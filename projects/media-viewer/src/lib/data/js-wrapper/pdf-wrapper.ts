@@ -1,8 +1,8 @@
-declare const PDFJS: any;
+declare const pdfjsLib: any;
 
 export class PdfWrapper {
 
-    getDocument(documentId): Promise<any> {
-        return PDFJS.getDocument(documentId);
+    getDocument(documentId): any {
+        return pdfjsLib.getDocument(documentId);
     }
 }

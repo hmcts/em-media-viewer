@@ -55,12 +55,12 @@ export class PdfRenderService {
         }
 
         const renderOptions = this.getRenderOptions();
-        this.pdfWrapper.getDocument(renderOptions.documentId)
-            .then(pdf => {
+        this.pdfWrapper.getDocument(renderOptions.documentId).promise.then(pdf => {
+              debugger
                 renderOptions.pdfDocument = pdf;
                 const viewer = this.viewerElementRef.nativeElement;
                 viewer.innerHTML = '';
-                this.pdfPages = pdf.pdfInfo.numPages;
+                this.pdfPages = pdf._pdfInfo.numPages;
                 this.listPages = [];
 
                 for (let i = 1; i < this.pdfPages + 1; i++) {

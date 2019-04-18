@@ -1,7 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "outDir": "../dist/annotation-ui-app-api",
+        "outDir": "../dist/media-viewer-sandbox-api",
         "target": "es5",
         "types": [
             "node",
