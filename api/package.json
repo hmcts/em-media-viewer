@@ -10,7 +10,7 @@
     "start-dev-node": "nodemon --watch '**/*.ts' --exec 'ts-node' ../dev-server.ts",
     "test": "mocha",
     "test:watch": "mocha --watch --recursive --watch-extensions ts",
-    "start": "cd ../dist/annotation-ui-app-api-api && node server.js"
+    "start": "cd ../dist/media-viewer-sandbox-api && node server.js"
   },
   "private": true,
   "nyc": {

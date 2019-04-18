@@ -8,6 +8,11 @@ This is an angular library that provides components to view and annotate PDF doc
 - npm run package
 - distributable will be created under dist/media-viewer
 
+### Running locally - dev mode
+- npm run package
+- npm run start:node
+- npm run start:ng
+
 ### Add as a dependency in your angular app
 - add @hmcts/media-viewer as a dependency in package.json
 - import MediaViewerModule and declare it in your NgModule imports.
