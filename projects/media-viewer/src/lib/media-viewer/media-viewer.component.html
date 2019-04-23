@@ -1,5 +1,7 @@
 
-<ng-template appViewerAnchor></ng-template>
+<app-pdf-viewer *ngIf="contentType === 'pdf'" [url]="url" [annotate]="annotate"></app-pdf-viewer>
+<app-image-viewer *ngIf="contentType === 'image'" [url]="url"></app-image-viewer>
+<app-unsupported-viewer *ngIf="contentTypeUnsupported()" ></app-unsupported-viewer>
 
 <div class="grid-row">
   <div *ngIf="error"  class="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabindex="-1">

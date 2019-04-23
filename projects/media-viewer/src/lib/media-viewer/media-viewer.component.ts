@@ -10,9 +10,9 @@ import { AnnotationStoreService } from '../data/annotation-store.service';
     selector: 'app-media-viewer',
     templateUrl: './media-viewer.component.html'
 })
-export class MediaViewerComponent implements OnChanges {
+export class MediaViewerComponent {
 
-    @ViewChild(ViewerAnchorDirective) viewerAnchor: ViewerAnchorDirective;
+    // @ViewChild(ViewerAnchorDirective) viewerAnchor: ViewerAnchorDirective;
     @Input() url = '';
     @Input() annotate = false;
     @Input() baseUrl = '';
@@ -20,60 +20,63 @@ export class MediaViewerComponent implements OnChanges {
     @Input() contentType: string;
     @Input() rotate = false;
 
-    viewerComponent: any;
-    error: HttpErrorResponse;
+    private supportedContentTypes = ['pdf', 'image'];
 
-    constructor(private log: EmLoggerService,
-                private viewerFactoryService: ViewerFactoryService,
-                private annotationStoreService: AnnotationStoreService,
-                private documentViewerService: MediaViewerService) {
+    // viewerComponent: any;
+    // error: HttpErrorResponse;
+
+    constructor(private log: EmLoggerService) {
         log.setClass('MediaViewerComponent');
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.url || changes.annotate || changes.contentType) {
-          this.buildViewer();
-        }
-    }
-
-    buildViewer() {
-        if (!this.url) {
-            this.log.error('url is required argument');
-            throw new Error('url is required argument');
-        }
-        if (this.isDM) {
-          this.documentViewerService
-            .getDocumentMetadata(this.formatUrl(this.url))
-            .subscribe(metadata => {
-              this.log.info(metadata);
-              if (metadata && metadata._links) {
-                const url = this.formatUrl(metadata._links.binary.href);
-                const dmDocumentId = this.viewerFactoryService.getDocumentId(metadata);
-                if (this.annotate) {
-                  this.annotationStoreService.getAnnotationSet(this.baseUrl, dmDocumentId).subscribe(annotationSet => {
-                    this.buildComponent(metadata, url, annotationSet.body);
-                  });
-                } else {
-                  this.buildComponent(metadata, url, null);
-                }
-              }
-          }, err => {
-            this.log.error('An error has occured while fetching document' + err);
-            this.error = err;
-          });
-        } else {
-          this.viewerComponent = this.viewerFactoryService.buildComponent(this.viewerAnchor.viewContainerRef,
-            this.contentType, this.url, this.baseUrl, this.url, this.annotate, null, this.rotate);
-        }
-    }
-
-    buildComponent(metadata, url, annotationSet?) {
-      this.viewerFactoryService.buildComponent(this.viewerAnchor.viewContainerRef,
-        metadata.mimeType, url, this.baseUrl, metadata._links.self.href, this.annotate, annotationSet, this.rotate);
-    }
-
-  formatUrl(url: string): string {
-    return url.replace(/http.*\/documents\//, `${this.baseUrl}/documents/`);
+  //   ngOnChanges(changes: SimpleChanges) {
+  //       if (changes.url || changes.annotate || changes.contentType) {
+  //         this.buildViewer();
+  //       }
+  //   }
+  //
+  //   buildViewer() {
+  //       if (!this.url) {
+  //           this.log.error('url is required argument');
+  //           throw new Error('url is required argument');
+  //       }
+  //       if (this.isDM) {
+  //         this.documentViewerService
+  //           .getDocumentMetadata(this.formatUrl(this.url))
+  //           .subscribe(metadata => {
+  //             this.log.info(metadata);
+  //             if (metadata && metadata._links) {
+  //               const url = this.formatUrl(metadata._links.binary.href);
+  //               const dmDocumentId = this.viewerFactoryService.getDocumentId(metadata);
+  //               if (this.annotate) {
+  //                 this.annotationStoreService.getAnnotationSet(this.baseUrl, dmDocumentId).subscribe(annotationSet => {
+  //                   this.buildComponent(metadata, url, annotationSet.body);
+  //                 });
+  //               } else {
+  //                 this.buildComponent(metadata, url, null);
+  //               }
+  //             }
+  //         }, err => {
+  //           this.log.error('An error has occured while fetching document' + err);
+  //           this.error = err;
+  //         });
+  //       } else {
+  //         this.viewerComponent = this.viewerFactoryService.buildComponent(this.viewerAnchor.viewContainerRef,
+  //           this.contentType, this.url, this.baseUrl, this.url, this.annotate, null, this.rotate);
+  //       }
+  //   }
+  //
+  //   buildComponent(metadata, url, annotationSet?) {
+  //     this.viewerFactoryService.buildComponent(this.viewerAnchor.viewContainerRef,
+  //       metadata.mimeType, url, this.baseUrl, metadata._links.self.href, this.annotate, annotationSet, this.rotate);
+  //   }
+  //
+  //
+  //
+  // formatUrl(url: string): string {
+  //   return url.replace(/http.*\/documents\//, `${this.baseUrl}/documents/`);
+  // }
+  contentTypeUnsupported(): boolean {
+    return this.supportedContentTypes.indexOf(this.contentType) < 0;
   }
-
 }
