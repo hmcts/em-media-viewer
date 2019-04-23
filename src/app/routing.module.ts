@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { RedirectionService } from './auth/redirection.service';
 import { SandboxWebappComponent } from './sandbox-webapp/sandbox-webapp.component';
-import { MediaViewerModule } from '@hmcts/media-viewer';
+import {MediaViewerModule} from '../../projects/media-viewer/src/lib/media-viewer.module';
 
 const routes: Routes = [{
     path: '',

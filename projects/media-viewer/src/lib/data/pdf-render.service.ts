@@ -56,7 +56,6 @@ export class PdfRenderService {
 
         const renderOptions = this.getRenderOptions();
         this.pdfWrapper.getDocument(renderOptions.documentId).promise.then(pdf => {
-              debugger
                 renderOptions.pdfDocument = pdf;
                 const viewer = this.viewerElementRef.nativeElement;
                 viewer.innerHTML = '';
