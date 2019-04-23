@@ -12,17 +12,23 @@
   </div>
   <div class="aui__toolbar" role="toolbar">
     <div class="aui__toolbar-container">
-      <button (click)="toggleDocumentSelection('nonDM_PDF')"
+      <button (click)="toggleDocumentSelection('pdf')"
         class="aui__toolbar-button aui__toolbar-button--items"
         type="button"
         role="button">
         PDF Viewer
       </button>
-      <button (click)="toggleDocumentSelection('nonDM_image')"
+      <button (click)="toggleDocumentSelection('image')"
         class="aui__toolbar-button aui__toolbar-button--items"
         type="button"
         role="button">
         Image Viewer
+      </button>
+      <button (click)="toggleDocumentSelection('unsupported')"
+              class="aui__toolbar-button aui__toolbar-button--items"
+              type="button"
+              role="button">
+        Unsupported Viewer
       </button>
     </div>
   </div>
@@ -52,20 +58,20 @@
                    role="textbox"
                    aria-multiline="true" data-medium-editor-editor-index="1"
                    medium-editor-index="ca3cfb8f-8b6a-8f73-1ed5-fa7679703446" data-placeholder="Type your text">
-                <app-media-viewer *ngIf="documentTypeToShow === 'DM_PDF'"
-                                  [baseUrl]="'api'"
-                                  [annotate]="true"
-                                  [url]="'https://dm-store-aat.service.core-compute-aat.internal/documents/35f3714e-30e0-45d6-b4fb-08f51c271f8e'"
-                                  [rotate]="true">
-                </app-media-viewer>
-                <app-media-viewer *ngIf="documentTypeToShow === 'nonDM_PDF'"
-                                  [url]="'http://localhost:3000/assets/non-dm.pdf'"
+
+                <app-media-viewer *ngIf="documentTypeToShow === 'pdf'"
+                                  [url]="'assets/non-dm.pdf'"
                                   [contentType]="'pdf'"
                                   [isDM]="false">
                 </app-media-viewer>
-                <app-media-viewer *ngIf="documentTypeToShow === 'nonDM_image'"
-                                  [url]="'http://localhost:3000/assets/non-dm.jpg'"
+                <app-media-viewer *ngIf="documentTypeToShow === 'image'"
+                                  [url]="'assets/non-dm.jpg'"
                                   [contentType]="'image'"
+                                  [isDM]="false">
+                </app-media-viewer>
+                <app-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
+                                  [url]="'assets/unsupported.txt'"
+                                  [contentType]="'txt'"
                                   [isDM]="false">
                 </app-media-viewer>
               </div>
