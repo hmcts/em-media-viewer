@@ -3,15 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthGuardService } from './auth/auth-guard.service';
-import { RedirectionService } from './auth/redirection.service';
 import { SandboxWebappComponent } from './sandbox-webapp/sandbox-webapp.component';
 import {MediaViewerModule} from '../../projects/media-viewer/src/lib/media-viewer.module';
 
 const routes: Routes = [{
     path: '',
-    component: SandboxWebappComponent,
-    canActivate: [AuthGuardService]
+    component: SandboxWebappComponent
 }];
 
 @NgModule({
@@ -29,7 +26,6 @@ const routes: Routes = [{
         SandboxWebappComponent
     ],
     providers: [
-        RedirectionService
     ],
     exports: [
         RouterModule
