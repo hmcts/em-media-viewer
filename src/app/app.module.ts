@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
-import { ConfigService } from './config.service';
 import { RouterModule } from '@angular/router';
 import { RoutingModule } from './routing.module';
 
@@ -15,13 +13,11 @@ import { RoutingModule } from './routing.module';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AuthModule,
     RouterModule,
     RoutingModule,
     BrowserTransferStateModule
   ],
   providers: [
-    ConfigService
   ],
   bootstrap: [AppComponent]
 })

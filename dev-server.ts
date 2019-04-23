@@ -1,12 +1,15 @@
-const app = require('./application');
-import { config } from './config';
-import * as globalTunnel from 'global-tunnel-ng';
+import * as express from 'express';
 
-if (config.proxy) {
-    globalTunnel.initialize({
-        host: config.proxy.host,
-        port: config.proxy.port,
-    })
-}
+const apiRoute = require('./api');
 
-app.listen(3001, () => console.log('Example app listening on port 3001!'));
+const app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/api', apiRoute);
+
+module.exports = app;
+
+app.listen(3001, () => console.log('media-viewer-sandbox-api is working on 3001!'));
