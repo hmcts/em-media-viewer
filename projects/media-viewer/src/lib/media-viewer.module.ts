@@ -19,7 +19,6 @@ import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.compon
 import { UnsupportedViewerComponent } from './viewers/unsupported-viewer/unsupported-viewer.component';
 import { ViewerFactoryService } from './viewers/viewer-factory.service';
 import { MediaViewerComponent } from './media-viewer/media-viewer.component';
-import { ViewerAnchorDirective } from './media-viewer/viewer-anchor.directive';
 import { MediaViewerService } from './media-viewer/media-viewer.service';
 import { RotationComponent } from './viewers/pdf-viewer/rotation-toolbar/rotation.component';
 import { RotationFactoryService } from './viewers/pdf-viewer/rotation-toolbar/rotation-factory.service';
@@ -41,7 +40,6 @@ import { EmLoggerService } from './logging/em-logger.service';
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,
-    ViewerAnchorDirective,
     RotationComponent
   ],
   entryComponents: [
