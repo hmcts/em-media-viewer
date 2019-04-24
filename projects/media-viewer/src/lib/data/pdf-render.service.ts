@@ -18,8 +18,7 @@ export class PdfRenderService {
     listPages: RotationModel[] = [];
 
     constructor(private pdfWrapper: PdfWrapper,
-                private log: EmLoggerService,
-                private pdfAnnotateWrapper: PdfAnnotateWrapper) {
+                private log: EmLoggerService) {
         this.log.setClass('PdfRenderService');
         this.dataLoadedSubject = new BehaviorSubject(false);
         this.listPagesSubject = new Subject();
@@ -49,38 +48,32 @@ export class PdfRenderService {
         return this.pdfPages;
     }
 
-    render(viewerElementRef?: ElementRef) {
-        if (viewerElementRef != null) {
-            this.viewerElementRef = viewerElementRef;
-        }
+    render(renderOptions: any) {
 
-        const renderOptions = this.getRenderOptions();
-        this.pdfWrapper.getDocument(renderOptions.documentId).promise.then(pdf => {
+        this.pdfWrapper.getDocument(renderOptions.url).promise.then(pdf => {
                 renderOptions.pdfDocument = pdf;
-                const viewer = this.viewerElementRef.nativeElement;
-                viewer.innerHTML = '';
                 this.pdfPages = pdf._pdfInfo.numPages;
                 this.listPages = [];
-
+                const pageContainer = renderOptions.pageContainer.nativeElement;
+                pageContainer.innerHTML = '';
                 for (let i = 1; i < this.pdfPages + 1; i++) {
-                    const pageDom = this.pdfAnnotateWrapper.createPage(i);
-                    // Create a copy of the render options for each page.
-                    const pageOptions = Object.assign({}, renderOptions);
-                    viewer.appendChild(pageDom);
-                    this.addDomPage(pageDom, i);
-                    pdf.getPage(i).then((pdfPage) => {
-                        // Get current page rotation from page rotation objects
-                        pageOptions.rotate = this.addPageRotation(renderOptions, pageOptions, pdfPage);
-                        setTimeout(() => {
-                            this.pdfAnnotateWrapper.renderPage(i, pageOptions).then(() => {
-                                if (i === this.pdfPages) {
-                                    this.setRenderOptions(renderOptions);
-                                    this.dataLoadedUpdate(true);
-                                    this.listPagesSubject.next(this.listPages);
-                                }
-                            });
-                        });
-                    });
+                  pdf.getPage(i).then(page => {
+                      const scale = 1.0;
+                      //scale, ration, dontFlip
+                      const viewport = page.getViewport(scale, 0, false);
+                      const canvas = document.createElement('canvas');
+                      pageContainer.appendChild(canvas);
+                      const context = canvas.getContext('2d');
+                      canvas.height = viewport.viewBox[3];
+                      canvas.width = viewport.viewBox[2];
+                      const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport,
+                        enableWebGL: true
+                      };
+
+                      page.render(renderContext);
+                  });
                 }
             }).catch(
             (error) => {

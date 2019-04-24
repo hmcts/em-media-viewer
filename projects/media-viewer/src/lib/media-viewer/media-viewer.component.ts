@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {EmLoggerService} from '../logging/em-logger.service';
+import {MediaViewerFeatures} from './media-viewer-features';
 
 @Component({
     selector: 'app-media-viewer',
@@ -8,9 +9,10 @@ import {EmLoggerService} from '../logging/em-logger.service';
 export class MediaViewerComponent {
 
   @Input() url = '';
-  @Input() annotate = false;
   @Input() contentType: string;
-  @Input() rotate = false;
+  @Input() mediaViewerFeatures: MediaViewerFeatures = null;
+
+  error: any;
 
   private supportedContentTypes = ['pdf', 'image'];
 
