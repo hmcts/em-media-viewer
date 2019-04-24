@@ -8,7 +8,7 @@ import { of} from 'rxjs';
 import { TransferState } from '@angular/platform-browser';
 import { MediaViewerModule } from '../media-viewer.module';
 import { EmLoggerService } from '../logging/em-logger.service';
-import { ViewerFactoryService } from '../viewers/viewer-factory.service';
+import { ViewerFactoryService } from './viewers/viewer-factory.service';
 import { PdfWrapper } from '../data/js-wrapper/pdf-wrapper';
 import { AnnotationStoreService } from '../data/annotation-store.service';
 

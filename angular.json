@@ -89,10 +89,9 @@
               "dist/media-viewer/assets/aui-styles.scss"
             ],
             "scripts": [
-              "dist/media-viewer/assets/pdfjs/pdf.js",
-              "dist/media-viewer/assets/pdfjs/pdf.worker.js",
-              "dist/media-viewer/assets/js/pdf_viewer.min.js",
-              "dist/media-viewer/assets/js/pdf-annotate.min.js"
+              "dist/media-viewer/assets/minified/build/pdf.js",
+              "dist/media-viewer/assets/minified/build/pdf.worker.js",
+              "dist/media-viewer/assets/minified/web/pdf.viewer.js"
             ]
           },
           "configurations": {

@@ -1,6 +1,6 @@
 
-<app-pdf-viewer *ngIf="contentType === 'pdf'" [url]="url" [annotate]="annotate"></app-pdf-viewer>
-<app-image-viewer *ngIf="contentType === 'image'" [url]="url"></app-image-viewer>
+<app-pdf-viewer *ngIf="contentType === 'pdf'" [url]="url" ></app-pdf-viewer>
+<app-image-viewer *ngIf="contentType === 'image'" [url]="url" ></app-image-viewer>
 <app-unsupported-viewer *ngIf="contentTypeUnsupported()" ></app-unsupported-viewer>
 
 <div class="grid-row">
