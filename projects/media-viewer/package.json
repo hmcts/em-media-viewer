@@ -16,7 +16,8 @@
   "dependencies": {
     "@hmcts/frontend": "0.0.14-alpha",
     "@hmcts/pdf-annotate": "^1.1.17",
-    "govuk-frontend": "2.5.0"
+    "govuk-frontend": "2.5.0",
+    "pdfjs-dist": "^2.0.943"
   },
   "peerDependencies": {
     "@angular/common": "^7.2.8",

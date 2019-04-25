@@ -86,12 +86,13 @@
               }
             ],
             "styles": [
-              "dist/media-viewer/assets/aui-styles.scss"
+              "dist/media-viewer/assets/aui-styles.scss",
+              "dist/media-viewer/assets/pdfjs-dist/web/pdf_viewer.css"
             ],
             "scripts": [
-              "dist/media-viewer/assets/minified/build/pdf.js",
-              "dist/media-viewer/assets/minified/build/pdf.worker.js",
-              "dist/media-viewer/assets/minified/web/pdf.viewer.js"
+              "dist/media-viewer/assets/pdfjs-dist/build/pdf.js",
+              "dist/media-viewer/assets/pdfjs-dist/build/pdf.worker.js",
+              "dist/media-viewer/assets/pdfjs-dist/web/pdf_viewer.js"
             ]
           },
           "configurations": {

@@ -35,71 +35,10 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-      this.pdfWrapper.initViewer();
+      this.pdfWrapper.initViewer(this.url);
   }
 
-    @Input() url: string;
-    @Input() mediaViewerFeatures = new MediaViewerFeatures();
-    //
-    // private page: number;
-    // private focusedAnnotationSubscription: Subscription;
-    // private pageNumberSubscription: Subscription;
-    // private pdfPageSubscription: Subscription;
-    // rotationComponents: ComponentRef<RotationComponent>[] = [];
-    //
-    // // @ViewChild("viewerCanvas") tref: ElementRef;
-    // @ViewChild('pageContainer') pageContainer: ElementRef;
-    // // @ViewChild('viewer') viewerElementRef: ElementRef;
-    // // @ViewChild('annotationWrapper') annotationWrapper: ElementRef;
-    // // @ViewChild('commentsComponent') commentsComponent: CommentsComponent;
-    // // @ViewChild('contextualToolbar') contextualToolbar: ContextualToolbarComponent;
-    //
-    // constructor(private pdfService: PdfService,
-    //             private utils: Utils,
-    //             private ref: ChangeDetectorRef,
-    //             private renderer: Renderer2,
-    //             private pdfAnnotateWrapper: PdfAnnotateWrapper,
-    //             private pdfRenderService: PdfRenderService,
-    //             private rotationFactoryService: RotationFactoryService) {
-    // }
-    //
-    // ngOnInit() {
-    //     // this.loadAnnotations(this.annotate);
-    //     // this.pdfService.preRun();
-    //     // this.pdfRenderService.setRenderOptions(new RenderOptions(
-    //     //     this.url,
-    //     //     null,
-    //     //     parseFloat('1.33'),
-    //     //     0,
-    //     //     []
-    //     // ));
-    //
-    //     // if (this.mediaViewerFeatures.enableRotation) {
-    //     //     this.pdfPageSubscription = this.pdfRenderService.listPagesSubject
-    //     //       .subscribe((listPages: RotationModel[]) => {
-    //     //         this.rotationComponents.forEach(rc => rc.destroy());
-    //     //         listPages.forEach(pageDetails => {
-    //     //           this.rotationComponents.push(this.rotationFactoryService.addToDom(pageDetails));
-    //     //         });
-    //     //       });
-    //     // }
-    //     this.pdfRenderService.render({url: this.url, pageContainer: this.pageContainer});
-    //     // this.pdfService.setAnnotationWrapper(this.annotationWrapper);
-    //
-    //     // this.pageNumberSubscription = this.pdfService.getPageNumber()
-    //     //     .subscribe(page => this.page = page);
-    // }
-    //
-    // ngOnDestroy() {
-    //     if (this.pageNumberSubscription) {
-    //         this.pageNumberSubscription.unsubscribe();
-    //     }
-    //     if (this.focusedAnnotationSubscription) {
-    //         this.focusedAnnotationSubscription.unsubscribe();
-    //     }
-    //     if (this.pdfPageSubscription) {
-    //         this.pdfPageSubscription.unsubscribe();
-    //     }
-    // }
+  @Input() url: string;
+  @Input() mediaViewerFeatures = new MediaViewerFeatures();
 
 }
