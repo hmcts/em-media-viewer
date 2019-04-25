@@ -1,3 +1,5 @@
+import {ElementRef} from '@angular/core';
+
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
 
@@ -11,7 +13,7 @@ export class PdfWrapper {
       return pdfjsLib.getPage(pageIndex);
     }
 
-    initViewer(documentUrl: string) {
+    initViewer(documentUrl: string, container: ElementRef) {
 
       if (!pdfjsLib.getDocument || !pdfjsViewer.PDFPageView) {
         alert('pdfjsLib or pdfjsViewer are not unavailable.');
@@ -22,8 +24,6 @@ export class PdfWrapper {
 
       const DEFAULT_URL = documentUrl;
 
-      const container = document.getElementById('viewerContainer');
-
       // (Optionally) enable hyperlinks within PDF files.
       const pdfLinkService = new pdfjsViewer.PDFLinkService();
 
@@ -33,7 +33,7 @@ export class PdfWrapper {
       });
 
       const pdfViewer = new pdfjsViewer.PDFViewer({
-        container: container,
+        container: container.nativeElement,
         linkService: pdfLinkService,
         findController: pdfFindController,
       });
