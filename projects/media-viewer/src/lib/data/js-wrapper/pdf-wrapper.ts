@@ -14,7 +14,7 @@ export class PdfWrapper {
     initViewer(documentUrl: string) {
 
       if (!pdfjsLib.getDocument || !pdfjsViewer.PDFPageView) {
-        alert('pdfjsLib or pdfjsViewer are unavailable.');
+        alert('pdfjsLib or pdfjsViewer are not unavailable.');
       }
 
       const CMAP_URL = 'assets/minified/cmaps';
