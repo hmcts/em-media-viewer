@@ -1,8 +1,5 @@
 declare const pdfjsLib: any;
-declare const PDFViewerApplication: any;
-// import webViewerLoad from 'dist/media-viewer/assets/minified/web/pdf.viewer.js';
-
-// import webViewerLoad from 'dist/media-viewer/assets/generic/web/viewer.js';
+declare const pdfjsViewer: any;
 
 export class PdfWrapper {
 
@@ -14,7 +11,55 @@ export class PdfWrapper {
       return pdfjsLib.getPage(pageIndex);
     }
 
-    initViewer() {
+    initViewer(documentUrl: string) {
+
+      if (!pdfjsLib.getDocument || !pdfjsViewer.PDFPageView) {
+        alert('pdfjsLib or pdfjsViewer are unavailable.');
+      }
+
+      const CMAP_URL = 'assets/minified/cmaps';
+      const CMAP_PACKED = true;
+
+      const DEFAULT_URL = documentUrl;
+
+      const container = document.getElementById('viewerContainer');
+
+      // (Optionally) enable hyperlinks within PDF files.
+      const pdfLinkService = new pdfjsViewer.PDFLinkService();
+
+      // (Optionally) enable find controller.
+      const pdfFindController = new pdfjsViewer.PDFFindController({
+        linkService: pdfLinkService,
+      });
+
+      const pdfViewer = new pdfjsViewer.PDFViewer({
+        container: container,
+        linkService: pdfLinkService,
+        findController: pdfFindController,
+      });
+      pdfLinkService.setViewer(pdfViewer);
+
+      document.addEventListener('pagesinit', function () {
+        // We can use pdfViewer now, e.g. let's change default scale.
+        pdfViewer.currentScaleValue = 'page-width';
+
+        pdfFindController.executeCommand('find', { query: "run", });
+      });
+
+      // Loading document.
+      const loadingTask = pdfjsLib.getDocument({
+        url: DEFAULT_URL,
+        cMapUrl: CMAP_URL,
+        cMapPacked: CMAP_PACKED,
+      });
+      loadingTask.promise.then(function(pdfDocument) {
+        // Document loaded, specifying document for the viewer and
+        // the (optional) linkService.
+        pdfViewer.setDocument(pdfDocument);
+
+        pdfLinkService.setDocument(pdfDocument, null);
+      });
+
     }
 
 }

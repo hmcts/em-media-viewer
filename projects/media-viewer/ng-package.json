@@ -8,6 +8,7 @@
   "whitelistedNonPeerDependencies": [
     "@hmcts/pdf-annotate",
     "@hmcts/frontend",
-    "govuk-frontend"
+    "govuk-frontend",
+    "pdfjs-dist"
   ]
 }
