@@ -13,7 +13,7 @@ export class PdfWrapper {
       return pdfjsLib.getPage(pageIndex);
     }
 
-    initViewer(documentUrl: string, container: ElementRef) {
+    initViewer(documentUrl: string, container: ElementRef): [any, any] {
 
       if (!pdfjsLib.getDocument || !pdfjsViewer.PDFPageView) {
         alert('pdfjsLib or pdfjsViewer are not unavailable.');
@@ -43,7 +43,7 @@ export class PdfWrapper {
         // We can use pdfViewer now, e.g. let's change default scale.
         pdfViewer.currentScaleValue = 'page-width';
 
-        pdfFindController.executeCommand('find', { query: "run", });
+        // pdfFindController.executeCommand('find', { query: "run", });
       });
 
       // Loading document.
@@ -59,6 +59,8 @@ export class PdfWrapper {
 
         pdfLinkService.setDocument(pdfDocument, null);
       });
+
+      return [pdfViewer, pdfFindController];
 
     }
 

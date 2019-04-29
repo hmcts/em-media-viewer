@@ -19,7 +19,7 @@ export class NpaService {
     }
 
     exportPdf(dmDocumentId: string, outputDmDocumentId: string, baseUrl: string): Observable<HttpResponse<IDocumentTask>> {
-        this.log.info('Calling HTTP service for NPA');
+        this.log.info('Calling HTTP media-viewer-message.service.ts for NPA');
         return this.apiHttpService.documentTask(dmDocumentId, outputDmDocumentId, baseUrl);
     }
 }

@@ -32,7 +32,7 @@ describe('NpaService' , () => {
         expect(service).toBeTruthy();
     }));
 
-    it('should invoke the http service to send document task', inject([NpaService], (service: NpaService) => {
+    it('should invoke the http media-viewer-message.service.ts to send document task', inject([NpaService], (service: NpaService) => {
         spyOn(mockApiHttpService, 'documentTask');
         service.exportPdf('dmDocumentId', 'outputDocumentId', 'baseUrl');
         expect(mockApiHttpService.documentTask).toHaveBeenCalled();

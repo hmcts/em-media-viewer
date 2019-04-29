@@ -1,0 +1,4 @@
+.pdfContainer {
+  overflow: auto;
+  max-width: 960px;
+}
