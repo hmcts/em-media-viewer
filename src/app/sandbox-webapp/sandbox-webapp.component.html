@@ -59,6 +59,18 @@
                    aria-multiline="true" data-medium-editor-editor-index="1"
                    medium-editor-index="ca3cfb8f-8b6a-8f73-1ed5-fa7679703446" data-placeholder="Type your text">
 
+                <div *ngIf="documentTypeToShow === 'pdf'">
+
+                  <button (click)="rotate('LEFT')">rotate left</button>
+                  <button (click)="rotate('RIGHT')">rotate right</button>
+                  <button (click)="zoom(0.2)">zoom in</button>
+                  <button (click)="zoom(-0.2)">zoom out</button>
+                  <input type="input" placeholder="find..." #searchTerm/>
+                  <button (click)="searchPrev(searchTerm.value)">prev</button>
+                  <button (click)="searchNext(searchTerm.value)">next</button>
+
+                </div>
+
                 <app-media-viewer *ngIf="documentTypeToShow === 'pdf'"
                                   [url]="'assets/example.pdf'"
                                   [contentType]="'pdf'"

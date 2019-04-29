@@ -57,7 +57,7 @@ This is an angular library that provides components to view and annotate PDF doc
   <app-media-viewer
       [baseUrl]="'http://localhost:3000/api'"
       [annotate]="true"
-      [url]="'https://dm-store-aat.service.core-compute-aat.internal/documents/35f3714e-30e0-45d6-b4fb-08f51c271f8e'"
+      [url]="'https://dm-store-aat.media-viewer-message.service.ts.core-compute-aat.internal/documents/35f3714e-30e0-45d6-b4fb-08f51c271f8e'"
   ></app-media-viewer>
   ```
   

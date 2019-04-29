@@ -23,6 +23,8 @@ import { RotationComponent } from './media-viewer/viewers/pdf-viewer/rotation-to
 import { RotationFactoryService } from './media-viewer/viewers/pdf-viewer/rotation-toolbar/rotation-factory.service';
 import { PdfRenderService } from './data/pdf-render.service';
 import { EmLoggerService } from './logging/em-logger.service';
+import {MediaViewerMessageService} from './media-viewer/service/media-viewer-message.service';
+import {RotateDirection, RotateOperation} from './media-viewer/service/media-viewer-message.model';
 
 @NgModule({
   imports: [
@@ -59,7 +61,8 @@ import { EmLoggerService } from './logging/em-logger.service';
     MediaViewerService,
     RotationFactoryService,
     PdfRenderService,
-    EmLoggerService
+    EmLoggerService,
+    MediaViewerMessageService
   ],
   exports: [
     MediaViewerComponent

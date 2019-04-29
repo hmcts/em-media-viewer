@@ -56,7 +56,7 @@ export class ApiHttpService {
             inputDocumentId: dmDocumentId,
             outputDocumentId: outputDmDocumentId
         };
-        this.log.info('Calling NPA service-' + dmDocumentId);
+        this.log.info('Calling NPA media-viewer-message.service.ts-' + dmDocumentId);
         return this.httpClient.post<IDocumentTask>(url, documentTasks, {observe: 'response'});
     }
 
