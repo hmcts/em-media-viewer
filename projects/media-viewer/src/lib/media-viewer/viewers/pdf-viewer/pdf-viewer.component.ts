@@ -74,7 +74,10 @@ export class PdfViewerComponent implements AfterViewInit, OnDestroy {
 
   search(searchOperation: SearchOperation) {
     if (this.pdfViewer) {
-      this.pdfFindController.executeCommand('findagain', {query: searchOperation.searchTerm, findPrevious: searchOperation.previous});
+      this.pdfFindController.executeCommand('findagain', {
+        query: searchOperation.searchTerm,
+        highlightAll: true,
+        findPrevious: searchOperation.previous});
     }
   }
 
