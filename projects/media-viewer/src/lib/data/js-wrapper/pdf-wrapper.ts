@@ -1,7 +1,8 @@
 import {ElementRef} from '@angular/core';
-
-declare const pdfjsLib: any;
-declare const pdfjsViewer: any;
+import * as pdfjsLib from 'pdfjs-dist';
+import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
+import 'pdfjs-dist/web/pdf_viewer.css';
+import 'pdfjs-dist/build/pdf.worker';
 
 export class PdfWrapper {
 
