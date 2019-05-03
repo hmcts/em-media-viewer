@@ -43,15 +43,6 @@ This is an angular library that provides components to view and annotate PDF doc
     ...
   ],
   ```
-- import JS dependencies as scripts within angular.json
-  ```
-  "scripts": [
-      "node_modules/@hmcts/media-viewer/assets/js/pdf.combined.min.js",
-      "node_modules/@hmcts/media-viewer/assets/js/pdf_viewer.min.js",
-      "node_modules/@hmcts/media-viewer/assets/js/pdf-annotate.min.js"
-      ...
-  ]
-  ```
 - component entry point:
   ```
   <app-media-viewer
