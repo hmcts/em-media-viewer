@@ -86,13 +86,9 @@
               }
             ],
             "styles": [
-              "dist/media-viewer/assets/aui-styles.scss",
-              "dist/media-viewer/assets/pdfjs-dist/web/pdf_viewer.css"
+              "dist/media-viewer/assets/aui-styles.scss"
             ],
             "scripts": [
-              "dist/media-viewer/assets/pdfjs-dist/build/pdf.js",
-              "dist/media-viewer/assets/pdfjs-dist/build/pdf.worker.js",
-              "dist/media-viewer/assets/pdfjs-dist/web/pdf_viewer.js"
             ]
           },
           "configurations": {
