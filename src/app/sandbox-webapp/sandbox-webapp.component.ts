@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {MediaViewerMessageService} from '../../../projects/media-viewer/src/lib/media-viewer/service/media-viewer-message.service';
 import {
   RotateDirection,
-  RotateOperation, SearchOperation,
+  RotateOperation, RotateSinglePageOperation, SearchOperation,
   ZoomOperation
 } from '../../../projects/media-viewer/src/lib/media-viewer/service/media-viewer-message.model';
 
@@ -22,6 +22,10 @@ export class SandboxWebappComponent {
 
     rotate(rotateDirectionStr: string) {
       this.mediaViewerMessageService.sendMessage(new RotateOperation(RotateDirection[rotateDirectionStr]));
+    }
+
+    rotateSinglePage(rotateDirectionStr: string, pageIndex: number) {
+      this.mediaViewerMessageService.sendMessage(new RotateSinglePageOperation(RotateDirection[rotateDirectionStr], pageIndex));
     }
 
     zoom(zoomFactor: number) {

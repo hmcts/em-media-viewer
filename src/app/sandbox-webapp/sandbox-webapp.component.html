@@ -63,6 +63,9 @@
 
                   <button (click)="rotate('LEFT')">rotate left</button>
                   <button (click)="rotate('RIGHT')">rotate right</button>
+                  <button (click)="rotateSinglePage('LEFT', 0)">rotate 1st page left</button>
+                  <button (click)="rotateSinglePage('RIGHT', 0)">rotate 1st page right</button>
+
                   <button (click)="zoom(0.2)">zoom in</button>
                   <button (click)="zoom(-0.2)">zoom out</button>
                   <input type="input" placeholder="find..." #searchTerm/>

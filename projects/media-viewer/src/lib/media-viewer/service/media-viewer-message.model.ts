@@ -11,6 +11,17 @@ export class RotateOperation extends MediaViewerMessage {
     super();
     this.direction = direction;
   }
+
+}
+
+export class RotateSinglePageOperation extends RotateOperation {
+
+  pageIndex: number;
+
+  constructor(direction: RotateDirection, pageIndex: number) {
+    super(direction);
+    this.pageIndex = pageIndex;
+  }
 }
 
 export enum RotateDirection {

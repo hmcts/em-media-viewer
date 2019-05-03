@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
 import {
   MediaViewerMessage,
   RotateDirection,
-  RotateOperation,
+  RotateOperation, RotateSinglePageOperation,
   SearchOperation,
   ZoomOperation
 } from '../../service/media-viewer-message.model';
@@ -43,12 +43,15 @@ export class PdfViewerComponent implements AfterViewInit, OnDestroy {
   }
 
   handleMessage(genericMessage: MediaViewerMessage) {
+    if (genericMessage instanceof RotateSinglePageOperation) {
+      this.rotateSinglePage(genericMessage);
+    } else
     if (genericMessage instanceof RotateOperation) {
       this.rotate(genericMessage);
-    }
+    } else
     if (genericMessage instanceof ZoomOperation) {
       this.zoom(genericMessage);
-    }
+    } else
     if (genericMessage instanceof SearchOperation) {
       this.search(genericMessage);
     }
@@ -63,6 +66,21 @@ export class PdfViewerComponent implements AfterViewInit, OnDestroy {
         currentRotation = (currentRotation + 90) % 360;
       }
       this.pdfViewer.pagesRotation = currentRotation;
+    }
+  }
+
+  rotateSinglePage(rotateSinglePageOperation: RotateSinglePageOperation) {
+    if (this.pdfViewer) {
+      const page = this.pdfViewer.getPageView(rotateSinglePageOperation.pageIndex);
+      if (page) {
+        let currentPageRotation = page.rotation;
+        if (rotateSinglePageOperation.direction === RotateDirection.LEFT) {
+          currentPageRotation = (currentPageRotation - 90) % 360;
+        } else if (rotateSinglePageOperation.direction === RotateDirection.RIGHT) {
+          currentPageRotation = (currentPageRotation + 90) % 360;
+        }
+        page.update(null, currentPageRotation);
+      }
     }
   }
 
