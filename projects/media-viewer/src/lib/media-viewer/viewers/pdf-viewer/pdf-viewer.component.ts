@@ -71,15 +71,16 @@ export class PdfViewerComponent implements AfterViewInit, OnDestroy {
 
   rotateSinglePage(rotateSinglePageOperation: RotateSinglePageOperation) {
     if (this.pdfViewer) {
-      const page = this.pdfViewer.getPageView(rotateSinglePageOperation.pageIndex);
-      if (page) {
-        let currentPageRotation = page.rotation;
+      const pageView = this.pdfViewer.getPageView(rotateSinglePageOperation.pageIndex);
+      if (pageView) {
+        let currentPageRotation = pageView.rotation;
         if (rotateSinglePageOperation.direction === RotateDirection.LEFT) {
           currentPageRotation = (currentPageRotation - 90) % 360;
         } else if (rotateSinglePageOperation.direction === RotateDirection.RIGHT) {
           currentPageRotation = (currentPageRotation + 90) % 360;
         }
-        page.update(null, currentPageRotation);
+        pageView.update(pageView.scale, currentPageRotation);
+        pageView.draw();
       }
     }
   }
