@@ -5,12 +5,8 @@ import { NO_ERRORS_SCHEMA, Renderer2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { CommentItemComponent } from './comment-item.component';
-import { Rectangle, Annotation, Comment } from '../../../../data/annotation-set.model';
-import { AnnotationStoreService } from '../../../../data/annotation-store.service';
-import { PdfService } from '../../../../data/pdf.service';
-import { Utils } from '../../../../data/utils';
-import { EmLoggerService } from '../../../../logging/em-logger.service';
-import { PdfRenderService } from '../../../../data/pdf-render.service';
+import { Rectangle, Annotation, Comment } from '../../annotation-set.model';
+
 
 
 class MockAnnotationStoreService {

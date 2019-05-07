@@ -12,12 +12,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Annotation, Comment } from '../../../../data/annotation-set.model';
-import { AnnotationStoreService } from '../../../../data/annotation-store.service';
-import { PdfService } from '../../../../data/pdf.service';
-import { Utils } from '../../../../data/utils';
-import { EmLoggerService } from '../../../../logging/em-logger.service';
-import { PdfRenderService } from '../../../../data/pdf-render.service';
+import { Annotation, Comment } from '../../annotation-set.model';
 
 @Component({
     selector: 'app-comment-item',
@@ -51,54 +46,14 @@ export class CommentItemComponent implements OnInit, OnDestroy {
     annotationLeftPos: number;
     annotationHeight: number;
 
-    constructor(private annotationStoreService: AnnotationStoreService,
-                private pdfService: PdfService,
-                private pdfRenderService: PdfRenderService,
-                private ref: ChangeDetectorRef,
-                private renderer: Renderer2,
-                private utils: Utils,
-                private log: EmLoggerService) {
-        this.log.setClass('CommentItemComponent');
+    constructor(private ref: ChangeDetectorRef,
+                private renderer: Renderer2) {
     }
 
     ngOnInit() {
         this.hideButton = true;
         this.focused = false;
         this.sliceComment = this.comment.content;
-
-        this.commentFocusSub = this.annotationStoreService.getCommentFocusSubject()
-            .subscribe((options) => {
-                if (options.annotation.id === this.comment.annotationId) {
-
-                    if (options.showButton) {
-                        this.onEdit();
-                    } else {
-                        this.handleShowBtn();
-                    }
-
-                    this.ref.detectChanges();
-                } else {
-                    this.onBlur();
-                }
-        });
-
-        this.commentBtnSub = this.annotationStoreService.getCommentBtnSubject()
-            .subscribe((commentId) => {
-                (commentId === this.comment.id) ? this.handleShowBtn() : this.handleHideBtn();
-          });
-
-        this.dataLoadedSub = this.pdfRenderService.getDataLoadedSub()
-            .subscribe( (dataLoaded: boolean) => {
-                if (dataLoaded) {
-                    this.annotationTopPos = this.getRelativePosition(this.comment.annotationId);
-                    this.commentTopPos = this.annotationTopPos;
-                    this.utils.sortByX(this.annotation.rectangles, true);
-                    this.annotationHeight = this.utils.getAnnotationLineHeight(this.annotation.rectangles);
-                    this.annotationLeftPos = this.annotation.rectangles[0].x;
-                    this.commentRendered.emit(true);
-                    this.collapseComment();
-                }
-            });
 
         this.commentItem.statusChanges.subscribe(
                 () => {
@@ -133,7 +88,6 @@ export class CommentItemComponent implements OnInit, OnDestroy {
 
     onSubmit() {
         const comment = this.convertFormToComment(this.commentItem);
-        this.annotationStoreService.editComment(comment);
         this.commentSubmitted.emit(this.annotation);
 
         this.viewOnly();
@@ -191,13 +145,13 @@ export class CommentItemComponent implements OnInit, OnDestroy {
     }
 
     handleDeleteComment() {
-        this.annotationStoreService.deleteComment(this.comment.id);
+        // this.annotationStoreService.deleteComment(this.comment.id);
     }
 
     handleCommentClick(event: any) {
         event.stopPropagation();
-        this.annotationStoreService.setCommentBtnSubject(this.comment.id);
-        this.annotationStoreService.setAnnotationFocusSubject(this.annotation);
+        // this.annotationStoreService.setCommentBtnSubject(this.comment.id);
+        // this.annotationStoreService.setAnnotationFocusSubject(this.annotation);
     }
 
     handleShowBtn() {
@@ -214,17 +168,17 @@ export class CommentItemComponent implements OnInit, OnDestroy {
     }
 
     handleHideBtn() {
-        new Promise(resolve => {
-            if (!this.commentItem.value.content) {
-                this.annotationStoreService.deleteComment(this.comment.id);
-            }
-            this.focused = false;
-            this.hideButton = true;
-            this.collapseComment();
-            resolve('Success');
-        }).then(() => {
-            this.setHeight();
-        });
+        // new Promise(resolve => {
+        //     if (!this.commentItem.value.content) {
+        //         this.annotationStoreService.deleteComment(this.comment.id);
+        //     }
+        //     this.focused = false;
+        //     this.hideButton = true;
+        //     this.collapseComment();
+        //     resolve('Success');
+        // }).then(() => {
+        //     this.setHeight();
+        // });
     }
 
     collapseComment() {
@@ -272,16 +226,5 @@ export class CommentItemComponent implements OnInit, OnDestroy {
         this.setHeight();
     }
 
-    getRelativePosition(annotationId: string): number {
-        const svgSelector = this.pdfRenderService.getViewerElementRef().nativeElement
-                                .querySelector(`g[data-pdf-annotate-id="${annotationId}"]`);
-        if (svgSelector === null) {
-            return null;
-        } else {
-            const highlightRect = <DOMRect> svgSelector.getBoundingClientRect();
-            const wrapperRect = <DOMRect> this.pdfService.getAnnotationWrapper().nativeElement.getBoundingClientRect();
 
-            return (highlightRect.y - wrapperRect.top);
-        }
-    }
 }

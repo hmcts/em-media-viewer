@@ -4,12 +4,12 @@ import { HttpResponse } from '@angular/common/http';
 
 import { AnnotationStoreService } from './annotation-store.service';
 import { ApiHttpService } from './api-http.service';
-import { PdfAdapter } from './pdf-adapter';
-import { PdfService } from './pdf.service';
+import { PdfAdapter } from '../../data/pdf-adapter';
+import { PdfService } from '../../data/pdf.service';
 import { Annotation, AnnotationSet, Comment } from './annotation-set.model';
-import { PdfAnnotateWrapper } from './js-wrapper/pdf-annotate-wrapper';
-import { EmLoggerService } from '../logging/em-logger.service';
-import { PdfRenderService } from './pdf-render.service';
+import { PdfAnnotateWrapper } from '../../data/js-wrapper/pdf-annotate-wrapper';
+import { EmLoggerService } from '../../logging/em-logger.service';
+import { PdfRenderService } from '../../data/pdf-render.service';
 
 class MockPdfAnnotateWrapper {
   setStoreAdapter() {}

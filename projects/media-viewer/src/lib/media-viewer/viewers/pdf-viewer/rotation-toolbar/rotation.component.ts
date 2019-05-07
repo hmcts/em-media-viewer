@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { PdfRenderService } from '../../../../data/pdf-render.service';
 import { EmLoggerService } from '../../../../logging/em-logger.service';
 
 
@@ -14,7 +13,7 @@ export class RotationComponent implements OnInit {
 
     @Input() pageNumber: number;
 
-    constructor(private pdfRenderService: PdfRenderService,
+    constructor(
                 private log: EmLoggerService) {
         this.log.setClass('RotationComponent');
     }
@@ -37,12 +36,11 @@ export class RotationComponent implements OnInit {
     }
 
     onRotateClockwise() {
-        const RENDER_OPTIONS = this.pdfRenderService.getRenderOptions();
-        const rotation = RENDER_OPTIONS.rotationPages
-            .find(rotatePage => rotatePage.page === this.pageNumber).rotate;
-        RENDER_OPTIONS.rotationPages
-            .find(rotatePage => rotatePage.page === this.pageNumber).rotate = this.calculateRotation(rotation + 90);
-        this.pdfRenderService.setRenderOptions(RENDER_OPTIONS);
-        //this.pdfRenderService.render();
+        // const RENDER_OPTIONS = this.pdfRenderService.getRenderOptions();
+        // const rotation = RENDER_OPTIONS.rotationPages
+        //     .find(rotatePage => rotatePage.page === this.pageNumber).rotate;
+        // RENDER_OPTIONS.rotationPages
+        //     .find(rotatePage => rotatePage.page === this.pageNumber).rotate = this.calculateRotation(rotation + 90);
+        // this.pdfRenderService.setRenderOptions(RENDER_OPTIONS);
     }
 }

@@ -4,10 +4,10 @@ import { Subject, Observable, of } from 'rxjs';
 
 import { CommentsComponent } from './comments.component';
 import { CommentItemComponent } from './comment-item/comment-item.component';
-import { Annotation, Comment } from '../../../data/annotation-set.model';
+import { Annotation, Comment } from '../annotation-set.model';
 import { Utils } from '../../../data/utils';
 import { PdfService } from '../../../data/pdf.service';
-import { AnnotationStoreService } from '../../../data/annotation-store.service';
+import { AnnotationStoreService } from '../annotation-store.service';
 import { EmLoggerService } from '../../../logging/em-logger.service';
 import { PdfRenderService } from '../../../data/pdf-render.service';
 

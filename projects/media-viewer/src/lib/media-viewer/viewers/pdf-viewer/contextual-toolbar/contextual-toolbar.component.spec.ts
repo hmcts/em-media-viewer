@@ -1,9 +1,9 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import { Subject, of } from 'rxjs';
 import { ContextualToolbarComponent } from './contextual-toolbar.component';
-import { Annotation, Comment } from '../../../../data/annotation-set.model';
+import { Annotation, Comment } from '../../../annotation/annotation-set.model';
 import { PdfService } from '../../../../data/pdf.service';
-import { AnnotationStoreService } from '../../../../data/annotation-store.service';
+import { AnnotationStoreService } from '../../../annotation/annotation-store.service';
 import { EmLoggerService } from '../../../../logging/em-logger.service';
 import { PdfRenderService } from '../../../../data/pdf-render.service';
 

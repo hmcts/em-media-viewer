@@ -1,12 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import {Subscription} from 'rxjs';
 import { CommentItemComponent } from './comment-item/comment-item.component';
-import { Annotation } from '../../../data/annotation-set.model';
-import { AnnotationStoreService } from '../../../data/annotation-store.service';
-import { PdfService } from '../../../data/pdf.service';
-import { Utils } from '../../../data/utils';
-import { EmLoggerService } from '../../../logging/em-logger.service';
-import { PdfRenderService } from '../../../data/pdf-render.service';
+import { Annotation } from '../annotation-set.model';
+import { AnnotationStoreService } from '../annotation-store.service';
+import {EmLoggerService} from '../../../logging/em-logger.service';
 
 @Component({
     selector: 'app-comments',
@@ -22,21 +19,18 @@ export class CommentsComponent implements OnInit, OnDestroy {
     @ViewChildren('commentItem') commentItems: QueryList<CommentItemComponent>;
 
     constructor(private annotationStoreService: AnnotationStoreService,
-                private pdfService: PdfService,
-                private utils: Utils,
-                private pdfRenderService: PdfRenderService,
                 private log: EmLoggerService) {
         this.log.setClass('CommentsComponent');
     }
 
     ngOnInit() {
-        this.dataLoadedSub = this.pdfRenderService.getDataLoadedSub()
-            .subscribe(isDataLoaded => {
-                if (isDataLoaded) {
-                    this.showAllComments();
-                    this.preRun();
-                }
-        });
+        // this.dataLoadedSub = this.pdfRenderService.getDataLoadedSub()
+        //     .subscribe(isDataLoaded => {
+        //         if (isDataLoaded) {
+        //             this.showAllComments();
+        //             this.preRun();
+        //         }
+        // });
     }
 
     redrawCommentItemComponents() {
@@ -67,11 +61,12 @@ export class CommentsComponent implements OnInit, OnDestroy {
     }
 
     isAnnotationOnSameLine(a: CommentItemComponent, b: CommentItemComponent): boolean {
-        const delta = (a.annotationHeight >= b.annotationHeight) ? a.annotationHeight : b.annotationHeight;
-        if (this.utils.difference(a.annotationTopPos, b.annotationTopPos) > delta) {
-            return false;
-        }
-        return true;
+        // const delta = (a.annotationHeight >= b.annotationHeight) ? a.annotationHeight : b.annotationHeight;
+        // if (this.utils.difference(a.annotationTopPos, b.annotationTopPos) > delta) {
+        //     return false;
+        // }
+        // return true;
+      return false;
     }
 
     isOverlapping(commentItem: CommentItemComponent, previousCommentItem: CommentItemComponent): CommentItemComponent {
@@ -95,21 +90,21 @@ export class CommentsComponent implements OnInit, OnDestroy {
     }
 
     preRun() {
-        this.pageNumSub = this.pdfService.getPageNumber().subscribe(
-            pageNumber => {
-                this.pageNumber = pageNumber;
-            });
+        // this.pageNumSub = this.pdfService.getPageNumber().subscribe(
+        //     pageNumber => {
+        //         this.pageNumber = pageNumber;
+        //     });
     }
 
     showAllComments() {
         // todo - refactor this out of component
         this.annotations = [];
-        for (let i = 0; i < this.pdfRenderService.getPdfPages() + 1; i++) {
-            this.annotationStoreService.getAnnotationsForPage(i)
-                .then((pageData: any) => {
-                    this.annotations = this.annotations.concat(pageData.annotations.slice());
-                });
-        }
+        // for (let i = 0; i < this.pdfRenderService.getPdfPages() + 1; i++) {
+        //     this.annotationStoreService.getAnnotationsForPage(i)
+        //         .then((pageData: any) => {
+        //             this.annotations = this.annotations.concat(pageData.annotations.slice());
+        //         });
+        // }
     }
 
     handleAnnotationBlur() {

@@ -1,11 +1,10 @@
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, inject, async } from '@angular/core/testing';
-import { ApiHttpService } from './api-http.service';
+import { AnnotationApiHttpService } from './annotation-api-http.service';
 import { AnnotationSet, Annotation } from './annotation-set.model';
-import { DocumentTask } from './document-task.model';
 import { TransferState } from '@angular/platform-browser';
 import { PLATFORM_ID } from '@angular/core';
-import { EmLoggerService } from '../logging/em-logger.service';
+import { EmLoggerService } from '../../logging/em-logger.service';
 
 class MockTransferState {
     hasKey() {}
@@ -13,10 +12,10 @@ class MockTransferState {
     set() {}
 }
 
-describe('ApiHttpService', () => {
+describe('AnnotationApiHttpService', () => {
     const mockTransferState = new MockTransferState();
     let httpMock: HttpTestingController;
-    let apiHttpService: ApiHttpService;
+    let apiHttpService: AnnotationApiHttpService;
     const baseUrl = 'http://localhost';
     const dmDocumentId = 'ad88d12c-8526-49b6-ae5e-3f7ea5d08168';
     const dummyAnnotationSet = new AnnotationSet(
@@ -47,7 +46,7 @@ describe('ApiHttpService', () => {
         TestBed.configureTestingModule({
             providers: [
                 EmLoggerService,
-                ApiHttpService,
+                AnnotationApiHttpService,
                 { provide: TransferState, useFactory: () => mockTransferState},
                 { provide: PLATFORM_ID, useValue: 'browser' },
             ],
@@ -56,12 +55,12 @@ describe('ApiHttpService', () => {
             ]
         });
 
-      apiHttpService = TestBed.get(ApiHttpService);
+      apiHttpService = TestBed.get(AnnotationApiHttpService);
       httpMock = TestBed.get(HttpTestingController);
       });
 
 
-    it('should be created', inject([ApiHttpService], (service: ApiHttpService) => {
+    it('should be created', inject([AnnotationApiHttpService], (service: AnnotationApiHttpService) => {
         expect(service).toBeTruthy();
     }));
 

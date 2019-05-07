@@ -9,8 +9,8 @@ import { TransferState } from '@angular/platform-browser';
 import { MediaViewerModule } from '../media-viewer.module';
 import { EmLoggerService } from '../logging/em-logger.service';
 import { ViewerFactoryService } from './viewers/viewer-factory.media-viewer-message.service.ts';
-import { PdfWrapper } from '../data/js-wrapper/pdf-wrapper';
-import { AnnotationStoreService } from '../data/annotation-store.service';
+import { PdfJsWrapper } from './viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
+import { AnnotationStoreService } from './annotation/annotation-store.service';
 
 const originalUrl = 'http://api-gateway.dm.com/documents/1234-1234-1234';
 
@@ -87,7 +87,7 @@ describe('MediaViewerComponent', () => {
                 { provide: TransferState, useFactory: () => mockTransferState},
                 { provide: MediaViewerService, useValue: DocumentViewerServiceMock},
                 { provide: AnnotationStoreService, useValue: AnnotationStoreServiceMock},
-                { provide: PdfWrapper, useFactory: () => mockPdfWrapper }
+                { provide: PdfJsWrapper, useFactory: () => mockPdfWrapper }
             ]
         });
 
