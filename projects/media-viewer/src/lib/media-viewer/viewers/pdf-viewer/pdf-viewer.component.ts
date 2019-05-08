@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
-import {MediaViewerFeatures} from '../../media-viewer-features';
 import {PdfJsWrapper} from './pdf-js/pdf-js-wrapper';
 import {MediaViewerMessageService} from '../../service/media-viewer-message.service';
 import {Subscription} from 'rxjs';
@@ -20,7 +19,6 @@ import {
 export class PdfViewerComponent implements AfterViewInit, OnDestroy {
 
   @Input() url: string;
-  @Input() mediaViewerFeatures = new MediaViewerFeatures();
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
   pdfViewer: any;
