@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SandboxWebappComponent } from './sandbox-webapp/sandbox-webapp.component';
-import {MediaViewerModule} from '../../projects/media-viewer/src/lib/media-viewer.module';
+import { MediaViewerModule } from '../../projects/media-viewer/src/lib/media-viewer.module';
+import { ToolbarModule } from '../../projects/media-viewer/src/lib/toolbar/toolbar.module';
 
 const routes: Routes = [{
     path: '',
@@ -12,16 +13,18 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forRoot(routes, {
-            scrollPositionRestoration: 'enabled',
-            anchorScrolling: 'enabled'
-        }),
-        HttpClientModule,
-        ReactiveFormsModule,
-        MediaViewerModule
-    ],
+  imports: [
+    CommonModule,
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled'
+    }),
+    HttpClientModule,
+    ReactiveFormsModule,
+    MediaViewerModule,
+    ToolbarModule,
+    ToolbarModule
+  ],
     declarations: [
         SandboxWebappComponent
     ],
