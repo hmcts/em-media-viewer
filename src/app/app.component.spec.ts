@@ -2,19 +2,18 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TransferState } from '@angular/platform-browser';
-import { CookieModule, CookieService } from 'ngx-cookie';
+
 describe('AppComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        CookieModule.forRoot()
+        RouterTestingModule
       ],
       declarations: [
         AppComponent,
       ],
-      providers: [TransferState, CookieService]
+      providers: [TransferState]
     }).compileComponents();
   }));
 
