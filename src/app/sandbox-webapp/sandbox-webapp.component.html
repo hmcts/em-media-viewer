@@ -59,11 +59,8 @@
                 </div>
                 <app-media-viewer *ngIf="documentTypeToShow === 'pdf'"
                                   [url]="'assets/example.pdf'"
-                                  [rotation]="rotateOperation"
-                                  [search]="searchOperation"
-                                  [zoom]="zoomOperation"
-                                  [contentType]="'pdf'"
-                                  >
+                                  [actionEvents]=actionEvents
+                                  [contentType]="'pdf'">
                 </app-media-viewer>
                 <app-media-viewer *ngIf="documentTypeToShow === 'image'"
                                   [url]="'assets/example.jpg'"

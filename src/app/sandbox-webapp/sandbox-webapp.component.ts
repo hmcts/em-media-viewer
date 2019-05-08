@@ -1,10 +1,9 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { MediaViewerMessageService } from '../../../projects/media-viewer/src/lib/media-viewer/service/media-viewer-message.service';
 import {
-  RotateDirection,
-  RotateOperation, SearchOperation,
-  ZoomOperation
+  ActionEvents, RotateDirection,
+  RotateOperation, SearchOperation, ZoomOperation
 } from '../../../projects/media-viewer/src/lib/media-viewer/service/media-viewer-message.model';
-import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-sandbox-webapp',
@@ -13,12 +12,29 @@ import { Subject } from 'rxjs';
 export class SandboxWebappComponent {
 
     documentTypeToShow = 'nonDM_PDF';
-    rotateOperation = new Subject<RotateOperation>();
-    searchOperation = new Subject<SearchOperation>();
-    zoomOperation = new Subject<ZoomOperation>();
+    actionEvents: ActionEvents;
+
+    constructor(private mediaViewerMessageService: MediaViewerMessageService) {
+      this.actionEvents = this.mediaViewerMessageService.actionEvents();
+    }
+
+    rotate(rotateDirectionStr: string) {
+      this.actionEvents.rotate.next(new RotateOperation(RotateDirection[rotateDirectionStr]));
+    }
+
+    zoom(zoomFactor: number) {
+      this.actionEvents.zoom.next(new ZoomOperation(zoomFactor));
+    }
+
+    searchPrev(searchTerm: string) {
+      this.actionEvents.search.next(new SearchOperation(searchTerm, true));
+    }
+
+    searchNext(searchTerm: string) {
+      this.actionEvents.search.next(new SearchOperation(searchTerm));
+    }
 
     toggleDocumentSelection(selectedDocumentType: string) {
       this.documentTypeToShow = selectedDocumentType;
     }
-
 }

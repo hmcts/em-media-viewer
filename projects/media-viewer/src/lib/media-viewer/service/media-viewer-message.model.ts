@@ -1,14 +1,16 @@
+import { Subject } from 'rxjs';
 
-export class MediaViewerMessage {
-
+export interface ActionEvents {
+  rotate: Subject<RotateOperation>,
+  search: Subject<SearchOperation>,
+  zoom: Subject<ZoomOperation>
 }
 
-export class RotateOperation extends MediaViewerMessage {
+export class RotateOperation {
 
   direction: RotateDirection;
 
   constructor(direction: RotateDirection) {
-    super();
     this.direction = direction;
   }
 }
@@ -17,23 +19,21 @@ export enum RotateDirection {
   LEFT, RIGHT
 }
 
-export class ZoomOperation extends MediaViewerMessage {
+export class ZoomOperation {
 
   zoomFactor: number;
 
   constructor(zoomFactor: number) {
-    super();
     this.zoomFactor = zoomFactor;
   }
 }
 
-export class SearchOperation extends MediaViewerMessage {
+export class SearchOperation {
 
   searchTerm: string;
-  previous: boolean
+  previous: boolean;
 
   constructor(searchTerm: string, previous?: boolean) {
-    super();
     this.searchTerm = searchTerm;
     this.previous = previous;
   }
