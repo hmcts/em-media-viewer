@@ -14,17 +14,17 @@
     "url": "https://github.com/hmcts/media-viewer"
   },
   "dependencies": {
-    "@hmcts/frontend": "0.0.14-alpha",
+    "@hmcts/frontend": "^0.0.34-alpha",
     "@hmcts/pdf-annotate": "^1.1.17",
-    "govuk-frontend": "2.5.0",
+    "govuk-frontend": "^2.11.0",
     "pdfjs-dist": "^2.0.943"
   },
   "peerDependencies": {
-    "@angular/common": "^7.2.8",
-    "@angular/core": "^7.2.8",
-    "@angular/forms": "^7.2.8",
-    "@ng-toolkit/universal": "^1.1.51",
-    "@angular/platform-browser": "^7.2.8"
+    "@angular/common": "^7.2.15",
+    "@angular/core": "^7.2.15",
+    "@angular/forms": "^7.2.15",
+    "@ng-toolkit/universal": "^7.1.2",
+    "@angular/platform-browser": "^7.2.15"
   },
   "publishConfig": {
     "access": "public"
