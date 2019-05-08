@@ -13,7 +13,6 @@ export class MediaViewerService {
     constructor(private log: EmLoggerService,
                 private httpClient: HttpClient,
                 private state: TransferState) {
-        log.setClass('MediaViewerService');
     }
 
     getDocumentMetadata(documentUri): Observable<any> {
