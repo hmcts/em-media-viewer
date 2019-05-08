@@ -1,7 +1,11 @@
-<button (click)="rotate('LEFT')">rotate left</button>
-<button (click)="rotate('RIGHT')">rotate right</button>
-<button (click)="zoom(0.2)">zoom in</button>
-<button (click)="zoom(-0.2)">zoom out</button>
-<input type="text" placeholder="find..." #searchTerm/>
-<button class="toolbar-search-prev" [disabled]="searchTerm.value.length === 0 ? true : null" (click)="searchPrev(searchTerm.value)">prev</button>
-<button class="toolbar-search-next" [disabled]="searchTerm.value.length === 0 ? true : null" (click)="searchNext(searchTerm.value)">next</button>
+<div>
+  <sticky sticky-offset-top="60">
+    <button (click)="rotate('LEFT')">rotate left</button>
+    <button (click)="rotate('RIGHT')">rotate right</button>
+    <button (click)="zoom(0.2)">zoom in</button>
+    <button (click)="zoom(-0.2)">zoom out</button>
+    <input type="text" placeholder="find..." #searchTerm/>
+    <button class="toolbar-search-prev" [disabled]="searchTerm.value.length === 0 ? true : null" (click)="searchPrev(searchTerm.value)">prev</button>
+    <button class="toolbar-search-next" [disabled]="searchTerm.value.length === 0 ? true : null" (click)="searchNext(searchTerm.value)">next</button>
+  </sticky>
+</div>

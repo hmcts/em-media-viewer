@@ -9,6 +9,7 @@
     "@hmcts/pdf-annotate",
     "@hmcts/frontend",
     "govuk-frontend",
-    "pdfjs-dist"
+    "pdfjs-dist",
+    "ng2-sticky-kit"
   ]
 }

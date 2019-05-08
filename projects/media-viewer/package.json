@@ -17,6 +17,7 @@
     "@hmcts/frontend": "^0.0.34-alpha",
     "@hmcts/pdf-annotate": "^1.1.17",
     "govuk-frontend": "^2.11.0",
+    "ng2-sticky-kit": "^6.1.0",
     "pdfjs-dist": "^2.0.943"
   },
   "peerDependencies": {
