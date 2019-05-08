@@ -1,9 +1,6 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
-import {PdfJsWrapper} from './pdf-js/pdf-js-wrapper';
-import {MediaViewerMessageService} from '../../service/media-viewer-message.service';
-import {Subscription} from 'rxjs';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
-  MediaViewerMessage,
   RotateDirection,
   RotateOperation,
   SearchOperation,
@@ -13,42 +10,42 @@ import {
 
 @Component({
     selector: 'app-pdf-viewer',
-    templateUrl: './pdf-viewer.component.html',
+  template: `
+    <div #viewerContainer class="pdfContainer">
+      <div class="pdfViewer"></div>
+    </div>
+  `,
     styleUrls: ['./pdf-viewer.component.css']
 })
-export class PdfViewerComponent implements AfterViewInit, OnDestroy {
+export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   @Input() url: string;
+  @Input() rotateOperation: RotateOperation;
+  @Input() searchOperation: SearchOperation;
+  @Input() zoomOperation: ZoomOperation;
+
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
   pdfViewer: any;
   pdfFindController: any;
 
-  subscription: Subscription;
-
-  constructor(private pdfWrapper: PdfJsWrapper, private mediaViewerMessageService: MediaViewerMessageService) {
-    this.subscription = this.mediaViewerMessageService.getMessage().subscribe( newMessage =>
-      this.handleMessage(newMessage) );
-  }
+  constructor(private pdfWrapper: PdfJsWrapper) {}
 
   ngAfterViewInit(): void {
     [this.pdfViewer, this.pdfFindController]
       = this.pdfWrapper.initViewer(this.url, this.viewerContainer);
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 
-  handleMessage(genericMessage: MediaViewerMessage) {
-    if (genericMessage instanceof RotateOperation) {
-      this.rotate(genericMessage);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.rotateOperation) {
+      this.rotate(this.rotateOperation);
     }
-    if (genericMessage instanceof ZoomOperation) {
-      this.zoom(genericMessage);
+    if (changes.searchOperation) {
+      this.search(this.searchOperation);
     }
-    if (genericMessage instanceof SearchOperation) {
-      this.search(genericMessage);
+    if (changes.zoomOperation) {
+      this.zoom(this.zoomOperation);
     }
   }
 
@@ -78,5 +75,4 @@ export class PdfViewerComponent implements AfterViewInit, OnDestroy {
         findPrevious: searchOperation.previous});
     }
   }
-
 }
