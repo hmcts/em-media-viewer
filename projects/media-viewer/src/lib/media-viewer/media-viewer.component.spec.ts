@@ -65,7 +65,7 @@ describe('MediaViewerComponent', () => {
     };
 
     beforeEach(async(() => {
-        return TestBed.configureTestingModule({
+        TestBed.configureTestingModule({
             imports: [MediaViewerModule, HttpClientTestingModule],
             providers: [
                 EmLoggerService,
