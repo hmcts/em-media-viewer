@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from './service/media-viewer-message.model';
+import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from './media-viewer.model';
 import { Observable } from 'rxjs';
 
 @Component({

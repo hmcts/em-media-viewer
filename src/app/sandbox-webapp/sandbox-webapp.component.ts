@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { MediaViewerMessageService } from '../../../projects/media-viewer/src/lib/media-viewer/service/media-viewer-message.service';
 import {
-  ActionEvents, RotateDirection,
-  RotateOperation, SearchOperation, ZoomOperation
-} from '../../../projects/media-viewer/src/lib/media-viewer/service/media-viewer-message.model';
+  ActionEvents, RotateOperation, SearchOperation, ZoomOperation
+} from '../../../projects/media-viewer/src/lib/media-viewer/media-viewer.model';
 
 @Component({
     selector: 'app-sandbox-webapp',
@@ -14,12 +12,12 @@ export class SandboxWebappComponent {
     documentTypeToShow = 'nonDM_PDF';
     actionEvents: ActionEvents;
 
-    constructor(private mediaViewerMessageService: MediaViewerMessageService) {
-      this.actionEvents = this.mediaViewerMessageService.actionEvents();
+    constructor() {
+      this.actionEvents = new ActionEvents();
     }
 
-    rotate(rotateDirectionStr: string) {
-      this.actionEvents.rotate.next(new RotateOperation(RotateDirection[rotateDirectionStr]));
+    rotate(rotation: number) {
+      this.actionEvents.rotate.next(new RotateOperation(rotation));
     }
 
     zoom(zoomFactor: number) {
