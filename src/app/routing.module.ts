@@ -22,7 +22,6 @@ const routes: Routes = [{
     HttpClientModule,
     ReactiveFormsModule,
     MediaViewerModule,
-    ToolbarModule,
     ToolbarModule
   ],
     declarations: [

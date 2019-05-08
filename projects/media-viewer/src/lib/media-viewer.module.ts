@@ -11,15 +11,13 @@ import { MediaViewerComponent } from './media-viewer/media-viewer.component';
 import { MediaViewerService } from './media-viewer/media-viewer.service';
 import { EmLoggerService } from './logging/em-logger.service';
 import {MediaViewerMessageService} from './media-viewer/service/media-viewer-message.service';
-import { ToolbarModule } from './toolbar/toolbar.module';
 
 @NgModule({
   imports: [
     NgtUniversalModule,
     CommonModule,
     FormsModule,
-    HttpClientModule,
-    ToolbarModule
+    HttpClientModule
   ],
   declarations: [
     PdfViewerComponent,
