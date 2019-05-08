@@ -1,11 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
-  RotateDirection,
   RotateOperation,
   SearchOperation,
   ZoomOperation
-} from '../../service/media-viewer-message.model';
+} from '../../media-viewer.model';
 
 
 @Component({
@@ -38,41 +37,34 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.rotateOperation) {
-      this.rotate(this.rotateOperation);
-    }
-    if (changes.searchOperation) {
-      this.search(this.searchOperation);
-    }
-    if (changes.zoomOperation) {
-      this.zoom(this.zoomOperation);
-    }
-  }
-
-  rotate(rotateDirection: RotateOperation) {
-    if (this.pdfViewer) {
-      let currentRotation = this.pdfViewer.pagesRotation;
-      if (rotateDirection.direction === RotateDirection.LEFT) {
-        currentRotation = (currentRotation - 90) % 360;
-      } else if (rotateDirection.direction === RotateDirection.RIGHT) {
-        currentRotation = (currentRotation + 90) % 360;
+    for (let change in changes) {
+      let operation = changes[change].currentValue;
+      if(operation && operation.action) {
+        this[operation.action].call(this, operation);
       }
-      this.pdfViewer.pagesRotation = currentRotation;
     }
   }
 
-  zoom(zoomOperation: ZoomOperation) {
+  rotate(operation: RotateOperation) {
     if (this.pdfViewer) {
-      this.pdfViewer.currentScale += zoomOperation.zoomFactor;
+      this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + operation.rotation) % 360;
+      this.rotateOperation = this.pdfViewer.pagesRotation;
     }
   }
 
-  search(searchOperation: SearchOperation) {
+  zoom(operation: ZoomOperation) {
+    if (this.pdfViewer) {
+      this.pdfViewer.currentScale += operation.zoomFactor;
+    }
+  }
+
+  search(operation: SearchOperation) {
     if (this.pdfViewer) {
       this.pdfFindController.executeCommand('findagain', {
-        query: searchOperation.searchTerm,
+        query: operation.searchTerm,
         highlightAll: true,
-        findPrevious: searchOperation.previous});
+        findPrevious: operation.previous
+      });
     }
   }
 }
