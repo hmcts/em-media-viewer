@@ -1,5 +1,9 @@
 
-<app-pdf-viewer *ngIf="contentType === 'pdf'" [url]="url" ></app-pdf-viewer>
+<app-pdf-viewer *ngIf="contentType === 'pdf'"
+                          [url]="url"
+                          [zoomOperation]="zoom | async"
+                          [searchOperation]="search | async"
+                          [rotateOperation]="rotation | async"></app-pdf-viewer>
 <app-image-viewer *ngIf="contentType === 'image'" [url]="url" ></app-image-viewer>
 <app-unsupported-viewer *ngIf="contentTypeUnsupported()" ></app-unsupported-viewer>
 

@@ -1,4 +1,6 @@
 import {Component, Input} from '@angular/core';
+import { Observable } from 'rxjs';
+import { RotateOperation, SearchOperation, ZoomOperation } from './service/media-viewer-message.model';
 
 @Component({
     selector: 'app-media-viewer',
@@ -8,6 +10,9 @@ export class MediaViewerComponent {
 
   @Input() url = '';
   @Input() contentType: string;
+  @Input() rotation: Observable<RotateOperation>;
+  @Input() search: Observable<SearchOperation>;
+  @Input() zoom: Observable<ZoomOperation>;
 
   error: any;
 
