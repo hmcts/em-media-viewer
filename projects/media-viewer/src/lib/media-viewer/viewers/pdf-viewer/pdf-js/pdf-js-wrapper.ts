@@ -10,10 +10,6 @@ export class PdfJsWrapper {
         return pdfjsLib.getDocument(documentId);
     }
 
-    getPage(pageIndex: number) {
-      return pdfjsLib.getPage(pageIndex);
-    }
-
     initViewer(documentUrl: string, container: ElementRef): [any, any] {
 
       if (!pdfjsLib.getDocument || !pdfjsViewer.PDFPageView) {
