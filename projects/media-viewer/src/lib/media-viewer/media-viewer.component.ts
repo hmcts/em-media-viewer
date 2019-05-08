@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {MediaViewerFeatures} from './media-viewer-features';
 
 @Component({
     selector: 'app-media-viewer',
@@ -9,7 +8,6 @@ export class MediaViewerComponent {
 
   @Input() url = '';
   @Input() contentType: string;
-  @Input() mediaViewerFeatures: MediaViewerFeatures = null;
 
   error: any;
 

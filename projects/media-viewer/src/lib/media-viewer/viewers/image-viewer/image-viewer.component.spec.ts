@@ -13,7 +13,7 @@ describe('ImageViewerComponent', () => {
     const mockRenderer = new MockRenderer();
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+    return TestBed.configureTestingModule({
       declarations: [ ImageViewerComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
