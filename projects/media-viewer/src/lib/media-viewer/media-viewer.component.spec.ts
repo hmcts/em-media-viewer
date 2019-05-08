@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MediaViewerComponent } from './media-viewer.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DebugElement, Renderer2, SimpleChange, Type } from '@angular/core';
+import { DebugElement, Renderer2 } from '@angular/core';
 import { MediaViewerService } from './media-viewer.service';
-import { of} from 'rxjs';
+import { of } from 'rxjs';
 import { TransferState } from '@angular/platform-browser';
 import { MediaViewerModule } from '../media-viewer.module';
 import { EmLoggerService } from '../logging/em-logger.service';
@@ -18,72 +18,70 @@ class MockTransferState {
 }
 
 class MockPdfWrapper {
-  getDocument(documentId) {}
+    getDocument() {}
+    initViewer() {
+        return [{}, {}];
+    }
 }
+
+class MockMediaViewerService {
+    public document;
+
+    getDocumentMetadata() {
+        return of(this.document);
+    }
+}
+
+const createMockDocuments = (mimeType, documentName, url) => {
+    return {
+        mimeType: mimeType,
+        originalDocumentName: documentName,
+        _links: {
+            binary: {
+                href: `${url}/binary`
+            },
+            self: {
+                href: `${url}`
+            }
+        }
+    };
+};
 
 describe('MediaViewerComponent', () => {
     const mockTransferState = new MockTransferState();
     const mockPdfWrapper = new MockPdfWrapper();
+    const mockMediaViewerService = new MockMediaViewerService();
     let component: MediaViewerComponent;
     let fixture: ComponentFixture<MediaViewerComponent>;
     let element: DebugElement;
-    let mockDocuments;
-    let viewerFactoryServiceMock;
 
-  const DocumentViewerServiceMock = {
-        getDocumentMetadata: () => {
-            return of(mockDocuments);
-        }
-    };
-
-    const createComponent = () => {
+    const createComponent = (contentType: string) => {
         fixture = TestBed.createComponent(MediaViewerComponent);
         component = fixture.componentInstance;
         component.url = originalUrl;
+        component.contentType = contentType;
         element = fixture.debugElement;
-
-        spyOn(viewerFactoryServiceMock, 'getDocumentId').and.callThrough();
-        spyOn(viewerFactoryServiceMock, 'buildComponent').and.callThrough();
-
         fixture.detectChanges();
     };
 
-    const createMockDocuments = (mimeType, documentName, url) => {
-        return {
-            mimeType: mimeType,
-            originalDocumentName: documentName,
-            _links: {
-                binary: {
-                    href: `${url}/binary`
-                },
-                self: {
-                    href: `${url}`
-                }
-            }
-        };
-    };
-
-
     beforeEach(async(() => {
-        const testingModule = TestBed.configureTestingModule({
+        TestBed.configureTestingModule({
             imports: [MediaViewerModule, HttpClientTestingModule],
             providers: [
                 EmLoggerService,
                 Renderer2,
-                { provide: TransferState, useFactory: () => mockTransferState},
-                { provide: MediaViewerService, useValue: DocumentViewerServiceMock},
+                { provide: TransferState, useFactory: () => mockTransferState },
+                { provide: MediaViewerService, useFactory: () => mockMediaViewerService },
                 { provide: PdfJsWrapper, useFactory: () => mockPdfWrapper }
             ]
-        });
-
-        testingModule.compileComponents();
+        }).compileComponents();
     }));
 
 
     describe('when the mime type is an image', () => {
         beforeEach(() => {
-            mockDocuments = createMockDocuments('image/jpeg', 'image.jpeg', originalUrl);
-            createComponent();
+            mockMediaViewerService.document = createMockDocuments('image/jpeg', 'image.jpeg', originalUrl);
+            createComponent('image');
         });
 
         it('img element should be visible', () => {
@@ -102,7 +100,7 @@ describe('MediaViewerComponent', () => {
             });
 
             beforeEach(() => {
-              mockDocuments = createMockDocuments('image/jpeg', 'new-image.jpeg', newUrl);
+                mockMediaViewerService.document = createMockDocuments('image/jpeg', 'new-image.jpeg', newUrl);
             });
 
             it('img element should still be visible', () => {
@@ -117,8 +115,8 @@ describe('MediaViewerComponent', () => {
 
     describe('when the mime type is pdf', () => {
         beforeEach(() => {
-            mockDocuments = createMockDocuments('application/pdf', 'cert.pdf', originalUrl);
-            createComponent();
+            mockMediaViewerService.document = createMockDocuments('application/pdf', 'cert.pdf', originalUrl);
+            createComponent('pdf');
         });
 
         it('img element should not be visible', () => {

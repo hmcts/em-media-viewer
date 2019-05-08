@@ -17,7 +17,6 @@ export class ImageViewerComponent implements OnInit {
 
     constructor(private renderer: Renderer2,
                 private log: EmLoggerService) {
-        this.log.setClass('ImageViewerComponent');
     }
 
     ngOnInit() {
