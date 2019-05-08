@@ -8,10 +8,30 @@ import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from '.
 })
 export class ToolbarComponent {
 
+  sidebarToggle = false;
+  searchToggle = false;
+  secondaryToolbarToggle = false;
+
+  constructor(private readonly mediaViewerMessageService: MediaViewerMessageService) {}
   @Input() actionEvents: ActionEvents;
 
-  rotate(rotation: number) {
-    this.actionEvents.rotate.next(new RotateOperation(rotation));
+  ngOnInit() {
+  }
+
+  toggleSidebar() {
+    this.sidebarToggle = !this.sidebarToggle;
+  }
+
+  toggleSearch() {
+    this.searchToggle = !this.searchToggle;
+  }
+
+  toggleSecondaryToolbar() {
+    this.secondaryToolbarToggle = !this.secondaryToolbarToggle;
+  }
+
+  rotate(rotateDirectionStr: string) {
+    this.mediaViewerMessageService.sendMessage(new RotateOperation(RotateDirection[rotateDirectionStr]));
   }
 
   zoom(zoomFactor: number) {
