@@ -17,16 +17,9 @@ describe('EmLoggerService', () => {
       }));
     });
 
-    describe('setClass', () => {
-        it('should set the logged class', inject([EmLoggerService], (service: EmLoggerService) => {
-            service.setClass('myClassName');
-            expect(service['loggingClass']).toBe('myClassName');
-        }));
-    });
-
     describe('error', () => {
         it('should prepend error to the message', inject([EmLoggerService], (service: EmLoggerService) => {
-            spyOn(service, 'buildLog').and.callFake(message => {
+            spyOn(service, 'log').and.callFake(message => {
                 expect(message).toContain('error');
             });
             service.error('mymessage');
@@ -35,18 +28,11 @@ describe('EmLoggerService', () => {
 
     describe('info', () => {
         it('should prepend info to the message', inject([EmLoggerService], (service: EmLoggerService) => {
-            spyOn(service, 'buildLog').and.callFake(message => {
+            spyOn(service, 'log').and.callFake(message => {
                 expect(message).toContain('info');
             });
             service.info('mymessage');
         }));
     });
 
-    describe('buildLog', () => {
-        it('should prepend info to the message', inject([EmLoggerService], (service: EmLoggerService) => {
-            spyOn(console, 'log');
-            service.buildLog('mymessage');
-            expect(console.log).toHaveBeenCalled();
-        }));
-    });
 });
