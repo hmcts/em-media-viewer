@@ -8,9 +8,7 @@ import { of} from 'rxjs';
 import { TransferState } from '@angular/platform-browser';
 import { MediaViewerModule } from '../media-viewer.module';
 import { EmLoggerService } from '../logging/em-logger.service';
-import { ViewerFactoryService } from './viewers/viewer-factory.media-viewer-message.service.ts';
-import { PdfWrapper } from '../data/js-wrapper/pdf-wrapper';
-import { AnnotationStoreService } from '../data/annotation-store.service';
+import { PdfJsWrapper } from './viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 const originalUrl = 'http://api-gateway.dm.com/documents/1234-1234-1234';
 
@@ -38,27 +36,16 @@ describe('MediaViewerComponent', () => {
         }
     };
 
-    const AnnotationStoreServiceMock = {
-        getAnnotationSet: () => {
-          return of([]);
-        }
-    };
-
     const createComponent = () => {
         fixture = TestBed.createComponent(MediaViewerComponent);
         component = fixture.componentInstance;
-        component.isDM = true;
         component.url = originalUrl;
-        component.baseUrl = '/demproxy/dm';
         element = fixture.debugElement;
 
-        viewerFactoryServiceMock = fixture.componentRef.injector
-            .get<ViewerFactoryService>(ViewerFactoryService as Type<ViewerFactoryService>);
         spyOn(viewerFactoryServiceMock, 'getDocumentId').and.callThrough();
         spyOn(viewerFactoryServiceMock, 'buildComponent').and.callThrough();
 
         fixture.detectChanges();
-        component.ngOnChanges({url: new SimpleChange(null, component.url, true)});
     };
 
     const createMockDocuments = (mimeType, documentName, url) => {
@@ -83,11 +70,9 @@ describe('MediaViewerComponent', () => {
             providers: [
                 EmLoggerService,
                 Renderer2,
-                ViewerFactoryService,
                 { provide: TransferState, useFactory: () => mockTransferState},
                 { provide: MediaViewerService, useValue: DocumentViewerServiceMock},
-                { provide: AnnotationStoreService, useValue: AnnotationStoreServiceMock},
-                { provide: PdfWrapper, useFactory: () => mockPdfWrapper }
+                { provide: PdfJsWrapper, useFactory: () => mockPdfWrapper }
             ]
         });
 
@@ -113,7 +98,6 @@ describe('MediaViewerComponent', () => {
             const newUrl = 'http://api-gateway.dm.com/documents/5678-5678-5678';
             beforeEach(() => {
                 component.url = newUrl;
-                component.ngOnChanges({url: new SimpleChange(originalUrl, newUrl, false)});
                 fixture.detectChanges();
             });
 
