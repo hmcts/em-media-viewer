@@ -8,7 +8,25 @@ import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from '.
 })
 export class ToolbarComponent {
 
+  sidebarToggle = false;
+  searchToggle = false;
+  secondaryToolbarToggle = false;
+
+  constructor() {}
+
   @Input() actionEvents: ActionEvents;
+
+  toggleSidebar() {
+    this.sidebarToggle = !this.sidebarToggle;
+  }
+
+  toggleSearch() {
+    this.searchToggle = !this.searchToggle;
+  }
+
+  toggleSecondaryToolbar() {
+    this.secondaryToolbarToggle = !this.secondaryToolbarToggle;
+  }
 
   rotate(rotation: number) {
     this.actionEvents.rotate.next(new RotateOperation(rotation));
