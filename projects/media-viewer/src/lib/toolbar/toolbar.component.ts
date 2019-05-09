@@ -1,33 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { RotateDirection, RotateOperation, SearchOperation, ZoomOperation } from '../media-viewer/service/media-viewer-message.model';
-import { MediaViewerMessageService } from '../media-viewer/service/media-viewer-message.service';
+import { Component, Input } from '@angular/core';
+import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from '../media-viewer/media-viewer.model';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent {
 
-  constructor(private readonly mediaViewerMessageService: MediaViewerMessageService) {}
+  @Input() actionEvents: ActionEvents;
 
-  ngOnInit() {
-  }
-
-  rotate(rotateDirectionStr: string) {
-    this.mediaViewerMessageService.sendMessage(new RotateOperation(RotateDirection[rotateDirectionStr]));
+  rotate(rotation: number) {
+    this.actionEvents.rotate.next(new RotateOperation(rotation));
   }
 
   zoom(zoomFactor: number) {
-    this.mediaViewerMessageService.sendMessage(new ZoomOperation(zoomFactor));
+    this.actionEvents.zoom.next(new ZoomOperation(zoomFactor));
   }
 
   searchPrev(searchTerm: string) {
-    this.mediaViewerMessageService.sendMessage(new SearchOperation(searchTerm, true));
+    this.actionEvents.search.next(new SearchOperation(searchTerm, true));
   }
 
   searchNext(searchTerm: string) {
-    this.mediaViewerMessageService.sendMessage(new SearchOperation(searchTerm));
+    this.actionEvents.search.next(new SearchOperation(searchTerm));
   }
-
 }

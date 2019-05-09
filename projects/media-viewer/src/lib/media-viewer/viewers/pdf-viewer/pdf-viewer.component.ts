@@ -1,82 +1,70 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
-import {PdfJsWrapper} from './pdf-js/pdf-js-wrapper';
-import {MediaViewerMessageService} from '../../service/media-viewer-message.service';
-import {Subscription} from 'rxjs';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
-  MediaViewerMessage,
-  RotateDirection,
   RotateOperation,
   SearchOperation,
   ZoomOperation
-} from '../../service/media-viewer-message.model';
+} from '../../media-viewer.model';
 
 
 @Component({
     selector: 'app-pdf-viewer',
-    templateUrl: './pdf-viewer.component.html',
+  template: `
+    <div #viewerContainer class="pdfContainer">
+      <div class="pdfViewer"></div>
+    </div>
+  `,
     styleUrls: ['./pdf-viewer.component.css']
 })
-export class PdfViewerComponent implements AfterViewInit, OnDestroy {
+export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   @Input() url: string;
+  @Input() rotateOperation: RotateOperation;
+  @Input() searchOperation: SearchOperation;
+  @Input() zoomOperation: ZoomOperation;
+
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
   pdfViewer: any;
   pdfFindController: any;
 
-  subscription: Subscription;
-
-  constructor(private pdfWrapper: PdfJsWrapper, private mediaViewerMessageService: MediaViewerMessageService) {
-    this.subscription = this.mediaViewerMessageService.getMessage().subscribe( newMessage =>
-      this.handleMessage(newMessage) );
-  }
+  constructor(private pdfWrapper: PdfJsWrapper) {}
 
   ngAfterViewInit(): void {
     [this.pdfViewer, this.pdfFindController]
       = this.pdfWrapper.initViewer(this.url, this.viewerContainer);
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 
-  handleMessage(genericMessage: MediaViewerMessage) {
-    if (genericMessage instanceof RotateOperation) {
-      this.rotate(genericMessage);
-    }
-    if (genericMessage instanceof ZoomOperation) {
-      this.zoom(genericMessage);
-    }
-    if (genericMessage instanceof SearchOperation) {
-      this.search(genericMessage);
-    }
-  }
-
-  rotate(rotateDirection: RotateOperation) {
-    if (this.pdfViewer) {
-      let currentRotation = this.pdfViewer.pagesRotation;
-      if (rotateDirection.direction === RotateDirection.LEFT) {
-        currentRotation = (currentRotation - 90) % 360;
-      } else if (rotateDirection.direction === RotateDirection.RIGHT) {
-        currentRotation = (currentRotation + 90) % 360;
+  ngOnChanges(changes: SimpleChanges): void {
+    for (let change in changes) {
+      let operation = changes[change].currentValue;
+      if(operation && operation.action) {
+        this[operation.action].call(this, operation);
       }
-      this.pdfViewer.pagesRotation = currentRotation;
     }
   }
 
-  zoom(zoomOperation: ZoomOperation) {
+  rotate(operation: RotateOperation) {
     if (this.pdfViewer) {
-      this.pdfViewer.currentScale += zoomOperation.zoomFactor;
+      this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + operation.rotation) % 360;
+      this.rotateOperation = this.pdfViewer.pagesRotation;
     }
   }
 
-  search(searchOperation: SearchOperation) {
+  zoom(operation: ZoomOperation) {
+    if (this.pdfViewer) {
+      this.pdfViewer.currentScale += operation.zoomFactor;
+    }
+  }
+
+  search(operation: SearchOperation) {
     if (this.pdfViewer) {
       this.pdfFindController.executeCommand('findagain', {
-        query: searchOperation.searchTerm,
+        query: operation.searchTerm,
         highlightAll: true,
-        findPrevious: searchOperation.previous});
+        findPrevious: operation.previous
+      });
     }
   }
-
 }
