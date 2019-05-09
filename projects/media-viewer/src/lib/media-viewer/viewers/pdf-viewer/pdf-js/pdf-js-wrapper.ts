@@ -32,15 +32,15 @@ export class PdfJsWrapper {
       const pdfViewer = new pdfjsViewer.PDFViewer({
         container: container.nativeElement,
         linkService: pdfLinkService,
-        findController: pdfFindController,
+        findController: pdfFindController
       });
+
+
       pdfLinkService.setViewer(pdfViewer);
 
       document.addEventListener('pagesinit', function () {
         // We can use pdfViewer now, e.g. let's change default scale.
-        pdfViewer.currentScaleValue = 'page-width';
-
-        // pdfFindController.executeCommand('find', { query: "run", });
+        pdfViewer.currentScaleValue = 'page-fit';
       });
 
       // Loading document.
