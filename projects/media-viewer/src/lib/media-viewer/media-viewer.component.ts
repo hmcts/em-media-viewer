@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class MediaViewerComponent implements OnInit {
 
   @Input() url = '';
+  @Input() downloadFileName = null;
   @Input() contentType: string;
   @Input() actionEvents: ActionEvents;
   rotation: Observable<RotateOperation>;
