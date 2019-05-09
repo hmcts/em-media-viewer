@@ -12,11 +12,9 @@ export class ToolbarComponent {
   searchToggle = false;
   secondaryToolbarToggle = false;
 
-  constructor(private readonly mediaViewerMessageService: MediaViewerMessageService) {}
-  @Input() actionEvents: ActionEvents;
+  constructor() {}
 
-  ngOnInit() {
-  }
+  @Input() actionEvents: ActionEvents;
 
   toggleSidebar() {
     this.sidebarToggle = !this.sidebarToggle;
@@ -30,8 +28,8 @@ export class ToolbarComponent {
     this.secondaryToolbarToggle = !this.secondaryToolbarToggle;
   }
 
-  rotate(rotateDirectionStr: string) {
-    this.mediaViewerMessageService.sendMessage(new RotateOperation(RotateDirection[rotateDirectionStr]));
+  rotate(rotation: number) {
+    this.actionEvents.rotate.next(new RotateOperation(rotation));
   }
 
   zoom(zoomFactor: number) {
