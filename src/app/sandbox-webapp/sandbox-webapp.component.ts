@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ActionEvents, RotateOperation, SearchOperation, ZoomOperation
-} from '../../../projects/media-viewer/src/lib/media-viewer/media-viewer.model';
+import { ActionEvents } from '../../../projects/media-viewer/src/lib/media-viewer/media-viewer.model';
 
 @Component({
     selector: 'app-sandbox-webapp',
@@ -14,22 +12,6 @@ export class SandboxWebappComponent {
 
     constructor() {
       this.actionEvents = new ActionEvents();
-    }
-
-    rotate(rotation: number) {
-      this.actionEvents.rotate.next(new RotateOperation(rotation));
-    }
-
-    zoom(zoomFactor: number) {
-      this.actionEvents.zoom.next(new ZoomOperation(zoomFactor));
-    }
-
-    searchPrev(searchTerm: string) {
-      this.actionEvents.search.next(new SearchOperation(searchTerm, true));
-    }
-
-    searchNext(searchTerm: string) {
-      this.actionEvents.search.next(new SearchOperation(searchTerm));
     }
 
     toggleDocumentSelection(selectedDocumentType: string) {
