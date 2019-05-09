@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { EmLoggerService } from '../../../logging/em-logger.service';
+import {RotateOperation, SearchOperation, ZoomOperation} from '../../media-viewer.model';
 
 @Component({
     selector: 'app-image-viewer',
@@ -10,10 +11,11 @@ export class ImageViewerComponent implements OnInit {
 
     @Input() url: string;
     @Input() originalUrl: string;
-    @Input() rotate: boolean;
-    @Input() annotate: boolean;
     @ViewChild('img') img: ElementRef;
     rotation: number;
+
+    @Input() rotateOperation: RotateOperation;
+    @Input() zoomOperation: ZoomOperation;
 
     constructor(private renderer: Renderer2,
                 private log: EmLoggerService) {
