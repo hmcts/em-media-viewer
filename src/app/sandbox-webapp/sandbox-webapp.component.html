@@ -44,17 +44,20 @@
 
                 <app-media-viewer *ngIf="documentTypeToShow === 'pdf'"
                                   [url]="'assets/example.pdf'"
+                                  [downloadFileName]="'example.pdf'"
                                   [actionEvents]=actionEvents
                                   [contentType]="'pdf'">
                 </app-media-viewer>
                 <app-media-viewer *ngIf="documentTypeToShow === 'image'"
                                   [url]="'assets/example.jpg'"
                                   [actionEvents]=actionEvents
+                                  [downloadFileName]="'example.jpg'"
                                   [contentType]="'image'"
                                   >
                 </app-media-viewer>
                 <app-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
                                   [url]="'assets/unsupported.txt'"
+                                  [downloadFileName]="'unsupported.txt'"
                                   [contentType]="'txt'"
                                   >
                 </app-media-viewer>
