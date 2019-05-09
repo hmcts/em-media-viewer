@@ -61,4 +61,9 @@ export class PdfJsWrapper {
 
     }
 
+    downloadFile(url, filename) {
+      const downloadManager = new pdfjsViewer.DownloadManager({});
+      downloadManager.downloadUrl(url, filename);
+    }
+
 }

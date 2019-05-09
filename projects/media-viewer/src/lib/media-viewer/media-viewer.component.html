@@ -1,4 +1,4 @@
-<app-toolbar [actionEvents]="actionEvents" [url]="url" [contentType]="contentType"></app-toolbar>
+<app-toolbar [actionEvents]="actionEvents" [url]="url" [contentType]="contentType" [downloadFileName]="downloadFileName"></app-toolbar>
 
 <app-pdf-viewer *ngIf="contentType === 'pdf'"
                           [url]="url"

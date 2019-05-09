@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from '../media-viewer.model';
+import {PdfJsWrapper} from '../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,11 +11,12 @@ export class ToolbarComponent {
 
   @Input() url = '';
   @Input() contentType: string;
+  @Input() downloadFileName = null;
   sidebarToggle = false;
   searchToggle = false;
   secondaryToolbarToggle = false;
 
-  constructor() {}
+  constructor(private pdfWrapper: PdfJsWrapper) {}
 
   @Input() actionEvents: ActionEvents;
 
@@ -44,5 +46,9 @@ export class ToolbarComponent {
 
   searchNext(searchTerm: string) {
     this.actionEvents.search.next(new SearchOperation(searchTerm));
+  }
+
+  downloadFile() {
+    this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
   }
 }
