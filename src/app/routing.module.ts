@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SandboxWebappComponent } from './sandbox-webapp/sandbox-webapp.component';
 import { MediaViewerModule } from '../../projects/media-viewer/src/lib/media-viewer.module';
-import { ToolbarModule } from '../../projects/media-viewer/src/lib/toolbar/toolbar.module';
+import { ToolbarModule } from '../../projects/media-viewer/src/lib/media-viewer/toolbar/toolbar.module';
 
 const routes: Routes = [{
     path: '',

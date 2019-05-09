@@ -20,9 +20,11 @@ export class MediaViewerComponent implements OnInit {
   private supportedContentTypes = ['pdf', 'image'];
 
   ngOnInit(): void {
-    this.rotation = this.actionEvents.rotate;
-    this.search = this.actionEvents.search;
-    this.zoom = this.actionEvents.zoom;
+    if (this.actionEvents) {
+      this.rotation = this.actionEvents.rotate;
+      this.search = this.actionEvents.search;
+      this.zoom = this.actionEvents.zoom;
+    }
   }
 
   contentTypeUnsupported(): boolean {

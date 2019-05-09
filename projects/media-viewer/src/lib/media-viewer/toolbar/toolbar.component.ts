@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from '../media-viewer/media-viewer.model';
+import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from '../media-viewer.model';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,6 +8,8 @@ import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from '.
 })
 export class ToolbarComponent {
 
+  @Input() url = '';
+  @Input() contentType: string;
   sidebarToggle = false;
   searchToggle = false;
   secondaryToolbarToggle = false;
