@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, RotateOperation } from '../../media-viewer/media-viewer.model';
+import { ActionEvents, RotateOperation } from '../../media-viewer.model';
 
 @Component({
   selector: 'mv-sub-toolbar',

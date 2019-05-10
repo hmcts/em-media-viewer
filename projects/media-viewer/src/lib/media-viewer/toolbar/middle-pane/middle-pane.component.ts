@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, ZoomOperation } from '../../media-viewer/media-viewer.model';
+import { ActionEvents, ZoomOperation } from '../../media-viewer.model';
 
 @Component({
   selector: 'mv-tb-middle-pane',
