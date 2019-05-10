@@ -1,14 +1,18 @@
-<app-toolbar [actionEvents]="actionEvents" [url]="url" [contentType]="contentType"></app-toolbar>
+<app-toolbar [actionEvents]="actionEvents"></app-toolbar>
 
 <app-pdf-viewer *ngIf="contentType === 'pdf'"
-                          [url]="url"
-                          [zoomOperation]="zoom | async"
-                          [searchOperation]="search | async"
-                          [rotateOperation]="rotation | async">
+                [url]="url"
+                [downloadFileName]="downloadFileName"
+                [zoomOperation]="zoom | async"
+                [searchOperation]="search | async"
+                [downloadOperation]="download | async"
+                [printOperation]="print | async"
+                [rotateOperation]="rotation | async">
 </app-pdf-viewer>
 <app-image-viewer *ngIf="contentType === 'image'"
                   [url]="url"
                   [zoomOperation]="zoom | async"
+                  [printOperation]="print | async"
                   [rotateOperation]="rotation | async">
 </app-image-viewer>
 <app-unsupported-viewer [url]="url"
