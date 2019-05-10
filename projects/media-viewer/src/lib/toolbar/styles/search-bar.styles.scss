@@ -1,0 +1,68 @@
+.findbar {
+  min-width: 300px;
+}
+.findbar > div {
+  height: 32px;
+}
+.findbar.wrapContainers > div {
+  clear: both;
+}
+.findbar.wrapContainers > div#findbarMessageContainer {
+  height: auto;
+}
+.findbar {
+  left: 68px;
+}
+html[dir='rtl'] .findbar {
+  right: 68px;
+}
+
+.findbar label {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#findInput {
+  width: 200px;
+}
+#findInput::-webkit-input-placeholder {
+  color: hsl(0, 0%, 75%);
+}
+#findInput:-ms-input-placeholder {
+  font-style: italic;
+}
+#findInput::-ms-input-placeholder {
+  font-style: italic;
+}
+#findInput::placeholder {
+  font-style: italic;
+}
+#findInput[data-status="pending"] {
+  background-image: url(/assets/images/loading-small.png);
+  background-repeat: no-repeat;
+  background-position: right;
+}
+html[dir='rtl'] #findInput[data-status="pending"] {
+  background-position: left;
+}
+
+#findResultsCount {
+  background-color: hsl(0, 0%, 85%);
+  color: hsl(0, 0%, 32%);
+  text-align: center;
+  padding: 3px 4px;
+}
+
+#findMsg {
+  font-style: italic;
+  color: #A6B7D0;
+}
+#findMsg:empty {
+  display: none;
+}
+
+#findInput.notFound {
+  background-color: rgb(255, 102, 102);
+}

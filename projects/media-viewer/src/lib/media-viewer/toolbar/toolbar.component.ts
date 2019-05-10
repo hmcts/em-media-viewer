@@ -4,7 +4,7 @@ import { ActionEvents, RotateOperation } from '../media-viewer.model';
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./styles/toolbar.component.scss']
 })
 export class ToolbarComponent {
 

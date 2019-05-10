@@ -4,7 +4,7 @@ import { ActionEvents, SearchOperation } from '../../media-viewer/media-viewer.m
 @Component({
   selector: 'mv-search-bar',
   templateUrl: './search-bar.component.html',
-  styleUrls: ['../toolbar.component.scss']
+  styleUrls: ['../styles/toolbar.component.scss']
 })
 export class SearchBarComponent {
 
