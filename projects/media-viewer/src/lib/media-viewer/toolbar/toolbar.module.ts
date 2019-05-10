@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from './toolbar.component';
-import { SidebarComponent } from './sidebar.component';
-import { FindbarComponent } from './findbar.component';
-import { SecondaryToolbarComponent } from './secondary-toolbar.component';
-import { ToolbarViewerLeftComponent } from './toolbar-viewer-left.component';
-import { ToolbarViewerRightComponent } from './toolbar-viewer-right.component';
-import { ToolbarViewerMiddleComponent } from './toolbar-viewer-middle.component';
-import { ToolbarContextMenuComponent } from './toolbar-context-menu.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SubToolbarComponent } from './sub-toolbar/sub-toolbar.component';
+import { ToolbarLeftPaneComponent } from './left-pane/left-pane.component';
+import { ToolbarViewerRightComponent } from './right-pane/right-pane.component';
+import { ToolbarMiddlePaneComponent } from './middle-pane/middle-pane.component';
 
 @NgModule({
   declarations: [
-    FindbarComponent,
-    SecondaryToolbarComponent,
-    SidebarComponent,
-    ToolbarViewerLeftComponent,
+    SearchBarComponent,
+    SubToolbarComponent,
+    SideBarComponent,
+    ToolbarLeftPaneComponent,
     ToolbarViewerRightComponent,
     ToolbarComponent,
-    ToolbarViewerMiddleComponent,
-    ToolbarContextMenuComponent
+    ToolbarMiddlePaneComponent
   ],
   exports: [
     ToolbarComponent

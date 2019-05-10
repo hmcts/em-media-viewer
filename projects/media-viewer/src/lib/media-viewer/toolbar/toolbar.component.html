@@ -1,18 +1,18 @@
 <div id="outerContainer" [ngClass]="{ sidebarOpen: !sidebarToggle }">
-  <app-sidebar id="sidebarContainer"></app-sidebar>
+  <mv-side-bar id="sidebarContainer"></mv-side-bar>
   <div id="mainContainer">
-    <app-findbar [actionEvents]="actionEvents"
-                 [searchToggle]="searchToggle"></app-findbar>
-    <app-secondary-toolbar [actionEvents]="actionEvents"
-                           [secondaryToolbarToggle]="secondaryToolbarToggle"></app-secondary-toolbar>
+    <mv-search-bar [actionEvents]="actionEvents"
+                   [searchToggle]="searchToggle"></mv-search-bar>
+    <mv-sub-toolbar [actionEvents]="actionEvents"
+                    [subToolbarToggle]="subToolbarToggle"></mv-sub-toolbar>
     <div class="toolbar">
       <div id="toolbarContainer">
         <div id="toolbarViewer">
-          <app-toolbar-viewer-left (searchToggle)="toggleSearch()"
-                                   (sidebarToggle)="toggleSidebar()"></app-toolbar-viewer-left>
-          <app-toolbar-viewer-right (secondaryToolbarToggle)="toggleSecondaryToolbar()">
-          </app-toolbar-viewer-right>
-          <app-toolbar-viewer-middle [actionEvents]="actionEvents"></app-toolbar-viewer-middle>
+          <mv-tb-left-pane (searchToggle)="toggleSearch()"
+                                   (sidebarToggle)="toggleSidebar()"></mv-tb-left-pane>
+          <mv-tb-right-pane (subToolbarToggle)="toggleSubToolbar()">
+          </mv-tb-right-pane>
+          <mv-tb-middle-pane [actionEvents]="actionEvents"></mv-tb-middle-pane>
         </div>
         <div id="loadingBar">
           <div class="progress">
@@ -22,6 +22,5 @@
         </div>
       </div>
     </div>
-    <app-toolbar-ctx-menu></app-toolbar-ctx-menu>
   </div>
 </div>

@@ -12,7 +12,7 @@ export class ToolbarComponent {
   @Input() contentType: string;
   sidebarToggle = false;
   searchToggle = false;
-  secondaryToolbarToggle = true;
+  subToolbarToggle = true;
 
   constructor() {}
 
@@ -26,8 +26,8 @@ export class ToolbarComponent {
     this.searchToggle = !this.searchToggle;
   }
 
-  toggleSecondaryToolbar() {
-    this.secondaryToolbarToggle = !this.secondaryToolbarToggle;
+  toggleSubToolbar() {
+    this.subToolbarToggle = !this.subToolbarToggle;
   }
 
   rotate(rotation: number) {
