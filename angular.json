@@ -75,6 +75,11 @@
                 "output": "/assets"
               },
               {
+                "glob": "**/*",
+                "input": "dist/media-viewer/assets/images",
+                "output": "/"
+              },
+              {
                 "glob": "favicon.ico",
                 "input": "src",
                 "output": "/"

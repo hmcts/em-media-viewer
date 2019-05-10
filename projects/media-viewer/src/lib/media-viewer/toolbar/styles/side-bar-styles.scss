@@ -1,0 +1,118 @@
+#sidebarContainer {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  width: 200px; /* Here, and elsewhere below, keep the constant value for compatibility
+                   with older browsers that lack support for CSS variables. */
+  width: var(--sidebar-width);
+  visibility: hidden;
+  z-index: 100;
+  border-top: 1px solid #333;
+
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+#sidebarContainer {
+  transition-property: left;
+  left: -200px;
+  left: calc(-1 * var(--sidebar-width));
+}
+html[dir='rtl'] #sidebarContainer {
+  transition-property: right;
+  right: -200px;
+  right: calc(-1 * var(--sidebar-width));
+}
+
+.loadingInProgress #sidebarContainer {
+  top: 36px;
+}
+
+#outerContainer.sidebarResizing #sidebarContainer {
+  /* Improve responsiveness and avoid visual glitches when the sidebar is resized. */
+  transition-duration: 0s;
+  /* Prevent e.g. the thumbnails being selected when the sidebar is resized. */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#outerContainer.sidebarMoving #sidebarContainer,
+#outerContainer.sidebarOpen #sidebarContainer {
+  visibility: visible;
+}
+#outerContainer.sidebarOpen #sidebarContainer {
+  left: 0px;
+}
+html[dir='rtl'] #outerContainer.sidebarOpen #sidebarContainer {
+  right: 0px;
+}
+
+#sidebarContent {
+  top: 32px;
+  bottom: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  position: absolute;
+  width: 100%;
+  background-color: hsla(0,0%,0%,.1);
+}
+#sidebarContent {
+  left: 0;
+  box-shadow: inset -1px 0 0 hsla(0,0%,0%,.25);
+}
+html[dir='rtl'] #sidebarContent {
+  right: 0;
+  box-shadow: inset 1px 0 0 hsla(0,0%,0%,.25);
+}
+
+#outerContainer.sidebarResizing #viewerContainer {
+  /* Improve responsiveness and avoid visual glitches when the sidebar is resized. */
+  transition-duration: 0s;
+}
+
+#outerContainer.sidebarOpen #viewerContainer:not(.pdfPresentationMode) {
+  transition-property: left;
+  left: 200px;
+  left: var(--sidebar-width);
+}
+html[dir='rtl'] #outerContainer.sidebarOpen #viewerContainer:not(.pdfPresentationMode) {
+  transition-property: right;
+  right: 200px;
+  right: var(--sidebar-width);
+}
+
+#toolbarSidebar {
+  width: 100%;
+  height: 32px;
+  background-color: #424242; /* fallback */
+  background-image: url(/assets/images/texture.png),
+  linear-gradient(hsla(0,0%,30%,.99), hsla(0,0%,25%,.95));
+}
+#toolbarSidebar {
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25),
+  inset 0 -1px 0 hsla(0,0%,100%,.05),
+  0 1px 0 hsla(0,0%,0%,.15),
+  0 0 1px hsla(0,0%,0%,.1);
+}
+html[dir='rtl'] #toolbarSidebar {
+  box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.25),
+  inset 0 1px 0 hsla(0,0%,100%,.05),
+  0 1px 0 hsla(0,0%,0%,.15),
+  0 0 1px hsla(0,0%,0%,.1);
+}
+
+#sidebarResizer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  z-index: 200;
+  cursor: ew-resize;
+}
+#sidebarResizer {
+  right: -6px;
+}
+html[dir='rtl'] #sidebarResizer {
+  left: -6px;
+}
