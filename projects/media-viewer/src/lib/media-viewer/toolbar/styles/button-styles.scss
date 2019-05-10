@@ -1,0 +1,504 @@
+.splitToolbarButton {
+  margin: 3px 2px 4px 0;
+  display: inline-block;
+}
+html[dir='rtl'] .splitToolbarButton {
+  margin: 3px 0 4px 2px;
+  display: inline-block;
+}
+.splitToolbarButton > .toolbarButton {
+  border-radius: 0;
+  float: left;
+}
+html[dir='rtl'] .splitToolbarButton > .toolbarButton {
+  border-radius: 0;
+  float: right;
+}
+
+.toolbarButton,
+.secondaryToolbarButton,
+.overlayButton {
+  border: 0 none;
+  background: none;
+  width: 32px;
+  height: 25px;
+}
+
+.toolbarButton > span {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.toolbarButton[disabled],
+.secondaryToolbarButton[disabled],
+.overlayButton[disabled] {
+  opacity: .5;
+}
+
+.splitToolbarButton.toggled .toolbarButton {
+  margin: 0;
+}
+
+.splitToolbarButton:hover > .toolbarButton,
+.splitToolbarButton:focus > .toolbarButton,
+.splitToolbarButton.toggled > .toolbarButton,
+.toolbarButton.textButton {
+  background-color: hsla(0,0%,0%,.12);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  background-clip: padding-box;
+  border: 1px solid hsla(0,0%,0%,.35);
+  border-color: hsla(0,0%,0%,.32) hsla(0,0%,0%,.38) hsla(0,0%,0%,.42);
+  box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
+  0 0 1px hsla(0,0%,100%,.15) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+
+}
+.splitToolbarButton > .toolbarButton:hover,
+.splitToolbarButton > .toolbarButton:focus,
+.dropdownToolbarButton:hover,
+.overlayButton:hover,
+.overlayButton:focus,
+.toolbarButton.textButton:hover,
+.toolbarButton.textButton:focus {
+  background-color: hsla(0,0%,0%,.2);
+  box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
+  0 0 1px hsla(0,0%,100%,.15) inset,
+  0 0 1px hsla(0,0%,0%,.05);
+  z-index: 199;
+}
+.splitToolbarButton > .toolbarButton {
+  position: relative;
+}
+.splitToolbarButton > .toolbarButton:first-child,
+html[dir='rtl'] .splitToolbarButton > .toolbarButton:last-child {
+  position: relative;
+  margin: 0;
+  margin-right: -1px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-right-color: transparent;
+}
+.splitToolbarButton > .toolbarButton:last-child,
+html[dir='rtl'] .splitToolbarButton > .toolbarButton:first-child {
+  position: relative;
+  margin: 0;
+  margin-left: -1px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-left-color: transparent;
+}
+.splitToolbarButtonSeparator {
+  padding: 8px 0;
+  width: 1px;
+  background-color: hsla(0,0%,0%,.5);
+  z-index: 99;
+  box-shadow: 0 0 0 1px hsla(0,0%,100%,.08);
+  display: inline-block;
+  margin: 5px 0;
+}
+.splitToolbarButtonSeparator {
+  float: left;
+}
+html[dir='rtl'] .splitToolbarButtonSeparator {
+  float: right;
+}
+.splitToolbarButton:hover > .splitToolbarButtonSeparator,
+.splitToolbarButton.toggled > .splitToolbarButtonSeparator {
+  padding: 12px 0;
+  margin: 1px 0;
+  box-shadow: 0 0 0 1px hsla(0,0%,100%,.03);
+  transition-property: padding;
+  transition-duration: 10ms;
+  transition-timing-function: ease;
+}
+
+.toolbarButton,
+.dropdownToolbarButton,
+.secondaryToolbarButton,
+.overlayButton {
+  min-width: 16px;
+  padding: 2px 6px 0;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: hsla(0,0%,100%,.8);
+  font-size: 12px;
+  line-height: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Opera does not support user-select, use <... unselectable="on"> instead */
+  cursor: default;
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+.toolbarButton,
+.overlayButton,
+.dropdownToolbarButton {
+  margin: 3px 2px 4px 0;
+}
+html[dir='rtl'] .toolbarButton,
+html[dir='rtl'] .overlayButton,
+html[dir='rtl'] .dropdownToolbarButton {
+  margin: 3px 0 4px 2px;
+}
+
+.toolbarButton:hover,
+.toolbarButton:focus,
+.dropdownToolbarButton,
+.overlayButton,
+.secondaryToolbarButton:hover,
+.secondaryToolbarButton:focus {
+  background-color: hsla(0,0%,0%,.12);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  background-clip: padding-box;
+  border: 1px solid hsla(0,0%,0%,.35);
+  border-color: hsla(0,0%,0%,.32) hsla(0,0%,0%,.38) hsla(0,0%,0%,.42);
+  box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
+  0 0 1px hsla(0,0%,100%,.15) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+}
+
+.toolbarButton:hover:active,
+.overlayButton:hover:active,
+.dropdownToolbarButton:hover:active,
+.secondaryToolbarButton:hover:active {
+  background-color: hsla(0,0%,0%,.2);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  border-color: hsla(0,0%,0%,.35) hsla(0,0%,0%,.4) hsla(0,0%,0%,.45);
+  box-shadow: 0 1px 1px hsla(0,0%,0%,.1) inset,
+  0 0 1px hsla(0,0%,0%,.2) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 10ms;
+  transition-timing-function: linear;
+}
+
+.toolbarButton.toggled,
+.splitToolbarButton.toggled > .toolbarButton.toggled,
+.secondaryToolbarButton.toggled {
+  background-color: hsla(0,0%,0%,.3);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  border-color: hsla(0,0%,0%,.4) hsla(0,0%,0%,.45) hsla(0,0%,0%,.5);
+  box-shadow: 0 1px 1px hsla(0,0%,0%,.1) inset,
+  0 0 1px hsla(0,0%,0%,.2) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 10ms;
+  transition-timing-function: linear;
+}
+
+.toolbarButton.toggled:hover:active,
+.splitToolbarButton.toggled > .toolbarButton.toggled:hover:active,
+.secondaryToolbarButton.toggled:hover:active {
+  background-color: hsla(0,0%,0%,.4);
+  border-color: hsla(0,0%,0%,.4) hsla(0,0%,0%,.5) hsla(0,0%,0%,.55);
+  box-shadow: 0 1px 1px hsla(0,0%,0%,.2) inset,
+  0 0 1px hsla(0,0%,0%,.3) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+}
+
+.dropdownToolbarButton {
+  width: 120px;
+  max-width: 120px;
+  padding: 0;
+  overflow: hidden;
+  background: url(/assets/images/toolbarButton-menuArrows.png) no-repeat;
+}
+.dropdownToolbarButton {
+  background-position: 95%;
+}
+html[dir='rtl'] .dropdownToolbarButton {
+  background-position: 5%;
+}
+
+.dropdownToolbarButton > select {
+  min-width: 140px;
+  font-size: 12px;
+  color: hsl(0,0%,95%);
+  margin: 0;
+  padding: 3px 2px 2px;
+  border: none;
+  background: rgba(0,0,0,0); /* Opera does not support 'transparent' <select> background */
+}
+
+.dropdownToolbarButton > select > option {
+  background: hsl(0,0%,24%);
+}
+
+#customScaleOption {
+  display: none;
+}
+
+#pageWidthOption {
+  border-bottom: 1px rgba(255, 255, 255, .5) solid;
+}
+
+.splitToolbarButton:first-child,
+.toolbarButton:first-child,
+html[dir='rtl'] .splitToolbarButton:last-child,
+html[dir='rtl'] .toolbarButton:last-child {
+  margin-left: 4px;
+}
+.splitToolbarButton:last-child,
+.toolbarButton:last-child,
+html[dir='rtl'] .splitToolbarButton:first-child,
+html[dir='rtl'] .toolbarButton:first-child {
+  margin-right: 4px;
+}
+
+.toolbarButtonSpacer {
+  width: 30px;
+  display: inline-block;
+  height: 1px;
+}
+
+#findPrevious {
+  margin-left: 3px;
+}
+#findNext {
+  margin-right: 3px;
+}
+
+html[dir='rtl'] #findPrevious {
+  margin-right: 3px;
+}
+html[dir='rtl'] #findNext {
+  margin-left: 3px;
+}
+
+.toolbarButton::before,
+.secondaryToolbarButton::before {
+  /* All matching images have a size of 16x16
+   * All relevant containers have a size of 32x25 */
+  position: absolute;
+  display: inline-block;
+  top: 4px;
+  left: 7px;
+}
+
+.secondaryToolbarButton::before {
+  left: 4px;
+}
+html[dir="rtl"] .secondaryToolbarButton::before {
+  right: 4px;
+}
+
+.toolbarButton#sidebarToggle::before {
+  content: url(/assets/images/toolbarButton-sidebarToggle.png);
+}
+html[dir='rtl'] .toolbarButton#sidebarToggle::before {
+  content: url(/assets/images/toolbarButton-sidebarToggle-rtl.png);
+}
+
+.toolbarButton#secondaryToolbarToggle::before {
+  content: url(/assets/images/toolbarButton-secondaryToolbarToggle.png);
+}
+html[dir='rtl'] .toolbarButton#secondaryToolbarToggle::before {
+  content: url(/assets/images/toolbarButton-secondaryToolbarToggle-rtl.png);
+}
+
+.toolbarButton.findPrevious::before {
+  content: url(/assets/images/findbarButton-previous.png);
+}
+html[dir='rtl'] .toolbarButton.findPrevious::before {
+  content: url(/assets/images/findbarButton-previous-rtl.png);
+}
+
+.toolbarButton.findNext::before {
+  content: url(/assets/images/findbarButton-next.png);
+}
+html[dir='rtl'] .toolbarButton.findNext::before {
+  content: url(/assets/images/findbarButton-next-rtl.png);
+}
+
+.toolbarButton.pageUp::before {
+  content: url(/assets/images/toolbarButton-pageUp.png);
+}
+html[dir='rtl'] .toolbarButton.pageUp::before {
+  content: url(/assets/images/toolbarButton-pageUp-rtl.png);
+}
+
+.toolbarButton.pageDown::before {
+  content: url(/assets/images/toolbarButton-pageDown.png);
+}
+html[dir='rtl'] .toolbarButton.pageDown::before {
+  content: url(/assets/images/toolbarButton-pageDown-rtl.png);
+}
+
+.toolbarButton.zoomOut::before {
+  content: url(/assets/images/toolbarButton-zoomOut.png);
+}
+
+.toolbarButton.zoomIn::before {
+  content: url(/assets/images/toolbarButton-zoomIn.png);
+}
+
+.toolbarButton.presentationMode::before,
+.secondaryToolbarButton.presentationMode::before {
+  content: url(/assets/images/toolbarButton-presentationMode.png);
+}
+
+.toolbarButton.print::before,
+.secondaryToolbarButton.print::before {
+  content: url(/assets/images/toolbarButton-print.png);
+}
+
+.toolbarButton.openFile::before,
+.secondaryToolbarButton.openFile::before {
+  content: url(/assets/images/toolbarButton-openFile.png);
+}
+
+.toolbarButton.download::before,
+.secondaryToolbarButton.download::before {
+  content: url(/assets/images/toolbarButton-download.png);
+}
+
+.toolbarButton.bookmark,
+.secondaryToolbarButton.bookmark {
+  box-sizing: border-box;
+  outline: none;
+  padding-top: 4px;
+  text-decoration: none;
+}
+.secondaryToolbarButton.bookmark {
+  padding-top: 5px;
+}
+
+.bookmark[href='#'] {
+  opacity: .5;
+  pointer-events: none;
+}
+
+.toolbarButton.bookmark::before,
+.secondaryToolbarButton.bookmark::before {
+  content: url(/assets/images/toolbarButton-bookmark.png);
+}
+
+#viewThumbnail.toolbarButton::before {
+  content: url(/assets/images/toolbarButton-viewThumbnail.png);
+}
+
+#viewOutline.toolbarButton::before {
+  content: url(/assets/images/toolbarButton-viewOutline.png);
+}
+html[dir="rtl"] #viewOutline.toolbarButton::before {
+  content: url(/assets/images/toolbarButton-viewOutline-rtl.png);
+}
+
+#viewAttachments.toolbarButton::before {
+  content: url(/assets/images/toolbarButton-viewAttachments.png);
+}
+
+#viewFind.toolbarButton::before {
+  content: url(/assets/images/toolbarButton-search.png);
+}
+
+.toolbarButton.pdfSidebarNotification::after {
+  position: absolute;
+  display: inline-block;
+  top: 1px;
+  /* Create a filled circle, with a diameter of 9 pixels, using only CSS: */
+  content: '';
+  background-color: #70DB55;
+  height: 9px;
+  width: 9px;
+  border-radius: 50%;
+}
+.toolbarButton.pdfSidebarNotification::after {
+  left: 17px;
+}
+html[dir='rtl'] .toolbarButton.pdfSidebarNotification::after {
+  right: 17px;
+}
+
+.secondaryToolbarButton {
+  position: relative;
+  margin: 0 0 4px 0;
+  padding: 3px 0 1px 0;
+  height: auto;
+  min-height: 25px;
+  width: auto;
+  min-width: 100%;
+  white-space: normal;
+}
+.secondaryToolbarButton {
+  padding-left: 24px;
+  text-align: left;
+}
+html[dir="rtl"] .secondaryToolbarButton {
+  padding-right: 24px;
+  text-align: right;
+}
+.secondaryToolbarButton.bookmark {
+  padding-left: 27px;
+}
+html[dir="rtl"] .secondaryToolbarButton.bookmark {
+  padding-right: 27px;
+}
+
+.secondaryToolbarButton > span {
+  padding-right: 4px;
+}
+html[dir="rtl"] .secondaryToolbarButton > span {
+  padding-left: 4px;
+}
+
+.secondaryToolbarButton.firstPage::before {
+  content: url(/assets/images/secondaryToolbarButton-firstPage.png);
+}
+
+.secondaryToolbarButton.lastPage::before {
+  content: url(/assets/images/secondaryToolbarButton-lastPage.png);
+}
+
+.secondaryToolbarButton.rotateCcw::before {
+  content: url(/assets/images/secondaryToolbarButton-rotateCcw.png);
+}
+
+.secondaryToolbarButton.rotateCw::before {
+  content: url(/assets/images/secondaryToolbarButton-rotateCw.png);
+}
+
+.secondaryToolbarButton.selectTool::before {
+  content: url(/assets/images/secondaryToolbarButton-selectTool.png);
+}
+
+.secondaryToolbarButton.handTool::before {
+  content: url(/assets/images/secondaryToolbarButton-handTool.png);
+}
+
+.secondaryToolbarButton.scrollVertical::before {
+  content: url(/assets/images/secondaryToolbarButton-scrollVertical.png);
+}
+
+.secondaryToolbarButton.scrollHorizontal::before {
+  content: url(/assets/images/secondaryToolbarButton-scrollHorizontal.png);
+}
+
+.secondaryToolbarButton.scrollWrapped::before {
+  content: url(/assets/images/secondaryToolbarButton-scrollWrapped.png);
+}
+
+.secondaryToolbarButton.spreadNone::before {
+  content: url(/assets/images/secondaryToolbarButton-spreadNone.png);
+}
+
+.secondaryToolbarButton.spreadOdd::before {
+  content: url(/assets/images/secondaryToolbarButton-spreadOdd.png);
+}
+
+.secondaryToolbarButton.spreadEven::before {
+  content: url(/assets/images/secondaryToolbarButton-spreadEven.png);
+}
+
+.secondaryToolbarButton.documentProperties::before {
+  content: url(/assets/images/secondaryToolbarButton-documentProperties.png);
+}

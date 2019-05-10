@@ -34,18 +34,6 @@
   <div class="aui__window">
     <div class="aui__window-container">
       <div class="aui__document">
-        <div class="aui__document-comments" id="comments" style="display: block">
-          <div class="hmcts-alert">
-            <svg class="hmcts-alert__icon" fill="currentColor" role="presentation" focusable="false"
-                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
-              <path d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z"/>
-            </svg>
-            <span class="hmcts-alert__message">
-              <span class="hmcts-alert__assistive">Success</span>
-              Select text to add a comment.
-            </span>
-          </div>
-        </div>
         <div class="aui__document-pages">
           <div class="aui__document-page">
             <div class="aui-casefile-document-wrapper">
@@ -61,6 +49,7 @@
                 </app-media-viewer>
                 <app-media-viewer *ngIf="documentTypeToShow === 'image'"
                                   [url]="'assets/example.jpg'"
+                                  [actionEvents]=actionEvents
                                   [contentType]="'image'"
                                   >
                 </app-media-viewer>
