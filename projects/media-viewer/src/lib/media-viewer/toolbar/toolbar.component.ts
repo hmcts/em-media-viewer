@@ -8,8 +8,6 @@ import { ActionEvents, RotateOperation } from '../media-viewer.model';
 })
 export class ToolbarComponent {
 
-  @Input() url = '';
-  @Input() contentType: string;
   sidebarToggle = false;
   searchToggle = false;
   subToolbarToggle = true;

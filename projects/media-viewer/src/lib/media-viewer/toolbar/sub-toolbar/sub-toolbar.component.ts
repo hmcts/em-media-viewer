@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, RotateOperation } from '../../media-viewer.model';
+import { ActionEvents, GenericOperation, RotateOperation } from '../../media-viewer.model';
 
 @Component({
   selector: 'mv-sub-toolbar',
@@ -15,5 +15,13 @@ export class SubToolbarComponent {
 
   rotate(rotation: number) {
     this.actionEvents.rotate.next(new RotateOperation(rotation));
+  }
+
+  printFile() {
+    this.actionEvents.print.next(new GenericOperation('print'));
+  }
+
+  downloadFile() {
+    this.actionEvents.download.next(new GenericOperation('download'));
   }
 }

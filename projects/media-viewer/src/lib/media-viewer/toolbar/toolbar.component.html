@@ -9,8 +9,9 @@
       <div id="toolbarContainer">
         <div id="toolbarViewer">
           <mv-tb-left-pane (searchToggle)="toggleSearch()"
-                                   (sidebarToggle)="toggleSidebar()"></mv-tb-left-pane>
-          <mv-tb-right-pane (subToolbarToggle)="toggleSubToolbar()">
+                           (sidebarToggle)="toggleSidebar()"></mv-tb-left-pane>
+          <mv-tb-right-pane [actionEvents]="actionEvents"
+                            (subToolbarToggle)="toggleSubToolbar()">
           </mv-tb-right-pane>
           <mv-tb-middle-pane [actionEvents]="actionEvents"></mv-tb-middle-pane>
         </div>

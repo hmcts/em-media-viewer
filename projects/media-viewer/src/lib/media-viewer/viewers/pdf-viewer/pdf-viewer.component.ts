@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
+  GenericOperation,
   RotateOperation,
   SearchOperation,
   ZoomOperation
@@ -19,9 +20,12 @@ import {
 export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   @Input() url: string;
+  @Input() downloadFileName: string;
   @Input() rotateOperation: RotateOperation;
   @Input() searchOperation: SearchOperation;
   @Input() zoomOperation: ZoomOperation;
+  @Input() printOperation: GenericOperation;
+  @Input() downloadOperation: GenericOperation;
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
@@ -66,5 +70,14 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
         findPrevious: operation.previous
       });
     }
+  }
+
+  print() {
+    const printWindow = window.open(this.url);
+    printWindow.print();
+  }
+
+  download() {
+    this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
   }
 }
