@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, SearchOperation } from '../../media-viewer/media-viewer.model';
+import { ActionEvents, SearchOperation } from '../../media-viewer.model';
 
 @Component({
   selector: 'mv-search-bar',
