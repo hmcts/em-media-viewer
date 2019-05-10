@@ -70,12 +70,12 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               {
-                "glob": "**/**/*",
+                "glob": "**/*",
                 "input": "dist/media-viewer/assets",
                 "output": "/assets"
               },
               {
-                "glob": "**/**/**/*",
+                "glob": "**/*",
                 "input": "dist/media-viewer/assets/images",
                 "output": "/"
               },
