@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { EmLoggerService } from '../../../logging/em-logger.service';
-import {RotateOperation, SearchOperation, ZoomOperation} from '../../media-viewer.model';
+import { RotateOperation, ZoomOperation } from '../../media-viewer.model';
 
 @Component({
     selector: 'app-image-viewer',

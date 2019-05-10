@@ -1,11 +1,3 @@
-
-    <div id="viewer-wrapper">
-        <button
-          *ngIf="rotate"
-          class="govuk-button hmcts hmcts-button--secondary rotate"
-          title="Clockwise"
-          role="button"
-          (click)="onRotateClockwise()">Rotate</button>
-
-        <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url"  />
-    </div>
+<div id="viewer-wrapper">
+    <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url"  />
+</div>
