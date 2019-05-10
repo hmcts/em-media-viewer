@@ -1,5 +1,6 @@
-import { Component, Output } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ActionEvents, GenericOperation } from '../../media-viewer.model';
 
 @Component({
   selector: 'mv-tb-right-pane',
@@ -8,7 +9,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ToolbarViewerRightComponent {
 
-  @Output() subToolbarToggle = new BehaviorSubject(true);
+  @Input() actionEvents: ActionEvents;
+  @Output() subToolbarToggle = new BehaviorSubject(false);
 
   constructor() {}
 
@@ -16,4 +18,11 @@ export class ToolbarViewerRightComponent {
     this.subToolbarToggle.next(false);
   }
 
+  printFile() {
+    this.actionEvents.print.next(new GenericOperation('print'));
+  }
+
+  downloadFile() {
+    this.actionEvents.download.next(new GenericOperation('download'));
+  }
 }

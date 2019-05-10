@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActionEvents, RotateOperation, SearchOperation, ZoomOperation } from './media-viewer.model';
+import { ActionEvents, GenericOperation, RotateOperation, SearchOperation, ZoomOperation } from './media-viewer.model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -15,6 +15,8 @@ export class MediaViewerComponent implements OnInit {
   rotation: Observable<RotateOperation>;
   search: Observable<SearchOperation>;
   zoom: Observable<ZoomOperation>;
+  download: Observable<GenericOperation>;
+  print: Observable<GenericOperation>;
 
   error: any;
 
@@ -25,6 +27,8 @@ export class MediaViewerComponent implements OnInit {
       this.rotation = this.actionEvents.rotate;
       this.search = this.actionEvents.search;
       this.zoom = this.actionEvents.zoom;
+      this.download = this.actionEvents.download;
+      this.print = this.actionEvents.print;
     }
   }
 

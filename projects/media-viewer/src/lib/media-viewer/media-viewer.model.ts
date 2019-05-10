@@ -4,11 +4,24 @@ export class ActionEvents {
   rotate: Subject<RotateOperation>;
   search: Subject<SearchOperation>;
   zoom: Subject<ZoomOperation>;
+  print: Subject<GenericOperation>;
+  download: Subject<GenericOperation>;
 
   constructor() {
     this.rotate = new Subject<RotateOperation>();
     this.search = new Subject<SearchOperation>();
     this.zoom = new Subject<ZoomOperation>();
+    this.print = new Subject<GenericOperation>();
+    this.download = new Subject<GenericOperation>();
+  }
+}
+
+export class GenericOperation {
+
+  action: string;
+
+  constructor(action: string) {
+    this.action = action;
   }
 }
 
