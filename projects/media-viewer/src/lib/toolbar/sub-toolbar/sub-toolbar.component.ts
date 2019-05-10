@@ -4,7 +4,7 @@ import { ActionEvents, RotateOperation } from '../../media-viewer/media-viewer.m
 @Component({
   selector: 'mv-sub-toolbar',
   templateUrl: './sub-toolbar.component.html',
-  styleUrls: ['../toolbar.component.scss']
+  styleUrls: ['../styles/toolbar.component.scss']
 })
 export class SubToolbarComponent {
 

@@ -1,0 +1,82 @@
+#thumbnailView {
+  position: absolute;
+  width: calc(100% - 60px);
+  top: 0;
+  bottom: 0;
+  padding: 10px 30px 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#thumbnailView > a:active,
+#thumbnailView > a:focus {
+  outline: 0;
+}
+
+.thumbnail {
+  margin: 0 10px 5px 10px;
+}
+.thumbnail {
+  float: left;
+}
+html[dir='rtl'] .thumbnail {
+  float: right;
+}
+
+#thumbnailView > a:last-of-type > .thumbnail {
+  margin-bottom: 10px;
+}
+
+#thumbnailView > a:last-of-type > .thumbnail:not([data-loaded]) {
+  margin-bottom: 9px;
+}
+
+.thumbnail:not([data-loaded]) {
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+  margin: -1px 9px 4px 9px;
+}
+
+.thumbnailImage {
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0.8;
+  z-index: 99;
+  background-color: white;
+  background-clip: content-box;
+}
+
+.thumbnailSelectionRing {
+  border-radius: 2px;
+  padding: 7px;
+}
+
+a:focus > .thumbnail > .thumbnailSelectionRing > .thumbnailImage,
+.thumbnail:hover > .thumbnailSelectionRing > .thumbnailImage {
+  opacity: .9;
+}
+
+a:focus > .thumbnail > .thumbnailSelectionRing,
+.thumbnail:hover > .thumbnailSelectionRing {
+  background-color: hsla(0,0%,100%,.15);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  background-clip: padding-box;
+  box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
+  0 0 1px hsla(0,0%,100%,.2) inset,
+  0 0 1px hsla(0,0%,0%,.2);
+  color: hsla(0,0%,100%,.9);
+}
+
+.thumbnail.selected > .thumbnailSelectionRing > .thumbnailImage {
+  box-shadow: 0 0 0 1px hsla(0,0%,0%,.5);
+  opacity: 1;
+}
+
+.thumbnail.selected > .thumbnailSelectionRing {
+  background-color: hsla(0,0%,100%,.3);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  background-clip: padding-box;
+  box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
+  0 0 1px hsla(0,0%,100%,.1) inset,
+  0 0 1px hsla(0,0%,0%,.2);
+  color: hsla(0,0%,100%,1);
+}

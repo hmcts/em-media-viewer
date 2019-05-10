@@ -1,0 +1,131 @@
+#outlineView,
+#attachmentsView {
+  position: absolute;
+  width: calc(100% - 8px);
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#outlineView {
+  padding: 4px 4px 0;
+}
+#attachmentsView {
+  padding: 3px 4px 0;
+}
+
+.outlineWithDeepNesting > .outlineItem,
+.outlineItem > .outlineItems {
+  margin-left: 20px;
+}
+
+html[dir='rtl'] .outlineWithDeepNesting > .outlineItem,
+html[dir='rtl'] .outlineItem > .outlineItems {
+  margin-right: 20px;
+}
+
+.outlineItem > a,
+.attachmentsItem > button {
+  text-decoration: none;
+  display: inline-block;
+  min-width: 95%;
+  min-width: calc(100% - 4px); /* Subtract the right padding (left, in RTL mode)
+                                  of the container. */
+  height: auto;
+  margin-bottom: 1px;
+  border-radius: 2px;
+  color: hsla(0,0%,100%,.8);
+  font-size: 13px;
+  line-height: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: normal;
+}
+
+.attachmentsItem > button {
+  border: 0 none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.outlineItem > a {
+  padding: 2px 0 5px 4px;
+}
+.attachmentsItem > button {
+  padding: 2px 0 3px 7px;
+  text-align: left;
+}
+
+html[dir='rtl'] .outlineItem > a {
+  padding: 2px 4px 5px 0;
+}
+html[dir='rtl'] .attachmentsItem > button {
+  padding: 2px 7px 3px 0;
+  text-align: right;
+}
+
+.outlineItemToggler {
+  position: relative;
+  height: 0;
+  width: 0;
+  color: hsla(0,0%,100%,.5);
+}
+.outlineItemToggler::before {
+  content: url(/assets/images/treeitem-expanded.png);
+  display: inline-block;
+  position: absolute;
+}
+.outlineItemToggler.outlineItemsHidden::before {
+  content: url(/assets/images/treeitem-collapsed.png);
+}
+html[dir='rtl'] .outlineItemToggler.outlineItemsHidden::before {
+  content: url(/assets/images/treeitem-collapsed-rtl.png);
+}
+.outlineItemToggler.outlineItemsHidden ~ .outlineItems {
+  display: none;
+}
+.outlineItemToggler {
+  float: left;
+}
+html[dir='rtl'] .outlineItemToggler {
+  float: right;
+}
+.outlineItemToggler::before {
+  right: 4px;
+}
+html[dir='rtl'] .outlineItemToggler::before {
+  left: 4px;
+}
+
+.outlineItemToggler:hover,
+.outlineItemToggler:hover + a,
+.outlineItemToggler:hover ~ .outlineItems,
+.outlineItem > a:hover,
+.attachmentsItem > button:hover {
+  background-color: hsla(0,0%,100%,.02);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  background-clip: padding-box;
+  box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
+  0 0 1px hsla(0,0%,100%,.2) inset,
+  0 0 1px hsla(0,0%,0%,.2);
+  border-radius: 2px;
+  color: hsla(0,0%,100%,.9);
+}
+
+.outlineItem.selected {
+  background-color: hsla(0,0%,100%,.08);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  background-clip: padding-box;
+  box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
+  0 0 1px hsla(0,0%,100%,.1) inset,
+  0 0 1px hsla(0,0%,0%,.2);
+  color: hsla(0,0%,100%,1);
+}

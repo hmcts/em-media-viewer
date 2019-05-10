@@ -4,7 +4,7 @@ import { ActionEvents, ZoomOperation } from '../../media-viewer/media-viewer.mod
 @Component({
   selector: 'mv-tb-middle-pane',
   templateUrl: './middle-pane.component.html',
-  styleUrls: ['../toolbar.component.scss']
+  styleUrls: ['../styles/toolbar.component.scss']
 })
 export class ToolbarMiddlePaneComponent {
 
