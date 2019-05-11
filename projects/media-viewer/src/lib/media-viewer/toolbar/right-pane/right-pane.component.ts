@@ -10,12 +10,12 @@ import { ActionEvents, GenericOperation } from '../../media-viewer.model';
 export class ToolbarViewerRightComponent {
 
   @Input() actionEvents: ActionEvents;
-  @Output() subToolbarToggle = new BehaviorSubject(false);
+  @Input() subToolbarHide: BehaviorSubject<boolean>;
 
   constructor() {}
 
   toggleSecondaryToolbar() {
-    this.subToolbarToggle.next(false);
+    this.subToolbarHide.next(!this.subToolbarHide.getValue());
   }
 
   printFile() {

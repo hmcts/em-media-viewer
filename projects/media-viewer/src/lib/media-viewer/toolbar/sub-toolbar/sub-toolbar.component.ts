@@ -8,7 +8,7 @@ import { ActionEvents, GenericOperation, RotateOperation } from '../../media-vie
 })
 export class SubToolbarComponent {
 
-  @Input() subToolbarToggle;
+  @Input() subToolbarHide;
   @Input() actionEvents: ActionEvents;
 
   constructor() {}
