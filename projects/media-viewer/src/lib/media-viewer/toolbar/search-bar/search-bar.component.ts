@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActionEvents, SearchOperation } from '../../media-viewer.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'mv-search-bar',
@@ -8,7 +9,7 @@ import { ActionEvents, SearchOperation } from '../../media-viewer.model';
 })
 export class SearchBarComponent {
 
-  @Input() searchToggle;
+  @Input() searchbarHide: BehaviorSubject<boolean>;
   @Input() actionEvents: ActionEvents;
 
   constructor() {}

@@ -1,4 +1,4 @@
-import { Component, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -8,16 +8,16 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ToolbarLeftPaneComponent {
 
-  @Output() sidebarToggle = new BehaviorSubject(true);
-  @Output() searchToggle = new BehaviorSubject(true);
+  @Input() sidebarOpen: BehaviorSubject<boolean>;
+  @Input() searchbarHide: BehaviorSubject<boolean>;
 
   constructor() {}
 
-  toggleSidebar() {
-    this.sidebarToggle.next(true);
+  toggleSideBar() {
+    this.sidebarOpen.next(!this.sidebarOpen.getValue());
   }
 
-  toggleSearch() {
-    this.searchToggle.next(true);
+  toggleSearchBar() {
+    this.searchbarHide.next(!this.searchbarHide.getValue());
   }
 }
