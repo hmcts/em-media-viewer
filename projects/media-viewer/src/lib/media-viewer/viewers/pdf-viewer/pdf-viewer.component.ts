@@ -54,7 +54,7 @@ export class PdfViewerComponent implements AfterViewInit {
   set searchOperation(operation: SearchOperation | null) {
     if (this.pdfViewer && operation) {
       const command = operation.reset ? 'find' : 'findagain';
-      console.log(command);
+
       this.pdfFindController.executeCommand(command, {
         query: operation.searchTerm,
         highlightAll: true,
