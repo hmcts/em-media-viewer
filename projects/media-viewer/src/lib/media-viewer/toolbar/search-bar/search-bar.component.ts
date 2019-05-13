@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SearchBarComponent {
 
-  @Input() searchbarHide: BehaviorSubject<boolean>;
+  @Input() searchBarHide: BehaviorSubject<boolean>;
   @Input() actionEvents: ActionEvents;
 
   private lastSearchTerm: string;
