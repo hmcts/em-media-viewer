@@ -42,25 +42,25 @@
                    aria-multiline="true" data-medium-editor-editor-index="1"
                    medium-editor-index="ca3cfb8f-8b6a-8f73-1ed5-fa7679703446" data-placeholder="Type your text">
 
-                <app-media-viewer *ngIf="documentTypeToShow === 'pdf'"
+                <mv-media-viewer *ngIf="documentTypeToShow === 'pdf'"
                                   [url]="'assets/example.pdf'"
                                   [downloadFileName]="'example.pdf'"
                                   [actionEvents]=actionEvents
                                   [contentType]="'pdf'">
-                </app-media-viewer>
-                <app-media-viewer *ngIf="documentTypeToShow === 'image'"
+                </mv-media-viewer>
+                <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
                                   [url]="'assets/example.jpg'"
                                   [actionEvents]=actionEvents
                                   [downloadFileName]="'example.jpg'"
                                   [contentType]="'image'"
                                   >
-                </app-media-viewer>
-                <app-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
+                </mv-media-viewer>
+                <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
                                   [url]="'assets/unsupported.txt'"
                                   [downloadFileName]="'unsupported.txt'"
                                   [contentType]="'txt'"
                                   >
-                </app-media-viewer>
+                </mv-media-viewer>
               </div>
             </div>
           </div>
