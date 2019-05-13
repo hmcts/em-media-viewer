@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, SearchOperation } from '../../media-viewer.model';
-import { BehaviorSubject } from 'rxjs';
+import { SearchOperation, SearchResultsCount } from '../../media-viewer.model';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'mv-search-bar',
@@ -10,21 +10,31 @@ import { BehaviorSubject } from 'rxjs';
 export class SearchBarComponent {
 
   @Input() searchbarHide: BehaviorSubject<boolean>;
-  @Input() actionEvents: ActionEvents;
+  @Input() searchEvents: Subject<SearchOperation>;
+  @Input() searchResultsCount: Observable<SearchResultsCount>;
 
-  private lastSearchTerm: string;
+  public resultsText = '';
 
   constructor() {}
 
-  searchNext(searchTerm: string) {
-    this.actionEvents.search.next(new SearchOperation(searchTerm, false, searchTerm !== this.lastSearchTerm));
+  ngOnInit() {
+    this.searchResultsCount.subscribe(r => this.onUpdateResults(r));
+  }
 
-    this.lastSearchTerm = searchTerm;
+  searchNext(searchTerm: string) {
+    this.searchEvents.next(new SearchOperation(searchTerm, false, false));
   }
 
   searchPrev(searchTerm: string) {
-    this.actionEvents.search.next(new SearchOperation(searchTerm, true, searchTerm !== this.lastSearchTerm));
+    this.searchEvents.next(new SearchOperation(searchTerm, true, false));
+  }
 
-    this.lastSearchTerm = searchTerm;
+  search(searchTerm: string) {
+    this.searchEvents.next(new SearchOperation(searchTerm, false, true));
+  }
+
+  onUpdateResults(results: SearchResultsCount) {
+    console.log("Results", results);
+    this.resultsText = `${results.current} of ${results.total} matches`;
   }
 }

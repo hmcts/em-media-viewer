@@ -1,27 +1,26 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
   DownloadOperation,
   PrintOperation,
   RotateOperation,
   SearchOperation,
+  SearchResultsCount,
   ZoomOperation
 } from '../../media-viewer.model';
+import { Subject } from 'rxjs';
 
 
 @Component({
-    selector: 'app-pdf-viewer',
-  template: `
-    <div #viewerContainer class="pdfContainer">
-      <div class="pdfViewer"></div>
-    </div>
-  `,
-    styleUrls: ['./pdf-viewer.component.css']
+  selector: 'app-pdf-viewer',
+  templateUrl: './pdf-viewer.component.html',
+  styleUrls: ['./pdf-viewer.component.css']
 })
 export class PdfViewerComponent implements AfterViewInit {
 
   @Input() url: string;
   @Input() downloadFileName: string;
+  @Input() searchResults: Subject<SearchResultsCount>;
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
   pdfViewer: any;
@@ -30,8 +29,9 @@ export class PdfViewerComponent implements AfterViewInit {
   constructor(private pdfWrapper: PdfJsWrapper) {}
 
   ngAfterViewInit(): void {
-    [this.pdfViewer, this.pdfFindController]
-      = this.pdfWrapper.initViewer(this.url, this.viewerContainer);
+    [this.pdfViewer, this.pdfFindController] = this.pdfWrapper.initViewer(this.url, this.viewerContainer);
+
+    this.pdfFindController._eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
   }
 
 
