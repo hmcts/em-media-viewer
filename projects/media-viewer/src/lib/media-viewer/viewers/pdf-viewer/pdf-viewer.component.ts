@@ -62,16 +62,16 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   @Input()
-  set printOperation(printOperation: PrintOperation) {
-    if (printOperation) {
+  set printOperation(operation: PrintOperation) {
+    if (operation) {
       const printWindow = window.open(this.url);
       printWindow.print();
     }
   }
 
   @Input()
-  set downloadOperation(downloadOperation: DownloadOperation) {
-    if (downloadOperation) {
+  set downloadOperation(operation: DownloadOperation) {
+    if (operation) {
       this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
     }
   }

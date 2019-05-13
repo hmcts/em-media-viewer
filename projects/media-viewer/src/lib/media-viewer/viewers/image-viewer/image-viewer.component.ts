@@ -22,26 +22,30 @@ export class ImageViewerComponent {
 
   @Input()
   set rotateOperation(operation: RotateOperation) {
+    if (operation) {
       this.rotation = this.rotation + operation.rotation;
       this.rotateImage();
+    }
   }
 
   @Input()
   set zoomOperation(operation: ZoomOperation) {
-
+    if (operation) {
+      // TODO
+    }
   }
 
   @Input()
-  set printOperation(printOperation: PrintOperation) {
-    if (printOperation) {
+  set printOperation(operation: PrintOperation) {
+    if (operation) {
       const printWindow = window.open(this.url);
       printWindow.print();
     }
   }
 
   @Input()
-  set downloadOperation(downloadOperation: DownloadOperation) {
-    if (downloadOperation) {
+  set downloadOperation(operation: DownloadOperation) {
+    if (operation) {
       // TODO
     }
   }
