@@ -7,7 +7,7 @@ import { ActionEvents, PrintOperation, DownloadOperation } from '../../media-vie
   templateUrl: './right-pane.component.html',
   styleUrls: ['../styles/toolbar.component.scss']
 })
-export class ToolbarViewerRightComponent {
+export class ToolbarRightPaneComponent {
 
   @Input() actionEvents: ActionEvents;
   @Input() toggleSubToolbarHidden: BehaviorSubject<boolean>;
