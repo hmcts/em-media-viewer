@@ -10,12 +10,12 @@ import { ActionEvents, PrintOperation, DownloadOperation } from '../../media-vie
 export class ToolbarViewerRightComponent {
 
   @Input() actionEvents: ActionEvents;
-  @Input() subToolbarHide: BehaviorSubject<boolean>;
+  @Input() toggleSubToolbarHidden: BehaviorSubject<boolean>;
 
   constructor() {}
 
   toggleSecondaryToolbar() {
-    this.subToolbarHide.next(!this.subToolbarHide.getValue());
+    this.toggleSubToolbarHidden.next(!this.toggleSubToolbarHidden.getValue());
   }
 
   printFile() {
