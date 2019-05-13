@@ -3,7 +3,7 @@ import { ActionEvents, RotateOperation } from '../media-viewer.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-toolbar',
+  selector: 'mv-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./styles/toolbar.component.scss']
 })

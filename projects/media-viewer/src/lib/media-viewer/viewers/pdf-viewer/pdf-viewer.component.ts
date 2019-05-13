@@ -10,7 +10,7 @@ import {
 
 
 @Component({
-    selector: 'app-pdf-viewer',
+    selector: 'mv-pdf-viewer',
   template: `
     <div #viewerContainer class="pdfContainer">
       <div class="pdfViewer"></div>

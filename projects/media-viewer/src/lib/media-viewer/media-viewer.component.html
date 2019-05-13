@@ -1,6 +1,6 @@
-<app-toolbar [actionEvents]="actionEvents"></app-toolbar>
+<mv-toolbar [actionEvents]="actionEvents"></mv-toolbar>
 
-<app-pdf-viewer *ngIf="contentType === 'pdf'"
+<mv-pdf-viewer *ngIf="contentType === 'pdf'"
                 [url]="url"
                 [downloadFileName]="downloadFileName"
                 [zoomOperation]="zoom | async"
@@ -8,16 +8,16 @@
                 [downloadOperation]="download | async"
                 [printOperation]="print | async"
                 [rotateOperation]="rotation | async">
-</app-pdf-viewer>
-<app-image-viewer *ngIf="contentType === 'image'"
+</mv-pdf-viewer>
+<mv-image-viewer *ngIf="contentType === 'image'"
                   [url]="url"
                   [zoomOperation]="zoom | async"
                   [printOperation]="print | async"
                   [rotateOperation]="rotation | async">
-</app-image-viewer>
-<app-unsupported-viewer [url]="url"
+</mv-image-viewer>
+<mv-unsupported-viewer [url]="url"
                         *ngIf="contentTypeUnsupported()" >
-</app-unsupported-viewer>
+</mv-unsupported-viewer>
 
 <div class="grid-row">
   <div *ngIf="error"  class="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
