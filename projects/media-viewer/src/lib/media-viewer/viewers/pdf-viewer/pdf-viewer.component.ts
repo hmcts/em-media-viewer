@@ -53,7 +53,9 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input()
   set searchOperation(operation: SearchOperation | null) {
     if (this.pdfViewer && operation) {
-      this.pdfFindController.executeCommand('findagain', {
+      const command = operation.reset ? 'find' : 'findagain';
+
+      this.pdfFindController.executeCommand(command, {
         query: operation.searchTerm,
         highlightAll: true,
         findPrevious: operation.previous
