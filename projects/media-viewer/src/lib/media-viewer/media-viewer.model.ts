@@ -1,53 +1,34 @@
 import { Subject } from 'rxjs';
 
 export class ActionEvents {
-  rotate: Subject<RotateOperation>;
-  search: Subject<SearchOperation>;
-  zoom: Subject<ZoomOperation>;
-  print: Subject<PrintOperation>;
-  download: Subject<DownloadOperation>;
-
-  constructor() {
-    this.rotate = new Subject<RotateOperation>();
-    this.search = new Subject<SearchOperation>();
-    this.zoom = new Subject<ZoomOperation>();
-    this.print = new Subject<PrintOperation>();
-    this.download = new Subject<DownloadOperation>();
-  }
+  public readonly rotate = new Subject<RotateOperation>();
+  public readonly search = new Subject<SearchOperation>();
+  public readonly zoom = new Subject<ZoomOperation>();
+  public readonly print = new Subject<PrintOperation>();
+  public readonly download = new Subject<DownloadOperation>();
 }
 
-export class DownloadOperation {
-}
+export class DownloadOperation {}
 
-export class PrintOperation {
-}
+export class PrintOperation {}
 
 export class RotateOperation {
-
-  rotation: number;
-
-  constructor(rotation: number) {
-    this.rotation = rotation;
-  }
+  constructor(
+    public readonly rotation: number
+  ) {}
 }
 
 export class ZoomOperation {
-
-  zoomFactor: number;
-
-  constructor(zoomFactor: number) {
-    this.zoomFactor = zoomFactor;
-  }
+  constructor(
+    public readonly zoomFactor: number
+  ) {}
 }
 
 export class SearchOperation {
-
-  searchTerm: string;
-  previous: boolean;
-
-  constructor(searchTerm: string, previous?: boolean) {
-    this.searchTerm = searchTerm;
-    this.previous = previous;
-  }
+  constructor(
+    public readonly searchTerm: string,
+    public readonly previous: boolean,
+    public readonly reset: boolean
+  ) {}
 }
 
