@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ToolbarComponent {
 
   sidebarOpen = new BehaviorSubject(false);
-  searchbarHide = new BehaviorSubject(true);
+  searchBarHide = new BehaviorSubject(true);
   subToolbarHide = new BehaviorSubject(true);
 
   constructor() {}

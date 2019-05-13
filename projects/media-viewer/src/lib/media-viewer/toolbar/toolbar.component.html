@@ -2,13 +2,13 @@
   <mv-side-bar id="sidebarContainer"></mv-side-bar>
   <div id="mainContainer">
     <mv-search-bar [actionEvents]="actionEvents"
-                   [searchbarHide]="searchbarHide | async"></mv-search-bar>
+                   [searchBarHide]="searchBarHide | async"></mv-search-bar>
     <mv-sub-toolbar [actionEvents]="actionEvents"
                     [subToolbarHide]="subToolbarHide | async"></mv-sub-toolbar>
     <div class="toolbar">
       <div id="toolbarContainer">
         <div id="toolbarViewer">
-          <mv-tb-left-pane [searchbarHide]="searchbarHide"
+          <mv-tb-left-pane [searchBarHide]="searchBarHide"
                            [sidebarOpen]="sidebarOpen"></mv-tb-left-pane>
           <mv-tb-right-pane [actionEvents]="actionEvents"
                             [subToolbarHide]="subToolbarHide">
