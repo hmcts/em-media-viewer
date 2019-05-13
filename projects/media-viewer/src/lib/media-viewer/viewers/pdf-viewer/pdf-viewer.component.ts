@@ -36,7 +36,7 @@ export class PdfViewerComponent implements AfterViewInit {
 
 
   @Input()
-  set rotateOperation(operation: RotateOperation) {
+  set rotateOperation(operation: RotateOperation | null) {
     if (this.pdfViewer && operation) {
       this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + operation.rotation) % 360;
       this.rotateOperation = this.pdfViewer.pagesRotation;
@@ -44,14 +44,14 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   @Input()
-  set zoomOperation(operation: ZoomOperation) {
+  set zoomOperation(operation: ZoomOperation | null) {
     if (this.pdfViewer && operation) {
       this.pdfViewer.currentScale += operation.zoomFactor;
     }
   }
 
   @Input()
-  set searchOperation(operation: SearchOperation) {
+  set searchOperation(operation: SearchOperation | null) {
     if (this.pdfViewer && operation) {
       this.pdfFindController.executeCommand('findagain', {
         query: operation.searchTerm,
@@ -62,7 +62,7 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   @Input()
-  set printOperation(operation: PrintOperation) {
+  set printOperation(operation: PrintOperation | null) {
     if (operation) {
       const printWindow = window.open(this.url);
       printWindow.print();
@@ -70,7 +70,7 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   @Input()
-  set downloadOperation(operation: DownloadOperation) {
+  set downloadOperation(operation: DownloadOperation | null) {
     if (operation) {
       this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
     }
