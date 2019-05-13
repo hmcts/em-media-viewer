@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
-  GenericOperation,
+  DownloadOperation,
+  PrintOperation,
   RotateOperation,
   SearchOperation,
   ZoomOperation
@@ -17,16 +18,10 @@ import {
   `,
     styleUrls: ['./pdf-viewer.component.css']
 })
-export class PdfViewerComponent implements AfterViewInit, OnChanges {
+export class PdfViewerComponent implements AfterViewInit {
 
   @Input() url: string;
   @Input() downloadFileName: string;
-  @Input() rotateOperation: RotateOperation;
-  @Input() searchOperation: SearchOperation;
-  @Input() zoomOperation: ZoomOperation;
-  @Input() printOperation: GenericOperation;
-  @Input() downloadOperation: GenericOperation;
-
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
   pdfViewer: any;
@@ -40,30 +35,24 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
   }
 
 
-  ngOnChanges(changes: SimpleChanges): void {
-    for (let change in changes) {
-      let operation = changes[change].currentValue;
-      if(operation && operation.action) {
-        this[operation.action].call(this, operation);
-      }
-    }
-  }
-
-  rotate(operation: RotateOperation) {
-    if (this.pdfViewer) {
+  @Input()
+  set rotateOperation(operation: RotateOperation | null) {
+    if (this.pdfViewer && operation) {
       this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + operation.rotation) % 360;
       this.rotateOperation = this.pdfViewer.pagesRotation;
     }
   }
 
-  zoom(operation: ZoomOperation) {
-    if (this.pdfViewer) {
+  @Input()
+  set zoomOperation(operation: ZoomOperation | null) {
+    if (this.pdfViewer && operation) {
       this.pdfViewer.currentScale += operation.zoomFactor;
     }
   }
 
-  search(operation: SearchOperation) {
-    if (this.pdfViewer) {
+  @Input()
+  set searchOperation(operation: SearchOperation | null) {
+    if (this.pdfViewer && operation) {
       this.pdfFindController.executeCommand('findagain', {
         query: operation.searchTerm,
         highlightAll: true,
@@ -72,12 +61,18 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  print() {
-    const printWindow = window.open(this.url);
-    printWindow.print();
+  @Input()
+  set printOperation(operation: PrintOperation | null) {
+    if (operation) {
+      const printWindow = window.open(this.url);
+      printWindow.print();
+    }
   }
 
-  download() {
-    this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
+  @Input()
+  set downloadOperation(operation: DownloadOperation | null) {
+    if (operation) {
+      this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
+    }
   }
 }

@@ -4,31 +4,27 @@ export class ActionEvents {
   rotate: Subject<RotateOperation>;
   search: Subject<SearchOperation>;
   zoom: Subject<ZoomOperation>;
-  print: Subject<GenericOperation>;
-  download: Subject<GenericOperation>;
+  print: Subject<PrintOperation>;
+  download: Subject<DownloadOperation>;
 
   constructor() {
     this.rotate = new Subject<RotateOperation>();
     this.search = new Subject<SearchOperation>();
     this.zoom = new Subject<ZoomOperation>();
-    this.print = new Subject<GenericOperation>();
-    this.download = new Subject<GenericOperation>();
+    this.print = new Subject<PrintOperation>();
+    this.download = new Subject<DownloadOperation>();
   }
 }
 
-export class GenericOperation {
+export class DownloadOperation {
+}
 
-  action: string;
-
-  constructor(action: string) {
-    this.action = action;
-  }
+export class PrintOperation {
 }
 
 export class RotateOperation {
 
   rotation: number;
-  action = "rotate";
 
   constructor(rotation: number) {
     this.rotation = rotation;
@@ -38,7 +34,6 @@ export class RotateOperation {
 export class ZoomOperation {
 
   zoomFactor: number;
-  action = "zoom";
 
   constructor(zoomFactor: number) {
     this.zoomFactor = zoomFactor;
@@ -49,7 +44,6 @@ export class SearchOperation {
 
   searchTerm: string;
   previous: boolean;
-  action = "search";
 
   constructor(searchTerm: string, previous?: boolean) {
     this.searchTerm = searchTerm;
