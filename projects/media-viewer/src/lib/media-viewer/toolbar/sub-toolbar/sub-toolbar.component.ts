@@ -8,7 +8,7 @@ import { ActionEvents, PrintOperation, DownloadOperation, RotateOperation } from
 })
 export class SubToolbarComponent {
 
-  @Input() subToolbarHide;
+  @Input() subToolbarHidden;
   @Input() actionEvents: ActionEvents;
 
   constructor() {}
