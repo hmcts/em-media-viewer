@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, RotateOperation } from '../media-viewer.model';
+import { ActionEvents } from '../media-viewer.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -10,14 +10,10 @@ import { BehaviorSubject } from 'rxjs';
 export class ToolbarComponent {
 
   sidebarOpen = new BehaviorSubject(false);
-  searchbarHide = new BehaviorSubject(true);
-  subToolbarHide = new BehaviorSubject(true);
+  searchbarHidden = new BehaviorSubject(true);
+  subToolbarHidden = new BehaviorSubject(true);
 
   constructor() {}
 
   @Input() actionEvents: ActionEvents;
-
-  rotate(rotation: number) {
-    this.actionEvents.rotate.next(new RotateOperation(rotation));
-  }
 }

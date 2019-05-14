@@ -1,17 +1,16 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NO_ERRORS_SCHEMA, Renderer2} from '@angular/core';
-import {ImageViewerComponent} from './image-viewer.component';
-import {EmLoggerService} from '../../../logging/em-logger.service';
-import {RotateOperation} from '../../media-viewer.model';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA, Renderer2 } from '@angular/core';
+import { ImageViewerComponent } from './image-viewer.component';
+import { EmLoggerService } from '../../../logging/em-logger.service';
 
 class MockRenderer {
 
 }
 
 describe('ImageViewerComponent', () => {
-    let component: ImageViewerComponent;
-    let fixture: ComponentFixture<ImageViewerComponent>;
-    const mockRenderer = new MockRenderer();
+  let component: ImageViewerComponent;
+  let fixture: ComponentFixture<ImageViewerComponent>;
+  const mockRenderer = new MockRenderer();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,7 +21,7 @@ describe('ImageViewerComponent', () => {
         { provide: Renderer2, useFactory: () => mockRenderer },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -44,12 +43,21 @@ describe('ImageViewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  describe('ngOnInit', () => {
+    it('should set rotation to 0', () => {
+      expect(component['rotation']).toBe(0);
+    });
+  });
+
   describe('onRotateClockwise', () => {
     it('should add 90 degrees to rotation', () => {
-      component.rotateOperation = new RotateOperation(90);
       expect(component['rotation']).toBe(90);
     });
 
+    it('should call rotateImage', () => {
+      spyOn(component, 'rotateImage').and.stub();
+      expect(component.rotateImage).toHaveBeenCalled();
+    });
   });
 });
 

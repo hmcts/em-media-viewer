@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, SearchOperation } from '../../media-viewer.model';
-import { BehaviorSubject } from 'rxjs';
+import { SearchOperation, SearchResultsCount } from '../../media-viewer.model';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'mv-search-bar',
@@ -9,22 +9,58 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SearchBarComponent {
 
-  @Input() searchbarHide: BehaviorSubject<boolean>;
-  @Input() actionEvents: ActionEvents;
+  @Input() searchbarHidden: BehaviorSubject<boolean>;
+  @Input() searchEvents: Subject<SearchOperation>;
 
-  private lastSearchTerm: string;
+  highlightAll = true;
+  matchCase = false;
+  wholeWord = false;
+  resultsText = '';
+  searchText = '';
+  haveResults = false;
 
   constructor() {}
 
-  searchNext(searchTerm: string) {
-    this.actionEvents.search.next(new SearchOperation(searchTerm, false, searchTerm !== this.lastSearchTerm));
-
-    this.lastSearchTerm = searchTerm;
+  searchNext() {
+    this.searchEvents.next(new SearchOperation(
+      this.searchText,
+      this.highlightAll,
+      this.matchCase,
+      this.wholeWord,
+      false,
+      false
+    ));
   }
 
-  searchPrev(searchTerm: string) {
-    this.actionEvents.search.next(new SearchOperation(searchTerm, true, searchTerm !== this.lastSearchTerm));
+  searchPrev() {
+    this.searchEvents.next(new SearchOperation(
+      this.searchText,
+      this.highlightAll,
+      this.matchCase,
+      this.wholeWord,
+      true,
+      false
+    ));
+  }
 
-    this.lastSearchTerm = searchTerm;
+  search() {
+    this.searchEvents.next(new SearchOperation(
+      this.searchText,
+      this.highlightAll,
+      this.matchCase,
+      this.wholeWord,
+      false,
+      true
+    ));
+  }
+
+  @Input()
+  set searchResultsCount(results: SearchResultsCount | null) {
+    if (results) {
+      this.haveResults = results.total > 0;
+      this.resultsText = this.haveResults
+        ? `${results.current} of ${results.total} matches`
+        : 'Phrase not found';
+    }
   }
 }
