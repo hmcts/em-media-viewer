@@ -45,20 +45,17 @@ describe('ImageViewerComponent', () => {
 
   describe('ngOnInit', () => {
     it('should set rotation to 0', () => {
-      component.ngOnInit();
       expect(component['rotation']).toBe(0);
     });
   });
 
   describe('onRotateClockwise', () => {
     it('should add 90 degrees to rotation', () => {
-      component.onRotateClockwise();
       expect(component['rotation']).toBe(90);
     });
 
     it('should call rotateImage', () => {
       spyOn(component, 'rotateImage').and.stub();
-      component.onRotateClockwise();
       expect(component.rotateImage).toHaveBeenCalled();
     });
   });
