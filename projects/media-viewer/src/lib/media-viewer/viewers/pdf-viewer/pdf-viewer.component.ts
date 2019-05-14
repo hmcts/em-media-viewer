@@ -31,11 +31,12 @@ export class PdfViewerComponent implements AfterViewInit {
   async ngAfterViewInit(): Promise<void> {
     [this.pdfViewer, this.pdfFindController] = await this.pdfWrapper.initViewer(this.url, this.viewerContainer);
 
-    this.pdfFindController._eventBus.on('updatefindcontrolstate', e => {
-      if (e.state === 3)  {
-        this.searchResults.next(e.matchesCount);
+    this.pdfViewer.eventBus.on('updatefindcontrolstate', e => {
+      if (e.state === FindState.NOT_FOUND) {
+        this.searchResults.next({ current: 0, total: 0 });
       }
     });
+    this.pdfViewer.eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
   }
 
 
@@ -83,4 +84,11 @@ export class PdfViewerComponent implements AfterViewInit {
       this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
     }
   }
+}
+
+enum FindState {
+  FOUND = 0,
+  NOT_FOUND = 1,
+  WRAPPED = 2,
+  PENDING = 3,
 }

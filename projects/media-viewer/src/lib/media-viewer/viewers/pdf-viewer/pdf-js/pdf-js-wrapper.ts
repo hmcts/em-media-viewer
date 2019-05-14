@@ -20,6 +20,7 @@ export class PdfJsWrapper {
       const CMAP_PACKED = true;
 
       const DEFAULT_URL = documentUrl;
+      const eventBus = new pdfjsViewer.EventBus();
 
       // (Optionally) enable hyperlinks within PDF files.
       const pdfLinkService = new pdfjsViewer.PDFLinkService();
@@ -27,12 +28,14 @@ export class PdfJsWrapper {
       // (Optionally) enable find controller.
       const pdfFindController = new pdfjsViewer.PDFFindController({
         linkService: pdfLinkService,
+        eventBus: eventBus
       });
 
       const pdfViewer = new pdfjsViewer.PDFViewer({
         container: container.nativeElement,
         linkService: pdfLinkService,
-        findController: pdfFindController
+        findController: pdfFindController,
+        eventBus: eventBus
       });
 
 
