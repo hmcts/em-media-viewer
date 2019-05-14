@@ -24,8 +24,7 @@ describe('SearchBarComponent', () => {
 
     const actionEvents = new ActionEvents();
     component.searchEvents = actionEvents.search as any;
-    component.searchResultsCount = actionEvents.searchResultsCount;
-    component.searchbarHidden = new BehaviorSubject<boolean>(false);
+    component.searchBarHidden = new BehaviorSubject<boolean>(false);
     fixture.detectChanges();
   });
 

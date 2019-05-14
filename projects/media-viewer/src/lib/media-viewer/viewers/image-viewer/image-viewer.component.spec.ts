@@ -54,10 +54,6 @@ describe('ImageViewerComponent', () => {
       expect(component['rotation']).toBe(90);
     });
 
-    it('should call rotateImage', () => {
-      spyOn(component, 'rotateImage').and.stub();
-      expect(component.rotateImage).toHaveBeenCalled();
-    });
   });
 });
 

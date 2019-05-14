@@ -17,7 +17,7 @@ describe('ToolbarLeftPaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarLeftPaneComponent);
     component = fixture.componentInstance;
     component.toggleSidebarOpen = new BehaviorSubject(false);
-    component.toggleSearchbarHidden = new BehaviorSubject(true);
+    component.toggleSearchBarHidden = new BehaviorSubject(true);
     fixture.detectChanges();
   });
 
@@ -38,14 +38,14 @@ describe('ToolbarLeftPaneComponent', () => {
   }));
 
   it('should not show searchbar', async(() => {
-    component.toggleSearchbarHidden.asObservable()
-      .subscribe(searchbarHidden => expect(searchbarHidden).toBeTruthy());
+    component.toggleSearchBarHidden.asObservable()
+      .subscribe(searchBarHidden => expect(searchBarHidden).toBeTruthy());
   }));
 
   it('should toggle searchbar visible', async(() => {
     component.toggleSearchBar();
 
-    component.toggleSearchbarHidden.asObservable()
-      .subscribe(searchbarHidden => expect(searchbarHidden).toBeFalsy());
+    component.toggleSearchBarHidden.asObservable()
+      .subscribe(searchBarHidden => expect(searchBarHidden).toBeFalsy());
   }));
 });
