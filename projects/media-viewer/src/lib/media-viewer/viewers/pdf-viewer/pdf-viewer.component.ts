@@ -9,7 +9,7 @@ import {
   ZoomOperation
 } from '../../media-viewer.model';
 import { Subject } from 'rxjs';
-
+import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -23,8 +23,8 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input() searchResults: Subject<SearchResultsCount>;
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
-  pdfViewer: any;
-  pdfFindController: any;
+  pdfViewer: pdfjsViewer.PDFViewer;
+  pdfFindController: pdfjsViewer.PDFFindController;
 
   constructor(private pdfWrapper: PdfJsWrapper) {}
 

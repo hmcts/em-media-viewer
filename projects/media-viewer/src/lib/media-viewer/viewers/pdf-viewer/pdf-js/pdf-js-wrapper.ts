@@ -10,7 +10,10 @@ export class PdfJsWrapper {
         return pdfjsLib.getDocument(documentId);
     }
 
-    async initViewer(documentUrl: string, container: ElementRef): [any, any] {
+    async initViewer(
+      documentUrl: string,
+      container: ElementRef
+    ): Promise<[pdfjsViewer.PDFViewer, pdfjsViewer.PDFFindController]> {
 
       if (!pdfjsLib.getDocument || !pdfjsViewer.PDFPageView) {
         alert('pdfjsLib or pdfjsViewer are not unavailable.');
