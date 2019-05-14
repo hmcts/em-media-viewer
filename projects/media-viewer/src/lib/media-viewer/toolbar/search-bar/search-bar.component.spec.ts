@@ -21,7 +21,10 @@ describe('SearchBarComponent', () => {
     nativeElement = fixture.debugElement.nativeElement;
     searchInput = nativeElement.querySelector('input[id=findInput]');
     searchInput.value = 'searchTerm';
-    component.actionEvents = new ActionEvents();
+
+    const actionEvents = new ActionEvents();
+    component.searchEvents = actionEvents.search as any;
+    component.searchResultsCount = actionEvents.searchResultsCount;
     component.searchbarHidden = new BehaviorSubject<boolean>(false);
     fixture.detectChanges();
   });
@@ -37,18 +40,18 @@ describe('SearchBarComponent', () => {
   });
 
   it('should emit search next event', () => {
-    const searchSpy = spyOn(component.actionEvents.search, 'next');
+    const searchSpy = spyOn(component.searchEvents, 'next');
     const searchNextButton = nativeElement.querySelector('button[id=findNext]');
     searchNextButton.click();
 
-    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation("searchTerm", false, false));
+    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation("searchTerm", true, false, false, false, false));
   });
 
   it('should emit search previous event', () => {
-    const searchSpy = spyOn(component.actionEvents.search, 'next');
+    const searchSpy = spyOn(component.searchEvents, 'next');
     const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');
     searchPrevButton.click();
 
-    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation("searchTerm", true, false));
+    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation("searchTerm", true, false, false, true, false));
   });
 });
