@@ -31,7 +31,11 @@ export class PdfViewerComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     [this.pdfViewer, this.pdfFindController] = this.pdfWrapper.initViewer(this.url, this.viewerContainer);
 
-    this.pdfFindController._eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
+    this.pdfFindController._eventBus.on('updatefindcontrolstate', e => {
+      if (e.state === 3)  {
+        this.searchResults.next(e.matchesCount);
+      }
+    });
   }
 
 
@@ -57,8 +61,10 @@ export class PdfViewerComponent implements AfterViewInit {
 
       this.pdfFindController.executeCommand(command, {
         query: operation.searchTerm,
-        highlightAll: true,
-        findPrevious: operation.previous
+        caseSensitive: operation.matchCase,
+        entireWord: operation.wholeWord,
+        highlightAll: operation.highlightAll,
+        findPrevious: operation.previous,
       });
     }
   }

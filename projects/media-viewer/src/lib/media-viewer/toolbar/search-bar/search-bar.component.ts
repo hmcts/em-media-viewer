@@ -13,7 +13,12 @@ export class SearchBarComponent {
   @Input() searchEvents: Subject<SearchOperation>;
   @Input() searchResultsCount: Observable<SearchResultsCount>;
 
-  public resultsText = '';
+  highlightAll = true;
+  matchCase = false;
+  wholeWord = false;
+  resultsText = '';
+  searchText = '';
+  haveResults = false;
 
   constructor() {}
 
@@ -21,20 +26,43 @@ export class SearchBarComponent {
     this.searchResultsCount.subscribe(r => this.onUpdateResults(r));
   }
 
-  searchNext(searchTerm: string) {
-    this.searchEvents.next(new SearchOperation(searchTerm, false, false));
+  searchNext() {
+    this.searchEvents.next(new SearchOperation(
+      this.searchText,
+      this.highlightAll,
+      this.matchCase,
+      this.wholeWord,
+      false,
+      false
+    ));
   }
 
-  searchPrev(searchTerm: string) {
-    this.searchEvents.next(new SearchOperation(searchTerm, true, false));
+  searchPrev() {
+    this.searchEvents.next(new SearchOperation(
+      this.searchText,
+      this.highlightAll,
+      this.matchCase,
+      this.wholeWord,
+      true,
+      false
+    ));
   }
 
-  search(searchTerm: string) {
-    this.searchEvents.next(new SearchOperation(searchTerm, false, true));
+  search() {
+    this.searchEvents.next(new SearchOperation(
+      this.searchText,
+      this.highlightAll,
+      this.matchCase,
+      this.wholeWord,
+      false,
+      true
+    ));
   }
 
   onUpdateResults(results: SearchResultsCount) {
-    console.log("Results", results);
-    this.resultsText = `${results.current} of ${results.total} matches`;
+    this.haveResults = results.total > 0;
+    this.resultsText = this.haveResults
+      ? `${results.current} of ${results.total} matches`
+      : 'Phrase not found';
   }
 }

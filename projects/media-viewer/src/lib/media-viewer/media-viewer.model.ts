@@ -29,6 +29,9 @@ export class ZoomOperation {
 export class SearchOperation {
   constructor(
     public readonly searchTerm: string,
+    public readonly highlightAll: boolean,
+    public readonly matchCase: boolean,
+    public readonly wholeWord: boolean,
     public readonly previous: boolean,
     public readonly reset: boolean
   ) {}
