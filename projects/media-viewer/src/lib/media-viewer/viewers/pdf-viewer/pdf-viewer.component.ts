@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 
 @Component({
-  selector: 'app-pdf-viewer',
+  selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.css']
 })

@@ -8,9 +8,9 @@ class MockRenderer {
 }
 
 describe('ImageViewerComponent', () => {
-    let component: ImageViewerComponent;
-    let fixture: ComponentFixture<ImageViewerComponent>;
-    const mockRenderer = new MockRenderer();
+  let component: ImageViewerComponent;
+  let fixture: ComponentFixture<ImageViewerComponent>;
+  const mockRenderer = new MockRenderer();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('ImageViewerComponent', () => {
         { provide: Renderer2, useFactory: () => mockRenderer },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
