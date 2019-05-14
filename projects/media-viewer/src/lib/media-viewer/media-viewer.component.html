@@ -14,7 +14,8 @@
                   [url]="url"
                   [zoomOperation]="zoom | async"
                   [printOperation]="print | async"
-                  [rotateOperation]="rotation | async">
+                  [rotateOperation]="rotation | async"
+                  [downloadOperation]="download | async">
 </mv-image-viewer>
 <mv-unsupported-viewer [url]="url"
                         *ngIf="contentTypeUnsupported()" >
