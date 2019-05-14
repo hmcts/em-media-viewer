@@ -3,7 +3,7 @@ import { EmLoggerService } from '../../../logging/em-logger.service';
 import {DownloadOperation, PrintOperation, RotateOperation, ZoomOperation} from '../../media-viewer.model';
 
 @Component({
-    selector: 'app-image-viewer',
+    selector: 'mv-image-viewer',
     templateUrl: './image-viewer.component.html',
     styleUrls: ['./image-viewer.component.scss'],
 })

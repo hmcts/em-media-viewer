@@ -10,7 +10,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 
 @Component({
-    selector: 'app-media-viewer',
+    selector: 'mv-media-viewer',
     templateUrl: './media-viewer.component.html'
 })
 export class MediaViewerComponent implements OnInit {

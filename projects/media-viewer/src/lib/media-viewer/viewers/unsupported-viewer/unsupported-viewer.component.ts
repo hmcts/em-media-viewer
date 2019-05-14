@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-unsupported-viewer',
+  selector: 'mv-unsupported-viewer',
   templateUrl: './unsupported-viewer.component.html',
   styleUrls: ['./unsupported-viewer.component.scss']
 })
