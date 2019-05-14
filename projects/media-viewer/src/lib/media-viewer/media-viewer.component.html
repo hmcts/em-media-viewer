@@ -1,10 +1,11 @@
-<app-toolbar [actionEvents]="actionEvents"></app-toolbar>
+<mv-toolbar [actionEvents]="actionEvents"></mv-toolbar>
 
 <app-pdf-viewer *ngIf="contentType === 'pdf'"
                 [url]="url"
                 [downloadFileName]="downloadFileName"
                 [zoomOperation]="zoom | async"
                 [searchOperation]="search | async"
+                [searchResults]="searchResults"
                 [downloadOperation]="download | async"
                 [printOperation]="print | async"
                 [rotateOperation]="rotation | async">

@@ -8,16 +8,16 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ToolbarLeftPaneComponent {
 
-  @Input() sidebarOpen: BehaviorSubject<boolean>;
-  @Input() searchBarHide: BehaviorSubject<boolean>;
+  @Input() toggleSidebarOpen: BehaviorSubject<boolean>;
+  @Input() toggleSearchBarHidden: BehaviorSubject<boolean>;
 
   constructor() {}
 
   toggleSideBar() {
-    this.sidebarOpen.next(!this.sidebarOpen.getValue());
+    this.toggleSidebarOpen.next(!this.toggleSidebarOpen.getValue());
   }
 
   toggleSearchBar() {
-    this.searchBarHide.next(!this.searchBarHide.getValue());
+    this.toggleSearchBarHidden.next(!this.toggleSearchBarHidden.getValue());
   }
 }
