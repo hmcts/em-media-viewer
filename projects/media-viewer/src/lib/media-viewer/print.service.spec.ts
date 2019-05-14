@@ -25,7 +25,7 @@ describe('PrintService', () => {
       });
 
     describe('constructor', () => {
-        it('should be created', inject([MediaViewerService], (service: MediaViewerService) => {
+        it('should be created', inject([PrintService], (service: PrintService) => {
           expect(service).toBeTruthy();
         }));
     });
