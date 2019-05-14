@@ -9,7 +9,7 @@ import { BehaviorSubject, Subject, Observable } from 'rxjs';
 })
 export class SearchBarComponent {
 
-  @Input() searchbarHidden: BehaviorSubject<boolean>;
+  @Input() searchBarHidden: BehaviorSubject<boolean>;
   @Input() searchEvents: Subject<SearchOperation>;
 
   highlightAll = true;

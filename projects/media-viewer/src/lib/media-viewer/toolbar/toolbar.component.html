@@ -3,16 +3,16 @@
   <div id="mainContainer">
     <mv-search-bar [searchEvents]="actionEvents.search"
                    [searchResultsCount]="actionEvents.searchResultsCount | async"
-                   [searchbarHidden]="searchbarHidden | async"></mv-search-bar>
+                   [searchBarHidden]="searchBarHidden | async"></mv-search-bar>
     <mv-sub-toolbar [actionEvents]="actionEvents"
                     [subToolbarHidden]="subToolbarHidden | async"></mv-sub-toolbar>
     <div class="toolbar">
       <div id="toolbarContainer">
         <div id="toolbarViewer">
-          <mv-tb-left-pane [toggleSearchbarHidden]="searchbarHidden"
+          <mv-tb-left-pane [toggleSearchbarHidden]="searchBarHidden"
                            [toggleSidebarOpen]="sidebarOpen"></mv-tb-left-pane>
           <mv-tb-right-pane [actionEvents]="actionEvents"
-                            [toggleSubToolbarHidden]="subToolbarHidden">
+                            [toggleSubToolbarHidden]="searchBarHidden">
           </mv-tb-right-pane>
           <mv-tb-middle-pane [actionEvents]="actionEvents"></mv-tb-middle-pane>
         </div>
