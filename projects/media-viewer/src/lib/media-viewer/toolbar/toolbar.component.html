@@ -1,17 +1,18 @@
 <div id="outerContainer" [ngClass]="{ sidebarOpen: sidebarOpen | async }">
   <mv-side-bar id="sidebarContainer"></mv-side-bar>
   <div id="mainContainer">
-    <mv-search-bar [actionEvents]="actionEvents"
-                   [searchBarHide]="searchBarHide | async"></mv-search-bar>
+    <mv-search-bar [searchEvents]="actionEvents.search"
+                   [searchResultsCount]="actionEvents.searchResultsCount | async"
+                   [searchBarHidden]="searchBarHidden | async"></mv-search-bar>
     <mv-sub-toolbar [actionEvents]="actionEvents"
-                    [subToolbarHide]="subToolbarHide | async"></mv-sub-toolbar>
+                    [subToolbarHidden]="subToolbarHidden | async"></mv-sub-toolbar>
     <div class="toolbar">
       <div id="toolbarContainer">
         <div id="toolbarViewer">
-          <mv-tb-left-pane [searchBarHide]="searchBarHide"
-                           [sidebarOpen]="sidebarOpen"></mv-tb-left-pane>
+          <mv-tb-left-pane [toggleSearchbarHidden]="searchBarHidden"
+                           [toggleSidebarOpen]="sidebarOpen"></mv-tb-left-pane>
           <mv-tb-right-pane [actionEvents]="actionEvents"
-                            [subToolbarHide]="subToolbarHide">
+                            [toggleSubToolbarHidden]="searchBarHidden">
           </mv-tb-right-pane>
           <mv-tb-middle-pane [actionEvents]="actionEvents"></mv-tb-middle-pane>
         </div>
