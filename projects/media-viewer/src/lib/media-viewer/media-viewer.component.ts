@@ -4,10 +4,10 @@ import {
   DownloadOperation,
   PrintOperation,
   RotateOperation,
-  SearchOperation,
+  SearchOperation, SearchResultsCount,
   ZoomOperation
 } from './media-viewer.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-media-viewer',
@@ -21,6 +21,7 @@ export class MediaViewerComponent implements OnInit {
   @Input() actionEvents: ActionEvents;
   rotation: Observable<RotateOperation>;
   search: Observable<SearchOperation>;
+  searchResults: Subject<SearchResultsCount>;
   zoom: Observable<ZoomOperation>;
   download: Observable<DownloadOperation>;
   print: Observable<PrintOperation>;
@@ -33,6 +34,7 @@ export class MediaViewerComponent implements OnInit {
     if (this.actionEvents) {
       this.rotation = this.actionEvents.rotate;
       this.search = this.actionEvents.search;
+      this.searchResults = this.actionEvents.searchResultsCount;
       this.zoom = this.actionEvents.zoom;
       this.download = this.actionEvents.download;
       this.print = this.actionEvents.print;

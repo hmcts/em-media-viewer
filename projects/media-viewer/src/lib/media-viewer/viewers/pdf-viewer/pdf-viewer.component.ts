@@ -1,37 +1,42 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
   DownloadOperation,
   PrintOperation,
   RotateOperation,
   SearchOperation,
+  SearchResultsCount,
   ZoomOperation
 } from '../../media-viewer.model';
-
+import { Subject } from 'rxjs';
+import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 
 @Component({
-    selector: 'app-pdf-viewer',
-  template: `
-    <div #viewerContainer class="pdfContainer">
-      <div class="pdfViewer"></div>
-    </div>
-  `,
-    styleUrls: ['./pdf-viewer.component.css']
+  selector: 'app-pdf-viewer',
+  templateUrl: './pdf-viewer.component.html',
+  styleUrls: ['./pdf-viewer.component.css']
 })
 export class PdfViewerComponent implements AfterViewInit {
 
   @Input() url: string;
   @Input() downloadFileName: string;
+  @Input() searchResults: Subject<SearchResultsCount>;
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
-  pdfViewer: any;
-  pdfFindController: any;
+  pdfViewer: pdfjsViewer.PDFViewer;
+  pdfFindController: pdfjsViewer.PDFFindController;
 
   constructor(private pdfWrapper: PdfJsWrapper) {}
 
-  ngAfterViewInit(): void {
-    [this.pdfViewer, this.pdfFindController]
-      = this.pdfWrapper.initViewer(this.url, this.viewerContainer);
+  async ngAfterViewInit(): Promise<void> {
+    [this.pdfViewer, this.pdfFindController] = await this.pdfWrapper.initViewer(this.url, this.viewerContainer);
+
+    this.pdfViewer.eventBus.on('updatefindcontrolstate', e => {
+      if (e.state === FindState.NOT_FOUND) {
+        this.searchResults.next({ current: 0, total: 0 });
+      }
+    });
+    this.pdfViewer.eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
   }
 
 
@@ -57,8 +62,10 @@ export class PdfViewerComponent implements AfterViewInit {
 
       this.pdfFindController.executeCommand(command, {
         query: operation.searchTerm,
-        highlightAll: true,
-        findPrevious: operation.previous
+        caseSensitive: operation.matchCase,
+        entireWord: operation.wholeWord,
+        highlightAll: operation.highlightAll,
+        findPrevious: operation.previous,
       });
     }
   }
@@ -77,4 +84,11 @@ export class PdfViewerComponent implements AfterViewInit {
       this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
     }
   }
+}
+
+enum FindState {
+  FOUND = 0,
+  NOT_FOUND = 1,
+  WRAPPED = 2,
+  PENDING = 3,
 }
