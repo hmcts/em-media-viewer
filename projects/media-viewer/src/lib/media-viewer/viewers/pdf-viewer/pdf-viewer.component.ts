@@ -28,8 +28,8 @@ export class PdfViewerComponent implements AfterViewInit {
 
   constructor(private pdfWrapper: PdfJsWrapper) {}
 
-  ngAfterViewInit(): void {
-    [this.pdfViewer, this.pdfFindController] = this.pdfWrapper.initViewer(this.url, this.viewerContainer);
+  async ngAfterViewInit(): Promise<void> {
+    [this.pdfViewer, this.pdfFindController] = await this.pdfWrapper.initViewer(this.url, this.viewerContainer);
 
     this.pdfFindController._eventBus.on('updatefindcontrolstate', e => {
       if (e.state === 3)  {

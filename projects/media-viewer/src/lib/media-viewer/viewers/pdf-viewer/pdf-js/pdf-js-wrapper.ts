@@ -10,7 +10,7 @@ export class PdfJsWrapper {
         return pdfjsLib.getDocument(documentId);
     }
 
-    initViewer(documentUrl: string, container: ElementRef): [any, any] {
+    async initViewer(documentUrl: string, container: ElementRef): [any, any] {
 
       if (!pdfjsLib.getDocument || !pdfjsViewer.PDFPageView) {
         alert('pdfjsLib or pdfjsViewer are not unavailable.');
@@ -44,18 +44,13 @@ export class PdfJsWrapper {
       });
 
       // Loading document.
-      const loadingTask = pdfjsLib.getDocument({
+      const pdfDocument = await pdfjsLib.getDocument({
         url: DEFAULT_URL,
         cMapUrl: CMAP_URL,
         cMapPacked: CMAP_PACKED,
       });
-      loadingTask.promise.then(function(pdfDocument) {
-        // Document loaded, specifying document for the viewer and
-        // the (optional) linkService.
-        pdfViewer.setDocument(pdfDocument);
-
-        pdfLinkService.setDocument(pdfDocument, null);
-      });
+      pdfViewer.setDocument(pdfDocument);
+      pdfLinkService.setDocument(pdfDocument, null);
 
       return [pdfViewer, pdfFindController];
 
