@@ -2,7 +2,7 @@
   <mv-side-bar id="sidebarContainer"></mv-side-bar>
   <div id="mainContainer">
     <mv-search-bar [searchEvents]="actionEvents.search"
-                   [searchResultsCount]="actionEvents.searchResultsCount"
+                   [searchResultsCount]="actionEvents.searchResultsCount | async"
                    [searchbarHidden]="searchbarHidden | async"></mv-search-bar>
     <mv-sub-toolbar [actionEvents]="actionEvents"
                     [subToolbarHidden]="subToolbarHidden | async"></mv-sub-toolbar>

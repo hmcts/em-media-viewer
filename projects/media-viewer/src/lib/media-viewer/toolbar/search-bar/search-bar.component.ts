@@ -11,7 +11,6 @@ export class SearchBarComponent {
 
   @Input() searchbarHidden: BehaviorSubject<boolean>;
   @Input() searchEvents: Subject<SearchOperation>;
-  @Input() searchResultsCount: Observable<SearchResultsCount>;
 
   highlightAll = true;
   matchCase = false;
@@ -21,10 +20,6 @@ export class SearchBarComponent {
   haveResults = false;
 
   constructor() {}
-
-  ngOnInit() {
-    this.searchResultsCount.subscribe(r => this.onUpdateResults(r));
-  }
 
   searchNext() {
     this.searchEvents.next(new SearchOperation(
@@ -59,10 +54,13 @@ export class SearchBarComponent {
     ));
   }
 
-  onUpdateResults(results: SearchResultsCount) {
-    this.haveResults = results.total > 0;
-    this.resultsText = this.haveResults
-      ? `${results.current} of ${results.total} matches`
-      : 'Phrase not found';
+  @Input()
+  set searchResultsCount(results: SearchResultsCount | null) {
+    if (results) {
+      this.haveResults = results.total > 0;
+      this.resultsText = this.haveResults
+        ? `${results.current} of ${results.total} matches`
+        : 'Phrase not found';
+    }
   }
 }
