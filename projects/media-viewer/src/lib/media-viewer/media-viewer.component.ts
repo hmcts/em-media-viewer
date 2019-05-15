@@ -13,6 +13,7 @@ export class MediaViewerComponent {
   @Input() downloadFileName = null;
   @Input() contentType: string;
   @Input() actionEvents: ActionEvents;
+  @Input() showToolbar = true;
 
   toolbarToggles = new ToolbarToggles();
 
