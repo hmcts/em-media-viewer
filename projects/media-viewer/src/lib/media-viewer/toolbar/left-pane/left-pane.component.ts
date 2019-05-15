@@ -37,7 +37,7 @@ export class ToolbarLeftPaneComponent {
   }
 
   @Input()
-  set stateChange(stateChangeEvent: SetCurrentPageOperation | ChangePageByDeltaOperation | any) {
+  set stateChange(stateChangeEvent: SetCurrentPageOperation | ChangePageByDeltaOperation | null) {
     if (stateChangeEvent) {
       if ((<SetCurrentPageOperation>stateChangeEvent).pageNumber) {
         this.pageNumber = (<SetCurrentPageOperation>stateChangeEvent).pageNumber;
