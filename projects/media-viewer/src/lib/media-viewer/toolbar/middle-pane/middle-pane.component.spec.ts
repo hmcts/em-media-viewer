@@ -18,7 +18,7 @@ describe('ToolbarMiddlePaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarMiddlePaneComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.actionEvents = new ActionEvents();
+    component.zoomEvent = new ActionEvents();
     fixture.detectChanges();
   });
 
@@ -27,7 +27,7 @@ describe('ToolbarMiddlePaneComponent', () => {
   });
 
   it('should emit zoom out event', () => {
-    const zoomSpy = spyOn(component.actionEvents.zoom, 'next');
+    const zoomSpy = spyOn(component.zoomEvent.zoom, 'next');
     const zoomOutButton = nativeElement.querySelector('button[id=zoomOut]');
     zoomOutButton.click();
 
@@ -35,7 +35,7 @@ describe('ToolbarMiddlePaneComponent', () => {
   });
 
   it('should emit zoom in event', () => {
-    const zoomSpy = spyOn(component.actionEvents.zoom, 'next');
+    const zoomSpy = spyOn(component.zoomEvent.zoom, 'next');
     const zoomInButton = nativeElement.querySelector('button[id=zoomIn]');
     zoomInButton.click();
 

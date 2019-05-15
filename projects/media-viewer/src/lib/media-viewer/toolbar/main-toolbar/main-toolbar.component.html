@@ -1,0 +1,18 @@
+<div class="toolbar">
+  <div id="toolbarContainer">
+    <div id="toolbarViewer">
+      <mv-tb-left-pane [toggleSearchBarHidden]="toggleSearchBarHidden"
+                       [toggleSidebarOpen]="toggleSidebarOpen"></mv-tb-left-pane>
+      <mv-tb-right-pane [actionEvents]="actionEvents"
+                        [toggleSubToolbarHidden]="toggleSubToolbarHidden">
+      </mv-tb-right-pane>
+      <mv-tb-middle-pane [zoomEvent]="actionEvents.zoom"></mv-tb-middle-pane>
+    </div>
+    <div id="loadingBar">
+      <div class="progress">
+        <div class="glimmer">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

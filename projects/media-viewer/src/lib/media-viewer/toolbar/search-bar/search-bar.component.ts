@@ -5,7 +5,7 @@ import { BehaviorSubject, Subject, Observable } from 'rxjs';
 @Component({
   selector: 'mv-search-bar',
   templateUrl: './search-bar.component.html',
-  styleUrls: ['../styles/toolbar.component.scss']
+  styleUrls: ['../../styles/main.scss']
 })
 export class SearchBarComponent {
 
