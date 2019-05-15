@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents } from '../media-viewer.model';
+import {ActionEvents, SetCurrentPageOperation} from '../media-viewer.model';
 import {BehaviorSubject, Subject} from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ export class ToolbarComponent {
   sidebarOpen = new BehaviorSubject(false);
   searchBarHidden = new BehaviorSubject(true);
   subToolbarHidden = new BehaviorSubject(true);
-  @Input() stateChange: any;
+  @Input() currentPage: SetCurrentPageOperation;
 
   constructor() {}
 

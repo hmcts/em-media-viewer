@@ -25,23 +25,21 @@ export class ToolbarLeftPaneComponent {
   }
 
   increasePageNumber() {
-    this.actionEvents.changePage.next(new ChangePageByDeltaOperation(1));
+    this.actionEvents.changePageByDelta.next(new ChangePageByDeltaOperation(1));
   }
 
   decreasePageNumber() {
-    this.actionEvents.changePage.next(new ChangePageByDeltaOperation(-1));
+    this.actionEvents.changePageByDelta.next(new ChangePageByDeltaOperation(-1));
   }
 
   setCurrentPageNumber(pageNumber: string) {
-    this.actionEvents.changePage.next(new SetCurrentPageOperation(Number.parseInt(pageNumber, 0)));
+    this.actionEvents.setCurrentPage.next(new SetCurrentPageOperation(Number.parseInt(pageNumber, 0)));
   }
 
   @Input()
-  set stateChange(stateChangeEvent: SetCurrentPageOperation | ChangePageByDeltaOperation | null) {
-    if (stateChangeEvent) {
-      if ((<SetCurrentPageOperation>stateChangeEvent).pageNumber) {
-        this.pageNumber = (<SetCurrentPageOperation>stateChangeEvent).pageNumber;
-      }
+  set currentPage(operation: SetCurrentPageOperation | null) {
+    if (operation) {
+      this.pageNumber = operation.pageNumber;
     }
   }
 
