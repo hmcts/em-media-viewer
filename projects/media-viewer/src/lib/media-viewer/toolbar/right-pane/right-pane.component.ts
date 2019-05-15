@@ -5,7 +5,7 @@ import { ActionEvents, PrintOperation, DownloadOperation } from '../../media-vie
 @Component({
   selector: 'mv-tb-right-pane',
   templateUrl: './right-pane.component.html',
-  styleUrls: ['../styles/toolbar.component.scss']
+  styleUrls: ['../../styles/main.scss']
 })
 export class ToolbarRightPaneComponent {
 

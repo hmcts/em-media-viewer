@@ -4,7 +4,7 @@ import { ActionEvents, PrintOperation, DownloadOperation, RotateOperation } from
 @Component({
   selector: 'mv-sub-toolbar',
   templateUrl: './sub-toolbar.component.html',
-  styleUrls: ['../styles/toolbar.component.scss']
+  styleUrls: ['../../styles/main.scss']
 })
 export class SubToolbarComponent {
 
