@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'mv-tb-left-pane',
   templateUrl: './left-pane.component.html',
-  styleUrls: ['../styles/toolbar.component.scss']
+  styleUrls: ['../../styles/main.scss']
 })
 export class ToolbarLeftPaneComponent {
 
