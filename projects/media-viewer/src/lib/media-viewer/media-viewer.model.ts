@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 export class ActionEvents {
@@ -10,6 +10,12 @@ export class ActionEvents {
   public readonly download = new Subject<DownloadOperation>();
   public readonly setCurrentPage = new Subject<SetCurrentPageOperation>();
   public readonly changePageByDelta = new Subject<ChangePageByDeltaOperation>();
+}
+
+export class ToolbarToggles {
+  public readonly subToolbarHidden = new BehaviorSubject(true);
+  public readonly sidebarOpen = new BehaviorSubject(false);
+  public readonly searchBarHidden = new BehaviorSubject(true);
 }
 
 export class DownloadOperation {}
