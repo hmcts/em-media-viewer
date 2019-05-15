@@ -10,6 +10,7 @@ import {
 } from '../../media-viewer.model';
 import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
+import {PrintService} from '../../print.service';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -26,7 +27,7 @@ export class PdfViewerComponent implements AfterViewInit {
   pdfViewer: pdfjsViewer.PDFViewer;
   pdfFindController: pdfjsViewer.PDFFindController;
 
-  constructor(private pdfWrapper: PdfJsWrapper) {}
+  constructor(private pdfWrapper: PdfJsWrapper, private printService: PrintService) {}
 
   async ngAfterViewInit(): Promise<void> {
     [this.pdfViewer, this.pdfFindController] = await this.pdfWrapper.initViewer(this.url, this.viewerContainer);
@@ -73,8 +74,7 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input()
   set printOperation(operation: PrintOperation | null) {
     if (operation) {
-      const printWindow = window.open(this.url);
-      printWindow.print();
+      this.printService.printDocumentNatively(this.url);
     }
   }
 
