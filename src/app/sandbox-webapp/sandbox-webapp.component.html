@@ -3,12 +3,12 @@
     <div class="govuk-grid-column-one-half">
       <h2 class="govuk-heading-m  govuk-!-margin-top-4">Media Viewer Demo</h2>
     </div>
-    <div class="govuk-grid-column-one-quarter">
+    <div class="govuk-grid-column-one-half">
       <table style="float: right">
         <tr>
           <td><span class="govuk-heading-s govuk-!-margin-top-4">Toggle Toolbar</span></td>
           <td>
-            <label  style="float: right" class="switch">
+            <label  style="float: right" class="switch govuk-!-margin-left-1">
               <input type="checkbox" [checked]="showToolbar" (change)="toggleToolbarVisibility($event.target.checked)">
               <span class="slider round"></span>
             </label>
