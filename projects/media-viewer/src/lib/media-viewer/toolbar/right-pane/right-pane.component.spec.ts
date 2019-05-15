@@ -19,7 +19,7 @@ describe('ToolbarRightPaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarRightPaneComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.zoomEvent = new ActionEvents();
+    component.actionEvents = new ActionEvents();
     component.toggleSubToolbarHidden = new BehaviorSubject<boolean>(true);
     fixture.detectChanges();
   });

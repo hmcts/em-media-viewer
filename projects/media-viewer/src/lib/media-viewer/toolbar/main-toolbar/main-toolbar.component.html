@@ -1,7 +1,9 @@
 <div class="toolbar">
   <div id="toolbarContainer">
     <div id="toolbarViewer">
-      <mv-tb-left-pane [toggleSearchBarHidden]="toggleSearchBarHidden"
+      <mv-tb-left-pane [currentPage]="currentPage"
+                       [actionEvents]="actionEvents"
+                       [toggleSearchBarHidden]="toggleSearchBarHidden"
                        [toggleSidebarOpen]="toggleSidebarOpen"></mv-tb-left-pane>
       <mv-tb-right-pane [actionEvents]="actionEvents"
                         [toggleSubToolbarHidden]="toggleSubToolbarHidden">
