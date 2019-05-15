@@ -9,16 +9,17 @@
     <span data-l10n-id="findbar_label">Find</span>
   </button>
   <div class="splitToolbarButton hiddenSmallView">
-    <button class="toolbarButton pageUp" title="Previous Page" id="previous" tabindex="13"
+    <button class="toolbarButton pageUp" title="Previous Page" id="previous" tabindex="13" (click)="increasePageNumber()"
             data-l10n-id="previous">
       <span data-l10n-id="previous_label">Previous</span>
     </button>
     <div class="splitToolbarButtonSeparator"></div>
-    <button class="toolbarButton pageDown" title="Next Page" id="next" tabindex="14" data-l10n-id="next">
+    <button class="toolbarButton pageDown" title="Next Page" id="next" tabindex="14" data-l10n-id="next" (click)="decreasePageNumber()">
       <span data-l10n-id="next_label">Next</span>
     </button>
   </div>
   <input type="number" id="pageNumber" class="toolbarField pageNumber" title="Page" value="1" size="4" min="1"
-         tabindex="15" data-l10n-id="page">
+         [value]="pageNumber"
+         tabindex="15" data-l10n-id="page" (change)="setCurrentPageNumber(pageNumberInput.value)" #pageNumberInput>
   <span id="numPages" class="toolbarLabel"></span>
 </div>

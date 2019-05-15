@@ -8,6 +8,8 @@ export class ActionEvents {
   public readonly zoom = new Subject<ZoomOperation>();
   public readonly print = new Subject<PrintOperation>();
   public readonly download = new Subject<DownloadOperation>();
+  public readonly setCurrentPage = new Subject<SetCurrentPageOperation>();
+  public readonly changePageByDelta = new Subject<ChangePageByDeltaOperation>();
 }
 
 export class ToolbarToggles {
@@ -46,4 +48,14 @@ export class SearchOperation {
 export interface SearchResultsCount {
   current: number;
   total: number;
+}
+
+export class SetCurrentPageOperation {
+  constructor(public pageNumber: number) {
+  }
+}
+
+export class ChangePageByDeltaOperation {
+  constructor(public delta: number) {
+  }
 }
