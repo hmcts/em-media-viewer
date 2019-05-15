@@ -10,7 +10,7 @@
       </mv-tb-right-pane>
       <mv-tb-middle-pane [zoomEvent]="actionEvents.zoom"
                          [stepZoomEvent]="actionEvents.stepZoom"
-                         [zoomValue]="(actionEvents.zoomValue | async) || 1"></mv-tb-middle-pane>
+                         [zoomValue]="(actionEvents.zoomValue | async) || { value: 1 }"></mv-tb-middle-pane>
     </div>
     <div id="loadingBar">
       <div class="progress">

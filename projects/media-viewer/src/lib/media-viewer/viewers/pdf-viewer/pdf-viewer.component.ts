@@ -61,7 +61,7 @@ export class PdfViewerComponent implements AfterViewInit {
   set zoomOperation(operation: ZoomOperation | null) {
     if (this.pdfViewer && operation) {
       this.pdfViewer.currentScaleValue = this.updateZoomValue(operation.zoomFactor);
-      this.zoomValue.next(this.pdfViewer.currentScaleValue);
+      this.zoomValue.next({ value: this.pdfViewer.currentScaleValue });
     }
   }
 
@@ -70,7 +70,7 @@ export class PdfViewerComponent implements AfterViewInit {
     if (this.pdfViewer && operation) {
       const newZoomValue = this.pdfViewer.currentScale + operation.zoomFactor;
       this.pdfViewer.currentScaleValue = this.updateZoomValue(newZoomValue);
-      this.zoomValue.next(this.pdfViewer.currentScaleValue);
+      this.zoomValue.next({ value: this.pdfViewer.currentScaleValue });
     }
   }
 

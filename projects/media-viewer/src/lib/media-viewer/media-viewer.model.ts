@@ -20,12 +20,6 @@ export class ToolbarToggles {
   public readonly searchBarHidden = new BehaviorSubject(true);
 }
 
-export class ToolbarToggles {
-  public readonly subToolbarHidden = new BehaviorSubject(true);
-  public readonly sidebarOpen = new BehaviorSubject(false);
-  public readonly searchBarHidden = new BehaviorSubject(true);
-}
-
 export class DownloadOperation {}
 
 export class PrintOperation {}
@@ -49,7 +43,7 @@ export class StepZoomOperation {
 }
 
 export interface ZoomValue {
-  zoomValue: number;
+  value: number;
 }
 
 export class SearchOperation {
