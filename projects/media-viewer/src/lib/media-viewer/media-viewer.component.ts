@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
-  ActionEvents,
+  ActionEvents, ChangePageOperation,
   DownloadOperation,
   PrintOperation,
   RotateOperation,
@@ -25,6 +25,9 @@ export class MediaViewerComponent implements OnInit {
   zoom: Observable<ZoomOperation>;
   download: Observable<DownloadOperation>;
   print: Observable<PrintOperation>;
+  changePage: Observable<ChangePageOperation>;
+
+  stateChange = new Subject();
 
   error: any;
 
@@ -38,10 +41,12 @@ export class MediaViewerComponent implements OnInit {
       this.zoom = this.actionEvents.zoom;
       this.download = this.actionEvents.download;
       this.print = this.actionEvents.print;
+      this.changePage = this.actionEvents.changePage;
     }
   }
 
   contentTypeUnsupported(): boolean {
     return this.supportedContentTypes.indexOf(this.contentType) < 0;
   }
+
 }

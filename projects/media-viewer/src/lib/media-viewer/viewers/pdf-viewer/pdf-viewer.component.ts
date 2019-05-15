@@ -1,14 +1,16 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
+  ChangeByDelta,
+  ChangePageOperation,
   DownloadOperation,
   PrintOperation,
   RotateOperation,
   SearchOperation,
-  SearchResultsCount,
+  SearchResultsCount, SetCurrentPage,
   ZoomOperation
 } from '../../media-viewer.model';
-import { Subject } from 'rxjs';
+import {Subject} from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import {PrintService} from '../../print.service';
 
@@ -23,6 +25,7 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input() downloadFileName: string;
   @Input() searchResults: Subject<SearchResultsCount>;
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
+  @Input() stateChange: Subject<any>;
 
   pdfViewer: pdfjsViewer.PDFViewer;
   pdfFindController: pdfjsViewer.PDFFindController;
@@ -38,6 +41,7 @@ export class PdfViewerComponent implements AfterViewInit {
       }
     });
     this.pdfViewer.eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
+    this.pdfViewer.eventBus.on('pagechanging', e => this.stateChange.next(new ChangePageOperation(new SetCurrentPage(e.pageNumber))));
   }
 
 
@@ -84,6 +88,21 @@ export class PdfViewerComponent implements AfterViewInit {
       this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
     }
   }
+
+  @Input()
+  set changePage(operation: ChangePageOperation | null) {
+    if (operation) {
+      if (operation.changePageParameter instanceof SetCurrentPage) {
+        this.pdfViewer.currentPageNumber = operation.changePageParameter.pageNumber;
+      } else if (operation.changePageParameter instanceof ChangeByDelta) {
+        const currentPage = this.pdfViewer.currentPageNumber;
+        this.pdfViewer.currentPageNumber = currentPage + operation.changePageParameter.delta;
+      }
+    }
+  }
+
+
+
 }
 
 enum FindState {

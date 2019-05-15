@@ -8,6 +8,7 @@ export class ActionEvents {
   public readonly zoom = new Subject<ZoomOperation>();
   public readonly print = new Subject<PrintOperation>();
   public readonly download = new Subject<DownloadOperation>();
+  public readonly changePage = new Subject<ChangePageOperation>();
 }
 
 export class DownloadOperation {}
@@ -40,4 +41,24 @@ export class SearchOperation {
 export interface SearchResultsCount {
   current: number;
   total: number;
+}
+
+export class ChangePageOperation {
+  constructor(public changePageParameter: ChangePageParameter) {
+  }
+}
+
+export class ChangePageParameter {
+}
+
+export class SetCurrentPage extends ChangePageParameter {
+  constructor(public pageNumber: number) {
+    super();
+  }
+}
+
+export class ChangeByDelta extends ChangePageParameter {
+  constructor(public delta: number) {
+    super();
+  }
 }

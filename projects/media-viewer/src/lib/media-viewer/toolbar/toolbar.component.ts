@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActionEvents } from '../media-viewer.model';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Component({
   selector: 'mv-toolbar',
@@ -12,6 +12,7 @@ export class ToolbarComponent {
   sidebarOpen = new BehaviorSubject(false);
   searchBarHidden = new BehaviorSubject(true);
   subToolbarHidden = new BehaviorSubject(true);
+  @Input() stateChange: any;
 
   constructor() {}
 
