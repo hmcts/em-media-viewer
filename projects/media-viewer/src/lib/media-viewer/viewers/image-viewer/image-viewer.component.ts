@@ -1,6 +1,7 @@
 import { Component, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { EmLoggerService } from '../../../logging/em-logger.service';
 import {DownloadOperation, PrintOperation, RotateOperation, ZoomOperation} from '../../media-viewer.model';
+import {PrintService} from '../../print.service';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -16,7 +17,8 @@ export class ImageViewerComponent {
   rotation = 0;
 
   constructor(private renderer: Renderer2,
-              private log: EmLoggerService) {
+              private log: EmLoggerService,
+              private printService: PrintService) {
   }
 
 
@@ -38,15 +40,20 @@ export class ImageViewerComponent {
   @Input()
   set printOperation(operation: PrintOperation | null) {
     if (operation) {
-      const printWindow = window.open(this.url);
-      printWindow.print();
+      this.printService.printDocumentNatively(this.url);
     }
   }
 
   @Input()
   set downloadOperation(operation: DownloadOperation | null) {
     if (operation) {
-      // TODO
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = this.url;
+      a.download = this.downloadFileName;
+      a.click();
+      a.remove();
     }
   }
 
