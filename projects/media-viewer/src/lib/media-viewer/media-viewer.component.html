@@ -1,30 +1,40 @@
-<mv-toolbar [actionEvents]="actionEvents"></mv-toolbar>
-
-<mv-pdf-viewer *ngIf="contentType === 'pdf'"
-                [url]="url"
-                [downloadFileName]="downloadFileName"
-                [zoomOperation]="zoom | async"
-                [searchOperation]="search | async"
-                [searchResults]="searchResults"
-                [downloadOperation]="download | async"
-                [printOperation]="print | async"
-                [rotateOperation]="rotation | async">
-</mv-pdf-viewer>
-<mv-image-viewer *ngIf="contentType === 'image'"
-                  [url]="url"
-                  [zoomOperation]="zoom | async"
-                  [printOperation]="print | async"
-                  [rotateOperation]="rotation | async"
-                  [downloadOperation]="download | async">
-</mv-image-viewer>
-<mv-unsupported-viewer [url]="url"
-                        *ngIf="contentTypeUnsupported()" >
-</mv-unsupported-viewer>
-
-<div class="grid-row">
-  <div *ngIf="error"  class="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
-    <h2 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">There was an error while loading your document.</h2>
-    <p>Response status was {{error.status}}.</p>
+<div id="outerContainer" [ngClass]="{ sidebarOpen: toolbarToggles.sidebarOpen | async }">
+  <mv-side-bar id="sidebarContainer"></mv-side-bar>
+  <div id="mainContainer">
+    <mv-search-bar [searchEvents]="actionEvents.search"
+                   [searchResultsCount]="actionEvents.searchResultsCount | async"
+                   [searchBarHidden]="toolbarToggles.searchBarHidden | async"></mv-search-bar>
+    <mv-sub-toolbar [actionEvents]="actionEvents"
+                    [subToolbarHidden]="toolbarToggles.subToolbarHidden | async"></mv-sub-toolbar>
+    <mv-main-toolbar [actionEvents]="actionEvents"
+                     [toggleSearchBarHidden]="toolbarToggles.searchBarHidden"
+                     [toggleSidebarOpen]="toolbarToggles.sidebarOpen"
+                     [toggleSubToolbarHidden]="toolbarToggles.subToolbarHidden"></mv-main-toolbar>
+    <mv-pdf-viewer *ngIf="contentType === 'pdf'"
+                   [url]="url"
+                   [downloadFileName]="downloadFileName"
+                   [zoomOperation]="actionEvents.zoom | async"
+                   [searchOperation]="actionEvents.search | async"
+                   [searchResults]="actionEvents.searchResultsCount"
+                   [downloadOperation]="actionEvents.download | async"
+                   [printOperation]="actionEvents.print | async"
+                   [rotateOperation]="actionEvents.rotate | async">
+    </mv-pdf-viewer>
+    <mv-image-viewer *ngIf="contentType === 'image'"
+                     [url]="url"
+                     [zoomOperation]="actionEvents.zoom | async"
+                     [printOperation]="actionEvents.print | async"
+                     [rotateOperation]="actionEvents.rotate | async"
+                     [downloadOperation]="actionEvents.download | async">
+    </mv-image-viewer>
+    <mv-unsupported-viewer [url]="url"
+                           *ngIf="contentTypeUnsupported()" >
+    </mv-unsupported-viewer>
+    <div class="grid-row">
+      <div *ngIf="error"  class="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+        <h2 class="heading-medium error-summary-heading" id="error-summary-heading-example-1">There was an error while loading your document.</h2>
+        <p>Response status was {{error.status}}.</p>
+      </div>
+    </div>
   </div>
 </div>
-

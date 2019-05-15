@@ -23,7 +23,7 @@ fdescribe('SubToolbarComponent', () => {
     fixture = TestBed.createComponent(SubToolbarComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.actionEvents = new ActionEvents();
+    component.zoomEvent = new ActionEvents();
     fixture.detectChanges();
   });
 

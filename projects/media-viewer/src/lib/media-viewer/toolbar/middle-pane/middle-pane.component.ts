@@ -1,18 +1,19 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, ZoomOperation } from '../../media-viewer.model';
+import { ZoomOperation } from '../../media-viewer.model';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-tb-middle-pane',
   templateUrl: './middle-pane.component.html',
-  styleUrls: ['../styles/toolbar.component.scss']
+  styleUrls: ['../../styles/main.scss']
 })
 export class ToolbarMiddlePaneComponent {
 
-  @Input() actionEvents: ActionEvents;
+  @Input() zoomEvent: Subject<ZoomOperation>;
 
   constructor() {}
 
   zoom(zoomFactor: number) {
-    this.actionEvents.zoom.next(new ZoomOperation(zoomFactor));
+    this.zoomEvent.next(new ZoomOperation(zoomFactor));
   }
 }
