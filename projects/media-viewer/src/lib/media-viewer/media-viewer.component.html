@@ -6,7 +6,9 @@
                    [searchBarHidden]="toolbarToggles.searchBarHidden | async"></mv-search-bar>
     <mv-sub-toolbar [actionEvents]="actionEvents"
                     [subToolbarHidden]="toolbarToggles.subToolbarHidden | async"></mv-sub-toolbar>
-    <mv-main-toolbar [actionEvents]="actionEvents"
+    <mv-main-toolbar
+                     [currentPage]="currentPageChanged | async"
+                     [actionEvents]="actionEvents"
                      [toggleSearchBarHidden]="toolbarToggles.searchBarHidden"
                      [toggleSidebarOpen]="toolbarToggles.sidebarOpen"
                      [toggleSubToolbarHidden]="toolbarToggles.subToolbarHidden"></mv-main-toolbar>
@@ -18,7 +20,10 @@
                    [searchResults]="actionEvents.searchResultsCount"
                    [downloadOperation]="actionEvents.download | async"
                    [printOperation]="actionEvents.print | async"
-                   [rotateOperation]="actionEvents.rotate | async">
+                   [rotateOperation]="actionEvents.rotate | async"
+                   [setCurrentPage]="actionEvents.setCurrentPage | async"
+                   [changePageByDelta]="actionEvents.changePageByDelta | async"
+                   [currentPageChanged]="currentPageChanged">
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"

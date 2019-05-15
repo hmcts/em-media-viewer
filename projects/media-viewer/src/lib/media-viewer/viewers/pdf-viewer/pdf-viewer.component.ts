@@ -1,14 +1,15 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
+  ChangePageByDeltaOperation,
   DownloadOperation,
   PrintOperation,
   RotateOperation,
   SearchOperation,
-  SearchResultsCount,
+  SearchResultsCount, SetCurrentPageOperation,
   ZoomOperation
 } from '../../media-viewer.model';
-import { Subject } from 'rxjs';
+import {Subject} from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import {PrintService} from '../../print.service';
 
@@ -23,6 +24,7 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input() downloadFileName: string;
   @Input() searchResults: Subject<SearchResultsCount>;
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
+  @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
 
   pdfViewer: pdfjsViewer.PDFViewer;
   pdfFindController: pdfjsViewer.PDFFindController;
@@ -38,6 +40,7 @@ export class PdfViewerComponent implements AfterViewInit {
       }
     });
     this.pdfViewer.eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
+    this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
   }
 
 
@@ -84,6 +87,22 @@ export class PdfViewerComponent implements AfterViewInit {
       this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
     }
   }
+
+  @Input()
+  set setCurrentPage(operation: SetCurrentPageOperation | null) {
+    if (operation) {
+      this.pdfViewer.currentPageNumber = operation.pageNumber;
+    }
+  }
+
+  @Input()
+  set changePageByDelta(operation: ChangePageByDeltaOperation | null) {
+    if (operation) {
+      const currentPage = this.pdfViewer.currentPageNumber;
+      this.pdfViewer.currentPageNumber = currentPage + operation.delta;
+    }
+  }
+
 }
 
 enum FindState {

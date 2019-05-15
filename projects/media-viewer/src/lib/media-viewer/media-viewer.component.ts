@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, ToolbarToggles } from './media-viewer.model';
+import {ActionEvents, SetCurrentPageOperation, ToolbarToggles} from './media-viewer.model';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'mv-media-viewer',
@@ -15,6 +16,7 @@ export class MediaViewerComponent {
 
   toolbarToggles = new ToolbarToggles();
 
+  currentPageChanged = new Subject<SetCurrentPageOperation>();
   error: any;
 
   private supportedContentTypes = ['pdf', 'image'];
@@ -22,4 +24,5 @@ export class MediaViewerComponent {
   contentTypeUnsupported(): boolean {
     return this.supportedContentTypes.indexOf(this.contentType) < 0;
   }
+
 }
