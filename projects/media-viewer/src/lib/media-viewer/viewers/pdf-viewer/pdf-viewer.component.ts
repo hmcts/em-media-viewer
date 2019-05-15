@@ -1,13 +1,12 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import {
-  ChangeByDelta,
-  ChangePageOperation,
+  ChangePageByDeltaOperation,
   DownloadOperation,
   PrintOperation,
   RotateOperation,
   SearchOperation,
-  SearchResultsCount, SetCurrentPage,
+  SearchResultsCount, SetCurrentPageOperation,
   ZoomOperation
 } from '../../media-viewer.model';
 import {Subject} from 'rxjs';
@@ -41,7 +40,7 @@ export class PdfViewerComponent implements AfterViewInit {
       }
     });
     this.pdfViewer.eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
-    this.pdfViewer.eventBus.on('pagechanging', e => this.stateChange.next(new ChangePageOperation(new SetCurrentPage(e.pageNumber))));
+    this.pdfViewer.eventBus.on('pagechanging', e => this.stateChange.next(new SetCurrentPageOperation(e.pageNumber)));
   }
 
 
@@ -90,13 +89,13 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   @Input()
-  set changePage(operation: ChangePageOperation | null) {
+  set changePage(operation: ChangePageByDeltaOperation | SetCurrentPageOperation | null) {
     if (operation) {
-      if (operation.changePageParameter instanceof SetCurrentPage) {
-        this.pdfViewer.currentPageNumber = operation.changePageParameter.pageNumber;
-      } else if (operation.changePageParameter instanceof ChangeByDelta) {
+      if ((<SetCurrentPageOperation>operation).pageNumber) {
+        this.pdfViewer.currentPageNumber = (<SetCurrentPageOperation>operation).pageNumber;
+      } else if ((<ChangePageByDeltaOperation>operation).delta) {
         const currentPage = this.pdfViewer.currentPageNumber;
-        this.pdfViewer.currentPageNumber = currentPage + operation.changePageParameter.delta;
+        this.pdfViewer.currentPageNumber = currentPage + (<ChangePageByDeltaOperation>operation).delta;
       }
     }
   }

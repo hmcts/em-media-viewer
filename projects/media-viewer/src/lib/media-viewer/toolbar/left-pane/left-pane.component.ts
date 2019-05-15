@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import {BehaviorSubject, Subject,} from 'rxjs';
-import {ActionEvents, ChangeByDelta, ChangePageOperation, SetCurrentPage} from '../../media-viewer.model';
+import {BehaviorSubject} from 'rxjs';
+import {ActionEvents, ChangePageByDeltaOperation, SetCurrentPageOperation} from '../../media-viewer.model';
 
 @Component({
   selector: 'mv-tb-left-pane',
@@ -25,23 +25,22 @@ export class ToolbarLeftPaneComponent {
   }
 
   increasePageNumber() {
-    this.actionEvents.changePage.next(new ChangePageOperation(new ChangeByDelta(1)));
+    this.actionEvents.changePage.next(new ChangePageByDeltaOperation(1));
   }
 
   decreasePageNumber() {
-    this.actionEvents.changePage.next(new ChangePageOperation(new ChangeByDelta(-1)));
+    this.actionEvents.changePage.next(new ChangePageByDeltaOperation(-1));
   }
 
   setCurrentPageNumber(pageNumber: string) {
-    this.actionEvents.changePage.next(new ChangePageOperation(new SetCurrentPage(Number.parseInt(pageNumber, 0))));
+    this.actionEvents.changePage.next(new SetCurrentPageOperation(Number.parseInt(pageNumber, 0)));
   }
 
   @Input()
-  set stateChange(stateChangeEvent: ChangePageOperation | any) {
-    console.log(stateChangeEvent);
-    if (stateChangeEvent instanceof ChangePageOperation) {
-      if (stateChangeEvent.changePageParameter instanceof SetCurrentPage) {
-        this.pageNumber = stateChangeEvent.changePageParameter.pageNumber;
+  set stateChange(stateChangeEvent: SetCurrentPageOperation | ChangePageByDeltaOperation | any) {
+    if (stateChangeEvent) {
+      if ((<SetCurrentPageOperation>stateChangeEvent).pageNumber) {
+        this.pageNumber = (<SetCurrentPageOperation>stateChangeEvent).pageNumber;
       }
     }
   }

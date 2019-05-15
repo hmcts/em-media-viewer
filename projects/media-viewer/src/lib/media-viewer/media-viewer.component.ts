@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
-  ActionEvents, ChangePageOperation,
+  ActionEvents, ChangePageByDeltaOperation,
   DownloadOperation,
   PrintOperation,
   RotateOperation,
-  SearchOperation, SearchResultsCount,
+  SearchOperation, SearchResultsCount, SetCurrentPageOperation,
   ZoomOperation
 } from './media-viewer.model';
 import { Observable, Subject } from 'rxjs';
@@ -25,9 +25,9 @@ export class MediaViewerComponent implements OnInit {
   zoom: Observable<ZoomOperation>;
   download: Observable<DownloadOperation>;
   print: Observable<PrintOperation>;
-  changePage: Observable<ChangePageOperation>;
+  changePage: Observable<SetCurrentPageOperation | ChangePageByDeltaOperation>;
 
-  stateChange = new Subject();
+  stateChange = new Subject<SetCurrentPageOperation | ChangePageByDeltaOperation>();
 
   error: any;
 
