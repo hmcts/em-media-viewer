@@ -22,5 +22,6 @@ export class ToolbarMiddlePaneComponent {
 
   stepZoom(zoomFactor: number) {
     this.stepZoomEvent.next(new StepZoomOperation(zoomFactor));
+    this.zoomSelect.nativeElement.selected = 'selected';
   }
 }

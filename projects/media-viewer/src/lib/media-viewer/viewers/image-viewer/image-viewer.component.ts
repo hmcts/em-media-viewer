@@ -35,7 +35,7 @@ export class ImageViewerComponent {
   set zoomOperation(operation: ZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
       this.zoom = this.updateZoomValue(+operation.zoomFactor);
-      this.zoomValue.next(this.zoom);
+      this.zoomValue.next({ value: this.zoom });
       this.setImageStyles();
     }
   }
@@ -44,7 +44,7 @@ export class ImageViewerComponent {
   set stepZoomOperation(operation: StepZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
       this.zoom = this.updateZoomValue(this.zoom, operation.zoomFactor);
-      this.zoomValue.next(this.zoom);
+      this.zoomValue.next({ value: this.zoom });
       this.setImageStyles();
     }
   }
