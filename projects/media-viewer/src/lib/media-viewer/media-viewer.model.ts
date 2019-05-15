@@ -8,7 +8,8 @@ export class ActionEvents {
   public readonly zoom = new Subject<ZoomOperation>();
   public readonly print = new Subject<PrintOperation>();
   public readonly download = new Subject<DownloadOperation>();
-  public readonly changePage = new Subject<SetCurrentPageOperation | ChangePageByDeltaOperation>();
+  public readonly setCurrentPage = new Subject<SetCurrentPageOperation>();
+  public readonly changePageByDelta = new Subject<ChangePageByDeltaOperation>();
 }
 
 export class DownloadOperation {}

@@ -24,7 +24,7 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input() downloadFileName: string;
   @Input() searchResults: Subject<SearchResultsCount>;
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
-  @Input() stateChange: Subject<any>;
+  @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
 
   pdfViewer: pdfjsViewer.PDFViewer;
   pdfFindController: pdfjsViewer.PDFFindController;
@@ -40,7 +40,7 @@ export class PdfViewerComponent implements AfterViewInit {
       }
     });
     this.pdfViewer.eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
-    this.pdfViewer.eventBus.on('pagechanging', e => this.stateChange.next(new SetCurrentPageOperation(e.pageNumber)));
+    this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
   }
 
 
@@ -89,18 +89,19 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   @Input()
-  set changePage(operation: ChangePageByDeltaOperation | SetCurrentPageOperation | null) {
+  set setCurrentPage(operation: SetCurrentPageOperation | null) {
     if (operation) {
-      if ((<SetCurrentPageOperation>operation).pageNumber) {
-        this.pdfViewer.currentPageNumber = (<SetCurrentPageOperation>operation).pageNumber;
-      } else if ((<ChangePageByDeltaOperation>operation).delta) {
-        const currentPage = this.pdfViewer.currentPageNumber;
-        this.pdfViewer.currentPageNumber = currentPage + (<ChangePageByDeltaOperation>operation).delta;
-      }
+      this.pdfViewer.currentPageNumber = operation.pageNumber;
     }
   }
 
-
+  @Input()
+  set changePageByDelta(operation: ChangePageByDeltaOperation | null) {
+    if (operation) {
+      const currentPage = this.pdfViewer.currentPageNumber;
+      this.pdfViewer.currentPageNumber = currentPage + operation.delta;
+    }
+  }
 
 }
 

@@ -25,9 +25,10 @@ export class MediaViewerComponent implements OnInit {
   zoom: Observable<ZoomOperation>;
   download: Observable<DownloadOperation>;
   print: Observable<PrintOperation>;
-  changePage: Observable<SetCurrentPageOperation | ChangePageByDeltaOperation>;
+  setCurrentPage: Observable<SetCurrentPageOperation>;
+  changePageByDelta: Observable<ChangePageByDeltaOperation>;
 
-  stateChange = new Subject<SetCurrentPageOperation | ChangePageByDeltaOperation>();
+  currentPageChanged = new Subject<SetCurrentPageOperation>();
 
   error: any;
 
@@ -41,7 +42,8 @@ export class MediaViewerComponent implements OnInit {
       this.zoom = this.actionEvents.zoom;
       this.download = this.actionEvents.download;
       this.print = this.actionEvents.print;
-      this.changePage = this.actionEvents.changePage;
+      this.setCurrentPage = this.actionEvents.setCurrentPage;
+      this.changePageByDelta = this.actionEvents.changePageByDelta;
     }
   }
 

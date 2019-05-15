@@ -1,4 +1,4 @@
-<mv-toolbar [actionEvents]="actionEvents" [stateChange]="stateChange | async"></mv-toolbar>
+<mv-toolbar [actionEvents]="actionEvents" [currentPage]="currentPageChanged | async"></mv-toolbar>
 
 <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                 [url]="url"
@@ -9,8 +9,9 @@
                 [downloadOperation]="download | async"
                 [printOperation]="print | async"
                 [rotateOperation]="rotation | async"
-                [changePage]="changePage | async"
-                [stateChange]="stateChange">
+                [setCurrentPage]="setCurrentPage | async"
+                [changePageByDelta]="changePageByDelta | async"
+                [currentPageChanged]="currentPageChanged">
 </mv-pdf-viewer>
 <mv-image-viewer *ngIf="contentType === 'image'"
                   [url]="url"
