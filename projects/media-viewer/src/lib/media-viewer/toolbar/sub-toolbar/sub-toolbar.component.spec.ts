@@ -7,7 +7,7 @@ import {
   RotateOperation
 } from '../../media-viewer.model';
 
-fdescribe('SubToolbarComponent', () => {
+describe('SubToolbarComponent', () => {
   let component: SubToolbarComponent;
   let fixture: ComponentFixture<SubToolbarComponent>;
   let nativeElement;
@@ -23,7 +23,7 @@ fdescribe('SubToolbarComponent', () => {
     fixture = TestBed.createComponent(SubToolbarComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.actionEvents = new ActionEvents();
+    component.zoomEvent = new ActionEvents();
     fixture.detectChanges();
   });
 

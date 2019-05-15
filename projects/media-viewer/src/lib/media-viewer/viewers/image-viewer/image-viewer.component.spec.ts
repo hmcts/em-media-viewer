@@ -1,24 +1,16 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA, Renderer2 } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
-import { EmLoggerService } from '../../../logging/em-logger.service';
-
-class MockRenderer {
-
-}
+import { PrintOperation, RotateOperation, StepZoomOperation, ZoomOperation } from '../../media-viewer.model';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
   let fixture: ComponentFixture<ImageViewerComponent>;
-  const mockRenderer = new MockRenderer();
+  let nativeElement;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ImageViewerComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
-        EmLoggerService,
-        { provide: Renderer2, useFactory: () => mockRenderer },
+    return TestBed.configureTestingModule({
+      declarations: [
+        ImageViewerComponent
       ]
     })
       .compileComponents();
@@ -27,33 +19,64 @@ describe('ImageViewerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ImageViewerComponent);
     component = fixture.componentInstance;
-
-    component.url = 'http://localhost:3000';
-    component.originalUrl = 'http://localhost:3000';
-
-    const mockNativeElement = { querySelector() {} };
-    spyOn(mockNativeElement, 'querySelector').and.callFake(function() {
-      const dummyElement = document.createElement('div');
-      return dummyElement;
-    });
+    nativeElement = fixture.debugElement.nativeElement;
+    component.url = '/document-url';
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('ngOnInit', () => {
-    it('should set rotation to 0', () => {
-      expect(component['rotation']).toBe(0);
+  it('should rotate image', () => {
+    component.rotateOperation = new RotateOperation(90);
+
+    expect(component.rotation).toBe(90);
+    expect(component.transformStyle).toBe('scale(1) rotate(90deg)');
+  });
+
+  describe('zoom operation', () => {
+
+    it('should zoom image by factor of 0.5 ', () => {
+      component.zoomOperation = new ZoomOperation(0.5);
+
+      expect(component.zoom).toBe(0.5);
+      expect(component.transformStyle).toBe('scale(0.5) rotate(0deg)');
+    });
+
+    it('should zoom image by factor of 2', () => {
+      component.zoomOperation = new StepZoomOperation(2);
+
+      expect(component.zoom).toBe(2);
+      expect(component.transformStyle).toBe('scale(2) rotate(0deg)');
+    });
+
+    it('should zoom image by maximum value 5', () => {
+      component.zoomOperation = new ZoomOperation(5);
+      component.stepZoomOperation = new StepZoomOperation(0.2);
+
+      expect(component.zoom).toBe(5);
+      expect(component.transformStyle).toBe('scale(5) rotate(0deg)');
+    });
+
+    it('should zoom image by minimum value 0.1', () => {
+      component.zoomOperation = new ZoomOperation(0.1);
+      component.zoomOperation = new StepZoomOperation(-0.2);
+
+      expect(component.zoom).toBe(0.1);
+      expect(component.transformStyle).toBe('scale(0.1) rotate(0deg)');
     });
   });
 
-  describe('onRotateClockwise', () => {
-    it('should add 90 degrees to rotation', () => {
-      expect(component['rotation']).toBe(90);
-    });
+  it('should trigger print', () => {
+    const print = () => {};
+    const windowMock = { print } as Window;
+    const windowOpenSpy = spyOn(window, 'open').and.returnValue(windowMock);
+    const windowPrintSpy = spyOn(windowMock, 'print');
+    component.printOperation = new PrintOperation();
 
+    expect(windowOpenSpy).toHaveBeenCalledWith('/document-url');
+    expect(windowPrintSpy).toHaveBeenCalled();
   });
 });
 

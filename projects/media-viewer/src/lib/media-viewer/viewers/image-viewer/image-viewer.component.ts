@@ -1,7 +1,7 @@
-import { Component, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
-import { EmLoggerService } from '../../../logging/em-logger.service';
-import {DownloadOperation, PrintOperation, RotateOperation, ZoomOperation} from '../../media-viewer.model';
-import {PrintService} from '../../print.service';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { PrintService } from '../../print.service';
+import {DownloadOperation, PrintOperation, RotateOperation, StepZoomOperation, ZoomOperation, ZoomValue} from '../../media-viewer.model';
+import {Subject} from 'rxjs';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -13,27 +13,39 @@ export class ImageViewerComponent {
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() originalUrl: string;
+  @Input() zoomValue: Subject<ZoomValue>;
   @ViewChild('img') img: ElementRef;
   rotation = 0;
+  zoom = 1;
+  transformStyle;
 
-  constructor(private renderer: Renderer2,
-              private log: EmLoggerService,
-              private printService: PrintService) {
+  constructor(private printService: PrintService) {
   }
 
 
   @Input()
   set rotateOperation(operation: RotateOperation | null) {
     if (operation) {
-      this.rotation = this.rotation + operation.rotation;
-      this.rotateImage();
+      this.rotation += operation.rotation;
+      this.setImageStyles();
     }
   }
 
   @Input()
   set zoomOperation(operation: ZoomOperation | null) {
-    if (operation) {
-      // TODO
+    if (operation && !isNaN(operation.zoomFactor)) {
+      this.zoom = this.updateZoomValue(+operation.zoomFactor);
+      this.zoomValue.next(this.zoom);
+      this.setImageStyles();
+    }
+  }
+
+  @Input()
+  set stepZoomOperation(operation: StepZoomOperation | null) {
+    if (operation && !isNaN(operation.zoomFactor)) {
+      this.zoom = this.updateZoomValue(this.zoom, operation.zoomFactor);
+      this.zoomValue.next(this.zoom);
+      this.setImageStyles();
     }
   }
 
@@ -57,11 +69,14 @@ export class ImageViewerComponent {
     }
   }
 
-  private rotateImage() {
-    this.log.info('rotating to-' + this.rotation + 'degrees');
-    const styles = ['transform', '-ms-transform', '-o-transform', '-moz-transform', '-webkit-transform'];
-    for (const style of styles) {
-      this.renderer.setStyle(this.img.nativeElement, style, `rotate(${this.rotation}deg)`);
-    }
+  setImageStyles() {
+    this.transformStyle = `scale(${this.zoom}) rotate(${this.rotation}deg)`;
+  }
+
+  updateZoomValue(zoomValue, increment = 0) {
+    const newZoomValue = zoomValue + increment;
+    if (newZoomValue > 5) return 5;
+    if (newZoomValue < 0.1) return 0.1;
+    return newZoomValue;
   }
 }

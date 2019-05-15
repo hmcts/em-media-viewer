@@ -8,11 +8,13 @@ import {
   SearchOperation,
   SearchResultsCount,
   SetCurrentPageOperation,
-  ZoomOperation
+  ZoomOperation,
+  StepZoomOperation,
+  ZoomValue
 } from '../../media-viewer.model';
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
-import {PrintService} from '../../print.service';
+import { PrintService } from '../../print.service';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -24,6 +26,7 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() searchResults: Subject<SearchResultsCount>;
+  @Input() zoomValue: Subject<ZoomValue>;
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
   @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
 
@@ -51,14 +54,23 @@ export class PdfViewerComponent implements AfterViewInit {
   set rotateOperation(operation: RotateOperation | null) {
     if (this.pdfViewer && operation) {
       this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + operation.rotation) % 360;
-      this.rotateOperation = this.pdfViewer.pagesRotation;
     }
   }
 
   @Input()
   set zoomOperation(operation: ZoomOperation | null) {
     if (this.pdfViewer && operation) {
-      this.pdfViewer.currentScale += operation.zoomFactor;
+      this.pdfViewer.currentScaleValue = this.updateZoomValue(operation.zoomFactor);
+      this.zoomValue.next(this.pdfViewer.currentScaleValue);
+    }
+  }
+
+  @Input()
+  set stepZoomOperation(operation: StepZoomOperation | null) {
+    if (this.pdfViewer && operation) {
+      const newZoomValue = this.pdfViewer.currentScale + operation.zoomFactor;
+      this.pdfViewer.currentScaleValue = this.updateZoomValue(newZoomValue);
+      this.zoomValue.next(this.pdfViewer.currentScaleValue);
     }
   }
 
@@ -106,6 +118,13 @@ export class PdfViewerComponent implements AfterViewInit {
     }
   }
 
+
+  updateZoomValue(zoomValue) {
+    if (isNaN(zoomValue)) { return zoomValue; }
+    if (zoomValue > 5) { return 5; }
+    if (zoomValue < 0.1) { return 0.1; }
+    return zoomValue;
+  }
 }
 
 enum FindState {

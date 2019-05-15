@@ -43,7 +43,7 @@ describe('SearchBarComponent', () => {
     const searchNextButton = nativeElement.querySelector('button[id=findNext]');
     searchNextButton.click();
 
-    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation("searchTerm", true, false, false, false, false));
+    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation('searchTerm', true, false, false, false, false));
   });
 
   it('should emit search previous event', () => {
@@ -51,6 +51,6 @@ describe('SearchBarComponent', () => {
     const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');
     searchPrevButton.click();
 
-    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation("searchTerm", true, false, false, true, false));
+    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation('searchTerm', true, false, false, true, false));
   });
 });

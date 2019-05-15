@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarMiddlePaneComponent } from './middle-pane.component';
-import { ActionEvents, ZoomOperation } from '../../media-viewer.model';
+import { ActionEvents, StepZoomOperation, ZoomOperation } from '../../media-viewer.model';
 
 describe('ToolbarMiddlePaneComponent', () => {
   let component: ToolbarMiddlePaneComponent;
@@ -27,18 +27,25 @@ describe('ToolbarMiddlePaneComponent', () => {
   });
 
   it('should emit zoom out event', () => {
-    const zoomSpy = spyOn(component.zoomEvent, 'next');
+    const stepZoom = spyOn(component.stepZoomEvent, 'next');
     const zoomOutButton = nativeElement.querySelector('button[id=zoomOut]');
     zoomOutButton.click();
 
-    expect(zoomSpy).toHaveBeenCalledWith(new ZoomOperation(-0.2));
+    expect(stepZoom).toHaveBeenCalledWith(new StepZoomOperation(-0.2));
+  });
+
+  it('should emit zoom in event', () => {
+    const stepZoom = spyOn(component.stepZoomEvent, 'next');
+    const zoomInButton = nativeElement.querySelector('button[id=zoomIn]');
+    zoomInButton.click();
+
+    expect(stepZoom).toHaveBeenCalledWith(new StepZoomOperation(0.2));
   });
 
   it('should emit zoom in event', () => {
     const zoomSpy = spyOn(component.zoomEvent, 'next');
-    const zoomInButton = nativeElement.querySelector('button[id=zoomIn]');
-    zoomInButton.click();
+    component.zoom(25);
 
-    expect(zoomSpy).toHaveBeenCalledWith(new ZoomOperation(0.2));
+    expect(zoomSpy).toHaveBeenCalledWith(new ZoomOperation(25));
   });
 });
