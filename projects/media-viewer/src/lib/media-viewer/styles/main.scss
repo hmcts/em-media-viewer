@@ -1,15 +1,15 @@
-@import "media-styles";
-@import "button-styles";
-@import "side-bar-styles";
-@import "search-bar.styles";
-@import "sub-toolbar-styles";
-@import "thumbnail.styles";
-@import "outline-attachment.styles";
-@import "dialog-overlay.styles";
-@import "field-label.styles";
-@import "loading-bar.styles";
-@import "debugging.styles";
-@import "text-selection.styles";
+@import "media";
+@import "buttons";
+@import "side-bar";
+@import "search-bar";
+@import "sub-toolbar";
+@import "thumbnail";
+@import "outline-attachment";
+@import "dialog-overlay";
+@import "field-label";
+@import "loading-bar";
+@import "debugging";
+@import "text-selection";
 
 .hidden {
   display: none !important;

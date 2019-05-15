@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToolbarComponent } from './toolbar.component';
+import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SubToolbarComponent } from './sub-toolbar/sub-toolbar.component';
@@ -16,11 +16,14 @@ import { FormsModule } from '@angular/forms';
     SideBarComponent,
     ToolbarLeftPaneComponent,
     ToolbarRightPaneComponent,
-    ToolbarComponent,
+    MainToolbarComponent,
     ToolbarMiddlePaneComponent
   ],
   exports: [
-    ToolbarComponent
+    MainToolbarComponent,
+    SearchBarComponent,
+    SubToolbarComponent,
+    SideBarComponent
   ],
   imports: [
     CommonModule,
