@@ -7,7 +7,7 @@ import {
   RotateOperation
 } from '../../media-viewer.model';
 
-fdescribe('SubToolbarComponent', () => {
+describe('SubToolbarComponent', () => {
   let component: SubToolbarComponent;
   let fixture: ComponentFixture<SubToolbarComponent>;
   let nativeElement;

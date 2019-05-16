@@ -1,3 +1,5 @@
 <div id="viewer-wrapper">
-    <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url"  />
+  <div [ngStyle]="{ transform: transformStyle }">
+    <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url"/>
+  </div>
 </div>

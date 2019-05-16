@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import {ActionEvents, SetCurrentPageOperation, ToolbarToggles} from './media-viewer.model';
-import {Subject} from 'rxjs';
+import { ActionEvents, SetCurrentPageOperation, ToolbarToggles } from './media-viewer.model';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-media-viewer',
