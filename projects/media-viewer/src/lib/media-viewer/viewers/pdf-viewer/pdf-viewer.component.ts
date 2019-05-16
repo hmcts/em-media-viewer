@@ -6,7 +6,8 @@ import {
   PrintOperation,
   RotateOperation,
   SearchOperation,
-  SearchResultsCount, SetCurrentPageOperation,
+  SearchResultsCount,
+  SetCurrentPageOperation,
   ZoomOperation
 } from '../../media-viewer.model';
 import {Subject} from 'rxjs';
@@ -35,11 +36,13 @@ export class PdfViewerComponent implements AfterViewInit {
     [this.pdfViewer, this.pdfFindController] = await this.pdfWrapper.initViewer(this.url, this.viewerContainer);
 
     this.pdfViewer.eventBus.on('updatefindcontrolstate', e => {
-      if (e.state === FindState.NOT_FOUND) {
-        this.searchResults.next({ current: 0, total: 0 });
+      if (e.state === FindState.NOT_FOUND || e.state === FindState.FOUND) {
+        this.searchResults.next(e.matchesCount);
       }
     });
-    this.pdfViewer.eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
+    this.pdfViewer.eventBus.on('updatefindmatchescount', e => {
+      this.searchResults.next(e.matchesCount);
+    });
     this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
   }
 
