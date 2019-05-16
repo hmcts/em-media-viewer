@@ -1,14 +1,9 @@
 import {ElementRef} from '@angular/core';
 import * as pdfjsLib from 'pdfjs-dist';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
-import 'pdfjs-dist/web/pdf_viewer.css';
 import 'pdfjs-dist/build/pdf.worker';
 
 export class PdfJsWrapper {
-
-    getDocument(documentId): any {
-        return pdfjsLib.getDocument(documentId);
-    }
 
     async initViewer(
       documentUrl: string,
