@@ -39,7 +39,7 @@ export class PdfJsWrapper {
 
       pdfLinkService.setViewer(pdfViewer);
 
-      document.addEventListener('pagesinit', function () {
+      eventBus.on('pagesinit', function () {
         // We can use pdfViewer now, e.g. let's change default scale.
         pdfViewer.currentScaleValue = 'page-fit';
       });
