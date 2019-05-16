@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
-import { PrintOperation, RotateOperation, StepZoomOperation, ZoomOperation } from '../../media-viewer.model';
+import { PrintOperation, RotateOperation, StepZoomOperation, ZoomOperation, ZoomValue } from '../../media-viewer.model';
+import { Subject } from 'rxjs';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -21,6 +22,7 @@ describe('ImageViewerComponent', () => {
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
     component.url = '/document-url';
+    component.zoomValue = new Subject<ZoomValue>();
     fixture.detectChanges();
   });
 

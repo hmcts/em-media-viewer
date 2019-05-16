@@ -19,6 +19,8 @@ describe('ToolbarMiddlePaneComponent', () => {
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
     component.zoomEvent = new ActionEvents().zoom;
+    component.stepZoomEvent = new ActionEvents().stepZoom;
+    component.zoomValue = { value: 1 };
     fixture.detectChanges();
   });
 
