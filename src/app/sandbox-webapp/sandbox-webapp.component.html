@@ -1,4 +1,4 @@
-<div class="aui aui--show-comments">
+<div class="aui aui--show-comments" style="position: absolute; width: 100%; height: 100%;">
   <div class="aui__toolbar" role="toolbar">
     <div class="aui__toolbar-container">
       <button
@@ -31,23 +31,25 @@
       </button>
     </div>
   </div>
-  <mv-media-viewer *ngIf="documentTypeToShow === 'pdf'"
-                    [url]="'assets/example.pdf'"
-                    [downloadFileName]="'example.pdf'"
-                    [actionEvents]=actionEvents
-                    [contentType]="'pdf'">
-  </mv-media-viewer>
-  <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
-                    [url]="'assets/example.jpg'"
-                    [actionEvents]=actionEvents
-                    [downloadFileName]="'example.jpg'"
-                    [contentType]="'image'"
-                    >
-  </mv-media-viewer>
-  <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
-                    [url]="'assets/unsupported.txt'"
-                    [downloadFileName]="'unsupported.txt'"
-                    [contentType]="'txt'"
-                    >
-  </mv-media-viewer>
+  <div style="height: calc(100% - 100px); width: 100%; margin: auto;">
+    <mv-media-viewer *ngIf="documentTypeToShow === 'pdf'"
+                      [url]="'assets/example.pdf'"
+                      [downloadFileName]="'example.pdf'"
+                      [actionEvents]=actionEvents
+                      [contentType]="'pdf'" >
+    </mv-media-viewer>
+    <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
+                      [url]="'assets/example.jpg'"
+                      [actionEvents]=actionEvents
+                      [downloadFileName]="'example.jpg'"
+                      [contentType]="'image'"
+                      >
+    </mv-media-viewer>
+    <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
+                      [url]="'assets/unsupported.txt'"
+                      [downloadFileName]="'unsupported.txt'"
+                      [contentType]="'txt'"
+                      >
+    </mv-media-viewer>
+  </div>
 </div>
