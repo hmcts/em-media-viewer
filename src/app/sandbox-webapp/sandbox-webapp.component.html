@@ -1,63 +1,65 @@
-<div class="govuk-width-container">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
-      <h2 class="govuk-heading-m  govuk-!-margin-top-4">Media Viewer Demo</h2>
-    </div>
-    <div class="govuk-grid-column-one-half">
-      <table style="float: right">
-        <tr>
-          <td><span class="govuk-heading-s govuk-!-margin-top-4">Toggle Toolbar</span></td>
-          <td>
-            <label  style="float: right" class="switch govuk-!-margin-left-1">
-              <input type="checkbox" [checked]="showToolbar" (change)="toggleToolbarVisibility($event.target.checked)">
-              <span class="slider round"></span>
-            </label>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</div>
-<div class="govuk-tabs" data-module="tabs">
+<div style="position: absolute; height: 100%; width: 100%;">
   <div class="govuk-width-container">
-  <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item">
-      <a [className]="tabLinkStyle('pdf')" href="#pdf" (click)="toggleDocumentSelection('pdf')">
-        PDF Viewer
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a [className]="tabLinkStyle('image')" href="#image" (click)="toggleDocumentSelection('image')">
-        Image Viewer
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a [className]="tabLinkStyle('unsupported')" href="#unsupported" (click)="toggleDocumentSelection('unsupported')">
-        Unsupported Documents Viewer
-      </a>
-    </li>
-  </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h2 class="govuk-heading-m  govuk-!-margin-top-4">Media Viewer Demo</h2>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <table style="float: right">
+          <tr>
+            <td><span class="govuk-heading-s govuk-!-margin-top-4">Toggle Toolbar</span></td>
+            <td>
+              <label  style="float: right" class="switch govuk-!-margin-left-1">
+                <input type="checkbox" [checked]="showToolbar" (change)="toggleToolbarVisibility($event.target.checked)">
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
-  <section [id]="documentTypeToShow">
-    <mv-media-viewer *ngIf="documentTypeToShow === 'pdf'"
-                     [url]="'assets/example.pdf'"
-                     [downloadFileName]="'example.pdf'"
-                     [actionEvents]=actionEvents
-                     [showToolbar]="showToolbar"
-                     [contentType]="'pdf'">
-    </mv-media-viewer>
-    <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
-                     [url]="'assets/example.jpg'"
-                     [actionEvents]=actionEvents
-                     [showToolbar]="showToolbar"
-                     [downloadFileName]="'example.jpg'"
-                     [contentType]="'image'">
-    </mv-media-viewer>
-    <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
-                     [url]="'assets/unsupported.txt'"
-                     [downloadFileName]="'unsupported.txt'"
-                     [showToolbar]="showToolbar"
-                     [contentType]="'txt'">
-    </mv-media-viewer>
-  </section>
+  <div class="govuk-tabs" data-module="tabs">
+    <div class="govuk-width-container">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item">
+          <a [className]="tabLinkStyle('pdf')" href="#pdf" (click)="toggleDocumentSelection('pdf')">
+            PDF Viewer
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a [className]="tabLinkStyle('image')" href="#image" (click)="toggleDocumentSelection('image')">
+            Image Viewer
+          </a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a [className]="tabLinkStyle('unsupported')" href="#unsupported" (click)="toggleDocumentSelection('unsupported')">
+            Unsupported Documents Viewer
+          </a>
+        </li>
+      </ul>
+    </div>
+    <section [id]="documentTypeToShow" style="height: calc(100% - 144px); width: 100%; margin:auto; position: absolute">
+        <mv-media-viewer *ngIf="documentTypeToShow === 'pdf'"
+                         [url]="'assets/example.pdf'"
+                         [downloadFileName]="'example.pdf'"
+                         [actionEvents]=actionEvents
+                         [showToolbar]="showToolbar"
+                         [contentType]="'pdf'">
+        </mv-media-viewer>
+        <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
+                         [url]="'assets/example.jpg'"
+                         [actionEvents]=actionEvents
+                         [showToolbar]="showToolbar"
+                         [downloadFileName]="'example.jpg'"
+                         [contentType]="'image'">
+        </mv-media-viewer>
+        <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
+                         [url]="'assets/unsupported.txt'"
+                         [downloadFileName]="'unsupported.txt'"
+                         [showToolbar]="showToolbar"
+                         [contentType]="'txt'">
+        </mv-media-viewer>
+    </section>
+  </div>
 </div>
