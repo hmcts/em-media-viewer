@@ -20,6 +20,7 @@ describe('ToolbarRightPaneComponent', () => {
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
     component.toggleSubToolbarHidden = new BehaviorSubject<boolean>(true);
+    component.actionEvents = new ActionEvents();
     fixture.detectChanges();
   });
 

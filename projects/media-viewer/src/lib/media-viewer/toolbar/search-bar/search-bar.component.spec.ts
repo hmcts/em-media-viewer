@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
 import { ActionEvents, SearchOperation } from '../../media-viewer.model';
 import { BehaviorSubject } from 'rxjs';
+import {FormsModule} from '@angular/forms';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -10,7 +11,8 @@ describe('SearchBarComponent', () => {
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
-      declarations: [ SearchBarComponent ]
+      declarations: [ SearchBarComponent ],
+      imports: [FormsModule]
     })
     .compileComponents();
   }));
@@ -40,6 +42,7 @@ describe('SearchBarComponent', () => {
 
   it('should emit search next event', () => {
     const searchSpy = spyOn(component.searchEvents, 'next');
+    component.searchText = 'searchTerm';
     const searchNextButton = nativeElement.querySelector('button[id=findNext]');
     searchNextButton.click();
 
@@ -48,6 +51,7 @@ describe('SearchBarComponent', () => {
 
   it('should emit search previous event', () => {
     const searchSpy = spyOn(component.searchEvents, 'next');
+    component.searchText = 'searchTerm';
     const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');
     searchPrevButton.click();
 
