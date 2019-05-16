@@ -6,6 +6,8 @@ export class ActionEvents {
   public readonly search = new Subject<SearchOperation>().pipe(debounceTime(250));
   public readonly searchResultsCount = new Subject<SearchResultsCount>();
   public readonly zoom = new Subject<ZoomOperation>();
+  public readonly stepZoom = new Subject<StepZoomOperation>();
+  public readonly zoomValue = new Subject<ZoomValue>();
   public readonly print = new Subject<PrintOperation>();
   public readonly download = new Subject<DownloadOperation>();
   public readonly setCurrentPage = new Subject<SetCurrentPageOperation>();
@@ -32,6 +34,16 @@ export class ZoomOperation {
   constructor(
     public readonly zoomFactor: number
   ) {}
+}
+
+export class StepZoomOperation {
+  constructor(
+    public readonly zoomFactor: number
+  ) {}
+}
+
+export interface ZoomValue {
+  value: number;
 }
 
 export class SearchOperation {

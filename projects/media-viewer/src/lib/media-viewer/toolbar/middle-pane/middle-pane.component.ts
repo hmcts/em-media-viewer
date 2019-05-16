@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { ZoomOperation } from '../../media-viewer.model';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ZoomOperation, StepZoomOperation, ZoomValue } from '../../media-viewer.model';
 
 @Component({
   selector: 'mv-tb-middle-pane',
@@ -10,10 +10,18 @@ import { Subject } from 'rxjs';
 export class ToolbarMiddlePaneComponent {
 
   @Input() zoomEvent: Subject<ZoomOperation>;
+  @Input() stepZoomEvent: Subject<StepZoomOperation>;
+  @Input() zoomValue: ZoomValue;
+  @ViewChild('zoomSelect') zoomSelect: ElementRef;
 
   constructor() {}
 
   zoom(zoomFactor: number) {
     this.zoomEvent.next(new ZoomOperation(zoomFactor));
+  }
+
+  stepZoom(zoomFactor: number) {
+    this.stepZoomEvent.next(new StepZoomOperation(zoomFactor));
+    this.zoomSelect.nativeElement.selected = 'selected';
   }
 }

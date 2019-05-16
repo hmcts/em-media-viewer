@@ -41,7 +41,7 @@ export class PdfJsWrapper {
 
       eventBus.on('pagesinit', function () {
         // We can use pdfViewer now, e.g. let's change default scale.
-        pdfViewer.currentScaleValue = 'page-fit';
+        pdfViewer.currentScaleValue = '1';
       });
 
       // Loading document.
