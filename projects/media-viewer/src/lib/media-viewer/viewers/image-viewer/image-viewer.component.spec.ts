@@ -61,7 +61,7 @@ describe('ImageViewerComponent', () => {
 
     it('should zoom image by minimum value 0.1', () => {
       component.zoomOperation = new ZoomOperation(0.1);
-      component.zoomOperation = new StepZoomOperation(-0.2);
+      component.stepZoomOperation = new StepZoomOperation(-0.2);
 
       expect(component.zoom).toBe(0.1);
       expect(component.transformStyle).toBe('scale(0.1) rotate(0deg)');
