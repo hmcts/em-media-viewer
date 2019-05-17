@@ -1,4 +1,4 @@
-<div style="position: absolute; height: 100%; width: 100%;">
+<div>
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half">
@@ -39,7 +39,7 @@
         </li>
       </ul>
     </div>
-    <section [id]="documentTypeToShow" style="height: calc(100% - 144px); width: 100%; margin:auto; position: absolute">
+    <section [id]="documentTypeToShow">
         <mv-media-viewer *ngIf="documentTypeToShow === 'pdf'"
                          [url]="'assets/example.pdf'"
                          [downloadFileName]="'example.pdf'"
