@@ -83,6 +83,8 @@ export class ImageViewerComponent {
     if (toolbarToggles) {
       toolbarToggles.showZoomBtns.next(true);
       toolbarToggles.showRotateBtns.next(true);
+      toolbarToggles.showDownloadBtn.next(true);
+      toolbarToggles.showPrintBtn.next(true);
     }
   };
 
