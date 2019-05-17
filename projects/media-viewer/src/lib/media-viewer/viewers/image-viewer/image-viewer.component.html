@@ -1,5 +1,5 @@
 <div id="viewer-wrapper">
-  <div [ngStyle]="{ transform: transformStyle }">
-    <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url"/>
+  <div id="image-container" [ngStyle]="{ transform: zoomStyle }">
+    <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url" [ngStyle]="{ transform: rotationStyle }"/>
   </div>
 </div>
