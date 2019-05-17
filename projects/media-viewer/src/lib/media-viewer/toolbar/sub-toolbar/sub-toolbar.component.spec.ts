@@ -27,22 +27,6 @@ describe('SubToolbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit rotate event with 90 degrees', () => {
-    const rotateSpy = spyOn(component.actionEvents.rotate, 'next');
-    const rotateClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCw]');
-    rotateClkwiseBtn.click();
-
-    expect(rotateSpy).toHaveBeenCalledWith(new RotateOperation(90));
-  });
-
-  it('should emit rotate event with -90 degrees', () => {
-    const rotateSpy = spyOn(component.actionEvents.rotate, 'next');
-    const rotateCtrClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCcw]');
-    rotateCtrClkwiseBtn.click();
-
-    expect(rotateSpy).toHaveBeenCalledWith(new RotateOperation(-90));
-  });
-
   it('should emit print event', () => {
     const printSpy = spyOn(component.actionEvents.print, 'next');
     const printBtn = nativeElement.querySelector('button[id=secondaryPrint]');

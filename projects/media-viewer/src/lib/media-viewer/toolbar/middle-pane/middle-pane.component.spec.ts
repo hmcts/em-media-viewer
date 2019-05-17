@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarMiddlePaneComponent } from './middle-pane.component';
 import { ActionEvents } from '../../model/action-events';
-import { StepZoomOperation, ZoomOperation } from '../../model/viewer-operations';
+import { RotateOperation, StepZoomOperation, ZoomOperation } from '../../model/viewer-operations';
 
 describe('ToolbarMiddlePaneComponent', () => {
   let component: ToolbarMiddlePaneComponent;
@@ -19,7 +19,10 @@ describe('ToolbarMiddlePaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarMiddlePaneComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
+    component.showRotateBtns = true;
+    component.showZoomBtns = true;
     component.zoomEvent = new ActionEvents().zoom;
+    component.rotateEvent = new ActionEvents().rotate;
     component.stepZoomEvent = new ActionEvents().stepZoom;
     component.zoomValue = { value: 1 };
     fixture.detectChanges();
@@ -27,6 +30,23 @@ describe('ToolbarMiddlePaneComponent', () => {
 
   it('should be created', () => {
     expect(component).toBeTruthy();
+  });
+
+
+  it('should emit rotate event with 90 degrees', () => {
+    const rotateSpy = spyOn(component.rotateEvent, 'next');
+    const rotateClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCw]');
+    rotateClkwiseBtn.click();
+
+    expect(rotateSpy).toHaveBeenCalledWith(new RotateOperation(90));
+  });
+
+  it('should emit rotate event with -90 degrees', () => {
+    const rotateSpy = spyOn(component.rotateEvent, 'next');
+    const rotateCtrClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCcw]');
+    rotateCtrClkwiseBtn.click();
+
+    expect(rotateSpy).toHaveBeenCalledWith(new RotateOperation(-90));
   });
 
   it('should emit zoom out event', () => {
