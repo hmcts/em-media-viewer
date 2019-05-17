@@ -17,7 +17,8 @@ export class ImageViewerComponent {
   @ViewChild('img') img: ElementRef;
   rotation = 0;
   zoom = 1;
-  transformStyle;
+  rotationStyle;
+  zoomStyle;
 
   constructor(private printService: PrintService) {
   }
@@ -35,8 +36,8 @@ export class ImageViewerComponent {
   set zoomOperation(operation: ZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
       this.zoom = this.updateZoomValue(+operation.zoomFactor);
-      this.zoomValue.next({ value: this.zoom });
-      this.setImageStyles();
+      this.setZoomValue(this.zoom)
+        .then(() => this.setImageStyles());
     }
   }
 
@@ -44,8 +45,8 @@ export class ImageViewerComponent {
   set stepZoomOperation(operation: StepZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
       this.zoom = this.updateZoomValue(this.zoom, operation.zoomFactor);
-      this.zoomValue.next({ value: this.zoom });
-      this.setImageStyles();
+      this.setZoomValue(this.zoom)
+        .then(() => this.setImageStyles());
     }
   }
 
@@ -70,13 +71,21 @@ export class ImageViewerComponent {
   }
 
   setImageStyles() {
-    this.transformStyle = `scale(${this.zoom}) rotate(${this.rotation}deg)`;
+    this.zoomStyle = `scale(${this.zoom})`;
+    this.rotationStyle = `rotate(${this.rotation}deg)`;
+  }
+
+  setZoomValue(zoomValue) {
+    return new Promise((resolve) => {
+      this.zoomValue.next({ value: zoomValue });
+      resolve(true);
+    });
   }
 
   updateZoomValue(zoomValue, increment = 0) {
     const newZoomValue = zoomValue + increment;
-    if (newZoomValue > 5) return 5;
-    if (newZoomValue < 0.1) return 0.1;
+    if (newZoomValue > 5) { return 5; }
+    if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
   }
 }
