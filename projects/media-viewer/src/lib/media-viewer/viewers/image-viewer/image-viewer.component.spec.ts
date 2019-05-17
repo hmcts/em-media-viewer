@@ -1,7 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
-import { PrintOperation, RotateOperation, StepZoomOperation, ZoomOperation, ZoomValue } from '../../media-viewer.model';
 import { Subject } from 'rxjs';
+import {
+  PrintOperation,
+  RotateOperation,
+  StepZoomOperation,
+  ZoomOperation,
+  ZoomValue
+} from '../../model/viewer-operations';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;

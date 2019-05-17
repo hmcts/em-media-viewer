@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, SetCurrentPageOperation } from '../../media-viewer.model';
-import { BehaviorSubject } from 'rxjs';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { SetCurrentPageOperation } from '../../model/viewer-operations';
+import { ActionEvents } from '../../model/action-events';
 
 @Component({
   selector: 'mv-main-toolbar',
@@ -9,9 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class MainToolbarComponent {
 
-  @Input() toggleSidebarOpen: BehaviorSubject<boolean>;
-  @Input() toggleSearchBarHidden: BehaviorSubject<boolean>;
-  @Input() toggleSubToolbarHidden: BehaviorSubject<boolean>;
+  @Input() toolbarToggles: ToolbarToggles;
   @Input() currentPage: SetCurrentPageOperation;
   @Input() actionEvents: ActionEvents;
 }

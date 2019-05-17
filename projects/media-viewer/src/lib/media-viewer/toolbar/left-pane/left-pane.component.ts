@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {ActionEvents, ChangePageByDeltaOperation, SetCurrentPageOperation} from '../../media-viewer.model';
+import { ActionEvents } from '../../model/action-events';
+import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../model/viewer-operations';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 @Component({
   selector: 'mv-tb-left-pane',
@@ -9,19 +10,18 @@ import {ActionEvents, ChangePageByDeltaOperation, SetCurrentPageOperation} from 
 })
 export class ToolbarLeftPaneComponent {
 
-  @Input() toggleSidebarOpen: BehaviorSubject<boolean>;
-  @Input() toggleSearchBarHidden: BehaviorSubject<boolean>;
+  @Input() toolbarToggles: ToolbarToggles;
   @Input() actionEvents: ActionEvents;
   @Input() pageNumber = 1;
 
   constructor() {}
 
   toggleSideBar() {
-    this.toggleSidebarOpen.next(!this.toggleSidebarOpen.getValue());
+    this.toolbarToggles.sidebarOpen.next(!this.toolbarToggles.sidebarOpen.getValue());
   }
 
   toggleSearchBar() {
-    this.toggleSearchBarHidden.next(!this.toggleSearchBarHidden.getValue());
+    this.toolbarToggles.searchBarHidden.next(!this.toolbarToggles.searchBarHidden.getValue());
   }
 
   increasePageNumber() {

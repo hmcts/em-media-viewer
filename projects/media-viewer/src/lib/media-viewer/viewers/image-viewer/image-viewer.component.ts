@@ -1,7 +1,15 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { PrintService } from '../../print.service';
-import {DownloadOperation, PrintOperation, RotateOperation, StepZoomOperation, ZoomOperation, ZoomValue} from '../../media-viewer.model';
 import {Subject} from 'rxjs';
+import {
+  DownloadOperation,
+  PrintOperation,
+  RotateOperation,
+  StepZoomOperation,
+  ZoomOperation,
+  ZoomValue
+} from '../../model/viewer-operations';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -14,6 +22,7 @@ export class ImageViewerComponent {
   @Input() downloadFileName: string;
   @Input() originalUrl: string;
   @Input() zoomValue: Subject<ZoomValue>;
+
   @ViewChild('img') img: ElementRef;
   rotation = 0;
   zoom = 1;
@@ -68,6 +77,14 @@ export class ImageViewerComponent {
       a.remove();
     }
   }
+
+  @Input()
+  set toolbarToggles(toolbarToggles: ToolbarToggles) {
+    if (toolbarToggles) {
+      toolbarToggles.showZoomBtns.next(true);
+      toolbarToggles.showSubToolbarToggleBtn.next(true);
+    }
+  };
 
   setImageStyles() {
     this.transformStyle = `scale(${this.zoom}) rotate(${this.rotation}deg)`;

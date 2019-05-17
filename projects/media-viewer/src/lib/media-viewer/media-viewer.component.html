@@ -7,16 +7,15 @@
                    [searchBarHidden]="toolbarToggles?.searchBarHidden | async"></mv-search-bar>
     <mv-sub-toolbar *ngIf="showToolbar"
                     [actionEvents]="actionEvents"
-                    [subToolbarHidden]="toolbarToggles.subToolbarHidden | async"></mv-sub-toolbar>
+                    [subToolbarHidden]="toolbarToggles?.subToolbarHidden | async"></mv-sub-toolbar>
     <mv-main-toolbar *ngIf="showToolbar"
                      [currentPage]="currentPageChanged | async"
                      [actionEvents]="actionEvents"
-                     [toggleSearchBarHidden]="toolbarToggles.searchBarHidden"
-                     [toggleSidebarOpen]="toolbarToggles.sidebarOpen"
-                     [toggleSubToolbarHidden]="toolbarToggles.subToolbarHidden"></mv-main-toolbar>
+                     [toolbarToggles]="toolbarToggles"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    [url]="url"
                    [downloadFileName]="downloadFileName"
+                   [toolbarToggles]="toolbarToggles"
                    [zoomOperation]="actionEvents?.zoom | async"
                    [stepZoomOperation]="actionEvents?.stepZoom | async"
                    [zoomValue]="actionEvents?.zoomValue"
@@ -31,6 +30,7 @@
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"
+                     [toolbarToggles]="toolbarToggles"
                      [zoomOperation]="actionEvents?.zoom | async"
                      [stepZoomOperation]="actionEvents?.stepZoom | async"
                      [zoomValue]="actionEvents?.zoomValue"

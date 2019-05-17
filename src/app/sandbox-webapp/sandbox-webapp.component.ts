@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActionEvents } from '../../../projects/media-viewer/src/lib/media-viewer/media-viewer.model';
+import { ActionEvents } from '../../../projects/media-viewer/src/lib/media-viewer/model/action-events';
 
 @Component({
   selector: 'app-sandbox-webapp',
