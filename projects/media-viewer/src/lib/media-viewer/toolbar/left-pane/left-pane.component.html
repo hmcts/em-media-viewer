@@ -1,15 +1,15 @@
 <div id="toolbarViewerLeft">
-  <button *ngIf="toolbarToggles.showSidebarToggleBtn | async"
+  <button *ngIf="toolbarToggles?.showSidebarToggleBtn | async"
           id="sidebarToggle" class="toolbarButton" title="Toggle Sidebar" tabindex="11"
           data-l10n-id="toggle_sidebar" (click)="toggleSideBar()">
     <span data-l10n-id="toggle_sidebar_label">Toggle Sidebar</span>
   </button>
   <div class="toolbarButtonSpacer"></div>
-  <button *ngIf="toolbarToggles.showSearchbarToggleBtn | async" id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar"
+  <button *ngIf="toolbarToggles?.showSearchbarToggleBtn | async" id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar"
           (click)="toggleSearchBar()">
     <span data-l10n-id="findbar_label">Find</span>
   </button>
-  <ng-container *ngIf="toolbarToggles.showNavigationBtns | async">
+  <ng-container *ngIf="toolbarToggles?.showNavigationBtns | async">
     <div class="splitToolbarButton hiddenSmallView">
       <button class="toolbarButton pageUp" title="Previous Page" id="previous" tabindex="13" (click)="increasePageNumber()"
               data-l10n-id="previous">

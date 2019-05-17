@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarLeftPaneComponent } from './left-pane.component';
 import { BehaviorSubject } from 'rxjs';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 describe('ToolbarLeftPaneComponent', () => {
   let component: ToolbarLeftPaneComponent;
@@ -16,8 +17,7 @@ describe('ToolbarLeftPaneComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarLeftPaneComponent);
     component = fixture.componentInstance;
-    component.toggleSidebarOpen = new BehaviorSubject(false);
-    component.toggleSearchBarHidden = new BehaviorSubject(true);
+    component.toolbarToggles = new ToolbarToggles();
     fixture.detectChanges();
   });
 
@@ -26,26 +26,26 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should not show sidebar', async(() => {
-    component.toggleSidebarOpen.asObservable()
+    component.toolbarToggles.sidebarOpen.asObservable()
       .subscribe(sidebarOpen => expect(sidebarOpen).toBeFalsy());
   }));
 
   it('should toggle sidebar open', async(() => {
     component.toggleSideBar();
 
-    component.toggleSidebarOpen.asObservable()
+    component.toolbarToggles.sidebarOpen.asObservable()
       .subscribe(sidebarOpen => expect(sidebarOpen).toBeTruthy());
   }));
 
   it('should not show searchbar', async(() => {
-    component.toggleSearchBarHidden.asObservable()
+    component.toolbarToggles.searchBarHidden.asObservable()
       .subscribe(searchBarHidden => expect(searchBarHidden).toBeTruthy());
   }));
 
   it('should toggle searchbar visible', async(() => {
     component.toggleSearchBar();
 
-    component.toggleSearchBarHidden.asObservable()
+    component.toolbarToggles.searchBarHidden.asObservable()
       .subscribe(searchBarHidden => expect(searchBarHidden).toBeFalsy());
   }));
 });

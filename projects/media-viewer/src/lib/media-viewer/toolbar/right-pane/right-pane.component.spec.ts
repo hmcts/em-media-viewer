@@ -22,6 +22,9 @@ describe('ToolbarRightPaneComponent', () => {
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
     component.toolbarToggles = new ToolbarToggles();
+    component.toolbarToggles.showPrintBtn.next(true);
+    component.toolbarToggles.showDownloadBtn.next(true);
+
     component.actionEvents = new ActionEvents();
     fixture.detectChanges();
   });
