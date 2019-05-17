@@ -9,8 +9,10 @@
       </mv-tb-right-pane>
       <mv-tb-middle-pane [zoomEvent]="actionEvents?.zoom"
                          [stepZoomEvent]="actionEvents?.stepZoom"
+                         [rotateEvent]="actionEvents?.rotate"
                          [zoomValue]="(actionEvents?.zoomValue | async) || { value: 1 }"
-                         [showZoomBtns]="toolbarToggles.showZoomBtns | async"></mv-tb-middle-pane>
+                         [showZoomBtns]="toolbarToggles.showZoomBtns | async"
+                         [showRotateBtns]="toolbarToggles.showRotateBtns | async"></mv-tb-middle-pane>
     </div>
     <div id="loadingBar">
       <div class="progress">

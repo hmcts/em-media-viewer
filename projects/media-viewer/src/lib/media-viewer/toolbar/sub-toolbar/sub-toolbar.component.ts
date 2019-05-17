@@ -12,12 +12,6 @@ export class SubToolbarComponent {
   @Input() subToolbarHidden;
   @Input() actionEvents: ActionEvents;
 
-  constructor() {}
-
-  rotate(rotation: number) {
-    this.actionEvents.rotate.next(new RotateOperation(rotation));
-  }
-
   printFile() {
     this.actionEvents.print.next(new PrintOperation());
   }
