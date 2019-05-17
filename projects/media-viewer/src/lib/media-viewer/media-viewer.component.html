@@ -1,6 +1,6 @@
 <div id="outerContainer" [ngClass]="{ sidebarOpen: toolbarToggles.sidebarOpen | async }">
   <mv-side-bar *ngIf="showToolbar" id="sidebarContainer"></mv-side-bar>
-  <div id="mainContainer" style="min-height: 700px;">
+  <div id="mainContainer" style="min-height: 800px;">
     <mv-search-bar *ngIf="showToolbar"
                    [searchEvents]="actionEvents?.search"
                    [searchResultsCount]="actionEvents?.searchResultsCount | async"
