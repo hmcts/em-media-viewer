@@ -123,10 +123,10 @@ export class PdfViewerComponent implements AfterViewInit {
     if (toolbarToggles) {
       toolbarToggles.showSearchbarToggleBtn.next(true);
       toolbarToggles.showZoomBtns.next(true);
+      toolbarToggles.showRotateBtns.next(true);
       toolbarToggles.showNavigationBtns.next(true);
       toolbarToggles.showDownloadBtn.next(true);
       toolbarToggles.showPrintBtn.next(true);
-      toolbarToggles.showSubToolbarToggleBtn.next(true);
     }
   }
 

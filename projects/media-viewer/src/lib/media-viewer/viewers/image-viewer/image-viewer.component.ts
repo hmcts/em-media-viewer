@@ -82,7 +82,7 @@ export class ImageViewerComponent {
   set toolbarToggles(toolbarToggles: ToolbarToggles) {
     if (toolbarToggles) {
       toolbarToggles.showZoomBtns.next(true);
-      toolbarToggles.showSubToolbarToggleBtn.next(true);
+      toolbarToggles.showRotateBtns.next(true);
     }
   };
 
