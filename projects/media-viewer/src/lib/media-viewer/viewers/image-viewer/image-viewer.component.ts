@@ -17,7 +17,8 @@ export class ImageViewerComponent {
   @ViewChild('img') img: ElementRef;
   rotation = 0;
   zoom = 1;
-  transformStyle;
+  rotationStyle;
+  zoomStyle;
 
   constructor(private printService: PrintService) {
   }
@@ -70,13 +71,14 @@ export class ImageViewerComponent {
   }
 
   setImageStyles() {
-    this.transformStyle = `scale(${this.zoom}) rotate(${this.rotation}deg)`;
+    this.zoomStyle = `scale(${this.zoom})`;
+    this.rotationStyle = `rotate(${this.rotation}deg)`;
   }
 
   updateZoomValue(zoomValue, increment = 0) {
     const newZoomValue = zoomValue + increment;
-    if (newZoomValue > 5) return 5;
-    if (newZoomValue < 0.1) return 0.1;
+    if (newZoomValue > 5) { return 5; }
+    if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
   }
 }
