@@ -36,8 +36,8 @@ export class ImageViewerComponent {
   set zoomOperation(operation: ZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
       this.zoom = this.updateZoomValue(+operation.zoomFactor);
-      this.zoomValue.next({ value: this.zoom });
-      this.setImageStyles();
+      this.setZoomValue(this.zoom)
+        .then(() => this.setImageStyles());
     }
   }
 
@@ -45,8 +45,8 @@ export class ImageViewerComponent {
   set stepZoomOperation(operation: StepZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
       this.zoom = this.updateZoomValue(this.zoom, operation.zoomFactor);
-      this.zoomValue.next({ value: this.zoom });
-      this.setImageStyles();
+      this.setZoomValue(this.zoom)
+        .then(() => this.setImageStyles());
     }
   }
 
@@ -73,6 +73,13 @@ export class ImageViewerComponent {
   setImageStyles() {
     this.zoomStyle = `scale(${this.zoom})`;
     this.rotationStyle = `rotate(${this.rotation}deg)`;
+  }
+
+  setZoomValue(zoomValue) {
+    return new Promise((resolve) => {
+      this.zoomValue.next({ value: zoomValue });
+      resolve(true);
+    });
   }
 
   updateZoomValue(zoomValue, increment = 0) {
