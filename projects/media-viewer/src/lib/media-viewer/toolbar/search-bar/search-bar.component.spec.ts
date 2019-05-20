@@ -8,7 +8,7 @@ import { SearchOperation } from '../../model/viewer-operations';
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
   let fixture: ComponentFixture<SearchBarComponent>;
-  let nativeElement, searchInput
+  let nativeElement, searchInput;
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
@@ -22,7 +22,7 @@ describe('SearchBarComponent', () => {
     fixture = TestBed.createComponent(SearchBarComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    searchInput = nativeElement.querySelector('input[id=findInput]');
+    searchInput = component.findInput.nativeElement;
     searchInput.value = 'searchTerm';
 
     const actionEvents = new ActionEvents();
@@ -36,12 +36,30 @@ describe('SearchBarComponent', () => {
   });
 
   it('should not show searchbar', () => {
+    component.searchBarHidden.next(true);
+    fixture.detectChanges();
+
     const searchbar = nativeElement.querySelector('.findbar');
 
     expect(searchbar.className).toContain('hidden');
   });
 
+  it('should show searchbar after f3 keypress', () => {
+    component.searchBarHidden.next(true);
+    fixture.detectChanges();
+
+    const searchbar = nativeElement.querySelector('.findbar');
+    expect(searchbar.className).toContain('hidden');
+
+    const event = new KeyboardEvent('keydown', { 'code': 'F3' });
+    window.dispatchEvent(event);
+    fixture.detectChanges();
+
+    expect(searchbar.className).not.toContain('hidden');
+  });
+
   it('should emit search next event', () => {
+    component.searchBarHidden.next(false);
     const searchSpy = spyOn(component.searchEvents, 'next');
     component.searchText = 'searchTerm';
     const searchNextButton = nativeElement.querySelector('button[id=findNext]');
@@ -51,6 +69,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should emit search previous event', () => {
+    component.searchBarHidden.next(false);
     const searchSpy = spyOn(component.searchEvents, 'next');
     component.searchText = 'searchTerm';
     const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');
