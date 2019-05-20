@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
-import { ActionEvents, SearchOperation } from '../../media-viewer.model';
 import { BehaviorSubject } from 'rxjs';
 import {FormsModule} from '@angular/forms';
+import { ActionEvents } from '../../model/action-events';
+import { SearchOperation } from '../../model/viewer-operations';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;

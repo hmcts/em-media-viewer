@@ -459,10 +459,12 @@ html[dir="rtl"] .secondaryToolbarButton > span {
   content: url(/assets/images/secondaryToolbarButton-lastPage.png);
 }
 
+.toolbarButton.rotateCcw::before,
 .secondaryToolbarButton.rotateCcw::before {
   content: url(/assets/images/secondaryToolbarButton-rotateCcw.png);
 }
 
+.toolbarButton.rotateCw::before,
 .secondaryToolbarButton.rotateCw::before {
   content: url(/assets/images/secondaryToolbarButton-rotateCw.png);
 }

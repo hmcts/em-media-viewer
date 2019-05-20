@@ -93,10 +93,7 @@
             "styles": [
               "dist/media-viewer/assets/aui-styles.scss"
             ],
-            "scripts": [
-              "projects/media-viewer/node_modules/pdfjs-dist/web/pdf_viewer.js",
-              "projects/media-viewer/node_modules/pdfjs-dist/build/pdf.worker.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

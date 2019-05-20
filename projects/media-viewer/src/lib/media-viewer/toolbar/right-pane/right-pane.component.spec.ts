@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarRightPaneComponent } from './right-pane.component';
-import { ActionEvents, DownloadOperation, PrintOperation } from '../../media-viewer.model';
 import { BehaviorSubject } from 'rxjs';
+import { ActionEvents } from '../../model/action-events';
+import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 describe('ToolbarRightPaneComponent', () => {
   let component: ToolbarRightPaneComponent;
@@ -19,7 +21,10 @@ describe('ToolbarRightPaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarRightPaneComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.toggleSubToolbarHidden = new BehaviorSubject<boolean>(true);
+    component.toolbarToggles = new ToolbarToggles();
+    component.toolbarToggles.showPrintBtn.next(true);
+    component.toolbarToggles.showDownloadBtn.next(true);
+
     component.actionEvents = new ActionEvents();
     fixture.detectChanges();
   });
@@ -29,7 +34,7 @@ describe('ToolbarRightPaneComponent', () => {
   });
 
   it('should not show secondary toolbar', async(() => {
-    component.toggleSubToolbarHidden.asObservable()
+    component.toolbarToggles.subToolbarHidden.asObservable()
       .subscribe(subToolbarHidden => expect(subToolbarHidden).toBeTruthy());
   }));
 
@@ -37,7 +42,7 @@ describe('ToolbarRightPaneComponent', () => {
   it('should toggle secondary toolbar visible', async(() => {
     component.toggleSecondaryToolbar();
 
-    component.toggleSubToolbarHidden.asObservable()
+    component.toolbarToggles.subToolbarHidden.asObservable()
       .subscribe(subToolbarHidden => expect(subToolbarHidden).toBeFalsy());
   }));
 

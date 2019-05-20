@@ -1,20 +1,19 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
+import { Subject } from 'rxjs';
+import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
+import { PrintService } from '../../print.service';
 import {
   ChangePageByDeltaOperation,
   DownloadOperation,
   PrintOperation,
-  RotateOperation,
-  SearchOperation,
+  RotateOperation, SearchOperation,
   SearchResultsCount,
-  SetCurrentPageOperation,
+  SetCurrentPageOperation, StepZoomOperation,
   ZoomOperation,
-  StepZoomOperation,
   ZoomValue
-} from '../../media-viewer.model';
-import { Subject } from 'rxjs';
-import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
-import { PrintService } from '../../print.service';
+} from '../../model/viewer-operations';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -27,8 +26,9 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input() downloadFileName: string;
   @Input() searchResults: Subject<SearchResultsCount>;
   @Input() zoomValue: Subject<ZoomValue>;
-  @ViewChild('viewerContainer') viewerContainer: ElementRef;
   @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
+
+  @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
   pdfViewer: pdfjsViewer.PDFViewer;
   pdfFindController: pdfjsViewer.PDFFindController;
@@ -115,6 +115,18 @@ export class PdfViewerComponent implements AfterViewInit {
     if (operation) {
       const currentPage = this.pdfViewer.currentPageNumber;
       this.pdfViewer.currentPageNumber = currentPage + operation.delta;
+    }
+  }
+
+  @Input()
+  set toolbarToggles(toolbarToggles: ToolbarToggles | null) {
+    if (toolbarToggles) {
+      toolbarToggles.showSearchbarToggleBtn.next(true);
+      toolbarToggles.showZoomBtns.next(true);
+      toolbarToggles.showRotateBtns.next(true);
+      toolbarToggles.showNavigationBtns.next(true);
+      toolbarToggles.showDownloadBtn.next(true);
+      toolbarToggles.showPrintBtn.next(true);
     }
   }
 

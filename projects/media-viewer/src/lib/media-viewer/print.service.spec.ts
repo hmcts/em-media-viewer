@@ -1,9 +1,8 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { MediaViewerService } from './media-viewer.service';
+import { inject, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TransferState } from '@angular/platform-browser';
-import {EmLoggerService} from '../logging/em-logger.service';
-import {PrintService} from './print.service';
+import { EmLoggerService } from '../logging/em-logger.service';
+import { PrintService } from './print.service';
 
 describe('PrintService', () => {
     let httpMock: HttpTestingController;
