@@ -1,4 +1,4 @@
-@media screen and (-webkit-min-device-pixel-ratio: 1.1), screen and (min-resolution: 1.1dppx) {
+
   /* Rules for Retina screens */
   .toolbarButton::before {
     -webkit-transform: scale(0.5);
@@ -28,11 +28,6 @@
   #findInput[data-status="pending"] {
     background-image: url(/assets/images/loading-small@2x.png);
     background-size: 16px 17px;
-  }
-
-  .dropdownToolbarButton {
-    background: url(/assets/images/toolbarButton-menuArrows@2x.png) no-repeat;
-    background-size: 7px 16px;
   }
 
   .toolbarButton#sidebarToggle::before {
@@ -137,10 +132,12 @@
     content: url(/assets/images/secondaryToolbarButton-lastPage@2x.png);
   }
 
+  .toolbarButton.rotateCcw::before,
   .secondaryToolbarButton.rotateCcw::before {
     content: url(/assets/images/secondaryToolbarButton-rotateCcw@2x.png);
   }
 
+  .toolbarButton.rotateCw::before,
   .secondaryToolbarButton.rotateCw::before {
     content: url(/assets/images/secondaryToolbarButton-rotateCw@2x.png);
   }
@@ -199,7 +196,7 @@
   html[dir='rtl'] .outlineItemToggler::before {
     left: 0;
   }
-}
+
 
 @media print {
   /* General rules for printing. */
