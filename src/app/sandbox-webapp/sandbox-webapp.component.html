@@ -55,6 +55,7 @@
                          [contentType]="'image'">
         </mv-media-viewer>
         <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
+                         [actionEvents]=actionEvents
                          [url]="'assets/unsupported.txt'"
                          [downloadFileName]="'unsupported.txt'"
                          [showToolbar]="showToolbar"
