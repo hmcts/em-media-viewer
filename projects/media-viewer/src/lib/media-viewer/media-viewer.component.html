@@ -4,7 +4,7 @@
     <mv-search-bar *ngIf="showToolbar"
                    [searchEvents]="actionEvents?.search"
                    [searchResultsCount]="actionEvents?.searchResultsCount | async"
-                   [searchBarHidden]="toolbarToggles?.searchBarHidden | async"></mv-search-bar>
+                   [searchBarHidden]="toolbarToggles?.searchBarHidden"></mv-search-bar>
     <mv-sub-toolbar *ngIf="showToolbar"
                     [actionEvents]="actionEvents"
                     [subToolbarHidden]="toolbarToggles?.subToolbarHidden | async"></mv-sub-toolbar>

@@ -1,8 +1,9 @@
-<div class="findbar doorHanger" [ngClass]="{ hidden: searchBarHidden }">
+<div class="findbar doorHanger" [ngClass]="{ hidden: searchBarHidden | async }">
   <div id="findbarInputContainer">
-    <input id="findInput"
+    <input #findInput
            [(ngModel)]="searchText"
            (ngModelChange)="search()"
+           (keydown)="onInputKeyPress($event)"
            [ngClass]="'toolbarField ' + (!searchText || haveResults ? '' : 'notFound')"
            title="Find"
            placeholder="Find in document…"
