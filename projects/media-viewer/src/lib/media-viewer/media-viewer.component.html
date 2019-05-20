@@ -38,8 +38,10 @@
                      [rotateOperation]="actionEvents?.rotate | async"
                      [downloadOperation]="actionEvents?.download | async">
     </mv-image-viewer>
-    <mv-unsupported-viewer [url]="url"
-                           *ngIf="contentTypeUnsupported()" >
+    <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
+                           [url]="url"
+                           [toolbarToggles]="toolbarToggles"
+                           [downloadOperation]="actionEvents?.download | async">
     </mv-unsupported-viewer>
     <div class="grid-row">
       <div *ngIf="error"  class="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
