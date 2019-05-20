@@ -10,8 +10,12 @@
       <span data-l10n-id="page_rotate_cw_label">Rotate Clockwise</span>
     </button>
   </div>
-  <div class="verticalToolbarSeparator hiddenSmallView"></div>
+  <div class="toolbarButtonSpacer"></div>
   <ng-container *ngIf="showZoomBtns">
+    <button id="zoomOut" class="toolbarButton zoomOut" title="Zoom Out" tabindex="21" data-l10n-id="zoom_out"
+            (click)="stepZoom(-0.2)">
+      <span data-l10n-id="zoom_out_label">Zoom Out</span>
+    </button>
     <span id="scaleSelectContainer" class="dropdownToolbarButton">
       <select id="scaleSelect" title="Zoom" tabindex="23" data-l10n-id="zoom" (change)="zoom($event.target.value)">
         <option #zoomSelect id="customScaleOption" title="" [value]="zoomValue.value">{{zoomValue.value * 100 | number: '1.0-0'}}%</option>
@@ -37,16 +41,9 @@
                 data-l10n-args='{ "scale": 500 }'>500%</option>
       </select>
     </span>
-    <div class="splitToolbarButton">
-      <button id="zoomOut" class="toolbarButton zoomOut" title="Zoom Out" tabindex="21" data-l10n-id="zoom_out"
-              (click)="stepZoom(-0.2)">
-        <span data-l10n-id="zoom_out_label">Zoom Out</span>
-      </button>
-      <div class="splitToolbarButtonSeparator"></div>
-      <button id="zoomIn" class="toolbarButton zoomIn" title="Zoom In" tabindex="22" data-l10n-id="zoom_in"
-              (click)="stepZoom(0.2)">
-        <span data-l10n-id="zoom_in_label">Zoom In</span>
-      </button>
-    </div>
+    <button id="zoomIn" class="toolbarButton zoomIn" title="Zoom In" tabindex="22" data-l10n-id="zoom_in"
+            (click)="stepZoom(0.2)">
+      <span data-l10n-id="zoom_in_label">Zoom In</span>
+    </button>
   </ng-container>
 </div>

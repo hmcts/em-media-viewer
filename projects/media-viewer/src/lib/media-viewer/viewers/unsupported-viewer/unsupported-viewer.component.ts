@@ -1,18 +1,30 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { DownloadOperation } from '../../model/viewer-operations';
 
 @Component({
   selector: 'mv-unsupported-viewer',
   templateUrl: './unsupported-viewer.component.html',
   styleUrls: ['./unsupported-viewer.component.scss']
 })
-export class UnsupportedViewerComponent implements OnInit {
+export class UnsupportedViewerComponent {
 
   @Input() url: string;
   @Input() originalUrl: string;
 
-  constructor() { }
+  @ViewChild('downloadLink') downloadLink: ElementRef;
 
-  ngOnInit() {
+  @Input()
+  set toolbarToggles(toolbarToggles: ToolbarToggles | null) {
+    if (toolbarToggles) {
+      toolbarToggles.showDownloadBtn.next(true);
+    }
   }
 
+  @Input()
+  set downloadOperation(operation: DownloadOperation) {
+    if (operation) {
+      this.downloadLink.nativeElement.click();
+    }
+  }
 }
