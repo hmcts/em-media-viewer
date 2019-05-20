@@ -3,14 +3,16 @@
     <div id="toolbarViewer">
       <mv-tb-left-pane [currentPage]="currentPage"
                        [actionEvents]="actionEvents"
-                       [toggleSearchBarHidden]="toggleSearchBarHidden"
-                       [toggleSidebarOpen]="toggleSidebarOpen"></mv-tb-left-pane>
+                       [toolbarToggles]="toolbarToggles"></mv-tb-left-pane>
       <mv-tb-right-pane [actionEvents]="actionEvents"
-                        [toggleSubToolbarHidden]="toggleSubToolbarHidden">
+                        [toolbarToggles]="toolbarToggles">
       </mv-tb-right-pane>
       <mv-tb-middle-pane [zoomEvent]="actionEvents?.zoom"
                          [stepZoomEvent]="actionEvents?.stepZoom"
-                         [zoomValue]="(actionEvents?.zoomValue | async) || { value: 1 }"></mv-tb-middle-pane>
+                         [rotateEvent]="actionEvents?.rotate"
+                         [zoomValue]="(actionEvents?.zoomValue | async) || { value: 1 }"
+                         [showZoomBtns]="toolbarToggles?.showZoomBtns | async"
+                         [showRotateBtns]="toolbarToggles?.showRotateBtns | async"></mv-tb-middle-pane>
     </div>
     <div id="loadingBar">
       <div class="progress">

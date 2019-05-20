@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { ActionEvents, PrintOperation, DownloadOperation } from '../../media-viewer.model';
+import { ActionEvents } from '../../model/action-events';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
 
 @Component({
   selector: 'mv-tb-right-pane',
@@ -10,12 +11,12 @@ import { ActionEvents, PrintOperation, DownloadOperation } from '../../media-vie
 export class ToolbarRightPaneComponent {
 
   @Input() actionEvents: ActionEvents;
-  @Input() toggleSubToolbarHidden: BehaviorSubject<boolean>;
+  @Input() toolbarToggles: ToolbarToggles;
 
   constructor() {}
 
   toggleSecondaryToolbar() {
-    this.toggleSubToolbarHidden.next(!this.toggleSubToolbarHidden.getValue());
+    this.toolbarToggles.subToolbarHidden.next(!this.toolbarToggles.subToolbarHidden.getValue());
   }
 
   printFile() {

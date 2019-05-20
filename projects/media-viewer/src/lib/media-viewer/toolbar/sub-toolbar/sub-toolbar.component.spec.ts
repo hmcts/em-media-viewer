@@ -1,11 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SubToolbarComponent } from './sub-toolbar.component';
-import {
-  ActionEvents,
-  DownloadOperation,
-  PrintOperation,
-  RotateOperation
-} from '../../media-viewer.model';
+import { ActionEvents } from '../../model/action-events';
+import { DownloadOperation, PrintOperation, RotateOperation } from '../../model/viewer-operations';
 
 describe('SubToolbarComponent', () => {
   let component: SubToolbarComponent;
@@ -29,22 +25,6 @@ describe('SubToolbarComponent', () => {
 
   it('should be created', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should emit rotate event with 90 degrees', () => {
-    const rotateSpy = spyOn(component.actionEvents.rotate, 'next');
-    const rotateClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCw]');
-    rotateClkwiseBtn.click();
-
-    expect(rotateSpy).toHaveBeenCalledWith(new RotateOperation(90));
-  });
-
-  it('should emit rotate event with -90 degrees', () => {
-    const rotateSpy = spyOn(component.actionEvents.rotate, 'next');
-    const rotateCtrClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCcw]');
-    rotateCtrClkwiseBtn.click();
-
-    expect(rotateSpy).toHaveBeenCalledWith(new RotateOperation(-90));
   });
 
   it('should emit print event', () => {

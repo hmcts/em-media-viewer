@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents, PrintOperation, DownloadOperation, RotateOperation } from '../../media-viewer.model';
+import { ActionEvents } from '../../model/action-events';
+import { DownloadOperation, PrintOperation, RotateOperation } from '../../model/viewer-operations';
 
 @Component({
   selector: 'mv-sub-toolbar',
@@ -10,12 +11,6 @@ export class SubToolbarComponent {
 
   @Input() subToolbarHidden;
   @Input() actionEvents: ActionEvents;
-
-  constructor() {}
-
-  rotate(rotation: number) {
-    this.actionEvents.rotate.next(new RotateOperation(rotation));
-  }
 
   printFile() {
     this.actionEvents.print.next(new PrintOperation());

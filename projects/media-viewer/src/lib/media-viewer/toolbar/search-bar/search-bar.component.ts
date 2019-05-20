@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { SearchOperation, SearchResultsCount } from '../../media-viewer.model';
-import { BehaviorSubject, Subject, Observable } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { SearchOperation, SearchResultsCount } from '../../model/viewer-operations';
 
 @Component({
   selector: 'mv-search-bar',
