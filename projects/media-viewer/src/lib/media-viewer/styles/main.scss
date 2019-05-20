@@ -1,4 +1,3 @@
-@import "media";
 @import "buttons";
 @import "side-bar";
 @import "search-bar";
@@ -10,6 +9,7 @@
 @import "loading-bar";
 @import "debugging";
 @import "text-selection";
+@import "media";
 
 .hidden {
   display: none !important;
