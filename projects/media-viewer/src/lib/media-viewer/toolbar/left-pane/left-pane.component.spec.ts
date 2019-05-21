@@ -69,4 +69,8 @@ describe('ToolbarLeftPaneComponent', () => {
     expect(pageChangerSpy).toHaveBeenCalledWith(new SetCurrentPageOperation(4));
   });
 
+  it('should update page number', () => {
+    component.currentPage = new SetCurrentPageOperation(4);
+    expect(component.pageNumber).toEqual(4);
+  });
 });
