@@ -86,3 +86,8 @@ Create test in the folder test/e2e/scenarios.
 ```
 npm run codeceptjs
 ```
+
+- To generate test file in the scenarios folder run
+```
+npx codeceptjs gt
+```
