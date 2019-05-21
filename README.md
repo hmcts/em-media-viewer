@@ -14,10 +14,15 @@ This is an angular library that provides components to view and annotate PDF doc
 - npm run start:ng
 
 ### Add as a dependency in your angular app
-- add @hmcts/media-viewer as a dependency in package.json
-- import MediaViewerModule and declare it in your NgModule imports.
 
-For example:
+add @hmcts/media-viewer as a dependency in package.json
+
+```
+npm install --save @hmcts/media-viewer
+```
+
+import MediaViewerModule and declare it in your NgModule imports.
+
 ```
 import { MediaViewerModule } from 'media-viewer';
 
@@ -28,7 +33,9 @@ import { MediaViewerModule } from 'media-viewer';
   ]
 })
 ```
+
 import assets to your angular.json
+
 ```
 {
     "glob": "**/*",
@@ -36,14 +43,18 @@ import assets to your angular.json
     "output": "/assets"
 }
 ```
+
 and styles
+
 ```
 "styles": [
   "node_modules/@hmcts/media-viewer/assets/aui-styles.scss",
   ...
 ],
 ```
+
 component entry point:
+
 ```
 <mv-media-viewer [url]="'assets/example.pdf'"
                  [downloadFileName]="'example.pdf'"
