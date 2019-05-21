@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
-import { PrintService } from '../../print.service';
+import { PrintService } from '../../service/print.service';
 import {
   ChangePageByDeltaOperation,
   DownloadOperation,

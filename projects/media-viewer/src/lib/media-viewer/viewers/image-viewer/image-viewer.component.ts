@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { PrintService } from '../../print.service';
+import { PrintService } from '../../service/print.service';
 import {Subject} from 'rxjs';
 import {
   DownloadOperation,
@@ -89,19 +89,19 @@ export class ImageViewerComponent {
     }
   };
 
-  setImageStyles() {
+  private setImageStyles() {
     this.zoomStyle = `scale(${this.zoom})`;
     this.rotationStyle = `rotate(${this.rotation}deg)`;
   }
 
-  setZoomValue(zoomValue) {
+  private setZoomValue(zoomValue) {
     return new Promise((resolve) => {
       this.zoomValue.next({ value: zoomValue });
       resolve(true);
     });
   }
 
-  updateZoomValue(zoomValue, increment = 0) {
+  private updateZoomValue(zoomValue, increment = 0) {
     const newZoomValue = zoomValue + increment;
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
