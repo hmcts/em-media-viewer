@@ -78,3 +78,11 @@ This is an angular library that provides components to view and annotate PDF doc
   yarn install; export S2S_SECRET={{insert secret here}}; export IDAM_SECRET={{insert secret here}}; export APP_ENV=local; yarn watch-dev-node;
   ``` 
 - go to http://localhost:3000 and the viewer should load the document.
+
+### Running e2e Test
+Create test in the folder test/e2e/scenarios.
+
+- To run the test
+```
+npm run codeceptjs
+```
