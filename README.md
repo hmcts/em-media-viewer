@@ -17,53 +17,48 @@ This is an angular library that provides components to view and annotate PDF doc
 - add @hmcts/media-viewer as a dependency in package.json
 - import MediaViewerModule and declare it in your NgModule imports.
 
-  For example:
-  ```
-  import { MediaViewerModule } from 'media-viewer';
+For example:
+```
+import { MediaViewerModule } from 'media-viewer';
 
-  @NgModule({
-    imports: [
-      ...,
-      MediaViewerModule,
-    ]
-  })
-  ```
-- import assets to your angular.json
-  ```
-    {
-        "glob": "**/*",
-        "input": "node_modules/@hmcts/media-viewer/assets",
-        "output": "/assets"
-    }
-  ```
-- and styles
-  ```
-  "styles": [
-    "node_modules/@hmcts/media-viewer/assets/aui-styles.scss",
-    ...
-  ],
-  ```
-- component entry point:
-  ```
-  <app-media-viewer
-      [baseUrl]="'http://localhost:3000/api'"
-      [annotate]="true"
-      [url]="'https://dm-store-aat.media-viewer-message.service.ts.core-compute-aat.internal/documents/35f3714e-30e0-45d6-b4fb-08f51c271f8e'"
-  ></app-media-viewer>
-  ```
-  
-  for non document store files:
-    ```
-    <app-media-viewer
-        [baseUrl]="'http://localhost:3000/api'"
-        [annotate]="false"
-        [url]="'http://localhost:3000/assets/non-dm.pdf'"
-        [isDM]="false"
-        [contentType]="'pdf'">
-    </app-media-viewer>
-    ```
-    Note: The file needs to be retrievable.
-  
+@NgModule({
+  imports: [
+    ...,
+    MediaViewerModule,
+  ]
+})
+```
+import assets to your angular.json
+```
+{
+    "glob": "**/*",
+    "input": "node_modules/@hmcts/media-viewer/assets",
+    "output": "/assets"
+}
+```
+and styles
+```
+"styles": [
+  "node_modules/@hmcts/media-viewer/assets/aui-styles.scss",
+  ...
+],
+```
+component entry point:
+```
+<mv-media-viewer [url]="'assets/example.pdf'"
+                 [downloadFileName]="'example.pdf'"
+                 [actionEvents]=actionEvents
+                 [showToolbar]="true"
+                 [contentType]="'pdf'">
+</mv-media-viewer>  
+```
+
+The `actionEvents` property is an instance of the `ActionEvents` class which acts like an event bus. The `actionEvents` instance will contain subscribable event streams for toolbar actions such as zoom, rotate and search. 
+
+### Toolbar
+
+The toolbar may be toggled off by setting `showToolbase` to false. The toolbar itself is available as a module that can be included into the DOM at a different location if necessary. 
+
 ### Running development application (only for use with hmcts document store)
 - set environment variable to define if app connects to localhost or aat:
   ```
