@@ -58,6 +58,22 @@ describe('SearchBarComponent', () => {
     expect(searchbar.className).not.toContain('hidden');
   });
 
+  it('should run search event', () => {
+    spyOn(component.searchEvents, 'next');
+    component.searchText = 'searchTerm';
+
+    const mockSearchOperation = new SearchOperation(
+      component.searchText,
+      component.highlightAll,
+      component.matchCase,
+      component.wholeWord,
+      false,
+      true
+    );
+    component.search();
+    expect(component.searchEvents.next).toHaveBeenCalledWith(mockSearchOperation);
+  });
+
   it('should close the searchbar on escape', () => {
     component.searchBarHidden.next(false);
     fixture.detectChanges();
@@ -72,7 +88,7 @@ describe('SearchBarComponent', () => {
     expect(searchbar.className).toContain('hidden');
   });
 
-  it('should not close the searchbar if other keys are pressed (not Escape)', () => {
+  it('should not close the searchbar on non-escape keypress)', () => {
     component.searchBarHidden.next(false);
     fixture.detectChanges();
 
@@ -116,5 +132,13 @@ describe('SearchBarComponent', () => {
     component.searchResultsCount = {current: null, total: null};
     expect(component.haveResults).toBeFalsy();
     expect(component.resultsText).toEqual('Phrase not found');
+  });
+
+  it('should not set search result count if null is passed in', () => {
+    component.haveResults = true;
+    component.resultsText = 'unchanged string';
+    component.searchResultsCount = null;
+    expect(component.haveResults).toEqual(true);
+    expect(component.resultsText).toEqual('unchanged string');
   });
 });
