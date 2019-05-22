@@ -26,17 +26,22 @@ describe('UnsupportedViewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // should it toggle or turn on? Check with taleb
-  // fit('should show download button', () => {
-  //   const localToolbarToggles = new ToolbarToggles();
-  //   spyOn(component.toolbarToggles.showDownloadBtn, 'next');
-  //   component.toolbarToggles = localToolbarToggles;
-  //   expect(component.toolbarToggles.showDownloadBtn.next).toHaveBeenCalledWith(true);
-  // });
+  it('should show download button', () => {
+    const mockToolbarToggles = new ToolbarToggles();
+    spyOn(mockToolbarToggles.showDownloadBtn, 'next');
+    component.toolbarToggles = mockToolbarToggles;
+    expect(mockToolbarToggles.showDownloadBtn.next).toHaveBeenCalledWith(true);
+  });
 
   it('should click download button', () => {
     const clickSpy = spyOn(component.downloadLink.nativeElement, 'click');
     component.downloadOperation = new DownloadOperation();
     expect(clickSpy).toHaveBeenCalledWith();
+  });
+
+  it('should not click download button', () => {
+    const clickSpy = spyOn(component.downloadLink.nativeElement, 'click');
+    component.downloadOperation = null;
+    expect(clickSpy).toHaveBeenCalledTimes(0);
   });
 });
