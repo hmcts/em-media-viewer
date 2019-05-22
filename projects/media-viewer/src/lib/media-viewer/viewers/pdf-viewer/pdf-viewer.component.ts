@@ -130,7 +130,6 @@ export class PdfViewerComponent implements AfterViewInit {
     }
   }
 
-
   updateZoomValue(zoomValue) {
     if (isNaN(zoomValue)) { return zoomValue; }
     if (zoomValue > 5) { return 5; }
