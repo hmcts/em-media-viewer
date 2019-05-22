@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActionEvents } from '../../../projects/media-viewer/src/lib/media-viewer/model/action-events';
 
 @Component({
   selector: 'app-sandbox-webapp',
@@ -9,12 +8,7 @@ import { ActionEvents } from '../../../projects/media-viewer/src/lib/media-viewe
 export class SandboxWebappComponent {
 
   documentTypeToShow = 'nonDM_PDF';
-  actionEvents: ActionEvents;
   showToolbar = true;
-
-  constructor() {
-    this.actionEvents = new ActionEvents();
-  }
 
   toggleDocumentSelection(selectedDocumentType: string) {
     this.documentTypeToShow = selectedDocumentType;
