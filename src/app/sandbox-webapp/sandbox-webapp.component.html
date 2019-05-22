@@ -43,19 +43,16 @@
         <mv-media-viewer *ngIf="documentTypeToShow === 'pdf'"
                          [url]="'assets/example.pdf'"
                          [downloadFileName]="'example.pdf'"
-                         [actionEvents]=actionEvents
                          [showToolbar]="showToolbar"
                          [contentType]="'pdf'">
         </mv-media-viewer>
         <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
                          [url]="'assets/example.jpg'"
-                         [actionEvents]=actionEvents
                          [showToolbar]="showToolbar"
                          [downloadFileName]="'example.jpg'"
                          [contentType]="'image'">
         </mv-media-viewer>
         <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
-                         [actionEvents]=actionEvents
                          [url]="'assets/unsupported.txt'"
                          [downloadFileName]="'unsupported.txt'"
                          [showToolbar]="showToolbar"
