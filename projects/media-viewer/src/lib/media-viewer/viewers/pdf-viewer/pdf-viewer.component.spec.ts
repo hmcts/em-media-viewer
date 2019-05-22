@@ -4,6 +4,7 @@ import { PdfViewerComponent } from './pdf-viewer.component';
 import { EmLoggerService } from '../../../logging/em-logger.service';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import {
+  ChangePageByDeltaOperation,
   RotateOperation,
   SearchResultsCount,
   SetCurrentPageOperation,
@@ -12,6 +13,7 @@ import {
   ZoomValue
 } from '../../model/viewer-operations';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -19,6 +21,7 @@ describe('PdfViewerComponent', () => {
 
   const mockViewer = {
     pagesRotation: 0,
+    currentPageNumber: 1,
     currentScaleValue: 2,
     eventBus: {
       on: () => {}
@@ -96,5 +99,38 @@ describe('PdfViewerComponent', () => {
     component.zoomOperation = new ZoomOperation(2);
     component.stepZoomOperation = new StepZoomOperation(0.5);
     expect(mockViewer.currentScaleValue).toEqual(2.5);
+  });
+
+  it('should set the current page', () => {
+    mockViewer.currentPageNumber = 1;
+    component.setCurrentPage = new SetCurrentPageOperation(2);
+    expect(mockViewer.currentPageNumber).toEqual(2);
+  });
+
+  it('should change the current page', () => {
+    mockViewer.currentPageNumber = 1;
+    component.changePageByDelta = new ChangePageByDeltaOperation(-2);
+    expect(mockViewer.currentPageNumber).toEqual(-1);
+  });
+
+  it('set toolbar toggles toggles', () => {
+    const toolbarToggles = new ToolbarToggles();
+
+    spyOn(toolbarToggles.showSearchbarToggleBtn, 'next');
+    spyOn(toolbarToggles.showZoomBtns, 'next');
+    spyOn(toolbarToggles.showRotateBtns, 'next');
+    spyOn(toolbarToggles.showNavigationBtns, 'next');
+    spyOn(toolbarToggles.showDownloadBtn, 'next');
+    spyOn(toolbarToggles.showPrintBtn, 'next');
+
+    component.toolbarToggles = toolbarToggles;
+
+    expect(toolbarToggles.showSearchbarToggleBtn.next).toHaveBeenCalledWith(true);
+    expect(toolbarToggles.showZoomBtns.next).toHaveBeenCalledWith(true);
+    expect(toolbarToggles.showRotateBtns.next).toHaveBeenCalledWith(true);
+    expect(toolbarToggles.showNavigationBtns.next).toHaveBeenCalledWith(true);
+    expect(toolbarToggles.showDownloadBtn.next).toHaveBeenCalledWith(true);
+    expect(toolbarToggles.showPrintBtn.next).toHaveBeenCalledWith(true);
+
   });
 });

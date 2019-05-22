@@ -105,7 +105,7 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input()
   set changePageByDelta(operation: ChangePageByDeltaOperation | null) {
     if (operation) {
-      this.pdfWrapper.incrementPageNumber(operation.delta);
+      this.pdfWrapper.changePageNumber(operation.delta);
     }
   }
 

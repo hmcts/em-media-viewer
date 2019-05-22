@@ -43,7 +43,7 @@ export class PdfJsWrapper {
     this.pdfViewer.currentPageNumber = pageNumber;
   }
 
-  public incrementPageNumber(numPages: number): void {
+  public changePageNumber(numPages: number): void {
     this.pdfViewer.currentPageNumber += numPages;
   }
 
