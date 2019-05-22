@@ -12,7 +12,7 @@ describe('navigate', () => {
   it('should display next page in pdf viewer', () => {
     page.getPdfViewer().click();
 
-    const nextPage = page.getPdfNextPageButton();
+    const nextPage = page.getNextPageButton();
     nextPage.click();
 
     const pageNumber = page.getPageNumberInput();
@@ -24,7 +24,7 @@ describe('navigate', () => {
   });
 
   it('should display previous page in pdf viewer', () => {
-    const previousPage = page.getPdfPreviousPageButton();
+    const previousPage = page.getPreviousPageButton();
     previousPage.click();
 
     const pageNumber = page.getPageNumberInput();
