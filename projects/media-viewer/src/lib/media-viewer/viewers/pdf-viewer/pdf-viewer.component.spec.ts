@@ -43,7 +43,7 @@ describe('PdfViewerComponent', () => {
     expect(component.pdfViewer.pagesRotation).toEqual(90);
   });
 
-  fit('should perform zoom operation', () => {
+  it('should perform zoom operation', () => {
     component.zoomValue = new Subject<ZoomValue>();
     spyOn(component.zoomValue, 'next');
 
@@ -53,14 +53,14 @@ describe('PdfViewerComponent', () => {
     expect(component.zoomValue.next).toHaveBeenCalledWith({value: component.pdfViewer.currentScaleValue });
   });
 
-  fit('should set scale value to max value', () => {
+  it('should set scale value to max value', () => {
     component.zoomValue = new Subject<ZoomValue>();
     component.pdfViewer = {currentScaleValue: 2};
     component.zoomOperation = new ZoomOperation(6);
     expect(component.pdfViewer.currentScaleValue).toEqual(5);
   });
 
-  fit('should set scale value to min value', () => {
+  it('should set scale value to min value', () => {
     component.zoomValue = new Subject<ZoomValue>();
     component.pdfViewer = {currentScaleValue: 2};
     component.zoomOperation = new ZoomOperation(0.001);

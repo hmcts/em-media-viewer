@@ -72,6 +72,20 @@ describe('SearchBarComponent', () => {
     expect(searchbar.className).toContain('hidden');
   });
 
+  it('should not close the searchbar if other keys are pressed (not Escape)', () => {
+    component.searchBarHidden.next(false);
+    fixture.detectChanges();
+
+    const searchbar = nativeElement.querySelector('.findbar');
+    expect(searchbar.className).not.toContain('hidden');
+
+    const event = new KeyboardEvent('keydown', { 'key': 'F' });
+    searchInput.dispatchEvent(event);
+    fixture.detectChanges();
+
+    expect(searchbar.className).not.toContain('hidden');
+  });
+
   it('should emit search next event', () => {
     component.searchBarHidden.next(false);
     const searchSpy = spyOn(component.searchEvents, 'next');
