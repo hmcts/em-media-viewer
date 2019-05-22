@@ -10,6 +10,7 @@ node_modules/
 projects/media-viewer/node_modules/
 **/**/node_modules/
 /reports
+/projects/media-viewer/reports
 /src/environments/environment.ts
 
 # IDEs and editors
