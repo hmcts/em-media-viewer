@@ -91,9 +91,12 @@
               }
             ],
             "styles": [
-              "dist/media-viewer/assets/aui-styles.scss"
+              "dist/media-viewer/assets/aui-styles.scss",
             ],
-            "scripts": []
+            "scripts": [
+              "dist/media-viewer/assets/build/pdf.worker.js",
+              "dist/media-viewer/assets/requirejs/require.js"
+            ]
           },
           "configurations": {
             "production": {
