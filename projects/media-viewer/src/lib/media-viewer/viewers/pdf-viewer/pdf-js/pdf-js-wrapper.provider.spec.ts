@@ -1,10 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { PdfJsWrapperFactory } from './pdf-js-wrapper.provider';
+import { PdfViewerComponent } from '../pdf-viewer.component';
+import { EmLoggerService } from '../../../../logging/em-logger.service';
+import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { PdfViewerComponent } from './pdf-viewer.component';
-import { EmLoggerService } from '../../../logging/em-logger.service';
-import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 
-describe('PdfViewerComponent', () => {
+describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
   let fixture: ComponentFixture<PdfViewerComponent>;
 
@@ -25,8 +25,12 @@ describe('PdfViewerComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('creates a wrapper', () => {
+    const factory = new PdfJsWrapperFactory();
+    const wrapper = factory.create(component.viewerContainer);
+
+    expect(wrapper).not.toBeNull();
   });
+
 
 });
