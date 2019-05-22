@@ -5,7 +5,23 @@ export class AppPage {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getHeaderText() {
+    return element(by.css('app-sandbox-webapp h2')).getText();
+  }
+
+  getPdfViewer() {
+    return element(by.css('a[id="pdf"]'));
+  }
+
+  getPdfNextPageButton() {
+    return element(by.css('button[id="next"]'));
+  }
+
+  getPdfPreviousPageButton() {
+    return element(by.css('button[id="previous"]'));
+  }
+
+  getPageNumberInput() {
+    return element(by.css('input[id="pageNumber"]'));
   }
 }

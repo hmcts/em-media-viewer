@@ -23,17 +23,17 @@
     <div class="govuk-width-container">
       <ul class="govuk-tabs__list">
         <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('pdf')" href="#pdf" (click)="toggleDocumentSelection('pdf')">
+          <a [className]="tabLinkStyle('pdf')" id="pdf" href="#pdf" (click)="toggleDocumentSelection('pdf')">
             PDF Viewer
           </a>
         </li>
         <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('image')" href="#image" (click)="toggleDocumentSelection('image')">
+          <a [className]="tabLinkStyle('image')" id="image" href="#image" (click)="toggleDocumentSelection('image')">
             Image Viewer
           </a>
         </li>
         <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('unsupported')" href="#unsupported" (click)="toggleDocumentSelection('unsupported')">
+          <a [className]="tabLinkStyle('unsupported')" id="unsupported" href="#unsupported" (click)="toggleDocumentSelection('unsupported')">
             Unsupported Documents Viewer
           </a>
         </li>

@@ -1,14 +1,16 @@
 import { AppPage } from './app.po';
 
-describe('workspace-project App', () => {
+describe('media viewer app', () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+
+  it('should display header', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to annotation-ui!');
+
+    expect(page.getHeaderText()).toEqual('Media Viewer Demo');
   });
 });
