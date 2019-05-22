@@ -60,7 +60,7 @@ export class PdfJsWrapper {
   }
 
   public setZoom(zoomValue: number): number {
-    return this.pdfViewer.currentScaleValue = zoomValue;
+    return this.pdfViewer.currentScaleValue = this.getZoomValue(zoomValue);
   }
 
   public stepZoom(zoomValue: number): number {

@@ -87,7 +87,7 @@ export class ImageViewerComponent {
       toolbarToggles.showDownloadBtn.next(true);
       toolbarToggles.showPrintBtn.next(true);
     }
-  };
+  }
 
   setImageStyles() {
     this.zoomStyle = `scale(${this.zoom})`;

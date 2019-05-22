@@ -58,6 +58,22 @@ describe('SearchBarComponent', () => {
     expect(searchbar.className).not.toContain('hidden');
   });
 
+  it('should run search event', () => {
+    spyOn(component.searchEvents, 'next');
+    component.searchText = 'searchTerm';
+
+    const mockSearchOperation = new SearchOperation(
+      component.searchText,
+      component.highlightAll,
+      component.matchCase,
+      component.wholeWord,
+      false,
+      true
+    );
+    component.search();
+    expect(component.searchEvents.next).toHaveBeenCalledWith(mockSearchOperation);
+  });
+
   it('should close the searchbar on escape', () => {
     component.searchBarHidden.next(false);
     fixture.detectChanges();
@@ -70,6 +86,20 @@ describe('SearchBarComponent', () => {
     fixture.detectChanges();
 
     expect(searchbar.className).toContain('hidden');
+  });
+
+  it('should not close the searchbar on non-escape keypress)', () => {
+    component.searchBarHidden.next(false);
+    fixture.detectChanges();
+
+    const searchbar = nativeElement.querySelector('.findbar');
+    expect(searchbar.className).not.toContain('hidden');
+
+    const event = new KeyboardEvent('keydown', { 'key': 'F' });
+    searchInput.dispatchEvent(event);
+    fixture.detectChanges();
+
+    expect(searchbar.className).not.toContain('hidden');
   });
 
   it('should emit search next event', () => {
@@ -90,5 +120,25 @@ describe('SearchBarComponent', () => {
     searchPrevButton.click();
 
     expect(searchSpy).toHaveBeenCalledWith(new SearchOperation('searchTerm', true, false, false, true, false));
+  });
+
+  it('should set search result count with results found', () => {
+    component.searchResultsCount = {current: 1, total: 4};
+    expect(component.haveResults).toBeTruthy();
+    expect(component.resultsText).toEqual('1 of 4 matches');
+  });
+
+  it('should set search result count with no results found', () => {
+    component.searchResultsCount = {current: null, total: null};
+    expect(component.haveResults).toBeFalsy();
+    expect(component.resultsText).toEqual('Phrase not found');
+  });
+
+  it('should not set search result count if null is passed in', () => {
+    component.haveResults = true;
+    component.resultsText = 'unchanged string';
+    component.searchResultsCount = null;
+    expect(component.haveResults).toEqual(true);
+    expect(component.resultsText).toEqual('unchanged string');
   });
 });

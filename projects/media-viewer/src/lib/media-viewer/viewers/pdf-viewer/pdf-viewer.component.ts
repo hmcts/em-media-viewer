@@ -16,7 +16,6 @@ import {
 } from '../../model/viewer-operations';
 import { ToolbarToggles } from '../../model/toolbar-toggles';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
-import { multicast } from 'rxjs/operators';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -33,7 +32,7 @@ export class PdfViewerComponent implements AfterViewInit {
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
-  private pdfViewer: PdfJsWrapper;
+  private pdfWrapper: PdfJsWrapper;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
@@ -41,18 +40,19 @@ export class PdfViewerComponent implements AfterViewInit {
   ) {}
 
   async ngAfterViewInit(): Promise<void> {
-    this.pdfViewer = this.pdfJsWrapperFactory.create(this.viewerContainer);
-    this.pdfViewer.currentPageChanged.subscribe(v => this.currentPageChanged.next(v));
-    this.pdfViewer.searchResults.subscribe(v => this.searchResults.next(v));
+    this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
+    this.pdfWrapper.currentPageChanged.subscribe(v => this.currentPageChanged.next(v));
+    this.pdfWrapper.searchResults.subscribe(v => this.searchResults.next(v));
 
-    await this.pdfViewer.loadDocument(this.url);
+    await this.pdfWrapper.loadDocument(this.url);
   }
 
 
   @Input()
   set rotateOperation(operation: RotateOperation | null) {
     if (operation) {
-      this.pdfViewer.rotate(operation.rotation);
+
+      this.pdfWrapper.rotate(operation.rotation);
     }
   }
 
@@ -60,7 +60,7 @@ export class PdfViewerComponent implements AfterViewInit {
   set zoomOperation(operation: ZoomOperation | null) {
     if (operation) {
       this.zoomValue.next({
-        value: this.pdfViewer.setZoom(operation.zoomFactor)
+        value: this.pdfWrapper.setZoom(operation.zoomFactor)
       });
     }
   }
@@ -69,7 +69,7 @@ export class PdfViewerComponent implements AfterViewInit {
   set stepZoomOperation(operation: StepZoomOperation | null) {
     if (operation) {
       this.zoomValue.next({
-        value: this.pdfViewer.stepZoom(operation.zoomFactor)
+        value: this.pdfWrapper.stepZoom(operation.zoomFactor)
       });
     }
   }
@@ -77,7 +77,7 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input()
   set searchOperation(operation: SearchOperation | null) {
     if (operation) {
-      this.pdfViewer.search(operation);
+      this.pdfWrapper.search(operation);
     }
   }
 
@@ -91,21 +91,21 @@ export class PdfViewerComponent implements AfterViewInit {
   @Input()
   set downloadOperation(operation: DownloadOperation | null) {
     if (operation) {
-      this.pdfViewer.downloadFile(this.url, this.downloadFileName);
+      this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
     }
   }
 
   @Input()
   set setCurrentPage(operation: SetCurrentPageOperation | null) {
     if (operation) {
-      this.pdfViewer.setPageNumber(operation.pageNumber);
+      this.pdfWrapper.setPageNumber(operation.pageNumber);
     }
   }
 
   @Input()
   set changePageByDelta(operation: ChangePageByDeltaOperation | null) {
     if (operation) {
-      this.pdfViewer.incrementPageNumber(operation.delta);
+      this.pdfWrapper.incrementPageNumber(operation.delta);
     }
   }
 
