@@ -1,65 +1,92 @@
-import {ElementRef} from '@angular/core';
 import * as pdfjsLib from 'pdfjs-dist';
-import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
+import { PDFViewer, DownloadManager } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
+import { SearchOperation, SearchResultsCount, SetCurrentPageOperation } from '../../../model/viewer-operations';
+import { Subject } from 'rxjs';
 
 export class PdfJsWrapper {
 
-    async initViewer(
-      documentUrl: string,
-      container: ElementRef
-    ): Promise<[pdfjsViewer.PDFViewer, pdfjsViewer.PDFFindController]> {
+  constructor(
+    public readonly searchResults: Subject<SearchResultsCount>,
+    public readonly currentPageChanged: Subject<SetCurrentPageOperation>,
+    private readonly pdfViewer: PDFViewer,
+    private readonly downloadManager: DownloadManager,
+  ) {
 
-      if (!pdfjsLib.getDocument || !pdfjsViewer.PDFPageView) {
-        alert('pdfjsLib or pdfjsViewer are not unavailable.');
+    // bind to internal PDF.js event bus
+    this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
+    this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
+    this.pdfViewer.eventBus.on('updatefindcontrolstate', e => {
+      if (e.state === FindState.NOT_FOUND || e.state === FindState.FOUND) {
+        this.searchResults.next(e.matchesCount);
       }
+    });
+    this.pdfViewer.eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
+  }
 
-      const CMAP_URL = 'assets/minified/cmaps';
-      const CMAP_PACKED = true;
+  public async loadDocument(documentUrl: string): Promise<void> {
+    const pdfDocument = await pdfjsLib.getDocument({
+      url: documentUrl,
+      cMapUrl: 'assets/minified/cmaps',
+      cMapPacked: true,
+    });
 
-      const DEFAULT_URL = documentUrl;
-      const eventBus = new pdfjsViewer.EventBus();
+    this.pdfViewer.setDocument(pdfDocument);
+    this.pdfViewer.linkService.setDocument(pdfDocument, null);
+  }
 
-      // (Optionally) enable hyperlinks within PDF files.
-      const pdfLinkService = new pdfjsViewer.PDFLinkService();
+  public downloadFile(url: string, filename: string): void {
+    this.downloadManager.downloadUrl(url, filename);
+  }
 
-      // (Optionally) enable find controller.
-      const pdfFindController = new pdfjsViewer.PDFFindController({
-        linkService: pdfLinkService,
-        eventBus: eventBus
-      });
+  public setPageNumber(pageNumber: number): void {
+    this.pdfViewer.currentPageNumber = pageNumber;
+  }
 
-      const pdfViewer = new pdfjsViewer.PDFViewer({
-        container: container.nativeElement,
-        linkService: pdfLinkService,
-        findController: pdfFindController,
-        eventBus: eventBus
-      });
+  public incrementPageNumber(numPages: number): void {
+    this.pdfViewer.currentPageNumber += numPages;
+  }
 
+  public search(operation: SearchOperation): void {
+    const command = operation.reset ? 'find' : 'findagain';
 
-      pdfLinkService.setViewer(pdfViewer);
+    this.pdfViewer.findController.executeCommand(command, {
+      query: operation.searchTerm,
+      caseSensitive: operation.matchCase,
+      entireWord: operation.wholeWord,
+      highlightAll: operation.highlightAll,
+      findPrevious: operation.previous,
+    });
+  }
 
-      eventBus.on('pagesinit', function () {
-        // We can use pdfViewer now, e.g. let's change default scale.
-        pdfViewer.currentScaleValue = '1';
-      });
+  public setZoom(zoomValue: number): number {
+    return this.pdfViewer.currentScaleValue = zoomValue;
+  }
 
-      // Loading document.
-      const pdfDocument = await pdfjsLib.getDocument({
-        url: DEFAULT_URL,
-        cMapUrl: CMAP_URL,
-        cMapPacked: CMAP_PACKED,
-      });
-      pdfViewer.setDocument(pdfDocument);
-      pdfLinkService.setDocument(pdfDocument, null);
+  public stepZoom(zoomValue: number): number {
+    return this.pdfViewer.currentScaleValue  = this.getZoomValue(this.pdfViewer.currentScaleValue + zoomValue);
+  }
 
-      return [pdfViewer, pdfFindController];
+  private getZoomValue(zoomValue: number): number {
+    if (isNaN(zoomValue)) { return zoomValue; }
+    if (zoomValue > 5) { return 5; }
+    if (zoomValue < 0.1) { return 0.1; }
 
-    }
+    return zoomValue;
+  }
 
-    downloadFile(url, filename) {
-      const downloadManager = new pdfjsViewer.DownloadManager({});
-      downloadManager.downloadUrl(url, filename);
-    }
+  public rotate(rotation: number): number {
+    return this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + rotation) % 360;
+  }
 
+}
+
+/**
+ * Values of the state field returned by the find events
+ */
+enum FindState {
+  FOUND = 0,
+  NOT_FOUND = 1,
+  WRAPPED = 2,
+  PENDING = 3,
 }
