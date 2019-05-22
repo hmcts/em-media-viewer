@@ -16,7 +16,8 @@
   "dependencies": {
     "@hmcts/frontend": "^0.0.34-alpha",
     "govuk-frontend": "^2.11.0",
-    "pdfjs-dist": "^2.0.943"
+    "pdfjs-dist": "^2.0.943",
+    "requirejs": "^2.3.6"
   },
   "peerDependencies": {
     "@angular/common": "^7.2.15",
