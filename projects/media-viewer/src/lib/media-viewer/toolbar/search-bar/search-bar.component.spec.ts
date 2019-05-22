@@ -91,4 +91,16 @@ describe('SearchBarComponent', () => {
 
     expect(searchSpy).toHaveBeenCalledWith(new SearchOperation('searchTerm', true, false, false, true, false));
   });
+
+  it('should set search result count with results found', () => {
+    component.searchResultsCount = {current: 1, total: 4};
+    expect(component.haveResults).toBeTruthy();
+    expect(component.resultsText).toEqual('1 of 4 matches');
+  });
+
+  it('should set search result count with no results found', () => {
+    component.searchResultsCount = {current: null, total: null};
+    expect(component.haveResults).toBeFalsy();
+    expect(component.resultsText).toEqual('Phrase not found');
+  });
 });

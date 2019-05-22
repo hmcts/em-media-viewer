@@ -32,7 +32,6 @@ describe('ToolbarMiddlePaneComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('should emit rotate event with 90 degrees', () => {
     const rotateSpy = spyOn(component.rotateEvent, 'next');
     const rotateClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCw]');
