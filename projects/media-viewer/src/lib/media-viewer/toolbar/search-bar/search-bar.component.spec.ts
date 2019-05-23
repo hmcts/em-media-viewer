@@ -59,11 +59,10 @@ describe('SearchBarComponent', () => {
   });
 
   it('should run search event', () => {
-    spyOn(component.searchEvents, 'next');
+    const searchSpy = spyOn(component.searchEvents, 'next');
     component.searchText = 'searchTerm';
-
     const mockSearchOperation = new SearchOperation(
-      component.searchText,
+      'searchTerm',
       component.highlightAll,
       component.matchCase,
       component.wholeWord,
@@ -71,7 +70,7 @@ describe('SearchBarComponent', () => {
       true
     );
     component.search();
-    expect(component.searchEvents.next).toHaveBeenCalledWith(mockSearchOperation);
+    expect(searchSpy).toHaveBeenCalledWith(mockSearchOperation);
   });
 
   it('should close the searchbar on escape', () => {

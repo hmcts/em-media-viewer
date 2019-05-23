@@ -10,10 +10,14 @@ import {
   SetCurrentPageOperation,
   StepZoomOperation,
   ZoomOperation,
-  ZoomValue
+  ZoomValue,
+  SearchOperation,
+  DownloadOperation
 } from '../../model/viewer-operations';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { PrintService } from '../../service/print.service';
+import { PrintOperation } from '@hmcts/media-viewer/lib/media-viewer/model/viewer-operations';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -25,7 +29,8 @@ describe('PdfViewerComponent', () => {
     currentScaleValue: 2,
     eventBus: {
       on: () => {}
-    }
+    },
+    // printService: { printDocumentNatively: () => {} }
   };
 
   const mockWrapper = new PdfJsWrapper(
@@ -66,54 +71,104 @@ describe('PdfViewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should run ngAfterViewInit', () => {
-  //   // mock calls to pdfWrapper.initViewer to return mock this.pdfViewer and mock this.pdfFindController
-  //   expect(component).toHaveBeenCalled();
-  // });
-
   it('should perform rotate operation', () => {
-    expect(mockViewer.pagesRotation).toEqual(0);
+    spyOn(mockWrapper, 'rotate');
     component.rotateOperation = new RotateOperation(90);
-    expect(mockViewer.pagesRotation).toEqual(90);
+    expect(mockWrapper.rotate).toHaveBeenCalledWith(90);
   });
 
   it('should perform zoom operation', () => {
     spyOn(component.zoomValue, 'next');
-
+    spyOn(mockWrapper, 'setZoom');
     component.zoomOperation = new ZoomOperation(4);
-    expect(mockViewer.currentScaleValue).toEqual(4);
-    expect(component.zoomValue.next).toHaveBeenCalledWith({value: mockViewer.currentScaleValue });
+    expect(component.zoomValue.next).toHaveBeenCalledWith({value: mockWrapper.setZoom(4) });
+    expect(mockWrapper.setZoom).toHaveBeenCalledWith(4);
   });
 
-  it('should set scale value to max value', () => {
-    component.zoomOperation = new ZoomOperation(6);
-    expect(mockViewer.currentScaleValue).toEqual(5);
-  });
-
-  it('should set scale value to min value', () => {
-    component.zoomOperation = new ZoomOperation(0.001);
-    expect(mockViewer.currentScaleValue).toEqual(0.1);
-  });
-
+  // TODO In wrapper
   it('should step the zoom', () => {
     component.zoomOperation = new ZoomOperation(2);
     component.stepZoomOperation = new StepZoomOperation(0.5);
     expect(mockViewer.currentScaleValue).toEqual(2.5);
   });
 
+  it('should call step zoom operation', () => {
+    spyOn(component.zoomValue, 'next');
+    spyOn(mockWrapper, 'stepZoom');
+    component.stepZoomOperation = new StepZoomOperation(0.5);
+    expect(component.zoomValue.next).toHaveBeenCalledWith({value: mockWrapper.stepZoom(0.5) });
+    expect(mockWrapper.stepZoom).toHaveBeenCalledWith(0.5);
+  });
+
+  // TODO In wrapper
+  // it('should search the pdf', () => {
+  //   component.searchOperation = new SearchOperation(2);
+  //   component.searchOperation = new SearchOperation(0.5);
+  //   expect(mockViewer.searchBoi).toEqual(2.5);
+  // });
+
+  it('should call the search operation', () => {
+    spyOn(mockWrapper, 'search');
+    const searchOperation = new SearchOperation('searchTerm', false, false, false, false, false);
+    component.searchOperation = searchOperation;
+    expect(mockWrapper.search).toHaveBeenCalledWith(searchOperation);
+  });
+
+  // TODO In wrapper
+  // it('should print the pdf', () => {
+  //   component.printOperation = new PrintOperation(2);
+  //   component.PrintOperation = new PrintOperation(0.5);
+  //   expect(mockViewer.PrintBoi).toEqual(2.5);
+  // });
+
+  // Why does this not work? I'm mocking the response from printService. Is it still running the method, just not returning its value?
+  // fit('should call the print operation', () => {
+  //   spyOn(mockViewer.printService, 'printDocumentNatively');
+  //   component.url = '';
+  //   component.printOperation = new PrintOperation();
+  //   expect(mockViewer.printService.printDocumentNatively).toHaveBeenCalledWith(component.url);
+  // });
+
+  // // TODO In wrapper
+  // it('should download the pdf', () => {
+  //   mockViewer.pdf = 1;
+  //   component.pdf = new pdf(2);
+  //   expect(mockViewer.currentPageNumber).toEqual(2);
+  // });
+
+  it('should download the pdf', () => {
+    spyOn(mockWrapper, 'downloadFile');
+    component.downloadOperation = new DownloadOperation();
+    expect(mockWrapper.downloadFile).toHaveBeenCalledWith(component.url, component.downloadFileName);
+  });
+
+  // TODO In wrapper
   it('should set the current page', () => {
     mockViewer.currentPageNumber = 1;
     component.setCurrentPage = new SetCurrentPageOperation(2);
     expect(mockViewer.currentPageNumber).toEqual(2);
   });
 
+  it('should call set current page operation', () => {
+    spyOn(mockWrapper, 'setPageNumber');
+    component.setCurrentPage = new SetCurrentPageOperation(2);
+    expect(mockWrapper.setPageNumber).toHaveBeenCalledWith(2);
+  });
+
+  // TODO In wrapper
   it('should change the current page', () => {
     mockViewer.currentPageNumber = 1;
     component.changePageByDelta = new ChangePageByDeltaOperation(-2);
     expect(mockViewer.currentPageNumber).toEqual(-1);
   });
 
-  it('set toolbar toggles toggles', () => {
+  it('should call change current page operation', () => {
+    spyOn(mockWrapper, 'changePageNumber');
+    component.changePageByDelta = new ChangePageByDeltaOperation(-2);
+    expect(mockWrapper.changePageNumber).toHaveBeenCalledWith(-2);
+  });
+
+  it('set toolbar toggles', () => {
     const toolbarToggles = new ToolbarToggles();
 
     spyOn(toolbarToggles.showSearchbarToggleBtn, 'next');
