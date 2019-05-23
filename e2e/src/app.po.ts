@@ -1,4 +1,5 @@
 import { browser, by, element } from 'protractor';
+const fs = require('fs');
 
 export class AppPage {
   navigateTo() {
@@ -19,6 +20,10 @@ export class AppPage {
 
   getImageViewer() {
     return element(by.css('a[id="image"]'));
+  }
+
+  getUnsupportedViewer() {
+    return element(by.css('a[id="unsupported"]'));
   }
 
   getNextPageButton() {
@@ -59,5 +64,17 @@ export class AppPage {
 
   getCounterClockwiseRotateButton() {
     return element(by.css('button[id="pageRotateCcw"]'));
+  }
+
+  getDownloadButton() {
+    return element(by.css('button[id="download"]'));
+  }
+
+  getPrintButton() {
+    return element(by.css('button[id="print"]'));
+  }
+
+  hasFileDownloaded(filePath) {
+    return fs.existsSync(filePath);
   }
 }
