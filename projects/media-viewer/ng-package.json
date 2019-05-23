@@ -8,7 +8,6 @@
   "whitelistedNonPeerDependencies": [
     "@hmcts/frontend",
     "govuk-frontend",
-    "pdfjs-dist",
-    "requirejs"
+    "pdfjs-dist"
   ]
 }
