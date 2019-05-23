@@ -9,5 +9,4 @@ export class PrintService {
     const printWindow = window.open(url);
     printWindow.print();
   }
-
 }

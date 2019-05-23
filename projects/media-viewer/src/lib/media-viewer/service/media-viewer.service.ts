@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {makeStateKey, TransferState} from '@angular/platform-browser';
-import {map, catchError} from 'rxjs/operators';
-import { EmLoggerService } from '../logging/em-logger.service';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { map, catchError} from 'rxjs/operators';
+import { EmLoggerService } from '../../logging/em-logger.service';
 
 @Injectable({
     providedIn: 'root'

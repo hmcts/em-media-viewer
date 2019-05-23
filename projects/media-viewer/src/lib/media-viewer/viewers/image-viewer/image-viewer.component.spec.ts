@@ -1,18 +1,22 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
 import { Subject } from 'rxjs';
 import {
+  DownloadOperation,
   PrintOperation,
   RotateOperation,
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
 } from '../../model/viewer-operations';
+import { PrintService } from '../../service/print.service';
+import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
   let fixture: ComponentFixture<ImageViewerComponent>;
   let nativeElement;
+  const DOCUMENT_URL = 'document-url';
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
@@ -27,7 +31,7 @@ describe('ImageViewerComponent', () => {
     fixture = TestBed.createComponent(ImageViewerComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.url = '/document-url';
+    component.url = DOCUMENT_URL;
     component.zoomValue = new Subject<ZoomValue>();
     fixture.detectChanges();
   });
@@ -93,15 +97,38 @@ describe('ImageViewerComponent', () => {
     });
   });
 
-  it('should trigger print', () => {
-    const print = () => {};
-    const windowMock = { print } as Window;
-    const windowOpenSpy = spyOn(window, 'open').and.returnValue(windowMock);
-    const windowPrintSpy = spyOn(windowMock, 'print');
+  it('should trigger print', inject([PrintService], (printService: PrintService) => {
+    const printSpy = spyOn(printService, 'printDocumentNatively');
     component.printOperation = new PrintOperation();
 
-    expect(windowOpenSpy).toHaveBeenCalledWith('/document-url');
-    expect(windowPrintSpy).toHaveBeenCalled();
+    expect(printSpy).toHaveBeenCalledWith(DOCUMENT_URL);
+  }));
+
+  it('should trigger download', () => {
+    const anchor = document.createElement('a');
+    spyOn(document, 'createElement').and.returnValue(anchor);
+    component.downloadFileName = 'download-filename';
+
+    component.downloadOperation = new DownloadOperation();
+
+    expect(document.createElement).toHaveBeenCalledWith('a');
+    expect(anchor.href).toContain(DOCUMENT_URL);
+    expect(anchor.download).toBe('download-filename');
+  });
+
+  it('should enable toolbar buttons', () => {
+    const toolbarToggles = new ToolbarToggles();
+    spyOn(toolbarToggles.showZoomBtns, 'next');
+    spyOn(toolbarToggles.showRotateBtns, 'next');
+    spyOn(toolbarToggles.showDownloadBtn, 'next');
+    spyOn(toolbarToggles.showPrintBtn, 'next');
+
+    component.toolbarToggles = toolbarToggles;
+
+    expect(toolbarToggles.showZoomBtns.next).toHaveBeenCalledWith(true);
+    expect(toolbarToggles.showRotateBtns.next).toHaveBeenCalledWith(true);
+    expect(toolbarToggles.showDownloadBtn.next).toHaveBeenCalledWith(true);
+    expect(toolbarToggles.showPrintBtn.next).toHaveBeenCalledWith(true);
   });
 });
 
