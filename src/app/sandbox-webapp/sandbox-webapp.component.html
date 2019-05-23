@@ -9,8 +9,9 @@
           <tr>
             <td><span class="govuk-heading-s govuk-!-margin-top-4">Toggle Toolbar</span></td>
             <td>
-              <label  style="float: right" class="switch govuk-!-margin-left-1">
-                <input type="checkbox" [checked]="showToolbar" (change)="toggleToolbarVisibility($event.target.checked)">
+              <label style="float: right" class="switch govuk-!-margin-left-1">
+                <input type="checkbox" [checked]="showToolbar"
+                       (change)="toggleToolbarVisibility($event.target.checked)">
                 <span class="slider round"></span>
               </label>
             </td>
@@ -33,31 +34,47 @@
           </a>
         </li>
         <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('unsupported')" id="unsupported" href="#unsupported" (click)="toggleDocumentSelection('unsupported')">
+          <a [className]="tabLinkStyle('unsupported')" id="unsupported" href="#unsupported"
+             (click)="toggleDocumentSelection('unsupported')">
             Unsupported Documents Viewer
           </a>
         </li>
       </ul>
     </div>
     <section [id]="documentTypeToShow">
-        <mv-media-viewer *ngIf="documentTypeToShow === 'pdf'"
-                         [url]="'assets/example.pdf'"
-                         [downloadFileName]="'example.pdf'"
-                         [showToolbar]="showToolbar"
-                         [contentType]="'pdf'">
+      <div *ngIf="documentTypeToShow === 'pdf'">
+        <div>
+          Document URL: <input type="text" [value]="'assets/example.pdf'" #pdfUrl>
+        </div>
+        <mv-media-viewer
+          [url]="pdfUrl.value"
+          [downloadFileName]="'example.pdf'"
+          [showToolbar]="showToolbar"
+          [contentType]="'pdf'">
         </mv-media-viewer>
-        <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
-                         [url]="'assets/example.jpg'"
+      </div>
+      <div *ngIf="documentTypeToShow === 'image'">
+        <div>
+          Document URL: <input type="text" [value]="'assets/example.jpg'" #imageUrl>
+        </div>
+        <mv-media-viewer
+                         [url]="imageUrl.value"
                          [showToolbar]="showToolbar"
                          [downloadFileName]="'example.jpg'"
                          [contentType]="'image'">
         </mv-media-viewer>
-        <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
-                         [url]="'assets/unsupported.txt'"
+      </div>
+      <div *ngIf="documentTypeToShow === 'unsupported'">
+        <div>
+          Document URL: <input type="text" [value]="'assets/unsupported.txt'" #unsupportedUrl>
+        </div>
+        <mv-media-viewer
+                         [url]="unsupportedUrl.value"
                          [downloadFileName]="'unsupported.txt'"
                          [showToolbar]="showToolbar"
                          [contentType]="'txt'">
         </mv-media-viewer>
+      </div>
     </section>
   </div>
 </div>

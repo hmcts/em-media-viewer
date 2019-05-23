@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
@@ -14,13 +14,14 @@ import {
   ZoomValue
 } from '../../model/viewer-operations';
 import { ToolbarToggles } from '../../model/toolbar-toggles';
+import {init} from 'protractor/built/launcher';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.css']
 })
-export class PdfViewerComponent implements AfterViewInit {
+export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -36,19 +37,29 @@ export class PdfViewerComponent implements AfterViewInit {
   constructor(private pdfWrapper: PdfJsWrapper, private printService: PrintService) {}
 
   async ngAfterViewInit(): Promise<void> {
-    [this.pdfViewer, this.pdfFindController] = await this.pdfWrapper.initViewer(this.url, this.viewerContainer);
-
-    this.pdfViewer.eventBus.on('updatefindcontrolstate', e => {
-      if (e.state === FindState.NOT_FOUND || e.state === FindState.FOUND) {
-        this.searchResults.next(e.matchesCount);
-      }
-    });
-    this.pdfViewer.eventBus.on('updatefindmatchescount', e => {
-      this.searchResults.next(e.matchesCount);
-    });
-    this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
+    await this.initViewer();
   }
 
+  async ngOnChanges(changes: SimpleChanges) {
+    if (changes.url) {
+      await this.initViewer();
+    }
+  }
+
+  async initViewer(): Promise<void> {
+    if (this.url) {
+      [this.pdfViewer, this.pdfFindController] = await this.pdfWrapper.initViewer(this.url, this.viewerContainer);
+      this.pdfViewer.eventBus.on('updatefindcontrolstate', e => {
+        if (e.state === FindState.NOT_FOUND || e.state === FindState.FOUND) {
+          this.searchResults.next(e.matchesCount);
+        }
+      });
+      this.pdfViewer.eventBus.on('updatefindmatchescount', e => {
+        this.searchResults.next(e.matchesCount);
+      });
+      this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
+    }
+  }
 
   @Input()
   set rotateOperation(operation: RotateOperation | null) {
