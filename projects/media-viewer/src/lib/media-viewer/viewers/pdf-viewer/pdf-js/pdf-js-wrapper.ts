@@ -59,6 +59,10 @@ export class PdfJsWrapper {
     });
   }
 
+  public clearSearch(): void {
+    this.pdfViewer.eventBus.dispatch('findbarclose');
+  }
+
   public setZoom(zoomValue: number): number {
     return this.pdfViewer.currentScaleValue = this.getZoomValue(zoomValue);
   }

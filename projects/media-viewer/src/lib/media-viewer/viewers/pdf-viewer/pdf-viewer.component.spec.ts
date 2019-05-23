@@ -24,7 +24,8 @@ describe('PdfViewerComponent', () => {
     currentPageNumber: 1,
     currentScaleValue: 2,
     eventBus: {
-      on: () => {}
+      on: () => {},
+      dispatch: () => {}
     }
   };
 
@@ -131,6 +132,11 @@ describe('PdfViewerComponent', () => {
     expect(toolbarToggles.showNavigationBtns.next).toHaveBeenCalledWith(true);
     expect(toolbarToggles.showDownloadBtn.next).toHaveBeenCalledWith(true);
     expect(toolbarToggles.showPrintBtn.next).toHaveBeenCalledWith(true);
+  });
 
+  it('clear the search when the search bar is closed', () => {
+    spyOn(mockViewer.eventBus, 'dispatch');
+    component.toolbarToggles = new ToolbarToggles();
+    expect(mockViewer.eventBus.dispatch).toHaveBeenCalled();
   });
 });
