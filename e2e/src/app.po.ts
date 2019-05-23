@@ -74,6 +74,50 @@ export class AppPage {
     return element(by.css('button[id="print"]'));
   }
 
+  getPrintDialog() {
+    return element(by.css('print-preview-app'));
+  }
+
+  getSearchButton() {
+    return element(by.id('viewFind'));
+  }
+
+  getSearchInput() {
+    return element(by.css('input[title="Find"]'));
+  }
+
+  getNextSearchButton() {
+    return element(by.id('findNext'));
+  }
+
+  getPreviousSearchButton() {
+    return element(by.id('findPrevious'));
+  }
+
+  getCurrentSearchResult() {
+    return element(by.className('highlight selected'));
+  }
+
+  getAllSearchHighlights() {
+    return element.all(by.css('.highlight'));
+  }
+
+  selectFindAllHighlight() {
+    return element.all(by.id('findHighlightAll'));
+  }
+
+  selectFindMatchCase() {
+    return element.all(by.id('findMatchCase'));
+  }
+
+  selectFindEntireWord() {
+    return element.all(by.id('findEntireWord'));
+  }
+
+  getSearchResultsCount() {
+    return element(by.id('findResultsCount'));
+  }
+
   hasFileDownloaded(filePath) {
     return fs.existsSync(filePath);
   }
