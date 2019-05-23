@@ -15,43 +15,43 @@ export class AppPage {
   }
 
   getPdfViewer() {
-    return element(by.css('a[id="pdf"]'));
+    return element(by.id('pdf'));
   }
 
   getImageViewer() {
-    return element(by.css('a[id="image"]'));
+    return element(by.id('image'));
   }
 
   getUnsupportedViewer() {
-    return element(by.css('a[id="unsupported"]'));
+    return element(by.id('unsupported'));
   }
 
   getNextPageButton() {
-    return element(by.css('button[id="next"]'));
+    return element(by.id('next'));
   }
 
   getPreviousPageButton() {
-    return element(by.css('button[id="previous"]'));
+    return element(by.id('previous'));
   }
 
   getPageNumberInput() {
-    return element(by.css('input[id="pageNumber"]'));
+    return element(by.id('pageNumber'));
   }
 
   getZoomInButton() {
-    return element(by.css('button[id="zoomIn"]'));
+    return element(by.id('zoomIn'));
   }
 
   getZoomOutButton() {
-    return element(by.css('button[id="zoomOut"]'));
+    return element(by.id('zoomOut'));
   }
 
   getCurrentZoomOption() {
-    return element(by.css('option[id="customScaleOption"]'));
+    return element(by.id('customScaleOption'));
   }
 
   getZoomSelect() {
-    return element(by.css('select[id="scaleSelect"]'));
+    return element(by.id('scaleSelect'));
   }
 
   selectZoomValue(zoomOption) {
@@ -59,19 +59,19 @@ export class AppPage {
   }
 
   getClockwiseRotateButton() {
-    return element(by.css('button[id="pageRotateCw"]'));
+    return element(by.id('pageRotateCw'));
   }
 
   getCounterClockwiseRotateButton() {
-    return element(by.css('button[id="pageRotateCcw"]'));
+    return element(by.id('pageRotateCcw'));
   }
 
   getDownloadButton() {
-    return element(by.css('button[id="download"]'));
+    return element(by.id('download'));
   }
 
   getPrintButton() {
-    return element(by.css('button[id="print"]'));
+    return element(by.id('print'));
   }
 
   getPrintDialog() {
@@ -103,15 +103,15 @@ export class AppPage {
   }
 
   selectFindAllHighlight() {
-    return element.all(by.id('findHighlightAll'));
+    return element(by.id('findHighlightAll'));
   }
 
   selectFindMatchCase() {
-    return element.all(by.id('findMatchCase'));
+    return element(by.id('findMatchCase'));
   }
 
   selectFindEntireWord() {
-    return element.all(by.id('findEntireWord'));
+    return element(by.id('findEntireWord'));
   }
 
   getSearchResultsCount() {
