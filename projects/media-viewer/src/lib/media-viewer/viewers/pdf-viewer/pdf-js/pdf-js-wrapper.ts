@@ -1,7 +1,8 @@
 import {ElementRef} from '@angular/core';
-import * as pdfjsLib from 'pdfjs-dist';
+import * as pdfjsLib from 'pdfjs-dist/build/pdf';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
-import 'pdfjs-dist/build/pdf.worker';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
 export class PdfJsWrapper {
 
