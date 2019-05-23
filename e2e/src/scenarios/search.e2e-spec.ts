@@ -8,6 +8,10 @@ describe('search', () => {
     page = new AppPage();
   });
 
+  afterAll(() =>{
+    page.getSearchButton().click();
+  });
+
 
   it('should search the pdf for selected word', () => {
     page.getPdfViewer().click();
@@ -82,5 +86,15 @@ describe('search', () => {
     page.selectFindEntireWord().click();
 
     expect(page.getAllSearchHighlights).not.toEqual(allSearchHighlights);
+  });
+
+  it('should search the pdf for selected word and inform no match is found if it doesnt exist', () => {
+    const searchBar = page.getSearchInput();
+    searchBar.clear();
+    searchBar.sendKeys('asdasdada');
+
+    page.wait(1000);
+
+    expect(page.getSearchResultsCount().getText()).toEqual('Phrase not found');
   });
 });
