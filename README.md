@@ -64,7 +64,11 @@ component entry point:
 </mv-media-viewer>  
 ```
 
-The optional `actionEvents` property is an instance of the `ActionEvents` class which acts like an event bus. The `actionEvents` instance will contain subscribable event streams for toolbar actions such as zoom, rotate and search. Can be used to interact with the viewer in case the default toolbar is disabled. 
+The optional `actionEvents` property is an instance of the `ActionEvents` class which acts like an event bus. The `actionEvents` instance will contain subscribable event streams for toolbar actions such as zoom, rotate and search. Can be used to interact with the viewer in case the default toolbar is disabled.
+
+### Worker
+
+To take full benefit from Web Worker asynchronous processing make sure to copy "node_modules/@hmcts/media-viewer/assets/build/pdf.worker.min.js" to your externally available assets so that the script is available under {your-domain}//assets/build/pdf.worker.min.js. Do NOT include this file in the angular.json -> "scripts" - it has to be fetched by URL.
 
 ### Toolbar
 
