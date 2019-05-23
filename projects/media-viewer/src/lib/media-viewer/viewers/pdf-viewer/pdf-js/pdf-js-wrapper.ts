@@ -1,5 +1,5 @@
-import * as pdfjsLib from 'pdfjs-dist';
-// import * as pdfjsLib from 'pdfjs-dist/build/pdf';
+// import * as pdfjsLib from 'pdfjs-dist';
+import * as pdfjsLib from 'pdfjs-dist/build/pdf';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
 import { SearchOperation, SearchResultsCount, SetCurrentPageOperation } from '../../../model/viewer-operations';
