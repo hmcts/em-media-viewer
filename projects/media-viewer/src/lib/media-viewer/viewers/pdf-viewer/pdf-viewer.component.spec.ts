@@ -152,4 +152,60 @@ describe('PdfViewerComponent', () => {
     component.toolbarToggles = new ToolbarToggles();
     expect(mockViewer.eventBus.dispatch).toHaveBeenCalled();
   });
+
+  // TODO In wrapper
+  it('should set scale value to max value', () => {
+    spyOn(mockWrapper, 'search');
+    component.zoomOperation = new ZoomOperation(6);
+    expect(mockViewer.currentScaleValue).toEqual(5);
+  });
+
+  // TODO In wrapper
+  it('should set scale value to min value', () => {
+    component.zoomOperation = new ZoomOperation(0.001);
+    expect(mockViewer.currentScaleValue).toEqual(0.1);
+  });
+
+  // TODO In wrapper
+  it('should step the zoom', () => {
+    component.zoomOperation = new ZoomOperation(2);
+    component.stepZoomOperation = new StepZoomOperation(0.5);
+    expect(mockViewer.currentScaleValue).toEqual(2.5);
+  });
+
+  // TODO In wrapper
+  // it('should search the pdf', () => {
+  //   component.searchOperation = new SearchOperation(2);
+  //   component.searchOperation = new SearchOperation(0.5);
+  //   expect(mockViewer.searchBoi).toEqual(2.5);
+  // });
+
+  // // TODO In wrapper
+  // it('should print the pdf', () => {
+  //   component.printOperation = new PrintOperation(2);
+  //   component.PrintOperation = new PrintOperation(0.5);
+  //   expect(mockViewer.PrintBoi).toEqual(2.5);
+  // });
+
+  // // TODO In wrapper
+  // it('should download the pdf', () => {
+  //   mockViewer.pdf = 1;
+  //   component.pdf = new pdf(2);
+  //   expect(mockViewer.currentPageNumber).toEqual(2);
+  // });
+
+  // TODO In wrapper
+  it('should set the current page', () => {
+    mockViewer.currentPageNumber = 1;
+    component.setCurrentPage = new SetCurrentPageOperation(2);
+    expect(mockViewer.currentPageNumber).toEqual(2);
+  });
+
+  // TODO In wrapper
+  it('should change the current page', () => {
+    mockViewer.currentPageNumber = 1;
+    component.changePageByDelta = new ChangePageByDeltaOperation(-2);
+    expect(mockViewer.currentPageNumber).toEqual(-1);
+  });
+
 });
