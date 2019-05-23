@@ -68,7 +68,7 @@ The optional `actionEvents` property is an instance of the `ActionEvents` class 
 
 ### Worker
 
-To take full benefit from Web Worker asynchronous processing make sure to copy "node_modules/@hmcts/media-viewer/assets/build/pdf.worker.min.js" to your externally available assets so that the script is available under {your-domain}//assets/build/pdf.worker.min.js. Do NOT include this file in the angular.json -> "scripts" - it has to be fetched by URL.
+To take full benefit from Web Worker asynchronous processing make sure to copy "node_modules/@hmcts/media-viewer/assets/build/pdf.worker.min.js" to your externally available assets so that the script is available under {your-domain}/assets/build/pdf.worker.min.js. Do NOT include this file in the angular.json -> "scripts" - it has to be fetched by URL.
 
 ### Toolbar
 
