@@ -64,7 +64,7 @@ component entry point:
 </mv-media-viewer>  
 ```
 
-The `actionEvents` property is an instance of the `ActionEvents` class which acts like an event bus. The `actionEvents` instance will contain subscribable event streams for toolbar actions such as zoom, rotate and search. 
+The optional `actionEvents` property is an instance of the `ActionEvents` class which acts like an event bus. The `actionEvents` instance will contain subscribable event streams for toolbar actions such as zoom, rotate and search. Can be used to interact with the viewer in case the default toolbar is disabled.
 
 ### Toolbar
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActionEvents } from './model/action-events';
 import { ToolbarToggles } from './model/toolbar-toggles';
@@ -14,7 +14,7 @@ export class MediaViewerComponent {
   @Input() url = '';
   @Input() downloadFileName = null;
   @Input() contentType: string;
-  @Input() actionEvents: ActionEvents;
+  @Input() actionEvents = new ActionEvents();
   @Input() showToolbar = true;
 
   toolbarToggles = new ToolbarToggles();
