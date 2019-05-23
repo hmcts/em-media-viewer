@@ -27,5 +27,4 @@ export class MediaViewerComponent {
   contentTypeUnsupported(): boolean {
     return this.supportedContentTypes.indexOf(this.contentType) < 0;
   }
-
 }
