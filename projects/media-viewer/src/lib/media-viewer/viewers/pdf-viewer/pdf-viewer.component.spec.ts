@@ -1,63 +1,62 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
-import { EmLoggerService } from '../../../logging/em-logger.service';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import {
   ChangePageByDeltaOperation,
+  DownloadOperation,
+  PrintOperation,
   RotateOperation,
+  SearchOperation,
   SearchResultsCount,
   SetCurrentPageOperation,
   StepZoomOperation,
   ZoomOperation,
-  ZoomValue,
-  SearchOperation,
-  DownloadOperation
+  ZoomValue
 } from '../../model/viewer-operations';
-import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { PrintService } from '../../service/print.service';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
   let fixture: ComponentFixture<PdfViewerComponent>;
 
-  const mockViewer = {
-    pagesRotation: 0,
-    currentPageNumber: 1,
-    currentScaleValue: 2,
-    eventBus: {
-      on: () => {
-      },
-      dispatch: () => {
-      }
-    }
+  const mockWrapper = {
+    loadDocument: () => Promise.resolve(),
+    search: () => {},
+    clearSearch: () => {},
+    rotate: () => {},
+    setZoom: () => {},
+    stepZoom: () => {},
+    downloadFile: () => {},
+    setPageNumber: () => {},
+    changePageNumber: () => {},
+    currentPageChanged: new Subject<SetCurrentPageOperation>(),
+    searchResults: new Subject<SearchResultsCount>()
   };
-
-  const mockWrapper = new PdfJsWrapper(
-    new Subject<SearchResultsCount>(),
-    new Subject<SetCurrentPageOperation>(),
-    mockViewer,
-    {} as any
-  );
 
   const mockFactory = {
     create: () => mockWrapper
   };
 
-  beforeEach(async(() => {
-    mockWrapper.loadDocument = () => Promise.resolve();
-
-    return TestBed.configureTestingModule({
-      declarations: [ PdfViewerComponent ],
-      providers: [
-        EmLoggerService,
-        { provide: PdfJsWrapperFactory, useValue: mockFactory }
-      ]
-    })
-    .compileComponents();
-  }));
+  const mockPrintService = {
+    printDocumentNatively: () => {}
+  };
 
   beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ PdfViewerComponent ]
+    })
+    .overrideComponent(PdfViewerComponent, {
+      set: {
+        providers: [
+          { provide: PdfJsWrapperFactory, useValue: mockFactory },
+          { provide: PrintService, useFactory: () => mockPrintService }
+        ]
+      }
+    })
+    .compileComponents();
+
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
     component.zoomValue = new Subject<ZoomValue>();
@@ -81,16 +80,15 @@ describe('PdfViewerComponent', () => {
     spyOn(component.zoomValue, 'next');
     spyOn(mockWrapper, 'setZoom');
     component.zoomOperation = new ZoomOperation(4);
-    expect(component.zoomValue.next).toHaveBeenCalledWith({value: mockWrapper.setZoom(4) });
+    expect(component.zoomValue.next).toHaveBeenCalled();
     expect(mockWrapper.setZoom).toHaveBeenCalledWith(4);
   });
-
 
   it('should call step zoom operation', () => {
     spyOn(component.zoomValue, 'next');
     spyOn(mockWrapper, 'stepZoom');
     component.stepZoomOperation = new StepZoomOperation(0.5);
-    expect(component.zoomValue.next).toHaveBeenCalledWith({value: mockWrapper.stepZoom(0.5) });
+    expect(component.zoomValue.next).toHaveBeenCalled();
     expect(mockWrapper.stepZoom).toHaveBeenCalledWith(0.5);
   });
 
@@ -101,13 +99,12 @@ describe('PdfViewerComponent', () => {
     expect(mockWrapper.search).toHaveBeenCalledWith(searchOperation);
   });
 
-  // Why does this not work? I'm mocking the response from printService. Is it still running the method, just not returning its value?
-  // it('should call the print operation', () => {
-  //   spyOn(mockViewer.printService, 'printDocumentNatively');
-  //   component.url = '';
-  //   component.printOperation = new PrintOperation();
-  //   expect(mockViewer.printService.printDocumentNatively).toHaveBeenCalledWith(component.url);
-  // });
+  it('should call the print operation', () => {
+    spyOn(mockPrintService, 'printDocumentNatively');
+    component.url = 'derp';
+    component.printOperation = new PrintOperation();
+    expect(mockPrintService.printDocumentNatively).toHaveBeenCalledWith(component.url);
+  });
 
   it('should download the pdf', () => {
     spyOn(mockWrapper, 'downloadFile');
@@ -148,29 +145,11 @@ describe('PdfViewerComponent', () => {
   });
 
   it('clear the search when the search bar is closed', () => {
-    spyOn(mockViewer.eventBus, 'dispatch');
-    component.toolbarToggles = new ToolbarToggles();
-    expect(mockViewer.eventBus.dispatch).toHaveBeenCalled();
-  });
-
-  // TODO In wrapper
-  it('should set scale value to max value', () => {
-    spyOn(mockWrapper, 'search');
-    component.zoomOperation = new ZoomOperation(6);
-    expect(mockViewer.currentScaleValue).toEqual(5);
-  });
-
-  // TODO In wrapper
-  it('should set scale value to min value', () => {
-    component.zoomOperation = new ZoomOperation(0.001);
-    expect(mockViewer.currentScaleValue).toEqual(0.1);
-  });
-
-  // TODO In wrapper
-  it('should step the zoom', () => {
-    component.zoomOperation = new ZoomOperation(2);
-    component.stepZoomOperation = new StepZoomOperation(0.5);
-    expect(mockViewer.currentScaleValue).toEqual(2.5);
+    spyOn(mockWrapper, 'clearSearch');
+    const toggles = new ToolbarToggles();
+    component.toolbarToggles = toggles;
+    toggles.searchBarHidden.next(true);
+    expect(mockWrapper.clearSearch).toHaveBeenCalled();
   });
 
   // TODO In wrapper
@@ -193,19 +172,5 @@ describe('PdfViewerComponent', () => {
   //   component.pdf = new pdf(2);
   //   expect(mockViewer.currentPageNumber).toEqual(2);
   // });
-
-  // TODO In wrapper
-  it('should set the current page', () => {
-    mockViewer.currentPageNumber = 1;
-    component.setCurrentPage = new SetCurrentPageOperation(2);
-    expect(mockViewer.currentPageNumber).toEqual(2);
-  });
-
-  // TODO In wrapper
-  it('should change the current page', () => {
-    mockViewer.currentPageNumber = 1;
-    component.changePageByDelta = new ChangePageByDeltaOperation(-2);
-    expect(mockViewer.currentPageNumber).toEqual(-1);
-  });
 
 });
