@@ -1,5 +1,5 @@
 import { AppPage } from '../app.po';
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 
 describe('print', () => {
   let page: AppPage;
@@ -9,36 +9,35 @@ describe('print', () => {
   });
 
 
-  it('should print the pdf', () => {
+  it('should print the pdf', async () => {
     page.getPdfViewer().click();
+    page.getPrintButton().click();
 
-    const printPage = page.getPrintButton();
-    printPage.click();
+    const tabs = await page.getBrowserTabs();
 
-    // clean up by moving to app.po
-    browser.getAllWindowHandles().then(function(handles) {
-      expect(handles.length).toEqual(2);
-      browser.switchTo().window(handles[1]);
-      expect(page.getPrintDialog).toBeTruthy();
-      page.wait(1000);
-      browser.close();
-      browser.switchTo().window(handles[0]);
-    });
+    expect(tabs.length).toEqual(2);
+
+    browser.switchTo().window(tabs[1]);
+    expect(page.getPrintDialog).toBeTruthy();
+
+    page.wait(1000);
+    browser.close();
+    browser.switchTo().window(tabs[0]);
   });
 
-  it('should print the image', () => {
+  it('should print the image', async () => {
     page.getImageViewer().click();
+    page.getPrintButton().click();
 
-    const printPage = page.getPrintButton();
-    printPage.click();
+    const tabs = await page.getBrowserTabs();
 
-    browser.getAllWindowHandles().then(function(handles) {
-      expect(handles.length).toEqual(2);
-      browser.switchTo().window(handles[1]);
-      expect(page.getPrintDialog).toBeTruthy();
-      page.wait(1000);
-      browser.close();
-      browser.switchTo().window(handles[0]);
-    });
+    expect(tabs.length).toEqual(2);
+
+    browser.switchTo().window(tabs[1]);
+    expect(page.getPrintDialog).toBeTruthy();
+
+    page.wait(1000);
+    browser.close();
+    browser.switchTo().window(tabs[0]);
   });
 });

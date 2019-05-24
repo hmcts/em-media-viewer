@@ -2,7 +2,7 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 const { SpecReporter } = require('jasmine-spec-reporter');
-var fs = require('fs');
+const fs = require('fs');
 
 exports.config = {
   allScriptsTimeout: 11000,
@@ -42,14 +42,16 @@ function removePreviousDownloads() {
     const downloadsPath = 'e2e/src/downloads';
     const files = fs.readdirSync(downloadsPath);
     if (files.length > 0)
-      for (var i = 0; i < files.length; i++) {
-        var filePath = downloadsPath + '/' + files[i];
-        if (fs.statSync(filePath).isFile())
+      for (let i = 0; i < files.length; i++) {
+        let filePath = downloadsPath + '/' + files[i];
+        if (fs.statSync(filePath).isFile()) {
           fs.unlinkSync(filePath);
-        else
-          rmDir(filePath);
+        }
       }
     fs.rmdirSync(downloadsPath);
   }
-  catch(e) { return; }
+  catch(e) {
+    console.log(e);
+    return e;
+  }
 }

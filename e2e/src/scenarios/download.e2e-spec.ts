@@ -8,42 +8,33 @@ describe('download', () => {
   });
 
 
-  it('should download the pdf', () => {
+  it('should download the pdf', async () => {
     const file = 'e2e/src/downloads/example.pdf';
 
     page.getPdfViewer().click();
+    page.getDownloadButton().click();
+    await page.wait(3000);
 
-    const downloadPage = page.getDownloadButton();
-    downloadPage.click()
-      .then(() => page.wait(3000))
-      .then(() => {
-        expect(page.hasFileDownloaded(file)).toEqual(true);
-      });
+    expect(page.hasFileDownloaded(file)).toEqual(true);
   });
 
-  it('should download the image', () => {
+  it('should download the image', async () => {
     const file = 'e2e/src/downloads/undefined.jpeg';
 
     page.getImageViewer().click();
+    page.getDownloadButton().click();
+    await page.wait(3000);
 
-    const downloadPage = page.getDownloadButton();
-    downloadPage.click()
-      .then(() => page.wait(3000))
-      .then(() => {
-        expect(page.hasFileDownloaded(file)).toEqual(true);
-      });
+    expect(page.hasFileDownloaded(file)).toEqual(true);
   });
 
-  it('should download the unsupported file', () => {
+  it('should download the unsupported file', async () => {
     const file = 'e2e/src/downloads/unsupported.txt';
 
     page.getUnsupportedViewer().click();
+    page.getDownloadButton().click();
+    await page.wait(3000);
 
-    const downloadPage = page.getDownloadButton();
-    downloadPage.click()
-      .then(() => page.wait(3000))
-      .then(() => {
-        expect(page.hasFileDownloaded(file)).toEqual(true);
-      });
+    expect(page.hasFileDownloaded(file)).toEqual(true);
   });
 });
