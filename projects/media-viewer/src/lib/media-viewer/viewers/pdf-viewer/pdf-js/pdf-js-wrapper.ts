@@ -19,11 +19,13 @@ export class PdfJsWrapper {
     this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
     this.pdfViewer.eventBus.on('updatefindcontrolstate', e => {
-      if (e.state === FindState.NOT_FOUND || e.state === FindState.FOUND) {
+      if (e.state !== FindState.PENDING) {
         this.searchResults.next(e.matchesCount);
       }
     });
-    this.pdfViewer.eventBus.on('updatefindmatchescount', e => this.searchResults.next(e.matchesCount));
+    this.pdfViewer.eventBus.on('updatefindmatchescount', e => {
+      this.searchResults.next(e.matchesCount);
+    });
   }
 
   public async loadDocument(documentUrl: string): Promise<void> {
