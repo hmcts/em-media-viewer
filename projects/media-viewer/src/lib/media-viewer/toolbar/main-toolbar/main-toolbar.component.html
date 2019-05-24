@@ -1,3 +1,8 @@
+<mv-search-bar [searchEvents]="actionEvents?.search"
+               [searchResultsCount]="actionEvents?.searchResultsCount | async"
+               [searchBarHidden]="toolbarToggles?.searchBarHidden"></mv-search-bar>
+<mv-sub-toolbar [actionEvents]="actionEvents"
+                [subToolbarHidden]="toolbarToggles?.subToolbarHidden | async"></mv-sub-toolbar>
 <div class="toolbar">
   <div id="toolbarContainer">
     <div id="toolbarViewer">
