@@ -42,7 +42,9 @@ export class PdfViewerComponent implements AfterViewInit {
   async ngAfterViewInit(): Promise<void> {
     this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     this.pdfWrapper.currentPageChanged.subscribe(v => this.currentPageChanged.next(v));
-    this.pdfWrapper.searchResults.subscribe(v => this.searchResults.next(v));
+    this.pdfWrapper.searchResults.subscribe(v => {
+      this.searchResults.next(v);
+    });
 
     await this.pdfWrapper.loadDocument(this.url);
   }
