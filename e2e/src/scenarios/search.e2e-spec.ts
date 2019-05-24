@@ -1,5 +1,4 @@
 import { AppPage } from '../app.po';
-import { browser, protractor } from 'protractor';
 
 describe('search', () => {
   let page: AppPage;
@@ -60,7 +59,7 @@ describe('search', () => {
     expect(page.getCurrentSearchResult).toBeTruthy();
     expect(page.getCurrentSearchResult().getText()).toEqual('based');
 
-    page.selectFindMatchCase().click();
+    page.getFindMatchCaseButton().click();
     page.wait(1000);
 
     expect(page.getCurrentSearchResult().getText()).toEqual('Based');
@@ -69,7 +68,7 @@ describe('search', () => {
   it('should search the pdf for selected word with single highlight', () => {
     const allSearchHighlights = page.getAllSearchHighlights();
 
-    page.selectFindAllHighlight().click();
+    page.getFindAllHighlightButton().click();
     page.wait(1000);
 
     expect(page.getCurrentSearchResult).toBeTruthy();
@@ -83,7 +82,7 @@ describe('search', () => {
     searchBar.sendKeys('a');
     const allSearchHighlights = page.getAllSearchHighlights();
 
-    page.selectFindEntireWord().click();
+    page.getFindEntireWordButton().click();
 
     expect(page.getAllSearchHighlights).not.toEqual(allSearchHighlights);
   });

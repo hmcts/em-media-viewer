@@ -102,15 +102,15 @@ export class AppPage {
     return element.all(by.css('.highlight'));
   }
 
-  selectFindAllHighlight() {
+  getFindAllHighlightButton() {
     return element(by.id('findHighlightAll'));
   }
 
-  selectFindMatchCase() {
+  getFindMatchCaseButton() {
     return element(by.id('findMatchCase'));
   }
 
-  selectFindEntireWord() {
+  getFindEntireWordButton() {
     return element(by.id('findEntireWord'));
   }
 
@@ -120,5 +120,9 @@ export class AppPage {
 
   hasFileDownloaded(filePath) {
     return fs.existsSync(filePath);
+  }
+
+  getBrowserTabs() {
+    return browser.getAllWindowHandles();
   }
 }
