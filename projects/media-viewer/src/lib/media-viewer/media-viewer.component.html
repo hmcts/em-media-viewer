@@ -28,7 +28,7 @@
                    [setCurrentPage]="actionEvents?.setCurrentPage | async"
                    [changePageByDelta]="actionEvents?.changePageByDelta | async"
                    [currentPageChanged]="currentPageChanged"
-                   [onSearchBarHidden]="toolbarButtonToggles?.searchBarHidden | async">
+                   [searchBarHidden]="toolbarButtonToggles?.searchBarHidden | async">
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"

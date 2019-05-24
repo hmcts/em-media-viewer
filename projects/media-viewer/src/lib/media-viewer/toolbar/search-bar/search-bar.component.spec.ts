@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
-import { BehaviorSubject } from 'rxjs';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ActionEvents } from '../../model/action-events';
 import { SearchOperation } from '../../model/viewer-operations';
 
@@ -27,7 +26,7 @@ describe('SearchBarComponent', () => {
 
     const actionEvents = new ActionEvents();
     component.searchEvents = actionEvents.search as any;
-    component.searchBarHidden = new BehaviorSubject<boolean>(false);
+    component.searchBarHidden = false;
     fixture.detectChanges();
   });
 
@@ -36,7 +35,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should not show searchbar', () => {
-    component.searchBarHidden.next(true);
+    component.searchBarHidden = true;
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
@@ -45,7 +44,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should show searchbar after f3 keypress', () => {
-    component.searchBarHidden.next(true);
+    component.searchBarHidden = true;
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
@@ -74,7 +73,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should close the searchbar on escape', () => {
-    component.searchBarHidden.next(false);
+    component.searchBarHidden = false;
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
@@ -88,7 +87,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should not close the searchbar on non-escape keypress)', () => {
-    component.searchBarHidden.next(false);
+    component.searchBarHidden = false;
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
@@ -102,7 +101,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should emit search next event', () => {
-    component.searchBarHidden.next(false);
+    component.searchBarHidden = false;
     const searchSpy = spyOn(component.searchEvents, 'next');
     component.searchText = 'searchTerm';
     const searchNextButton = nativeElement.querySelector('button[id=findNext]');
@@ -112,7 +111,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should emit search previous event', () => {
-    component.searchBarHidden.next(false);
+    component.searchBarHidden = false;
     const searchSpy = spyOn(component.searchEvents, 'next');
     component.searchText = 'searchTerm';
     const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');

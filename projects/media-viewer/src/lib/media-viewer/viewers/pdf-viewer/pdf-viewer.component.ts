@@ -110,7 +110,7 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   @Input()
-  set onSearchBarHidden(hidden: boolean) {
+  set searchBarHidden(hidden: boolean) {
     if (this.pdfWrapper && hidden) {
       this.pdfWrapper.clearSearch();
     }
