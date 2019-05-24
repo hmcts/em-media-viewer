@@ -1,7 +1,19 @@
 import { BehaviorSubject } from 'rxjs';
 
-export class ToolbarButtonToggles {
+export const getToolbarButtonToggles = (contentType: string) => {
+  switch (contentType) {
+    case 'pdf':
+      return  new PdfViewerToolbarButtons();
+      break
+    case 'image':
+      return  new ImageViewerToolbarButtons();
+      break;
+    default:
+      return  new UnsupportedViewerToolbarButtons();
+  }
+};
 
+export class ToolbarButtonToggles {
   public readonly subToolbarHidden = new BehaviorSubject(true);
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly searchBarHidden = new BehaviorSubject(true);
@@ -18,9 +30,8 @@ export class ToolbarButtonToggles {
   public showBookmarkBtn = false;
 
   public showSearchbarToggleBtn = false;
-  public showSubToolbarToggleBtn = true;
-  public showSidebarToggleBtn = true;
-
+  public showSubToolbarToggleBtn = false;
+  public showSidebarToggleBtn = false;
 }
 
 export class PdfViewerToolbarButtons extends ToolbarButtonToggles {
