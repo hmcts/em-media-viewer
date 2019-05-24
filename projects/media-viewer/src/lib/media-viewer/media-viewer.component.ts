@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActionEvents } from './model/action-events';
-import { getToolbarButtonToggles } from './model/toolbar-button-toggles';
+import { getToolbarButtonToggles, ToolbarButtonToggles } from './model/toolbar-button-toggles';
 import { SetCurrentPageOperation } from './model/viewer-operations';
 
 @Component({
@@ -16,7 +16,7 @@ export class MediaViewerComponent implements OnInit {
   @Input() contentType: string;
   @Input() actionEvents = new ActionEvents();
   @Input() showToolbar = true;
-  @Input() toolbarButtonToggles;
+  @Input() toolbarButtonToggles: ToolbarButtonToggles;
 
   currentPageChanged = new Subject<SetCurrentPageOperation>();
   error: any;
