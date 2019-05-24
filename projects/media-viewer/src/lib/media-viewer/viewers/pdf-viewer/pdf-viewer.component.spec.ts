@@ -1,20 +1,21 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
-import { EmLoggerService } from '../../../logging/em-logger.service';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import {
   ChangePageByDeltaOperation,
+  DownloadOperation,
+  PrintOperation,
   RotateOperation,
+  SearchOperation,
   SearchResultsCount,
   SetCurrentPageOperation,
   StepZoomOperation,
   ZoomOperation,
-  ZoomValue,
-  SearchOperation,
-  DownloadOperation
+  ZoomValue
 } from '../../model/viewer-operations';
 import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { PrintService } from '../../service/print.service';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -38,18 +39,24 @@ describe('PdfViewerComponent', () => {
     create: () => mockWrapper
   };
 
-  beforeEach(async(() => {
-    return TestBed.configureTestingModule({
-      declarations: [ PdfViewerComponent ],
-      providers: [
-        EmLoggerService,
-        { provide: PdfJsWrapperFactory, useValue: mockFactory }
-      ]
-    })
-    .compileComponents();
-  }));
+  const mockPrintService = {
+    printDocumentNatively: () => {}
+  };
 
   beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ PdfViewerComponent ]
+    })
+    .overrideComponent(PdfViewerComponent, {
+      set: {
+        providers: [
+          { provide: PdfJsWrapperFactory, useValue: mockFactory },
+          { provide: PrintService, useFactory: () => mockPrintService }
+        ]
+      }
+    })
+    .compileComponents();
+
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
     component.zoomValue = new Subject<ZoomValue>();
@@ -92,13 +99,12 @@ describe('PdfViewerComponent', () => {
     expect(mockWrapper.search).toHaveBeenCalledWith(searchOperation);
   });
 
-  // Why does this not work? I'm mocking the response from printService. Is it still running the method, just not returning its value?
-  // it('should call the print operation', () => {
-  //   spyOn(mockViewer.printService, 'printDocumentNatively');
-  //   component.url = '';
-  //   component.printOperation = new PrintOperation();
-  //   expect(mockViewer.printService.printDocumentNatively).toHaveBeenCalledWith(component.url);
-  // });
+  it('should call the print operation', () => {
+    spyOn(mockPrintService, 'printDocumentNatively');
+    component.url = 'derp';
+    component.printOperation = new PrintOperation();
+    expect(mockPrintService.printDocumentNatively).toHaveBeenCalledWith(component.url);
+  });
 
   it('should download the pdf', () => {
     spyOn(mockWrapper, 'downloadFile');
