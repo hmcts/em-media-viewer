@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ToolbarButtonToggles } from '../../model/toolbar-button-toggles';
 import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-tb-right-pane',
@@ -10,14 +9,20 @@ import { Subject } from 'rxjs';
 })
 export class ToolbarRightPaneComponent {
 
-  @Input() toolbarButtons: ToolbarButtonToggles;
   @Input() printEvent: Subject<PrintOperation>;
   @Input() downloadEvent: Subject<DownloadOperation>;
+  @Input() subToolbarHidden: BehaviorSubject<boolean>;
+  @Input() showPresentationModeBtn: boolean;
+  @Input() showOpenFileBtn: boolean;
+  @Input() showDownloadBtn: boolean;
+  @Input() showPrintBtn: boolean;
+  @Input() showBookmarkBtn: boolean;
+  @Input() showSubToolbarToggleBtn: boolean;
 
   constructor() {}
 
   toggleSecondaryToolbar() {
-    this.toolbarButtons.subToolbarHidden.next(!this.toolbarButtons.subToolbarHidden.getValue());
+    this.subToolbarHidden.next(!this.subToolbarHidden.getValue());
   }
 
   printFile() {

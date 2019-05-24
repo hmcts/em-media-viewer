@@ -17,7 +17,13 @@
                        [sidebarOpen]="toolbarButtons?.sidebarOpen"></mv-tb-left-pane>
       <mv-tb-right-pane [downloadEvent]="downloadEvent"
                         [printEvent]="printEvent"
-                        [toolbarButtons]="toolbarButtons">
+                        [subToolbarHidden]="toolbarButtons?.subToolbarHidden"
+                        [showPresentationModeBtn]="toolbarButtons?.showPresentationModeBtn"
+                        [showOpenFileBtn]="toolbarButtons?.showOpenFileBtn"
+                        [showDownloadBtn]="toolbarButtons?.showDownloadBtn"
+                        [showPrintBtn]="toolbarButtons?.showPrintBtn"
+                        [showBookmarkBtn]="toolbarButtons?.showBookmarkBtn"
+                        [showSubToolbarToggleBtn]="toolbarButtons?.showSubToolbarToggleBtn">
       </mv-tb-right-pane>
       <mv-tb-middle-pane [zoomEvent]="zoomEvent"
                          [stepZoomEvent]="stepZoomEvent"
