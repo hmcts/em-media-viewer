@@ -3,7 +3,16 @@
   <div id="mainContainer" style="min-height: 800px;">
     <mv-main-toolbar *ngIf="showToolbar"
                      [currentPage]="currentPageChanged | async"
-                     [actionEvents]="actionEvents"
+                     [searchEvent]="actionEvents.search"
+                     [searchResultsCountEvent]="actionEvents.searchResultsCount"
+                     [zoomEvent]="actionEvents.zoom"
+                     [stepZoomEvent]="actionEvents.stepZoom"
+                     [zoomValueEvent]="actionEvents.zoomValue"
+                     [rotateEvent]="actionEvents.rotate"
+                     [changePageByDeltaEvent]="actionEvents.changePageByDelta"
+                     [setCurrentPageEvent]="actionEvents.setCurrentPage"
+                     [downloadEvent]="actionEvents.download"
+                     [printEvent]="actionEvents.print"
                      [toolbarToggles]="toolbarToggles"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    [url]="url"

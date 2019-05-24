@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents } from '../../model/action-events';
 import { ToolbarToggles } from '../../model/toolbar-toggles';
 import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-tb-right-pane',
@@ -10,8 +10,9 @@ import { DownloadOperation, PrintOperation } from '../../model/viewer-operations
 })
 export class ToolbarRightPaneComponent {
 
-  @Input() actionEvents: ActionEvents;
   @Input() toolbarToggles: ToolbarToggles;
+  @Input() printEvent: Subject<PrintOperation>;
+  @Input() downloadEvent: Subject<DownloadOperation>;
 
   constructor() {}
 
@@ -20,10 +21,10 @@ export class ToolbarRightPaneComponent {
   }
 
   printFile() {
-    this.actionEvents.print.next(new PrintOperation());
+    this.printEvent.next(new PrintOperation());
   }
 
   downloadFile() {
-    this.actionEvents.download.next(new DownloadOperation());
+    this.downloadEvent.next(new DownloadOperation());
   }
 }
