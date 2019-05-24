@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarRightPaneComponent } from './right-pane.component';
-import { BehaviorSubject } from 'rxjs';
 import { ActionEvents } from '../../model/action-events';
 import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { ToolbarButtonToggles } from '../../model/toolbar-button-toggles';
+import { Subject } from 'rxjs';
 
 describe('ToolbarRightPaneComponent', () => {
   let component: ToolbarRightPaneComponent;
@@ -21,11 +21,13 @@ describe('ToolbarRightPaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarRightPaneComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.toolbarToggles = new ToolbarToggles();
-    component.toolbarToggles.showPrintBtn.next(true);
-    component.toolbarToggles.showDownloadBtn.next(true);
+    component.toolbarButtons = new ToolbarButtonToggles();
+    component.toolbarButtons.showPrintBtn = true;
+    component.toolbarButtons.showDownloadBtn = true;
 
-    component.actionEvents = new ActionEvents();
+    component.printEvent = new Subject<PrintOperation>();
+    component.downloadEvent = new Subject<DownloadOperation>();
+
     fixture.detectChanges();
   });
 
@@ -34,7 +36,7 @@ describe('ToolbarRightPaneComponent', () => {
   });
 
   it('should not show secondary toolbar', async(() => {
-    component.toolbarToggles.subToolbarHidden.asObservable()
+    component.toolbarButtons.subToolbarHidden.asObservable()
       .subscribe(subToolbarHidden => expect(subToolbarHidden).toBeTruthy());
   }));
 
@@ -42,12 +44,12 @@ describe('ToolbarRightPaneComponent', () => {
   it('should toggle secondary toolbar visible', async(() => {
     component.toggleSecondaryToolbar();
 
-    component.toolbarToggles.subToolbarHidden.asObservable()
+    component.toolbarButtons.subToolbarHidden.asObservable()
       .subscribe(subToolbarHidden => expect(subToolbarHidden).toBeFalsy());
   }));
 
   it('should emit print event', () => {
-    const printSpy = spyOn(component.actionEvents.print, 'next');
+    const printSpy = spyOn(component.printEvent, 'next');
     const printButton = nativeElement.querySelector('button[id=print]');
     printButton.click();
 
@@ -55,7 +57,7 @@ describe('ToolbarRightPaneComponent', () => {
   });
 
   it('should emit download event', () => {
-    const downloadSpy = spyOn(component.actionEvents.download, 'next');
+    const downloadSpy = spyOn(component.downloadEvent, 'next');
     const downloadButton = nativeElement.querySelector('button[id=download]');
     downloadButton.click();
 

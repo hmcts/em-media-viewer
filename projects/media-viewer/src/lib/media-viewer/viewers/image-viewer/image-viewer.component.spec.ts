@@ -10,7 +10,6 @@ import {
   ZoomValue
 } from '../../model/viewer-operations';
 import { PrintService } from '../../service/print.service';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;

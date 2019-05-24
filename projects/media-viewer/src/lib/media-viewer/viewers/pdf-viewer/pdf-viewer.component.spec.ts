@@ -14,8 +14,8 @@ import {
   ZoomOperation,
   ZoomValue
 } from '../../model/viewer-operations';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
 import { PrintService } from '../../service/print.service';
+import { ToolbarButtonToggles } from '../../model/toolbar-button-toggles';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -124,53 +124,11 @@ describe('PdfViewerComponent', () => {
     expect(mockWrapper.changePageNumber).toHaveBeenCalledWith(-2);
   });
 
-  it('set toolbar toggles', () => {
-    const toolbarToggles = new ToolbarToggles();
-
-    spyOn(toolbarToggles.showSearchbarToggleBtn, 'next');
-    spyOn(toolbarToggles.showZoomBtns, 'next');
-    spyOn(toolbarToggles.showRotateBtns, 'next');
-    spyOn(toolbarToggles.showNavigationBtns, 'next');
-    spyOn(toolbarToggles.showDownloadBtn, 'next');
-    spyOn(toolbarToggles.showPrintBtn, 'next');
-
-    component.toolbarToggles = toolbarToggles;
-
-    expect(toolbarToggles.showSearchbarToggleBtn.next).toHaveBeenCalledWith(true);
-    expect(toolbarToggles.showZoomBtns.next).toHaveBeenCalledWith(true);
-    expect(toolbarToggles.showRotateBtns.next).toHaveBeenCalledWith(true);
-    expect(toolbarToggles.showNavigationBtns.next).toHaveBeenCalledWith(true);
-    expect(toolbarToggles.showDownloadBtn.next).toHaveBeenCalledWith(true);
-    expect(toolbarToggles.showPrintBtn.next).toHaveBeenCalledWith(true);
-  });
-
   it('clear the search when the search bar is closed', () => {
     spyOn(mockWrapper, 'clearSearch');
-    const toggles = new ToolbarToggles();
+    const toggles = new ToolbarButtonToggles();
     component.toolbarToggles = toggles;
     toggles.searchBarHidden.next(true);
     expect(mockWrapper.clearSearch).toHaveBeenCalled();
   });
-
-  // TODO In wrapper
-  // it('should search the pdf', () => {
-  //   component.searchOperation = new SearchOperation(2);
-  //   component.searchOperation = new SearchOperation(0.5);
-  //   expect(mockViewer.searchBoi).toEqual(2.5);
-  // });
-
-  // // TODO In wrapper
-  // it('should print the pdf', () => {
-  //   component.printOperation = new PrintOperation(2);
-  //   component.PrintOperation = new PrintOperation(0.5);
-  //   expect(mockViewer.PrintBoi).toEqual(2.5);
-  // });
-
-  // // TODO In wrapper
-  // it('should download the pdf', () => {
-  //   mockViewer.pdf = 1;
-  //   component.pdf = new pdf(2);
-  //   expect(mockViewer.currentPageNumber).toEqual(2);
-  // });
-
 });

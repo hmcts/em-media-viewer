@@ -14,7 +14,7 @@ import {
   ZoomOperation,
   ZoomValue
 } from '../../model/viewer-operations';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { ToolbarButtonToggles } from '../../model/toolbar-button-toggles';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 
 @Component({
@@ -110,15 +110,9 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   @Input()
-  set toolbarToggles(toolbarToggles: ToolbarToggles | null) {
+  set toolbarToggles(toolbarToggles: ToolbarButtonToggles | null) {
     if (toolbarToggles) {
       toolbarToggles.searchBarHidden.subscribe(state => this.onSearchBarHidden(state));
-      toolbarToggles.showSearchbarToggleBtn.next(true);
-      toolbarToggles.showZoomBtns.next(true);
-      toolbarToggles.showRotateBtns.next(true);
-      toolbarToggles.showNavigationBtns.next(true);
-      toolbarToggles.showDownloadBtn.next(true);
-      toolbarToggles.showPrintBtn.next(true);
     }
   }
 
