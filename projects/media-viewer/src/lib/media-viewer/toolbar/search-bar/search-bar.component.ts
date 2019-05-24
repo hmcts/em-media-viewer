@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SearchOperation, SearchResultsCount } from '../../model/viewer-operations';
 
 @Component({
@@ -9,7 +9,7 @@ import { SearchOperation, SearchResultsCount } from '../../model/viewer-operatio
 })
 export class SearchBarComponent {
 
-  @Input() searchBarHidden: BehaviorSubject<boolean>;
+  @Input() searchBarHidden: boolean;
   @Input() searchEvents: Subject<SearchOperation>;
   @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
 
@@ -27,7 +27,7 @@ export class SearchBarComponent {
     if (e.code === 'F3' || (e.ctrlKey && e.code === 'KeyF')) {
       e.preventDefault();
 
-      this.searchBarHidden.next(false);
+      this.searchBarHidden = false;
       setTimeout(() => this.findInput.nativeElement.focus(), 200);
     }
   }
@@ -77,7 +77,7 @@ export class SearchBarComponent {
 
   public onInputKeyPress(e: KeyboardEvent) {
     if (e.key === 'Escape') {
-      this.searchBarHidden.next(true);
+      this.searchBarHidden = true;
     }
   }
 }

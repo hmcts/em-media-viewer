@@ -25,7 +25,7 @@
     <span data-l10n-id="bookmark_label">Current View</span>
   </a>
   <div class="toolbarButtonSpacer"></div>
-  <button *ngIf="toolbarToggles?.showSubToolbarToggleBtn | async"
+  <button *ngIf="toolbarButtons?.showSubToolbarToggleBtn"
           id="secondaryToolbarToggle" class="toolbarButton" title="Tools" tabindex="36" data-l10n-id="tools"
           (click)="toggleSecondaryToolbar()">
     <span data-l10n-id="tools_label">Tools</span>

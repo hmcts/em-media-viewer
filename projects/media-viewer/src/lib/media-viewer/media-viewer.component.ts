@@ -1,11 +1,11 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActionEvents } from './model/action-events';
 import {
   ImageViewerToolbarButtons,
   PdfViewerToolbarButtons,
-  ToolbarToggles, UnsupportedViewerToolbarButtons
-} from './model/toolbar-toggles';
+  UnsupportedViewerToolbarButtons
+} from './model/toolbar-button-toggles';
 import { SetCurrentPageOperation } from './model/viewer-operations';
 
 @Component({
@@ -20,10 +20,8 @@ export class MediaViewerComponent {
   @Input() contentType: string;
   @Input() actionEvents = new ActionEvents();
   @Input() showToolbar = true;
-  @Input() toolbarButtons = this.getToolbarButtons();
+  @Input() toolbarButtonToggles = new PdfViewerToolbarButtons();
   counter = 0;
-
-  toolbarToggles = new ToolbarToggles();
 
   currentPageChanged = new Subject<SetCurrentPageOperation>();
   error: any;

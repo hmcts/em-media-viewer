@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ToolbarBtnToggles, ToolbarToggles } from '../../model/toolbar-toggles';
+import { ToolbarButtonToggles } from '../../model/toolbar-button-toggles';
 import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
 import { Subject } from 'rxjs';
 
@@ -10,15 +10,14 @@ import { Subject } from 'rxjs';
 })
 export class ToolbarRightPaneComponent {
 
-  @Input() toolbarToggles: ToolbarToggles;
-  @Input() toolbarButtons: ToolbarBtnToggles;
+  @Input() toolbarButtons: ToolbarButtonToggles;
   @Input() printEvent: Subject<PrintOperation>;
   @Input() downloadEvent: Subject<DownloadOperation>;
 
   constructor() {}
 
   toggleSecondaryToolbar() {
-    this.toolbarToggles.subToolbarHidden.next(!this.toolbarToggles.subToolbarHidden.getValue());
+    this.toolbarButtons.subToolbarHidden.next(!this.toolbarButtons.subToolbarHidden.getValue());
   }
 
   printFile() {
