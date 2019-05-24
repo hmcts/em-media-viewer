@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents } from '../../model/action-events';
-import { DownloadOperation, PrintOperation, RotateOperation } from '../../model/viewer-operations';
+import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-sub-toolbar',
@@ -10,13 +10,14 @@ import { DownloadOperation, PrintOperation, RotateOperation } from '../../model/
 export class SubToolbarComponent {
 
   @Input() subToolbarHidden;
-  @Input() actionEvents: ActionEvents;
+  @Input() printEvent: Subject<PrintOperation>;
+  @Input() downloadEvent: Subject<DownloadOperation>;
 
   printFile() {
-    this.actionEvents.print.next(new PrintOperation());
+    this.printEvent.next(new PrintOperation());
   }
 
   downloadFile() {
-    this.actionEvents.download.next(new DownloadOperation());
+    this.downloadEvent.next(new DownloadOperation());
   }
 }

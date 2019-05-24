@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents } from '../../model/action-events';
 import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../model/viewer-operations';
 import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-tb-left-pane',
@@ -11,7 +11,8 @@ import { ToolbarToggles } from '../../model/toolbar-toggles';
 export class ToolbarLeftPaneComponent {
 
   @Input() toolbarToggles: ToolbarToggles;
-  @Input() actionEvents: ActionEvents;
+  @Input() changePageByDelta: Subject<ChangePageByDeltaOperation>;
+  @Input() setCurrentPage: Subject<SetCurrentPageOperation>;
   @Input() pageNumber = 1;
 
   constructor() {}
@@ -25,15 +26,15 @@ export class ToolbarLeftPaneComponent {
   }
 
   increasePageNumber() {
-    this.actionEvents.changePageByDelta.next(new ChangePageByDeltaOperation(1));
+    this.changePageByDelta.next(new ChangePageByDeltaOperation(1));
   }
 
   decreasePageNumber() {
-    this.actionEvents.changePageByDelta.next(new ChangePageByDeltaOperation(-1));
+    this.changePageByDelta.next(new ChangePageByDeltaOperation(-1));
   }
 
   setCurrentPageNumber(pageNumber: string) {
-    this.actionEvents.setCurrentPage.next(new SetCurrentPageOperation(Number.parseInt(pageNumber, 0)));
+    this.setCurrentPage.next(new SetCurrentPageOperation(Number.parseInt(pageNumber, 0)));
   }
 
   @Input()
