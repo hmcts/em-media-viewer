@@ -110,13 +110,7 @@ export class PdfViewerComponent implements AfterViewInit {
   }
 
   @Input()
-  set toolbarToggles(toolbarToggles: ToolbarButtonToggles | null) {
-    if (toolbarToggles) {
-      toolbarToggles.searchBarHidden.subscribe(state => this.onSearchBarHidden(state));
-    }
-  }
-
-  private onSearchBarHidden(hidden: boolean) {
+  set onSearchBarHidden(hidden: boolean) {
     if (this.pdfWrapper && hidden) {
       this.pdfWrapper.clearSearch();
     }
