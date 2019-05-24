@@ -23,3 +23,46 @@ export class ToolbarToggles {
   public readonly showSidebarToggleBtn = new BehaviorSubject(false);
 
 }
+
+export class ToolbarBtnToggles {
+
+  public readonly subToolbarHidden = new BehaviorSubject(true);
+  public readonly sidebarOpen = new BehaviorSubject(false);
+  public readonly searchBarHidden = new BehaviorSubject(true);
+
+  public showPrintBtn = false;
+  public showDownloadBtn = false;
+
+  public showNavigationBtns = false;
+  public showZoomBtns = false;
+  public showRotateBtns = false;
+
+  public showPresentationModeBtn = false;
+  public showOpenFileBtn = false;
+  public showBookmarkBtn = false;
+
+  public showSearchbarToggleBtn = false;
+  public showSubToolbarToggleBtn = false;
+  public showSidebarToggleBtn = false;
+
+}
+
+export class PdfViewerToolbarButtons extends ToolbarBtnToggles {
+  public showPrintBtn = true;
+  public showDownloadBtn = true;
+  public showNavigationBtns = true;
+  public showZoomBtns = true;
+  public showRotateBtns = true;
+  public showSearchbarToggleBtn = true;
+}
+
+export class ImageViewerToolbarButtons extends ToolbarBtnToggles {
+  public showPrintBtn = true;
+  public showDownloadBtn = true;
+  public showZoomBtns = true;
+  public showRotateBtns = true;
+}
+
+export class UnsupportedViewerToolbarButtons extends ToolbarBtnToggles {
+  public showDownloadBtn = true;
+}

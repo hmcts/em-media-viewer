@@ -13,7 +13,8 @@
                      [setCurrentPageEvent]="actionEvents.setCurrentPage"
                      [downloadEvent]="actionEvents.download"
                      [printEvent]="actionEvents.print"
-                     [toolbarToggles]="toolbarToggles"></mv-main-toolbar>
+                     [toolbarToggles]="toolbarToggles"
+                     [toolbarButtons]="getToolbarButtons()"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    [url]="url"
                    [downloadFileName]="downloadFileName"

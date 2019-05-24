@@ -1,7 +1,11 @@
 import {Component, Input} from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActionEvents } from './model/action-events';
-import { ToolbarToggles } from './model/toolbar-toggles';
+import {
+  ImageViewerToolbarButtons,
+  PdfViewerToolbarButtons,
+  ToolbarToggles, UnsupportedViewerToolbarButtons
+} from './model/toolbar-toggles';
 import { SetCurrentPageOperation } from './model/viewer-operations';
 
 @Component({
@@ -16,6 +20,8 @@ export class MediaViewerComponent {
   @Input() contentType: string;
   @Input() actionEvents = new ActionEvents();
   @Input() showToolbar = true;
+  @Input() toolbarButtons = this.getToolbarButtons();
+  counter = 0;
 
   toolbarToggles = new ToolbarToggles();
 
@@ -26,5 +32,19 @@ export class MediaViewerComponent {
 
   contentTypeUnsupported(): boolean {
     return this.supportedContentTypes.indexOf(this.contentType) < 0;
+  }
+
+  getToolbarButtons() {
+    if (this.contentType === 'pdf') {
+      console.log('number of times this is called' + this.counter);
+      this.counter++;
+      return new PdfViewerToolbarButtons();
+    } else if(this.contentType === 'image') {
+      console.log('number of times this is called' + this.counter);
+      this.counter++;
+      return new ImageViewerToolbarButtons();
+    } else {
+      return new UnsupportedViewerToolbarButtons();
+    }
   }
 }
