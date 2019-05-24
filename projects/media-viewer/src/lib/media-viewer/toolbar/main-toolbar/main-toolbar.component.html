@@ -10,17 +10,23 @@
       <mv-tb-left-pane [currentPage]="currentPage"
                        [changePageByDelta]="changePageByDeltaEvent"
                        [setCurrentPage]="setCurrentPageEvent"
-                       [toolbarToggles]="toolbarToggles"></mv-tb-left-pane>
+                       [toolbarToggles]="toolbarToggles"
+                       [showSidebarToggleBtn]="toolbarButtons?.showSidebarToggleBtn"
+                       [showSearchbarToggleBtn]="toolbarButtons?.showSearchbarToggleBtn"
+                       [showNavigationBtns]="toolbarButtons?.showNavigationBtns"
+                       [sidebarOpen]="toolbarButtons?.sidebarOpen"
+                       [searchBarHiddenToggle]="toolbarButtons?.searchBarHidden"></mv-tb-left-pane>
       <mv-tb-right-pane [downloadEvent]="downloadEvent"
                         [printEvent]="printEvent"
-                        [toolbarToggles]="toolbarToggles">
+                        [toolbarToggles]="toolbarToggles"
+                        [toolbarButtons]="toolbarButtons">
       </mv-tb-right-pane>
       <mv-tb-middle-pane [zoomEvent]="zoomEvent"
                          [stepZoomEvent]="stepZoomEvent"
                          [rotateEvent]="rotateEvent"
                          [zoomValue]="(zoomValueEvent | async) || { value: 1 }"
-                         [showZoomBtns]="toolbarToggles?.showZoomBtns | async"
-                         [showRotateBtns]="toolbarToggles?.showRotateBtns | async"></mv-tb-middle-pane>
+                         [showZoomBtns]="toolbarButtons?.showZoomBtns"
+                         [showRotateBtns]="toolbarButtons?.showRotateBtns"></mv-tb-middle-pane>
     </div>
     <div id="loadingBar">
       <div class="progress">

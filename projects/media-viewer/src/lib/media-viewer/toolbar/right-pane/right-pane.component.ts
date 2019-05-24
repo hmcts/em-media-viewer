@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { ToolbarBtnToggles, ToolbarToggles } from '../../model/toolbar-toggles';
 import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
 import { Subject } from 'rxjs';
 
@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 export class ToolbarRightPaneComponent {
 
   @Input() toolbarToggles: ToolbarToggles;
+  @Input() toolbarButtons: ToolbarBtnToggles;
   @Input() printEvent: Subject<PrintOperation>;
   @Input() downloadEvent: Subject<DownloadOperation>;
 

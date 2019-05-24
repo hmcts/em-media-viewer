@@ -14,6 +14,11 @@ export class ToolbarLeftPaneComponent {
   @Input() changePageByDelta: Subject<ChangePageByDeltaOperation>;
   @Input() setCurrentPage: Subject<SetCurrentPageOperation>;
   @Input() pageNumber = 1;
+  @Input() showSidebarToggleBtn: boolean;
+  @Input() showSearchbarToggleBtn: boolean;
+  @Input() showNavigationBtns: boolean;
+  @Input() sidebarOpen: Subject<boolean>;
+  @Input() searchBarHiddenToggle: Subject<boolean>;
 
   constructor() {}
 

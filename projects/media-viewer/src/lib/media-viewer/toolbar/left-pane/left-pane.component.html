@@ -5,11 +5,12 @@
     <span data-l10n-id="toggle_sidebar_label">Toggle Sidebar</span>
   </button>
   <div class="toolbarButtonSpacer"></div>
-  <button *ngIf="toolbarToggles?.showSearchbarToggleBtn | async" id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar"
+  <button *ngIf="showSearchbarToggleBtn"
+          id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar"
           (click)="toggleSearchBar()">
     <span data-l10n-id="findbar_label">Find</span>
   </button>
-  <ng-container *ngIf="toolbarToggles?.showNavigationBtns | async">
+  <ng-container *ngIf="showNavigationBtns">
     <div class="splitToolbarButton hiddenSmallView">
       <button class="toolbarButton pageUp" title="Previous Page" id="previous" tabindex="13" (click)="decreasePageNumber()"
               data-l10n-id="previous">

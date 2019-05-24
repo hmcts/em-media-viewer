@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { ToolbarBtnToggles, ToolbarToggles } from '../../model/toolbar-toggles';
 import {
   ChangePageByDeltaOperation, DownloadOperation, PrintOperation,
   RotateOperation,
@@ -18,6 +18,7 @@ import { Subject } from 'rxjs';
 export class MainToolbarComponent {
 
   @Input() toolbarToggles: ToolbarToggles;
+  @Input() toolbarButtons: ToolbarBtnToggles;
   @Input() currentPage: SetCurrentPageOperation;
   @Input() searchEvent: Subject<SearchOperation>;
   @Input() searchResultsCountEvent: Subject<SearchResultsCount>;
