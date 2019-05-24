@@ -126,9 +126,7 @@ describe('PdfViewerComponent', () => {
 
   it('clear the search when the search bar is closed', () => {
     spyOn(mockWrapper, 'clearSearch');
-    const toggles = new ToolbarButtonToggles();
-    component.toolbarToggles = toggles;
-    toggles.searchBarHidden.next(true);
+    component.searchBarHidden = true;
     expect(mockWrapper.clearSearch).toHaveBeenCalled();
   });
 });
