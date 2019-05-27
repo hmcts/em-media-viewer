@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/media-viewer/model/toolbar-button-toggles';
 
 @Component({
   selector: 'app-sandbox-webapp',
@@ -9,6 +10,7 @@ export class SandboxWebappComponent {
 
   documentTypeToShow = 'nonDM_PDF';
   showToolbar = true;
+  toolbarButtons = new ToolbarButtonToggles();
 
   toggleDocumentSelection(selectedDocumentType: string) {
     this.documentTypeToShow = selectedDocumentType;

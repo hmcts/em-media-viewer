@@ -1,15 +1,55 @@
 <div>
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half">
+      <div class="govuk-grid-column-one-third">
         <h2 class="govuk-heading-m  govuk-!-margin-top-4">Media Viewer Demo</h2>
       </div>
-      <div class="govuk-grid-column-one-half">
+      <div class="govuk-grid-column-two-thirds">
         <table style="float: right">
           <tr>
-            <td><span class="govuk-heading-s govuk-!-margin-top-4">Toggle Toolbar</span></td>
+            <td><span class="govuk-heading-s govuk-!-margin-top-4">search</span></td>
             <td>
-              <label  style="float: right" class="switch govuk-!-margin-left-1">
+              <label  style="float: right" class="switch govuk-!-margin-right-2">
+                <input type="checkbox" [checked]="toolbarButtons.showSearchbarToggleBtn"
+                       name="search" [(ngModel)]="toolbarButtons.showSearchbarToggleBtn">
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td><span class="govuk-heading-s govuk-!-margin-top-4">naviagate</span></td>
+            <td>
+              <label  style="float: right" class="switch govuk-!-margin-right-2">
+                <input type="checkbox" [checked]="toolbarButtons.showNavigationBtns"
+                       name="navigate" [(ngModel)]="toolbarButtons.showNavigationBtns">
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td><span class="govuk-heading-s govuk-!-margin-top-4">zoom</span></td>
+            <td>
+              <label  style="float: right" class="switch govuk-!-margin-right-2">
+                <input type="checkbox" [checked]="toolbarButtons.showZoomBtns"
+                       name="zoom" [(ngModel)]="toolbarButtons.showZoomBtns">
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td><span class="govuk-heading-s govuk-!-margin-top-4">print</span></td>
+            <td>
+              <label  style="float: right" class="switch govuk-!-margin-right-2">
+                <input type="checkbox" [checked]="toolbarButtons.showPrintBtn"
+                       name="print" [(ngModel)]="toolbarButtons.showPrintBtn">
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td><span class="govuk-heading-s govuk-!-margin-top-4">download</span></td>
+            <td>
+              <label  style="float: right" class="switch govuk-!-margin-right-2">
+                <input type="checkbox" [checked]="toolbarButtons.showDownloadBtn"
+                       name="download" [(ngModel)]="toolbarButtons.showDownloadBtn">
+                <span class="slider round"></span>
+              </label>
+            </td>
+            <td><span class="govuk-heading-s govuk-!-margin-top-4">toolbar</span></td>
+            <td>
+              <label  style="float: right" class="switch govuk-!-margin-right-2">
                 <input type="checkbox" [checked]="showToolbar" (change)="toggleToolbarVisibility($event.target.checked)">
                 <span class="slider round"></span>
               </label>
@@ -44,18 +84,21 @@
                          [url]="'assets/example.pdf'"
                          [downloadFileName]="'example.pdf'"
                          [showToolbar]="showToolbar"
+                         [toolbarButtonToggles]="toolbarButtons"
                          [contentType]="'pdf'">
         </mv-media-viewer>
         <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
                          [url]="'assets/example.jpg'"
                          [showToolbar]="showToolbar"
                          [downloadFileName]="'example.jpg'"
+                         [toolbarButtonToggles]="toolbarButtons"
                          [contentType]="'image'">
         </mv-media-viewer>
         <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
                          [url]="'assets/unsupported.txt'"
                          [downloadFileName]="'unsupported.txt'"
                          [showToolbar]="showToolbar"
+                         [toolbarButtonToggles]="toolbarButtons"
                          [contentType]="'txt'">
         </mv-media-viewer>
     </section>
