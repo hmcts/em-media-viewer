@@ -3,21 +3,20 @@ import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/med
 
 @Component({
   selector: 'app-sandbox-webapp',
-  templateUrl: './sandbox-webapp.component.html',
-  styleUrls: ['./sandbox-webapp.component.scss']
+  templateUrl: './media-viewer-wrapper.component.html'
 })
-export class SandboxWebappComponent {
+export class MediaViewerWrapperComponent {
 
-  documentTypeToShow = 'nonDM_PDF';
-  showToolbar = true;
+  documentTypeToShow = 'pdf';
+  showToolbar: boolean;
   toolbarButtons = new ToolbarButtonToggles();
-
-  toggleDocumentSelection(selectedDocumentType: string) {
-    this.documentTypeToShow = selectedDocumentType;
-  }
 
   toggleToolbarVisibility(showToolbar: boolean) {
     this.showToolbar = showToolbar;
+  }
+
+  toggleDocumentSelection(selectedDocumentType: string) {
+    this.documentTypeToShow = selectedDocumentType;
   }
 
   tabLinkStyle(documentType: string) {

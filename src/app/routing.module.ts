@@ -3,16 +3,21 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { SandboxWebappComponent } from './sandbox-webapp/sandbox-webapp.component';
+import { MediaViewerWrapperComponent } from './sandbox-webapp/media-viewer-wrapper.component';
 import { MediaViewerModule } from '../../projects/media-viewer/src/lib/media-viewer.module';
 import { ToolbarModule } from '../../projects/media-viewer/src/lib/media-viewer/toolbar/toolbar.module';
+import { ToolbarTogglesComponent } from './sandbox-webapp/toolbar-toggles/toolbar-toggles.component';
 
 const routes: Routes = [{
     path: '',
-    component: SandboxWebappComponent
+    component: MediaViewerWrapperComponent
 }];
 
 @NgModule({
+  declarations: [
+    MediaViewerWrapperComponent,
+    ToolbarTogglesComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forRoot(routes, {
@@ -25,14 +30,7 @@ const routes: Routes = [{
     MediaViewerModule,
     ToolbarModule
   ],
-    declarations: [
-        SandboxWebappComponent
-    ],
-    providers: [
-    ],
-    exports: [
-        RouterModule
-    ]
+  exports: [RouterModule]
 })
 
 export class RoutingModule {
