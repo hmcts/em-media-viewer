@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SandboxWebappComponent } from './sandbox-webapp/sandbox-webapp.component';
 import { MediaViewerModule } from '../../projects/media-viewer/src/lib/media-viewer.module';
@@ -21,6 +21,7 @@ const routes: Routes = [{
     }),
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     MediaViewerModule,
     ToolbarModule
   ],
