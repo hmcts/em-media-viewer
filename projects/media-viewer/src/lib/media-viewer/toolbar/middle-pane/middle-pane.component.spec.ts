@@ -53,7 +53,7 @@ describe('ToolbarMiddlePaneComponent', () => {
     const zoomOutButton = nativeElement.querySelector('button[id=zoomOut]');
     zoomOutButton.click();
 
-    expect(stepZoom).toHaveBeenCalledWith(new StepZoomOperation(-0.2));
+    expect(stepZoom).toHaveBeenCalledWith(new StepZoomOperation(-0.1));
   });
 
   it('should emit zoom in event', () => {
@@ -61,7 +61,7 @@ describe('ToolbarMiddlePaneComponent', () => {
     const zoomInButton = nativeElement.querySelector('button[id=zoomIn]');
     zoomInButton.click();
 
-    expect(stepZoom).toHaveBeenCalledWith(new StepZoomOperation(0.2));
+    expect(stepZoom).toHaveBeenCalledWith(new StepZoomOperation(0.1));
   });
 
   it('should emit zoom in event', () => {
