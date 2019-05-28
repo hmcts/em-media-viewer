@@ -14,7 +14,6 @@ import {
   ZoomOperation,
   ZoomValue
 } from '../../model/viewer-operations';
-import { ToolbarButtonToggles } from '../../model/toolbar-button-toggles';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 
 @Component({
@@ -56,7 +55,6 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
   @Input()
   set rotateOperation(operation: RotateOperation | null) {
     if (operation) {
-
       this.pdfWrapper.rotate(operation.rotation);
     }
   }

@@ -15,14 +15,14 @@ import {
   ZoomValue
 } from '../../model/viewer-operations';
 import { PrintService } from '../../service/print.service';
-import { ToolbarButtonToggles } from '../../model/toolbar-button-toggles';
+import {SimpleChange} from '@angular/core';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
   let fixture: ComponentFixture<PdfViewerComponent>;
 
   const mockWrapper = {
-    loadDocument: () => Promise.resolve(),
+    loadDocument: () => {},
     search: () => {},
     clearSearch: () => {},
     rotate: () => {},
@@ -128,5 +128,16 @@ describe('PdfViewerComponent', () => {
     spyOn(mockWrapper, 'clearSearch');
     component.searchBarHidden = true;
     expect(mockWrapper.clearSearch).toHaveBeenCalled();
+  });
+
+  it('test loadDocument is called when URL changes', async () => {
+    const loadDocumentSpy = spyOn(mockWrapper, 'loadDocument');
+    await component.ngOnChanges({
+      url: new SimpleChange('a', 'b', true)
+    });
+    await component.ngOnChanges({
+      url: new SimpleChange('b', 'c', true)
+    });
+    expect(loadDocumentSpy).toHaveBeenCalledTimes(2);
   });
 });
