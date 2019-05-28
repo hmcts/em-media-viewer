@@ -1,4 +1,4 @@
-<div class="findbar doorHanger" [ngClass]="{ hidden: searchBarHidden }">
+<div class="findbar doorHanger" [ngClass]="{ hidden: searchBarHidden | async }">
   <div id="findbarInputContainer">
     <input #findInput
            [(ngModel)]="searchText"
