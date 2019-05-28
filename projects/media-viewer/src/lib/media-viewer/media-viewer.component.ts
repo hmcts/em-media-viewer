@@ -11,7 +11,7 @@ import { SetCurrentPageOperation } from './model/viewer-operations';
 })
 export class MediaViewerComponent implements OnInit {
 
-  @Input() url;
+  @Input() url: string;
   @Input() downloadFileName: string;
   @Input() contentType: string;
   @Input() actionEvents = new ActionEvents();
