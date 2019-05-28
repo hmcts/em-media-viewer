@@ -11,8 +11,8 @@ import { SetCurrentPageOperation } from './model/viewer-operations';
 })
 export class MediaViewerComponent {
 
-  @Input() url = '';
-  @Input() downloadFileName = null;
+  @Input() url;
+  @Input() downloadFileName: string;
   @Input() contentType: string;
   @Input() actionEvents = new ActionEvents();
   @Input() showToolbar = true;
