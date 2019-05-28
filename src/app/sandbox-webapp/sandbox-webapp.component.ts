@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-sandbox-webapp',
@@ -6,6 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./sandbox-webapp.component.scss']
 })
 export class SandboxWebappComponent {
+
+  pdfUrl = 'assets/example.pdf';
+  imageUrl = 'assets/example.jpg';
+  unsupportedUrl = 'assets/unsupported.txt';
 
   documentTypeToShow = 'nonDM_PDF';
   showToolbar = true;

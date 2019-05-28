@@ -42,39 +42,41 @@
       </ul>
     </div>
     <section [id]="documentTypeToShow">
-      <div *ngIf="documentTypeToShow === 'pdf'">
-        <div>
-          Document URL: <input type="text" [value]="'assets/example.pdf'" #pdfUrl>
+      <form #form="ngForm">
+        <div *ngIf="documentTypeToShow === 'pdf'">
+          <div>
+            Document URL: <input type="text" name="pdfUrl" [(ngModel)]="pdfUrl">
+          </div>
+          <mv-media-viewer
+            [url]="pdfUrl"
+            [downloadFileName]="'example.pdf'"
+            [showToolbar]="showToolbar"
+            [contentType]="'pdf'">
+          </mv-media-viewer>
         </div>
-        <mv-media-viewer
-          [url]="pdfUrl.value"
-          [downloadFileName]="'example.pdf'"
-          [showToolbar]="showToolbar"
-          [contentType]="'pdf'">
-        </mv-media-viewer>
-      </div>
-      <div *ngIf="documentTypeToShow === 'image'">
-        <div>
-          Document URL: <input type="text" [value]="'assets/example.jpg'" #imageUrl>
+        <div *ngIf="documentTypeToShow === 'image'">
+          <div>
+            Document URL: <input type="text" name="imageUrl" [(ngModel)]="imageUrl">
+          </div>
+          <mv-media-viewer
+                           [url]="imageUrl"
+                           [showToolbar]="showToolbar"
+                           [downloadFileName]="'example.jpg'"
+                           [contentType]="'image'">
+          </mv-media-viewer>
         </div>
-        <mv-media-viewer
-                         [url]="imageUrl.value"
-                         [showToolbar]="showToolbar"
-                         [downloadFileName]="'example.jpg'"
-                         [contentType]="'image'">
-        </mv-media-viewer>
-      </div>
-      <div *ngIf="documentTypeToShow === 'unsupported'">
-        <div>
-          Document URL: <input type="text" [value]="'assets/unsupported.txt'" #unsupportedUrl>
+        <div *ngIf="documentTypeToShow === 'unsupported'">
+          <div>
+            Document URL: <input type="text" name="unsupportedUrl" [(ngModel)]="unsupportedUrl">
+          </div>
+          <mv-media-viewer
+                           [url]="unsupportedUrl"
+                           [downloadFileName]="'unsupported.txt'"
+                           [showToolbar]="showToolbar"
+                           [contentType]="'txt'">
+          </mv-media-viewer>
         </div>
-        <mv-media-viewer
-                         [url]="unsupportedUrl.value"
-                         [downloadFileName]="'unsupported.txt'"
-                         [showToolbar]="showToolbar"
-                         [contentType]="'txt'">
-        </mv-media-viewer>
-      </div>
+      </form>
     </section>
   </div>
 </div>
