@@ -74,7 +74,7 @@ describe('ImageViewerComponent', () => {
     it('should zoom image by maximum value 5', () => {
       const spy = spyOn(component, 'setZoomValue').and.returnValue(Promise.resolve(true));
       component.zoomOperation = new ZoomOperation(5);
-      component.stepZoomOperation = new StepZoomOperation(0.2);
+      component.stepZoomOperation = new StepZoomOperation(0.1);
 
       expect(component.zoom).toBe(5);
       spy.calls.mostRecent().returnValue.then(() => {
@@ -86,7 +86,7 @@ describe('ImageViewerComponent', () => {
     it('should zoom image by minimum value 0.1', () => {
       const spy = spyOn(component, 'setZoomValue').and.returnValue(Promise.resolve(true));
       component.zoomOperation = new ZoomOperation(0.1);
-      component.stepZoomOperation = new StepZoomOperation(-0.2);
+      component.stepZoomOperation = new StepZoomOperation(-0.1);
 
       expect(component.zoom).toBe(0.1);
       spy.calls.mostRecent().returnValue.then(() => {

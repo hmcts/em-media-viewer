@@ -85,7 +85,7 @@ export class ImageViewerComponent {
 
   setZoomValue(zoomValue) {
     return new Promise((resolve) => {
-      this.zoomValue.next({ value: zoomValue });
+      this.zoomValue.next({ value: Math.round(zoomValue * 10) / 10 });
       resolve(true);
     });
   }
