@@ -9,7 +9,7 @@ import { SearchOperation, SearchResultsCount } from '../../model/viewer-operatio
 })
 export class SearchBarComponent {
 
-  @Input() searchBarHidden: boolean;
+  @Input() searchBarHidden: Subject<boolean>;
   @Input() searchEvents: Subject<SearchOperation>;
   @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
 
@@ -27,7 +27,7 @@ export class SearchBarComponent {
     if (e.code === 'F3' || (e.ctrlKey && e.code === 'KeyF')) {
       e.preventDefault();
 
-      this.searchBarHidden = false;
+      this.searchBarHidden.next(false);
       setTimeout(() => this.findInput.nativeElement.focus(), 200);
     }
   }
@@ -77,7 +77,7 @@ export class SearchBarComponent {
 
   public onInputKeyPress(e: KeyboardEvent) {
     if (e.key === 'Escape') {
-      this.searchBarHidden = true;
+      this.searchBarHidden.next(true);
     }
   }
 }

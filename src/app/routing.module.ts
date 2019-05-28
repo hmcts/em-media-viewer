@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MediaViewerWrapperComponent } from './sandbox-webapp/media-viewer-wrapper.component';
+import { MediaViewerWrapperComponent } from './media-viewer-wrapper/media-viewer-wrapper.component';
 import { MediaViewerModule } from '../../projects/media-viewer/src/lib/media-viewer.module';
 import { ToolbarModule } from '../../projects/media-viewer/src/lib/media-viewer/toolbar/toolbar.module';
-import { ToolbarTogglesComponent } from './sandbox-webapp/toolbar-toggles/toolbar-toggles.component';
+import { ToolbarTogglesComponent } from './media-viewer-wrapper/toolbar-toggles/toolbar-toggles.component';
 
 const routes: Routes = [{
     path: '',

@@ -4,10 +4,8 @@ export const getToolbarButtonToggles = (contentType: string) => {
   switch (contentType) {
     case 'pdf':
       return  new PdfViewerToolbarButtons();
-      break
     case 'image':
       return  new ImageViewerToolbarButtons();
-      break;
     default:
       return  new UnsupportedViewerToolbarButtons();
   }
