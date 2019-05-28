@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SearchOperation, SearchResultsCount } from '../../model/viewer-operations';
 
 @Component({
@@ -9,7 +9,7 @@ import { SearchOperation, SearchResultsCount } from '../../model/viewer-operatio
 })
 export class SearchBarComponent {
 
-  @Input() searchBarHidden: BehaviorSubject<boolean>;
+  @Input() searchBarHidden: Subject<boolean>;
   @Input() searchEvents: Subject<SearchOperation>;
   @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
 

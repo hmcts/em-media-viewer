@@ -1,6 +1,6 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { PrintService } from '../../service/print.service';
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   DownloadOperation,
   PrintOperation,
@@ -9,7 +9,6 @@ import {
   ZoomOperation,
   ZoomValue
 } from '../../model/viewer-operations';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -75,16 +74,6 @@ export class ImageViewerComponent {
       a.download = this.downloadFileName;
       a.click();
       a.remove();
-    }
-  }
-
-  @Input()
-  set toolbarToggles(toolbarToggles: ToolbarToggles) {
-    if (toolbarToggles) {
-      toolbarToggles.showZoomBtns.next(true);
-      toolbarToggles.showRotateBtns.next(true);
-      toolbarToggles.showDownloadBtn.next(true);
-      toolbarToggles.showPrintBtn.next(true);
     }
   }
 
