@@ -1,9 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 import { UnsupportedViewerComponent } from './unsupported-viewer.component';
 import { DownloadOperation } from '../../model/viewer-operations';
-import { BehaviorSubject } from 'rxjs';
 
 describe('UnsupportedViewerComponent', () => {
   let component: UnsupportedViewerComponent;
@@ -24,13 +22,6 @@ describe('UnsupportedViewerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should show download button', () => {
-    const mockToolbarToggles = new ToolbarToggles();
-    spyOn(mockToolbarToggles.showDownloadBtn, 'next');
-    component.toolbarToggles = mockToolbarToggles;
-    expect(mockToolbarToggles.showDownloadBtn.next).toHaveBeenCalledWith(true);
   });
 
   it('should click download button', () => {

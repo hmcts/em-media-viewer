@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/media-viewer/model/toolbar-button-toggles';
 
 @Component({
   selector: 'app-sandbox-webapp',
-  templateUrl: './sandbox-webapp.component.html',
-  styleUrls: ['./sandbox-webapp.component.scss']
+  templateUrl: './media-viewer-wrapper.component.html'
 })
-export class SandboxWebappComponent {
+export class MediaViewerWrapperComponent {
 
   pdfUrl = 'assets/example.pdf';
   pdfFileName = 'example.pdf';
@@ -15,8 +15,10 @@ export class SandboxWebappComponent {
   unsupportedFileName = 'unsupported.txt';
   unsupportedType = 'txt';
 
-  documentTypeToShow = 'nonDM_PDF';
+  documentTypeToShow = 'pdf';
   showToolbar = true;
+
+  toolbarButtons = new ToolbarButtonToggles();
 
   toggleDocumentSelection(selectedDocumentType: string) {
     this.documentTypeToShow = selectedDocumentType;

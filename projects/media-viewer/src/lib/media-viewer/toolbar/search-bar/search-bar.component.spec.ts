@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
-import { BehaviorSubject } from 'rxjs';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ActionEvents } from '../../model/action-events';
 import { SearchOperation } from '../../model/viewer-operations';
+import { BehaviorSubject } from 'rxjs';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -27,7 +27,7 @@ describe('SearchBarComponent', () => {
 
     const actionEvents = new ActionEvents();
     component.searchEvents = actionEvents.search as any;
-    component.searchBarHidden = new BehaviorSubject<boolean>(false);
+    component.searchBarHidden = new BehaviorSubject(false);
     fixture.detectChanges();
   });
 

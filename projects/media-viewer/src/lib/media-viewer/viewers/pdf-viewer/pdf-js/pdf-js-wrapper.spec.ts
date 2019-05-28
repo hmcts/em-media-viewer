@@ -1,19 +1,8 @@
 import { PdfJsWrapper } from './pdf-js-wrapper';
-import {
-  ChangePageByDeltaOperation,
-  RotateOperation, SearchOperation,
-  SearchResultsCount,
-  SetCurrentPageOperation,
-  StepZoomOperation,
-  ZoomOperation
-} from '../../../model/viewer-operations';
+import { SearchOperation, SearchResultsCount, SetCurrentPageOperation } from '../../../model/viewer-operations';
 import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
-import { ToolbarToggles } from '../../../model/toolbar-toggles';
-import { PdfViewerComponent } from '../pdf-viewer.component';
-import { EmLoggerService } from '../../../../logging/em-logger.service';
-import { PdfJsWrapperFactory } from './pdf-js-wrapper.provider';
 
 describe('PdfJsWrapper', () => {
   const downloadManager = new pdfjsViewer.DownloadManager({});

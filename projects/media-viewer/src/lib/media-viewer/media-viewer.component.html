@@ -1,21 +1,22 @@
-<div id="outerContainer" [ngClass]="{ sidebarOpen: toolbarToggles.sidebarOpen | async }">
+<div id="outerContainer" [ngClass]="{ sidebarOpen: toolbarButtonToggles?.sidebarOpen | async }">
   <mv-side-bar *ngIf="showToolbar" id="sidebarContainer"></mv-side-bar>
   <div id="mainContainer" style="min-height: 800px;">
-    <mv-search-bar *ngIf="showToolbar"
-                   [searchEvents]="actionEvents?.search"
-                   [searchResultsCount]="actionEvents?.searchResultsCount | async"
-                   [searchBarHidden]="toolbarToggles?.searchBarHidden"></mv-search-bar>
-    <mv-sub-toolbar *ngIf="showToolbar"
-                    [actionEvents]="actionEvents"
-                    [subToolbarHidden]="toolbarToggles?.subToolbarHidden | async"></mv-sub-toolbar>
     <mv-main-toolbar *ngIf="showToolbar"
                      [currentPage]="currentPageChanged | async"
-                     [actionEvents]="actionEvents"
-                     [toolbarToggles]="toolbarToggles"></mv-main-toolbar>
+                     [searchEvent]="actionEvents.search"
+                     [searchResultsCountEvent]="actionEvents.searchResultsCount"
+                     [zoomEvent]="actionEvents.zoom"
+                     [stepZoomEvent]="actionEvents.stepZoom"
+                     [zoomValueEvent]="actionEvents.zoomValue"
+                     [rotateEvent]="actionEvents.rotate"
+                     [changePageByDeltaEvent]="actionEvents.changePageByDelta"
+                     [setCurrentPageEvent]="actionEvents.setCurrentPage"
+                     [downloadEvent]="actionEvents.download"
+                     [printEvent]="actionEvents.print"
+                     [toolbarButtons]="toolbarButtonToggles"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    [url]="url"
                    [downloadFileName]="downloadFileName"
-                   [toolbarToggles]="toolbarToggles"
                    [zoomOperation]="actionEvents?.zoom | async"
                    [stepZoomOperation]="actionEvents?.stepZoom | async"
                    [zoomValue]="actionEvents?.zoomValue"
@@ -26,7 +27,8 @@
                    [rotateOperation]="actionEvents?.rotate | async"
                    [setCurrentPage]="actionEvents?.setCurrentPage | async"
                    [changePageByDelta]="actionEvents?.changePageByDelta | async"
-                   [currentPageChanged]="currentPageChanged">
+                   [currentPageChanged]="currentPageChanged"
+                   [searchBarHidden]="toolbarButtonToggles?.searchBarHidden | async">
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"

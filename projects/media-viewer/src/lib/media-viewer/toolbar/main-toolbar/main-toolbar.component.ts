@@ -1,7 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
-import { SetCurrentPageOperation } from '../../model/viewer-operations';
-import { ActionEvents } from '../../model/action-events';
+import { ToolbarButtonToggles } from '../../model/toolbar-button-toggles';
+import {
+  ChangePageByDeltaOperation,
+  DownloadOperation,
+  PrintOperation,
+  RotateOperation,
+  SearchOperation,
+  SearchResultsCount,
+  SetCurrentPageOperation,
+  StepZoomOperation,
+  ZoomOperation,
+  ZoomValue
+} from '../../model/viewer-operations';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-main-toolbar',
@@ -10,7 +21,16 @@ import { ActionEvents } from '../../model/action-events';
 })
 export class MainToolbarComponent {
 
-  @Input() toolbarToggles: ToolbarToggles;
+  @Input() toolbarButtons: ToolbarButtonToggles;
   @Input() currentPage: SetCurrentPageOperation;
-  @Input() actionEvents: ActionEvents;
+  @Input() searchEvent: Subject<SearchOperation>;
+  @Input() searchResultsCountEvent: Subject<SearchResultsCount>;
+  @Input() zoomEvent: Subject<ZoomOperation>;
+  @Input() stepZoomEvent: Subject<StepZoomOperation>;
+  @Input() zoomValueEvent: Subject<ZoomValue>;
+  @Input() rotateEvent: Subject<RotateOperation>;
+  @Input() changePageByDeltaEvent: Subject<ChangePageByDeltaOperation>;
+  @Input() setCurrentPageEvent: Subject<SetCurrentPageOperation>;
+  @Input() downloadEvent: Subject<DownloadOperation>;
+  @Input() printEvent: Subject<PrintOperation>;
 }
