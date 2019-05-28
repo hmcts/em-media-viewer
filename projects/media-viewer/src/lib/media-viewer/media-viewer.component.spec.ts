@@ -4,6 +4,11 @@ import {PdfViewerComponent} from './viewers/pdf-viewer/pdf-viewer.component';
 import {ImageViewerComponent} from './viewers/image-viewer/image-viewer.component';
 import {UnsupportedViewerComponent} from './viewers/unsupported-viewer/unsupported-viewer.component';
 import {ToolbarModule} from './toolbar/toolbar.module';
+import {
+  ImageViewerToolbarButtons,
+  PdfViewerToolbarButtons,
+  UnsupportedViewerToolbarButtons
+} from './model/toolbar-button-toggles';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -39,5 +44,26 @@ describe('MediaViewerComponent', () => {
   it('should not support content', () => {
     component.contentType = 'unsupported';
     expect(component.contentTypeUnsupported()).toBeTruthy();
+  });
+
+  it('should set toolbarButtonToggles for pdf', function () {
+    component.contentType = 'pdf';
+    component.ngOnInit();
+
+    expect(component.toolbarButtonToggles).toEqual(new PdfViewerToolbarButtons());
+  });
+
+  it('should set toolbarButtonToggles for image', function () {
+    component.contentType = 'image';
+    component.ngOnInit();
+
+    expect(component.toolbarButtonToggles).toEqual(new ImageViewerToolbarButtons());
+  });
+
+  it('should set toolbarButtonToggles for unsupported types', function () {
+    component.contentType = 'unsupported';
+    component.ngOnInit();
+
+    expect(component.toolbarButtonToggles).toEqual(new UnsupportedViewerToolbarButtons());
   });
 });

@@ -4,6 +4,8 @@ import {ToolbarLeftPaneComponent} from '../left-pane/left-pane.component';
 import {ToolbarRightPaneComponent} from '../right-pane/right-pane.component';
 import {ToolbarMiddlePaneComponent} from '../middle-pane/middle-pane.component';
 import {FormsModule} from '@angular/forms';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { SubToolbarComponent } from '../sub-toolbar/sub-toolbar.component';
 
 describe('MainToolbarComponent', () => {
   let component: MainToolbarComponent;
@@ -14,6 +16,8 @@ describe('MainToolbarComponent', () => {
     return TestBed.configureTestingModule({
       declarations: [
         MainToolbarComponent,
+        SearchBarComponent,
+        SubToolbarComponent,
         ToolbarLeftPaneComponent,
         ToolbarRightPaneComponent,
         ToolbarMiddlePaneComponent,

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SubToolbarComponent } from './sub-toolbar.component';
-import { ActionEvents } from '../../model/action-events';
-import { DownloadOperation, PrintOperation, RotateOperation } from '../../model/viewer-operations';
+import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
+import { Subject } from 'rxjs';
 
 describe('SubToolbarComponent', () => {
   let component: SubToolbarComponent;
@@ -19,7 +19,8 @@ describe('SubToolbarComponent', () => {
     fixture = TestBed.createComponent(SubToolbarComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.actionEvents = new ActionEvents();
+    component.printEvent = new Subject<PrintOperation>();
+    component.downloadEvent = new Subject<DownloadOperation>();
     fixture.detectChanges();
   });
 
@@ -28,7 +29,7 @@ describe('SubToolbarComponent', () => {
   });
 
   it('should emit print event', () => {
-    const printSpy = spyOn(component.actionEvents.print, 'next');
+    const printSpy = spyOn(component.printEvent, 'next');
     const printBtn = nativeElement.querySelector('button[id=secondaryPrint]');
     printBtn.click();
 
@@ -36,7 +37,7 @@ describe('SubToolbarComponent', () => {
   });
 
   it('should emit download event', () => {
-    const downloadSpy = spyOn(component.actionEvents.download, 'next');
+    const downloadSpy = spyOn(component.downloadEvent, 'next');
     const downloadBtn = nativeElement.querySelector('button[id=secondaryDownload]');
     downloadBtn.click();
 

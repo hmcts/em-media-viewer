@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents } from '../../model/action-events';
 import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../model/viewer-operations';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-tb-left-pane',
@@ -10,30 +9,35 @@ import { ToolbarToggles } from '../../model/toolbar-toggles';
 })
 export class ToolbarLeftPaneComponent {
 
-  @Input() toolbarToggles: ToolbarToggles;
-  @Input() actionEvents: ActionEvents;
+  @Input() changePageByDelta: Subject<ChangePageByDeltaOperation>;
+  @Input() setCurrentPage: Subject<SetCurrentPageOperation>;
   @Input() pageNumber = 1;
+  @Input() showSidebarToggleBtn: boolean;
+  @Input() showSearchbarToggleBtn: boolean;
+  @Input() showNavigationBtns: boolean;
+  @Input() sidebarOpen: BehaviorSubject<boolean>;
+  @Input() searchBarHidden: BehaviorSubject<boolean>;
 
   constructor() {}
 
   toggleSideBar() {
-    this.toolbarToggles.sidebarOpen.next(!this.toolbarToggles.sidebarOpen.getValue());
+    this.sidebarOpen.next(!this.sidebarOpen.getValue());
   }
 
   toggleSearchBar() {
-    this.toolbarToggles.searchBarHidden.next(!this.toolbarToggles.searchBarHidden.getValue());
+    this.searchBarHidden.next(!this.searchBarHidden.getValue());
   }
 
   increasePageNumber() {
-    this.actionEvents.changePageByDelta.next(new ChangePageByDeltaOperation(1));
+    this.changePageByDelta.next(new ChangePageByDeltaOperation(1));
   }
 
   decreasePageNumber() {
-    this.actionEvents.changePageByDelta.next(new ChangePageByDeltaOperation(-1));
+    this.changePageByDelta.next(new ChangePageByDeltaOperation(-1));
   }
 
   setCurrentPageNumber(pageNumber: string) {
-    this.actionEvents.setCurrentPage.next(new SetCurrentPageOperation(Number.parseInt(pageNumber, 0)));
+    this.setCurrentPage.next(new SetCurrentPageOperation(Number.parseInt(pageNumber, 0)));
   }
 
   @Input()

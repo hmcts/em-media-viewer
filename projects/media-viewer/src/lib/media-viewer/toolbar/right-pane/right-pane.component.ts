@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActionEvents } from '../../model/action-events';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
 import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-tb-right-pane',
@@ -10,20 +9,27 @@ import { DownloadOperation, PrintOperation } from '../../model/viewer-operations
 })
 export class ToolbarRightPaneComponent {
 
-  @Input() actionEvents: ActionEvents;
-  @Input() toolbarToggles: ToolbarToggles;
+  @Input() printEvent: Subject<PrintOperation>;
+  @Input() downloadEvent: Subject<DownloadOperation>;
+  @Input() subToolbarHidden: BehaviorSubject<boolean>;
+  @Input() showPresentationModeBtn: boolean;
+  @Input() showOpenFileBtn: boolean;
+  @Input() showDownloadBtn: boolean;
+  @Input() showPrintBtn: boolean;
+  @Input() showBookmarkBtn: boolean;
+  @Input() showSubToolbarToggleBtn: boolean;
 
   constructor() {}
 
   toggleSecondaryToolbar() {
-    this.toolbarToggles.subToolbarHidden.next(!this.toolbarToggles.subToolbarHidden.getValue());
+    this.subToolbarHidden.next(!this.subToolbarHidden.getValue());
   }
 
   printFile() {
-    this.actionEvents.print.next(new PrintOperation());
+    this.printEvent.next(new PrintOperation());
   }
 
   downloadFile() {
-    this.actionEvents.download.next(new DownloadOperation());
+    this.downloadEvent.next(new DownloadOperation());
   }
 }

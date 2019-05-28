@@ -1,0 +1,47 @@
+<table style="float: right; margin-top: 10px;">
+  <tr>
+    <ng-container [ngTemplateOutlet]="toolbarToggle"
+      [ngTemplateOutletContext]="{ key: 'showSearchbarToggleBtn', label: 'Search' }">
+    </ng-container>
+    <ng-container [ngTemplateOutlet]="toolbarToggle"
+      [ngTemplateOutletContext]="{ key: 'showNavigationBtns', label: 'Navigate' }">
+    </ng-container>
+    <ng-container [ngTemplateOutlet]="toolbarToggle"
+      [ngTemplateOutletContext]="{ key: 'showZoomBtns', label: 'Zoom' }">
+    </ng-container>
+    <ng-container [ngTemplateOutlet]="toolbarToggle"
+      [ngTemplateOutletContext]="{ key: 'showPrintBtn', label: 'Print' }">
+    </ng-container>
+    <ng-container [ngTemplateOutlet]="toolbarToggle"
+      [ngTemplateOutletContext]="{ key: 'showDownloadBtn', label: 'Download' }">
+    </ng-container>
+    <td>
+      <div class="govuk-grid-row"><div class="govuk-grid-column-full">
+        <span class="govuk-!-font-weight-bold">Toolbar</span>
+        </div>
+        <div class="govuk-grid-column-full">
+          <label class="switch govuk-!-margin-right-2">
+            <input type="checkbox" [checked]="toggleToolbarVisibility.getValue()" (change)="toggleToolbarVisibility.next($event.target.checked)">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </td>
+  </tr>
+</table>
+<ng-template #toolbarToggle let-key="key" let-label="label">
+  <td>
+    <div class="govuk-grid-row"><div class="govuk-grid-column-full">
+      <span class="govuk-!-font-weight-bold">{{ label }}</span>
+    </div>
+      <div class="govuk-grid-column-full">
+        <label class="switch govuk-!-margin-right-2">
+          <input type="checkbox" [checked]="toolbarButtons[key]"
+                 [name]="key" [(ngModel)]="toolbarButtons[key]">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </td>
+</ng-template>
+
