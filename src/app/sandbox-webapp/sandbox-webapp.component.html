@@ -46,10 +46,11 @@
         <div *ngIf="documentTypeToShow === 'pdf'">
           <div>
             Document URL: <input type="text" name="pdfUrl" [(ngModel)]="pdfUrl">
+            Document download file name: <input type="text" name="pdfFileName" [(ngModel)]="pdfFileName">
           </div>
           <mv-media-viewer
             [url]="pdfUrl"
-            [downloadFileName]="'example.pdf'"
+            [downloadFileName]="pdfFileName"
             [showToolbar]="showToolbar"
             [contentType]="'pdf'">
           </mv-media-viewer>
@@ -57,23 +58,26 @@
         <div *ngIf="documentTypeToShow === 'image'">
           <div>
             Document URL: <input type="text" name="imageUrl" [(ngModel)]="imageUrl">
+            Document download file name: <input type="text" name="imageFileName" [(ngModel)]="imageFileName"> {{imageFileName}}
           </div>
           <mv-media-viewer
                            [url]="imageUrl"
                            [showToolbar]="showToolbar"
-                           [downloadFileName]="'example.jpg'"
+                           [downloadFileName]="imageFileName"
                            [contentType]="'image'">
           </mv-media-viewer>
         </div>
         <div *ngIf="documentTypeToShow === 'unsupported'">
           <div>
             Document URL: <input type="text" name="unsupportedUrl" [(ngModel)]="unsupportedUrl">
+            Document download file name: <input type="text" name="unsupportedFileName" [(ngModel)]="unsupportedFileName">
+            Document type: <input type="text" name="unsupportedType" [(ngModel)]="unsupportedType">
           </div>
           <mv-media-viewer
                            [url]="unsupportedUrl"
-                           [downloadFileName]="'unsupported.txt'"
+                           [downloadFileName]="unsupportedFileName"
                            [showToolbar]="showToolbar"
-                           [contentType]="'txt'">
+                           [contentType]="unsupportedType">
           </mv-media-viewer>
         </div>
       </form>

@@ -11,6 +11,7 @@ export class UnsupportedViewerComponent {
 
   @Input() url: string;
   @Input() originalUrl: string;
+  @Input() downloadFileName: string;
 
   @ViewChild('downloadLink') downloadLink: ElementRef;
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import { PrintService } from '../../service/print.service';
@@ -22,7 +22,7 @@ import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.css']
 })
-export class PdfViewerComponent implements AfterViewInit {
+export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -47,6 +47,11 @@ export class PdfViewerComponent implements AfterViewInit {
     await this.pdfWrapper.loadDocument(this.url);
   }
 
+  async ngOnChanges(changes: SimpleChanges) {
+    if (changes.url && this.pdfWrapper) {
+      await this.pdfWrapper.loadDocument(this.url);
+    }
+  }
 
   @Input()
   set rotateOperation(operation: RotateOperation | null) {
@@ -127,4 +132,6 @@ export class PdfViewerComponent implements AfterViewInit {
       this.pdfWrapper.clearSearch();
     }
   }
+
+
 }

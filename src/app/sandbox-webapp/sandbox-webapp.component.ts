@@ -8,8 +8,12 @@ import {Component} from '@angular/core';
 export class SandboxWebappComponent {
 
   pdfUrl = 'assets/example.pdf';
+  pdfFileName = 'example.pdf';
   imageUrl = 'assets/example.jpg';
+  imageFileName = 'example.jpg';
   unsupportedUrl = 'assets/unsupported.txt';
+  unsupportedFileName = 'unsupported.txt';
+  unsupportedType = 'txt';
 
   documentTypeToShow = 'nonDM_PDF';
   showToolbar = true;
