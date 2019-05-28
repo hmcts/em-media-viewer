@@ -33,7 +33,6 @@
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"
                      [downloadFileName]="downloadFileName"
-                     [toolbarToggles]="toolbarToggles"
                      [zoomOperation]="actionEvents?.zoom | async"
                      [stepZoomOperation]="actionEvents?.stepZoom | async"
                      [zoomValue]="actionEvents?.zoomValue"
@@ -44,7 +43,6 @@
     <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
                            [url]="url"
                            [downloadFileName]="downloadFileName"
-                           [toolbarToggles]="toolbarToggles"
                            [downloadOperation]="actionEvents?.download | async">
     </mv-unsupported-viewer>
     <div class="grid-row">

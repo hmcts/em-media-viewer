@@ -9,6 +9,7 @@ import {
   ZoomOperation,
   ZoomValue
 } from '../../model/viewer-operations';
+import {ToolbarButtonToggles} from '../../model/toolbar-button-toggles';
 
 @Component({
     selector: 'mv-image-viewer',
