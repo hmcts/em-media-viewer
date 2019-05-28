@@ -1,3 +1,5 @@
-<div #viewerContainer class="pdfContainer" style="height: 99%; position: absolute">
-  <div class="pdfViewer"></div>
+<div #viewerContainer class="pdfContainer" style="height: 99%; position: absolute" >
+  <div class="pdfViewer" [ngClass]="{hidden: loadingDocument}"></div>
+  <div class="loadingMessage" [ngClass]="{hidden: !loadingDocument}">Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}</div>
 </div>
+

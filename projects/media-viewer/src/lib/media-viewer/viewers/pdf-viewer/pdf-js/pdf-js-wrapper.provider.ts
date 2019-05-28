@@ -1,7 +1,13 @@
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import { ElementRef } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js-wrapper';
-import { SearchResultsCount, SetCurrentPageOperation } from '../../../model/viewer-operations';
+import {
+  DocumentLoaded, DocumentLoadFailed,
+  DocumentLoadProgress,
+  NewDocumentLoadInit,
+  SearchResultsCount,
+  SetCurrentPageOperation
+} from '../../../model/viewer-operations';
 import { Subject } from 'rxjs';
 
 export class PdfJsWrapperFactory {
@@ -27,7 +33,11 @@ export class PdfJsWrapperFactory {
       new Subject<SearchResultsCount>(),
       new Subject<SetCurrentPageOperation>(),
       pdfViewer,
-      new pdfjsViewer.DownloadManager({})
+      new pdfjsViewer.DownloadManager({}),
+      new Subject<NewDocumentLoadInit>(),
+      new Subject<DocumentLoadProgress>(),
+      new Subject<DocumentLoaded>(),
+      new Subject<DocumentLoadFailed>(),
     );
   }
 
