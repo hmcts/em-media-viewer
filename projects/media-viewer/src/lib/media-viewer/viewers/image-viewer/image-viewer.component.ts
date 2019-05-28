@@ -19,7 +19,6 @@ export class ImageViewerComponent {
 
   @Input() url: string;
   @Input() downloadFileName: string;
-  @Input() originalUrl: string;
   @Input() zoomValue: Subject<ZoomValue>;
 
   @ViewChild('img') img: ElementRef;
