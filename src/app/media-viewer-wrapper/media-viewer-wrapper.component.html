@@ -1,21 +1,12 @@
 <div>
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half">
+      <div class="govuk-grid-column-one-third">
         <h2 class="govuk-heading-m  govuk-!-margin-top-4">Media Viewer Demo</h2>
       </div>
-      <div class="govuk-grid-column-one-half">
-        <table style="float: right">
-          <tr>
-            <td><span class="govuk-heading-s govuk-!-margin-top-4">Toggle Toolbar</span></td>
-            <td>
-              <label  style="float: right" class="switch govuk-!-margin-left-1">
-                <input type="checkbox" [checked]="showToolbar" (change)="toggleToolbarVisibility($event.target.checked)">
-                <span class="slider round"></span>
-              </label>
-            </td>
-          </tr>
-        </table>
+      <div class="govuk-grid-column-two-thirds">
+        <app-toolbar-toggles [toolbarButtons]="toolbarButtons"
+                             (toggleToolbarVisibility)="toggleToolbarVisibility($event)"></app-toolbar-toggles>
       </div>
     </div>
   </div>
@@ -44,18 +35,21 @@
                          [url]="'assets/example.pdf'"
                          [downloadFileName]="'example.pdf'"
                          [showToolbar]="showToolbar"
+                         [toolbarButtonToggles]="toolbarButtons"
                          [contentType]="'pdf'">
         </mv-media-viewer>
         <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
                          [url]="'assets/example.jpg'"
                          [showToolbar]="showToolbar"
                          [downloadFileName]="'example.jpg'"
+                         [toolbarButtonToggles]="toolbarButtons"
                          [contentType]="'image'">
         </mv-media-viewer>
         <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
                          [url]="'assets/unsupported.txt'"
                          [downloadFileName]="'unsupported.txt'"
                          [showToolbar]="showToolbar"
+                         [toolbarButtonToggles]="toolbarButtons"
                          [contentType]="'txt'">
         </mv-media-viewer>
     </section>

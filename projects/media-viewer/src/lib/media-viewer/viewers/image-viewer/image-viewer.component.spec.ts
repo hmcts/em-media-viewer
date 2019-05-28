@@ -10,7 +10,6 @@ import {
   ZoomValue
 } from '../../model/viewer-operations';
 import { PrintService } from '../../service/print.service';
-import { ToolbarToggles } from '../../model/toolbar-toggles';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -114,21 +113,6 @@ describe('ImageViewerComponent', () => {
     expect(document.createElement).toHaveBeenCalledWith('a');
     expect(anchor.href).toContain(DOCUMENT_URL);
     expect(anchor.download).toBe('download-filename');
-  });
-
-  it('should enable toolbar buttons', () => {
-    const toolbarToggles = new ToolbarToggles();
-    spyOn(toolbarToggles.showZoomBtns, 'next');
-    spyOn(toolbarToggles.showRotateBtns, 'next');
-    spyOn(toolbarToggles.showDownloadBtn, 'next');
-    spyOn(toolbarToggles.showPrintBtn, 'next');
-
-    component.toolbarToggles = toolbarToggles;
-
-    expect(toolbarToggles.showZoomBtns.next).toHaveBeenCalledWith(true);
-    expect(toolbarToggles.showRotateBtns.next).toHaveBeenCalledWith(true);
-    expect(toolbarToggles.showDownloadBtn.next).toHaveBeenCalledWith(true);
-    expect(toolbarToggles.showPrintBtn.next).toHaveBeenCalledWith(true);
   });
 });
 
