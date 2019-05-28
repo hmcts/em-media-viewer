@@ -14,7 +14,6 @@ import {
   ZoomOperation,
   ZoomValue
 } from '../../model/viewer-operations';
-import { ToolbarButtonToggles } from '../../model/toolbar-button-toggles';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 
 @Component({
