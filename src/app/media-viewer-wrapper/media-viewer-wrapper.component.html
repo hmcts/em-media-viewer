@@ -42,6 +42,7 @@
             [url]="pdfUrl"
             [downloadFileName]="pdfFileName"
             [showToolbar]="showToolbar"
+            [toolbarButtonToggles]="toolbarButtons"
             [contentType]="'pdf'">
           </mv-media-viewer>
         </div>
@@ -54,6 +55,7 @@
                            [url]="imageUrl"
                            [showToolbar]="showToolbar"
                            [downloadFileName]="imageFileName"
+                           [toolbarButtonToggles]="toolbarButtons"
                            [contentType]="'image'">
           </mv-media-viewer>
         </div>
@@ -67,6 +69,7 @@
                            [url]="unsupportedUrl"
                            [downloadFileName]="unsupportedFileName"
                            [showToolbar]="showToolbar"
+                           [toolbarButtonToggles]="toolbarButtons"
                            [contentType]="unsupportedType">
           </mv-media-viewer>
         </div>
