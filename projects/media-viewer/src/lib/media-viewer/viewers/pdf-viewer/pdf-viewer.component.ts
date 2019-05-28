@@ -69,7 +69,7 @@ export class PdfViewerComponent implements AfterViewInit {
   set stepZoomOperation(operation: StepZoomOperation | null) {
     if (operation) {
       this.zoomValue.next({
-        value: this.pdfWrapper.stepZoom(operation.zoomFactor)
+        value: this.pdfWrapper.stepZoom(Math.round(operation.zoomFactor * 10) / 10)
       });
     }
   }

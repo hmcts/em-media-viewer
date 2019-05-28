@@ -13,7 +13,7 @@
   <div class="toolbarButtonSpacer"></div>
   <ng-container *ngIf="showZoomBtns">
     <button id="zoomOut" class="toolbarButton zoomOut" title="Zoom Out" tabindex="21" data-l10n-id="zoom_out"
-            (click)="stepZoom(-0.2)">
+            (click)="stepZoom(-0.1)">
       <span data-l10n-id="zoom_out_label">Zoom Out</span>
     </button>
     <span id="scaleSelectContainer" class="dropdownToolbarButton">
@@ -42,7 +42,7 @@
       </select>
     </span>
     <button id="zoomIn" class="toolbarButton zoomIn" title="Zoom In" tabindex="22" data-l10n-id="zoom_in"
-            (click)="stepZoom(0.2)">
+            (click)="stepZoom(0.1)">
       <span data-l10n-id="zoom_in_label">Zoom In</span>
     </button>
   </ng-container>
