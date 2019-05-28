@@ -1,5 +1,12 @@
 import { PdfJsWrapper } from './pdf-js-wrapper';
-import { SearchOperation, SearchResultsCount, SetCurrentPageOperation } from '../../../model/viewer-operations';
+import {
+  DocumentLoaded, DocumentLoadFailed,
+  DocumentLoadProgress,
+  NewDocumentLoadInit,
+  SearchOperation,
+  SearchResultsCount,
+  SetCurrentPageOperation
+} from '../../../model/viewer-operations';
 import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -30,7 +37,11 @@ describe('PdfJsWrapper', () => {
     new Subject<SearchResultsCount>(),
     new Subject<SetCurrentPageOperation>(),
     mockViewer,
-    downloadManager
+    downloadManager,
+    new Subject<NewDocumentLoadInit>(),
+    new Subject<DocumentLoadProgress>(),
+    new Subject<DocumentLoaded>(),
+    new Subject<DocumentLoadFailed>(),
   );
 
   it('set up eventbus listeners', () => {
@@ -39,7 +50,11 @@ describe('PdfJsWrapper', () => {
       new Subject<SearchResultsCount>(),
       new Subject<SetCurrentPageOperation>(),
       mockViewer,
-      downloadManager
+      downloadManager,
+      new Subject<NewDocumentLoadInit>(),
+      new Subject<DocumentLoadProgress>(),
+      new Subject<DocumentLoaded>(),
+      new Subject<DocumentLoadFailed>(),
     );
 
     expect(eventBusSpy).toHaveBeenCalledTimes(4);

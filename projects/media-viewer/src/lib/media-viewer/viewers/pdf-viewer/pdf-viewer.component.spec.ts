@@ -3,8 +3,8 @@ import { Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import {
-  ChangePageByDeltaOperation,
-  DownloadOperation,
+  ChangePageByDeltaOperation, DocumentLoaded, DocumentLoadFailed, DocumentLoadProgress,
+  DownloadOperation, NewDocumentLoadInit,
   PrintOperation,
   RotateOperation,
   SearchOperation,
@@ -32,7 +32,11 @@ describe('PdfViewerComponent', () => {
     setPageNumber: () => {},
     changePageNumber: () => {},
     currentPageChanged: new Subject<SetCurrentPageOperation>(),
-    searchResults: new Subject<SearchResultsCount>()
+    searchResults: new Subject<SearchResultsCount>(),
+    documentLoadInit: new Subject<NewDocumentLoadInit>(),
+    documentLoadProgress: new Subject<DocumentLoadProgress>(),
+    documentLoaded: new Subject<DocumentLoaded>(),
+    documentLoadFailed: new Subject<DocumentLoadFailed>(),
   };
 
   const mockFactory = {
