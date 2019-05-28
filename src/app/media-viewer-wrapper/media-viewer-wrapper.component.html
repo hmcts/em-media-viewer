@@ -24,34 +24,56 @@
           </a>
         </li>
         <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('unsupported')" id="unsupported" href="#unsupported" (click)="toggleDocumentSelection('unsupported')">
+          <a [className]="tabLinkStyle('unsupported')" id="unsupported" href="#unsupported"
+             (click)="toggleDocumentSelection('unsupported')">
             Unsupported Documents Viewer
           </a>
         </li>
       </ul>
     </div>
     <section [id]="documentTypeToShow">
-        <mv-media-viewer *ngIf="documentTypeToShow === 'pdf'"
-                         [url]="'assets/example.pdf'"
-                         [downloadFileName]="'example.pdf'"
-                         [showToolbar]="showToolbar"
-                         [toolbarButtonToggles]="toolbarButtons"
-                         [contentType]="'pdf'">
-        </mv-media-viewer>
-        <mv-media-viewer *ngIf="documentTypeToShow === 'image'"
-                         [url]="'assets/example.jpg'"
-                         [showToolbar]="showToolbar"
-                         [downloadFileName]="'example.jpg'"
-                         [toolbarButtonToggles]="toolbarButtons"
-                         [contentType]="'image'">
-        </mv-media-viewer>
-        <mv-media-viewer *ngIf="documentTypeToShow === 'unsupported'"
-                         [url]="'assets/unsupported.txt'"
-                         [downloadFileName]="'unsupported.txt'"
-                         [showToolbar]="showToolbar"
-                         [toolbarButtonToggles]="toolbarButtons"
-                         [contentType]="'txt'">
-        </mv-media-viewer>
+      <form #form="ngForm">
+        <div *ngIf="documentTypeToShow === 'pdf'">
+          <div>
+            Document URL: <input type="text" name="pdfUrl" [(ngModel)]="pdfUrl">
+            Document download file name: <input type="text" name="pdfFileName" [(ngModel)]="pdfFileName">
+          </div>
+          <mv-media-viewer
+            [url]="pdfUrl"
+            [downloadFileName]="pdfFileName"
+            [showToolbar]="showToolbar"
+            [toolbarButtonToggles]="toolbarButtons"
+            [contentType]="'pdf'">
+          </mv-media-viewer>
+        </div>
+        <div *ngIf="documentTypeToShow === 'image'">
+          <div>
+            Document URL: <input type="text" name="imageUrl" [(ngModel)]="imageUrl">
+            Document download file name: <input type="text" name="imageFileName" [(ngModel)]="imageFileName"> {{imageFileName}}
+          </div>
+          <mv-media-viewer
+                           [url]="imageUrl"
+                           [showToolbar]="showToolbar"
+                           [downloadFileName]="imageFileName"
+                           [toolbarButtonToggles]="toolbarButtons"
+                           [contentType]="'image'">
+          </mv-media-viewer>
+        </div>
+        <div *ngIf="documentTypeToShow === 'unsupported'">
+          <div>
+            Document URL: <input type="text" name="unsupportedUrl" [(ngModel)]="unsupportedUrl">
+            Document download file name: <input type="text" name="unsupportedFileName" [(ngModel)]="unsupportedFileName">
+            Document type: <input type="text" name="unsupportedType" [(ngModel)]="unsupportedType">
+          </div>
+          <mv-media-viewer
+                           [url]="unsupportedUrl"
+                           [downloadFileName]="unsupportedFileName"
+                           [showToolbar]="showToolbar"
+                           [toolbarButtonToggles]="toolbarButtons"
+                           [contentType]="unsupportedType">
+          </mv-media-viewer>
+        </div>
+      </form>
     </section>
   </div>
 </div>

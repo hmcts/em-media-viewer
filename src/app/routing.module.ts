@@ -26,9 +26,9 @@ const routes: Routes = [{
     }),
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule,
     MediaViewerModule,
-    ToolbarModule
+    ToolbarModule,
+    FormsModule
   ],
   exports: [RouterModule]
 })

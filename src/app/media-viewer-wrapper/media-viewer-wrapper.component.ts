@@ -7,16 +7,25 @@ import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/med
 })
 export class MediaViewerWrapperComponent {
 
-  documentTypeToShow = 'pdf';
-  showToolbar: boolean;
-  toolbarButtons = new ToolbarButtonToggles();
+  pdfUrl = 'assets/example.pdf';
+  pdfFileName = 'example.pdf';
+  imageUrl = 'assets/example.jpg';
+  imageFileName = 'example.jpg';
+  unsupportedUrl = 'assets/unsupported.txt';
+  unsupportedFileName = 'unsupported.txt';
+  unsupportedType = 'txt';
 
-  toggleToolbarVisibility(showToolbar: boolean) {
-    this.showToolbar = showToolbar;
-  }
+  documentTypeToShow = 'pdf';
+  showToolbar = true;
+
+  toolbarButtons = new ToolbarButtonToggles();
 
   toggleDocumentSelection(selectedDocumentType: string) {
     this.documentTypeToShow = selectedDocumentType;
+  }
+
+  toggleToolbarVisibility(showToolbar: boolean) {
+    this.showToolbar = showToolbar;
   }
 
   tabLinkStyle(documentType: string) {
