@@ -6,9 +6,11 @@ import {
   PrintOperation,
   RotateOperation,
   SearchOperation,
-  SearchResultsCount, SetCurrentPageOperation,
+  SearchResultsCount,
+  SetCurrentPageOperation,
   StepZoomOperation,
-  ZoomOperation, ZoomValue
+  ZoomOperation,
+  ZoomValue
 } from './viewer-operations';
 
 export class ActionEvents {
