@@ -31,4 +31,13 @@ describe('MediaViewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should support content', () => {
+    component.contentType = 'pdf';
+    expect(component.contentTypeUnsupported()).toBeFalsy();
+  });
+
+  it('should not support content', () => {
+    component.contentType = 'unsupported';
+    expect(component.contentTypeUnsupported()).toBeTruthy();
+  });
 });

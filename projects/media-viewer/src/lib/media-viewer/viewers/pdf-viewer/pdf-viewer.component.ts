@@ -1,27 +1,28 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { Subject } from 'rxjs';
-import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
-import { PrintService } from '../../print.service';
+import { PrintService } from '../../service/print.service';
 import {
   ChangePageByDeltaOperation,
   DownloadOperation,
   PrintOperation,
-  RotateOperation, SearchOperation,
+  RotateOperation,
+  SearchOperation,
   SearchResultsCount,
-  SetCurrentPageOperation, StepZoomOperation,
+  SetCurrentPageOperation,
+  StepZoomOperation,
   ZoomOperation,
   ZoomValue
 } from '../../model/viewer-operations';
 import { ToolbarToggles } from '../../model/toolbar-toggles';
-import {init} from 'protractor/built/launcher';
+import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.css']
 })
-export class PdfViewerComponent implements AfterViewInit, OnChanges {
+export class PdfViewerComponent implements AfterViewInit {
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -31,72 +32,52 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
-  pdfViewer: pdfjsViewer.PDFViewer;
-  pdfFindController: pdfjsViewer.PDFFindController;
+  private pdfWrapper: PdfJsWrapper;
 
-  constructor(private pdfWrapper: PdfJsWrapper, private printService: PrintService) {}
+  constructor(
+    private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
+    private readonly printService: PrintService
+  ) {}
 
   async ngAfterViewInit(): Promise<void> {
-    await this.initViewer();
+    this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
+    this.pdfWrapper.currentPageChanged.subscribe(v => this.currentPageChanged.next(v));
+    this.pdfWrapper.searchResults.subscribe(v => this.searchResults.next(v));
+
+    await this.pdfWrapper.loadDocument(this.url);
   }
 
-  async ngOnChanges(changes: SimpleChanges) {
-    if (changes.url) {
-      await this.initViewer();
-    }
-  }
-
-  async initViewer(): Promise<void> {
-    if (this.url) {
-      [this.pdfViewer, this.pdfFindController] = await this.pdfWrapper.initViewer(this.url, this.viewerContainer);
-      this.pdfViewer.eventBus.on('updatefindcontrolstate', e => {
-        if (e.state === FindState.NOT_FOUND || e.state === FindState.FOUND) {
-          this.searchResults.next(e.matchesCount);
-        }
-      });
-      this.pdfViewer.eventBus.on('updatefindmatchescount', e => {
-        this.searchResults.next(e.matchesCount);
-      });
-      this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
-    }
-  }
 
   @Input()
   set rotateOperation(operation: RotateOperation | null) {
-    if (this.pdfViewer && operation) {
-      this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + operation.rotation) % 360;
+    if (operation) {
+
+      this.pdfWrapper.rotate(operation.rotation);
     }
   }
 
   @Input()
   set zoomOperation(operation: ZoomOperation | null) {
-    if (this.pdfViewer && operation) {
-      this.pdfViewer.currentScaleValue = this.updateZoomValue(operation.zoomFactor);
-      this.zoomValue.next({ value: this.pdfViewer.currentScaleValue });
+    if (operation) {
+      this.zoomValue.next({
+        value: this.pdfWrapper.setZoom(operation.zoomFactor)
+      });
     }
   }
 
   @Input()
   set stepZoomOperation(operation: StepZoomOperation | null) {
-    if (this.pdfViewer && operation) {
-      const newZoomValue = this.pdfViewer.currentScale + operation.zoomFactor;
-      this.pdfViewer.currentScaleValue = this.updateZoomValue(newZoomValue);
-      this.zoomValue.next({ value: this.pdfViewer.currentScaleValue });
+    if (operation) {
+      this.zoomValue.next({
+        value: this.pdfWrapper.stepZoom(operation.zoomFactor)
+      });
     }
   }
 
   @Input()
   set searchOperation(operation: SearchOperation | null) {
-    if (this.pdfViewer && operation) {
-      const command = operation.reset ? 'find' : 'findagain';
-
-      this.pdfFindController.executeCommand(command, {
-        query: operation.searchTerm,
-        caseSensitive: operation.matchCase,
-        entireWord: operation.wholeWord,
-        highlightAll: operation.highlightAll,
-        findPrevious: operation.previous,
-      });
+    if (operation) {
+      this.pdfWrapper.search(operation);
     }
   }
 
@@ -117,21 +98,21 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
   @Input()
   set setCurrentPage(operation: SetCurrentPageOperation | null) {
     if (operation) {
-      this.pdfViewer.currentPageNumber = operation.pageNumber;
+      this.pdfWrapper.setPageNumber(operation.pageNumber);
     }
   }
 
   @Input()
   set changePageByDelta(operation: ChangePageByDeltaOperation | null) {
     if (operation) {
-      const currentPage = this.pdfViewer.currentPageNumber;
-      this.pdfViewer.currentPageNumber = currentPage + operation.delta;
+      this.pdfWrapper.changePageNumber(operation.delta);
     }
   }
 
   @Input()
   set toolbarToggles(toolbarToggles: ToolbarToggles | null) {
     if (toolbarToggles) {
+      toolbarToggles.searchBarHidden.subscribe(state => this.onSearchBarHidden(state));
       toolbarToggles.showSearchbarToggleBtn.next(true);
       toolbarToggles.showZoomBtns.next(true);
       toolbarToggles.showRotateBtns.next(true);
@@ -141,18 +122,9 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
     }
   }
 
-
-  updateZoomValue(zoomValue) {
-    if (isNaN(zoomValue)) { return zoomValue; }
-    if (zoomValue > 5) { return 5; }
-    if (zoomValue < 0.1) { return 0.1; }
-    return zoomValue;
+  private onSearchBarHidden(hidden: boolean) {
+    if (this.pdfWrapper && hidden) {
+      this.pdfWrapper.clearSearch();
+    }
   }
-}
-
-enum FindState {
-  FOUND = 0,
-  NOT_FOUND = 1,
-  WRAPPED = 2,
-  PENDING = 3,
 }

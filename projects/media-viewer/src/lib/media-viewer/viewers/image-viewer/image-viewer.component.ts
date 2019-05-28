@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { PrintService } from '../../print.service';
+import { PrintService } from '../../service/print.service';
 import {Subject} from 'rxjs';
 import {
   DownloadOperation,
@@ -86,7 +86,7 @@ export class ImageViewerComponent {
       toolbarToggles.showDownloadBtn.next(true);
       toolbarToggles.showPrintBtn.next(true);
     }
-  };
+  }
 
   setImageStyles() {
     this.zoomStyle = `scale(${this.zoom})`;
