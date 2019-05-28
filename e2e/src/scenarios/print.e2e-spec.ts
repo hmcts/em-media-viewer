@@ -14,11 +14,10 @@ describe('print', () => {
     page.getPrintButton().click();
 
     const tabs = await page.getBrowserTabs();
-
     expect(tabs.length).toEqual(2);
 
     browser.switchTo().window(tabs[1]);
-    expect(page.getPrintDialog).toBeTruthy();
+    expect(page.getPrintDialog().isPresent).toBeTruthy();
 
     page.wait(1000);
     browser.close();
@@ -30,11 +29,10 @@ describe('print', () => {
     page.getPrintButton().click();
 
     const tabs = await page.getBrowserTabs();
-
     expect(tabs.length).toEqual(2);
 
     browser.switchTo().window(tabs[1]);
-    expect(page.getPrintDialog).toBeTruthy();
+    expect(page.getPrintDialog().isPresent).toBeTruthy();
 
     page.wait(1000);
     browser.close();
