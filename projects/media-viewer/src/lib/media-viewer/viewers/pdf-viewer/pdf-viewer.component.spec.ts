@@ -144,4 +144,18 @@ describe('PdfViewerComponent', () => {
     });
     expect(loadDocumentSpy).toHaveBeenCalledTimes(2);
   });
+
+  it('on NewDocumentLoadInit indicate document is loading', () => {
+    mockWrapper.documentLoadInit.next(new NewDocumentLoadInit('abc'));
+    expect(component.loadingDocument).toBeTruthy();
+  });
+
+  it('on DocumentLoadProgress indicate document loading progress', () => {
+    mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(10, 100));
+    expect(component.loadingDocumentProgress).toBe(10);
+    mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(90, 100));
+    expect(component.loadingDocumentProgress).toBe(90);
+    mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(200, 100));
+    expect(component.loadingDocumentProgress).toBe(100);
+  });
 });

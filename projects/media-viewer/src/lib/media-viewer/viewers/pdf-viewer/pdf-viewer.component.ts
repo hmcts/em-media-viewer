@@ -67,7 +67,7 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   private onDocumentLoadProgress(documentLoadProgress: DocumentLoadProgress) {
     if (documentLoadProgress.total) {
-      this.loadingDocumentProgress = Math.max(100, Math.ceil(documentLoadProgress.loaded / documentLoadProgress.total * 100 ));
+      this.loadingDocumentProgress = Math.min(100, Math.ceil(documentLoadProgress.loaded / documentLoadProgress.total * 100 ));
     }
   }
 
