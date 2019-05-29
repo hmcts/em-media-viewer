@@ -107,6 +107,7 @@ describe('PdfJsWrapper', () => {
 
     expect(mockViewer.findController.executeCommand).toHaveBeenCalledWith('findagain', {
       query: 'searchTerm',
+      phraseSearch: true,
       caseSensitive: false,
       entireWord: false,
       highlightAll: false,
