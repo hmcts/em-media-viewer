@@ -56,6 +56,7 @@ export class PdfJsWrapper {
 
     this.pdfViewer.findController.executeCommand(command, {
       query: operation.searchTerm,
+      phraseSearch: true,
       caseSensitive: operation.matchCase,
       entireWord: operation.wholeWord,
       highlightAll: operation.highlightAll,
