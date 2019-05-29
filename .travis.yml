@@ -1,3 +1,6 @@
+dist: xenial
+services:
+  - xvfb
 language: node_js
 node_js:
 - lts/*
@@ -19,6 +22,7 @@ script:
 - npm install
 - npm run package
 - npm test
+- npm e2e
 after_success:
 - npm run test:codecov-upload
 - npm run test:coveralls-upload
