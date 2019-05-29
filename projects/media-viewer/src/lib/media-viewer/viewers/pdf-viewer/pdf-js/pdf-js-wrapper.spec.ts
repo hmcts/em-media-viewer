@@ -98,9 +98,9 @@ describe('PdfJsWrapper', () => {
 
     await wrapper.loadDocument({} as any);
 
-    expect(pdfViewerSpy).toHaveBeenCalledTimes(0);
+    expect(pdfViewerSpy).not.toHaveBeenCalled();
     expect(newDocumentLoadInitSpy).toHaveBeenCalledTimes(1);
-    expect(documentLoadedSpy).toHaveBeenCalledTimes(0);
+    expect(documentLoadedSpy).not.toHaveBeenCalled();
     expect(documentLoadFailedSpy).toHaveBeenCalledTimes(1);
   });
 
