@@ -49,7 +49,6 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe(() => this.onDocumentLoadFailed());
-    this.pdfWrapper.searchResults.subscribe(v => this.searchResults.next(v));
 
     await this.pdfWrapper.loadDocument(this.url);
   }
