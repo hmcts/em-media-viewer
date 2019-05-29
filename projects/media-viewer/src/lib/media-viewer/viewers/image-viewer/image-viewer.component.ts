@@ -51,7 +51,7 @@ export class ImageViewerComponent {
   @Input()
   set stepZoomOperation(operation: StepZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
-      this.zoom = this.updateZoomValue(this.zoom, operation.zoomFactor);
+      this.zoom = Math.round(this.updateZoomValue(this.zoom, operation.zoomFactor) * 10) / 10;
       this.setZoomValue(this.zoom)
         .then(() => this.setImageStyles());
     }
@@ -84,7 +84,7 @@ export class ImageViewerComponent {
 
   setZoomValue(zoomValue) {
     return new Promise((resolve) => {
-      this.zoomValue.next({ value: Math.round(zoomValue * 10) / 10 });
+      this.zoomValue.next({ value: zoomValue });
       resolve(true);
     });
   }
