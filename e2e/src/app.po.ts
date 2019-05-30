@@ -18,6 +18,10 @@ export class AppPage {
     return element(by.id('pdf'));
   }
 
+  getPdfPage() {
+    return element(by.css('div[class="page"'));
+  }
+
   getImageViewer() {
     return element(by.id('image'));
   }

@@ -1,11 +1,14 @@
 import { AppPage } from '../app.po';
-import { protractor } from 'protractor';
+import { browser, protractor } from 'protractor';
 
 describe('navigate', () => {
+  const until = protractor.ExpectedConditions;
   let page: AppPage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new AppPage();
+    page.getPdfViewer().click();
+    await browser.wait(until.presenceOf(page.getPdfPage()), 5000, 'PDF viewer taking too long to load');
   });
 
 

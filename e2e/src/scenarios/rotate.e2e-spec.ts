@@ -1,18 +1,20 @@
 import { AppPage } from '../app.po';
-import { by, element } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 
 describe('rotate', () => {
   let page: AppPage;
+  const until = protractor.ExpectedConditions;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
 
-  it('should display rotated pdf by 90 degree', () => {
+  it('should display rotated pdf by 90 degree', async () => {
     page.getPdfViewer().click();
+    await browser.wait(until.presenceOf(page.getPdfPage()), 5000, 'PDF viewer taking too long to load');
 
-    const pdfPage = element(by.css('div[class="page"'));
+    const pdfPage = page.getPdfPage();
     const pdfWidth = pdfPage.getCssValue('width');
     const pdfHeight = pdfPage.getCssValue('height');
 
