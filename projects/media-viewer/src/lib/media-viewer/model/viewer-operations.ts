@@ -50,3 +50,23 @@ export class ChangePageByDeltaOperation {
   constructor(public delta: number) {
   }
 }
+
+export class NewDocumentLoadInit {
+  constructor(public documentUrl: string) {
+  }
+}
+
+export class DocumentLoadProgress {
+  constructor(public loaded: number, public total: number) {
+  }
+}
+
+export class DocumentLoaded {
+  constructor(public document: any) {
+  }
+}
+
+export class DocumentLoadFailed {
+  constructor() {
+  }
+}
