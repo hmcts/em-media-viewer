@@ -1,7 +1,13 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import { PDFViewer, DownloadManager } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
-import { SearchOperation, SearchResultsCount, SetCurrentPageOperation } from '../../../model/viewer-operations';
+import {
+  DocumentLoaded, DocumentLoadFailed,
+  DocumentLoadProgress, NewDocumentLoadInit,
+  SearchOperation,
+  SearchResultsCount,
+  SetCurrentPageOperation
+} from '../../../model/viewer-operations';
 import { Subject } from 'rxjs';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
@@ -13,6 +19,10 @@ export class PdfJsWrapper {
     public readonly currentPageChanged: Subject<SetCurrentPageOperation>,
     private readonly pdfViewer: PDFViewer,
     private readonly downloadManager: DownloadManager,
+    public readonly documentLoadInit: Subject<NewDocumentLoadInit>,
+    public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
+    public readonly documentLoaded: Subject<DocumentLoaded>,
+    public readonly documentLoadFailed: Subject<DocumentLoadFailed>
   ) {
 
     // bind to internal PDF.js event bus
@@ -28,15 +38,31 @@ export class PdfJsWrapper {
     });
   }
 
-  public async loadDocument(documentUrl: string): Promise<void> {
-    const pdfDocument = await pdfjsLib.getDocument({
+  public async loadDocument(documentUrl: string) {
+    const loadingTask = pdfjsLib.getDocument({
       url: documentUrl,
       cMapUrl: 'assets/minified/cmaps',
       cMapPacked: true,
     });
 
-    this.pdfViewer.setDocument(pdfDocument);
-    this.pdfViewer.linkService.setDocument(pdfDocument, null);
+    loadingTask.onProgress = ({loaded, total}) => {
+      this.documentLoadProgress.next(new DocumentLoadProgress(loaded, total));
+    };
+
+    this.documentLoadInit.next(new NewDocumentLoadInit(documentUrl));
+
+    try {
+      const pdfDocument = await loadingTask;
+
+      this.documentLoaded.next(new DocumentLoaded(pdfDocument));
+
+      this.pdfViewer.setDocument(pdfDocument);
+      this.pdfViewer.linkService.setDocument(pdfDocument, null);
+
+    } catch (e) {
+      this.documentLoadFailed.next(new DocumentLoadFailed());
+    }
+
   }
 
   public downloadFile(url: string, filename: string): void {

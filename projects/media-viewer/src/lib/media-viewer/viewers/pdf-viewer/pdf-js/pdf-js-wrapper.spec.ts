@@ -1,5 +1,12 @@
 import { PdfJsWrapper } from './pdf-js-wrapper';
-import { SearchOperation, SearchResultsCount, SetCurrentPageOperation } from '../../../model/viewer-operations';
+import {
+  DocumentLoaded, DocumentLoadFailed,
+  DocumentLoadProgress,
+  NewDocumentLoadInit,
+  SearchOperation,
+  SearchResultsCount,
+  SetCurrentPageOperation
+} from '../../../model/viewer-operations';
 import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -30,7 +37,11 @@ describe('PdfJsWrapper', () => {
     new Subject<SearchResultsCount>(),
     new Subject<SetCurrentPageOperation>(),
     mockViewer,
-    downloadManager
+    downloadManager,
+    new Subject<NewDocumentLoadInit>(),
+    new Subject<DocumentLoadProgress>(),
+    new Subject<DocumentLoaded>(),
+    new Subject<DocumentLoadFailed>(),
   );
 
   it('set up eventbus listeners', () => {
@@ -39,7 +50,11 @@ describe('PdfJsWrapper', () => {
       new Subject<SearchResultsCount>(),
       new Subject<SetCurrentPageOperation>(),
       mockViewer,
-      downloadManager
+      downloadManager,
+      new Subject<NewDocumentLoadInit>(),
+      new Subject<DocumentLoadProgress>(),
+      new Subject<DocumentLoaded>(),
+      new Subject<DocumentLoadFailed>(),
     );
 
     expect(eventBusSpy).toHaveBeenCalledTimes(4);
@@ -54,14 +69,39 @@ describe('PdfJsWrapper', () => {
 
   it('loads a document', async () => {
     const pdfViewerSpy = spyOn(mockViewer, 'setDocument');
+    const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
+    const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
     const mockDocument = {};
+    const loadingTask = new Promise(resolve => {
+      resolve(mockDocument);
+    });
 
     // hack out the pdf.js function
-    pdfjsLib.getDocument = () => Promise.resolve(mockDocument);
+    pdfjsLib.getDocument = () => loadingTask;
 
     await wrapper.loadDocument({} as any);
 
     expect(pdfViewerSpy).toHaveBeenCalledWith(mockDocument);
+    expect(newDocumentLoadInitSpy).toHaveBeenCalledTimes(1);
+    expect(documentLoadedSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('loads a document with exception', async () => {
+    const pdfViewerSpy = spyOn(mockViewer, 'setDocument');
+    const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
+    const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
+    const documentLoadFailedSpy = spyOn(wrapper.documentLoadFailed, 'next').and.callThrough();
+    const loadingTask = Promise.reject(new Error('x'));
+
+    // hack out the pdf.js function
+    pdfjsLib.getDocument = () => loadingTask;
+
+    await wrapper.loadDocument({} as any);
+
+    expect(pdfViewerSpy).not.toHaveBeenCalled();
+    expect(newDocumentLoadInitSpy).toHaveBeenCalledTimes(1);
+    expect(documentLoadedSpy).not.toHaveBeenCalled();
+    expect(documentLoadFailedSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should perform rotate operation', () => {

@@ -3,8 +3,8 @@ import { Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import {
-  ChangePageByDeltaOperation,
-  DownloadOperation,
+  ChangePageByDeltaOperation, DocumentLoaded, DocumentLoadFailed, DocumentLoadProgress,
+  DownloadOperation, NewDocumentLoadInit,
   PrintOperation,
   RotateOperation,
   SearchOperation,
@@ -32,7 +32,11 @@ describe('PdfViewerComponent', () => {
     setPageNumber: () => {},
     changePageNumber: () => {},
     currentPageChanged: new Subject<SetCurrentPageOperation>(),
-    searchResults: new Subject<SearchResultsCount>()
+    searchResults: new Subject<SearchResultsCount>(),
+    documentLoadInit: new Subject<NewDocumentLoadInit>(),
+    documentLoadProgress: new Subject<DocumentLoadProgress>(),
+    documentLoaded: new Subject<DocumentLoaded>(),
+    documentLoadFailed: new Subject<DocumentLoadFailed>(),
   };
 
   const mockFactory = {
@@ -139,5 +143,19 @@ describe('PdfViewerComponent', () => {
       url: new SimpleChange('b', 'c', true)
     });
     expect(loadDocumentSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('on NewDocumentLoadInit indicate document is loading', () => {
+    mockWrapper.documentLoadInit.next(new NewDocumentLoadInit('abc'));
+    expect(component.loadingDocument).toBeTruthy();
+  });
+
+  it('on DocumentLoadProgress indicate document loading progress', () => {
+    mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(10, 100));
+    expect(component.loadingDocumentProgress).toBe(10);
+    mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(90, 100));
+    expect(component.loadingDocumentProgress).toBe(90);
+    mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(200, 100));
+    expect(component.loadingDocumentProgress).toBe(100);
   });
 });

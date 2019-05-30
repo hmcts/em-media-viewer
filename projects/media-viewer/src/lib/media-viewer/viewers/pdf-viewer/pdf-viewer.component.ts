@@ -3,7 +3,7 @@ import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import { PrintService } from '../../service/print.service';
 import {
-  ChangePageByDeltaOperation,
+  ChangePageByDeltaOperation, DocumentLoadFailed, DocumentLoadProgress,
   DownloadOperation,
   PrintOperation,
   RotateOperation,
@@ -29,6 +29,9 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
   @Input() zoomValue: Subject<ZoomValue>;
   @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
 
+  loadingDocument = false;
+  loadingDocumentProgress: number;
+
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
   private pdfWrapper: PdfJsWrapper;
@@ -42,6 +45,10 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
     this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     this.pdfWrapper.currentPageChanged.subscribe(v => this.currentPageChanged.next(v));
     this.pdfWrapper.searchResults.subscribe(v => this.searchResults.next(v));
+    this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
+    this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
+    this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
+    this.pdfWrapper.documentLoadFailed.subscribe(() => this.onDocumentLoadFailed());
 
     await this.pdfWrapper.loadDocument(this.url);
   }
@@ -50,6 +57,25 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
     if (changes.url && this.pdfWrapper) {
       await this.pdfWrapper.loadDocument(this.url);
     }
+  }
+
+  private onDocumentLoadInit() {
+    this.loadingDocument = true;
+    this.loadingDocumentProgress = null;
+  }
+
+  private onDocumentLoadProgress(documentLoadProgress: DocumentLoadProgress) {
+    if (documentLoadProgress.total) {
+      this.loadingDocumentProgress = Math.min(100, Math.ceil(documentLoadProgress.loaded / documentLoadProgress.total * 100 ));
+    }
+  }
+
+  private onDocumentLoaded() {
+    this.loadingDocument = false;
+  }
+
+  private onDocumentLoadFailed() {
+    this.loadingDocument = false;
   }
 
   @Input()
