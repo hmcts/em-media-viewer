@@ -7,34 +7,32 @@ describe('navigate', () => {
 
   beforeEach(async () => {
     page = new AppPage();
-    page.getPdfViewer().click();
+    page.selectPdfViewer();
     await browser.wait(until.presenceOf(page.getPdfPage()), 5000, 'PDF viewer taking too long to load');
   });
 
 
   it('should display next page in pdf viewer', () => {
-    page.getPdfViewer().click();
+    page.selectPdfViewer();
 
-    const nextPage = page.getNextPageButton();
-    nextPage.click();
+    page.goToNextPage();
 
     const pageNumber = page.getPageNumberInput();
 
     expect(pageNumber.getAttribute('value')).toEqual('2');
 
-    nextPage.click();
+    page.goToNextPage();
     expect(pageNumber.getAttribute('value')).toEqual('3');
   });
 
   it('should display previous page in pdf viewer', () => {
-    const previousPage = page.getPreviousPageButton();
-    previousPage.click();
+    page.goToPreviousPage();
 
     const pageNumber = page.getPageNumberInput();
 
     expect(pageNumber.getAttribute('value')).toEqual('2');
 
-    previousPage.click();
+    page.goToPreviousPage();
     expect(pageNumber.getAttribute('value')).toEqual('1');
   });
 

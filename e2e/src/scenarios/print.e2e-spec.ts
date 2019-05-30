@@ -10,8 +10,8 @@ describe('print', () => {
 
 
   it('should print the pdf', async () => {
-    page.getPdfViewer().click();
-    page.getPrintButton().click();
+    page.selectPdfViewer();
+    page.clickPrint();
 
     const tabs = await page.getBrowserTabs();
     expect(tabs.length).toEqual(2);
@@ -25,8 +25,8 @@ describe('print', () => {
   });
 
   it('should print the image', async () => {
-    page.getImageViewer().click();
-    page.getPrintButton().click();
+    page.selectImageViewer();
+    page.clickPrint();
 
     const tabs = await page.getBrowserTabs();
     expect(tabs.length).toEqual(2);
