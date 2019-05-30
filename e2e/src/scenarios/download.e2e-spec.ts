@@ -11,8 +11,8 @@ describe('download', () => {
   it('should download the pdf', async () => {
     const file = 'e2e/src/downloads/example.pdf';
 
-    page.getPdfViewer().click();
-    page.getDownloadButton().click();
+    page.selectPdfViewer();
+    page.clickDownload();
     await page.wait(3000);
 
     expect(page.hasFileDownloaded(file)).toEqual(true);
@@ -21,8 +21,8 @@ describe('download', () => {
   it('should download the image', async () => {
     const file = 'e2e/src/downloads/undefined.jpeg';
 
-    page.getImageViewer().click();
-    page.getDownloadButton().click();
+    page.selectImageViewer();
+    page.clickDownload();
     await page.wait(3000);
 
     expect(page.hasFileDownloaded(file)).toEqual(true);
@@ -31,8 +31,8 @@ describe('download', () => {
   it('should download the unsupported file', async () => {
     const file = 'e2e/src/downloads/unsupported.txt';
 
-    page.getUnsupportedViewer().click();
-    page.getDownloadButton().click();
+    page.selectUnsupportedViewer();
+    page.clickDownload();
     await page.wait(3000);
 
     expect(page.hasFileDownloaded(file)).toEqual(true);

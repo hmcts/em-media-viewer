@@ -8,14 +8,14 @@ describe('search', () => {
   });
 
   afterAll(() =>{
-    page.getSearchButton().click();
+    page.clickSearch();
   });
 
 
   it('should search the pdf for selected word', () => {
-    page.getPdfViewer().click();
+    page.selectPdfViewer();
 
-    page.getSearchButton().click();
+    page.clickSearch();
     const searchBar = page.getSearchInput();
     searchBar.sendKeys('based');
 
@@ -31,7 +31,7 @@ describe('search', () => {
 
     expect(page.getAllSearchHighlights().get(0).getAttribute('class')).toEqual('highlight selected');
 
-    page.getNextSearchButton().click();
+    page.searchNext();
 
     expect(page.getSearchResultsCount).not.toEqual(currentResultsCount);
     expect(page.getAllSearchHighlights().get(0)).not.toEqual(currentResultHighlight);
@@ -44,7 +44,7 @@ describe('search', () => {
 
     expect(page.getAllSearchHighlights().get(1).getAttribute('class')).toEqual('highlight selected');
 
-    page.getPreviousSearchButton().click();
+    page.searchPrevious();
 
     expect(page.getSearchResultsCount).not.toEqual(currentResultsCount);
     expect(page.getAllSearchHighlights().get(1)).not.toEqual(currentResultHighlight);
@@ -59,7 +59,7 @@ describe('search', () => {
     expect(page.getCurrentSearchResult).toBeTruthy();
     expect(page.getCurrentSearchResult().getText()).toEqual('based');
 
-    page.getFindMatchCaseButton().click();
+    page.selectMatchCase();
     page.wait(1000);
 
     expect(page.getCurrentSearchResult().getText()).toEqual('Based');
@@ -68,7 +68,7 @@ describe('search', () => {
   it('should search the pdf for selected word with single highlight', () => {
     const allSearchHighlights = page.getAllSearchHighlights();
 
-    page.getFindAllHighlightButton().click();
+    page.selectHighlightAll();
     page.wait(1000);
 
     expect(page.getCurrentSearchResult).toBeTruthy();
@@ -82,7 +82,7 @@ describe('search', () => {
     searchBar.sendKeys('a');
     const allSearchHighlights = page.getAllSearchHighlights();
 
-    page.getFindEntireWordButton().click();
+    page.selectWholeWords();
 
     expect(page.getAllSearchHighlights).not.toEqual(allSearchHighlights);
   });

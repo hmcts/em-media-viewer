@@ -14,88 +14,88 @@ export class AppPage {
     return element(by.css('app-sandbox-webapp h2')).getText();
   }
 
-  getPdfViewer() {
-    return element(by.id('pdf'));
+  selectPdfViewer() {
+    element(by.id('pdf')).click();
   }
 
   getPdfPage() {
     return element(by.css('div[class="page"'));
   }
 
-  getImageViewer() {
-    return element(by.id('image'));
+  selectImageViewer() {
+    return element(by.id('image')).click();
   }
 
-  getUnsupportedViewer() {
-    return element(by.id('unsupported'));
+  selectUnsupportedViewer() {
+    return element(by.id('unsupported')).click();
   }
 
-  getNextPageButton() {
-    return element(by.id('next'));
+  goToNextPage() {
+    return element(by.id('next')).click();
   }
 
-  getPreviousPageButton() {
-    return element(by.id('previous'));
+  goToPreviousPage() {
+    return element(by.id('previous')).click();
   }
 
   getPageNumberInput() {
     return element(by.id('pageNumber'));
   }
 
-  getZoomInButton() {
-    return element(by.id('zoomIn'));
+  zoomIn() {
+    return element(by.id('zoomIn')).click();
   }
 
-  getZoomOutButton() {
-    return element(by.id('zoomOut'));
+  zoomOut() {
+    return element(by.id('zoomOut')).click();
   }
 
   getCurrentZoomOption() {
     return element(by.id('customScaleOption'));
   }
 
-  getZoomSelect() {
-    return element(by.id('scaleSelect'));
+  selectZoom() {
+    return element(by.id('scaleSelect')).click();
   }
 
   selectZoomValue(zoomOption) {
-    return element(by.cssContainingText('select[id="scaleSelect"] option', zoomOption));
+    return element(by.cssContainingText('select[id="scaleSelect"] option', zoomOption)).click();
   }
 
-  getClockwiseRotateButton() {
-    return element(by.id('pageRotateCw'));
+  rotateClockwise() {
+    return element(by.id('pageRotateCw')).click();
   }
 
-  getCounterClockwiseRotateButton() {
-    return element(by.id('pageRotateCcw'));
+  rotateCounterClockwise() {
+    return element(by.id('pageRotateCcw')).click();
   }
 
-  getDownloadButton() {
-    return element(by.id('download'));
+  clickDownload() {
+    return element(by.id('download')).click();
   }
 
-  getPrintButton() {
-    return element(by.id('print'));
+  clickPrint() {
+    return element(by.id('print')).click();
   }
 
   getPrintDialog() {
     return element(by.css('print-preview-app'));
   }
 
-  getSearchButton() {
-    return element(by.id('viewFind'));
+  clickSearch() {
+    return element(by.id('viewFind')).click();
   }
 
   getSearchInput() {
     return element(by.css('input[title="Find"]'));
   }
 
-  getNextSearchButton() {
-    return element(by.id('findNext'));
+  searchNext() {
+    return element(by.id('findNext')).click();
   }
 
-  getPreviousSearchButton() {
-    return element(by.id('findPrevious'));
+  searchPrevious() {
+    return element(by.id('findPrevious')).click();
   }
 
   getCurrentSearchResult() {
@@ -106,16 +106,16 @@ export class AppPage {
     return element.all(by.css('.highlight'));
   }
 
-  getFindAllHighlightButton() {
-    return element(by.id('findHighlightAll'));
+  selectHighlightAll() {
+    return element(by.id('findHighlightAll')).click();
   }
 
-  getFindMatchCaseButton() {
-    return element(by.id('findMatchCase'));
+  selectMatchCase() {
+    return element(by.id('findMatchCase')).click();
   }
 
-  getFindEntireWordButton() {
-    return element(by.id('findEntireWord'));
+  selectWholeWords() {
+    return element(by.id('findEntireWord')).click();
   }
 
   getSearchResultsCount() {
