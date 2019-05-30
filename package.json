@@ -45,7 +45,6 @@
     "@ng-toolkit/universal": "^7.1.2",
     "@nguniversal/express-engine": "^7.1.1",
     "@nguniversal/module-map-ngfactory-loader": "^7.1.1",
-    "axios": "^0.18.0",
     "body-parser": "^1.19.0",
     "core-js": "^2.6.5",
     "exception-formatter": "^2.1.2",
