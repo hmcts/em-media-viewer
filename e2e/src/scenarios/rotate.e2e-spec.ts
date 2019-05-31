@@ -12,7 +12,7 @@ describe('rotate', () => {
 
   it('should display rotated pdf by 90 degree', async () => {
     page.selectPdfViewer();
-    await browser.wait(until.presenceOf(page.getPdfPage()), 5000, 'PDF viewer taking too long to load');
+    await browser.wait(until.presenceOf(page.getPdfPage()), 3000, 'PDF viewer taking too long to load');
 
     const pdfPage = page.getPdfPage();
     const pdfWidth = pdfPage.getCssValue('width');
