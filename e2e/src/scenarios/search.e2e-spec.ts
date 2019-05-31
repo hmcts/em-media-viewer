@@ -12,17 +12,15 @@ describe('search', () => {
   });
 
 
-  it('should search the pdf for selected word', () => {
+  it('should search the pdf for selected word', async () => {
     page.selectPdfViewer();
 
     page.clickSearch();
     const searchBar = page.getSearchInput();
     searchBar.sendKeys('based');
 
-    page.wait(3000);
-
     expect(page.getCurrentSearchResult).toBeTruthy();
-    expect(page.getCurrentSearchResult().getText()).toEqual('based');
+    expect((await page.getCurrentSearchResult()).getText()).toEqual('based');
   });
 
   it('should go to the next search value when next is clicked', () => {
@@ -51,25 +49,23 @@ describe('search', () => {
     expect(page.getAllSearchHighlights().get(0).getAttribute('class')).toEqual('highlight selected');
   });
 
-  it('should search the pdf for selected word with match case', () => {
+  it('should search the pdf for selected word with match case', async () => {
     const searchBar = page.getSearchInput();
     searchBar.clear();
     searchBar.sendKeys('Based');
 
     expect(page.getCurrentSearchResult).toBeTruthy();
-    expect(page.getCurrentSearchResult().getText()).toEqual('based');
+    expect((await page.getCurrentSearchResult()).getText()).toEqual('based');
 
     page.selectMatchCase();
-    page.wait(1000);
 
-    expect(page.getCurrentSearchResult().getText()).toEqual('Based');
+    expect((await page.getCurrentSearchResult()).getText()).toEqual('Based');
   });
 
   it('should search the pdf for selected word with single highlight', () => {
     const allSearchHighlights = page.getAllSearchHighlights();
 
     page.selectHighlightAll();
-    page.wait(1000);
 
     expect(page.getCurrentSearchResult).toBeTruthy();
     expect(page.getAllSearchHighlights.length).toEqual(0);
@@ -87,13 +83,11 @@ describe('search', () => {
     expect(page.getAllSearchHighlights).not.toEqual(allSearchHighlights);
   });
 
-  it('should search the pdf for selected word and inform no match is found if it doesnt exist', () => {
+  it('should search the pdf for selected word and inform no match is found if it doesnt exist', async () => {
     const searchBar = page.getSearchInput();
     searchBar.clear();
     searchBar.sendKeys('asdasdada');
 
-    page.wait(1000);
-
-    expect(page.getSearchResultsCount().getText()).toEqual('Phrase not found');
+    expect((await page.getSearchResultsCount()).getText()).toEqual('Phrase not found');
   });
 });

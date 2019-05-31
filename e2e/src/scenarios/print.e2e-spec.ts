@@ -19,7 +19,6 @@ describe('print', () => {
     browser.switchTo().window(tabs[1]);
     expect(page.getPrintDialog().isPresent).toBeTruthy();
 
-    page.wait(1000);
     browser.close();
     browser.switchTo().window(tabs[0]);
   });
@@ -34,7 +33,6 @@ describe('print', () => {
     browser.switchTo().window(tabs[1]);
     expect(page.getPrintDialog().isPresent).toBeTruthy();
 
-    page.wait(1000);
     browser.close();
     browser.switchTo().window(tabs[0]);
   });

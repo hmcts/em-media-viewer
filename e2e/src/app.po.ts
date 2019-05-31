@@ -6,10 +6,6 @@ export class AppPage {
     return browser.get('/');
   }
 
-  wait(amount) {
-    return browser.sleep(amount);
-  }
-
   getHeaderText() {
     return element(by.css('app-sandbox-webapp h2')).getText();
   }
@@ -98,8 +94,10 @@ export class AppPage {
     return element(by.id('findPrevious')).click();
   }
 
-  getCurrentSearchResult() {
-    return element(by.className('highlight selected'));
+  async getCurrentSearchResult() {
+    const selector = by.className('highlight selected');
+    await browser.wait(async () => element(selector), 3000, 'failed to load search results');
+    return await element(selector);
   }
 
   getAllSearchHighlights() {
@@ -118,8 +116,10 @@ export class AppPage {
     return element(by.id('findEntireWord')).click();
   }
 
-  getSearchResultsCount() {
-    return element(by.id('findResultsCount'));
+  async getSearchResultsCount() {
+    const selector = by.id('findResultsCount');
+    await browser.wait(async () => element(selector), 3000, 'failed to load search results');
+    return element(selector);
   }
 
   async hasFileDownloaded(filePath) {
