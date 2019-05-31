@@ -8,7 +8,7 @@ describe('navigate', () => {
   beforeEach(async () => {
     page = new AppPage();
     page.selectPdfViewer();
-    await browser.wait(until.presenceOf(page.getPdfPage()), 5000, 'PDF viewer taking too long to load');
+    await browser.wait(until.presenceOf(page.getPdfPage()), 3000, 'PDF viewer taking too long to load');
   });
 
 

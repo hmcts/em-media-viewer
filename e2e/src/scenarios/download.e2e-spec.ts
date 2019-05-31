@@ -13,9 +13,8 @@ describe('download', () => {
 
     page.selectPdfViewer();
     page.clickDownload();
-    await page.wait(3000);
 
-    expect(page.hasFileDownloaded(file)).toEqual(true);
+    await expect(page.hasFileDownloaded(file)).toEqual(true);
   });
 
   it('should download the image', async () => {
@@ -23,9 +22,8 @@ describe('download', () => {
 
     page.selectImageViewer();
     page.clickDownload();
-    await page.wait(3000);
 
-    expect(page.hasFileDownloaded(file)).toEqual(true);
+    await expect(page.hasFileDownloaded(file)).toEqual(true);
   });
 
   it('should download the unsupported file', async () => {
@@ -33,8 +31,7 @@ describe('download', () => {
 
     page.selectUnsupportedViewer();
     page.clickDownload();
-    await page.wait(3000);
 
-    expect(page.hasFileDownloaded(file)).toEqual(true);
+    await expect(page.hasFileDownloaded(file)).toEqual(true);
   });
 });

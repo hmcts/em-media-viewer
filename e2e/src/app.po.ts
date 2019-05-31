@@ -122,7 +122,8 @@ export class AppPage {
     return element(by.id('findResultsCount'));
   }
 
-  hasFileDownloaded(filePath) {
+  async hasFileDownloaded(filePath) {
+    await browser.wait(async () => fs.existsSync(filePath), 3000, 'File failed to download');
     return fs.existsSync(filePath);
   }
 
