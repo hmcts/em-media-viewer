@@ -16,28 +16,27 @@ describe('AnnotationApiService', () => {
     surname: 'Surname'
   };
   const annotationSet: AnnotationSet = {
-    id: '1',
-    annotationId: '1',
+    id: 'ae2133a4-8dc5-430b-bb20-5290bd801f94',
     createdBy: 'example@example.org',
     createdByDetails: user,
     createdDate: '2019-06-03T10:00:00Z',
     lastModifiedBy: 'example@example.org',
     lastModifiedByDetails: user,
     lastModifiedDate: '2019-06-03T10:00:00Z',
-    documentId: dmDocumentId,
+    objectId: dmDocumentId,
     annotations: []
   };
 
   const annotation: Annotation = {
     id: 'f6225689-29ab-4e0d-9bea-8519a06d16f9',
-    annotationId: 'ae2133a4-8dc5-430b-bb20-5290bd801f94',
+    annotationSetId: annotationSet.id,
     createdBy: 'example@example.org',
     createdByDetails: user,
     createdDate: '2019-06-03T10:00:00Z',
     lastModifiedBy: 'example@example.org',
     lastModifiedByDetails: user,
     lastModifiedDate: '2019-06-03T10:00:00Z',
-    documentId: dmDocumentId,
+    objectId: dmDocumentId,
     page: 1,
     color: 'FFFF00',
     type: 'highlight',
@@ -67,16 +66,16 @@ describe('AnnotationApiService', () => {
   describe('createAnnotationSet', () => {
     it('should return IAnnotationSet response', () => {
       const requestBody = {
-        documentId: dmDocumentId,
+        objectId: dmDocumentId,
         id: '6d1f5e09-98ad-4891-aecc-936282b06148'
       };
       api.createAnnotationSet(requestBody).subscribe((response) => {
-        expect(response.body.documentId).toEqual(dmDocumentId);
+        expect(response.body.objectId).toEqual(dmDocumentId);
       });
 
       const req = httpMock.expectOne('/em-anno/annotation-sets');
       expect(req.request.method).toBe('POST');
-      expect(req.request.body.documentId).toBe(dmDocumentId);
+      expect(req.request.body.objectId).toBe(dmDocumentId);
       expect(req.request.body.id).toBeTruthy();
       req.flush(annotationSet);
     });
@@ -85,7 +84,7 @@ describe('AnnotationApiService', () => {
   describe('fetch', () => {
     it('should return AnnotationSet response', () => {
       api.getAnnotationSet(dmDocumentId).subscribe((response) => {
-        expect(response.body.documentId).toBe(dmDocumentId);
+        expect(response.body.objectId).toBe(dmDocumentId);
       });
 
       const req = httpMock.expectOne(`/em-anno/annotation-sets/filter?documentId=${dmDocumentId}`);
@@ -97,7 +96,7 @@ describe('AnnotationApiService', () => {
   describe('delete annotation', () => {
     it('should return IAnnotation response', async(() => {
       api.deleteAnnotation(annotation).subscribe((response) => {
-        expect(response.body.documentId).toEqual(dmDocumentId);
+        expect(response.body.objectId).toEqual(dmDocumentId);
       });
 
       const req = httpMock.expectOne(`/em-anno/annotations/${annotation.id}`);
@@ -109,7 +108,7 @@ describe('AnnotationApiService', () => {
   describe('save annotation', () => {
     it('should return IAnnotation response', async(() => {
       api.createAnnotation(annotation).subscribe((response) => {
-        expect(response.body.documentId).toEqual(annotation.documentId);
+        expect(response.body.objectId).toEqual(annotation.objectId);
       });
 
       const req = httpMock.expectOne('/em-anno/annotations');
