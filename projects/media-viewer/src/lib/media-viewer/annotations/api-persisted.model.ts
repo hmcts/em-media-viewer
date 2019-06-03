@@ -5,8 +5,8 @@ export interface ApiPersisted {
   annotationId: string;
   createdBy: string;
   createdByDetails: User;
-  createdDate: any;
+  createdDate: string;
   lastModifiedBy: string;
   lastModifiedByDetails: User;
-  lastModifiedDate: any;
+  lastModifiedDate: string;
 }
