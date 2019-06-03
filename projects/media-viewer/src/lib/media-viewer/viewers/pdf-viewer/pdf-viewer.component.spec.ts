@@ -16,6 +16,7 @@ import {
 } from '../../model/viewer-operations';
 import { PrintService } from '../../service/print.service';
 import {SimpleChange} from '@angular/core';
+import {ErrorMessageComponent} from '../error-message/error.message.component';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -49,7 +50,7 @@ describe('PdfViewerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PdfViewerComponent ]
+      declarations: [ PdfViewerComponent, ErrorMessageComponent ]
     })
     .overrideComponent(PdfViewerComponent, {
       set: {

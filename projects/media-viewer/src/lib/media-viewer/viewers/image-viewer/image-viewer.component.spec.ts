@@ -10,6 +10,7 @@ import {
   ZoomValue
 } from '../../model/viewer-operations';
 import { PrintService } from '../../service/print.service';
+import {ErrorMessageComponent} from '../error-message/error.message.component';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -20,6 +21,7 @@ describe('ImageViewerComponent', () => {
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [
+        ErrorMessageComponent,
         ImageViewerComponent
       ]
     })
