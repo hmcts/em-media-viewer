@@ -40,8 +40,7 @@ import {ErrorMessageComponent} from './media-viewer/viewers/error-message/error.
     EmLoggerService
   ],
   exports: [
-    MediaViewerComponent,
-    ErrorMessageComponent
+    MediaViewerComponent
 ]
 })
 export class MediaViewerModule { }
