@@ -11,6 +11,7 @@ import { MediaViewerService } from './media-viewer/service/media-viewer.service'
 import { EmLoggerService } from './logging/em-logger.service';
 import { ToolbarModule } from './media-viewer/toolbar/toolbar.module';
 import { PdfJsWrapperFactory } from './media-viewer/viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
+import {ErrorMessageComponent} from './media-viewer/viewers/error-message/error.message.component';
 
 @NgModule({
   imports: [
@@ -18,18 +19,20 @@ import { PdfJsWrapperFactory } from './media-viewer/viewers/pdf-viewer/pdf-js/pd
     CommonModule,
     FormsModule,
     HttpClientModule,
-    ToolbarModule
+    ToolbarModule,
   ],
   declarations: [
     PdfViewerComponent,
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,
+    ErrorMessageComponent
   ],
   entryComponents: [
     PdfViewerComponent,
     ImageViewerComponent,
     UnsupportedViewerComponent,
+    ErrorMessageComponent
 ],
   providers: [
     PdfJsWrapperFactory,
@@ -37,7 +40,8 @@ import { PdfJsWrapperFactory } from './media-viewer/viewers/pdf-viewer/pdf-js/pd
     EmLoggerService
   ],
   exports: [
-    MediaViewerComponent
+    MediaViewerComponent,
+    ErrorMessageComponent
 ]
 })
 export class MediaViewerModule { }
