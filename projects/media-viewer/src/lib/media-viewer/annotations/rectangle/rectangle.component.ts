@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Rectangle } from './rectangle.model';
 
 @Component({
   selector: 'mv-anno-rectangle',
@@ -8,14 +9,14 @@ import { Component } from '@angular/core';
 export class RectangleComponent {
 
   selected = false;
+  @Input() rectangle: Rectangle;
+  @Input() color: String;
 
   onMouseDown() {
-    console.log('selected');
     this.selected = true;
   }
 
   onMouseUp() {
-    console.log('unselected');
     this.selected = false;
   }
 }
