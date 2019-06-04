@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import { PrintService } from '../../service/print.service';
 import { Subject } from 'rxjs';
 import {
@@ -15,11 +15,13 @@ import {
     templateUrl: './image-viewer.component.html',
     styleUrls: ['./image-viewer.component.scss'],
 })
-export class ImageViewerComponent {
+export class ImageViewerComponent implements OnChanges{
 
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() zoomValue: Subject<ZoomValue>;
+
+  errorMessage: string;
 
   @ViewChild('img') img: ElementRef;
   rotation = 0;
@@ -28,6 +30,12 @@ export class ImageViewerComponent {
   zoomStyle;
 
   constructor(private printService: PrintService) {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.url) {
+      this.errorMessage = null;
+    }
   }
 
 
@@ -94,5 +102,9 @@ export class ImageViewerComponent {
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
+  }
+
+  onLoadError() {
+    this.errorMessage = `Could not load the image "${this.url}"`;
   }
 }
