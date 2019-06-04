@@ -1,23 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Comment } from './comment.model';
+import { UserDetail } from '../user-detail/user-detail.model';
 
 @Component({
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent {
+export class CommentComponent implements OnInit {
 
-  comment = { content: 'test'};
-  user = { forename: 'forename', surname: 'surname', email: 'email@email.com' };
-  selected = false;
+  editable: boolean;
+  expanded: boolean;
+  sliceComment: string;
+  @Input() comment: Comment;
+  @Input() user: UserDetail;
+  @Input() height: number;
 
-  onMouseDown() {
-    console.log('selected');
-    this.selected = true;
+  ngOnInit() {
+    this.editable = false;
+    this.expanded = true;
+    this.sliceComment = this.comment.content;
   }
 
-  onMouseUp() {
-    console.log('unselected');
-    this.selected = false;
+  onCommentClick() {
+    this.expanded = true;
+  }
+
+  onEdit() {
+    this.editable = true;
+  }
+
+  onCancel() {
+    this.editable = false;
   }
 }
