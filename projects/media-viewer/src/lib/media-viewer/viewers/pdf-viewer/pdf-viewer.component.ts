@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { Subject } from 'rxjs';
-import { PrintService } from '../../service/print.service';
+import { PrintService } from '../../print.service';
 import {
   ChangePageByDeltaOperation, DocumentLoadFailed, DocumentLoadProgress,
   DownloadOperation,
@@ -13,7 +13,7 @@ import {
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
-} from '../../model/viewer-operations';
+} from '../../events/viewer-operations';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ActionEvents } from './model/action-events';
-import { getToolbarButtonToggles, ToolbarButtonToggles } from './model/toolbar-button-toggles';
-import { SetCurrentPageOperation } from './model/viewer-operations';
+import { ActionEvents } from './events/action-events';
+import { getToolbarButtonToggles, ToolbarButtonToggles } from './events/toolbar-button-toggles';
+import { SetCurrentPageOperation } from './events/viewer-operations';
 
 @Component({
   selector: 'mv-media-viewer',

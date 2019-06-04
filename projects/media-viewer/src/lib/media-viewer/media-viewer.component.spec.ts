@@ -8,7 +8,7 @@ import {
   ImageViewerToolbarButtons,
   PdfViewerToolbarButtons,
   UnsupportedViewerToolbarButtons
-} from './model/toolbar-button-toggles';
+} from './events/toolbar-button-toggles';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;

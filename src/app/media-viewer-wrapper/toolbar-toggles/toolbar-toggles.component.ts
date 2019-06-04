@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ToolbarButtonToggles } from '../../../../projects/media-viewer/src/lib/media-viewer/model/toolbar-button-toggles';
+import { ToolbarButtonToggles } from '../../../../projects/media-viewer/src/lib/media-viewer/events/toolbar-button-toggles';
 
 @Component({
   selector: 'app-toolbar-toggles',

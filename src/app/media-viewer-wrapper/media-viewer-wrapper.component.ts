@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/media-viewer/model/toolbar-button-toggles';
+import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/media-viewer/events/toolbar-button-toggles';
 
 @Component({
   selector: 'app-sandbox-webapp',

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DownloadOperation, PrintOperation } from '../../model/viewer-operations';
+import { DownloadOperation, PrintOperation } from '../../events/viewer-operations';
 import { Subject } from 'rxjs';
 
 @Component({

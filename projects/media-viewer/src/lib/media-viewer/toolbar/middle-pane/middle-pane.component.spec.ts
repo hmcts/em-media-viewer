@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarMiddlePaneComponent } from './middle-pane.component';
-import { ActionEvents } from '../../model/action-events';
-import { RotateOperation, StepZoomOperation, ZoomOperation } from '../../model/viewer-operations';
+import { ActionEvents } from '../../events/action-events';
+import { RotateOperation, StepZoomOperation, ZoomOperation } from '../../events/viewer-operations';
 
 describe('ToolbarMiddlePaneComponent', () => {
   let component: ToolbarMiddlePaneComponent;

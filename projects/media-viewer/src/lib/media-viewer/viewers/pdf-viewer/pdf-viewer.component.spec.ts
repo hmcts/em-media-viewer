@@ -13,8 +13,8 @@ import {
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
-} from '../../model/viewer-operations';
-import { PrintService } from '../../service/print.service';
+} from '../../events/viewer-operations';
+import { PrintService } from '../../print.service';
 import {SimpleChange} from '@angular/core';
 
 describe('PdfViewerComponent', () => {
