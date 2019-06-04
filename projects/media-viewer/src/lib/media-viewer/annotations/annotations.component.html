@@ -1,0 +1,11 @@
+<div class="annotations-container">
+  <div class="annotation-wrapper" *ngFor="let annotation of annotations">
+    <mv-anno-rectangle
+      [rectangle]="annotation.rectangles[0]"
+      [color]="annotation.color"></mv-anno-rectangle>
+    <mv-anno-comment
+      [comment]="annotation.comments[0]"
+      [user]="annotation.createdByDetails"
+      [height]="annotation.rectangles[0].y"></mv-anno-comment>
+  </div>
+</div>
