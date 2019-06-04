@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { PrintService } from '../../service/print.service';
+import { PrintService } from '../../print.service';
 import { Subject } from 'rxjs';
 import {
   DownloadOperation,
@@ -8,7 +8,7 @@ import {
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
-} from '../../model/viewer-operations';
+} from '../../events/viewer-operations';
 
 @Component({
     selector: 'mv-image-viewer',

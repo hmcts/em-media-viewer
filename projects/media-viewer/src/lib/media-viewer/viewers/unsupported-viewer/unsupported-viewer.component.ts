@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { DownloadOperation } from '../../model/viewer-operations';
+import { DownloadOperation } from '../../events/viewer-operations';
 
 @Component({
   selector: 'mv-unsupported-viewer',

@@ -8,8 +8,8 @@ import {
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
-} from '../../model/viewer-operations';
-import { PrintService } from '../../service/print.service';
+} from '../../events/viewer-operations';
+import { PrintService } from '../../print.service';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;

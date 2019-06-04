@@ -7,8 +7,6 @@ import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { ImageViewerComponent } from './media-viewer/viewers/image-viewer/image-viewer.component';
 import { UnsupportedViewerComponent } from './media-viewer/viewers/unsupported-viewer/unsupported-viewer.component';
 import { MediaViewerComponent } from './media-viewer/media-viewer.component';
-import { MediaViewerService } from './media-viewer/service/media-viewer.service';
-import { EmLoggerService } from './logging/em-logger.service';
 import { ToolbarModule } from './media-viewer/toolbar/toolbar.module';
 import { PdfJsWrapperFactory } from './media-viewer/viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
 import { AnnotationsModule } from './media-viewer/annotations/annotations.module';
@@ -34,9 +32,7 @@ import { AnnotationsModule } from './media-viewer/annotations/annotations.module
     UnsupportedViewerComponent,
 ],
   providers: [
-    PdfJsWrapperFactory,
-    MediaViewerService,
-    EmLoggerService
+    PdfJsWrapperFactory
   ],
   exports: [
     MediaViewerComponent

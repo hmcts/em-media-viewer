@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarLeftPaneComponent } from './left-pane.component';
-import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../model/viewer-operations';
+import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../events/viewer-operations';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 describe('ToolbarLeftPaneComponent', () => {

@@ -1,7 +1,6 @@
 import { PdfJsWrapperFactory } from './pdf-js-wrapper.provider';
 import { PdfViewerComponent } from '../pdf-viewer.component';
-import { EmLoggerService } from '../../../../logging/em-logger.service';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+  import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
@@ -11,7 +10,6 @@ describe('PdfJsWrapperFactory', () => {
     return TestBed.configureTestingModule({
       declarations: [ PdfViewerComponent ],
       providers: [
-        EmLoggerService,
         PdfJsWrapperFactory
       ]
     })

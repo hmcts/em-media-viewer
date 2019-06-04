@@ -7,7 +7,7 @@ import {
   NewDocumentLoadInit,
   SearchResultsCount,
   SetCurrentPageOperation
-} from '../../../model/viewer-operations';
+} from '../../../events/viewer-operations';
 import { Subject } from 'rxjs';
 
 export class PdfJsWrapperFactory {

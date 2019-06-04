@@ -7,7 +7,7 @@ import {
   SearchOperation,
   SearchResultsCount,
   SetCurrentPageOperation
-} from '../../../model/viewer-operations';
+} from '../../../events/viewer-operations';
 import { Subject } from 'rxjs';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';

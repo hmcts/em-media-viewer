@@ -6,7 +6,7 @@ import {
   SearchOperation,
   SearchResultsCount,
   SetCurrentPageOperation
-} from '../../../model/viewer-operations';
+} from '../../../events/viewer-operations';
 import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
