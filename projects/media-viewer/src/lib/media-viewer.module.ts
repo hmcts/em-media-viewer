@@ -12,6 +12,7 @@ import { EmLoggerService } from './logging/em-logger.service';
 import { ToolbarModule } from './media-viewer/toolbar/toolbar.module';
 import { PdfJsWrapperFactory } from './media-viewer/viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
 import { AnnotationsModule } from './media-viewer/annotations/annotations.module';
+import {ErrorMessageComponent} from './media-viewer/viewers/error-message/error.message.component';
 
 @NgModule({
   imports: [
@@ -27,11 +28,13 @@ import { AnnotationsModule } from './media-viewer/annotations/annotations.module
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,
+    ErrorMessageComponent
   ],
   entryComponents: [
     PdfViewerComponent,
     ImageViewerComponent,
     UnsupportedViewerComponent,
+    ErrorMessageComponent
 ],
   providers: [
     PdfJsWrapperFactory,
