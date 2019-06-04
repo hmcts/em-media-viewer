@@ -11,6 +11,7 @@ import { MediaViewerService } from './media-viewer/service/media-viewer.service'
 import { EmLoggerService } from './logging/em-logger.service';
 import { ToolbarModule } from './media-viewer/toolbar/toolbar.module';
 import { PdfJsWrapperFactory } from './media-viewer/viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
+import { AnnotationsModule } from './media-viewer/annotations/annotations.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { PdfJsWrapperFactory } from './media-viewer/viewers/pdf-viewer/pdf-js/pd
     CommonModule,
     FormsModule,
     HttpClientModule,
-    ToolbarModule
+    ToolbarModule,
+    AnnotationsModule
   ],
   declarations: [
     PdfViewerComponent,
