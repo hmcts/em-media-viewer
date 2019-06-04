@@ -12,6 +12,7 @@ import {
 import { PrintService } from '../../service/print.service';
 import {ErrorMessageComponent} from '../error-message/error.message.component';
 import {By} from '@angular/platform-browser';
+import {SimpleChange} from '@angular/core';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -125,6 +126,20 @@ describe('ImageViewerComponent', () => {
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.image-container'))).toBeNull();
     expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeTruthy();
+  });
+
+  it('when url changes the error message is reset', async () => {
+    component.errorMessage = 'errox';
+    component.url = 'x';
+    component.ngOnChanges({
+      url: new SimpleChange('a', 'b', true)
+    });
+    expect(component.errorMessage).toBeNull();
+  });
+
+  it('on load error show error message', () => {
+    component.onLoadError();
+    expect(component.errorMessage).toContain('Could not load the image');
   });
 });
 

@@ -169,4 +169,10 @@ describe('PdfViewerComponent', () => {
     expect(fixture.debugElement.query(By.css('.pdfContainer')).nativeElement.className).toContain('hidden');
     expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeTruthy();
   });
+
+  it('on document load failed expect error message', () => {
+    mockWrapper.documentLoadFailed.next(new DocumentLoadFailed());
+    expect(component.errorMessage).toContain('Could not load the document');
+    expect(component.loadingDocument).toBe(false);
+  });
 });
