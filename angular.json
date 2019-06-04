@@ -34,7 +34,7 @@
               "src/public/**",
               "src/environments/**"
             ],
-            "main": "projects/media-viewer/test.ts",
+            "main": "projects/media-viewer/src/test.ts",
             "tsConfig": "projects/media-viewer/tsconfig.spec.json",
             "karmaConfig": "projects/media-viewer/karma.conf.js"
           }
