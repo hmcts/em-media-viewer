@@ -1,11 +1,17 @@
-import { AppPage } from '../app.po';
 import { browser } from 'protractor';
+import { PrintDownloadPage } from '../pages/print-download.po';
 
 describe('print', () => {
-  let page: AppPage;
+  let page: PrintDownloadPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new PrintDownloadPage();
+  });
+
+  afterEach(async () => {
+    browser.close();
+    const tabs = await browser.getAllWindowHandles();
+    browser.switchTo().window(tabs[0]);
   });
 
 
@@ -13,27 +19,17 @@ describe('print', () => {
     page.selectPdfViewer();
     page.clickPrint();
 
-    const tabs = await page.getBrowserTabs();
-    expect(tabs.length).toEqual(2);
+    await page.swithToPrintTab();
 
-    browser.switchTo().window(tabs[1]);
-    expect(page.getPrintDialog().isPresent).toBeTruthy();
-
-    browser.close();
-    browser.switchTo().window(tabs[0]);
+    expect(page.getPrintDialog()).toBeDefined();
   });
 
   it('should print the image', async () => {
     page.selectImageViewer();
     page.clickPrint();
 
-    const tabs = await page.getBrowserTabs();
-    expect(tabs.length).toEqual(2);
+    await page.swithToPrintTab();
 
-    browser.switchTo().window(tabs[1]);
-    expect(page.getPrintDialog().isPresent).toBeTruthy();
-
-    browser.close();
-    browser.switchTo().window(tabs[0]);
+    expect(page.getPrintDialog()).toBeDefined();
   });
 });
