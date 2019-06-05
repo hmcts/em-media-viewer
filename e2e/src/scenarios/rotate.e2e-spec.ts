@@ -35,28 +35,6 @@ describe('rotate', () => {
     expect(pdfPage.getCssValue('height')).toEqual(pdfWidth);
   });
 
-  it('should display rotated pdf by 360 degrees clockwise', () => {
-    const pdfPage = element(by.css('div[class="page"'));
-    const pdfWidth = pdfPage.getCssValue('width');
-    const pdfHeight = pdfPage.getCssValue('height');
-
-    page.rotateClockwise();
-    expect(pdfPage.getCssValue('width')).toEqual(pdfHeight);
-    expect(pdfPage.getCssValue('height')).toEqual(pdfWidth);
-
-    page.rotateClockwise();
-    expect(pdfPage.getCssValue('width')).toEqual(pdfWidth);
-    expect(pdfPage.getCssValue('height')).toEqual(pdfHeight);
-
-    page.rotateClockwise();
-    expect(pdfPage.getCssValue('width')).toEqual(pdfHeight);
-    expect(pdfPage.getCssValue('height')).toEqual(pdfWidth);
-
-    page.rotateClockwise();
-    expect(pdfPage.getCssValue('width')).toEqual(pdfWidth);
-    expect(pdfPage.getCssValue('height')).toEqual(pdfHeight);
-  });
-
   it('should display rotated image by 90 degree', () => {
     page.selectImageViewer();
 
@@ -67,19 +45,5 @@ describe('rotate', () => {
   it('should display rotated image by -90 degrees', () => {
     page.rotateCounterClockwise();
     expect(element(by.css('img')).getAttribute('style')).toEqual('transform: rotate(0deg);');
-  });
-
-  it('should display rotated image by 360 degrees clockwise', () => {
-    page.rotateClockwise();
-    expect(element(by.css('img')).getAttribute('style')).toEqual('transform: rotate(90deg);');
-
-    page.rotateClockwise();
-    expect(element(by.css('img')).getAttribute('style')).toEqual('transform: rotate(180deg);');
-
-    page.rotateClockwise();
-    expect(element(by.css('img')).getAttribute('style')).toEqual('transform: rotate(270deg);');
-
-    page.rotateClockwise();
-    expect(element(by.css('img')).getAttribute('style')).toEqual('transform: rotate(360deg);');
   });
 });

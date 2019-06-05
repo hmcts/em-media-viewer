@@ -1,4 +1,4 @@
-import { browser, by, element } from 'protractor';
+import { browser, by, element, Locator } from 'protractor';
 const fs = require('fs');
 
 export class AppPage {
@@ -78,48 +78,8 @@ export class AppPage {
     return element(by.css('print-preview-app'));
   }
 
-  clickSearch() {
+  toggleSearchBar() {
     return element(by.id('viewFind')).click();
-  }
-
-  getSearchInput() {
-    return element(by.css('input[title="Find"]'));
-  }
-
-  searchNext() {
-    return element(by.id('findNext')).click();
-  }
-
-  searchPrevious() {
-    return element(by.id('findPrevious')).click();
-  }
-
-  async getCurrentSearchResult() {
-    const selector = by.className('highlight selected');
-    await browser.wait(async () => element(selector), 3000, 'failed to load search results');
-    return await element(selector);
-  }
-
-  getAllSearchHighlights() {
-    return element.all(by.css('.highlight'));
-  }
-
-  selectHighlightAll() {
-    return element(by.id('findHighlightAll')).click();
-  }
-
-  selectMatchCase() {
-    return element(by.id('findMatchCase')).click();
-  }
-
-  selectWholeWords() {
-    return element(by.id('findEntireWord')).click();
-  }
-
-  async getSearchResultsCount() {
-    const selector = by.id('findResultsCount');
-    await browser.wait(async () => element(selector), 3000, 'failed to load search results');
-    return element(selector);
   }
 
   async hasFileDownloaded(filePath) {
@@ -129,5 +89,14 @@ export class AppPage {
 
   getBrowserTabs() {
     return browser.getAllWindowHandles();
+  }
+
+
+  async waitForElement(selector: Locator) {
+    await browser.wait(async () => element(selector), 3000, 'failed to load search results');
+  }
+
+  async waitForArray(selector: Locator) {
+    await browser.wait(async () => element.all(selector), 3000, 'failed to load search results');
   }
 }
