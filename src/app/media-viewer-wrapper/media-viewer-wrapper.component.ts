@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/events/toolbar-button-toggles';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-sandbox-webapp',
   templateUrl: './media-viewer-wrapper.component.html'
 })
 export class MediaViewerWrapperComponent {
+
 
   pdfUrl = 'assets/example.pdf';
   pdfFileName = 'example.pdf';
@@ -19,6 +21,7 @@ export class MediaViewerWrapperComponent {
   showToolbar = true;
 
   toolbarButtons = new ToolbarButtonToggles();
+  showCommentSummary = new Subject<boolean>();
 
   toggleDocumentSelection(selectedDocumentType: string) {
     this.documentTypeToShow = selectedDocumentType;

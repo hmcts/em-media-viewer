@@ -6,6 +6,7 @@
       </div>
       <div class="govuk-grid-column-two-thirds">
         <app-toolbar-toggles [toolbarButtons]="toolbarButtons"
+                             [showCommentSummary]="showCommentSummary"
                              (toggleToolbarVisibility)="toggleToolbarVisibility($event)"></app-toolbar-toggles>
       </div>
     </div>
@@ -43,6 +44,7 @@
             [downloadFileName]="pdfFileName"
             [showToolbar]="showToolbar"
             [toolbarButtonToggles]="toolbarButtons"
+            [showCommentSummary]="showCommentSummary"
             [contentType]="'pdf'">
           </mv-media-viewer>
         </div>
@@ -56,6 +58,7 @@
                            [showToolbar]="showToolbar"
                            [downloadFileName]="imageFileName"
                            [toolbarButtonToggles]="toolbarButtons"
+                           [showCommentSummary]="showCommentSummary"
                            [contentType]="'image'">
           </mv-media-viewer>
         </div>
@@ -70,6 +73,7 @@
                            [downloadFileName]="unsupportedFileName"
                            [showToolbar]="showToolbar"
                            [toolbarButtonToggles]="toolbarButtons"
+                           [showCommentSummary]="showCommentSummary"
                            [contentType]="unsupportedType">
           </mv-media-viewer>
         </div>
