@@ -16,6 +16,8 @@ import {
 } from '../../events/viewer-operations';
 import { PrintService } from '../../print.service';
 import {SimpleChange} from '@angular/core';
+import {ErrorMessageComponent} from '../error-message/error.message.component';
+import {By} from '@angular/platform-browser';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -49,7 +51,7 @@ describe('PdfViewerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PdfViewerComponent ]
+      declarations: [ PdfViewerComponent, ErrorMessageComponent ]
     })
     .overrideComponent(PdfViewerComponent, {
       set: {
@@ -157,5 +159,20 @@ describe('PdfViewerComponent', () => {
     expect(component.loadingDocumentProgress).toBe(90);
     mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(200, 100));
     expect(component.loadingDocumentProgress).toBe(100);
+  });
+
+  it('when errorMessage available show error message', () => {
+    expect(fixture.debugElement.query(By.css('.pdfContainer')).nativeElement.className).not.toContain('hidden');
+    expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeNull();
+    component.errorMessage = 'errorx';
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.pdfContainer')).nativeElement.className).toContain('hidden');
+    expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeTruthy();
+  });
+
+  it('on document load failed expect error message', () => {
+    mockWrapper.documentLoadFailed.next(new DocumentLoadFailed());
+    expect(component.errorMessage).toContain('Could not load the document');
+    expect(component.loadingDocument).toBe(false);
   });
 });

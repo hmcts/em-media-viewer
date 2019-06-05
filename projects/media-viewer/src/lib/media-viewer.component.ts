@@ -19,7 +19,6 @@ export class MediaViewerComponent implements OnInit {
   @Input() toolbarButtonToggles: ToolbarButtonToggles;
 
   currentPageChanged = new Subject<SetCurrentPageOperation>();
-  error: any;
 
   private supportedContentTypes = ['pdf', 'image'];
 
