@@ -1,93 +1,53 @@
-import { AppPage } from '../app.po';
+import { SearchPage } from '../search.page';
 
 describe('search', () => {
-  let page: AppPage;
+  let searchPage: SearchPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    searchPage = new SearchPage();
   });
 
-  afterAll(() =>{
-    page.clickSearch();
+  afterAll(async () =>{
+    searchPage.toggleSearchBar();
   });
 
 
   it('should search the pdf for selected word', async () => {
-    page.selectPdfViewer();
+    searchPage.selectPdfViewer();
 
-    page.clickSearch();
-    const searchBar = page.getSearchInput();
-    searchBar.sendKeys('based');
+    searchPage.toggleSearchBar();
+    searchPage.searchFor('Based');
+    const numberOfSearchResults = await searchPage.numberOfSearchResults();
 
-    expect(page.getCurrentSearchResult).toBeTruthy();
-    expect((await page.getCurrentSearchResult()).getText()).toEqual('based');
-  });
+    expect(await searchPage.selectedSearchText()).toEqual('based');
+    expect(numberOfSearchResults).toBeGreaterThan(1);
 
-  it('should go to the next search value when next is clicked', () => {
-    const currentResultsCount = page.getSearchResultsCount();
-    const currentResultHighlight = page.getAllSearchHighlights().get(0);
+    searchPage.goToNextResult();
 
-    expect(page.getAllSearchHighlights().get(0).getAttribute('class')).toEqual('highlight selected');
+    expect(searchPage.searchResultsCounter()).toContain('2 of');
+    expect(searchPage.selectedSearchResult()).toEqual(searchPage.secondSearchResult());
 
-    page.searchNext();
+    searchPage.goToPreviousResult();
 
-    expect(page.getSearchResultsCount).not.toEqual(currentResultsCount);
-    expect(page.getAllSearchHighlights().get(0)).not.toEqual(currentResultHighlight);
-    expect(page.getAllSearchHighlights().get(1).getAttribute('class')).toEqual('highlight selected');
-  });
+    expect(searchPage.searchResultsCounter()).toContain('1 of');
+    expect(searchPage.selectedSearchResult()).toEqual(searchPage.firstSearchResult());
 
-  it('should go to the previous search value when previous is clicked', () => {
-    const currentResultsCount = page.getSearchResultsCount();
-    const currentResultHighlight = page.getAllSearchHighlights().get(1);
+    searchPage.selectMatchCase();
 
-    expect(page.getAllSearchHighlights().get(1).getAttribute('class')).toEqual('highlight selected');
+    expect(searchPage.selectedSearchText()).toEqual('Based');
 
-    page.searchPrevious();
+    searchPage.toggleHighlightAll();
 
-    expect(page.getSearchResultsCount).not.toEqual(currentResultsCount);
-    expect(page.getAllSearchHighlights().get(1)).not.toEqual(currentResultHighlight);
-    expect(page.getAllSearchHighlights().get(0).getAttribute('class')).toEqual('highlight selected');
-  });
+    expect(searchPage.numberOfSearchResults()).toEqual(1);
 
-  it('should search the pdf for selected word with match case', async () => {
-    const searchBar = page.getSearchInput();
-    searchBar.clear();
-    searchBar.sendKeys('Based');
 
-    expect(page.getCurrentSearchResult).toBeTruthy();
-    expect((await page.getCurrentSearchResult()).getText()).toEqual('based');
+    searchPage.selectWholeWords();
+    const wholeWordSearchResults = await searchPage.numberOfSearchResults();
 
-    page.selectMatchCase();
+    expect(wholeWordSearchResults).toBeLessThan(numberOfSearchResults);
 
-    expect((await page.getCurrentSearchResult()).getText()).toEqual('Based');
-  });
+    searchPage.searchFor('asdasdada');
 
-  it('should search the pdf for selected word with single highlight', () => {
-    const allSearchHighlights = page.getAllSearchHighlights();
-
-    page.selectHighlightAll();
-
-    expect(page.getCurrentSearchResult).toBeTruthy();
-    expect(page.getAllSearchHighlights.length).toEqual(0);
-    expect(page.getAllSearchHighlights).not.toEqual(allSearchHighlights);
-  });
-
-  it('should search the pdf for selected word with single highlight', () => {
-    const searchBar = page.getSearchInput();
-    searchBar.clear();
-    searchBar.sendKeys('a');
-    const allSearchHighlights = page.getAllSearchHighlights();
-
-    page.selectWholeWords();
-
-    expect(page.getAllSearchHighlights).not.toEqual(allSearchHighlights);
-  });
-
-  it('should search the pdf for selected word and inform no match is found if it doesnt exist', async () => {
-    const searchBar = page.getSearchInput();
-    searchBar.clear();
-    searchBar.sendKeys('asdasdada');
-
-    expect((await page.getSearchResultsCount()).getText()).toEqual('Phrase not found');
+    expect(searchPage.searchResultsCounter()).toEqual('Phrase not found');
   });
 });
