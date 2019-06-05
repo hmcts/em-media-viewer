@@ -14,7 +14,7 @@
     "copy-readme": "cp ./LICENSE dist/media-viewer",
     "copy-docs": "npm run copy-readme && npm run copy-license",
     "copy-assets": "npm run copy-lib-assets && npm run copy-hmcts-assets && npm run copy-govuk-assets",
-    "copy-lib-assets": "rsync -r projects/media-viewer/src/assets/* dist/media-viewer/assets/",
+    "copy-lib-assets": "rsync -r projects/media-viewer/assets/* dist/media-viewer/assets/",
     "copy-hmcts-assets": "rsync -r projects/media-viewer/node_modules/@hmcts/frontend/* dist/media-viewer/assets/hmcts-frontend",
     "copy-govuk-assets": "rsync -r projects/media-viewer/node_modules/govuk-frontend dist/media-viewer/assets",
     "install-js-dependencies": "cd projects/media-viewer && npm install",

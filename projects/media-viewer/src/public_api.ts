@@ -3,5 +3,5 @@
  */
 
 export * from './lib/media-viewer.module';
-export * from './lib/media-viewer/toolbar/toolbar.module';
-export * from './lib/media-viewer/model/action-events';
+export * from './lib/toolbar/toolbar.module';
+export * from './lib/events/action-events';
