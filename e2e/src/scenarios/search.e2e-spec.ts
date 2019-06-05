@@ -19,7 +19,7 @@ describe('search', () => {
     searchPage.searchFor('Based');
     const numberOfSearchResults = await searchPage.numberOfSearchResults();
 
-    expect(await searchPage.selectedSearchText()).toEqual('based');
+    expect(searchPage.selectedSearchText()).toEqual('based');
     expect(numberOfSearchResults).toBeGreaterThan(1);
 
     searchPage.goToNextResult();
