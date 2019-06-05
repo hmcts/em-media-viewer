@@ -1,10 +1,10 @@
-import { AppPage } from '../app.po';
+import { PrintDownloadPage } from '../pages/print-download.po';
 
 describe('download', () => {
-  let page: AppPage;
+  let page: PrintDownloadPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new PrintDownloadPage();
   });
 
 
@@ -14,7 +14,7 @@ describe('download', () => {
     page.selectPdfViewer();
     page.clickDownload();
 
-    await expect(page.hasFileDownloaded(file)).toEqual(true);
+    await expect(page.hasFileDownloaded(file)).toBe(true);
   });
 
   it('should download the image', async () => {
@@ -23,7 +23,7 @@ describe('download', () => {
     page.selectImageViewer();
     page.clickDownload();
 
-    await expect(page.hasFileDownloaded(file)).toEqual(true);
+    await expect(page.hasFileDownloaded(file)).toBe(true);
   });
 
   it('should download the unsupported file', async () => {

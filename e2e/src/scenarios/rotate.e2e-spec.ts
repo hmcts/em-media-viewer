@@ -1,49 +1,35 @@
-import { AppPage } from '../app.po';
-import { browser, by, element, protractor } from 'protractor';
+import { RotatePage } from '../pages/rotate.po';
 
 describe('rotate', () => {
-  let page: AppPage;
-  const until = protractor.ExpectedConditions;
+  let page: RotatePage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new RotatePage();
   });
 
 
-  it('should display rotated pdf by 90 degree', async () => {
+  it('should display rotated pdf', async () => {
     page.selectPdfViewer();
-    await browser.wait(until.presenceOf(page.getPdfPage()), 3000, 'PDF viewer taking too long to load');
+    await page.waitForPdfToLoad();
 
-    const pdfPage = page.getPdfPage();
-    const pdfWidth = pdfPage.getCssValue('width');
-    const pdfHeight = pdfPage.getCssValue('height');
-
+    await page.captureCurrentOrientation();
     page.rotateClockwise();
 
-    expect(pdfPage.getCssValue('width')).toEqual(pdfHeight);
-    expect(pdfPage.getCssValue('height')).toEqual(pdfWidth);
-  });
+    await page.checkPdfIsRotated();
 
-  it('should display rotated pdf by -90 degrees', () => {
-    const pdfPage = element(by.css('div[class="page"'));
-    const pdfWidth = pdfPage.getCssValue('width');
-    const pdfHeight = pdfPage.getCssValue('height');
-
+    await page.captureCurrentOrientation();
     page.rotateCounterClockwise();
 
-    expect(pdfPage.getCssValue('width')).toEqual(pdfHeight);
-    expect(pdfPage.getCssValue('height')).toEqual(pdfWidth);
+    await page.checkPdfIsRotated();
   });
 
-  it('should display rotated image by 90 degree', () => {
+  it('should display rotated image', () => {
     page.selectImageViewer();
 
     page.rotateClockwise();
-    expect(element(by.css('img')).getAttribute('style')).toEqual('transform: rotate(90deg);');
-  });
+    page.checkImageIsRotatedBy('90');
 
-  it('should display rotated image by -90 degrees', () => {
     page.rotateCounterClockwise();
-    expect(element(by.css('img')).getAttribute('style')).toEqual('transform: rotate(0deg);');
+    page.checkImageIsRotatedBy('0');
   });
 });

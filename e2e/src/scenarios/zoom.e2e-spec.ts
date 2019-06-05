@@ -1,128 +1,56 @@
-import { AppPage } from '../app.po';
+import { ZoomPage } from '../pages/zoom.po';
 
 describe('zoom', () => {
-  let page: AppPage;
+  let page: ZoomPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new ZoomPage();
   });
 
 
-  it('should display pdf zoomed in', () => {
+  it('should display pdf zoomed in', async () => {
     page.selectPdfViewer();
 
-    const currentZoomValue = page.getCurrentZoomOption();
-    expect(currentZoomValue.getAttribute('value')).toEqual('1');
-    expect(currentZoomValue.getText()).toEqual('100%');
+    expect(page.currentZoom()).toEqual('100%');
 
     page.zoomIn();
-
-    expect(currentZoomValue.getAttribute('value')).toEqual('1.2');
-    expect(currentZoomValue.getText()).toEqual('120%');
-  });
-
-  it('should display pdf zoomed out', () => {
-    const currentZoomValue = page.getCurrentZoomOption();
+    expect(page.currentZoom()).toEqual('120%');
 
     page.zoomOut();
+    expect(page.currentZoom()).toEqual('100%');
 
-    expect(currentZoomValue.getAttribute('value')).toEqual('1');
-    expect(currentZoomValue.getText()).toEqual('100%');
+    await page.setZoomTo('25%');
+    expect(page.currentZoom()).toEqual('25%');
 
-    page.zoomOut();
-
-    expect(currentZoomValue.getAttribute('value')).toEqual('0.8');
-    expect(currentZoomValue.getText()).toEqual('80%');
-  });
-
-  it('should display pdf zoomed to selected scale', () => {
-    const currentZoomValue = page.getCurrentZoomOption();
-
-    page.selectZoom();
-    page.selectZoomValue('25%');
-
-    expect(currentZoomValue.getAttribute('value')).toEqual('0.25');
-    expect(currentZoomValue.getText()).toEqual('25%');
-  });
-
-  it('should not zoom more pdf than max scale', () => {
-    const currentZoomValue = page.getCurrentZoomOption();
-
-    page.selectZoom();
-    page.selectZoomValue('500%');
+    await page.setZoomTo('500%');
     page.zoomIn();
+    expect(page.currentZoom()).toEqual('500%');
 
-    expect(currentZoomValue.getAttribute('value')).toEqual('5');
-    expect(currentZoomValue.getText()).toEqual('500%');
-  });
-
-  it('should not zoom pdf less than min scale', () => {
-    const currentZoomValue = page.getCurrentZoomOption();
-
-    page.selectZoom();
-    page.selectZoomValue('10%');
+    await page.setZoomTo('10%');
     page.zoomOut();
-
-    expect(currentZoomValue.getAttribute('value')).toEqual('0.1');
-    expect(currentZoomValue.getText()).toEqual('10%');
+    expect(page.currentZoom()).toEqual('10%');
   });
 
-  it('should display image zoomed in', () => {
+  it('should display image zoomed in', async () => {
     page.selectImageViewer();
 
-    const currentZoomValue = page.getCurrentZoomOption();
-    expect(currentZoomValue.getAttribute('value')).toEqual('1');
-    expect(currentZoomValue.getText()).toEqual('100%');
+    expect(page.currentZoom()).toEqual('100%');
+
+    page.zoomOut();
+    expect(page.currentZoom()).toEqual('80%');
 
     page.zoomIn();
+    expect(page.currentZoom()).toEqual('100%');
 
-    expect(currentZoomValue.getAttribute('value')).toEqual('1.2');
-    expect(currentZoomValue.getText()).toEqual('120%');
-  });
+    await page.setZoomTo('50%');
+    expect(page.currentZoom()).toEqual('50%');
 
-  it('should display image zoomed out', () => {
-    const currentZoomValue = page.getCurrentZoomOption();
-
-    page.zoomOut();
-
-    expect(currentZoomValue.getAttribute('value')).toEqual('1');
-    expect(currentZoomValue.getText()).toEqual('100%');
-
-    page.zoomOut();
-
-    expect(currentZoomValue.getAttribute('value')).toEqual('0.8');
-    expect(currentZoomValue.getText()).toEqual('80%');
-  });
-
-  it('should display image zoomed to selected scale', () => {
-    const currentZoomValue = page.getCurrentZoomOption();
-
-    page.selectZoom();
-    page.selectZoomValue('500%');
-
-    expect(currentZoomValue.getAttribute('value')).toEqual('5');
-    expect(currentZoomValue.getText()).toEqual('500%');
-  });
-
-  it('should not zoom more image than max scale', () => {
-    const currentZoomValue = page.getCurrentZoomOption();
-
-    page.selectZoom();
-    page.selectZoomValue('500%');
+    await page.setZoomTo('500%');
     page.zoomIn();
+    expect(page.currentZoom()).toEqual('500%');
 
-    expect(currentZoomValue.getAttribute('value')).toEqual('5');
-    expect(currentZoomValue.getText()).toEqual('500%');
-  });
-
-  it('should not zoom image less than min scale', () => {
-    const currentZoomValue = page.getCurrentZoomOption();
-
-    page.selectZoom();
-    page.selectZoomValue('10%');
+    await page.setZoomTo('10%');
     page.zoomOut();
-
-    expect(currentZoomValue.getAttribute('value')).toEqual('0.1');
-    expect(currentZoomValue.getText()).toEqual('10%');
+    expect(page.currentZoom()).toEqual('10%');
   });
 });
