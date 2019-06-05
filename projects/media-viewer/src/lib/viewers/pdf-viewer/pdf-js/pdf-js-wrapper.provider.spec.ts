@@ -1,6 +1,7 @@
 import { PdfJsWrapperFactory } from './pdf-js-wrapper.provider';
 import { PdfViewerComponent } from '../pdf-viewer.component';
-  import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ErrorMessageComponent } from '../../error-message/error.message.component';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
@@ -8,7 +9,7 @@ describe('PdfJsWrapperFactory', () => {
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
-      declarations: [ PdfViewerComponent ],
+      declarations: [ PdfViewerComponent, ErrorMessageComponent ],
       providers: [
         PdfJsWrapperFactory
       ]
@@ -27,6 +28,5 @@ describe('PdfJsWrapperFactory', () => {
 
     expect(wrapper).not.toBeNull();
   });
-
 
 });

@@ -10,6 +10,7 @@ import { MediaViewerComponent } from './media-viewer.component';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { PdfJsWrapperFactory } from './viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
 import { AnnotationsModule } from './annotations/annotations.module';
+import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 
 @NgModule({
   imports: [
@@ -25,11 +26,13 @@ import { AnnotationsModule } from './annotations/annotations.module';
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,
+    ErrorMessageComponent
   ],
   entryComponents: [
     PdfViewerComponent,
     ImageViewerComponent,
     UnsupportedViewerComponent,
+    ErrorMessageComponent
 ],
   providers: [
     PdfJsWrapperFactory

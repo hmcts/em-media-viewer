@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UnsupportedViewerComponent } from './unsupported-viewer.component';
 import { DownloadOperation } from '../../events/viewer-operations';
+import {ErrorMessageComponent} from '../error-message/error.message.component';
 
 describe('UnsupportedViewerComponent', () => {
   let component: UnsupportedViewerComponent;
@@ -9,7 +10,7 @@ describe('UnsupportedViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UnsupportedViewerComponent ]
+      declarations: [ UnsupportedViewerComponent, ErrorMessageComponent ]
     })
     .compileComponents();
   }));

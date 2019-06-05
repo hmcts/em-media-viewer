@@ -31,6 +31,7 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   loadingDocument = false;
   loadingDocumentProgress: number;
+  errorMessage: string;
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
 
@@ -62,6 +63,7 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
   private onDocumentLoadInit() {
     this.loadingDocument = true;
     this.loadingDocumentProgress = null;
+    this.errorMessage = null;
   }
 
   private onDocumentLoadProgress(documentLoadProgress: DocumentLoadProgress) {
@@ -76,6 +78,7 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   private onDocumentLoadFailed() {
     this.loadingDocument = false;
+    this.errorMessage = `Could not load the document "${this.url}"`;
   }
 
   @Input()

@@ -9,6 +9,7 @@ import {
   PdfViewerToolbarButtons,
   UnsupportedViewerToolbarButtons
 } from './events/toolbar-button-toggles';
+import {ErrorMessageComponent} from './viewers/error-message/error.message.component';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -20,7 +21,8 @@ describe('MediaViewerComponent', () => {
         MediaViewerComponent,
         PdfViewerComponent,
         ImageViewerComponent,
-        UnsupportedViewerComponent
+        UnsupportedViewerComponent,
+        ErrorMessageComponent
       ],
       imports: [ToolbarModule]
     })
