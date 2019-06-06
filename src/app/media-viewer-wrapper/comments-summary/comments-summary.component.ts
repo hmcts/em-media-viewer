@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'mv-comments-summary',
+  selector: 'app-comments-summary',
   templateUrl: './comments-summary.component.html',
   styleUrls: ['./comments-summary.component.scss']
 })
