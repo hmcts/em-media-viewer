@@ -11,6 +11,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { PdfJsWrapperFactory } from './viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
+import { CommentsSummaryComponent } from './comments-summary/comments-summary.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ErrorMessageComponent } from './viewers/error-message/error.message.com
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,
-    ErrorMessageComponent
+    ErrorMessageComponent,
+    CommentsSummaryComponent
   ],
   entryComponents: [
     PdfViewerComponent,

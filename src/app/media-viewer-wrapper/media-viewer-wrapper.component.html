@@ -32,7 +32,6 @@
         </li>
       </ul>
     </div>
-    <app-comments-summary *ngIf="showCommentSummary | async" [showCommentSummary]="showCommentSummary"></app-comments-summary>
     <section [id]="documentTypeToShow">
       <form #form="ngForm">
         <div *ngIf="documentTypeToShow === 'pdf'">
