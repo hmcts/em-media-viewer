@@ -1,46 +1,22 @@
-import { AppPage } from '../app.po';
-import { protractor } from 'protractor';
+import { NavigatePage } from '../pages/navigate.po';
 
 describe('navigate', () => {
-  let page: AppPage;
+  let page: NavigatePage;
 
-  beforeEach(() => {
-    page = new AppPage();
+  beforeEach(async () => {
+    page = new NavigatePage();
   });
 
+  it('should display next page in pdf viewer', async () => {
+    page.selectPdfViewer();
+    await page.waitForPdfToLoad();
 
-  it('should display next page in pdf viewer', () => {
-    page.getPdfViewer().click();
+    await page.goToNextPage();
 
-    const nextPage = page.getPdfNextPageButton();
-    nextPage.click();
+    expect(page.number()).toEqual('2');
 
-    const pageNumber = page.getPageNumberInput();
+    await page.goToPreviousPage();
 
-    expect(pageNumber.getAttribute('value')).toEqual('2');
-
-    nextPage.click();
-    expect(pageNumber.getAttribute('value')).toEqual('3');
-  });
-
-  it('should display previous page in pdf viewer', () => {
-    const previousPage = page.getPdfPreviousPageButton();
-    previousPage.click();
-
-    const pageNumber = page.getPageNumberInput();
-
-    expect(pageNumber.getAttribute('value')).toEqual('2');
-
-    previousPage.click();
-    expect(pageNumber.getAttribute('value')).toEqual('1');
-  });
-
-  it('should display entered value page in pdf viewer', () => {
-    const pageNumber = page.getPageNumberInput();
-    pageNumber.sendKeys(protractor.Key.BACK_SPACE);
-    pageNumber.sendKeys('10');
-    pageNumber.sendKeys(protractor.Key.ENTER);
-
-    expect(pageNumber.getAttribute('value')).toEqual('10');
+    expect(page.number()).toEqual('1');
   });
 });
