@@ -8,13 +8,13 @@ describe('zoom', () => {
   });
 
 
-  it('should display pdf zoomed in', async () => {
+  it('should display pdf zoomed in/out', async () => {
     page.selectPdfViewer();
 
     expect(page.currentZoom()).toEqual('100%');
 
     page.zoomIn();
-    expect(page.currentZoom()).toEqual('120%');
+    expect(page.currentZoom()).toEqual('110%');
 
     page.zoomOut();
     expect(page.currentZoom()).toEqual('100%');
@@ -31,13 +31,13 @@ describe('zoom', () => {
     expect(page.currentZoom()).toEqual('10%');
   });
 
-  it('should display image zoomed in', async () => {
+  it('should display image zoomed in/out', async () => {
     page.selectImageViewer();
 
     expect(page.currentZoom()).toEqual('100%');
 
     page.zoomOut();
-    expect(page.currentZoom()).toEqual('80%');
+    expect(page.currentZoom()).toEqual('90%');
 
     page.zoomIn();
     expect(page.currentZoom()).toEqual('100%');

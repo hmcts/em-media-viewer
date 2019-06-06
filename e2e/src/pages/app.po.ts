@@ -7,6 +7,16 @@ export class AppPage {
     return browser.get('/');
   }
 
+
+  toggleToolbarButtons() {
+    element(by.css("label[for='search-btn-toggle']")).click();
+    element(by.css("label[for='navigate-btn-toggle']")).click();
+    element(by.css("label[for='rotate-btn-toggle']")).click();
+    element(by.css("label[for='zoom-btn-toggle']")).click();
+    element(by.css("label[for='print-btn-toggle']")).click();
+    element(by.css("label[for='download-btn-toggle']")).click();
+  }
+
   getHeaderText() {
     return element(by.css('media-viewer-wrapper h2')).getText();
   }

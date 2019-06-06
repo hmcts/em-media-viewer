@@ -14,10 +14,9 @@ describe('print', () => {
     browser.switchTo().window(tabs[0]);
   });
 
-
   it('should print the pdf', async () => {
     page.selectPdfViewer();
-    page.clickPrint();
+    await page.clickPrint();
 
     await page.swithToPrintTab();
 
@@ -26,7 +25,7 @@ describe('print', () => {
 
   it('should print the image', async () => {
     page.selectImageViewer();
-    page.clickPrint();
+    await page.clickPrint();
 
     await page.swithToPrintTab();
 

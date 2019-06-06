@@ -11,19 +11,22 @@ describe('download', () => {
   it('should download the pdf', async () => {
     const file = 'e2e/src/downloads/example.pdf';
 
+    page.toggleToolbarButtons();
     page.selectPdfViewer();
     page.clickDownload();
+    await page.waitForDownloadToComplete(file);
 
-    await expect(page.hasFileDownloaded(file)).toBe(true);
+    expect(page.hasFileDownloaded(file)).toBe(true);
   });
 
   it('should download the image', async () => {
-    const file = 'e2e/src/downloads/undefined.jpeg';
+    const file = 'e2e/src/downloads/example.jpg';
 
     page.selectImageViewer();
     page.clickDownload();
+    await page.waitForDownloadToComplete(file);
 
-    await expect(page.hasFileDownloaded(file)).toBe(true);
+    expect(page.hasFileDownloaded(file)).toBe(true);
   });
 
   it('should download the unsupported file', async () => {
@@ -31,7 +34,8 @@ describe('download', () => {
 
     page.selectUnsupportedViewer();
     page.clickDownload();
+    await page.waitForDownloadToComplete(file);
 
-    await expect(page.hasFileDownloaded(file)).toEqual(true);
+    expect(page.hasFileDownloaded(file)).toBe(true);
   });
 });

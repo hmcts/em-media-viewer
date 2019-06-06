@@ -8,8 +8,11 @@ export class DownloadPage extends AppPage {
     return element(by.id('download')).click();
   }
 
-  async hasFileDownloaded(filePath) {
-    await browser.wait(async () => fs.existsSync(filePath), 3000, 'File failed to download');
+  async waitForDownloadToComplete(path) {
+    await browser.wait(() => fs.existsSync(path), 3000);
+  }
+
+  hasFileDownloaded(filePath) {
     return fs.existsSync(filePath);
   }
 }

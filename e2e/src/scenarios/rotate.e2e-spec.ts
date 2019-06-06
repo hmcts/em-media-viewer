@@ -20,7 +20,7 @@ describe('rotate', () => {
     await page.captureCurrentOrientation();
     page.rotateCounterClockwise();
 
-    await page.checkPdfIsRotated();
+    page.checkPdfIsRotated();
   });
 
   it('should display rotated image', () => {
