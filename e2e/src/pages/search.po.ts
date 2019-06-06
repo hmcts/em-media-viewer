@@ -32,17 +32,17 @@ export class SearchPage extends AppPage {
   }
 
   async firstSearchResult() {
-    await this.waitForArray(by.css('.highlight'));
+    await this.waitForElementsArray(by.css('.highlight'));
     return element.all(by.css('.highlight')).get(0).getLocation();
   }
 
   async secondSearchResult() {
-    await this.waitForArray(by.css('.highlight'));
+    await this.waitForElementsArray(by.css('.highlight'));
     return element.all(by.css('.highlight')).get(1).getWebElement().getLocation();
   }
 
   async numberOfSearchResults() {
-    await this.waitForArray(by.css('.highlight'));
+    await this.waitForElementsArray(by.css('.highlight'));
     return (await element.all(by.css('.highlight')).getWebElements()).length;
   }
 

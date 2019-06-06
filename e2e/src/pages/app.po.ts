@@ -31,7 +31,7 @@ export class AppPage {
     await browser.wait(async () => element(selector), 3000, 'failed to load search results');
   }
 
-  async waitForArray(selector: Locator) {
+  async waitForElementsArray(selector: Locator) {
     await browser.wait(async () => element.all(selector), 3000, 'failed to load search results');
   }
 }
