@@ -19,7 +19,6 @@
       <ng-container [ngTemplateOutlet]="toolbarToggle"
                     [ngTemplateOutletContext]="{ key: 'showDownloadBtn', label: 'Download' }">
       </ng-container>
-      <button (click)="showComments()">Show comments</button>
     </ng-container>
     <td>
       <div class="govuk-grid-row"><div class="govuk-grid-column-full">
@@ -28,6 +27,19 @@
         <div class="govuk-grid-column-full">
           <label class="switch govuk-!-margin-right-2">
             <input type="checkbox" [checked]="toggleToolbarVisibility.getValue()" (change)="toggleToolbarVisibility.next($event.target.checked)">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <span class="govuk-!-font-weight-bold">Comments</span>
+        </div>
+        <div class="govuk-grid-column-full">
+          <label class="switch govuk-!-margin-right-2">
+            <input type="checkbox" [checked]="showCommentSummary | async" (change)="showCommentSummary.next($event.target.checked)">
             <span class="slider round"></span>
           </label>
         </div>

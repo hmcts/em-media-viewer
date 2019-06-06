@@ -11,8 +11,4 @@ export class ToolbarTogglesComponent {
   @Input() toolbarButtons: ToolbarButtonToggles;
   @Output() toggleToolbarVisibility = new BehaviorSubject(true);
   @Input() showCommentSummary: Subject<boolean>;
-
-  public showComments() {
-    this.showCommentSummary.next(true);
-  }
 }
