@@ -8,8 +8,8 @@ describe('media viewer app', () => {
   });
 
 
-  it('should display header', () => {
-    page.navigateTo();
+  it('should display header', async () => {
+    await page.navigateTo();
 
     expect(page.getHeaderText()).toEqual('Media Viewer Demo');
   });

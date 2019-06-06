@@ -8,7 +8,7 @@ export class AppPage {
   }
 
   getHeaderText() {
-    return element(by.css('app-sandbox-webapp h2')).getText();
+    return element(by.css('media-viewer-wrapper h2')).getText();
   }
 
   selectPdfViewer() {
