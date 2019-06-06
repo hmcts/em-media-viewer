@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/events/toolbar-button-toggles';
 
 @Component({
-  selector: 'app-sandbox-webapp',
+  selector: 'media-viewer-wrapper',
   templateUrl: './media-viewer-wrapper.component.html'
 })
 export class MediaViewerWrapperComponent {
