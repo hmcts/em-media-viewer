@@ -1,19 +1,42 @@
-<div>
+<div class="govuk-width-container">
+  <h2>Document Title</h2>
   <div class="scroll-container">
-    <table>
+    <table class="govuk-table">
       <thead>
-      <tr>
-        <th>User</th>
-        <th>Date</th>
-        <th>Comment</th>
-      </tr>
+        <tr class="govuk-table__header">
+          <th>User</th>
+          <th>Date</th>
+          <th>Comment</th>
+        </tr>
       </thead>
-      <tbody>
-      <tr>
-        <td><span title="linusnorton@gmail.com">Linus Norton</span></td>
-        <td>14:12 4 June 2019</td>
-        <td title="Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses">Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses</td>
-      </tr>
+      <tbody class="govuk-table__cell">
+        <tr>
+          <td><span title="linusnorton@gmail.com">Linus Norton</span></td>
+          <td>14:12 4 June 2019</td>
+          <td title="Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses">
+            <span class="clipped">
+              This is a very long comment text for the purpose of testing the ellipses. This is still a very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td><span title="linusnorton@gmail.com">Linus Norton</span></td>
+          <td>14:12 4 June 2019</td>
+          <td title="Shorter comment">
+            <span class="clipped">
+              This is a shorter comment
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td><span title="linusnorton@gmail.com">Linus Norton</span></td>
+          <td>14:12 4 June 2019</td>
+          <td title="Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses">
+            <span class="clipped">
+              This is a very long comment text for the purpose of testing the ellipses. This is still a very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses. Very long comment text for the purpose of testing the ellipses
+            </span>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
