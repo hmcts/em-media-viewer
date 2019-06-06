@@ -1,4 +1,4 @@
-<div class="modal" (click)="onCloseButton()">
+<div class="modal" (click)="onClose()">
   <div class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
     <h2>Document Title</h2>
     <div class="comment-container">
@@ -11,6 +11,15 @@
           </tr>
         </thead>
         <tbody class="govuk-table__cell">
+          <tr *ngFor='let comment of comments | async'>
+            <td><span title="{{comment.createdByDetails.email}}">{{comment.createdByDetails.forename}} {{comment.createdByDetails.surname}}</span></td>
+            <td>{{comment.createdDate}}</td>
+            <td title="{{comment.content}}">
+              <span class="clipped">
+                {{comment.content}}
+              </span>
+            </td>
+          </tr>
           <tr>
             <td><span title="linusnorton@gmail.com">Linus Norton</span></td>
             <td>14:12 4 June 2019</td>
@@ -224,7 +233,7 @@
 
     <div class="button-container">
       <button>Print</button>
-      <button (click)="onCloseButton()">Close</button>
+      <button (click)="onClose()">Close</button>
     </div>
   </div>
 </div>

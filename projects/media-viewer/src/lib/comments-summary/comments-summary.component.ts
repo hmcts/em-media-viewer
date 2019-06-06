@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Comment } from '../annotations/comment/comment.model';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -10,9 +11,9 @@ export class CommentsSummaryComponent {
 
   @Input() showCommentSummary: Subject<boolean>;
 
-  comments: Subject<Comment[]>;
+  @Input() comments: Subject<Comment[]>;
 
-  public onCloseButton(): void {
+  public onClose(): void {
     this.showCommentSummary.next(false);
   }
 }

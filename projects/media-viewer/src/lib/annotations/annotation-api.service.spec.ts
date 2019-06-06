@@ -36,7 +36,6 @@ describe('AnnotationApiService', () => {
     lastModifiedBy: 'example@example.org',
     lastModifiedByDetails: user,
     lastModifiedDate: '2019-06-03T10:00:00Z',
-    documentId: dmDocumentId,
     page: 1,
     color: 'FFFF00',
     type: 'highlight',
@@ -96,7 +95,7 @@ describe('AnnotationApiService', () => {
   describe('delete annotation', () => {
     it('should return IAnnotation response', async(() => {
       api.deleteAnnotation(annotation).subscribe((response) => {
-        expect(response.body.documentId).toEqual(dmDocumentId);
+        expect(response.body.annotationSetId).toEqual(annotationSet.id);
       });
 
       const req = httpMock.expectOne(`/em-anno/annotations/${annotation.id}`);
@@ -108,7 +107,7 @@ describe('AnnotationApiService', () => {
   describe('save annotation', () => {
     it('should return IAnnotation response', async(() => {
       api.createAnnotation(annotation).subscribe((response) => {
-        expect(response.body.documentId).toEqual(annotation.documentId);
+        expect(response.body.annotationSetId).toEqual(annotationSet.id);
       });
 
       const req = httpMock.expectOne('/em-anno/annotations');

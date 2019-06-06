@@ -35,7 +35,12 @@
       </ul>
     </div>
 
-    <mv-comments-summary *ngIf="showCommentSummary | async" [showCommentSummary]="showCommentSummary"></mv-comments-summary>
+    <mv-comments-summary
+      *ngIf="showCommentSummary | async"
+      [showCommentSummary]="showCommentSummary"
+      [comments]="comments">
+
+    </mv-comments-summary>
 
     <section [id]="documentTypeToShow">
       <form #form="ngForm">
