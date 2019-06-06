@@ -15,7 +15,7 @@ exports.config = {
       prefs: {
         download: {
           'prompt_for_download': false,
-          'default_directory': 'e2e/src/downloads'
+          'default_directory': require('path').join(__dirname, 'src/downloads')
         }
       }
     }
@@ -34,6 +34,9 @@ exports.config = {
     });
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
     removePreviousDownloads();
+  },
+  onCleanUp() {
+    removePreviousDownloads();
   }
 };
 
@@ -48,7 +51,6 @@ function removePreviousDownloads() {
           fs.unlinkSync(filePath);
         }
       }
-    fs.rmdirSync(downloadsPath);
   }
   catch(e) {
     console.log(e);
