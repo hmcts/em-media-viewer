@@ -1,10 +1,10 @@
-import { PrintDownloadPage } from '../pages/print-download.po';
+import { DownloadPage } from '../pages/download.po';
 
 describe('download', () => {
-  let page: PrintDownloadPage;
+  let page: DownloadPage;
 
   beforeEach(() => {
-    page = new PrintDownloadPage();
+    page = new DownloadPage();
   });
 
 

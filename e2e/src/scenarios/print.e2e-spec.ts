@@ -1,11 +1,11 @@
 import { browser } from 'protractor';
-import { PrintDownloadPage } from '../pages/print-download.po';
+import { PrintPage } from '../pages/print.po';
 
 describe('print', () => {
-  let page: PrintDownloadPage;
+  let page: PrintPage;
 
   beforeEach(() => {
-    page = new PrintDownloadPage();
+    page = new PrintPage();
   });
 
   afterEach(async () => {
