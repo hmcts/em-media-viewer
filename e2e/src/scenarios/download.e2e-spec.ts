@@ -11,7 +11,6 @@ describe('download', () => {
   it('should download the pdf', async () => {
     const file = 'e2e/src/downloads/example.pdf';
 
-    page.toggleToolbarButtons();
     page.selectPdfViewer();
     page.clickDownload();
     await page.waitForDownloadToComplete(file);
