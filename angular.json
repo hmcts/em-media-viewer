@@ -91,7 +91,7 @@
               }
             ],
             "styles": [
-              "dist/media-viewer/assets/aui-styles.scss",
+              "dist/media-viewer/assets/aui-styles.scss"
             ],
             "scripts": [
 
