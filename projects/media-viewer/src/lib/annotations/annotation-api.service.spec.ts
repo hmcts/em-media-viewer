@@ -62,7 +62,7 @@ describe('AnnotationApiService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('createAnnotationSet', () => {
+  it('createAnnotationSet', async () => {
     const requestBody = {
       documentId: dmDocumentId,
       id: '6d1f5e09-98ad-4891-aecc-936282b06148'
@@ -78,7 +78,7 @@ describe('AnnotationApiService', () => {
     req.flush(annotationSet);
   });
 
-  it('fetch', () => {
+  it('fetch', async () => {
     api.getAnnotationSet(dmDocumentId).subscribe((response) => {
       expect(response.body.documentId).toBe(dmDocumentId);
     });
@@ -88,7 +88,7 @@ describe('AnnotationApiService', () => {
     req.flush(annotationSet);
   });
 
-  it('delete annotation', () => {
+  it('delete annotation', async () => {
     api.deleteAnnotation(annotation).subscribe((response) => {
       expect(response.body.annotationSetId).toEqual(annotationSet.id);
     });
@@ -98,7 +98,7 @@ describe('AnnotationApiService', () => {
     req.flush(annotation);
   });
 
-  it('save annotation', () => {
+  it('save annotation', async () => {
     api.createAnnotation(annotation).subscribe((response) => {
       expect(response.body.annotationSetId).toEqual(annotationSet.id);
     });
@@ -108,7 +108,7 @@ describe('AnnotationApiService', () => {
     req.flush(annotation);
   });
 
-  it('get comments', () => {
+  it('get comments', async () => {
     api.getComments(dmDocumentId).subscribe((comments) => {
       expect(comments[0].content).toBe('Hello,\nThis is a comment');
       expect(comments[1].content).toBe('This is another comment');

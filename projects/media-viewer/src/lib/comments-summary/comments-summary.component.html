@@ -1,7 +1,7 @@
 <div class="modal" (click)="onClose()">
   <div class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
     <h2>Document Title</h2>
-    <div class="comment-container">
+    <div class="comment-container" #commentContainer>
       <table class="govuk-table">
         <thead>
           <tr class="govuk-table__header">
@@ -232,7 +232,7 @@
     </div>
 
     <div class="button-container">
-      <button>Print</button>
+      <button (click)="onPrint()">Print</button>
       <button (click)="onClose()">Close</button>
     </div>
   </div>
