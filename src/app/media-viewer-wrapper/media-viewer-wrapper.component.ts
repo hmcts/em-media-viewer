@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/events/toolbar-button-toggles';
 import { Subject } from 'rxjs';
 import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/annotations/annotation-api.service';
-import { Comment } from '../../../projects/media-viewer/src/lib/annotations/comment/comment.model';
 
 @Component({
   selector: 'media-viewer-wrapper',
@@ -23,7 +22,7 @@ export class MediaViewerWrapperComponent implements OnInit {
 
   toolbarButtons = new ToolbarButtonToggles();
   showCommentSummary = new Subject<boolean>();
-  comments = new Subject<Comment[]>();
+  comments = [];
 
   constructor(
     public api: AnnotationApiService
@@ -42,6 +41,6 @@ export class MediaViewerWrapperComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.api.getComments('1').subscribe(this.comments);
+    this.api.getComments('1').subscribe(comments => this.comments = comments);
   }
 }

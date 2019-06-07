@@ -11,9 +11,9 @@
           </tr>
         </thead>
         <tbody class="govuk-table__cell">
-          <tr *ngFor='let comment of comments | async'>
+          <tr *ngFor='let comment of comments'>
             <td><span title="{{comment.createdByDetails.email}}">{{comment.createdByDetails.forename}} {{comment.createdByDetails.surname}}</span></td>
-            <td>{{comment.createdDate}}</td>
+            <td>{{comment.createdDate | date : "hh:mm d MMMM yyyy" : 0 }}</td>
             <td title="{{comment.content}}">
               <span class="clipped">
                 {{comment.content}}

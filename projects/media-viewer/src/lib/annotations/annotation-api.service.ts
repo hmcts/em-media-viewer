@@ -5,7 +5,7 @@ import { AnnotationSet } from './annotation-set.model';
 import { Annotation } from './annotation.model';
 import { Comment } from './comment/comment.model';
 import dummyAnnotationSet from '../../assets/annotation-set.json';
-import { flatMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AnnotationApiService {
@@ -33,11 +33,11 @@ export class AnnotationApiService {
       body: dummyAnnotationSet
     })), 1000);
 
-    return response.pipe(flatMap(r => this.extractComments(r)));
+    return response.pipe(map(r => this.extractComments(r)));
   }
 
   private extractComments(r: HttpResponse<AnnotationSet>) {
-    return r.body.annotations.map(a => a.comments);
+    return [].concat(...r.body.annotations.map(a => a.comments));
   }
 
   public deleteAnnotation(annotation: Annotation): Observable<HttpResponse<Annotation>> {

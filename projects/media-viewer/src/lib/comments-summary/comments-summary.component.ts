@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Comment } from '../annotations/comment/comment.model';
 
@@ -8,12 +8,12 @@ import { Comment } from '../annotations/comment/comment.model';
   styleUrls: ['./comments-summary.component.scss']
 })
 export class CommentsSummaryComponent {
-
   @Input() showCommentSummary: Subject<boolean>;
 
-  @Input() comments: Subject<Comment[]>;
+  @Input() comments: Comment[];
 
   public onClose(): void {
     this.showCommentSummary.next(false);
   }
+
 }
