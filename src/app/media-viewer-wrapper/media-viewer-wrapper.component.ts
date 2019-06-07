@@ -5,7 +5,7 @@ import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/ann
 import { Comment } from '../../../projects/media-viewer/src/lib/annotations/comment/comment.model';
 
 @Component({
-  selector: 'app-sandbox-webapp',
+  selector: 'media-viewer-wrapper',
   templateUrl: './media-viewer-wrapper.component.html'
 })
 export class MediaViewerWrapperComponent implements OnInit {
