@@ -11,8 +11,8 @@ exports.config = {
   ],
   exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
   capabilities: {
-    browserName: 'firefox',
-    'moz:firefoxOptions': {
+    browserName: 'chrome',
+    'chromeOptions': {
       args: ["-headless"],
     }
   },
