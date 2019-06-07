@@ -71,12 +71,12 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "dist/media-viewer/src/assets",
+                "input": "dist/media-viewer/assets",
                 "output": "/assets"
               },
               {
                 "glob": "**/*",
-                "input": "dist/media-viewer/src/assets/images",
+                "input": "dist/media-viewer/assets/images",
                 "output": "/"
               },
               {
@@ -91,7 +91,7 @@
               }
             ],
             "styles": [
-              "dist/media-viewer/src/assets/aui-styles.scss"
+              "dist/media-viewer/assets/aui-styles.scss"
             ],
             "scripts": [
 
