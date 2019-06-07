@@ -8,7 +8,6 @@ describe('navigate', () => {
   });
 
   it('should display next page in pdf viewer', async () => {
-    page.toggleToolbarButtons();
     page.selectPdfViewer();
     await page.waitForPdfToLoad();
 
