@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { AnnotationSet } from './annotation-set.model';
 import { Annotation } from './annotation.model';
 import { Comment } from './comment/comment.model';
-import dummyAnnotationSet from '../../../../../src/assets/annotation-set.json';
+import dummyAnnotationSet from '../../../assets/annotation-set.json';
 import { flatMap } from 'rxjs/operators';
 
 @Injectable()
