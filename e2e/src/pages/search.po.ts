@@ -7,28 +7,36 @@ export class SearchPage extends AppPage {
     return element(by.id('viewFind')).click();
   }
 
-  searchFor(searchTerm: string) {
+  async searchFor(searchTerm: string) {
     const searchBar = element(by.css('input[title="Find"]'));
     searchBar.clear();
     searchBar.sendKeys(searchTerm);
+    return await this.waitForSearchResults();
   }
 
-  goToNextResult() {
-    return element(by.id('findNext')).click();
+  async goToNextResult() {
+    element(by.id('findNext')).click();
+    return await this.waitForSearchResults();
   }
 
-  goToPreviousResult() {
-    return element(by.id('findPrevious')).click();
+  async goToPreviousResult() {
+    element(by.id('findPrevious')).click();
+    return await this.waitForSearchResults();
+  }
+
+  async selectMatchCase() {
+    element(by.id('findMatchCase')).click();
+    return await this.waitForSearchResults();
   }
 
   async selectedSearchResult() {
     await this.waitForElement(by.className('highlight selected'));
-    return await element(by.className('highlight selected')).getWebElement().getLocation();
+    return element(by.className('highlight selected')).getWebElement().getLocation();
   }
 
   async selectedSearchText() {
     await this.waitForElement(by.className('highlight selected'));
-    return await element(by.className('highlight selected')).getText();
+    return element(by.className('highlight selected')).getText();
   }
 
   async firstSearchResult() {
@@ -41,25 +49,13 @@ export class SearchPage extends AppPage {
     return element.all(by.css('.highlight')).get(1).getWebElement().getLocation();
   }
 
-  async numberOfSearchResults() {
+  async waitForSearchResults() {
     await this.waitForElementsArray(by.css('.highlight'));
-    return (await element.all(by.css('.highlight')).getWebElements()).length;
-  }
-
-  toggleHighlightAll() {
-    return element(by.id('findHighlightAll')).click();
-  }
-
-  selectMatchCase() {
-    return element(by.id('findMatchCase')).click();
-  }
-
-  selectWholeWords() {
-    return element(by.id('findEntireWord')).click();
+    return element.all(by.css('.highlight')).count();
   }
 
   async searchResultsCounter() {
     await this.waitForElement(by.id('findResultsCount'));
-    return await element(by.id('findResultsCount')).getText();
+    return element(by.id('findResultsCount')).getText();
   }
 }
