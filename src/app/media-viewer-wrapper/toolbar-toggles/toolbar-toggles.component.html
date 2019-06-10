@@ -32,6 +32,19 @@
         </div>
       </div>
     </td>
+    <td>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <span class="govuk-!-font-weight-bold">Comments</span>
+        </div>
+        <div class="govuk-grid-column-full">
+          <label class="switch govuk-!-margin-right-2">
+            <input type="checkbox" [checked]="showCommentSummary | async" (change)="showCommentSummary.next($event.target.checked)">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </td>
   </tr>
 </table>
 <ng-template #toolbarToggle let-key="key" let-label="label ">
