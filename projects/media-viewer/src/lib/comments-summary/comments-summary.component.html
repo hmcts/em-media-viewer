@@ -1,6 +1,6 @@
 <div class="modal" (click)="onClose()">
   <div class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
-    <h2>Document Title</h2>
+    <h2>{{ title }}</h2>
     <div class="comment-container" #commentContainer>
       <table class="govuk-table">
         <thead>
@@ -10,8 +10,8 @@
             <th>Comment</th>
           </tr>
         </thead>
-        <tbody class="govuk-table__cell">
-          <tr *ngFor='let comment of comments'>
+        <tbody>
+          <tr *ngFor='let comment of comments' class="govuk-table__cell">
             <td><span title="{{comment.createdByDetails.email}}">{{comment.createdByDetails.forename}} {{comment.createdByDetails.surname}}</span></td>
             <td>{{comment.createdDate | date : "hh:mm d MMMM yyyy" : 0 }}</td>
             <td title="{{comment.content}}">
@@ -25,8 +25,8 @@
     </div>
 
     <div class="button-container">
-      <button (click)="onPrint()">Print</button>
-      <button (click)="onClose()">Close</button>
+      <button (click)="onPrint()" class="govuk-button govuk-button--secondary">Print</button>
+      <button (click)="onClose()" class="govuk-button">Close</button>
     </div>
   </div>
 </div>

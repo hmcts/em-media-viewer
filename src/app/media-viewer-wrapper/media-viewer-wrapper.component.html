@@ -37,6 +37,7 @@
 
     <mv-comments-summary
       *ngIf="showCommentSummary | async"
+      [title]="'Document Title'"
       [showCommentSummary]="showCommentSummary"
       [comments]="comments">
 
