@@ -250,7 +250,7 @@
           "lastModifiedBy":"ea6d959c-b6c9-48af-89c2-6f7bd796524d",
           "lastModifiedDate":"2019-05-28T08:48:47.337Z",
           "id":"4f679ad8-560e-4ca7-8428-d14c005c785a",
-          "content":"This is another comment",
+          "content":"This is another comment. It is very long and should have ellipses. It is very long and should have ellipses. It is very long and should have ellipses.",
           "annotationId":"8e7c272c-206c-4a6e-801f-a58588ba9e7a"
         }
       ],
