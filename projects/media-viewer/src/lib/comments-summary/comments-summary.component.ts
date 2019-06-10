@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Comment } from '../annotations/comment/comment.model';
+import { PrintService } from '../print.service';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -14,18 +15,16 @@ export class CommentsSummaryComponent {
 
   @ViewChild('commentContainer') commentsTable: ElementRef;
 
+  constructor(
+    private readonly printService: PrintService
+  ) {}
+
   public onClose(): void {
     this.showCommentSummary.next(false);
   }
 
   public onPrint(): void {
-    const printElement = this.commentsTable.nativeElement;
-    const printWindow = window.open('', '', 'left=0,top=0,width=1000,height=900,toolbar=0,scrollbars=0,status=0');
-    printWindow.document.write(printElement.innerHTML);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    printWindow.close();
+    this.printService.printElementNatively(this.commentsTable.nativeElement, 1000, 900);
   }
 
 }
