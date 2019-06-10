@@ -16,7 +16,9 @@ export class MediaViewerComponent implements OnInit {
   @Input() contentType: string;
   @Input() actionEvents = new ActionEvents();
   @Input() showToolbar = true;
+  @Input() showCommentSummary: Subject<boolean>;
   @Input() toolbarButtonToggles: ToolbarButtonToggles;
+  @Input() commentSummaryToggle: Subject<SetCurrentPageOperation>;
 
   currentPageChanged = new Subject<SetCurrentPageOperation>();
 
@@ -31,4 +33,5 @@ export class MediaViewerComponent implements OnInit {
   contentTypeUnsupported(): boolean {
     return this.supportedContentTypes.indexOf(this.contentType) < 0;
   }
+
 }

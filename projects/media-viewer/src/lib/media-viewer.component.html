@@ -1,4 +1,5 @@
 <div id="outerContainer" [ngClass]="{ sidebarOpen: toolbarButtonToggles?.sidebarOpen | async }">
+
   <mv-side-bar *ngIf="showToolbar" id="sidebarContainer"></mv-side-bar>
   <div id="mainContainer" style="min-height: 800px;">
     <mv-main-toolbar *ngIf="showToolbar"

@@ -1,5 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ToolbarButtonToggles } from '../../../../projects/media-viewer/src/lib/events/toolbar-button-toggles';
 
 @Component({
@@ -10,4 +10,5 @@ import { ToolbarButtonToggles } from '../../../../projects/media-viewer/src/lib/
 export class ToolbarTogglesComponent {
   @Input() toolbarButtons: ToolbarButtonToggles;
   @Output() toggleToolbarVisibility = new BehaviorSubject(true);
+  @Input() showCommentSummary: Subject<boolean>;
 }
