@@ -12,14 +12,26 @@ export class CommentComponent implements OnInit {
   editable: boolean;
   expanded: boolean;
   sliceComment: string;
-  @Input() comment: Comment;
+  lastUpdate: string;
+  author: User;
+  editor: User;
+  content: string;
   @Input() user: User;
   @Input() height: number;
+
+  @Input()
+  set comment(comment: Comment) {
+    this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
+    this.author = comment.createdByDetails;
+    this.editor = comment.lastModifiedByDetails;
+    this.content = comment.content;
+  }
+
 
   ngOnInit() {
     this.editable = false;
     this.expanded = true;
-    this.sliceComment = this.comment.content;
+    this.sliceComment = this.content;
   }
 
   onCommentClick() {
@@ -32,5 +44,9 @@ export class CommentComponent implements OnInit {
 
   onCancel() {
     this.editable = false;
+  }
+
+  commentStyle() {
+    return 'aui-comment__content form-control mimic-focus ' + (!this.editable ? 'view-mode' : 'edit-mode');
   }
 }
