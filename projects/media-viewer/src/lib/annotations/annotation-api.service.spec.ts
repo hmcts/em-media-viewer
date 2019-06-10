@@ -62,7 +62,7 @@ describe('AnnotationApiService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('createAnnotationSet', async () => {
+  it('createAnnotationSet', async(() => {
     const requestBody = {
       documentId: dmDocumentId,
       id: '6d1f5e09-98ad-4891-aecc-936282b06148'
@@ -76,9 +76,9 @@ describe('AnnotationApiService', () => {
     expect(req.request.body.documentId).toBe(dmDocumentId);
     expect(req.request.body.id).toBeTruthy();
     req.flush(annotationSet);
-  });
+  }));
 
-  it('fetch', async () => {
+  it('fetch', async(() => {
     api.getAnnotationSet(dmDocumentId).subscribe((response) => {
       expect(response.body.documentId).toBe(dmDocumentId);
     });
@@ -86,9 +86,9 @@ describe('AnnotationApiService', () => {
     const req = httpMock.expectOne(`/em-anno/annotation-sets/filter?documentId=${dmDocumentId}`);
     expect(req.request.method).toBe('GET');
     req.flush(annotationSet);
-  });
+  }));
 
-  it('delete annotation', async () => {
+  it('delete annotation', async(() => {
     api.deleteAnnotation(annotation).subscribe((response) => {
       expect(response.body.annotationSetId).toEqual(annotationSet.id);
     });
@@ -96,9 +96,9 @@ describe('AnnotationApiService', () => {
     const req = httpMock.expectOne(`/em-anno/annotations/${annotation.id}`);
     expect(req.request.method).toBe('DELETE');
     req.flush(annotation);
-  });
+  }));
 
-  it('save annotation', async () => {
+  it('save annotation', async(() => {
     api.createAnnotation(annotation).subscribe((response) => {
       expect(response.body.annotationSetId).toEqual(annotationSet.id);
     });
@@ -106,18 +106,20 @@ describe('AnnotationApiService', () => {
     const req = httpMock.expectOne('/em-anno/annotations');
     expect(req.request.method).toBe('POST');
     req.flush(annotation);
-  });
+  }));
 
-  it('get comments', async () => {
+  it('get comments', async(() => {
     api.getComments(dmDocumentId).subscribe((comments) => {
       expect(comments[0].content).toBe('Hello,\nThis is a comment');
       expect(comments[1].content).toBe('This is another comment');
+      expect(comments[2].content).toBe('This comment should be second last.');
+      expect(comments[3].content).toBe('This comment should be last');
     });
 
     // uncomment after mock removed
     // const req = httpMock.expectOne(`/em-anno/annotation-sets/filter?documentId=${dmDocumentId}`);
     // expect(req.request.method).toBe('GET');
     // req.flush(annotationSet);
-  });
+  }));
 
 });

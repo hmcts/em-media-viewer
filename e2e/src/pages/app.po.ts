@@ -8,13 +8,16 @@ export class AppPage {
   }
 
 
-  toggleToolbarButtons() {
-    element(by.css("label[for='search-btn-toggle']")).click();
-    element(by.css("label[for='navigate-btn-toggle']")).click();
-    element(by.css("label[for='rotate-btn-toggle']")).click();
-    element(by.css("label[for='zoom-btn-toggle']")).click();
-    element(by.css("label[for='print-btn-toggle']")).click();
-    element(by.css("label[for='download-btn-toggle']")).click();
+  async showToolbarButtons() {
+    const checked = await element(by.css("input[id='search-btn-toggle']")).getAttribute('checked');
+    if (!checked) {
+      element(by.css("label[for='download-btn-toggle']")).click();
+      element(by.css("label[for='navigate-btn-toggle']")).click();
+      element(by.css("label[for='print-btn-toggle']")).click();
+      element(by.css("label[for='rotate-btn-toggle']")).click();
+      element(by.css("label[for='search-btn-toggle']")).click();
+      element(by.css("label[for='zoom-btn-toggle']")).click();
+    }
   }
 
   getHeaderText() {
@@ -22,14 +25,17 @@ export class AppPage {
   }
 
   selectPdfViewer() {
+    this.showToolbarButtons();
     element(by.id('pdf')).click();
   }
 
   selectImageViewer() {
+    this.showToolbarButtons();
     return element(by.id('image')).click();
   }
 
   selectUnsupportedViewer() {
+    this.showToolbarButtons();
     return element(by.id('unsupported')).click();
   }
 

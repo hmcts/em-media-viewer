@@ -9,9 +9,10 @@ import { PrintService } from '../print.service';
   styleUrls: ['./comments-summary.component.scss']
 })
 export class CommentsSummaryComponent {
-  @Input() showCommentSummary: Subject<boolean>;
 
+  @Input() showCommentSummary: Subject<boolean>;
   @Input() comments: Comment[];
+  @Input() title: string;
 
   @ViewChild('commentContainer') commentsTable: ElementRef;
 
