@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Comment } from './comment.model';
-import { UserDetail } from '../user-detail/user-detail.model';
+import { User } from '../user/user.model';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -13,7 +13,7 @@ export class CommentComponent implements OnInit {
   expanded: boolean;
   sliceComment: string;
   @Input() comment: Comment;
-  @Input() user: UserDetail;
+  @Input() user: User;
   @Input() height: number;
 
   ngOnInit() {

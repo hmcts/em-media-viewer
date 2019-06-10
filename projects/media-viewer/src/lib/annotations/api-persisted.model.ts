@@ -1,11 +1,11 @@
-import { UserDetail } from './user-detail/user-detail.model';
+import { User } from './user/user.model';
 
 export interface ApiPersisted {
   id: string;
   createdBy: string;
-  createdByDetails: UserDetail;
+  createdByDetails: User;
   createdDate: string;
   lastModifiedBy: string;
-  lastModifiedByDetails: UserDetail;
+  lastModifiedByDetails: User;
   lastModifiedDate: string;
 }
