@@ -1,4 +1,5 @@
 <div id="viewer-wrapper">
+  <mv-anno></mv-anno>
   <div *ngIf="!errorMessage" id="image-container" class="image-container" [ngStyle]="{ transform: zoomStyle }">
     <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url" [ngStyle]="{ transform: rotationStyle }" (error)="onLoadError()"/>
   </div>
