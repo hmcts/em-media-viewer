@@ -1,53 +1,36 @@
 import { SearchPage } from '../pages/search.po';
 
 describe('search', () => {
-  let searchPage: SearchPage;
+  let page: SearchPage;
 
   beforeEach(() => {
-    searchPage = new SearchPage();
+    page = new SearchPage();
   });
 
   afterAll(async () =>{
-    searchPage.toggleSearchBar();
+    page.toggleSearchBar();
   });
 
 
   it('should search the pdf for selected word', async () => {
-    searchPage.selectPdfViewer();
+    page.selectPdfViewer();
+    page.toggleSearchBar();
 
-    searchPage.toggleSearchBar();
-    searchPage.searchFor('Based');
-    const numberOfSearchResults = await searchPage.numberOfSearchResults();
-
-    expect(searchPage.selectedSearchText()).toEqual('based');
-    expect(numberOfSearchResults).toBeGreaterThan(1);
-
-    searchPage.goToNextResult();
-
-    expect(searchPage.searchResultsCounter()).toContain('2 of');
-    expect(searchPage.selectedSearchResult()).toEqual(searchPage.secondSearchResult());
-
-    searchPage.goToPreviousResult();
-
-    expect(searchPage.searchResultsCounter()).toContain('1 of');
-    expect(searchPage.selectedSearchResult()).toEqual(searchPage.firstSearchResult());
-
-    searchPage.selectMatchCase();
-
-    expect(searchPage.selectedSearchText()).toEqual('Based');
-
-    searchPage.toggleHighlightAll();
-
-    expect(searchPage.numberOfSearchResults()).toEqual(1);
+    await page.searchFor('Based');
+    expect(page.selectedSearchText()).toEqual('based');
 
 
-    searchPage.selectWholeWords();
-    const wholeWordSearchResults = await searchPage.numberOfSearchResults();
+    await page.goToNextResult();
+    expect(page.searchResultsCounter()).toContain('2 of');
+    expect(page.selectedSearchResult()).toEqual(page.secondSearchResult());
 
-    expect(wholeWordSearchResults).toBeLessThan(numberOfSearchResults);
 
-    searchPage.searchFor('asdasdada');
+    await page.goToPreviousResult();
+    expect(page.searchResultsCounter()).toContain('1 of');
+    expect(page.selectedSearchResult()).toEqual(page.firstSearchResult());
 
-    expect(searchPage.searchResultsCounter()).toEqual('Phrase not found');
+
+    await page.selectMatchCase();
+    expect(page.selectedSearchText()).toEqual('Based');
   });
 });
