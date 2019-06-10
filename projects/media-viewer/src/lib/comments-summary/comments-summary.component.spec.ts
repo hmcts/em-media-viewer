@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../print.service';
 import { Subject } from 'rxjs';
-import { PdfViewerComponent } from '../viewers/pdf-viewer/pdf-viewer.component';
 
 describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
