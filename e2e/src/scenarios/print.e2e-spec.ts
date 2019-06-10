@@ -18,7 +18,7 @@ describe('print', () => {
     page.selectPdfViewer();
     await page.clickPrint();
 
-    await page.swithToPrintTab();
+    await page.switchToPrintTab();
 
     expect(page.getPrintDialog()).toBeDefined();
   });
@@ -27,7 +27,7 @@ describe('print', () => {
     page.selectImageViewer();
     await page.clickPrint();
 
-    await page.swithToPrintTab();
+    await page.switchToPrintTab();
 
     expect(page.getPrintDialog()).toBeDefined();
   });
