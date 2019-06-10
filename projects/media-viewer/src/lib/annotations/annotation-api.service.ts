@@ -33,11 +33,20 @@ export class AnnotationApiService {
       body: dummyAnnotationSet
     })), 1000);
 
-    return response.pipe(map(r => this.extractComments(r)));
+    return response
+      .pipe(map(this.sortAnnotations))
+      .pipe(map(this.extractComments));
   }
 
-  private extractComments(r: HttpResponse<AnnotationSet>) {
-    return [].concat(...r.body.annotations.map(a => a.comments));
+  /**
+   * Sort the annotations in the response by page and then y position of their first rectangle
+   */
+  private sortAnnotations(r: HttpResponse<AnnotationSet>): Annotation[] {
+    return r.body.annotations.sort((a, b) => a.page !== b.page ? a.page - b.page : a.rectangles[0].y - b.rectangles[0].y);
+  }
+
+  private extractComments(annotations: Annotation[]) {
+    return [].concat(...annotations.map(a => a.comments));
   }
 
   public deleteAnnotation(annotation: Annotation): Observable<HttpResponse<Annotation>> {

@@ -112,6 +112,8 @@ describe('AnnotationApiService', () => {
     api.getComments(dmDocumentId).subscribe((comments) => {
       expect(comments[0].content).toBe('Hello,\nThis is a comment');
       expect(comments[1].content).toBe('This is another comment');
+      expect(comments[2].content).toBe('This comment should be second last.');
+      expect(comments[3].content).toBe('This comment should be last');
     });
 
     // uncomment after mock removed
