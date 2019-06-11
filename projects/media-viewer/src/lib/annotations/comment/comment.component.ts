@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../user/user.model';
 
@@ -7,17 +7,17 @@ import { User } from '../user/user.model';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent {
 
-  editable: boolean;
-  expanded: boolean;
+  editable = false;
+  expanded = true;
   sliceComment: string;
   lastUpdate: string;
   author: User;
   editor: User;
   content: string;
   @Input() user: User;
-  @Input() height: number;
+  @Input() top: number;
 
   @Input()
   set comment(comment: Comment) {
@@ -25,12 +25,6 @@ export class CommentComponent implements OnInit {
     this.author = comment.createdByDetails;
     this.editor = comment.lastModifiedByDetails;
     this.content = comment.content;
-  }
-
-
-  ngOnInit() {
-    this.editable = false;
-    this.expanded = true;
     this.sliceComment = this.content;
   }
 
