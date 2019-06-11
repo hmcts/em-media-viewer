@@ -9,10 +9,17 @@ import { annotationSet } from '../stub-annotation-data/annotation-set';
 })
 export class AnnotationsComponent implements OnInit {
 
-  annotations: Annotation[] = [];
   @Input() bounds: HTMLElement;
+
+  annotations: Annotation[] = [];
+  selectedIndex = -1;
 
   ngOnInit() {
     this.annotations = annotationSet;
   }
+
+  public setSelected(i: number) {
+    this.selectedIndex = i;
+  }
+
 }
