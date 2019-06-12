@@ -5,7 +5,7 @@ describe('navigate', () => {
 
   beforeEach(async () => {
     page = new NavigatePage();
-    await page.navigateTo();
+    await page.preparePage();
   });
 
   it('should display next page in pdf viewer', async () => {

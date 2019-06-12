@@ -39,8 +39,4 @@ export class MediaViewerWrapperComponent implements OnInit {
   tabLinkStyle(documentType: string) {
     return `govuk-tabs__tab ${this.documentTypeToShow === documentType ? 'govuk-tabs__tab--selected' : ''}`;
   }
-
-  public ngOnInit(): void {
-    this.api.getComments('1').subscribe(comments => this.comments = comments);
-  }
 }
