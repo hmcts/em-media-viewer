@@ -3,11 +3,19 @@ import { AppPage } from './app.po';
 
 export class CommentPage extends AppPage {
 
-  async openComments() {
-    await this.waitForElement(by.id('toggleCommentSummary'));
-    const toggleCommentSummaryElement = element(by.id('toggleCommentSummary'));
-    if (!toggleCommentSummaryElement.getAttribute('checked')) {
-        toggleCommentSummaryElement.click();
+  async openModal() {
+    const checked = await element(by.css('input[id="toggleCommentSummary"]')).getAttribute('checked');
+    console.log('JJJ - before openModal, checked is ', checked);
+    if (!checked) {
+      element(by.css('label[for="toggleCommentSummary"]')).click();
+    }
+  }
+
+  async closeModal() {
+    const checked = await element(by.css('input[id="toggleCommentSummary"]')).getAttribute('checked');
+    console.log('JJJ - before closeModal, checked is ', checked);
+    if (checked) {
+      element(by.css('label[for="toggleCommentSummary"]')).click();
     }
   }
 
@@ -16,35 +24,30 @@ export class CommentPage extends AppPage {
     return element(by.id('modal'));
   }
 
-  async closeModal() {
-    await this.waitForElement(by.id('modal-close-button'));
-    return element(by.id('modal-close-button')).click();
-  }
-
-  async clickOutsideModal() {
-    await this.waitForElement(by.id('modal-background'));
-    return element(by.id('modal-background')).click();
-  }
-
   async getCommentContainer() {
-    await this.waitForElement(by.id('comment-container'));
-    return element(by.id('comment-container'));
+    console.log(await element(by.id('comment-container')).getText()); // This is working!
+    return await element(by.id('comment-container'));
   }
 
-  async getFirstComment() {
-    await this.waitForElement(by.id('comment-row-0'));
-    return element(by.id('comment-row-0'));
-  }
+  // async clickOutsideModal() {
+  //   await this.waitForElement(by.id('modal-background'));
+  //   return element(by.id('modal-background')).click();
+  // }
 
-  async getSecondComment() {
-    await this.waitForElement(by.id('comment-row-1'));
-    return element(by.id('comment-row-1'));
-  }
+  // async getFirstComment() {
+  //   await this.waitForElement(by.id('comment-row-0'));
+  //   return element(by.id('comment-row-0'));
+  // }
 
-  async clickLastComment() {
-    await this.waitForElement(by.id('comment-row-3'));
-    return element(by.id('comment-row-1')).click();
-  }
+  // async getSecondComment() {
+  //   await this.waitForElement(by.id('comment-row-1'));
+  //   return element(by.id('comment-row-1'));
+  // }
+
+  // async clickLastComment() {
+  //   await this.waitForElement(by.id('comment-row-3'));
+  //   return element(by.id('comment-row-1')).click();
+  // }
 
   async number() {
     await this.waitForElement(by.id('pageNumber'));
