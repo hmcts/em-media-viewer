@@ -4,8 +4,9 @@ import { browser } from 'protractor';
 describe('media viewer app', () => {
   let page: AppPage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new AppPage();
+    await page.preparePage();
   });
 
   // afterEach(async () => {
@@ -15,8 +16,6 @@ describe('media viewer app', () => {
 
 
   it('should display header', async () => {
-    await page.navigateTo();
-
     expect(page.getHeaderText()).toEqual('Media Viewer Demo');
   });
 });

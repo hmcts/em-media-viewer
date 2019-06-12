@@ -7,6 +7,11 @@ export class AppPage {
     return browser.get('/');
   }
 
+  async preparePage() {
+    this.navigateTo();
+    await this.showToolbarButtons();
+  }
+
   async showToolbarButtons() {
     const checked = await element(by.css('input[id="search-btn-toggle"]')).getAttribute('checked');
     if (!checked) {

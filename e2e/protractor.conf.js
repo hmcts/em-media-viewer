@@ -11,8 +11,8 @@ exports.config = {
   ],
   capabilities: {
     browserName: 'chrome',
-    // shardTestFiles: true,
-    // maxInstances: 2,
+    shardTestFiles: true,
+    maxInstances: 20,
     chromeOptions: {
       prefs: {
         download: {

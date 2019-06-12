@@ -4,8 +4,9 @@ import { PrintPage } from '../pages/print.po';
 describe('print', () => {
   let page: PrintPage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new PrintPage();
+    await page.preparePage();
   });
 
   afterEach(async () => {

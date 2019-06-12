@@ -3,8 +3,9 @@ import { SearchPage } from '../pages/search.po';
 describe('search', () => {
   let page: SearchPage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new SearchPage();
+    await page.preparePage();
   });
 
   afterAll(async () =>{
