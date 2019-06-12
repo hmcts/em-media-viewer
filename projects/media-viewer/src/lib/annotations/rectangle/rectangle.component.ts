@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Rectangle } from './rectangle.model';
 
 @Component({
@@ -8,15 +8,14 @@ import { Rectangle } from './rectangle.model';
 })
 export class RectangleComponent {
 
-  selected = false;
+  @Input() selected: boolean;
   @Input() rectangle: Rectangle;
   @Input() color: String;
 
-  onMouseDown() {
-    this.selected = true;
+  @Output() click = new EventEmitter();
+
+  onClick() {
+    this.click.emit();
   }
 
-  onMouseUp() {
-    this.selected = false;
-  }
 }

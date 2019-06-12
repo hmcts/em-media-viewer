@@ -9,7 +9,7 @@ form {
 }
 
 form textarea {
-  width: 95%;
+  width: 100%;
   padding: 2px;
   border: none;
 
@@ -18,7 +18,6 @@ form textarea {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
-  overflow: hidden;
   resize: none;
 }
 
@@ -51,7 +50,9 @@ textarea.expanded {
 
 textarea.collapsed {
   margin-top: -25px;
+  margin-bottom: 15px;
   max-height: 20px;
+  overflow: hidden;
 }
 
 .collapsed > time {
@@ -64,4 +65,8 @@ textarea.edit-mode {
 
 textarea.view-mode {
   outline: none;
+}
+
+.aui-comment__header {
+  margin-bottom: 10px;
 }
