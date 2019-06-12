@@ -4,7 +4,7 @@ import { AnnotationApiService } from './annotation-api.service';
 import { AnnotationSet } from './annotation-set.model';
 import { User } from './user/user.model';
 import { Annotation } from './annotation.model';
-
+import mockAnnotationSet from '../../assets/annotation-set.json';
 
 describe('AnnotationApiService', () => {
   let httpMock: HttpTestingController;
@@ -116,10 +116,9 @@ describe('AnnotationApiService', () => {
       expect(comments[3].content).toBe('This comment should be last');
     });
 
-    // uncomment after mock removed
-    // const req = httpMock.expectOne(`/em-anno/annotation-sets/filter?documentId=${dmDocumentId}`);
-    // expect(req.request.method).toBe('GET');
-    // req.flush(annotationSet);
+    const req = httpMock.expectOne(`/em-anno/annotation-sets/filter?documentId=${dmDocumentId}`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockAnnotationSet);
   }));
 
 });

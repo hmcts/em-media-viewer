@@ -8,6 +8,7 @@
   "whitelistedNonPeerDependencies": [
     "@hmcts/frontend",
     "govuk-frontend",
-    "pdfjs-dist"
+    "pdfjs-dist",
+    "angular2-draggable"
   ]
 }

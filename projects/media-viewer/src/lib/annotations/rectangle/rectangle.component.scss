@@ -1,0 +1,13 @@
+.rectangle {
+  position: absolute;
+  z-index: 2;
+  opacity: 0.3;
+}
+
+.ng-draggable {
+  cursor: grab;
+}
+
+.ng-dragging {
+  cursor: grabbing;
+}
