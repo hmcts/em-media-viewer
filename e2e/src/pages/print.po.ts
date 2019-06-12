@@ -11,7 +11,7 @@ export class PrintPage extends AppPage {
     return element(by.css('print-preview-app'));
   }
 
-  async swithToPrintTab() {
+  async switchToPrintTab() {
     const tabs = await browser.getAllWindowHandles();
     expect(tabs.length).toEqual(2);
     browser.switchTo().window(tabs[1]);

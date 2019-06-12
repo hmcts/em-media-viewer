@@ -10,7 +10,9 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome',
+    browserName: 'chrome',
+    shardTestFiles: true,
+    maxInstances: 20,
     chromeOptions: {
       prefs: {
         download: {
