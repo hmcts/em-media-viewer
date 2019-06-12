@@ -13,6 +13,7 @@ import { PrintService } from '../../print.service';
 import {ErrorMessageComponent} from '../error-message/error.message.component';
 import {By} from '@angular/platform-browser';
 import {SimpleChange} from '@angular/core';
+import { AnnotationsModule } from '../../annotations/annotations.module';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -25,6 +26,9 @@ describe('ImageViewerComponent', () => {
       declarations: [
         ErrorMessageComponent,
         ImageViewerComponent
+      ],
+      imports: [
+        AnnotationsModule
       ]
     })
       .compileComponents();
