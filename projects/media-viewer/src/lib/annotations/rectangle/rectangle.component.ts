@@ -13,14 +13,9 @@ export class RectangleComponent {
   @Input() color: String;
 
   @Output() click = new EventEmitter();
-  @Output() loseFocus = new EventEmitter();
 
   onClick() {
     this.click.emit();
-  }
-
-  onLoseFocus() {
-    this.loseFocus.emit();
   }
 
 }

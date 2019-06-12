@@ -18,7 +18,6 @@ export class CommentComponent {
   editor: User;
 
   @Output() click = new EventEmitter();
-  @Output() loseFocus = new EventEmitter();
   @Input() user: User;
   @Input() top: number;
   @Input() selected: boolean;
@@ -51,10 +50,6 @@ export class CommentComponent {
       !this.editable ? 'view-mode' : 'edit-mode',
       !this.selected ? 'collapsed' : 'expanded',
     ];
-  }
-
-  onLoseFocus() {
-    this.loseFocus.emit();
   }
 
   get commentText() {
