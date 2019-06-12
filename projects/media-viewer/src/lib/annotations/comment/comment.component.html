@@ -1,0 +1,37 @@
+<form class="aui-comment" [ngStyle]="{ top: top + 'px' }">
+  <div id="detailsWrapper" class="aui-comment__header">
+    <span *ngIf="author && !editor" class="aui-comment__author">
+      {{ author.forename }} {{ author.surname }}
+    </span>
+    <span *ngIf="editor" class="aui-comment__author">
+      Modified By: {{ editor.forename }} {{ editor.surname }}
+    </span>
+    <time class="aui-comment__meta">
+      {{ lastUpdate | date: 'd MMMM y h:mm a' }}
+    </time>
+  </div>
+  <textarea type="text" required name="content" value="content"
+    [ngClass]="commentStyle()" [ngModel]="sliceComment" [readOnly]="!editable">
+  </textarea>
+  <div [hidden]="!expanded" class="aui-comment__footer commentBtns">
+    <button *ngIf="!editable; else Save"
+            class="govuk-button" type="submit" role="button"
+            (click)="onEdit()">
+      Edit
+    </button>
+    <button *ngIf="!editable; else Cancel" class="govuk-button govuk-button--secondary"
+            role="button">
+      Delete
+    </button>
+  </div>
+</form>
+<ng-template #Save>
+  <button class="govuk-button" type="submit" role="button">
+    Save
+  </button>
+</ng-template>
+<ng-template #Cancel>
+  <button class="govuk-button govuk-button--secondary" role="button" (click)="onCancel()">
+    Cancel
+  </button>
+</ng-template>

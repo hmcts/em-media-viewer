@@ -17,7 +17,7 @@ export class MediaViewerWrapperComponent implements OnInit {
   unsupportedFileName = 'unsupported.txt';
   unsupportedType = 'txt';
 
-  documentTypeToShow = 'pdf';
+  selectedTab = 'pdf';
   showToolbar = true;
 
   toolbarButtons = new ToolbarButtonToggles();
@@ -28,15 +28,19 @@ export class MediaViewerWrapperComponent implements OnInit {
     public api: AnnotationApiService
   ) {}
 
-  toggleDocumentSelection(selectedDocumentType: string) {
-    this.documentTypeToShow = selectedDocumentType;
+  selectTab(currentTab: string) {
+    this.selectedTab = currentTab;
   }
 
   toggleToolbarVisibility(showToolbar: boolean) {
     this.showToolbar = showToolbar;
   }
 
-  tabLinkStyle(documentType: string) {
-    return `govuk-tabs__tab ${this.documentTypeToShow === documentType ? 'govuk-tabs__tab--selected' : ''}`;
+  tabLinkStyle(currentTab: string) {
+    return `govuk-tabs__tab ${this.selectedTab === currentTab ? 'govuk-tabs__tab--selected' : ''}`;
+  }
+
+  public ngOnInit(): void {
+    this.api.getComments('1').subscribe(comments => this.comments = comments);
   }
 }
