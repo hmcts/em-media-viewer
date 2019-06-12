@@ -1,7 +1,7 @@
-<div class="modal" (click)="onClose()">
-  <div class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
+<div id="modal-background" class="modal" (click)="onClose()">
+  <div id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
     <h2>{{ title }}</h2>
-    <div class="comment-container" #commentContainer>
+    <div id="comment-container" class="comment-container" #commentContainer>
       <table class="govuk-table">
         <thead>
           <tr class="govuk-table__header">
@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor='let comment of comments' class="govuk-table__cell">
+          <tr *ngFor='let comment of comments; let i = index' [id]="'comment-row-'+i" class="govuk-table__cell">
             <td><span title="{{comment.createdByDetails.email}}">{{comment.createdByDetails.forename}} {{comment.createdByDetails.surname}}</span></td>
             <td>{{comment.createdDate | date : "hh:mm d MMMM yyyy" : 0 }}</td>
             <td title="{{comment.commentText}}">
@@ -26,7 +26,7 @@
 
     <div class="button-container">
       <button (click)="onPrint()" class="govuk-button govuk-button--secondary">Print</button>
-      <button (click)="onClose()" class="govuk-button">Close</button>
+      <button id="modal-close-button" (click)="onClose()" class="govuk-button">Close</button>
     </div>
   </div>
 </div>
