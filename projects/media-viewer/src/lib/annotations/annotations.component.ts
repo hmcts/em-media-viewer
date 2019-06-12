@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Annotation } from './annotation.model';
 import { annotationSet } from '../stub-annotation-data/annotation-set';
 
@@ -10,9 +10,14 @@ import { annotationSet } from '../stub-annotation-data/annotation-set';
 export class AnnotationsComponent implements OnInit {
 
   annotations: Annotation[] = [];
-  @Input() bounds: HTMLElement;
+  selectedIndex = -1;
 
   ngOnInit() {
     this.annotations = annotationSet;
   }
+
+  public setSelected(i: number) {
+    this.selectedIndex = i;
+  }
+
 }

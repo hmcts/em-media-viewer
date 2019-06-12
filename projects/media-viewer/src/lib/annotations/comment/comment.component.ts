@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../user/user.model';
 
@@ -9,27 +9,29 @@ import { User } from '../user/user.model';
 })
 export class CommentComponent {
 
+  private readonly MAX_COMMENT_LENGTH = 50;
+
   editable = false;
-  expanded = true;
-  sliceComment: string;
   lastUpdate: string;
+  fullComment: string;
   author: User;
   editor: User;
-  content: string;
+
+  @Output() click = new EventEmitter();
   @Input() user: User;
   @Input() top: number;
+  @Input() selected: boolean;
 
   @Input()
   set comment(comment: Comment) {
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
     this.editor = comment.lastModifiedByDetails;
-    this.content = comment.content;
-    this.sliceComment = this.content;
+    this.fullComment = comment.content;
   }
 
   onCommentClick() {
-    this.expanded = true;
+    this.click.emit();
   }
 
   onEdit() {
@@ -41,6 +43,18 @@ export class CommentComponent {
   }
 
   commentStyle() {
-    return 'aui-comment__content form-control mimic-focus ' + (!this.editable ? 'view-mode' : 'edit-mode');
+    return [
+      'aui-comment__content',
+      'form-control',
+      'mimic-focus',
+      !this.editable ? 'view-mode' : 'edit-mode',
+      !this.selected ? 'collapsed' : 'expanded',
+    ];
+  }
+
+  get commentText() {
+    return !this.selected && this.fullComment.length > this.MAX_COMMENT_LENGTH
+      ? this.fullComment.substring(0, this.MAX_COMMENT_LENGTH - 3) + '...'
+      : this.fullComment;
   }
 }

@@ -13,7 +13,8 @@ export const annotationSet = [
     type: 'highlight',
     comments: [{
       annotationId: 'f6225689-29ab-4e0d-9bea-8519a06d16f9',
-      content: 'hello',
+      content: 'This is a long comment that should get clipped at some point. I\'m not exactly sure what ' +
+        'point that is but it will definitely happen.',
       id: 'f6225689-29ab-9bea-8519a06d16f9',
       createdBy: 'example@example.org',
       createdByDetails: { forename: 'user', surname: 'surname', email: 'example@example.org' },
