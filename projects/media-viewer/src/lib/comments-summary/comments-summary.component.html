@@ -14,9 +14,9 @@
           <tr *ngFor='let comment of comments; let i = index' [id]="'comment-row-'+i" class="govuk-table__cell">
             <td><span title="{{comment.createdByDetails.email}}">{{comment.createdByDetails.forename}} {{comment.createdByDetails.surname}}</span></td>
             <td>{{comment.createdDate | date : "hh:mm d MMMM yyyy" }}</td>
-            <td title="{{comment.commentText}}">
+            <td title="{{comment.content}}">
               <span class="clipped">
-                {{comment.commentText}}
+                {{comment.content}}
               </span>
             </td>
           </tr>
