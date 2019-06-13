@@ -1,31 +1,31 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { annotationSet } from '../stub-annotation-data/annotation-set';
-import { AnnotationSet } from './annotation-set.model';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Annotation } from './annotation.model';
 
 @Component({
-  selector: 'mv-anno',
-  templateUrl: './annotations.component.html',
-  styleUrls: ['./annotations.component.scss']
+  selector: 'mv-annotation',
+  templateUrl: './annotations.component.html'
 })
-export class AnnotationsComponent implements OnInit {
+export class AnnotationsComponent {
 
+  @Input() annotation: Annotation;
+  @Input() commentsLeftOffset: number;
   @Input() zoom: number;
-  @Output() update = new EventEmitter<AnnotationSet>();
+  @Output() update = new EventEmitter<Annotation>();
 
-  annotationSet: AnnotationSet;
-  selectedIndex = -1;
+  commentSelected = false;
+  highlightSelected = false;
 
-  ngOnInit() {
-    this.annotationSet = annotationSet;
+  public selectComment() {
+    this.commentSelected = true;
   }
 
-  public setSelected(i: number) {
-    this.selectedIndex = i;
+  public selectHighlight() {
+    this.highlightSelected = true;
   }
 
-  public deleteComment(i: number) {
-    this.annotationSet.annotations[i].comments = [];
+  public deleteComment() {
+    this.annotation.comments = [];
 
-    this.update.emit(this.annotationSet);
+    this.update.emit(this.annotation);
   }
 }

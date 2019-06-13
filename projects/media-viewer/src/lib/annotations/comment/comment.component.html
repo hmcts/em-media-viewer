@@ -1,4 +1,4 @@
-<form (click)="onCommentClick()" class="aui-comment" [ngStyle]="{ top: top + 'px' }">
+<form (click)="onCommentClick()" class="aui-comment" [ngStyle]="{ top: top + 'px', left: left + 'px'}">
   <div id="detailsWrapper" class="aui-comment__header">
     <span *ngIf="author && !editor" class="aui-comment__author">
       {{ author.forename }} {{ author.surname }}

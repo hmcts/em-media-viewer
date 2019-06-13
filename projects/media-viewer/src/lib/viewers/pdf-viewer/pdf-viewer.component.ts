@@ -1,9 +1,20 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import { PrintService } from '../../print.service';
 import {
-  ChangePageByDeltaOperation, DocumentLoadFailed, DocumentLoadProgress,
+  ChangePageByDeltaOperation,
+  DocumentLoadProgress,
   DownloadOperation,
   PrintOperation,
   RotateOperation,
@@ -15,6 +26,9 @@ import {
   ZoomValue
 } from '../../events/viewer-operations';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
+import { AnnotationsComponent } from '../../annotations/annotations.component';
+import { AnnotationsViewInjector } from '../../annotations/annotations-view.injector';
+import { AnnotationSet } from '../../annotations/annotation-set.model';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -28,17 +42,24 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
   @Input() searchResults: Subject<SearchResultsCount>;
   @Input() zoomValue: Subject<ZoomValue>;
   @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
+  @Input() showAnnotations: boolean;
+  @Input() annotationSet: AnnotationSet;
+
+  annotationsViewInjector: AnnotationsViewInjector;
 
   loadingDocument = false;
   loadingDocumentProgress: number;
   errorMessage: string;
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef;
+  @ViewChild('pdfViewer') pdfViewer: ElementRef;
 
   private pdfWrapper: PdfJsWrapper;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService
   ) {}
 
@@ -50,6 +71,7 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe(() => this.onDocumentLoadFailed());
+    this.pdfWrapper.pagesRendered.subscribe(() => this.toggleAnnotations());
 
     await this.pdfWrapper.loadDocument(this.url);
   }
@@ -57,6 +79,20 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.url && this.pdfWrapper) {
       await this.pdfWrapper.loadDocument(this.url);
+    }
+    if (changes.showAnnotations) {
+      this.toggleAnnotations();
+    }
+  }
+
+  toggleAnnotations() {
+    if (this.showAnnotations) {
+      if(!this.annotationsViewInjector) {
+        const annotationFactory = this.componentFactoryResolver
+          .resolveComponentFactory(AnnotationsComponent);
+        this.annotationsViewInjector = new AnnotationsViewInjector(annotationFactory, this.viewContainerRef)
+      }
+      this.annotationsViewInjector.addToDom(this.annotationSet.annotations, this.pdfViewer);
     }
   }
 
@@ -74,6 +110,9 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
 
   private onDocumentLoaded() {
     this.loadingDocument = false;
+    if (this.showAnnotations) {
+      this.toggleAnnotations();
+    }
   }
 
   private onDocumentLoadFailed() {
