@@ -24,6 +24,7 @@ exports.config = {
   cucumberOpts: {
     monochrome: true,
     strict: true,
+    compiler:   'ts:ts-node/register',
     format: 'pretty',
     profile: false,
     'no-source': true,
