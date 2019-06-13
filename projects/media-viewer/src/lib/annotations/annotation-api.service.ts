@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { AnnotationSet } from './annotation-set.model';
 import { Annotation } from './annotation.model';
 import { Comment } from './comment/comment.model';
+import dummyAnnotationSet from '../../assets/annotation-set.json';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -26,6 +27,14 @@ export class AnnotationApiService {
   }
 
   public getComments(documentId: string): Observable<Comment[]> {
+    const response = new Subject<HttpResponse<AnnotationSet>>();
+
+    setTimeout(() => response.next(new HttpResponse({
+      body: dummyAnnotationSet
+    })), 1000);
+
+    // uncomment after removing the mock
+    // return this.getAnnotationSet(documentId)
     return this.getAnnotationSet(documentId)
       .pipe(map(this.sortAnnotations))
       .pipe(map(this.extractComments));
