@@ -35,7 +35,7 @@ export class AnnotationApiService {
 
     // uncomment after removing the mock
     // return this.getAnnotationSet(documentId)
-    return this.getAnnotationSet(documentId)
+    return response
       .pipe(map(this.sortAnnotations))
       .pipe(map(this.extractComments));
   }
