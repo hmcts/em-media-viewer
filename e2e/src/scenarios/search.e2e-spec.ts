@@ -8,7 +8,7 @@ describe('search', () => {
     await page.preparePage();
   });
 
-  afterAll(async () =>{
+  afterAll(async () => {
     page.toggleSearchBar();
   });
 
