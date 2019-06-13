@@ -4,8 +4,9 @@ const until = protractor.ExpectedConditions;
 export class AppPage {
 
   navigateTo() {
-    return browser.get('/');
-  }
+    browser.get('/');
+    return browser.driver.manage().window().maximize();
+   }
 
 
   async showToolbarButtons() {

@@ -1,7 +1,7 @@
 import { by, element } from 'protractor';
 import { AppPage } from './app.po';
 
-export class NavigatePage extends AppPage{
+export class NavigatePage extends AppPage {
 
   async goToNextPage() {
     await this.waitForElement(by.id('next'));

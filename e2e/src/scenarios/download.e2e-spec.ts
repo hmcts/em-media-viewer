@@ -1,6 +1,6 @@
 import { DownloadPage } from '../pages/download.po';
 
-describe('download', () => {
+describe('Doownload Scenarios ', () => {
   let page: DownloadPage;
 
   beforeEach(() => {

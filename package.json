@@ -28,7 +28,9 @@
     "test:codacy-upload": "cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
     "test:coveralls-upload": "cat ./reports/tests/coverage/ng/lcov.info | coveralls",
     "test:codecov-upload": "codecov -f ./reports/tests/coverage/ng/lcov.info",
-    "e2e": "ng e2e",
+    "e2e": "webdriver-manager update && ng e2e",
+    "webdriver": "webdriver-manager update",
+    "cucumber-e2e": "webdriver-manager update && ng e2e --protractor-config 'e2e/cucumber.conf.js'",
     "e2e:travis": "webdriver-manager update && ng e2e --protractor-config 'e2e/ci.protractor.conf.js'"
   },
   "dependencies": {
@@ -97,6 +99,14 @@
     "tsickle": "^0.35.0",
     "tslib": "^1.9.3",
     "tslint": "~5.16.0",
-    "typescript": "~3.2.4"
+    "typescript": "~3.2.4",
+    "protractor-cucumber-framework": "^6.1.1",
+    "cucumber": "^5.1.0",
+    "@types/cucumber": "~4.0.5",
+    "cucumber-html-reporter": "^5.0.0",
+    "@types/chai": "3.4.34",
+    "@types/chai-as-promised": "0.0.29",
+    "chai-smoothie": "^0.2.0",
+    "@types/node": "12.0.8"
   }
 }

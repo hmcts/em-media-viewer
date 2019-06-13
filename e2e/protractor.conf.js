@@ -5,12 +5,22 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 const fs = require('fs');
 
 exports.config = {
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 120000,
+  getPageTimeout: 120000,
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
-  capabilities: {
-    'browserName': 'chrome',
+  multiCapabilities: [
+    {
+      'browserName': 'firefox',
+      directConnect: true,
+      'moz:firefoxOptions': {
+        'args': ['--safe-mode']
+      }
+    },
+
+    {
+    browserName: 'chrome',
     chromeOptions: {
       prefs: {
         download: {
@@ -20,14 +30,21 @@ exports.config = {
       }
     }
   },
+
+  ],
+  maxSessions: 2,
+  shardTestFiles: true,
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
-    print: function() {}
+    print: function() {},
+    includeStackTrace: true,
+    isVerbose: true
   },
+
   onPrepare() {
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.e2e.json')
@@ -56,4 +73,5 @@ function removePreviousDownloads() {
     console.log(e);
     return e;
   }
+
 }
