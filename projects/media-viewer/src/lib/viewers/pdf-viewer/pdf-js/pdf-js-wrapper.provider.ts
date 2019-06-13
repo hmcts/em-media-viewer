@@ -38,6 +38,7 @@ export class PdfJsWrapperFactory {
       new Subject<DocumentLoadProgress>(),
       new Subject<DocumentLoaded>(),
       new Subject<DocumentLoadFailed>(),
+      new Subject<boolean>()
     );
   }
 

@@ -1,4 +1,4 @@
-export const annotationSet = {
+export const imageAnnotationSet = {
   documentId: '1',
   id: 'f6225689-29ab-4e0d-9bea-8519a06d16f9',
   annotationSetId: 'f6225689-29ab-4e0d-9bea-8519a06d16f9',

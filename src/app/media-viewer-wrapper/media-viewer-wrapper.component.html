@@ -7,9 +7,8 @@
       <div class="govuk-grid-column-two-thirds">
         <app-toolbar-toggles [toolbarButtons]="toolbarButtons"
                              [showCommentSummary]="showCommentSummary"
-                             (toggleToolbarVisibility)="toggleToolbarVisibility($event)"></app-toolbar-toggles>
-
-
+                             (toggleAnnotations)="toggleAnnotations($event)"
+                             (toggleToolbar)="toggleToolbar($event)"></app-toolbar-toggles>
       </div>
     </div>
     <div class="govuk-grid-row">
@@ -86,7 +85,9 @@
                          [downloadFileName]="pdfFileName"
                          [toolbarButtonToggles]="toolbarButtons"
                          [contentType]="'pdf'"
+                         [annotationSet]="pdfAnnotationSet"
                          [showCommentSummary]="showCommentSummary"
+                         [showAnnotations]="showAnnotations"
                          [showToolbar]="showToolbar"></mv-media-viewer>
       </div>
       <div *ngIf="selectedTab === 'image'">
@@ -94,6 +95,7 @@
                          [downloadFileName]="imageFileName"
                          [toolbarButtonToggles]="toolbarButtons"
                          [contentType]="'image'"
+                         [annotationSet]="imageAnnotationSet"
                          [showCommentSummary]="showCommentSummary"
                          [showToolbar]="showToolbar"></mv-media-viewer>
       </div>

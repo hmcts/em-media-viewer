@@ -19,8 +19,8 @@ export class CommentComponent {
 
   @Output() click = new EventEmitter();
   @Output() delete = new EventEmitter();
-  @Input() user: User;
   @Input() top: number;
+  @Input() left : number;
   @Input() selected: boolean;
 
   @Input()

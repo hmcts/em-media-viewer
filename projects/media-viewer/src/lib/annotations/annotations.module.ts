@@ -23,14 +23,13 @@ import { AngularDraggableModule } from 'angular2-draggable';
     CommentComponent
   ],
   entryComponents: [
+    AnnotationsComponent
   ],
   providers: [
     AnnotationApiService
   ],
   exports: [
-    AnnotationsComponent,
-    RectangleComponent,
-    CommentComponent
+    AnnotationsComponent
   ]
 })
 export class AnnotationsModule { }

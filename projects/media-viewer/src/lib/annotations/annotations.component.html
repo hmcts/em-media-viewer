@@ -1,22 +1,18 @@
-<div class="annotations-container" (click)="$event.target === $event.currentTarget && setSelected(-1)">
-  <div class="annotation-wrapper" *ngFor="let annotation of annotationSet.annotations; index as i">
-    <div [ngStyle]="{ top: annotation.rectangles[0].y + 'px' }">
+  <div class="annotation-wrapper">
       <mv-anno-rectangle
-        (click)="setSelected(i)"
-        [selected]="selectedIndex === i"
-        [rectangle]="annotation.rectangles[0]"
+        (click)="selectHighlight()"
+        [selected]="highlightSelected"
         [zoom]="zoom"
+        [rectangle]="annotation.rectangles[0]"
         [color]="annotation.color">
       </mv-anno-rectangle>
       <mv-anno-comment
         *ngIf="annotation.comments[0]"
-        (click)="setSelected(i)"
-        (delete)="deleteComment(i)"
-        [selected]="selectedIndex === i"
+        (click)="selectComment()"
+        (delete)="deleteComment()"
+        [selected]="commentSelected"
         [comment]="annotation.comments[0]"
-        [user]="annotation.createdByDetails"
-        [top]="annotation.rectangles[0].y * zoom">
+        [left]="commentsLeftOffset"
+        [top]="annotation.rectangles[0].y">
       </mv-anno-comment>
-    </div>
   </div>
-</div>
