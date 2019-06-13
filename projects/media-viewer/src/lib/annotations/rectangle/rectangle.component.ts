@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Rectangle } from './rectangle.model';
 
 @Component({
@@ -11,6 +11,7 @@ export class RectangleComponent {
   @Input() selected: boolean;
   @Input() rectangle: Rectangle;
   @Input() color: String;
+  @Input() zoom: number;
 
   @Output() click = new EventEmitter();
 

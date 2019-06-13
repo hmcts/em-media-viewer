@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Annotation } from './annotation.model';
 import { annotationSet } from '../stub-annotation-data/annotation-set';
 
@@ -8,6 +8,8 @@ import { annotationSet } from '../stub-annotation-data/annotation-set';
   styleUrls: ['./annotations.component.scss']
 })
 export class AnnotationsComponent implements OnInit {
+
+  @Input() zoom: number;
 
   annotations: Annotation[] = [];
   selectedIndex = -1;
