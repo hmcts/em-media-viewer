@@ -10,6 +10,8 @@ import {
 } from '../../events/viewer-operations';
 import { PrintService } from '../../print.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
+import { Annotation } from '../../annotations/annotation.model';
+import { AnnotationSet } from '../../annotations/annotation-set.model';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -21,7 +23,9 @@ export class ImageViewerComponent implements OnChanges {
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() zoomValue: Subject<ZoomValue>;
+  @Input() annotationSet: AnnotationSet;
 
+  selectedAnnotation = new Subject<string>();
   errorMessage: string;
 
   @ViewChild('img') img: ElementRef;

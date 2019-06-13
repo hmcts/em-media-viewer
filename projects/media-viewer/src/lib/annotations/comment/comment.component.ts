@@ -20,8 +20,8 @@ export class CommentComponent {
   @Output() click = new EventEmitter();
   @Output() delete = new EventEmitter();
   @Output() updated = new EventEmitter<String>();
-  @Input() user: User;
   @Input() top: number;
+  @Input() left: number;
   @Input() selected: boolean;
 
   @Input()

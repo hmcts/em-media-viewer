@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import {
   ChangePageByDeltaOperation,
@@ -19,7 +19,7 @@ export class ActionEvents {
   public readonly searchResultsCount = new Subject<SearchResultsCount>();
   public readonly zoom = new Subject<ZoomOperation>();
   public readonly stepZoom = new Subject<StepZoomOperation>();
-  public readonly zoomValue = new Subject<ZoomValue>();
+  public readonly zoomValue = new BehaviorSubject<ZoomValue>({ value: 1 });
   public readonly print = new Subject<PrintOperation>();
   public readonly download = new Subject<DownloadOperation>();
   public readonly setCurrentPage = new Subject<SetCurrentPageOperation>();
