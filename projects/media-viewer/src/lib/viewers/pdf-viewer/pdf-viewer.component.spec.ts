@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import {
@@ -39,6 +39,7 @@ describe('PdfViewerComponent', () => {
     documentLoadProgress: new Subject<DocumentLoadProgress>(),
     documentLoaded: new Subject<DocumentLoaded>(),
     documentLoadFailed: new Subject<DocumentLoadFailed>(),
+    pagesRendered: new Subject<boolean>(),
   };
 
   const mockFactory = {
@@ -65,7 +66,7 @@ describe('PdfViewerComponent', () => {
 
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
-    component.zoomValue = new Subject<ZoomValue>();
+    component.zoomValue = new BehaviorSubject<ZoomValue>({value: 1});
     component.currentPageChanged = new Subject<SetCurrentPageOperation>();
     component.searchResults = new Subject<SearchResultsCount>();
 

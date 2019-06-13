@@ -1,0 +1,19 @@
+<div class="annotation-wrapper">
+  <mv-anno-rectangle
+    (click)="selectAnnotation()"
+    [selected]="(selectedAnnotation | async) === annotation.id"
+    [zoom]="zoom"
+    [rectangle]="annotation.rectangles[0]"
+    [draggable]="draggable"
+    [color]="annotation.color">
+  </mv-anno-rectangle>
+  <mv-anno-comment
+    *ngIf="annotation.comments[0]"
+    (click)="selectAnnotation()"
+    (delete)="deleteComment()"
+    [selected]="(selectedAnnotation | async) === annotation.id"
+    [comment]="annotation.comments[0]"
+    [left]="commentsLeftOffset"
+    [top]="annotation.rectangles[0].y *(zoom)">
+  </mv-anno-comment>
+</div>
