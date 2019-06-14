@@ -10,26 +10,26 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
 // Firefox local setup
-  exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
-  capabilities: {
-    browserName: 'firefox',
-    shardTestFiles: true,
-    maxInstances: 20,
-  },
+  // exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
+  // capabilities: {
+  //   browserName: 'firefox',
+  //   shardTestFiles: true,
+  //   maxInstances: 20,
+  // },
 // // Chrome local setup
-//   capabilities: {
-//     browserName: 'chrome',
-//     shardTestFiles: true,
-//     maxInstances: 20,
-//     chromeOptions: {
-//       prefs: {
-//         download: {
-//           'prompt_for_download': false,
-//           'default_directory': require('path').join(__dirname, 'src/downloads')
-//         }
-//       }
-//     }
-//   },
+  capabilities: {
+    browserName: 'chrome',
+    // shardTestFiles: true,
+    // maxInstances: 20,
+    chromeOptions: {
+      prefs: {
+        download: {
+          'prompt_for_download': false,
+          'default_directory': require('path').join(__dirname, 'src/downloads')
+        }
+      }
+    }
+  },
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   framework: 'jasmine',

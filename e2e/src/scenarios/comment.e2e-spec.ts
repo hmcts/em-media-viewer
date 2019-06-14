@@ -1,12 +1,10 @@
 import { CommentPage } from '../pages/comment.po';
-import { Subject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AnnotationApiService } from 'projects/media-viewer/src/lib/annotations/annotation-api.service';
-import { HttpResponse } from '@angular/common/http';
-import dummyAnnotationSet from 'projects/media-viewer/src/assets/annotation-set.json';
+// import { AnnotationApiService } from 'projects/media-viewer/src/lib/annotations/annotation-api.service';
+import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/annotations/annotation-api.service';
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { AnnotationSet } from 'projects/media-viewer/src/lib/annotations/annotation-set.model';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { browser, by, element } from 'protractor';
+
 
 describe('search', () => {
   let page: CommentPage;
@@ -21,8 +19,8 @@ describe('search', () => {
         HttpClientTestingModule
       ]
     });
-
     annotationApiService = TestBed.get(AnnotationApiService);
+    spyOn(annotationApiService, 'getAnnotationSet').and.callFake(page.getMockAnnotationSet);
   });
 
   beforeEach(async () => {
@@ -33,6 +31,7 @@ describe('search', () => {
 
   // objective: Set up data mocking within here.
   it('should show test-data', async () => {
-    spyOn(annotationApiService, 'getAnnotationSet').and.callFake(page.getMockAnnotationSet('string')); // TODO Start here
+    // page.openModal();
+    browser.sleep(10000);
   });
 });
