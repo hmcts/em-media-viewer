@@ -31,7 +31,7 @@ describe('search', () => {
 
   // objective: Set up data mocking within here.
   it('should show test-data', async () => {
-    // page.openModal();
+    page.openModal();
     browser.sleep(10000);
   });
 });

@@ -8,11 +8,15 @@ export class CommentPage extends AppPage {
   private readonly httpClient: HttpClient;
 
   async openModal() {
-    const checked = element(by.css('input[id="showCommentSummary"]')).getAttribute('checked');
+    console.log('in openModal');
+    const checked = await element(by.css('input[id="toggleCommentSummary"]')).getAttribute('checked');
+    console.log('checked is ', checked);
     if (!checked) {
-        element(by.css('label[for="showCommentSummary"]')).click();
+        element(by.css('label[for="toggleCommentSummary"]')).click();
     }
-    browser.sleep(100000);
+    console.log('now, checked is ', await element(by.css('input[id="toggleCommentSummary"]')).getAttribute('checked'));
+    console.log('about to leave openModal');
+    browser.sleep(5000);
   }
 
   getMockAnnotationSet(documentId: string): Observable<HttpResponse<AnnotationSet>> {
