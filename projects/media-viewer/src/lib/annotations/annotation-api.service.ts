@@ -21,21 +21,23 @@ export class AnnotationApiService {
   }
 
   public getAnnotationSet(documentId: string): Observable<HttpResponse<AnnotationSet>> {
-    const url = `/em-anno/annotation-sets/filter?documentId=${documentId}`;
-
+    // const url = `/em-anno/annotation-sets/filter?documentId=${documentId}`;
+    const url = '/assets/annotation-set.json';
+    // TODO Find out why two of the comments aren't being rendered
     return this.httpClient.get<AnnotationSet>(url, { observe: 'response' });
   }
 
   public getComments(documentId: string): Observable<Comment[]> {
-    const response = new Subject<HttpResponse<AnnotationSet>>();
+    // const response = new Subject<HttpResponse<AnnotationSet>>();
 
-    setTimeout(() => response.next(new HttpResponse({
-      body: dummyAnnotationSet
-    })), 1000);
+
+    // setTimeout(() => response.next(new HttpResponse({
+    //   body: dummyAnnotationSet
+    // })), 1000);
 
     // uncomment after removing the mock
-    // return this.getAnnotationSet(documentId)
-    return response
+    return this.getAnnotationSet(documentId)
+    // return response
       .pipe(map(this.sortAnnotations))
       .pipe(map(this.extractComments));
   }
