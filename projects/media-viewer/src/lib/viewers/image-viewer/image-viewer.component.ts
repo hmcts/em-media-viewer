@@ -9,6 +9,8 @@ import {
   ZoomValue
 } from '../../events/viewer-operations';
 import { PrintService } from '../../print.service';
+import { AnnotationSet } from '../../annotations/annotation-set.model';
+import { AnnotationApiService } from '../../annotations/annotation-api.service';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -29,8 +31,10 @@ export class ImageViewerComponent implements OnChanges {
   rotationStyle;
   zoomStyle;
 
-  constructor(private printService: PrintService) {
-  }
+  constructor(
+    private readonly printService: PrintService,
+    private readonly api: AnnotationApiService
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.url) {
@@ -106,5 +110,9 @@ export class ImageViewerComponent implements OnChanges {
 
   onLoadError() {
     this.errorMessage = `Could not load the image "${this.url}"`;
+  }
+
+  public updateAnnotation(annotationSet: AnnotationSet) {
+    this.api.createAnnotationSet(annotationSet);
   }
 }

@@ -18,6 +18,7 @@ export class CommentComponent {
   editor: User;
 
   @Output() click = new EventEmitter();
+  @Output() delete = new EventEmitter();
   @Input() user: User;
   @Input() top: number;
   @Input() selected: boolean;
@@ -57,4 +58,9 @@ export class CommentComponent {
       ? this.fullComment.substring(0, this.MAX_COMMENT_LENGTH - 3) + '...'
       : this.fullComment;
   }
+
+  public onDelete() {
+    this.delete.emit();
+  }
+
 }
