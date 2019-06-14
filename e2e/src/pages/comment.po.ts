@@ -24,7 +24,7 @@ export class CommentPage extends AppPage {
     browser.sleep(100000);
   }
 
-  getMockAnnotationSet(api: AnnotationApiService): Observable<HttpResponse<AnnotationSet>> {
+  getMockAnnotationSet(documentId: string): Observable<HttpResponse<AnnotationSet>> {
     const response = new Subject<HttpResponse<AnnotationSet>>();
     setTimeout(() => response.next(new HttpResponse({
         body: dummyAnnotationSet

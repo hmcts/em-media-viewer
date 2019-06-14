@@ -33,6 +33,6 @@ describe('search', () => {
 
   // objective: Set up data mocking within here.
   it('should show test-data', async () => {
-    spyOn(annotationApiService, 'getAnnotationSet').and.callFake(page.getMockAnnotationSet(annotationApiService)); // TODO Start here
+    spyOn(annotationApiService, 'getAnnotationSet').and.callFake(page.getMockAnnotationSet('string')); // TODO Start here
   });
 });
