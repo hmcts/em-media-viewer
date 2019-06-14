@@ -19,7 +19,9 @@
             (click)="onEdit()">
       Edit
     </button>
-    <button *ngIf="!editable; else Cancel" class="govuk-button govuk-button--secondary"
+    <button *ngIf="!editable; else Cancel"
+            (click)="onDelete()"
+            class="govuk-button govuk-button--secondary"
             role="button">
       Delete
     </button>
