@@ -5,6 +5,7 @@
         (click)="setSelected(i)"
         [selected]="selectedIndex === i"
         [rectangle]="annotation.rectangles[0]"
+        [zoom]="zoom"
         [color]="annotation.color">
       </mv-anno-rectangle>
       <mv-anno-comment
