@@ -30,6 +30,10 @@ describe('AnnotationsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AnnotationsComponent);
     component = fixture.componentInstance;
+
+    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
+    fixture.detectChanges();
+
     debugElement = fixture.debugElement;
   });
 
@@ -38,9 +42,6 @@ describe('AnnotationsComponent', () => {
   });
 
   it('select a comment', () => {
-    component.annotations = annotationSet;
-    fixture.detectChanges();
-
     const commentElements = debugElement.nativeElement.querySelectorAll('form.aui-comment');
 
     commentElements[1].click();
@@ -48,9 +49,6 @@ describe('AnnotationsComponent', () => {
   });
 
   it('select a rectangle', () => {
-    component.annotations = annotationSet;
-    fixture.detectChanges();
-
     const commentElements = debugElement.nativeElement.querySelectorAll('div.rectangle');
 
     commentElements[1].click();
@@ -58,9 +56,6 @@ describe('AnnotationsComponent', () => {
   });
 
   it('deselect', () => {
-    component.annotations = annotationSet;
-    fixture.detectChanges();
-
     const commentElements = debugElement.nativeElement.querySelectorAll('form.aui-comment');
 
     commentElements[1].click();
@@ -70,6 +65,25 @@ describe('AnnotationsComponent', () => {
     container.click();
 
     expect(component.selectedIndex).toBe(-1);
+  });
+
+  it('deletes a comment', async () => {
+    const commentElements = debugElement.nativeElement.querySelectorAll('form.aui-comment');
+
+    commentElements[0].click();
+    fixture.detectChanges();
+
+    return new Promise(resolve => {
+      component.update.subscribe(as => {
+        expect(as.annotations[0].comments.length).toBe(0);
+
+        resolve();
+      });
+
+      const buttons = commentElements[0].querySelectorAll('button');
+      buttons[1].click();
+    });
+
   });
 
 });
