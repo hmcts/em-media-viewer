@@ -13,7 +13,7 @@
         [selected]="selectedIndex === i"
         [comment]="annotation.comments[0]"
         [user]="annotation.createdByDetails"
-        [top]="annotation.rectangles[0].y">
+        [top]="annotation.rectangles[0].y * zoom">
       </mv-anno-comment>
     </div>
   </div>
