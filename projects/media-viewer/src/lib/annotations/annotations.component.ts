@@ -28,4 +28,10 @@ export class AnnotationsComponent implements OnInit {
 
     this.update.emit(this.annotationSet);
   }
+
+  public updateComment(i: number, text: string) {
+    this.annotationSet.annotations[i].comments[0].content = text;
+
+    this.update.emit(this.annotationSet);
+  }
 }

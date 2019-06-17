@@ -44,22 +44,22 @@ describe('AnnotationsComponent', () => {
   it('select a comment', () => {
     const commentElements = debugElement.nativeElement.querySelectorAll('form.aui-comment');
 
-    commentElements[1].click();
-    expect(component.selectedIndex).toBe(1);
+    commentElements[0].click();
+    expect(component.selectedIndex).toBe(0);
   });
 
   it('select a rectangle', () => {
     const commentElements = debugElement.nativeElement.querySelectorAll('div.rectangle');
 
-    commentElements[1].click();
-    expect(component.selectedIndex).toBe(1);
+    commentElements[0].click();
+    expect(component.selectedIndex).toBe(0);
   });
 
   it('deselect', () => {
     const commentElements = debugElement.nativeElement.querySelectorAll('form.aui-comment');
 
-    commentElements[1].click();
-    expect(component.selectedIndex).toBe(1);
+    commentElements[0].click();
+    expect(component.selectedIndex).toBe(0);
 
     const container = debugElement.nativeElement.querySelector('.annotations-container');
     container.click();
@@ -70,20 +70,30 @@ describe('AnnotationsComponent', () => {
   it('deletes a comment', async () => {
     const commentElements = debugElement.nativeElement.querySelectorAll('form.aui-comment');
 
-    commentElements[0].click();
+    commentElements[1].click();
     fixture.detectChanges();
 
-    return new Promise(resolve => {
+    await new Promise(resolve => {
       component.update.subscribe(as => {
-        expect(as.annotations[0].comments.length).toBe(0);
+        expect(as.annotations[1].comments.length).toBe(0);
 
         resolve();
       });
 
-      const buttons = commentElements[0].querySelectorAll('button');
+      const buttons = commentElements[1].querySelectorAll('button');
       buttons[1].click();
     });
-
   });
 
+  it('updates a comment', async () => {
+    await new Promise(resolve => {
+      component.update.subscribe(as => {
+        expect(as.annotations[0].comments[0].content).toBe('Updated comment');
+
+        resolve();
+      });
+
+      component.updateComment(0, 'Updated comment');
+    });
+  });
 });
