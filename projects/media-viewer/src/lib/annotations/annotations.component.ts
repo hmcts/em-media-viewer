@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Annotation } from './annotation.model';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-annotation',
@@ -9,7 +10,7 @@ export class AnnotationsComponent {
 
   @Input() annotation: Annotation;
   @Input() commentsLeftOffset: number;
-  @Input() zoom: number;
+  @Input() zoom: Subject<number>;
   @Output() update = new EventEmitter<Annotation>();
 
   commentSelected = false;

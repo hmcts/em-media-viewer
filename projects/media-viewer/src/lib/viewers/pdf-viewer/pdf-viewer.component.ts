@@ -92,7 +92,7 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
           .resolveComponentFactory(AnnotationsComponent);
         this.annotationsViewInjector = new AnnotationsViewInjector(annotationFactory, this.viewContainerRef)
       }
-      this.annotationsViewInjector.addToDom(this.annotationSet.annotations, this.pdfViewer);
+      this.annotationsViewInjector.addToDom(this.annotationSet.annotations, this.zoomValue, this.pdfViewer);
     }
   }
 

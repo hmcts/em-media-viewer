@@ -2,7 +2,7 @@
       <mv-anno-rectangle
         (click)="selectHighlight()"
         [selected]="highlightSelected"
-        [zoom]="zoom"
+        [zoom]="zoom | async"
         [rectangle]="annotation.rectangles[0]"
         [color]="annotation.color">
       </mv-anno-rectangle>
@@ -13,6 +13,6 @@
         [selected]="commentSelected"
         [comment]="annotation.comments[0]"
         [left]="commentsLeftOffset"
-        [top]="annotation.rectangles[0].y">
+        [top]="annotation.rectangles[0].y *(zoom | async)">
       </mv-anno-comment>
   </div>
