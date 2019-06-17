@@ -10,7 +10,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { PrintService } from '../../print.service';
 import {
   ChangePageByDeltaOperation,
@@ -40,7 +40,7 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() searchResults: Subject<SearchResultsCount>;
-  @Input() zoomValue: Subject<ZoomValue>;
+  @Input() zoomValue: BehaviorSubject<ZoomValue>;
   @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
   @Input() showAnnotations: boolean;
   @Input() annotationSet: AnnotationSet;
