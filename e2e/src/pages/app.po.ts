@@ -1,45 +1,55 @@
 import { browser, by, element, Locator, protractor } from 'protractor';
+import { By } from '@angular/platform-browser';
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
 
-  navigateTo() {
-    return browser.get('/');
+  async navigateTo() {
+    const homepage = await browser.get('/'); 
+    return homepage;
   }
 
   async preparePage() {
-    this.navigateTo();
+    await this.navigateTo();
     await this.showToolbarButtons();
   }
 
+  async clickElement(selector: By) {
+    const el = await element(selector);
+    return el.click();
+  }
+
   async showToolbarButtons() {
-    const checked = await element(by.css('input[id="search-btn-toggle"]')).getAttribute('checked');
+    console.log('showToolbarButtons called');
+    const searchButtonElement = await element(by.id('search-btn-toggle'));
+    const checked = await searchButtonElement.getAttribute('checked');
     if (!checked) {
-      element(by.css('label[for="download-btn-toggle"]')).click();
-      element(by.css('label[for="navigate-btn-toggle"]')).click();
-      element(by.css('label[for="print-btn-toggle"]')).click();
-      element(by.css('label[for="rotate-btn-toggle"]')).click();
-      element(by.css('label[for="search-btn-toggle"]')).click();
-      element(by.css('label[for="zoom-btn-toggle"]')).click();
+      await Promise.all([
+        this.clickElement(by.css('label[for="download-btn-toggle"]')),
+        this.clickElement(by.css('label[for="navigate-btn-toggle"]')),
+        this.clickElement(by.css('label[for="print-btn-toggle"]')),
+        this.clickElement(by.css('label[for="rotate-btn-toggle"]')),
+        this.clickElement(by.css('label[for="search-btn-toggle"]')),
+        this.clickElement(by.css('label[for="zoom-btn-toggle"]'))
+      ]);
     }
+    console.log('leaving showToolbarButtons');
   }
 
-  getHeaderText() {
-    return element(by.css('media-viewer-wrapper h2')).getText();
+  async getHeaderText() {
+    const headerText = await element(by.css('media-viewer-wrapper h2')).getText();
+    return headerText;
   }
 
-  selectPdfViewer() {
-    this.showToolbarButtons();
-    element(by.id('pdf')).click();
+  async selectPdfViewer() {
+    await (await element(by.id('pdf'))).click();
   }
 
-  selectImageViewer() {
-    this.showToolbarButtons();
+  async selectImageViewer() {
     return element(by.id('image')).click();
   }
 
-  selectUnsupportedViewer() {
-    this.showToolbarButtons();
+  async selectUnsupportedViewer() {
     return element(by.id('unsupported')).click();
   }
 

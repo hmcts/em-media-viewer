@@ -1,37 +1,38 @@
-// import { SearchPage } from '../pages/search.po';
+import { SearchPage } from '../pages/search.po';
 
-// describe('search', () => {
-//   let page: SearchPage;
+describe('search', () => {
+  let page: SearchPage;
 
-//   beforeEach(async () => {
-//     page = new SearchPage();
-//     await page.preparePage();
-//   });
+  beforeEach(async () => {
+    page = new SearchPage();
+    await page.preparePage();
+  });
 
-//   afterAll(async () => {
-//     page.toggleSearchBar();
-//   });
-
-
-//   it('should search the pdf for selected word', async () => {
-//     page.selectPdfViewer();
-//     page.toggleSearchBar();
-
-//     await page.searchFor('Based');
-//     expect(page.selectedSearchText()).toEqual('based');
+  afterAll(async () => {
+    page.toggleSearchBar();
+  });
 
 
-//     await page.goToNextResult();
-//     expect(page.searchResultsCounter()).toContain('2 of');
-//     expect(page.selectedSearchResult()).toEqual(page.secondSearchResult());
+  it('should search the pdf for selected word', async () => {
+    await page.selectPdfViewer();
+    await page.showToolbarButtons(); // NEW
+    page.toggleSearchBar();
+
+    await page.searchFor('Based');
+    expect(page.selectedSearchText()).toEqual('based');
 
 
-//     await page.goToPreviousResult();
-//     expect(page.searchResultsCounter()).toContain('1 of');
-//     expect(page.selectedSearchResult()).toEqual(page.firstSearchResult());
+    await page.goToNextResult();
+    expect(page.searchResultsCounter()).toContain('2 of');
+    expect(page.selectedSearchResult()).toEqual(page.secondSearchResult());
 
 
-//     await page.selectMatchCase();
-//     expect(page.selectedSearchText()).toEqual('Based');
-//   });
-// });
+    await page.goToPreviousResult();
+    expect(page.searchResultsCounter()).toContain('1 of');
+    expect(page.selectedSearchResult()).toEqual(page.firstSearchResult());
+
+
+    await page.selectMatchCase();
+    expect(page.selectedSearchText()).toEqual('Based');
+  });
+});

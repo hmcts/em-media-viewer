@@ -10,7 +10,6 @@ export class CommentPage extends AppPage {
     if (!checked) {
         (await element(by.css('label[for="toggleCommentSummary"]'))).click();
     }
-    browser.sleep(5000);
   }
 
   async getModal() {

@@ -28,34 +28,39 @@ describe('search', () => {
     expect(modalText).toContain('Comment');
   });
 
-  // TODO Uncomment this once clicking on background works
+  it('should close modal on close button', async () => {
+    expect(await page.modalIsOpen()).toBeTruthy();
+    await page.clickCloseButton();
+    expect(await page.modalIsOpen()).toBeFalsy();
+  });
 
-  // it('should close modal on close button', async () => {
-  //   expect(await page.modalIsOpen()).toBeTruthy();
-  //   await page.clickCloseButton();
-  //   expect(await page.modalIsOpen()).toBeFalsy();
+  // it('should re-open the modal', async () => {
+  //   await page.preparePage();
+  //   await page.selectPdfViewer();
+  //   await page.openModal();
+  //   browser.sleep(5000);
   // });
 
-  it('should close modal on clicking on background', async () => {
-    await page.preparePage();
-    console.log('1');
-    browser.sleep(10000);
-    await page.selectPdfViewer();
-    console.log('2');
+  // it('should close modal on clicking on background', async () => {
+  //   await page.preparePage();
+  //   console.log('1');
+  //   browser.sleep(10000);
+  //   await page.selectPdfViewer();
+  //   console.log('2');
 
-    // TODO - This opens a modal right at the end of the sleep, and then says
-    // WebDriverError: Element <a id="pdf" class="govuk-tabs__tab govuk-tabs__tab--selected" href="#pdf"> is not clickable at point (97,158) because another element <th> obscures it
-    console.log('3');
-    await page.openModal();
-    console.log('4');
+  //   // TODO - This opens a modal right at the end of the sleep, and then says
+  //   // WebDriverError: Element <a id="pdf" class="govuk-tabs__tab govuk-tabs__tab--selected" href="#pdf"> is not clickable at point (97,158) because another element <th> obscures it
+  //   console.log('3');
+  //   await page.openModal();
+  //   console.log('4');
     
-    expect(await page.modalIsOpen()).toBeTruthy();
-    console.log('5');
-    browser.sleep(10000);
-    // await page.clickOutsideModal();
-    expect(await page.modalIsOpen()).toBeFalsy();
+    // expect(await page.modalIsOpen()).toBeTruthy();
+    // console.log('5');
+    // browser.sleep(10000);
+    // // await page.clickOutsideModal();
+    // expect(await page.modalIsOpen()).toBeFalsy();
 
-  });
+  // });
 
 
   // Once stub is set up, write the following tests
