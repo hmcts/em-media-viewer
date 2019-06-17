@@ -9,30 +9,35 @@ describe('search', () => {
   });
 
   afterAll(async () => {
-    page.toggleSearchBar();
+    await page.toggleSearchBar();
   });
-
 
   it('should search the pdf for selected word', async () => {
     await page.selectPdfViewer();
-    await page.showToolbarButtons(); // NEW
-    page.toggleSearchBar();
+    await page.showToolbarButtons();
+    await page.toggleSearchBar();
 
     await page.searchFor('Based');
-    expect(page.selectedSearchText()).toEqual('based');
-
+    let selectedSearchText = await page.selectedSearchText();
+    expect(selectedSearchText).toEqual('based');
 
     await page.goToNextResult();
-    expect(page.searchResultsCounter()).toContain('2 of');
-    expect(page.selectedSearchResult()).toEqual(page.secondSearchResult());
+    let searchResultsCount = await page.searchResultsCounter();
+    let selectedResult = await page.selectedSearchResult();
+    const secondSearchResult = await page.secondSearchResult();
+    expect(searchResultsCount).toContain('2 of');
+    expect(selectedResult).toEqual(secondSearchResult);
 
 
     await page.goToPreviousResult();
-    expect(page.searchResultsCounter()).toContain('1 of');
-    expect(page.selectedSearchResult()).toEqual(page.firstSearchResult());
-
+    searchResultsCount = await page.searchResultsCounter();
+    selectedResult = await page.selectedSearchResult();
+    const firstSearchResult = await page.firstSearchResult();
+    expect(searchResultsCount).toContain('1 of');
+    expect(selectedResult).toEqual(firstSearchResult);
 
     await page.selectMatchCase();
-    expect(page.selectedSearchText()).toEqual('Based');
+    selectedSearchText = await page.selectedSearchText();
+    expect(selectedSearchText).toEqual('Based');
   });
 });

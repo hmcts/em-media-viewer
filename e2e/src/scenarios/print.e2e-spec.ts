@@ -17,21 +17,21 @@ describe('print', () => {
 
   it('should print the pdf', async () => {
     await page.selectPdfViewer();
-    await page.showToolbarButtons(); // NEW
+    await page.showToolbarButtons();
     await page.clickPrint();
 
     await page.switchToPrintTab();
 
-    expect(page.getPrintDialog()).toBeDefined();
+    expect(await page.getPrintDialog()).toBeDefined();
   });
 
   it('should print the image', async () => {
     await page.selectImageViewer();
-    await page.showToolbarButtons(); // NEW
+    await page.showToolbarButtons();
     await page.clickPrint();
 
     await page.switchToPrintTab();
 
-    expect(page.getPrintDialog()).toBeDefined();
+    expect(await page.getPrintDialog()).toBeDefined();
   });
 });

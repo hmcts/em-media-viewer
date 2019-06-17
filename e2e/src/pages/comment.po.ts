@@ -6,9 +6,10 @@ import { AppPage } from './app.po';
 export class CommentPage extends AppPage {
 
   async openModal() {
-    const checked = await element(by.css('input[id="toggleCommentSummary"]')).getAttribute('checked');
+    const el = await element(by.css('input[id="toggleCommentSummary"]'));
+    const checked = await el.getAttribute('checked');
     if (!checked) {
-        (await element(by.css('label[for="toggleCommentSummary"]'))).click();
+      await this.clickElement(by.css('label[for="toggleCommentSummary"]'));
     }
   }
 
@@ -28,12 +29,12 @@ export class CommentPage extends AppPage {
   }
 
   async clickCloseButton() {
-    await element(by.id('modal-close-button')).click();
+    await this.clickElement(by.id('modal-close-button'));
   }
 
   async clickOutsideModal() {
     browser.sleep(10000);
-    (await element(by.id('modal-background'))).click();
+    await this.clickElement(by.id('modal-background'));
     browser.sleep(10000);
   }
 

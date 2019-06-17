@@ -5,7 +5,7 @@ const until = protractor.ExpectedConditions;
 export class AppPage {
 
   async navigateTo() {
-    const homepage = await browser.get('/'); 
+    const homepage = await browser.get('/');
     return homepage;
   }
 
@@ -20,7 +20,6 @@ export class AppPage {
   }
 
   async showToolbarButtons() {
-    console.log('showToolbarButtons called');
     const searchButtonElement = await element(by.id('search-btn-toggle'));
     const checked = await searchButtonElement.getAttribute('checked');
     if (!checked) {
@@ -33,7 +32,6 @@ export class AppPage {
         this.clickElement(by.css('label[for="zoom-btn-toggle"]'))
       ]);
     }
-    console.log('leaving showToolbarButtons');
   }
 
   async getHeaderText() {
@@ -41,17 +39,11 @@ export class AppPage {
     return headerText;
   }
 
-  async selectPdfViewer() {
-    await (await element(by.id('pdf'))).click();
-  }
+  async selectPdfViewer() { await this.clickElement(by.id('pdf')); }
 
-  async selectImageViewer() {
-    return element(by.id('image')).click();
-  }
+  async selectImageViewer() { await this.clickElement(by.id('image')); }
 
-  async selectUnsupportedViewer() {
-    return element(by.id('unsupported')).click();
-  }
+  async selectUnsupportedViewer() { await this.clickElement(by.id('unsupported')); }
 
   async waitForPdfToLoad() {
     await browser.wait(until.presenceOf(element(by.css('div[class="page"'))), 3000, 'PDF viewer taking too long to load');

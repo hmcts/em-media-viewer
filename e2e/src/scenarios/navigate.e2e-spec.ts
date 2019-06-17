@@ -10,7 +10,7 @@ describe('navigate', () => {
 
   it('should display next page in pdf viewer', async () => {
     await page.selectPdfViewer();
-    await page.showToolbarButtons(); // NEW
+    await page.showToolbarButtons();
     await page.waitForPdfToLoad();
 
     await page.goToNextPage();

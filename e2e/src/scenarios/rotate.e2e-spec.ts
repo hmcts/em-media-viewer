@@ -11,28 +11,28 @@ describe('rotate', () => {
 
   it('should display rotated pdf', async () => {
     await page.selectPdfViewer();
-    await page.showToolbarButtons(); // NEW
+    await page.showToolbarButtons();
     await page.waitForPdfToLoad();
 
     await page.captureCurrentOrientation();
-    page.rotateClockwise();
+    await page.rotateClockwise();
 
     await page.checkPdfIsRotated();
 
     await page.captureCurrentOrientation();
-    page.rotateCounterClockwise();
+    await page.rotateCounterClockwise();
 
-    page.checkPdfIsRotated();
+    await page.checkPdfIsRotated();
   });
 
   it('should display rotated image', async () => {
     await page.selectImageViewer();
-    await page.showToolbarButtons(); // NEW
+    await page.showToolbarButtons();
 
-    page.rotateClockwise();
-    page.checkImageIsRotatedBy('90');
+    await page.rotateClockwise();
+    await page.checkImageIsRotatedBy('90');
 
-    page.rotateCounterClockwise();
-    page.checkImageIsRotatedBy('0');
+    await page.rotateCounterClockwise();
+    await page.checkImageIsRotatedBy('0');
   });
 });

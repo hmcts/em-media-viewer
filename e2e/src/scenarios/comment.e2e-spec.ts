@@ -16,7 +16,7 @@ describe('search', () => {
   it('should display comments modal', async () => {
     await page.selectPdfViewer();
     await page.openModal();
-
+    browser.sleep(10000);
     const modalElement = await page.getModal();
     expect(modalElement).toBeDefined();
   });

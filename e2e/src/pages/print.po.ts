@@ -3,17 +3,17 @@ import { AppPage } from './app.po';
 
 export class PrintPage extends AppPage {
 
-  clickPrint() {
-    return element(by.id('print')).click();
+  async clickPrint() {
+    await this.clickElement(by.id('print'));
   }
 
-  getPrintDialog() {
-    return element(by.css('print-preview-app'));
+  async getPrintDialog() {
+    await element(by.css('print-preview-app'));
   }
 
   async switchToPrintTab() {
     const tabs = await browser.getAllWindowHandles();
     expect(tabs.length).toEqual(2);
-    browser.switchTo().window(tabs[1]);
+    await browser.switchTo().window(tabs[1]);
   }
 }

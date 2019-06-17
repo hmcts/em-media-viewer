@@ -13,8 +13,8 @@ describe('download', () => {
     const file = 'e2e/src/downloads/example.pdf';
 
     await page.selectPdfViewer();
-    await page.showToolbarButtons(); // NEW
-    page.clickDownload();
+    await page.showToolbarButtons();
+    await page.clickDownload();
     await page.waitForDownloadToComplete(file);
 
     expect(page.hasFileDownloaded(file)).toBe(true);
@@ -24,8 +24,8 @@ describe('download', () => {
     const file = 'e2e/src/downloads/example.jpg';
 
     await page.selectImageViewer();
-    await page.showToolbarButtons(); // NEW
-    page.clickDownload();
+    await page.showToolbarButtons();
+    await page.clickDownload();
     await page.waitForDownloadToComplete(file);
 
     expect(page.hasFileDownloaded(file)).toBe(true);
@@ -35,8 +35,8 @@ describe('download', () => {
     const file = 'e2e/src/downloads/unsupported.txt';
 
     await page.selectUnsupportedViewer();
-    await page.showToolbarButtons(); // NEW
-    page.clickDownload();
+    await page.showToolbarButtons();
+    await page.clickDownload();
     await page.waitForDownloadToComplete(file);
 
     expect(page.hasFileDownloaded(file)).toBe(true);
