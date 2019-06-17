@@ -3,8 +3,8 @@
      rzHandles="all"
      class="rectangle"
      [style.backgroundColor]="'#' + color"
-     [style.width]="rectangle.width + 'px'"
-     [style.height]="rectangle.height + 'px'"
-     [position]="{ x: rectangle.x, y: rectangle.y }"
+     [style.width]="rectangle.width *zoom + 'px'"
+     [style.height]="rectangle.height *zoom + 'px'"
+     [position]="{ x: rectangle.x *zoom, y: rectangle.y *zoom }"
      (click)="onClick()">
 </div>

@@ -1,16 +1,19 @@
 import { ComponentFactory, ElementRef, EmbeddedViewRef, ViewContainerRef } from '@angular/core';
 import { Annotation } from './annotation.model';
 import { AnnotationsComponent } from './annotations.component';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { ZoomValue } from '../events/viewer-operations';
 
 export class AnnotationsViewInjector {
 
   constructor(private annotationFactory: ComponentFactory<AnnotationsComponent>,
               private viewContainerRef: ViewContainerRef) {}
 
-  addToDom(annotations: Annotation[], pdfViewer: ElementRef) {
+  addToDom(annotations: Annotation[], zoomSubject: Subject<ZoomValue>, pdfViewer: ElementRef) {
+    const zoomValue = new BehaviorSubject<number>(1);
+    zoomSubject.subscribe( zoom => zoomValue.next(zoom.value));
 
     this.viewContainerRef.clear();
-
     const pdfViewerHtml = pdfViewer.nativeElement as HTMLElement;
     let pages = pdfViewerHtml.querySelectorAll(".page");
 
@@ -21,6 +24,7 @@ export class AnnotationsViewInjector {
         const annotationComponent = this.viewContainerRef.createComponent(this.annotationFactory);
         annotationComponent.instance.annotation = annotation;
         annotationComponent.instance.commentsLeftOffset = page.clientWidth + 5;
+        annotationComponent.instance.zoom = zoomValue;
         const annotationElement = (annotationComponent.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
         page.insertBefore(annotationElement, page.firstElementChild);
