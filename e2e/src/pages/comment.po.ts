@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs';
-import { HttpResponse, HttpClient } from '@angular/common/http';
 import { browser, by, element } from 'protractor';
 import { AppPage } from './app.po';
 
@@ -33,9 +31,12 @@ export class CommentPage extends AppPage {
   }
 
   async clickOutsideModal() {
-    browser.sleep(10000);
+    console.log('a');
+    browser.sleep(5000);
     await this.clickElement(by.id('modal-background'));
-    browser.sleep(10000);
+    await console.log(await (await element(by.id('modal-background'))).getWebElement());
+    console.log('b');
+    browser.sleep(5000);
   }
 
 

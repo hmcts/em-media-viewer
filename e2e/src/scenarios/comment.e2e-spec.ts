@@ -1,8 +1,8 @@
 import { CommentPage } from '../pages/comment.po';
-import { browser, by, element } from 'protractor';
+import { browser } from 'protractor';
 
 
-describe('search', () => {
+describe('comment', () => {
   let page: CommentPage;
 
   beforeAll(async () => {
@@ -16,7 +16,6 @@ describe('search', () => {
   it('should display comments modal', async () => {
     await page.selectPdfViewer();
     await page.openModal();
-    browser.sleep(10000);
     const modalElement = await page.getModal();
     expect(modalElement).toBeDefined();
   });
@@ -34,34 +33,21 @@ describe('search', () => {
     expect(await page.modalIsOpen()).toBeFalsy();
   });
 
-  // it('should re-open the modal', async () => {
-  //   await page.preparePage();
-  //   await page.selectPdfViewer();
-  //   await page.openModal();
-  //   browser.sleep(5000);
-  // });
-
-  // it('should close modal on clicking on background', async () => {
-  //   await page.preparePage();
-  //   console.log('1');
-  //   browser.sleep(10000);
-  //   await page.selectPdfViewer();
-  //   console.log('2');
-
-  //   // TODO - This opens a modal right at the end of the sleep, and then says
-  //   // WebDriverError: Element <a id="pdf" class="govuk-tabs__tab govuk-tabs__tab--selected" href="#pdf"> is not clickable at point (97,158) because another element <th> obscures it
-  //   console.log('3');
-  //   await page.openModal();
-  //   console.log('4');
-    
-    // expect(await page.modalIsOpen()).toBeTruthy();
-    // console.log('5');
-    // browser.sleep(10000);
-    // // await page.clickOutsideModal();
-    // expect(await page.modalIsOpen()).toBeFalsy();
-
-  // });
-
+  it('should re-open the modal', async () => {
+    await page.preparePage();
+    await page.selectPdfViewer();
+    await page.openModal();
+    browser.sleep(10000);
+    const isModalOpen = await page.modalIsOpen();
+    expect(isModalOpen).toBeTruthy();
+    // TODO This doesn't close the modal very well
+    await page.clickOutsideModal();
+    console.log('I should have clicked outside the modal now');
+    browser.sleep(10000);
+    // TODO This doesn't measure if the modal is open or not
+    const andNowIsModalOpen = await page.modalIsOpen();
+    expect(andNowIsModalOpen).toBeFalsy();
+  });
 
   // Once stub is set up, write the following tests
   // Comment text appears (use page.getModalText() method)

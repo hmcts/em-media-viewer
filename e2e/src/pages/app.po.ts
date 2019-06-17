@@ -39,11 +39,11 @@ export class AppPage {
     return headerText;
   }
 
-  async selectPdfViewer() { await this.clickElement(by.id('pdf')); }
+  async selectPdfViewer() { await this.clickElement(by.id('pdf-tab')); }
 
-  async selectImageViewer() { await this.clickElement(by.id('image')); }
+  async selectImageViewer() { await this.clickElement(by.id('image-tab')); }
 
-  async selectUnsupportedViewer() { await this.clickElement(by.id('unsupported')); }
+  async selectUnsupportedViewer() { await this.clickElement(by.id('unsupported-tab')); }
 
   async waitForPdfToLoad() {
     await browser.wait(until.presenceOf(element(by.css('div[class="page"'))), 3000, 'PDF viewer taking too long to load');
