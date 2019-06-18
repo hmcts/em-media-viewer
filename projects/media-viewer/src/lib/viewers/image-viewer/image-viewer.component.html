@@ -1,7 +1,9 @@
 <div id="viewer-wrapper">
-  <mv-anno [zoom]="zoom" (update)="updateAnnotation($event)"></mv-anno>
-  <div *ngIf="!errorMessage" id="image-container" class="image-container" [ngStyle]="{ transform: zoomStyle }">
-    <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url" [ngStyle]="{ transform: rotationStyle }" (error)="onLoadError()"/>
+  <mv-anno [shadowedElement]="img" [zoom]="zoom" [rotation]="rotation" (update)="updateAnnotation($event)"></mv-anno>
+  <div *ngIf="!errorMessage" id="image-container" class="image-container" #imgCont [ngStyle]="{ transform: zoomStyle, height: heightStyle }">
+    <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url" [ngClass]="{rot90: rotation == 90, rot180: rotation == 180, rot270: rotation == 270}" (load)="onImageLoad()" (error)="onLoadError()"/>
   </div>
   <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>
 </div>
+
+

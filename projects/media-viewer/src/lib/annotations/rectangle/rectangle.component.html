@@ -1,10 +1,9 @@
-<div ngDraggable
-     ngResizable
-     rzHandles="all"
+<div
      class="rectangle"
      [style.backgroundColor]="'#' + color"
      [style.width]="rectangle.width * zoom + 'px'"
      [style.height]="rectangle.height * zoom + 'px'"
-     [position]="{ x: rectangle.x * zoom, y: rectangle.y * zoom}"
+     [style.top]="rectangle.y * zoom + 'px'"
+     [style.left]="rectangle.x * zoom + 'px'"
      (click)="onClick()">
 </div>

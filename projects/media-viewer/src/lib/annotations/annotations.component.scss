@@ -1,6 +1,45 @@
 
 .annotations-container {
   position: absolute;
+  top:0;
+  left:0;
+  z-index: 1;
+}
+
+.inner-container {
+  position: absolute;
   height: 100%;
   width: 100%;
+  transform-origin: left bottom;
+  top:0;
+  left:0;
+  -webkit-transform-origin: left bottom;
+  -moz-transform-origin: left bottom;
+  -ms-transform-origin: left bottom;
+  -o-transform-origin: left bottom;
+  transform-origin: left bottom;
+}
+
+.rot90 {
+  -webkit-transform: translateY(-100%) rotate(90deg); /* Safari */
+  -moz-transform: translateY(-100%) rotate(90deg); /* Firefox 3.6 Firefox 4 */
+  /*-moz-transform-origin: right top; */
+  -ms-transform: translateY(-100%) rotate(90deg); /* IE9 */
+  -o-transform: translateY(-100%) rotate(90deg); /* Opera */
+  transform: translateY(-100%) rotate(90deg); /* W3C */
+}
+
+.rot180 {
+  -webkit-transform: translateX(100%) translateY(-100%) rotate(180deg); /* Safari */
+  -moz-transform: translateX(100%) translateY(-100%) rotate(180deg); /* Firefox 3.6 Firefox 4 */
+  /*-moz-transform-origin: right top; */
+  -ms-transform: translateX(100%) translateY(-100%) rotate(180deg); /* IE9 */
+  -o-transform: translateX(100%) translateY(-100%) rotate(180deg); /* Opera */
+  transform: translateX(100%) translateY(-100%) rotate(180deg); /* W3C */
+}
+
+.rot270 {
+  position: relative;
+  transform: rotate(-90deg) translate(-100%, 0);
+  transform-origin: 0 0;
 }
