@@ -9,23 +9,23 @@ exports.config = {
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
-// // Firefox local setup
-//   exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
-//   capabilities: {
-//     browserName: 'firefox',
-//   },
-// Chrome local setup
+// Firefox local setup
+  exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
   capabilities: {
-    browserName: 'chrome',
-    chromeOptions: {
-      prefs: {
-        download: {
-          'prompt_for_download': false,
-          'default_directory': require('path').join(__dirname, 'src/downloads')
-        }
-      }
-    }
+    browserName: 'firefox',
   },
+// // Chrome local setup
+//   capabilities: {
+//     browserName: 'chrome',
+//     chromeOptions: {
+//       prefs: {
+//         download: {
+//           'prompt_for_download': false,
+//           'default_directory': require('path').join(__dirname, 'src/downloads')
+//         }
+//       }
+//     }
+//   },
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   framework: 'jasmine',
