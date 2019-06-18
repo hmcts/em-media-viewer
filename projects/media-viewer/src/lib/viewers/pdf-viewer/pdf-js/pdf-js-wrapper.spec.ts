@@ -42,6 +42,7 @@ describe('PdfJsWrapper', () => {
     new Subject<DocumentLoadProgress>(),
     new Subject<DocumentLoaded>(),
     new Subject<DocumentLoadFailed>(),
+    new Subject<boolean>(),
   );
 
   it('set up eventbus listeners', () => {
@@ -55,6 +56,7 @@ describe('PdfJsWrapper', () => {
       new Subject<DocumentLoadProgress>(),
       new Subject<DocumentLoaded>(),
       new Subject<DocumentLoadFailed>(),
+      new Subject<boolean>(),
     );
 
     expect(eventBusSpy).toHaveBeenCalledTimes(4);
