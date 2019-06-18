@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, ElementRef} from '@angular/core';
 import { annotationSet } from '../stub-annotation-data/annotation-set';
 import { AnnotationSet } from './annotation-set.model';
+import {Rectangle} from './rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-anno',
@@ -9,8 +10,10 @@ import { AnnotationSet } from './annotation-set.model';
 })
 export class AnnotationsComponent implements OnInit {
 
-  @Input() zoom: number;
+  @Input() zoom = 1;
+  @Input() rotation = 0;
   @Output() update = new EventEmitter<AnnotationSet>();
+  @Input() shadowedElement: ElementRef;
 
   annotationSet: AnnotationSet;
   selectedIndex = -1;
@@ -28,4 +31,13 @@ export class AnnotationsComponent implements OnInit {
 
     this.update.emit(this.annotationSet);
   }
+
+  get widthStyle() {
+    return this.shadowedElement ? (this.shadowedElement.nativeElement.clientWidth * this.zoom) + 'px' : 0;
+  }
+
+  get heightStyle() {
+    return this.shadowedElement ? (this.shadowedElement.nativeElement.clientHeight * this.zoom) + 'px' : 0;
+  }
+
 }

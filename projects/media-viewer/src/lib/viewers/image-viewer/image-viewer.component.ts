@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import { Subject } from 'rxjs';
 import {
   DownloadOperation,
@@ -11,6 +11,7 @@ import {
 import { PrintService } from '../../print.service';
 import { AnnotationSet } from '../../annotations/annotation-set.model';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
+import {Rectangle} from '../../annotations/rectangle/rectangle.model';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -28,8 +29,8 @@ export class ImageViewerComponent implements OnChanges {
   @ViewChild('img') img: ElementRef;
   rotation = 0;
   zoom = 1;
-  rotationStyle;
   zoomStyle;
+  heightStyle;
 
   constructor(
     private readonly printService: PrintService,
@@ -42,11 +43,14 @@ export class ImageViewerComponent implements OnChanges {
     }
   }
 
+  onImageLoad() {
+    this.heightStyle = this.img ? Math.max(this.img.nativeElement.clientHeight, this.img.nativeElement.clientWidth) + 'px' : '0px';
+  }
 
   @Input()
   set rotateOperation(operation: RotateOperation | null) {
     if (operation) {
-      this.rotation += operation.rotation;
+      this.rotation = (this.rotation + operation.rotation + 360) % 360;
       this.setImageStyles();
     }
   }
@@ -91,7 +95,6 @@ export class ImageViewerComponent implements OnChanges {
 
   setImageStyles() {
     this.zoomStyle = `scale(${this.zoom})`;
-    this.rotationStyle = `rotate(${this.rotation}deg)`;
   }
 
   setZoomValue(zoomValue) {
@@ -115,4 +118,6 @@ export class ImageViewerComponent implements OnChanges {
   public updateAnnotation(annotationSet: AnnotationSet) {
     this.api.createAnnotationSet(annotationSet);
   }
+
+
 }
