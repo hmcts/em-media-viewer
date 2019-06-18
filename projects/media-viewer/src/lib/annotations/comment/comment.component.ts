@@ -19,6 +19,7 @@ export class CommentComponent {
 
   @Output() click = new EventEmitter();
   @Output() delete = new EventEmitter();
+  @Output() updated = new EventEmitter<String>();
   @Input() user: User;
   @Input() top: number;
   @Input() selected: boolean;
@@ -59,8 +60,16 @@ export class CommentComponent {
       : this.fullComment;
   }
 
+  set commentText(text: string) {
+    this.fullComment = text;
+  }
+
   public onDelete() {
     this.delete.emit();
   }
 
+  public onSave() {
+    this.updated.emit(this.fullComment);
+    this.editable = false;
+  }
 }

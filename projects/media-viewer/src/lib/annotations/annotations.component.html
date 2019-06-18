@@ -12,6 +12,7 @@
         *ngIf="annotation.comments[0]"
         (click)="setSelected(i)"
         (delete)="deleteComment(i)"
+        (updated)="updateComment(i, $event)"
         [selected]="selectedIndex === i"
         [comment]="annotation.comments[0]"
         [user]="annotation.createdByDetails"
