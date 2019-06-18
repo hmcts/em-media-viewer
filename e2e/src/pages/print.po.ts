@@ -8,7 +8,7 @@ export class PrintPage extends AppPage {
   }
 
   async getPrintDialog() {
-    await element(by.css('print-preview-app'));
+    return element(by.css('print-preview-app'));
   }
 
   async switchToPrintTab() {
