@@ -1,7 +1,7 @@
 import { ComponentFactory, ElementRef, EmbeddedViewRef, ViewContainerRef } from '@angular/core';
 import { Annotation } from './annotation.model';
 import { AnnotationsComponent } from './annotations.component';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ZoomValue } from '../events/viewer-operations';
 
 export class AnnotationsViewInjector {
@@ -9,7 +9,7 @@ export class AnnotationsViewInjector {
   constructor(private annotationFactory: ComponentFactory<AnnotationsComponent>,
               private viewContainerRef: ViewContainerRef) {}
 
-  addToDom(annotations: Annotation[], zoomSubject: Subject<ZoomValue>, pdfViewer: ElementRef) {
+  addToDom(annotations: Annotation[], zoomSubject: BehaviorSubject<ZoomValue>, pdfViewer: ElementRef) {
     zoomSubject.subscribe(zoom => {
       this.viewContainerRef.clear();
       const pdfViewerHtml = pdfViewer.nativeElement as HTMLElement;
