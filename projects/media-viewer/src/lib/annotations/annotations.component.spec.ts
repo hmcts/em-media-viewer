@@ -1,19 +1,25 @@
 import { AnnotationsComponent } from './annotations.component';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentComponent } from './comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { annotationSet } from '../stub-annotation-data/annotation-set';
 import { DebugElement } from '@angular/core';
+import { AnnotationApiService } from './annotation-api.service';
+import { HttpClientModule } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 describe('AnnotationsComponent', () => {
+  const mockApi = {
+    postAnnotationSet: () => new Subject()
+  };
   let component: AnnotationsComponent;
   let fixture: ComponentFixture<AnnotationsComponent>;
   let debugElement: DebugElement;
 
-  beforeEach(async(() => {
-    return TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [
         AnnotationsComponent,
         CommentComponent,
@@ -21,13 +27,15 @@ describe('AnnotationsComponent', () => {
       ],
       imports: [
         FormsModule,
-        AngularDraggableModule
+        AngularDraggableModule,
+        HttpClientModule
+      ],
+      providers: [
+        { provide: AnnotationApiService, useValue: mockApi }
       ]
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(AnnotationsComponent);
     component = fixture.componentInstance;
 
@@ -73,27 +81,16 @@ describe('AnnotationsComponent', () => {
     commentElements[1].click();
     fixture.detectChanges();
 
-    await new Promise(resolve => {
-      component.update.subscribe(as => {
-        expect(as.annotations[1].comments.length).toBe(0);
+    const spy = spyOn(component, 'deleteComment');
+    const buttons = commentElements[1].querySelectorAll('button');
+    buttons[1].click();
 
-        resolve();
-      });
-
-      const buttons = commentElements[1].querySelectorAll('button');
-      buttons[1].click();
-    });
+    expect(spy).toHaveBeenCalledWith(1);
   });
 
   it('updates a comment', async () => {
-    await new Promise(resolve => {
-      component.update.subscribe(as => {
-        expect(as.annotations[0].comments[0].content).toBe('Updated comment');
+    component.updateComment(0, 'Updated text');
 
-        resolve();
-      });
-
-      component.updateComment(0, 'Updated comment');
-    });
+    expect(component.annotationSet.annotations[0].comments[0].content).toEqual('Updated text');
   });
 });

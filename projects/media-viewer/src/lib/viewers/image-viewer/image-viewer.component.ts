@@ -9,7 +9,6 @@ import {
   ZoomValue
 } from '../../events/viewer-operations';
 import { PrintService } from '../../print.service';
-import { AnnotationSet } from '../../annotations/annotation-set.model';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 
 @Component({
@@ -32,8 +31,7 @@ export class ImageViewerComponent implements OnChanges {
   zoomStyle;
 
   constructor(
-    private readonly printService: PrintService,
-    private readonly api: AnnotationApiService
+    private readonly printService: PrintService
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -112,7 +110,4 @@ export class ImageViewerComponent implements OnChanges {
     this.errorMessage = `Could not load the image "${this.url}"`;
   }
 
-  public updateAnnotation(annotationSet: AnnotationSet) {
-    this.api.createAnnotationSet(annotationSet);
-  }
 }
