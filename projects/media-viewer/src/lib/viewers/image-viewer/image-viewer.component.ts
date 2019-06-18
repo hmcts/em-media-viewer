@@ -29,8 +29,6 @@ export class ImageViewerComponent implements OnChanges {
   @ViewChild('img') img: ElementRef;
   rotation = 0;
   zoom = 1;
-  zoomStyle;
-  heightStyle;
 
   constructor(
     private readonly printService: PrintService,
@@ -43,15 +41,10 @@ export class ImageViewerComponent implements OnChanges {
     }
   }
 
-  onImageLoad() {
-    this.heightStyle = this.img ? Math.max(this.img.nativeElement.clientHeight, this.img.nativeElement.clientWidth) + 'px' : '0px';
-  }
-
   @Input()
   set rotateOperation(operation: RotateOperation | null) {
     if (operation) {
       this.rotation = (this.rotation + operation.rotation + 360) % 360;
-      this.setImageStyles();
     }
   }
 
@@ -94,7 +87,7 @@ export class ImageViewerComponent implements OnChanges {
   }
 
   setImageStyles() {
-    this.zoomStyle = `scale(${this.zoom})`;
+    this.img.nativeElement.style.width = (this.img.nativeElement.naturalWidth * this.zoom) + 'px';
   }
 
   setZoomValue(zoomValue) {

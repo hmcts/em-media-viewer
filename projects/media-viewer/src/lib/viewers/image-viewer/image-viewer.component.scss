@@ -1,21 +1,13 @@
 #viewer-wrapper {
-  overflow: auto;
   position: absolute;
-  width: 100%;
-  height: 100%;
 }
 
-#image-container {
-  transform-origin: top left;
-}
-
-img {
+.image-container {
   -webkit-transform-origin: left bottom;
   -moz-transform-origin: left bottom;
   -ms-transform-origin: left bottom;
   -o-transform-origin: left bottom;
   transform-origin: left bottom;
-  white-space: nowrap;
 }
 
 .rot90 {
