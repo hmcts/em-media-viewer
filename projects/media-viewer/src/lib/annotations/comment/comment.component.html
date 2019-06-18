@@ -11,7 +11,7 @@
     </time>
   </div>
   <textarea type="text" required name="content"
-            [ngClass]="commentStyle()" [ngModel]="commentText" [readOnly]="!editable">
+            [ngClass]="commentStyle()" [(ngModel)]="commentText" [readOnly]="!editable">
   </textarea>
   <div [hidden]="!selected" class="aui-comment__footer commentBtns">
     <button *ngIf="!editable; else Save"
@@ -28,7 +28,7 @@
   </div>
 </form>
 <ng-template #Save>
-  <button class="govuk-button" type="submit" role="button">
+  <button class="govuk-button" type="submit" role="button" (click)="onSave()">
     Save
   </button>
 </ng-template>

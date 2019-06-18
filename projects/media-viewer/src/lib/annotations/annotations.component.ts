@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter, ElementRef} from '@angular/core';
 import { annotationSet } from '../stub-annotation-data/annotation-set';
 import { AnnotationSet } from './annotation-set.model';
-import {Rectangle} from './rectangle/rectangle.model';
+import { AnnotationApiService } from './annotation-api.service';
 
 @Component({
   selector: 'mv-anno',
@@ -10,12 +10,14 @@ import {Rectangle} from './rectangle/rectangle.model';
 })
 export class AnnotationsComponent implements OnInit {
 
-  @Input() zoom = 1;
+  @Input() zoom: number;
   @Input() rotation = 0;
-  @Output() update = new EventEmitter<AnnotationSet>();
-
   annotationSet: AnnotationSet;
   selectedIndex = -1;
+
+  constructor(
+    private readonly api: AnnotationApiService
+  ) {}
 
   ngOnInit() {
     this.annotationSet = annotationSet;
@@ -28,7 +30,19 @@ export class AnnotationsComponent implements OnInit {
   public deleteComment(i: number) {
     this.annotationSet.annotations[i].comments = [];
 
-    this.update.emit(this.annotationSet);
+    this.update();
+  }
+
+  public updateComment(i: number, text: string) {
+    this.annotationSet.annotations[i].comments[0].content = text;
+
+    this.update();
+  }
+
+  private update() {
+    this.api
+      .postAnnotationSet(this.annotationSet)
+      .subscribe(newAnnotationSet => this.annotationSet = newAnnotationSet);
   }
 
 }

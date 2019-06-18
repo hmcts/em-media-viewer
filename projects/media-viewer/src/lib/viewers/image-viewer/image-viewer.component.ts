@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import { Subject } from 'rxjs';
 import {
   DownloadOperation,
@@ -9,9 +9,7 @@ import {
   ZoomValue
 } from '../../events/viewer-operations';
 import { PrintService } from '../../print.service';
-import { AnnotationSet } from '../../annotations/annotation-set.model';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import {Rectangle} from '../../annotations/rectangle/rectangle.model';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -31,8 +29,7 @@ export class ImageViewerComponent implements OnChanges {
   zoom = 1;
 
   constructor(
-    private readonly printService: PrintService,
-    private readonly api: AnnotationApiService
+    private readonly printService: PrintService
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -107,10 +104,5 @@ export class ImageViewerComponent implements OnChanges {
   onLoadError() {
     this.errorMessage = `Could not load the image "${this.url}"`;
   }
-
-  public updateAnnotation(annotationSet: AnnotationSet) {
-    this.api.createAnnotationSet(annotationSet);
-  }
-
 
 }
