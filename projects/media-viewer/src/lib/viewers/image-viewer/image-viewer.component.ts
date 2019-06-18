@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, ViewChild} from '@angular/core';
 import { Subject } from 'rxjs';
 import {
   DownloadOperation,
@@ -49,8 +49,6 @@ export class ImageViewerComponent implements OnChanges {
   set zoomOperation(operation: ZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
       this.zoom = this.updateZoomValue(+operation.zoomFactor);
-      this.setZoomValue(this.zoom)
-        .then(() => this.setImageStyles());
     }
   }
 
@@ -58,8 +56,6 @@ export class ImageViewerComponent implements OnChanges {
   set stepZoomOperation(operation: StepZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
       this.zoom = Math.round(this.updateZoomValue(this.zoom, operation.zoomFactor) * 10) / 10;
-      this.setZoomValue(this.zoom)
-        .then(() => this.setImageStyles());
     }
   }
 
@@ -81,10 +77,6 @@ export class ImageViewerComponent implements OnChanges {
       a.click();
       a.remove();
     }
-  }
-
-  setImageStyles() {
-    this.img.nativeElement.style.width = (this.img.nativeElement.naturalWidth * this.zoom) + 'px';
   }
 
   setZoomValue(zoomValue) {
