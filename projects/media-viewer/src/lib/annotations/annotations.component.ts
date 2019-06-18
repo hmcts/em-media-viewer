@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter, ElementRef} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { annotationSet } from '../stub-annotation-data/annotation-set';
 import { AnnotationSet } from './annotation-set.model';
 import { AnnotationApiService } from './annotation-api.service';
