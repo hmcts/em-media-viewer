@@ -13,7 +13,6 @@ export class AnnotationsComponent implements OnInit {
   @Input() zoom = 1;
   @Input() rotation = 0;
   @Output() update = new EventEmitter<AnnotationSet>();
-  @Input() shadowedElement: ElementRef;
 
   annotationSet: AnnotationSet;
   selectedIndex = -1;
@@ -30,14 +29,6 @@ export class AnnotationsComponent implements OnInit {
     this.annotationSet.annotations[i].comments = [];
 
     this.update.emit(this.annotationSet);
-  }
-
-  get widthStyle() {
-    return this.shadowedElement ? (this.shadowedElement.nativeElement.clientWidth * this.zoom) + 'px' : 0;
-  }
-
-  get heightStyle() {
-    return this.shadowedElement ? (this.shadowedElement.nativeElement.clientHeight * this.zoom) + 'px' : 0;
   }
 
 }
