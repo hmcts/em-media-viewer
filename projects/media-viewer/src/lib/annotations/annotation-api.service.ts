@@ -13,10 +13,12 @@ export class AnnotationApiService {
     private readonly httpClient: HttpClient
   ) { }
 
-  public createAnnotationSet(body: Partial<AnnotationSet>): Observable<HttpResponse<AnnotationSet>> {
+  public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
     const url = '/em-anno/annotation-sets';
 
-    return this.httpClient.post<AnnotationSet>(url, body, { observe: 'response' });
+    return this.httpClient
+      .post<AnnotationSet>(url, body, { observe: 'response' })
+      .pipe(map(response => response.body));
   }
 
   public getAnnotationSet(documentId: string): Observable<HttpResponse<AnnotationSet>> {
@@ -48,7 +50,7 @@ export class AnnotationApiService {
     return this.httpClient.delete<Annotation>(url, { observe: 'response' });
   }
 
-  public createAnnotation(annotation: Annotation): Observable<HttpResponse<Annotation>> {
+  public postAnnotation(annotation: Annotation): Observable<HttpResponse<Annotation>> {
     const url = `/em-anno/annotations`;
 
     return this.httpClient.post<Annotation>(url, annotation, { observe: 'response' });
