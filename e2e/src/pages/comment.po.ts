@@ -1,4 +1,4 @@
-import { browser, by, element } from 'protractor';
+import { by, element } from 'protractor';
 import { AppPage } from './app.po';
 
 export class CommentPage extends AppPage {
@@ -29,15 +29,5 @@ export class CommentPage extends AppPage {
   async clickCloseButton() {
     await this.clickElement(by.id('modal-close-button'));
   }
-
-  async clickOutsideModal() {
-    console.log('a');
-    browser.sleep(5000);
-    await this.clickElement(by.id('modal-background'));
-    await console.log(await (await element(by.id('modal-background'))).getWebElement());
-    console.log('b');
-    browser.sleep(5000);
-  }
-
 
 }
