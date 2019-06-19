@@ -8,6 +8,7 @@ import { AnnotationComponent } from './annotation.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { CommentComponent } from './comment/comment.component';
 import { AngularDraggableModule } from 'angular2-draggable';
+import { PopupToolbarComponent } from './rectangle/popup-toolbar/popup-toolbar.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { AngularDraggableModule } from 'angular2-draggable';
   declarations: [
     AnnotationComponent,
     RectangleComponent,
-    CommentComponent
+    CommentComponent,
+    PopupToolbarComponent
   ],
   entryComponents: [
     AnnotationComponent
