@@ -13,23 +13,21 @@ exports.config = {
     browserName: 'chrome',
     },
 
-  specs: [
-    //'./src/**/*.e2e-spec.ts',
-    './src/features/*.feature',
 
-  ],
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
 
+  specs: [
+    './src/**/*.feature',
+    //'../../features/*.feature',
+
+  ],
   cucumberOpts: {
-    monochrome: true,
-    strict: true,
-    compiler:   'ts:ts-node/register',
+    compiler: 'ts:ts-node/register',
     format: 'pretty',
-    profile: false,
-    'no-source': true,
-    require: './src/stepDefinitions/*.ts',
-    tags: '@Toolbar_ToggleButtons'
-  }
+    require: ['./src/stepDefinitions/*.js', '../../typeScript/support/*.js'],
+    strict: true,
+    tags: '@Toolbar_ToggleButtons',
+  },
 
 }
