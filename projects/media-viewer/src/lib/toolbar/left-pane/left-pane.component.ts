@@ -14,6 +14,7 @@ export class ToolbarLeftPaneComponent {
   @Input() pageNumber = 1;
   @Input() showSidebarToggleBtn: boolean;
   @Input() showSearchbarToggleBtn: boolean;
+  @Input() showHighlightBtn: boolean;
   @Input() showNavigationBtns: boolean;
   @Input() sidebarOpen: BehaviorSubject<boolean>;
   @Input() searchBarHidden: BehaviorSubject<boolean>;
