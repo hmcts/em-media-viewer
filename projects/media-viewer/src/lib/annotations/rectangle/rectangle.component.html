@@ -9,3 +9,8 @@
      [position]="{ x: rectangle.x *zoom, y: rectangle.y *zoom }"
      (click)="onClick()">
 </div>
+<mv-popup-toolbar
+  *ngIf="selected"
+  [top]="rectangle.y * zoom"
+  [left]="(rectangle.x + (rectangle.height / 2)) * zoom"
+></mv-popup-toolbar>
