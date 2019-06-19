@@ -117,7 +117,7 @@ export class ImageViewerComponent implements OnChanges {
 
   public updateAnnotation(updatedAnnotation: Annotation) {
     const annotations = this.annotationSet.annotations
-      .filter(annotation => annotation.id == updatedAnnotation.id);
+      .filter(annotation => annotation.id !== updatedAnnotation.id);
     annotations.push(updatedAnnotation);
     this.annotationSet.annotations = annotations;
     this.api.postAnnotationSet(this.annotationSet);
