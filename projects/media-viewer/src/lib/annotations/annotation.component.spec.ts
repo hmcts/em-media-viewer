@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { annotationSet } from '../../assets/annotation-set';
 import { Subject } from 'rxjs';
-import { PopupToolbarComponent } from './rectangle/popup-toolbar/popup-toolbar.component';
 
 describe('AnnotationComponent', () => {
   let component: AnnotationComponent;
@@ -17,8 +16,7 @@ describe('AnnotationComponent', () => {
       declarations: [
         AnnotationComponent,
         CommentComponent,
-        RectangleComponent,
-        PopupToolbarComponent
+        RectangleComponent
       ],
       imports: [
         FormsModule,
