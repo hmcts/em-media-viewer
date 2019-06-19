@@ -27,6 +27,8 @@ export class ToolbarButtonToggles {
   public showOpenFileBtn = false;
   public showBookmarkBtn = false;
 
+  public showHighlightBtn = false;
+
   public showSearchbarToggleBtn = false;
   public showSubToolbarToggleBtn = false;
   public showSidebarToggleBtn = false;
@@ -39,6 +41,7 @@ export class PdfViewerToolbarButtons extends ToolbarButtonToggles {
   public showZoomBtns = true;
   public showRotateBtns = true;
   public showSearchbarToggleBtn = true;
+  public showHighlightBtn = true;
 }
 
 export class ImageViewerToolbarButtons extends ToolbarButtonToggles {
