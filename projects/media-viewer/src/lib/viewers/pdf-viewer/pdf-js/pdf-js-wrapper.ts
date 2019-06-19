@@ -22,19 +22,21 @@ export class PdfJsWrapper {
     public readonly documentLoadInit: Subject<NewDocumentLoadInit>,
     public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
     public readonly documentLoaded: Subject<DocumentLoaded>,
-    public readonly documentLoadFailed: Subject<DocumentLoadFailed>
+    public readonly documentLoadFailed: Subject<DocumentLoadFailed>,
+    public readonly pagesRendered: Subject<boolean>
   ) {
 
     // bind to internal PDF.js event bus
-    this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
+    this.pdfViewer.eventBus.on('pagerendered', () => this.pagesRendered.next(true));
+    this.pdfViewer.eventBus.on('pagechanging', event => this.currentPageChanged.next(new SetCurrentPageOperation(event.pageNumber)));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
-    this.pdfViewer.eventBus.on('updatefindcontrolstate', e => {
-      if (e.state !== FindState.PENDING) {
-        this.searchResults.next(e.matchesCount);
+    this.pdfViewer.eventBus.on('updatefindcontrolstate', event => {
+      if (event.state !== FindState.PENDING) {
+        this.searchResults.next(event.matchesCount);
       }
     });
-    this.pdfViewer.eventBus.on('updatefindmatchescount', e => {
-      this.searchResults.next(e.matchesCount);
+    this.pdfViewer.eventBus.on('updatefindmatchescount', event => {
+      this.searchResults.next(event.matchesCount);
     });
   }
 
