@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterContentInit,
   Component,
   ComponentFactoryResolver,
   ElementRef,
@@ -35,7 +35,7 @@ import { AnnotationSet } from '../../annotations/annotation-set.model';
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.css']
 })
-export class PdfViewerComponent implements AfterViewInit, OnChanges {
+export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -63,7 +63,7 @@ export class PdfViewerComponent implements AfterViewInit, OnChanges {
     private readonly printService: PrintService
   ) {}
 
-  async ngAfterViewInit(): Promise<void> {
+  async ngAfterContentInit(): Promise<void> {
     this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     this.pdfWrapper.currentPageChanged.subscribe(v => this.currentPageChanged.next(v));
     this.pdfWrapper.searchResults.subscribe(v => this.searchResults.next(v));
