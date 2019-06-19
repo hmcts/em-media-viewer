@@ -10,6 +10,8 @@ import {
 } from '../../events/viewer-operations';
 import { PrintService } from '../../print.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
+import { Annotation } from '../../annotations/annotation.model';
+import { AnnotationSet } from '../../annotations/annotation-set.model';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -21,7 +23,9 @@ export class ImageViewerComponent implements OnChanges {
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() zoomValue: Subject<ZoomValue>;
+  @Input() annotationSet: AnnotationSet;
 
+  selectedAnnotation = new Subject<string>();
   errorMessage: string;
 
   @ViewChild('img') img: ElementRef;
@@ -31,7 +35,8 @@ export class ImageViewerComponent implements OnChanges {
   zoomStyle;
 
   constructor(
-    private readonly printService: PrintService
+    private readonly printService: PrintService,
+    private readonly api: AnnotationApiService
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -110,4 +115,11 @@ export class ImageViewerComponent implements OnChanges {
     this.errorMessage = `Could not load the image "${this.url}"`;
   }
 
+  public updateAnnotation(updatedAnnotation: Annotation) {
+    const annotations = this.annotationSet.annotations
+      .filter(annotation => annotation.id == updatedAnnotation.id);
+    annotations.push(updatedAnnotation);
+    this.annotationSet.annotations = annotations;
+    this.api.postAnnotationSet(this.annotationSet);
+  }
 }

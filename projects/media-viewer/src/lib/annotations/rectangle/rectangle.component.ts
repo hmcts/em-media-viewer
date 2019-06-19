@@ -12,11 +12,11 @@ export class RectangleComponent {
   @Input() rectangle: Rectangle;
   @Input() color: String;
   @Input() zoom: number;
+  @Input() draggable = true;
 
   @Output() click = new EventEmitter();
 
   onClick() {
     this.click.emit();
   }
-
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/events/toolbar-button-toggles';
 import { Subject } from 'rxjs';
 import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/annotations/annotation-api.service';
+import { imageAnnotationSet } from '../../assets/mock-data/image-annotation-set';
+import { pdfAnnotationSet } from '../../assets/mock-data/pdf-annotation-set';
 
 @Component({
   selector: 'media-viewer-wrapper',
@@ -19,10 +21,14 @@ export class MediaViewerWrapperComponent implements OnInit {
 
   selectedTab = 'pdf';
   showToolbar = true;
+  showAnnotations = false;
 
   toolbarButtons = new ToolbarButtonToggles();
   showCommentSummary = new Subject<boolean>();
   comments = [];
+
+  imageAnnotationSet = imageAnnotationSet;
+  pdfAnnotationSet = pdfAnnotationSet;
 
   constructor(
     public api: AnnotationApiService
@@ -32,8 +38,12 @@ export class MediaViewerWrapperComponent implements OnInit {
     this.selectedTab = currentTab;
   }
 
-  toggleToolbarVisibility(showToolbar: boolean) {
+  toggleToolbar(showToolbar: boolean) {
     this.showToolbar = showToolbar;
+  }
+
+  toggleAnnotations(showAnnotations: boolean) {
+    this.showAnnotations = showAnnotations;
   }
 
   tabLinkStyle(currentTab: string) {
