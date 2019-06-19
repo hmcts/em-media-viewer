@@ -35,7 +35,8 @@ export class ImageViewerComponent implements OnChanges {
   zoomStyle;
 
   constructor(
-    private readonly printService: PrintService
+    private readonly printService: PrintService,
+    private readonly api: AnnotationApiService
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -114,4 +115,11 @@ export class ImageViewerComponent implements OnChanges {
     this.errorMessage = `Could not load the image "${this.url}"`;
   }
 
+  public updateAnnotation(updatedAnnotation: Annotation) {
+    const annotations = this.annotationSet.annotations
+      .filter(annotation => annotation.id == updatedAnnotation.id);
+    annotations.push(updatedAnnotation);
+    this.annotationSet.annotations = annotations;
+    this.api.postAnnotationSet(this.annotationSet);
+  }
 }

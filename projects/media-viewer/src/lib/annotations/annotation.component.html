@@ -11,6 +11,7 @@
     *ngIf="annotation.comments[0]"
     (click)="selectAnnotation()"
     (delete)="deleteComment()"
+    (updated)="updateComment($event)"
     [selected]="(selectedAnnotation | async) === annotation.id"
     [comment]="annotation.comments[0]"
     [left]="commentsLeftOffset"
