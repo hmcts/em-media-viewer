@@ -21,6 +21,11 @@ export class AnnotationComponent {
 
   public deleteComment() {
     this.annotation.comments = [];
+    this.update.emit(this.annotation);
+  }
+
+  public updateComment(text: string) {
+    this.annotation.comments[0].content = text;
 
     this.update.emit(this.annotation);
   }

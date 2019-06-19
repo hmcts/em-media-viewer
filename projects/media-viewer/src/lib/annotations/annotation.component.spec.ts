@@ -5,13 +5,11 @@ import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { annotationSet } from '../../assets/annotation-set';
-import { DebugElement } from '@angular/core';
 import { Subject } from 'rxjs';
 
 describe('AnnotationComponent', () => {
   let component: AnnotationComponent;
   let fixture: ComponentFixture<AnnotationComponent>;
-  let debugElement: DebugElement;
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
@@ -55,5 +53,11 @@ describe('AnnotationComponent', () => {
 
     expect(component.annotation.comments.length).toBe(0);
     expect(component.update.emit).toHaveBeenCalledWith(component.annotation);
+  });
+
+  it('updates a comment', async () => {
+    component.updateComment('Updated text');
+
+    expect(component.annotation.comments[0].content).toEqual('Updated text');
   });
 });
