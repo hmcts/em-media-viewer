@@ -70,7 +70,7 @@ describe('PdfViewerComponent', () => {
     component.currentPageChanged = new Subject<SetCurrentPageOperation>();
     component.searchResults = new Subject<SearchResultsCount>();
 
-    await component.ngAfterViewInit();
+    await component.ngAfterContentInit();
   });
 
   it('should create', () => {
