@@ -9,6 +9,7 @@ import { DebugElement } from '@angular/core';
 import { AnnotationApiService } from './annotation-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { PopupToolbarComponent } from './rectangle/popup-toolbar/popup-toolbar.component';
 
 describe('AnnotationsComponent', () => {
   const mockApi = {
@@ -23,7 +24,8 @@ describe('AnnotationsComponent', () => {
       declarations: [
         AnnotationsComponent,
         CommentComponent,
-        RectangleComponent
+        RectangleComponent,
+        PopupToolbarComponent
       ],
       imports: [
         FormsModule,
