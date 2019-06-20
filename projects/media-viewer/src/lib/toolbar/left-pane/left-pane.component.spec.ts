@@ -20,6 +20,7 @@ describe('ToolbarLeftPaneComponent', () => {
     component = fixture.componentInstance;
     component.sidebarOpen = new BehaviorSubject(false);
     component.searchBarHidden = new BehaviorSubject(true);
+    component.drawMode = new BehaviorSubject(false);
     component.changePageByDelta = new Subject<ChangePageByDeltaOperation>();
     component.setCurrentPage = new Subject<SetCurrentPageOperation>();
     fixture.detectChanges();
@@ -80,5 +81,17 @@ describe('ToolbarLeftPaneComponent', () => {
     component.showHighlightBtn = true;
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toBeTruthy();
+  });
+
+  it('should show the draw button if permitted', () => {
+    component.showHighlightBtn = true;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toBeTruthy();
+  });
+
+  it('should toggle the draw button if permitted', () => {
+    expect(component.drawMode.getValue()).toBeFalsy();
+    component.onClickDraw();
+    expect(component.drawMode.getValue()).toBeTruthy();
   });
 });
