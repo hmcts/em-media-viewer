@@ -1,8 +1,11 @@
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
-
+"use strict";
 
 exports.config = {
+
+  SELENIUM_PROMISE_MANAGER: false,
+
   allScriptsTimeout: 120000,
   getPageTimeout: 120000,
   framework: 'custom',
@@ -19,15 +22,26 @@ exports.config = {
 
   specs: [
     './src/**/*.feature',
-    //'../../features/*.feature',
 
   ],
+  onPrepare() {
+    require('ts-node').register({
+      project: require('path').join(__dirname, './tsconfig.e2e.json')
+    });
+  },
+
   cucumberOpts: {
     compiler: 'ts:ts-node/register',
-    format: 'pretty',
-    require: ['./src/stepDefinitions/*.js', '../../typeScript/support/*.js'],
     strict: true,
+    plugin: ["pretty"],
+    require: ['./src/stepDefinitions/*.js', '../../typeScript/support/*.js'],
     tags: '@Toolbar_ToggleButtons',
   },
 
-}
+  noGlobals: true,
+  // Options to be passed to Jasmine-node.
+  jasmineNodeOpts: {
+    showColors: true,
+  }
+
+};

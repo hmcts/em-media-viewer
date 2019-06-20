@@ -1,10 +1,11 @@
+@MediaViewer
 Feature: Media Viewer Toolbar Scenarios
   As a user
   I want to navigate to media viewer application
   So that I can enable the toolbar toggle buttons
 
   Background:
-    Given User Navigates Media Viewer Application
+    Given I am on Media Viewer Page
 
   @Toolbar_ToggleButtons
   Scenario: Enable Toolbar Toggle buttons

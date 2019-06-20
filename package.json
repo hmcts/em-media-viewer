@@ -31,6 +31,7 @@
     "e2e": "webdriver-manager update && ng e2e",
     "webdriver": "webdriver-manager update",
     "cucumber-e2e": "webdriver-manager update && ng e2e --protractor-config 'e2e/cucumber.conf.js'",
+    "cucumber-e2e-test": "webdriver-manager update && protractor e2e/cucumber.conf.js",
     "e2e-cucumber": "webdriver-manager update && protractor typeScript/e2e/e2e-cucumber.ts",
     "e2e:travis": "webdriver-manager update && ng e2e --protractor-config 'e2e/ci.protractor.conf.js'"
   },
