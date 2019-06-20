@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommentComponent } from '../comment/comment.component';
+import { CommentComponent } from './comment.component';
 import { FormsModule } from '@angular/forms';
 
 describe('CommentComponent', () => {
@@ -45,7 +45,7 @@ describe('CommentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
-    component.comment = mockComment;
+    component.comment = {...mockComment};
     nativeElement = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });
@@ -61,13 +61,17 @@ describe('CommentComponent', () => {
     expect(component.fullComment).toEqual(mockComment.content);
   });
 
-  it('should set comment with lastUpdate set to createdDate', () => {
-    mockComment.lastModifiedDate = null;
-    component.comment = mockComment;
-    expect(component.lastUpdate).toEqual(mockComment.createdDate);
-    expect(component.author).toEqual(mockComment.createdByDetails);
-    expect(component.editor).toEqual(mockComment.lastModifiedByDetails);
-    expect(component.fullComment).toEqual(mockComment.content);
+  it('should set comment with lastUpdate set to createdDate if there has been no update', () => {
+    const modifiedMockComment = {...mockComment};
+    modifiedMockComment.lastModifiedDate = null;
+    modifiedMockComment.lastModifiedBy = null;
+    modifiedMockComment.lastModifiedByDetails = null;
+    component.comment = modifiedMockComment;
+    fixture.detectChanges();
+    expect(component.lastUpdate).toEqual(modifiedMockComment.createdDate);
+    expect(component.author).toEqual(modifiedMockComment.createdByDetails);
+    expect(component.editor).toEqual(modifiedMockComment.lastModifiedByDetails);
+    expect(component.fullComment).toEqual(modifiedMockComment.content);
   });
 
   it('should emit a click', () => {
