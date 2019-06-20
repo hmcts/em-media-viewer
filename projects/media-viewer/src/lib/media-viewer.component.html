@@ -17,6 +17,8 @@
                      [toolbarButtons]="toolbarButtonToggles"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    [url]="url"
+                   [showAnnotations]="showAnnotations"
+                   [annotationSet]="annotationSet"
                    [downloadFileName]="downloadFileName"
                    [zoomOperation]="actionEvents?.zoom | async"
                    [stepZoomOperation]="actionEvents?.stepZoom | async"
@@ -33,6 +35,7 @@
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"
+                     [annotationSet]="annotationSet"
                      [downloadFileName]="downloadFileName"
                      [zoomOperation]="actionEvents?.zoom | async"
                      [stepZoomOperation]="actionEvents?.stepZoom | async"

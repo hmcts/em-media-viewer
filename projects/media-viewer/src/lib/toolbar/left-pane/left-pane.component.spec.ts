@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarLeftPaneComponent } from './left-pane.component';
 import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../events/viewer-operations';
 import { BehaviorSubject, Subject } from 'rxjs';
+import {By} from '@angular/platform-browser';
 
 describe('ToolbarLeftPaneComponent', () => {
   let component: ToolbarLeftPaneComponent;
@@ -73,5 +74,11 @@ describe('ToolbarLeftPaneComponent', () => {
   it('should update page number', () => {
     component.currentPage = new SetCurrentPageOperation(4);
     expect(component.pageNumber).toEqual(4);
+  });
+
+  it('should show the highlight button if permitted', () => {
+    component.showHighlightBtn = true;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toBeTruthy();
   });
 });

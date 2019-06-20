@@ -329,6 +329,10 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
   content: url(/assets/images/toolbarButton-pageDown-rtl.png);
 }
 
+.toolbarButton.highlightBtn::before {
+  content: url(/assets/images/toolbarButton-highlight.png);
+}
+
 .toolbarButton.zoomOut::before {
   content: url(/assets/images/toolbarButton-zoomOut.png);
 }

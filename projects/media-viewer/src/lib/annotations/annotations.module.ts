@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { AnnotationApiService } from './annotation-api.service';
-import { AnnotationsComponent } from './annotations.component';
+import { AnnotationComponent } from './annotation.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { CommentComponent } from './comment/comment.component';
 import { AngularDraggableModule } from 'angular2-draggable';
+import { PopupToolbarComponent } from './rectangle/popup-toolbar/popup-toolbar.component';
 
 @NgModule({
   imports: [
@@ -18,19 +19,19 @@ import { AngularDraggableModule } from 'angular2-draggable';
     AngularDraggableModule
   ],
   declarations: [
-    AnnotationsComponent,
+    AnnotationComponent,
     RectangleComponent,
-    CommentComponent
+    CommentComponent,
+    PopupToolbarComponent
   ],
   entryComponents: [
+    AnnotationComponent
   ],
   providers: [
     AnnotationApiService
   ],
   exports: [
-    AnnotationsComponent,
-    RectangleComponent,
-    CommentComponent
+    AnnotationComponent
   ]
 })
 export class AnnotationsModule { }

@@ -26,4 +26,8 @@
            tabindex="15" data-l10n-id="page" (change)="setCurrentPageNumber(pageNumberInput.value)" #pageNumberInput>
     <span id="numPages" class="toolbarLabel"></span>
   </ng-container>
+  <div class="toolbarButtonSpacer"></div>
+  <button *ngIf="showHighlightBtn" class="toolbarButton highlightBtn" title="Highlight Text" id="highlight" tabindex="15" data-l10n-id="highlight">
+    <span data-l10n-id="next_label">Highlight Text</span>
+  </button>
 </div>
