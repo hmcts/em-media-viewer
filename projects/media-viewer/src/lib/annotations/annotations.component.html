@@ -1,4 +1,4 @@
-<div class="annotations-wrapper">
+<div [ngClass]="'rotation rot' + rotate" [style.width]="width + 'px'" [style.height]="height + 'px'">
   <ng-container *ngFor="let annotation of annotations" >
     <mv-annotation [annotation]="annotation"
                    [zoom]="zoom"

@@ -1,5 +1,5 @@
 import * as pdfjsLib from 'pdfjs-dist';
-import { PDFViewer, DownloadManager } from 'pdfjs-dist/web/pdf_viewer';
+import { PDFViewer, DownloadManager, PdfPageView } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
 import {
   DocumentLoaded, DocumentLoadFailed,
@@ -23,12 +23,12 @@ export class PdfJsWrapper {
     public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
     public readonly documentLoaded: Subject<DocumentLoaded>,
     public readonly documentLoadFailed: Subject<DocumentLoadFailed>,
-    public readonly pagesRendered: Subject<boolean>
+    public readonly pageRendered: Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>
   ) {
 
     // bind to internal PDF.js event bus
-    this.pdfViewer.eventBus.on('pagerendered', () => this.pagesRendered.next(true));
-    this.pdfViewer.eventBus.on('pagechanging', event => this.currentPageChanged.next(new SetCurrentPageOperation(event.pageNumber)));
+    this.pdfViewer.eventBus.on('pagerendered', e => this.pageRendered.next(e));
+    this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
     this.pdfViewer.eventBus.on('updatefindcontrolstate', event => {
       if (event.state !== FindState.PENDING) {
@@ -114,6 +114,10 @@ export class PdfJsWrapper {
 
   public rotate(rotation: number): number {
     return this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + rotation) % 360;
+  }
+
+  public getRotate(): number {
+    return this.pdfViewer.pagesRotation;
   }
 
 }
