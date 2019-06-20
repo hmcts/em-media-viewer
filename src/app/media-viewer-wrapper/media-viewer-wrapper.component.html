@@ -6,7 +6,51 @@
       </div>
       <div class="govuk-grid-column-two-thirds">
         <app-toolbar-toggles [toolbarButtons]="toolbarButtons"
-                             (toggleToolbarVisibility)="toggleToolbarVisibility($event)"></app-toolbar-toggles>
+                             [showCommentSummary]="showCommentSummary"
+                             (toggleAnnotations)="toggleAnnotations($event)"
+                             (toggleToolbar)="toggleToolbar($event)"></app-toolbar-toggles>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <details class="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">Change document URL</span>
+          </summary>
+          <div class="govuk-details__text">
+            <input *ngIf="selectedTab === 'pdf'"
+                   class="govuk-input" type="text" name="pdfUrl" [(ngModel)]="pdfUrl">
+            <input *ngIf="selectedTab === 'image'"
+                   class="govuk-input" type="text" name="imageUrl" [(ngModel)]="imageUrl">
+            <input *ngIf="selectedTab === 'unsupported'"
+                   class="govuk-input" type="text" name="unsupportedUrl" [(ngModel)]="unsupportedUrl">
+          </div>
+        </details>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <details class="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">Change download file name</span>
+          </summary>
+          <div class="govuk-details__text">
+            <input *ngIf="selectedTab === 'pdf'"
+                   class="govuk-input" type="text" name="pdfFileName" [(ngModel)]="pdfFileName">
+            <input *ngIf="selectedTab === 'image'"
+                   class="govuk-input" type="text" name="imageFileName" [(ngModel)]="imageFileName">
+            <input *ngIf="selectedTab === 'unsupported'"
+                   class="govuk-input" type="text" name="unsupportedFileName" [(ngModel)]="unsupportedFileName">
+          </div>
+        </details>
+      </div>
+      <div *ngIf="selectedTab === 'unsupported'" class="govuk-grid-column-one-third">
+        <details class="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">Change document type</span>
+          </summary>
+          <div class="govuk-details__text">
+            <input class="govuk-input" type="text" name="unsupportedType" [(ngModel)]="unsupportedType">
+          </div>
+        </details>
       </div>
     </div>
   </div>
@@ -14,66 +58,55 @@
     <div class="govuk-width-container">
       <ul class="govuk-tabs__list">
         <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('pdf')" id="pdf" href="#pdf" (click)="toggleDocumentSelection('pdf')">
+          <a [className]="tabLinkStyle('pdf')" id="pdf" href="#pdf" (click)="selectTab('pdf')">
             PDF Viewer
           </a>
         </li>
         <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('image')" id="image" href="#image" (click)="toggleDocumentSelection('image')">
+          <a [className]="tabLinkStyle('image')" id="image" href="#image" (click)="selectTab('image')">
             Image Viewer
           </a>
         </li>
         <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('unsupported')" id="unsupported" href="#unsupported"
-             (click)="toggleDocumentSelection('unsupported')">
+          <a [className]="tabLinkStyle('unsupported')" (click)="selectTab('unsupported')"
+             id="unsupported" href="#unsupported">
             Unsupported Documents Viewer
           </a>
         </li>
       </ul>
     </div>
-    <section [id]="documentTypeToShow">
-      <form #form="ngForm">
-        <div *ngIf="documentTypeToShow === 'pdf'">
-          <div>
-            Document URL: <input type="text" name="pdfUrl" [(ngModel)]="pdfUrl">
-            Document download file name: <input type="text" name="pdfFileName" [(ngModel)]="pdfFileName">
-          </div>
-          <mv-media-viewer
-            [url]="pdfUrl"
-            [downloadFileName]="pdfFileName"
-            [showToolbar]="showToolbar"
-            [toolbarButtonToggles]="toolbarButtons"
-            [contentType]="'pdf'">
-          </mv-media-viewer>
-        </div>
-        <div *ngIf="documentTypeToShow === 'image'">
-          <div>
-            Document URL: <input type="text" name="imageUrl" [(ngModel)]="imageUrl">
-            Document download file name: <input type="text" name="imageFileName" [(ngModel)]="imageFileName"> {{imageFileName}}
-          </div>
-          <mv-media-viewer
-                           [url]="imageUrl"
-                           [showToolbar]="showToolbar"
-                           [downloadFileName]="imageFileName"
-                           [toolbarButtonToggles]="toolbarButtons"
-                           [contentType]="'image'">
-          </mv-media-viewer>
-        </div>
-        <div *ngIf="documentTypeToShow === 'unsupported'">
-          <div>
-            Document URL: <input type="text" name="unsupportedUrl" [(ngModel)]="unsupportedUrl">
-            Document download file name: <input type="text" name="unsupportedFileName" [(ngModel)]="unsupportedFileName">
-            Document type: <input type="text" name="unsupportedType" [(ngModel)]="unsupportedType">
-          </div>
-          <mv-media-viewer
-                           [url]="unsupportedUrl"
-                           [downloadFileName]="unsupportedFileName"
-                           [showToolbar]="showToolbar"
-                           [toolbarButtonToggles]="toolbarButtons"
-                           [contentType]="unsupportedType">
-          </mv-media-viewer>
-        </div>
-      </form>
+    <mv-comments-summary *ngIf="showCommentSummary | async"
+                         [title]="'Document Title'"
+                         [showCommentSummary]="showCommentSummary"
+                         [comments]="comments"></mv-comments-summary>
+    <section [id]="selectedTab">
+      <div *ngIf="selectedTab === 'pdf'">
+        <mv-media-viewer [url]="pdfUrl"
+                         [downloadFileName]="pdfFileName"
+                         [toolbarButtonToggles]="toolbarButtons"
+                         [contentType]="'pdf'"
+                         [annotationSet]="pdfAnnotationSet"
+                         [showCommentSummary]="showCommentSummary"
+                         [showAnnotations]="showAnnotations"
+                         [showToolbar]="showToolbar"></mv-media-viewer>
+      </div>
+      <div *ngIf="selectedTab === 'image'">
+        <mv-media-viewer [url]="imageUrl"
+                         [downloadFileName]="imageFileName"
+                         [toolbarButtonToggles]="toolbarButtons"
+                         [contentType]="'image'"
+                         [annotationSet]="imageAnnotationSet"
+                         [showCommentSummary]="showCommentSummary"
+                         [showToolbar]="showToolbar"></mv-media-viewer>
+      </div>
+      <div *ngIf="selectedTab === 'unsupported'">
+        <mv-media-viewer [url]="unsupportedUrl"
+                         [downloadFileName]="unsupportedFileName"
+                         [toolbarButtonToggles]="toolbarButtons"
+                         [contentType]="unsupportedType"
+                         [showCommentSummary]="showCommentSummary"
+                         [showToolbar]="showToolbar"></mv-media-viewer>
+      </div>
     </section>
   </div>
 </div>

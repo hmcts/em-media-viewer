@@ -3,8 +3,9 @@ import { DownloadPage } from '../pages/download.po';
 describe('Doownload Scenarios ', () => {
   let page: DownloadPage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new DownloadPage();
+    await page.preparePage();
   });
 
 

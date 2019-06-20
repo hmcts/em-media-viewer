@@ -9,16 +9,20 @@ export class AppPage {
     return browser.driver.manage().window().maximize();
    }
 
+  async preparePage() {
+    this.navigateTo();
+    await this.showToolbarButtons();
+  }
 
   async showToolbarButtons() {
-    const checked = await element(by.css("input[id='search-btn-toggle']")).getAttribute('checked');
+    const checked = await element(by.css('input[id="search-btn-toggle"]')).getAttribute('checked');
     if (!checked) {
-      element(by.css("label[for='download-btn-toggle']")).click();
-      element(by.css("label[for='navigate-btn-toggle']")).click();
-      element(by.css("label[for='print-btn-toggle']")).click();
-      element(by.css("label[for='rotate-btn-toggle']")).click();
-      element(by.css("label[for='search-btn-toggle']")).click();
-      element(by.css("label[for='zoom-btn-toggle']")).click();
+      element(by.css('label[for="download-btn-toggle"]')).click();
+      element(by.css('label[for="navigate-btn-toggle"]')).click();
+      element(by.css('label[for="print-btn-toggle"]')).click();
+      element(by.css('label[for="rotate-btn-toggle"]')).click();
+      element(by.css('label[for="search-btn-toggle"]')).click();
+      element(by.css('label[for="zoom-btn-toggle"]')).click();
     }
   }
 
@@ -46,10 +50,14 @@ export class AppPage {
   }
 
   async waitForElement(selector: Locator) {
-    await browser.wait(async () => element(selector), 3000, 'failed to load search results');
+    await browser.wait(async () => {
+      return (await element(selector)).isPresent();
+    }, 3000, 'failed to load search results');
   }
 
   async waitForElementsArray(selector: Locator) {
-    await browser.wait(async () => element.all(selector), 3000, 'failed to load search results');
+    await browser.wait(async () => {
+      return (await element.all(selector).isPresent());
+    }, 10000, 'failed to load search results');
   }
 }

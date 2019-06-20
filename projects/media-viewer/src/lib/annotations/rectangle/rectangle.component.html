@@ -1,0 +1,11 @@
+<div [ngDraggable]="draggable"
+     ngResizable
+     rzHandles="all"
+     class="rectangle"
+     [ngClass]="{ 'selected': selected }"
+     [style.backgroundColor]="'#' + color"
+     [style.width]="rectangle.width *zoom + 'px'"
+     [style.height]="rectangle.height *zoom + 'px'"
+     [position]="{ x: rectangle.x *zoom, y: rectangle.y *zoom }"
+     (click)="onClick()">
+</div>

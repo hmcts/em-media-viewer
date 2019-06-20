@@ -7,6 +7,7 @@ import { MediaViewerWrapperComponent } from './media-viewer-wrapper/media-viewer
 import { MediaViewerModule } from '../../projects/media-viewer/src/lib/media-viewer.module';
 import { ToolbarModule } from '../../projects/media-viewer/src/lib/toolbar/toolbar.module';
 import { ToolbarTogglesComponent } from './media-viewer-wrapper/toolbar-toggles/toolbar-toggles.component';
+import { CommentsSummaryModule } from '../../projects/media-viewer/src/lib/comments-summary/comments-summary.module';
 
 const routes: Routes = [{
     path: '',
@@ -28,7 +29,8 @@ const routes: Routes = [{
     ReactiveFormsModule,
     MediaViewerModule,
     ToolbarModule,
-    FormsModule
+    FormsModule,
+    CommentsSummaryModule
   ],
   exports: [RouterModule]
 })

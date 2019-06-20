@@ -5,46 +5,39 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 const fs = require('fs');
 
 exports.config = {
-  allScriptsTimeout: 120000,
-  getPageTimeout: 120000,
+  allScriptsTimeout: 11000,
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
-  multiCapabilities: [
-    {
-      'browserName': 'firefox',
-      directConnect: true,
-      'moz:firefoxOptions': {
-        'args': ['--safe-mode']
-      }
-    },
-
-    {
-    browserName: 'chrome',
-    chromeOptions: {
-      prefs: {
-        download: {
-          'prompt_for_download': false,
-          'default_directory': require('path').join(__dirname, 'src/downloads')
-        }
-      }
-    }
+// Firefox local setup
+  exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
+  capabilities: {
+    browserName: 'firefox',
+    shardTestFiles: true,
+    maxInstances: 20,
   },
-
-  ],
-  maxSessions: 2,
-  shardTestFiles: true,
+// // Chrome local setup
+//   capabilities: {
+//     browserName: 'chrome',
+//     shardTestFiles: true,
+//     maxInstances: 20,
+//     chromeOptions: {
+//       prefs: {
+//         download: {
+//           'prompt_for_download': false,
+//           'default_directory': require('path').join(__dirname, 'src/downloads')
+//         }
+//       }
+//     }
+//   },
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
-    print: function() {},
-    includeStackTrace: true,
-    isVerbose: true
+    print: function() {}
   },
-
   onPrepare() {
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.e2e.json')
@@ -73,5 +66,4 @@ function removePreviousDownloads() {
     console.log(e);
     return e;
   }
-
 }

@@ -1,6 +1,6 @@
 <table style="float: right; margin-top: 15px;">
   <tr>
-    <ng-container *ngIf="toggleToolbarVisibility.getValue()">
+    <ng-container *ngIf="toggleToolbar.getValue()">
       <ng-container [ngTemplateOutlet]="toolbarToggle"
                     [ngTemplateOutletContext]="{ key: 'showSearchbarToggleBtn', label: 'search' }">
       </ng-container>
@@ -26,7 +26,33 @@
         </div>
         <div class="govuk-grid-column-full">
           <label class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleToolbar" [checked]="toggleToolbarVisibility.getValue()" (change)="toggleToolbarVisibility.next($event.target.checked)">
+            <input type="checkbox" id="toggleToolbar" [checked]="toggleToolbar.getValue()" (change)="toggleToolbar.next($event.target.checked)">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <span class="govuk-!-font-weight-bold">Annotate</span>
+        </div>
+        <div class="govuk-grid-column-full">
+          <label class="switch govuk-!-margin-right-2">
+            <input type="checkbox" id="toggleAnnotations" [checked]="toggleAnnotations.getValue()" (change)="toggleAnnotations.next($event.target.checked)">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <span class="govuk-!-font-weight-bold">Comments</span>
+        </div>
+        <div class="govuk-grid-column-full">
+          <label for="toggleCommentSummary" class="switch govuk-!-margin-right-2">
+            <input type="checkbox" id="toggleCommentSummary" [checked]="showCommentSummary | async" (change)="showCommentSummary.next($event.target.checked)">
             <span class="slider round"></span>
           </label>
         </div>
