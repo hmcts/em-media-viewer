@@ -14,10 +14,9 @@ export class AnnotationsViewInjector {
       this.viewContainerRef.clear();
       const pdfViewerHtml = pdfViewer.nativeElement as HTMLElement;
       let pages = pdfViewerHtml.querySelectorAll(".page");
-      const selectedAnnotationEvent = new Subject<string>();
 
       if (pages.length && pages.length > 0) {
-        annotations.forEach(annotation => {
+        for(const annotation of annotations) {
           const page = pages.item(annotation.page -1);
 
           const annotationComponent = this.viewContainerRef.createComponent(this.annotationFactory);
@@ -25,11 +24,10 @@ export class AnnotationsViewInjector {
           annotationComponent.instance.commentsLeftOffset = page.clientWidth + 5;
           annotationComponent.instance.zoom = zoom.value;
           annotationComponent.instance.draggable = false;
-          annotationComponent.instance.selectedAnnotation = selectedAnnotationEvent;
           const annotationElement = (annotationComponent.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
           page.insertBefore(annotationElement, page.firstElementChild);
-        });
+        }
       }
     });
   }
