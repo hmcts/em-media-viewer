@@ -34,7 +34,7 @@ exports.config = {
     compiler: 'ts:ts-node/register',
     strict: true,
     plugin: ["pretty"],
-    require: ['./src/stepDefinitions/*.js', '../../typeScript/support/*.js'],
+    require: ['../dist/e2e/src/step-definitions/*.js', '../../typeScript/support/*.js'],
     tags: '@Toolbar_ToggleButtons',
   },
 

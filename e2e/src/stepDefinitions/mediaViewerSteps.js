@@ -8,7 +8,10 @@ global.expect = chai.expect;
 
 Given('I am on Media Viewer Page', function () {
   let page = new NavigatePage();
-  page.getHeaderText();
+  let text =  page.getHeaderText();
+  text.then(textValue => {
+    console.log(textValue);
+  });
   page.goToNextPage();
 
 });

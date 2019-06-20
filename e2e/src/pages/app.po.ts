@@ -3,8 +3,9 @@ const until = protractor.ExpectedConditions;
 
 export class AppPage {
 
-  navigateTo() {
-    browser.get('/');
+  async navigateTo() {
+    await browser.get('http://localhost:3000/');
+    await browser.waitForAngularEnabled(true);
     return browser.driver.manage().window().maximize();
    }
 

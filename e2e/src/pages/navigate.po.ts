@@ -5,7 +5,7 @@ export class NavigatePage extends AppPage {
 
   async goToNextPage() {
     await this.waitForElement(by.id('next'));
-    return element(by.id('next')).click();
+     element(by.id('next')).click();
   }
 
   async goToPreviousPage() {
