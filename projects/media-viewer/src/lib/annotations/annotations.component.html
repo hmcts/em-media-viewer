@@ -1,0 +1,8 @@
+<div class="annotations-wrapper">
+  <ng-container *ngFor="let annotation of annotations" >
+    <mv-annotation [annotation]="annotation"
+                   [zoom]="zoom"
+                   [selectedAnnotation]="selectedAnnotation">
+    </mv-annotation>
+  </ng-container>
+</div>
