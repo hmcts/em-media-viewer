@@ -1,17 +1,5 @@
-.rectangle {
+.annotation-wrapper {
   position: absolute;
-  z-index: 2;
-  opacity: 0.3;
-}
-
-.selected.rectangle {
-  opacity: 0.5;
-}
-
-.ng-draggable {
-  cursor: grab;
-}
-
-.ng-dragging {
-  cursor: grabbing;
+  top: 0;
+  left: 0;
 }
