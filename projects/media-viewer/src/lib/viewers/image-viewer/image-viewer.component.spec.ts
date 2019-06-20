@@ -14,6 +14,7 @@ import {ErrorMessageComponent} from '../error-message/error.message.component';
 import {By} from '@angular/platform-browser';
 import {SimpleChange} from '@angular/core';
 import { AnnotationsModule } from '../../annotations/annotations.module';
+import { annotationSet } from '../../../assets/annotation-set';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -40,6 +41,7 @@ describe('ImageViewerComponent', () => {
     nativeElement = fixture.debugElement.nativeElement;
     component.url = DOCUMENT_URL;
     component.zoomValue = new Subject<ZoomValue>();
+    component.annotationSet = annotationSet;
     fixture.detectChanges();
   });
 

@@ -1,6 +1,9 @@
-<div #viewerContainer class="pdfContainer" style="height: 99%; position: absolute" [ngClass]="{hidden: errorMessage}">
-  <div class="pdfViewer" [ngClass]="{hidden: loadingDocument}"></div>
-  <div class="loadingMessage" [ngClass]="{hidden: !loadingDocument}">Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}</div>
+<div #viewerContainer class="pdfContainer"
+     style="height: 99%; position: absolute;" [ngClass]="{ hidden: errorMessage }">
+  <div #pdfViewer class="pdfViewer" [ngClass]="{ hidden: loadingDocument }">
+  </div>
+  <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
+    Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
+  </div>
 </div>
 <mv-error-message [errorMessage]="errorMessage" *ngIf="errorMessage"></mv-error-message>
-
