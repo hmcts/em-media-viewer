@@ -39,7 +39,7 @@ describe('PdfViewerComponent', () => {
     documentLoadProgress: new Subject<DocumentLoadProgress>(),
     documentLoaded: new Subject<DocumentLoaded>(),
     documentLoadFailed: new Subject<DocumentLoadFailed>(),
-    pagesRendered: new Subject<boolean>(),
+    pageRendered: new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>(),
   };
 
   const mockFactory = {
