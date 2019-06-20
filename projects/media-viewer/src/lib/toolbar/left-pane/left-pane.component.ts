@@ -18,6 +18,7 @@ export class ToolbarLeftPaneComponent {
   @Input() showNavigationBtns: boolean;
   @Input() sidebarOpen: BehaviorSubject<boolean>;
   @Input() searchBarHidden: BehaviorSubject<boolean>;
+  @Input() drawMode: BehaviorSubject<boolean>;
 
   constructor() {}
 
@@ -48,4 +49,7 @@ export class ToolbarLeftPaneComponent {
     }
   }
 
+  onClickDraw() {
+    this.drawMode.next(!this.drawMode.value);
+  }
 }
