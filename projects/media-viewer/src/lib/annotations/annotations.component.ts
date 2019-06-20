@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Annotation } from './annotation.model';
 import { Subject } from 'rxjs';
-import {RotateValue, ZoomValue} from '../events/viewer-operations';
 
 @Component({
   selector: 'mv-annotations',
