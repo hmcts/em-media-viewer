@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-annotation',
+  styleUrls: ['./annotation.component.scss'],
   templateUrl: './annotation.component.html'
 })
 export class AnnotationComponent {
