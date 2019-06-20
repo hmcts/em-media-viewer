@@ -7,7 +7,7 @@ export class AppPage {
     console.log('Navigate Method');
     await browser.waitForAngularEnabled(false);
     await browser.driver.navigate().to('http://localhost:3000');
-    await browser.sleep(30000);
+    browser.driver.sleep(30000)
     console.log('wait time');
     return await browser.driver.manage().window().maximize();
    }
