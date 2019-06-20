@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../events/viewer-operations';
+import { ChangePageByDeltaOperation, SetCurrentPageOperation, ToggleHighlightModeOperation } from '../../events/viewer-operations';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
@@ -11,6 +11,7 @@ export class ToolbarLeftPaneComponent {
 
   @Input() changePageByDelta: Subject<ChangePageByDeltaOperation>;
   @Input() setCurrentPage: Subject<SetCurrentPageOperation>;
+  @Input() toggleHighlightMode: Subject<ToggleHighlightModeOperation>;
   @Input() pageNumber = 1;
   @Input() showSidebarToggleBtn: boolean;
   @Input() showSearchbarToggleBtn: boolean;
@@ -20,6 +21,7 @@ export class ToolbarLeftPaneComponent {
   @Input() searchBarHidden: BehaviorSubject<boolean>;
   @Input() drawMode: BehaviorSubject<boolean>;
   @Input() highlightMode: BehaviorSubject<boolean>;
+  fred = true;
 
   constructor() {}
 
@@ -55,6 +57,8 @@ export class ToolbarLeftPaneComponent {
   }
 
   onClickHighlight() {
+    // JJJ - Worried that we have three sources of truth. left-pane.highlightMode, pdf-viewer.highlightMode, and actionEvents.highlightMode
     this.highlightMode.next(!this.highlightMode.value);
+    this.toggleHighlightMode.next(new ToggleHighlightModeOperation(this.highlightMode.getValue()));
   }
 }

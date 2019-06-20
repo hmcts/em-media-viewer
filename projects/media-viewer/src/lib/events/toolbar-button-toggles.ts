@@ -28,9 +28,7 @@ export class ToolbarButtonToggles {
   public showPresentationModeBtn = false;
   public showOpenFileBtn = false;
   public showBookmarkBtn = false;
-
   public showHighlightBtn = false;
-
   public showSearchbarToggleBtn = false;
   public showSubToolbarToggleBtn = false;
   public showSidebarToggleBtn = false;

@@ -10,7 +10,8 @@ import {
   SetCurrentPageOperation,
   StepZoomOperation,
   ZoomOperation,
-  ZoomValue
+  ZoomValue,
+  ToggleHighlightModeOperation
 } from '../../events/viewer-operations';
 import { Subject } from 'rxjs';
 
@@ -31,6 +32,7 @@ export class MainToolbarComponent {
   @Input() rotateEvent: Subject<RotateOperation>;
   @Input() changePageByDeltaEvent: Subject<ChangePageByDeltaOperation>;
   @Input() setCurrentPageEvent: Subject<SetCurrentPageOperation>;
+  @Input() toggleHighlightModeEvent: Subject<ToggleHighlightModeOperation>;
   @Input() downloadEvent: Subject<DownloadOperation>;
   @Input() printEvent: Subject<PrintOperation>;
 }

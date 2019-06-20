@@ -23,7 +23,8 @@ import {
   SetCurrentPageOperation,
   StepZoomOperation,
   ZoomOperation,
-  ZoomValue
+  ZoomValue,
+  ToggleHighlightModeOperation
 } from '../../events/viewer-operations';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationComponent } from '../../annotations/annotation.component';
@@ -55,12 +56,13 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   @ViewChild('pdfViewer') pdfViewer: ElementRef;
 
   private pdfWrapper: PdfJsWrapper;
+  private highlightMode = false; // JJJ Setting a default value
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
-    private readonly printService: PrintService
+    private readonly printService: PrintService,
   ) {}
 
   async ngAfterContentInit(): Promise<void> {
@@ -87,7 +89,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
   toggleAnnotations() {
     if (this.showAnnotations) {
-      if(!this.annotationsViewInjector) {
+      if (!this.annotationsViewInjector) {
         const annotationFactory = this.componentFactoryResolver
           .resolveComponentFactory(AnnotationComponent);
         this.annotationsViewInjector = new AnnotationsViewInjector(annotationFactory, this.viewContainerRef)
@@ -181,11 +183,29 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   }
 
   @Input()
+  set toggleHighlightMode(operation: ToggleHighlightModeOperation | null) {
+    if (operation) {
+      this.highlightMode = operation.highlightMode;
+    }
+  }
+
+  @Input()
   set searchBarHidden(hidden: boolean) {
     if (this.pdfWrapper && hidden) {
       this.pdfWrapper.clearSearch();
     }
   }
 
+  mouseDown(event: MouseEvent) {
+    if (this.highlightMode) {
+      console.log('mouseDown - ', event);
+    }
+  }
+
+  mouseUp(event: MouseEvent) {
+    if (this.highlightMode) {
+      console.log('mouseUp - ', event);
+    }
+  }
 
 }

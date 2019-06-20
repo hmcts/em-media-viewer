@@ -14,6 +14,7 @@
                      [setCurrentPageEvent]="actionEvents.setCurrentPage"
                      [downloadEvent]="actionEvents.download"
                      [printEvent]="actionEvents.print"
+                     [toggleHighlightModeEvent]="actionEvents.toggleHighlightMode"
                      [toolbarButtons]="toolbarButtonToggles"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    [url]="url"
@@ -30,6 +31,7 @@
                    [rotateOperation]="actionEvents?.rotate | async"
                    [setCurrentPage]="actionEvents?.setCurrentPage | async"
                    [changePageByDelta]="actionEvents?.changePageByDelta | async"
+                   [toggleHighlightMode]="actionEvents?.toggleHighlightMode | async"
                    [currentPageChanged]="currentPageChanged"
                    [searchBarHidden]="toolbarButtonToggles?.searchBarHidden | async">
     </mv-pdf-viewer>

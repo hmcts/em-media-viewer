@@ -9,6 +9,7 @@ import {
   SearchResultsCount,
   SetCurrentPageOperation,
   StepZoomOperation,
+  ToggleHighlightModeOperation,
   ZoomOperation,
   ZoomValue
 } from './viewer-operations';
@@ -24,4 +25,5 @@ export class ActionEvents {
   public readonly download = new Subject<DownloadOperation>();
   public readonly setCurrentPage = new Subject<SetCurrentPageOperation>();
   public readonly changePageByDelta = new Subject<ChangePageByDeltaOperation>();
+  public readonly toggleHighlightMode = new Subject<ToggleHighlightModeOperation>();
 }
