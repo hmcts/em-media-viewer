@@ -1,8 +1,9 @@
 <div id="viewer-wrapper">
-  <div *ngIf="!errorMessage" id="image-container" class="image-container" [ngClass]="'rot' + rotation">
+  <div *ngIf="!errorMessage" id="image-container" class="image-container">
 
     <img #img
          *ngIf="url"
+         [ngClass]="'rot' + rotation"
          data-hook="dm.viewer.img"
          [src]="url"
          (error)="onLoadError()"
@@ -10,6 +11,7 @@
 
     <mv-annotations [annotations]="annotationSet?.annotations"
                     [zoom]="zoom"
+                    [rotate]="rotation"
                     [selectedAnnotation]="selectedAnnotation">
     </mv-annotations>
 
