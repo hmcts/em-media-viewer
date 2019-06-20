@@ -4,13 +4,16 @@ const until = protractor.ExpectedConditions;
 export class AppPage {
 
   async navigateTo() {
-    await browser.get('http://localhost:3000/');
-    await browser.waitForAngularEnabled(true);
-    return browser.driver.manage().window().maximize();
+    console.log('Navigate Method');
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.navigate().to('http://localhost:3000');
+    await browser.sleep(30000);
+    console.log('wait time');
+    return await browser.driver.manage().window().maximize();
    }
 
   async preparePage() {
-    this.navigateTo();
+    await this.navigateTo();
     await this.showToolbarButtons();
   }
 
