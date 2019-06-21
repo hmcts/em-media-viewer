@@ -36,7 +36,7 @@
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"
                      [annotationSet]="annotationSet"
-                     [drawMode]="toolbarButtonToggles.drawMode | async"
+                     [drawMode]="toolbarButtonToggles.drawMode"
                      [downloadFileName]="downloadFileName"
                      [zoomOperation]="actionEvents?.zoom | async"
                      [stepZoomOperation]="actionEvents?.stepZoom | async"

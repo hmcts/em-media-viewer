@@ -4,7 +4,7 @@
                    [selectedAnnotation]="selectedAnnotation"
                    (update)="updateAnnotation($event)"></mv-annotation>
   </ng-container>
-  <div #newRectangle class="newRectangle"></div>
+  <div #newRectangle class="newRectangle" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></div>
   <div *ngIf="!errorMessage"
        id="image-container"
        class="image-container"

@@ -26,7 +26,7 @@ export class ImageViewerComponent implements OnChanges {
   @Input() downloadFileName: string;
   @Input() zoomValue: Subject<ZoomValue>;
   @Input() annotationSet: AnnotationSet;
-  @Input() drawMode: boolean;
+  @Input() drawMode: Subject<boolean>;
 
   selectedAnnotation = new Subject<string>();
   errorMessage: string;
@@ -183,6 +183,7 @@ export class ImageViewerComponent implements OnChanges {
       this.newRectangle.nativeElement.style.display = 'none';
       this.newRectangle.nativeElement.style.width = '0';
       this.newRectangle.nativeElement.style.height = '0';
+      this.drawMode.next(false);
 
       event.preventDefault();
     }
