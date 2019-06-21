@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarLeftPaneComponent } from './left-pane.component';
-import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../events/viewer-operations';
+import { ChangePageByDeltaOperation, SetCurrentPageOperation, ToggleHighlightModeOperation } from '../../events/viewer-operations';
 import { BehaviorSubject, Subject } from 'rxjs';
 import {By} from '@angular/platform-browser';
 
@@ -18,10 +18,12 @@ describe('ToolbarLeftPaneComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarLeftPaneComponent);
     component = fixture.componentInstance;
+    component.showHighlightBtn = true;
     component.sidebarOpen = new BehaviorSubject(false);
     component.searchBarHidden = new BehaviorSubject(true);
     component.drawMode = new BehaviorSubject(false);
     component.highlightMode = new BehaviorSubject(false);
+    component.toggleHighlightMode = new Subject<ToggleHighlightModeOperation>();
     component.changePageByDelta = new Subject<ChangePageByDeltaOperation>();
     component.setCurrentPage = new Subject<SetCurrentPageOperation>();
     fixture.detectChanges();
@@ -100,5 +102,17 @@ describe('ToolbarLeftPaneComponent', () => {
     expect(component.drawMode.getValue()).toBeFalsy();
     component.onClickDraw();
     expect(component.drawMode.getValue()).toBeTruthy();
+  });
+
+  fit('should turn draw mode off when highlight is selected', () => {
+    component.showHighlightBtn = true;
+    component.highlightMode.next(false);
+    component.drawMode.next(true);
+    const toggleHighlightSpy = spyOn(component.toggleHighlightMode, 'next');
+    expect(component.drawMode.getValue()).toBeTruthy();
+
+    component.onClickHighlight();
+    expect(component.drawMode.getValue()).toBeFalsy();
+    expect(toggleHighlightSpy).toHaveBeenCalledWith(new ToggleHighlightModeOperation(true));
   });
 });

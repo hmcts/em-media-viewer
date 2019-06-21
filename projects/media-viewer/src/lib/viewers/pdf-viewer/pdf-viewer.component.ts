@@ -186,6 +186,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   set toggleHighlightMode(operation: ToggleHighlightModeOperation | null) {
     if (operation) {
       this.highlightMode = operation.highlightMode;
+      console.log('highlightMode is set to ', this.highlightMode);
     }
   }
 
