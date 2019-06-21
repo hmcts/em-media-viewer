@@ -4,8 +4,8 @@ const fs = require('fs');
 
 export class DownloadPage extends AppPage {
 
-  clickDownload() {
-    return element(by.id('download')).click();
+  async clickDownload() {
+    await this.clickElement(by.id('download'));
   }
 
   async waitForDownloadToComplete(path) {
