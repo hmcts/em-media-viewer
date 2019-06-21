@@ -9,7 +9,7 @@ import { pdfAnnotationSet } from '../../assets/mock-data/pdf-annotation-set';
   selector: 'media-viewer-wrapper',
   templateUrl: './media-viewer-wrapper.component.html'
 })
-export class MediaViewerWrapperComponent implements OnInit {
+export class MediaViewerWrapperComponent {
 
   pdfUrl = 'assets/example.pdf';
   pdfFileName = 'example.pdf';
@@ -20,22 +20,31 @@ export class MediaViewerWrapperComponent implements OnInit {
   unsupportedType = 'txt';
 
   selectedTab = 'pdf';
-  showToolbar = true;
-  showAnnotations = false;
-
-  toolbarButtons = new ToolbarButtonToggles();
-  showCommentSummary = new Subject<boolean>();
+  url = this.pdfUrl;
+  annotationSet = pdfAnnotationSet;
   comments = [];
 
-  imageAnnotationSet = imageAnnotationSet;
-  pdfAnnotationSet = pdfAnnotationSet;
+  showToolbar = true;
+  showAnnotations = false;
+  toolbarButtons = new ToolbarButtonToggles();
+  showCommentSummary = new Subject<boolean>();
 
   constructor(
     public api: AnnotationApiService
   ) {}
 
-  selectTab(currentTab: string) {
-    this.selectedTab = currentTab;
+  selectTab(newTab: string) {
+    this.selectedTab = newTab;
+
+    if (newTab === 'pdf') {
+      this.url = this.pdfUrl;
+      this.annotationSet = pdfAnnotationSet;
+    } else if (newTab === 'image') {
+      this.url = this.imageUrl;
+      this.annotationSet = imageAnnotationSet;
+    } else {
+      this.url = this.unsupportedUrl;
+    }
   }
 
   toggleToolbar(showToolbar: boolean) {
@@ -51,7 +60,13 @@ export class MediaViewerWrapperComponent implements OnInit {
     return `govuk-tabs__tab ${this.selectedTab === currentTab ? 'govuk-tabs__tab--selected' : ''}`;
   }
 
-  public ngOnInit(): void {
-    this.api.getComments('1').subscribe(comments => this.comments = comments);
+  setDocumentUrl(newUrl: string) {
+    if (newUrl.startsWith('/documents/')) {
+      const documentId = newUrl.split('/')[2];
+
+      this.api.getComments(documentId).subscribe(comments => this.comments = comments);
+      this.api.getOrCreateAnnotationSet(documentId).subscribe(annotationSet => this.annotationSet = annotationSet);
+      this.url = newUrl.endsWith('/binary') ? newUrl : newUrl + '/binary';
+    }
   }
 }
