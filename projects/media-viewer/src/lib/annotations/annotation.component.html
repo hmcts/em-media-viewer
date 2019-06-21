@@ -1,0 +1,20 @@
+<div class="annotation-wrapper" tabindex="1" (focusout)="toggleSelection(false)">
+  <mv-anno-rectangle
+    (click)="toggleSelection(true)"
+    [selected]="selected"
+    [zoom]="zoom"
+    [rectangle]="annotation.rectangles[0]"
+    [draggable]="draggable"
+    [color]="annotation.color">
+  </mv-anno-rectangle>
+  <mv-anno-comment
+    *ngIf="annotation.comments[0]"
+    (click)="toggleSelection(true)"
+    (delete)="deleteComment()"
+    (updated)="updateComment($event)"
+    [selected]="selected"
+    [comment]="annotation.comments[0]"
+    [left]="commentsLeftOffset"
+    [top]="annotation.rectangles[0].y *(zoom)">
+  </mv-anno-comment>
+</div>

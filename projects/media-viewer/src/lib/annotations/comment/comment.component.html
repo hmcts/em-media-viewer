@@ -1,4 +1,4 @@
-<form (click)="onCommentClick()" class="aui-comment" [ngStyle]="{ top: top + 'px' }">
+<form (click)="onCommentClick()" class="aui-comment" [ngStyle]="{ top: top + 'px', left: left + 'px'}">
   <div id="detailsWrapper" class="aui-comment__header">
     <span *ngIf="author && !editor" class="aui-comment__author">
       {{ author.forename }} {{ author.surname }}
@@ -11,7 +11,7 @@
     </time>
   </div>
   <textarea type="text" required name="content"
-            [ngClass]="commentStyle()" [ngModel]="commentText" [readOnly]="!editable">
+            [ngClass]="commentStyle()" [(ngModel)]="commentText" [readOnly]="!editable">
   </textarea>
   <div [hidden]="!selected" class="aui-comment__footer commentBtns">
     <button *ngIf="!editable; else Save"
@@ -19,14 +19,16 @@
             (click)="onEdit()">
       Edit
     </button>
-    <button *ngIf="!editable; else Cancel" class="govuk-button govuk-button--secondary"
+    <button *ngIf="!editable; else Cancel"
+            (click)="onDelete()"
+            class="govuk-button govuk-button--secondary"
             role="button">
       Delete
     </button>
   </div>
 </form>
 <ng-template #Save>
-  <button class="govuk-button" type="submit" role="button">
+  <button class="govuk-button" type="submit" role="button" (click)="onSave()">
     Save
   </button>
 </ng-template>

@@ -18,8 +18,10 @@ export class CommentComponent {
   editor: User;
 
   @Output() click = new EventEmitter();
-  @Input() user: User;
+  @Output() delete = new EventEmitter();
+  @Output() updated = new EventEmitter<String>();
   @Input() top: number;
+  @Input() left: number;
   @Input() selected: boolean;
 
   @Input()
@@ -56,5 +58,18 @@ export class CommentComponent {
     return !this.selected && this.fullComment.length > this.MAX_COMMENT_LENGTH
       ? this.fullComment.substring(0, this.MAX_COMMENT_LENGTH - 3) + '...'
       : this.fullComment;
+  }
+
+  set commentText(text: string) {
+    this.fullComment = text;
+  }
+
+  public onDelete() {
+    this.delete.emit();
+  }
+
+  public onSave() {
+    this.updated.emit(this.fullComment);
+    this.editable = false;
   }
 }
