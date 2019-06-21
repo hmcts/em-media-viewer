@@ -23,8 +23,7 @@ import {
   SetCurrentPageOperation,
   StepZoomOperation,
   ZoomOperation,
-  ZoomValue,
-  ToggleHighlightModeOperation
+  ZoomValue
 } from '../../events/viewer-operations';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationComponent } from '../../annotations/annotation.component';
@@ -45,6 +44,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
   @Input() showAnnotations: boolean;
   @Input() annotationSet: AnnotationSet;
+  @Input() highlightMode: BehaviorSubject<boolean>;
 
   annotationsViewInjector: AnnotationsViewInjector;
 
@@ -56,7 +56,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   @ViewChild('pdfViewer') pdfViewer: ElementRef;
 
   private pdfWrapper: PdfJsWrapper;
-  private highlightMode = false; // JJJ Setting a default value
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
@@ -80,7 +79,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.url && this.pdfWrapper) {
-      await this.pdfWrapper.loadDocument(this.url);
+      await this.pdfWrapper.loadDocument(this.url); 
     }
     if (changes.showAnnotations) {
       this.toggleAnnotations();
@@ -179,14 +178,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   set changePageByDelta(operation: ChangePageByDeltaOperation | null) {
     if (operation) {
       this.pdfWrapper.changePageNumber(operation.delta);
-    }
-  }
-
-  @Input()
-  set toggleHighlightMode(operation: ToggleHighlightModeOperation | null) {
-    if (operation) {
-      this.highlightMode = operation.highlightMode;
-      console.log('highlightMode is set to ', this.highlightMode);
     }
   }
 

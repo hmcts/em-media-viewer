@@ -70,7 +70,3 @@ export class DocumentLoadFailed {
   constructor() {
   }
 }
-
-export class ToggleHighlightModeOperation {
-  constructor( public highlightMode: boolean ) {}
-}
