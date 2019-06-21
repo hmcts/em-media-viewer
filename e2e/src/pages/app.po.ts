@@ -29,7 +29,8 @@ export class AppPage {
         this.clickElement(by.css('label[for="print-btn-toggle"]')),
         this.clickElement(by.css('label[for="rotate-btn-toggle"]')),
         this.clickElement(by.css('label[for="search-btn-toggle"]')),
-        this.clickElement(by.css('label[for="zoom-btn-toggle"]'))
+        this.clickElement(by.css('label[for="zoom-btn-toggle"]')),
+        this.clickElement(by.css('label[for="toggleAnnotations"]'))
       ]);
     }
   }
