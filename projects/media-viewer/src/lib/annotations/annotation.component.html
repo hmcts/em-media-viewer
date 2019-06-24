@@ -1,4 +1,4 @@
-<ng-container *ngFor="let rectangle of annotation.rectangles">
+<ng-container *ngFor="let rectangle of annotation.rectangles; index as i">
   <mv-anno-rectangle
     (click)="selectAnnotation()"
     [selected]="(selectedAnnotation | async) === annotation.id"
@@ -8,3 +8,15 @@
     [color]="annotation.color">
   </mv-anno-rectangle>
 </ng-container>
+
+<mv-anno-comment
+  *ngIf="annotation.comments[0]"
+  (click)="selectAnnotation()"
+  [rotate]="rotate"
+  (delete)="deleteComment()"
+  (updated)="updateComment($event)"
+  [selected]="(selectedAnnotation | async) === annotation.id"
+  [comment]="annotation.comments[0]"
+  [rectangle]="annotation.rectangles[0]"
+  [zoom]="zoom">
+</mv-anno-comment>
