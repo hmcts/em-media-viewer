@@ -1,10 +1,10 @@
-import { by, element } from 'protractor';
+import { by, element, browser } from 'protractor';
 import { AppPage } from './app.po';
 
 export class SearchPage extends AppPage {
 
-  toggleSearchBar() {
-    return element(by.id('viewFind')).click();
+  async toggleSearchBar() {
+    return this.clickElement(by.id('viewFind'));
   }
 
   async searchFor(searchTerm: string) {
@@ -15,17 +15,17 @@ export class SearchPage extends AppPage {
   }
 
   async goToNextResult() {
-    element(by.id('findNext')).click();
-    return await this.waitForSearchResults();
+    await this.clickElement(by.id('findNext'));
+    return this.waitForSearchResults();
   }
 
   async goToPreviousResult() {
-    element(by.id('findPrevious')).click();
+    await this.clickElement(by.id('findPrevious'));
     return await this.waitForSearchResults();
   }
 
   async selectMatchCase() {
-    element(by.id('findMatchCase')).click();
+    await this.clickElement(by.id('findMatchCase'));
     return await this.waitForSearchResults();
   }
 
@@ -35,8 +35,8 @@ export class SearchPage extends AppPage {
   }
 
   async selectedSearchText() {
-    await this.waitForElement(by.className('highlight selected'));
-    return element(by.className('highlight selected')).getText();
+    const el = await element(by.css('.highlight.selected'));
+    return el.getText();
   }
 
   async firstSearchResult() {

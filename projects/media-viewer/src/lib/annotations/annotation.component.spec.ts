@@ -32,7 +32,6 @@ describe('AnnotationComponent', () => {
     fixture = TestBed.createComponent(AnnotationComponent);
     component = fixture.componentInstance;
     component.annotation = { ...annotationSet.annotations[0] } ;
-    component.selectedAnnotation = new Subject<string>();
     fixture.detectChanges();
   });
 
@@ -41,11 +40,9 @@ describe('AnnotationComponent', () => {
   });
 
   it('select the annotation', async () => {
-    spyOn(component.selectedAnnotation, 'next');
+    component.toggleSelection(true);
 
-    component.selectAnnotation();
-
-    expect(component.selectedAnnotation.next).toHaveBeenCalledWith(component.annotation.id);
+    expect(component.selected).toBe(true);
   });
 
   it('deletes a comment', async () => {
@@ -58,7 +55,7 @@ describe('AnnotationComponent', () => {
   });
 
   it('updates a comment', async () => {
-    component.updateComment('Updated text');
+    component.onCommentUpdate('Updated text');
 
     expect(component.annotation.comments[0].content).toEqual('Updated text');
   });

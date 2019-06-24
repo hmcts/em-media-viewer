@@ -1,7 +1,7 @@
 <ng-container *ngFor="let rectangle of annotation.rectangles; index as i">
   <mv-anno-rectangle
-    (click)="selectAnnotation()"
-    [selected]="(selectedAnnotation | async) === annotation.id"
+    (click)="toggleSelection(true)"
+    [selected]="selected"
     [zoom]="zoom"
     [rectangle]="rectangle"
     [draggable]="draggable"
@@ -11,11 +11,11 @@
 
 <mv-anno-comment
   *ngIf="annotation.comments[0]"
-  (click)="selectAnnotation()"
+  (click)="toggleSelection(true)"
   [rotate]="rotate"
   (delete)="deleteComment()"
-  (updated)="updateComment($event)"
-  [selected]="(selectedAnnotation | async) === annotation.id"
+  (updated)="onCommentUpdate($event)"
+  [selected]="selected"
   [comment]="annotation.comments[0]"
   [rectangle]="annotation.rectangles[0]"
   [zoom]="zoom">

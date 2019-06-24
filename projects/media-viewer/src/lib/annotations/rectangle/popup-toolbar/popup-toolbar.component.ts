@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class PopupToolbarComponent {
 
   readonly HEIGHT = 70;
-  readonly WIDTH = 100;
+  readonly WIDTH = 350;
 
   @Input() top: number;
   @Input() left: number;

@@ -12,7 +12,7 @@ describe('ToolbarLeftPaneComponent', () => {
     return TestBed.configureTestingModule({
       declarations: [ ToolbarLeftPaneComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -98,6 +98,18 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should turn on the draw button if permitted', () => {
+    expect(component.drawMode.getValue()).toBeFalsy();
+    component.onClickDraw();
+    expect(component.drawMode.getValue()).toBeTruthy();
+  });
+
+  it('should show the draw button if permitted', () => {
+    component.showHighlightBtn = true;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toBeTruthy();
+  });
+
+  it('should toggle the draw button if permitted', () => {
     expect(component.drawMode.getValue()).toBeFalsy();
     component.onClickDraw();
     expect(component.drawMode.getValue()).toBeTruthy();
