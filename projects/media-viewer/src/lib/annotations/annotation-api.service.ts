@@ -27,13 +27,15 @@ export class AnnotationApiService {
 
     return this.httpClient
       .get<AnnotationSet>(url, { observe: 'response' })
-      .pipe(map(response => response.body));
+      .pipe(map(response => response.body))
+      .pipe(catchError(() => []));
   }
 
   public getComments(documentId: string): Observable<Comment[]> {
     return this.getAnnotationSet(documentId)
       .pipe(map(this.sortAnnotations))
-      .pipe(map(this.extractComments));
+      .pipe(map(this.extractComments))
+      .pipe(catchError(() => []));
   }
 
   /**
