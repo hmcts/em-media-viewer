@@ -89,7 +89,7 @@ describe('AnnotationApiService', () => {
   }));
 
   it('delete annotation', async(() => {
-    api.deleteAnnotation(annotation).subscribe((response) => {
+    api.deleteAnnotation(annotation.id).subscribe((response) => {
       expect(response.body.annotationSetId).toEqual(annotationSet.id);
     });
 

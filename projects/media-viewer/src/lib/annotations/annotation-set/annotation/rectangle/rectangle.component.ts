@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Rectangle } from './rectangle.model';
 import { IResizeEvent } from 'angular2-draggable/lib/models/resize-event';
+import { AnnotationApiService } from '../annotation-api.service';
 
 @Component({
   selector: 'mv-anno-rectangle',
@@ -18,6 +19,8 @@ export class RectangleComponent {
 
   @Output() click = new EventEmitter();
   @Output() update = new EventEmitter<Rectangle>();
+
+  constructor(private readonly annotationsApi: AnnotationApiService) {}
 
   onClick() {
     this.click.emit();
@@ -37,5 +40,9 @@ export class RectangleComponent {
     this.rectangle.height = event.size.height / this.zoom;
 
     this.update.emit(this.rectangle);
+  }
+
+  deleteHighlight() {
+    this.annotationsApi.deleteAnnotation(this.rectangle.annotationId);
   }
 }
