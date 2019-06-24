@@ -16,6 +16,7 @@ describe('media viewer app', () => {
 
 
   it('should display header', async () => {
-    expect(page.getHeaderText()).toEqual('Media Viewer Demo');
+    const headerText = await page.getHeaderText();
+    expect(headerText).toEqual('Media Viewer Demo');
   });
 });

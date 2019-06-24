@@ -5,12 +5,12 @@ export class NavigatePage extends AppPage{
 
   async goToNextPage() {
     await this.waitForElement(by.id('next'));
-    return element(by.id('next')).click();
+    await this.clickElement(by.id('next'));
   }
 
   async goToPreviousPage() {
     await this.waitForElement(by.id('previous'));
-    return element(by.id('previous')).click();
+    await this.clickElement(by.id('previous'));
   }
 
   async number() {

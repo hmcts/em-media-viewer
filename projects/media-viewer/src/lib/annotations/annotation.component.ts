@@ -13,11 +13,11 @@ export class AnnotationComponent {
   @Input() commentsLeftOffset: number;
   @Input() zoom: number;
   @Input() draggable: boolean;
-  @Input() selectedAnnotation: Subject<string>;
   @Output() update = new EventEmitter<Annotation>();
+  selected = false;
 
-  public selectAnnotation() {
-    this.selectedAnnotation.next(this.annotation.id);
+  public toggleSelection(selected: boolean) {
+    this.selected = selected;
   }
 
   public deleteComment() {

@@ -13,14 +13,10 @@ exports.config = {
   exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
   capabilities: {
     browserName: 'firefox',
-    shardTestFiles: true,
-    maxInstances: 20,
   },
 // // Chrome local setup
 //   capabilities: {
 //     browserName: 'chrome',
-//     shardTestFiles: true,
-//     maxInstances: 20,
 //     chromeOptions: {
 //       prefs: {
 //         download: {
