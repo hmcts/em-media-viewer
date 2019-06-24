@@ -37,6 +37,7 @@
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"
+                     [drawMode]="toolbarButtonToggles.drawMode"
                      [annotationSet]="showAnnotations ? annotationSet : null"
                      [downloadFileName]="downloadFileName"
                      [zoomOperation]="actionEvents?.zoom | async"

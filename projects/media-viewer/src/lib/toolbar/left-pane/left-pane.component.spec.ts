@@ -103,6 +103,18 @@ describe('ToolbarLeftPaneComponent', () => {
     expect(component.drawMode.getValue()).toBeTruthy();
   });
 
+  it('should show the draw button if permitted', () => {
+    component.showHighlightBtn = true;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toBeTruthy();
+  });
+
+  it('should toggle the draw button if permitted', () => {
+    expect(component.drawMode.getValue()).toBeFalsy();
+    component.onClickDraw();
+    expect(component.drawMode.getValue()).toBeTruthy();
+  });
+
   it('should turn off the draw button if permitted', () => {
     component.drawMode.next(true);
     expect(component.drawMode.getValue()).toBeTruthy();
