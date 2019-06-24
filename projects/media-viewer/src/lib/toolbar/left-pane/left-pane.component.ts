@@ -19,6 +19,7 @@ export class ToolbarLeftPaneComponent {
   @Input() sidebarOpen: BehaviorSubject<boolean>;
   @Input() searchBarHidden: BehaviorSubject<boolean>;
   @Input() drawMode: BehaviorSubject<boolean>;
+  @Input() highlightMode: BehaviorSubject<boolean>;
 
   constructor() {}
 
@@ -50,6 +51,17 @@ export class ToolbarLeftPaneComponent {
   }
 
   onClickDraw() {
-    this.drawMode.next(!this.drawMode.value);
+    this.drawMode.next(!this.drawMode.getValue());
+    if (this.drawMode.getValue() && this.highlightMode.getValue()) {
+      this.highlightMode.next(false);
+    }
   }
+
+  onClickHighlight() {
+    this.highlightMode.next(!this.highlightMode.getValue());
+    if (this.highlightMode.getValue() && this.drawMode.getValue()) {
+      this.drawMode.next(false);
+    }
+  }
+
 }
