@@ -28,7 +28,7 @@ describe('PopupToolbarComponent', () => {
     const element = fixture.debugElement.query(By.css('div'));
     console.log(element.styles);
 
-    expect(element.styles.left).toEqual((component.left - 100 ) + 'px');
+    expect(element.styles.left).toEqual((component.left - 175 ) + 'px');
     expect(element.styles.top).toEqual((component.top - 70) + 'px');
   });
 });

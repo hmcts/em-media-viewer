@@ -3,7 +3,15 @@
     <mv-annotation [annotation]="annotation" [zoom]="zoom"
                    (update)="updateAnnotation($event)"></mv-annotation>
   </ng-container>
-  <div *ngIf="!errorMessage" id="image-container" class="image-container" [ngStyle]="{ transform: zoomStyle }">
+  <div *ngIf="drawMode" #newRectangle class="newRectangle" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></div>
+  <div *ngIf="!errorMessage"
+       id="image-container"
+       class="image-container"
+       [ngStyle]="{ transform: zoomStyle }"
+       (mousedown)="onMouseDown($event)"
+       (mousemove)="onMouseMove($event)"
+       (mouseup)="onMouseUp($event)"
+  >
     <img #img *ngIf="url" data-hook="dm.viewer.img" [src]="url" [ngStyle]="{ transform: rotationStyle }" (error)="onLoadError()"/>
   </div>
   <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>
