@@ -12,7 +12,7 @@ import {
   ZoomOperation,
   ZoomValue
 } from '../../events/viewer-operations';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'mv-main-toolbar',
@@ -31,6 +31,7 @@ export class MainToolbarComponent {
   @Input() rotateEvent: Subject<RotateOperation>;
   @Input() changePageByDeltaEvent: Subject<ChangePageByDeltaOperation>;
   @Input() setCurrentPageEvent: Subject<SetCurrentPageOperation>;
+  @Input() highlightMode: BehaviorSubject<boolean>;
   @Input() downloadEvent: Subject<DownloadOperation>;
   @Input() printEvent: Subject<PrintOperation>;
 }
