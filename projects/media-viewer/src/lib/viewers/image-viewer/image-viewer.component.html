@@ -3,7 +3,7 @@
     <mv-annotation [annotation]="annotation" [zoom]="zoom"
                    (update)="updateAnnotation($event)"></mv-annotation>
   </ng-container>
-  <div #newRectangle class="newRectangle" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></div>
+  <div *ngIf="drawMode" #newRectangle class="newRectangle" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></div>
   <div *ngIf="!errorMessage"
        id="image-container"
        class="image-container"
