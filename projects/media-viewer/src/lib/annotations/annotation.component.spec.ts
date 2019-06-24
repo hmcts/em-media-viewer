@@ -58,7 +58,7 @@ describe('AnnotationComponent', () => {
   });
 
   it('updates a comment', async () => {
-    component.updateComment('Updated text');
+    component.onCommentUpdate('Updated text');
 
     expect(component.annotation.comments[0].content).toEqual('Updated text');
   });

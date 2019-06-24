@@ -1,6 +1,7 @@
 <div class="annotation-wrapper">
   <mv-anno-rectangle
     (click)="selectAnnotation()"
+    (update)="onRectangleUpdate($event)"
     [selected]="(selectedAnnotation | async) === annotation.id"
     [zoom]="zoom"
     [rectangle]="annotation.rectangles[0]"
@@ -11,7 +12,7 @@
     *ngIf="annotation.comments[0]"
     (click)="selectAnnotation()"
     (delete)="deleteComment()"
-    (updated)="updateComment($event)"
+    (updated)="onCommentUpdate($event)"
     [selected]="(selectedAnnotation | async) === annotation.id"
     [comment]="annotation.comments[0]"
     [left]="commentsLeftOffset"
