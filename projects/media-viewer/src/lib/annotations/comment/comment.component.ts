@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../user/user.model';
+import {Rectangle} from '../rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -20,9 +21,10 @@ export class CommentComponent {
   @Output() click = new EventEmitter();
   @Output() delete = new EventEmitter();
   @Output() updated = new EventEmitter<String>();
-  @Input() top: number;
-  @Input() left: number;
   @Input() selected: boolean;
+  @Input() rotate: number;
+  @Input() zoom: number;
+  @Input() rectangle: Rectangle;
 
   @Input()
   set comment(comment: Comment) {
@@ -42,6 +44,34 @@ export class CommentComponent {
 
   onCancel() {
     this.editable = false;
+  }
+
+  formNgStyle() {
+    if (this.rotate === 0) {
+      return {
+        top: this.rectangle.y * this.zoom + 'px',
+        right: '0px'
+      };
+    } else if (this.rotate === 90) {
+      return {
+        top: '0px',
+        left: this.rectangle.x * this.zoom + 'px',
+        'transform-origin': 'top left'
+      };
+    } else if (this.rotate === 180) {
+      return {
+        top: ((this.rectangle.y * this.zoom) + (this.rectangle.height + this.zoom)) + 'px',
+        left: '0px',
+        'transform-origin': 'top left'
+      };
+    } else if (this.rotate === 270) {
+      return {
+        bottom: '0px',
+        left: (this.rectangle.x * this.zoom) + (this.rectangle.width * this.zoom) + 'px',
+        'transform-origin': 'top left'
+      };
+    }
+    return null;
   }
 
   commentStyle() {
