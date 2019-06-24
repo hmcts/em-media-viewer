@@ -12,11 +12,9 @@ import { pdfAnnotationSet } from '../../assets/mock-data/pdf-annotation-set';
 export class MediaViewerWrapperComponent {
 
   pdfUrl = 'assets/example.pdf';
-  pdfFileName = 'example.pdf';
   imageUrl = 'assets/example.jpg';
-  imageFileName = 'example.jpg';
   unsupportedUrl = 'assets/unsupported.txt';
-  unsupportedFileName = 'unsupported.txt';
+  filename = 'filename';
   unsupportedType = 'txt';
 
   selectedTab = 'pdf';

@@ -30,12 +30,7 @@
             <span class="govuk-details__summary-text">Change download file name</span>
           </summary>
           <div class="govuk-details__text">
-            <input *ngIf="selectedTab === 'pdf'"
-                   class="govuk-input" type="text" name="pdfFileName" [(ngModel)]="pdfFileName">
-            <input *ngIf="selectedTab === 'image'"
-                   class="govuk-input" type="text" name="imageFileName" [(ngModel)]="imageFileName">
-            <input *ngIf="selectedTab === 'unsupported'"
-                   class="govuk-input" type="text" name="unsupportedFileName" [(ngModel)]="unsupportedFileName">
+            <input *ngIf="selectedTab === 'pdf'" class="govuk-input" type="text" name="pdfFileName" [(ngModel)]="filename">
           </div>
         </details>
       </div>
@@ -77,34 +72,14 @@
                          [showCommentSummary]="showCommentSummary"
                          [comments]="comments"></mv-comments-summary>
     <section [id]="selectedTab">
-      <div *ngIf="selectedTab === 'pdf'">
         <mv-media-viewer [url]="url"
-                         [downloadFileName]="pdfFileName"
+                         [downloadFileName]="filename"
                          [toolbarButtonToggles]="toolbarButtons"
-                         [contentType]="'pdf'"
+                         [contentType]="selectedTab"
                          [annotationSet]="annotationSet"
                          [showCommentSummary]="showCommentSummary"
                          [showAnnotations]="showAnnotations"
                          [showToolbar]="showToolbar"></mv-media-viewer>
-      </div>
-      <div *ngIf="selectedTab === 'image'">
-        <mv-media-viewer [url]="url"
-                         [downloadFileName]="imageFileName"
-                         [toolbarButtonToggles]="toolbarButtons"
-                         [contentType]="'image'"
-                         [annotationSet]="annotationSet"
-                         [showAnnotations]="showAnnotations"
-                         [showCommentSummary]="showCommentSummary"
-                         [showToolbar]="showToolbar"></mv-media-viewer>
-      </div>
-      <div *ngIf="selectedTab === 'unsupported'">
-        <mv-media-viewer [url]="url"
-                         [downloadFileName]="unsupportedFileName"
-                         [toolbarButtonToggles]="toolbarButtons"
-                         [contentType]="unsupportedType"
-                         [showCommentSummary]="showCommentSummary"
-                         [showToolbar]="showToolbar"></mv-media-viewer>
-      </div>
     </section>
   </div>
 </div>
