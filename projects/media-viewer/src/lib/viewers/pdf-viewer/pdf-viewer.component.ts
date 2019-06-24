@@ -44,6 +44,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
   @Input() showAnnotations: boolean;
   @Input() annotationSet: AnnotationSet;
+  @Input() highlightMode: BehaviorSubject<boolean>;
 
   annotationsViewInjector: AnnotationsViewInjector;
 
@@ -60,7 +61,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
-    private readonly printService: PrintService
+    private readonly printService: PrintService,
   ) {}
 
   async ngAfterContentInit(): Promise<void> {
@@ -78,7 +79,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.url && this.pdfWrapper) {
-      await this.pdfWrapper.loadDocument(this.url);
+      await this.pdfWrapper.loadDocument(this.url); 
     }
     if (changes.showAnnotations) {
       this.toggleAnnotations();
@@ -87,7 +88,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
   toggleAnnotations() {
     if (this.showAnnotations) {
-      if(!this.annotationsViewInjector) {
+      if (!this.annotationsViewInjector) {
         const annotationFactory = this.componentFactoryResolver
           .resolveComponentFactory(AnnotationComponent);
         this.annotationsViewInjector = new AnnotationsViewInjector(annotationFactory, this.viewContainerRef)
@@ -187,5 +188,16 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
     }
   }
 
+  mouseDown(event: MouseEvent) {
+    if (this.highlightMode) {
+      console.log('mouseDown - ', event);
+    }
+  }
+
+  mouseUp(event: MouseEvent) {
+    if (this.highlightMode) {
+      console.log('mouseUp - ', event);
+    }
+  }
 
 }
