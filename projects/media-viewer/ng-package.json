@@ -9,6 +9,7 @@
     "@hmcts/frontend",
     "govuk-frontend",
     "pdfjs-dist",
-    "angular2-draggable"
+    "angular2-draggable",
+    "uuid"
   ]
 }
