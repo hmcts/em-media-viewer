@@ -49,9 +49,8 @@ export class AnnotationApiService {
     return [].concat(...annotations.map(a => a.comments));
   }
 
-  public deleteAnnotation(annotation: Annotation): Observable<HttpResponse<Annotation>> {
-    const url = `/em-anno/annotations/${annotation.id}`;
-
+  public deleteAnnotation(annotationId: string): Observable<HttpResponse<Annotation>> {
+    const url = `/em-anno/annotations/${annotationId}`;
     return this.httpClient.delete<Annotation>(url, { observe: 'response' });
   }
 
