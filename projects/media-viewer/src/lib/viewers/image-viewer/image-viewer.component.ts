@@ -23,9 +23,8 @@ export class ImageViewerComponent implements OnChanges {
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() zoomValue: Subject<ZoomValue>;
-  @Input() annotationSet: AnnotationSet;
+  @Input() annotationSet: AnnotationSet | null;
 
-  selectedAnnotation = new Subject<string>();
   errorMessage: string;
 
   @ViewChild('img') img: ElementRef;
