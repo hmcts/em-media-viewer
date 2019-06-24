@@ -27,6 +27,26 @@ describe('CommentComponent', () => {
     content: 'This is a comment.',
   };
 
+  const mockRectangle = {
+    x: 10, y: 10, width: 100, height: 20,
+    id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
+    annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329',
+    createdDate: '2018-05-28T08:48:33.206Z',
+    createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+    createdByDetails: {
+      'forename': 'Linus',
+      'surname': 'Norton',
+      'email': 'linus.norton@hmcts.net'
+    },
+    lastModifiedDate: '2019-05-28T08:48:33.206Z',
+    lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+    lastModifiedByDetails: {
+      'forename': 'Jeroen',
+      'surname': 'Rijks',
+      'email': 'jeroen.rijks@hmcts.net'
+    },
+  }
+
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [
@@ -46,6 +66,7 @@ describe('CommentComponent', () => {
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
     component.comment = {...mockComment};
+    component.rectangle = {...mockRectangle};
     nativeElement = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });
@@ -150,6 +171,34 @@ describe('CommentComponent', () => {
     component.fullComment = longComment;
     const retrievedCommentText = component.commentText;
     expect(retrievedCommentText).toBe(longComment);
+  });
+
+  it('rotate 0 should align to right and vertically with highlight', () => {
+    component.rotate = 0;
+    const style = component.formNgStyle();
+    expect(style.right).toBe('0px');
+    expect(style.top).toBe('10px');
+  });
+
+  it('rotate 90 should align to top and horizontally with highlight', () => {
+    component.rotate = 90;
+    const style = component.formNgStyle();
+    expect(style.left).toBe('10px');
+    expect(style.top).toBe('0px');
+  });
+
+  it('rotate 180 should align to left and horizontally with highlight (accounting for highlight dimensions)', () => {
+    component.rotate = 180;
+    const style = component.formNgStyle();
+    expect(style.left).toBe('0px');
+    expect(style.top).toBe('30px');
+  });
+
+  it('rotate 270 (-90) should align to bottom and horizontally with highlight (accounting for highlight dimensions)', () => {
+    component.rotate = 270;
+    const style = component.formNgStyle();
+    expect(style.bottom).toBe('0px');
+    expect(style.left).toBe('110px');
   });
 
 });
