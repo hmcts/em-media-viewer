@@ -80,18 +80,20 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
     }
   }
 
-  onPageRendered(e: {pageNumber: number, source: any}) {
+  onPageRendered(e: {pageNumber: number, source: {rotation: number, scale: number, div: Element}}) {
     if (this.showAnnotations) {
       const pageAnnotations = this.annotationSet.annotations.filter(a => a.page === e.pageNumber);
-      const annotationsFactory = this.componentFactoryResolver.resolveComponentFactory(AnnotationsComponent);
-      const annotationsComponent = this.viewContainerRef.createComponent(annotationsFactory);
-      annotationsComponent.instance.annotations = pageAnnotations;
-      annotationsComponent.instance.zoom = e.source.scale;
-      annotationsComponent.instance.rotate = e.source.rotation;
-      annotationsComponent.instance.width = e.source.rotation % 180 === 0 ? e.source.div.clientWidth : e.source.div.clientHeight;
-      annotationsComponent.instance.height = e.source.rotation % 180 === 0 ? e.source.div.clientHeight : e.source.div.clientWidth;
-      const annotationsElement = (annotationsComponent.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-      e.source.div.appendChild(annotationsElement);
+      if (pageAnnotations && pageAnnotations.length) {
+        const annotationsFactory = this.componentFactoryResolver.resolveComponentFactory(AnnotationsComponent);
+        const annotationsComponent = this.viewContainerRef.createComponent(annotationsFactory);
+        annotationsComponent.instance.annotations = pageAnnotations;
+        annotationsComponent.instance.zoom = e.source.scale;
+        annotationsComponent.instance.rotate = e.source.rotation;
+        annotationsComponent.instance.width = e.source.rotation % 180 === 0 ? e.source.div.clientWidth : e.source.div.clientHeight;
+        annotationsComponent.instance.height = e.source.rotation % 180 === 0 ? e.source.div.clientHeight : e.source.div.clientWidth;
+        const annotationsElement = (annotationsComponent.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+        e.source.div.appendChild(annotationsElement);
+      }
     }
   }
 

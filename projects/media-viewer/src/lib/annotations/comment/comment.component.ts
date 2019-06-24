@@ -22,8 +22,8 @@ export class CommentComponent {
   @Output() delete = new EventEmitter();
   @Output() updated = new EventEmitter<String>();
   @Input() selected: boolean;
-  @Input() rotate: number;
-  @Input() zoom: number;
+  @Input() rotate = 0;
+  @Input() zoom = 1;
   @Input() rectangle: Rectangle;
 
   @Input()
@@ -60,7 +60,7 @@ export class CommentComponent {
       };
     } else if (this.rotate === 180) {
       return {
-        top: ((this.rectangle.y * this.zoom) + (this.rectangle.height + this.zoom)) + 'px',
+        top: ((this.rectangle.y * this.zoom) + (this.rectangle.height * this.zoom)) + 'px',
         left: '0px',
         'transform-origin': 'top left'
       };
