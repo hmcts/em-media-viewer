@@ -43,6 +43,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
   @Input() showAnnotations: boolean;
   @Input() annotationSet: AnnotationSet;
+  @Input() highlightMode: BehaviorSubject<boolean>;
 
   loadingDocument = false;
   loadingDocumentProgress: number;
@@ -57,7 +58,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
-    private readonly printService: PrintService
+    private readonly printService: PrintService,
   ) {}
 
   async ngAfterContentInit(): Promise<void> {
@@ -182,5 +183,16 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
     }
   }
 
+  mouseDown(event: MouseEvent) {
+    if (this.highlightMode) {
+      console.log('mouseDown - ', event);
+    }
+  }
+
+  mouseUp(event: MouseEvent) {
+    if (this.highlightMode) {
+      console.log('mouseUp - ', event);
+    }
+  }
 
 }
