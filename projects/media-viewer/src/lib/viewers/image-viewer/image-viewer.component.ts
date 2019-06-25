@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import { Subject } from 'rxjs';
 import {
   DownloadOperation,
