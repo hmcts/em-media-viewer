@@ -1,13 +1,13 @@
-#viewer-wrapper {
-  position: absolute;
-}
 
-img {
+.rotation {
   -webkit-transform-origin: left bottom;
   -moz-transform-origin: left bottom;
   -ms-transform-origin: left bottom;
   -o-transform-origin: left bottom;
   transform-origin: left bottom;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .rot90 {
@@ -39,16 +39,4 @@ img {
   -ms-transform-origin: left top;
   -o-transform-origin: left top;
   transform-origin: left top;
-}
-
-.newRectangle {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  z-index: 10;
-  opacity: 0.5;
-  background-color: yellow;
 }

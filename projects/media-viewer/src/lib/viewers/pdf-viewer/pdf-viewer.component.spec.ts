@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
+import { annotationSet } from '../../../assets/annotation-set';
 import {
   ChangePageByDeltaOperation, DocumentLoaded, DocumentLoadFailed, DocumentLoadProgress,
   DownloadOperation, NewDocumentLoadInit,
@@ -15,9 +16,11 @@ import {
   ZoomValue
 } from '../../events/viewer-operations';
 import { PrintService } from '../../print.service';
-import {SimpleChange} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, SimpleChange} from '@angular/core';
 import {ErrorMessageComponent} from '../error-message/error.message.component';
 import {By} from '@angular/platform-browser';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {AnnotationsComponent} from '../../annotations/annotations.component';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -39,7 +42,7 @@ describe('PdfViewerComponent', () => {
     documentLoadProgress: new Subject<DocumentLoadProgress>(),
     documentLoaded: new Subject<DocumentLoaded>(),
     documentLoadFailed: new Subject<DocumentLoadFailed>(),
-    pagesRendered: new Subject<boolean>(),
+    pageRendered: new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>()
   };
 
   const mockFactory = {
@@ -52,17 +55,25 @@ describe('PdfViewerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PdfViewerComponent, ErrorMessageComponent ]
+      declarations: [ PdfViewerComponent, ErrorMessageComponent, AnnotationsComponent ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+      ]
     })
-    .overrideComponent(PdfViewerComponent, {
-      set: {
-        providers: [
-          { provide: PdfJsWrapperFactory, useValue: mockFactory },
-          { provide: PrintService, useFactory: () => mockPrintService }
-        ]
-      }
-    })
-    .compileComponents();
+      .overrideComponent(PdfViewerComponent, {
+        set: {
+          providers: [
+            { provide: PdfJsWrapperFactory, useValue: mockFactory },
+            { provide: PrintService, useFactory: () => mockPrintService }
+          ]
+        }
+      })
+      .overrideModule(BrowserDynamicTestingModule, {
+        set: {
+          entryComponents: [AnnotationsComponent]
+        }
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
@@ -175,5 +186,14 @@ describe('PdfViewerComponent', () => {
     mockWrapper.documentLoadFailed.next(new DocumentLoadFailed());
     expect(component.errorMessage).toContain('Could not load the document');
     expect(component.loadingDocument).toBe(false);
+  });
+
+  it('on document load failed expect error message xx', () => {
+    component.annotationSet = annotationSet;
+    component.showAnnotations = true;
+    const div = document.createElement('div');
+    mockWrapper.pageRendered.next({pageNumber: 1, source: {rotation: 0, scale: 1, div: div}});
+    expect(div.childNodes).not.toBeNull();
+    expect(div.childNodes.length).toBe(1);
   });
 });

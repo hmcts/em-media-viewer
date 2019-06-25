@@ -10,7 +10,7 @@ describe('PopupToolbarComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PopupToolbarComponent ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PopupToolbarComponent);
     component = fixture.componentInstance;

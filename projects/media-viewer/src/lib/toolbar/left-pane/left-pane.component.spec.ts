@@ -12,7 +12,7 @@ describe('ToolbarLeftPaneComponent', () => {
     return TestBed.configureTestingModule({
       declarations: [ ToolbarLeftPaneComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
