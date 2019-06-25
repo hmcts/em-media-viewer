@@ -10,7 +10,6 @@ import { Subject } from 'rxjs';
 export class AnnotationsComponent {
 
   @Input() annotations: Annotation[];
-  @Input() selectedAnnotation: Subject<string>;
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() width: number;
