@@ -4,7 +4,6 @@
   <div *ngIf="!errorMessage"
        id="image-container"
        class="image-container"
-       [ngStyle]="{ transform: zoomStyle }"
        (mousedown)="onMouseDown($event)"
        (mousemove)="onMouseMove($event)"
        (mouseup)="onMouseUp($event)"
