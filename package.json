@@ -32,7 +32,7 @@
     "e2e": "ng e2e",
     "webdriver": "webdriver-manager update",
     "e2e-cucumber": "webdriver-manager update && ng e2e --protractor-config e2e/cucumber.conf.js",
-    "e2e:travis": "ng e2e --protractor-config 'e2e/ci.protractor.conf.js'"
+    "e2e:travis": "webdriver-manager update && ng e2e --protractor-config 'e2e/ci.protractor.conf.js'"
   },
   "dependencies": {
     "@angular-devkit/build-ng-packagr": "^0.13.9",
