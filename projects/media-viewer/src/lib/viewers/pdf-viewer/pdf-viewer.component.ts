@@ -76,7 +76,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.url && this.pdfWrapper) {
-      await this.pdfWrapper.loadDocument(this.url); 
+      await this.pdfWrapper.loadDocument(this.url);
     }
   }
 

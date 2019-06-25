@@ -34,7 +34,6 @@ describe('AnnotationsComponent', () => {
     fixture = TestBed.createComponent(AnnotationsComponent);
     component = fixture.componentInstance;
     component.annotations = [{ ...annotationSet.annotations[0] }] ;
-    component.selectedAnnotation = new Subject<string>();
     fixture.detectChanges();
   });
 

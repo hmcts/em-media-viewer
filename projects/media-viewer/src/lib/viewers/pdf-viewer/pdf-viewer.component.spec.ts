@@ -1,4 +1,4 @@
-import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
@@ -15,18 +15,13 @@ import {
   ZoomValue
 } from '../../events/viewer-operations';
 import { PrintService } from '../../print.service';
-import {ComponentFactory, ComponentFactoryResolver, SimpleChange, ViewContainerRef} from '@angular/core';
+import {SimpleChange} from '@angular/core';
 import {ErrorMessageComponent} from '../error-message/error.message.component';
 import {By} from '@angular/platform-browser';
-import { annotationSet } from '../../../assets/annotation-set';
-import {AnnotationsComponent} from '../../annotations/annotations.component';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
   let fixture: ComponentFixture<PdfViewerComponent>;
-  let annotationFactory: ComponentFactory<AnnotationsComponent>;
-  let viewContainerRef: ViewContainerRef;
 
   const mockWrapper = {
     loadDocument: () => {},
@@ -44,7 +39,7 @@ describe('PdfViewerComponent', () => {
     documentLoadProgress: new Subject<DocumentLoadProgress>(),
     documentLoaded: new Subject<DocumentLoaded>(),
     documentLoadFailed: new Subject<DocumentLoadFailed>(),
-    pageRendered: new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>(),
+    pageRendered: new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>()
   };
 
   const mockFactory = {
@@ -59,31 +54,21 @@ describe('PdfViewerComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ PdfViewerComponent, ErrorMessageComponent ]
     })
-    .overrideComponent(PdfViewerComponent, {
-      set: {
-        providers: [
-          { provide: PdfJsWrapperFactory, useValue: mockFactory },
-          { provide: PrintService, useFactory: () => mockPrintService }
-        ]
-      }
-    })
-    .compileComponents();
+      .overrideComponent(PdfViewerComponent, {
+        set: {
+          providers: [
+            { provide: PdfJsWrapperFactory, useValue: mockFactory },
+            { provide: PrintService, useFactory: () => mockPrintService }
+          ]
+        }
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
     component.zoomValue = new BehaviorSubject<ZoomValue>({value: 1});
     component.currentPageChanged = new Subject<SetCurrentPageOperation>();
     component.searchResults = new Subject<SearchResultsCount>();
-
-    TestBed.overrideModule(BrowserDynamicTestingModule, {
-      set: {
-        entryComponents: [AnnotationsComponent]
-      }
-    });
-
-    annotationFactory = fixture.debugElement.injector.get(ComponentFactoryResolver)
-      .resolveComponentFactory(AnnotationsComponent);
-    viewContainerRef = fixture.debugElement.injector.get(ViewContainerRef);
 
     await component.ngAfterContentInit();
   });
@@ -191,14 +176,4 @@ describe('PdfViewerComponent', () => {
     expect(component.errorMessage).toContain('Could not load the document');
     expect(component.loadingDocument).toBe(false);
   });
-
-  // it('on page rendered add annotations related to this page', () => {
-  //   const div = document.createElement('div');
-  //   div.style.width = '100px';
-  //   div.style.height = '100px';
-  //   component.showAnnotations = true;
-  //   component.annotationSet = annotationSet;
-  //   mockWrapper.pageRendered.next({pageNumber: 1, source: {rotation: 0, scale: 1, div: div}});
-  //   expect(div.childNodes.length).toBe(1);
-  // });
 });
