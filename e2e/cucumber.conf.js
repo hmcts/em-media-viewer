@@ -1,4 +1,3 @@
-
 exports.config = {
   SELENIUM_PROMISE_MANAGER: false,
   allScriptsTimeout: 120000,
@@ -13,7 +12,12 @@ exports.config = {
   specs: [
     './src/**/*.feature',
   ],
-  onPrepare() {
+  onPrepare: function () {
+
+    const {Given, Then, When} = require('cucumber');
+    global.Given = Given;
+    global.When = When;
+    global.Then = Then;
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.e2e.json')
     });
@@ -23,8 +27,8 @@ exports.config = {
 
     const options = {
       theme: 'bootstrap',
-      jsonFile: './reports/cucumber.json',
-      output: './reports/cucumber.html',
+      jsonFile: './cucumber.json',
+      output: './cucumber.html',
       reportSuiteAsScenarios: true,
       launchReport: false,
       metadata: {
@@ -37,8 +41,9 @@ exports.config = {
     compiler: 'ts:ts-node/register',
     strict: true,
     plugin: ['pretty'],
-    format: 'json:./reports/cucumber.json',
+    format: 'json:./cucumber.json',
     require: ['../e2e/src/step-definitions/*.ts']
   },
   noGlobals: true
+
 };

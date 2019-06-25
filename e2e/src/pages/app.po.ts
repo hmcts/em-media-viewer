@@ -12,7 +12,7 @@ export class AppPage {
   }
 
   async preparePage() {
-    await this.navigateTo();
+    /*await this.navigateTo(); */
     await this.showToolbarButtons();
   }
 
