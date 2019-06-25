@@ -18,7 +18,7 @@ export class MouseSelectionUtils {
     const viewportY: number = event.clientY;
     //
     // Obtain the HTMLElement from the event
-    const localElement: Element = (<Element>event.target) || (<Element>event.srcElement);
+    const localElement = (<Element>event.target) || (<Element>event.srcElement);
     if (!localElement) {
       return responseObject;
     }
