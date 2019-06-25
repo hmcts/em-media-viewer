@@ -10,6 +10,6 @@ import { ToolbarButtonToggles } from '../../../../projects/media-viewer/src/lib/
 export class ToolbarTogglesComponent {
   @Input() toolbarButtons: ToolbarButtonToggles;
   @Output() toggleToolbar = new BehaviorSubject(true);
-  @Output() toggleAnnotations = new BehaviorSubject(false);
+  @Output() toggleAnnotations = new BehaviorSubject(true);
   @Input() showCommentSummary: Subject<boolean>;
 }

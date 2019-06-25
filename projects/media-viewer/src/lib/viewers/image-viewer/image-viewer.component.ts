@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import { Subject } from 'rxjs';
 import {
   DownloadOperation,
@@ -34,8 +34,6 @@ export class ImageViewerComponent implements OnChanges {
   @ViewChild('newRectangle') newRectangle: ElementRef;
   rotation = 0;
   zoom = 1;
-  rotationStyle;
-  zoomStyle;
 
   drawStartX = -1;
   drawStartY = -1;
@@ -51,30 +49,25 @@ export class ImageViewerComponent implements OnChanges {
     }
   }
 
-
   @Input()
   set rotateOperation(operation: RotateOperation | null) {
     if (operation) {
-      this.rotation += operation.rotation;
-      this.setImageStyles();
+      this.rotation = (this.rotation + operation.rotation + 360) % 360;
     }
   }
 
   @Input()
   set zoomOperation(operation: ZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
-      this.zoom = this.updateZoomValue(+operation.zoomFactor);
-      this.setZoomValue(this.zoom)
-        .then(() => this.setImageStyles());
+      this.setZoomValue(this.calculateZoomValue(+operation.zoomFactor)).then(() => {});
     }
   }
 
   @Input()
   set stepZoomOperation(operation: StepZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
-      this.zoom = Math.round(this.updateZoomValue(this.zoom, operation.zoomFactor) * 10) / 10;
-      this.setZoomValue(this.zoom)
-        .then(() => this.setImageStyles());
+      this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, operation.zoomFactor) * 10) / 10)
+        .then(() => {});
     }
   }
 
@@ -98,19 +91,16 @@ export class ImageViewerComponent implements OnChanges {
     }
   }
 
-  setImageStyles() {
-    this.zoomStyle = `scale(${this.zoom})`;
-    this.rotationStyle = `rotate(${this.rotation}deg)`;
-  }
-
+  // the returned promise is a work-around
   setZoomValue(zoomValue) {
     return new Promise((resolve) => {
+      this.zoom = zoomValue;
       this.zoomValue.next({ value: zoomValue });
       resolve(true);
     });
   }
 
-  updateZoomValue(zoomValue, increment = 0) {
+  calculateZoomValue(zoomValue, increment = 0) {
     const newZoomValue = zoomValue + increment;
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }

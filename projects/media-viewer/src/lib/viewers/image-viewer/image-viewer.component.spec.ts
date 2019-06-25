@@ -53,56 +53,34 @@ describe('ImageViewerComponent', () => {
     component.rotateOperation = new RotateOperation(90);
 
     expect(component.rotation).toBe(90);
-    expect(component.rotationStyle).toBe('rotate(90deg)');
-    expect(component.zoomStyle).toBe('scale(1)');
   });
 
   describe('zoom operation', () => {
 
     it('should zoom image by factor of 0.5 ', () => {
-      const spy = spyOn(component, 'setZoomValue').and.returnValue(Promise.resolve(true));
       component.zoomOperation = new ZoomOperation(0.5);
-
       expect(component.zoom).toBe(0.5);
-      spy.calls.mostRecent().returnValue.then(() => {
-        expect(component.rotationStyle).toBe('rotate(0deg)');
-        expect(component.zoomStyle).toBe('scale(0.5)');
-      });
     });
 
     it('should zoom image by factor of 2', () => {
-      const spy = spyOn(component, 'setZoomValue').and.returnValue(Promise.resolve(true));
       component.zoomOperation = new StepZoomOperation(2);
 
       expect(component.zoom).toBe(2);
-      spy.calls.mostRecent().returnValue.then(() => {
-        expect(component.rotationStyle).toBe('rotate(0deg)');
-        expect(component.zoomStyle).toBe('scale(2)');
-      });
     });
 
     it('should zoom image by maximum value 5', () => {
-      const spy = spyOn(component, 'setZoomValue').and.returnValue(Promise.resolve(true));
       component.zoomOperation = new ZoomOperation(5);
       component.stepZoomOperation = new StepZoomOperation(0.1);
 
       expect(component.zoom).toBe(5);
-      spy.calls.mostRecent().returnValue.then(() => {
-        expect(component.rotationStyle).toBe('rotate(0deg)');
-        expect(component.zoomStyle).toBe('scale(5)');
-      });
+
     });
 
     it('should zoom image by minimum value 0.1', () => {
-      const spy = spyOn(component, 'setZoomValue').and.returnValue(Promise.resolve(true));
       component.zoomOperation = new ZoomOperation(0.1);
       component.stepZoomOperation = new StepZoomOperation(-0.1);
 
       expect(component.zoom).toBe(0.1);
-      spy.calls.mostRecent().returnValue.then(() => {
-        expect(component.rotationStyle).toBe('rotate(0deg)');
-        expect(component.zoomStyle).toBe('scale(0.1)');
-      });
     });
   });
 

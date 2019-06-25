@@ -42,25 +42,8 @@ describe('PdfJsWrapper', () => {
     new Subject<DocumentLoadProgress>(),
     new Subject<DocumentLoaded>(),
     new Subject<DocumentLoadFailed>(),
-    new Subject<boolean>(),
+    new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>(),
   );
-
-  it('set up eventbus listeners', () => {
-    const eventBusSpy = spyOn(mockViewer.eventBus, 'on');
-    const _ = new PdfJsWrapper(
-      new Subject<SearchResultsCount>(),
-      new Subject<SetCurrentPageOperation>(),
-      mockViewer,
-      downloadManager,
-      new Subject<NewDocumentLoadInit>(),
-      new Subject<DocumentLoadProgress>(),
-      new Subject<DocumentLoaded>(),
-      new Subject<DocumentLoadFailed>(),
-      new Subject<boolean>(),
-    );
-
-    expect(eventBusSpy).toHaveBeenCalledTimes(5);
-  });
 
   it('downloads a file', () => {
     const downloadSpy = spyOn(downloadManager, 'downloadUrl');
