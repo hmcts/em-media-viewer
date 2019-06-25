@@ -29,11 +29,10 @@
     "test:codacy-upload": "cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
     "test:coveralls-upload": "cat ./reports/tests/coverage/ng/lcov.info | coveralls",
     "test:codecov-upload": "codecov -f ./reports/tests/coverage/ng/lcov.info",
-    "e2e": "webdriver-manager update && ng e2e",
+    "e2e": "ng e2e",
     "webdriver": "webdriver-manager update",
-    "tsc": "tsc -p ./e2e/ --outDir dist/e2e",
     "e2e-cucumber": "webdriver-manager update && ng e2e --protractor-config e2e/cucumber.conf.js",
-    "e2e:travis": "webdriver-manager update && ng e2e --protractor-config 'e2e/ci.protractor.conf.js'"
+    "e2e:travis": "ng e2e --protractor-config 'e2e/ci.protractor.conf.js'"
   },
   "dependencies": {
     "@angular-devkit/build-ng-packagr": "^0.13.9",

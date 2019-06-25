@@ -1,6 +1,6 @@
 import { NavigatePage } from '../pages/navigate.po';
 
-describe('Media Viewer PDF Scenarios ', () => {
+describe('navigate', () => {
   let page: NavigatePage;
 
   beforeEach(async () => {
