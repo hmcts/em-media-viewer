@@ -6,8 +6,8 @@ Feature: Media Viewer Toolbar Scenarios
 
   Background:
     Given I am on Media Viewer Page
+    Then I expect the page header to be "Media Viewer Demo"
 
-  @Toolbar_ToggleButtons
   Scenario: Enable Toolbar Toggle buttons
     And I enable toggle buttons
     Then I expect toolbar icons should appear

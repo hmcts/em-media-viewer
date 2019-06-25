@@ -38,8 +38,7 @@ export class AppPage {
   }
 
   async getHeaderText() {
-    const headerText = await element(by.css('media-viewer-wrapper h2')).getText();
-    return headerText;
+    return await element(by.css('media-viewer-wrapper h2')).getText();
   }
 
   async selectPdfViewer() { await this.clickElement(by.id('pdf-tab')); }
