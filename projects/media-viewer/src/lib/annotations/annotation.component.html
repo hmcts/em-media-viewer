@@ -1,22 +1,24 @@
-<ng-container *ngFor="let rectangle of annotation.rectangles">
-  <mv-anno-rectangle
-    (click)="toggleSelection(true)"
-    [selected]="selected"
-    [zoom]="zoom"
-    [rectangle]="rectangle"
-    [draggable]="draggable"
-    [color]="annotation.color">
-  </mv-anno-rectangle>
-</ng-container>
+<div class="annotation-wrapper" tabindex="1" (focusout)="toggleSelection(false)">
+  <ng-container *ngFor="let rectangle of annotation.rectangles">
+    <mv-anno-rectangle
+      (click)="toggleSelection(true)"
+      [selected]="selected"
+      [zoom]="zoom"
+      [rectangle]="rectangle"
+      [draggable]="draggable"
+      [color]="annotation.color">
+    </mv-anno-rectangle>
+  </ng-container>
 
-<mv-anno-comment
-  *ngIf="annotation.comments[0]"
-  (click)="toggleSelection(true)"
-  [rotate]="rotate"
-  (delete)="deleteComment()"
-  (updated)="onCommentUpdate($event)"
-  [selected]="selected"
-  [comment]="annotation.comments[0]"
-  [rectangle]="annotation.rectangles[0]"
-  [zoom]="zoom">
-</mv-anno-comment>
+  <mv-anno-comment
+    *ngIf="annotation.comments[0]"
+    (click)="toggleSelection(true)"
+    [rotate]="rotate"
+    (delete)="deleteComment()"
+    (updated)="onCommentUpdate($event)"
+    [selected]="selected"
+    [comment]="annotation.comments[0]"
+    [rectangle]="annotation.rectangles[0]"
+    [zoom]="zoom">
+  </mv-anno-comment>
+</div>
