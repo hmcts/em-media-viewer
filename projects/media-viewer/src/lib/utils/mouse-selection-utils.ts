@@ -1,7 +1,13 @@
+// Custom Type Definition
+export interface Coordinates {
+  x: number;
+  y: number;
+}
+
 export class MouseSelectionUtils {
 
   // Return the absolute positioning of the top, left x & y coordinates relative to the localElement
-  static getTargetElementAbsoluteMouseCoordinates(event: MouseEvent): { x: number, y: number } {
+  static getTargetElementAbsoluteMouseCoordinates(event: MouseEvent): Coordinates {
     const responseObject = {
       x: event.x,
       y: event.y
