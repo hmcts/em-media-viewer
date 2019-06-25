@@ -29,7 +29,6 @@ export class MouseSelectionUtils {
     if (localX && localY) {
       responseObject.x = localX;
       responseObject.y = localY;
-      // console.log('Translating Viewport {', viewportX, ',', viewportY, '}', 'to Local {', localX, ',', localY, '}');
     }
     return responseObject;
   }
