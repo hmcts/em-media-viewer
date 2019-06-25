@@ -59,14 +59,15 @@ export class ImageViewerComponent implements OnChanges {
   @Input()
   set zoomOperation(operation: ZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
-      this.setZoomValue(this.calculateZoomValue(+operation.zoomFactor));
+      this.setZoomValue(this.calculateZoomValue(+operation.zoomFactor)).then(() => {});
     }
   }
 
   @Input()
   set stepZoomOperation(operation: StepZoomOperation | null) {
     if (operation && !isNaN(operation.zoomFactor)) {
-      this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, operation.zoomFactor) * 10) / 10);
+      this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, operation.zoomFactor) * 10) / 10)
+        .then(() => {});
     }
   }
 
@@ -90,9 +91,13 @@ export class ImageViewerComponent implements OnChanges {
     }
   }
 
+  // the returned promise is a work-around
   setZoomValue(zoomValue) {
-    this.zoom = zoomValue;
-    this.zoomValue.next({ value: zoomValue });
+    return new Promise((resolve) => {
+      this.zoom = zoomValue;
+      this.zoomValue.next({ value: zoomValue });
+      resolve(true);
+    });
   }
 
   calculateZoomValue(zoomValue, increment = 0) {
