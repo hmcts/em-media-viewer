@@ -2,6 +2,7 @@
   <ng-container *ngFor="let rectangle of annotation.rectangles">
     <mv-anno-rectangle
       (click)="toggleSelection(true)"
+      (update)="onRectangleUpdate($event)"
       [selected]="selected"
       [zoom]="zoom"
       [rectangle]="rectangle"

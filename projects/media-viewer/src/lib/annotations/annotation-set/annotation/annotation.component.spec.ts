@@ -4,7 +4,7 @@ import { CommentComponent } from './comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { AngularDraggableModule } from 'angular2-draggable';
-import { annotationSet } from '../../assets/annotation-set';
+import { annotationSet } from '../../../../assets/annotation-set';
 import { Subject } from 'rxjs';
 import { PopupToolbarComponent } from './rectangle/popup-toolbar/popup-toolbar.component';
 

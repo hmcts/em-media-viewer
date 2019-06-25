@@ -1,4 +1,4 @@
-import { ApiPersisted } from './api-persisted.model';
+import { ApiPersisted } from '../../api-persisted.model';
 import { Rectangle } from './rectangle/rectangle.model';
 import { Comment } from './comment/comment.model';
 
