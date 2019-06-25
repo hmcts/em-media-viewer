@@ -5,8 +5,10 @@ const until = protractor.ExpectedConditions;
 export class AppPage {
 
   async navigateTo() {
-    const homepage = await browser.get('/');
-    return homepage;
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.navigate().to(browser.baseUrl);
+
+    return await browser.driver.manage().window().maximize();
   }
 
   async preparePage() {
@@ -36,8 +38,7 @@ export class AppPage {
   }
 
   async getHeaderText() {
-    const headerText = await element(by.css('media-viewer-wrapper h2')).getText();
-    return headerText;
+    return await element(by.css('media-viewer-wrapper h2')).getText();
   }
 
   async selectPdfViewer() { await this.clickElement(by.id('pdf-tab')); }
