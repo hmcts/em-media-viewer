@@ -20,7 +20,9 @@ import {CUSTOM_ELEMENTS_SCHEMA, SimpleChange} from '@angular/core';
 import {ErrorMessageComponent} from '../error-message/error.message.component';
 import {By} from '@angular/platform-browser';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {AnnotationsComponent} from '../../annotations/annotations.component';
+import {AnnotationSetComponent} from '../../annotations/annotation-set/annotation-set.component';
+import { AnnotationApiService } from '../../annotations/annotation-api.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -55,7 +57,13 @@ describe('PdfViewerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PdfViewerComponent, ErrorMessageComponent, AnnotationsComponent ],
+      declarations: [ PdfViewerComponent, ErrorMessageComponent, AnnotationSetComponent ],
+      imports: [
+        HttpClientTestingModule
+      ],
+      providers: [
+        AnnotationApiService
+      ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
       ]
@@ -64,13 +72,14 @@ describe('PdfViewerComponent', () => {
         set: {
           providers: [
             { provide: PdfJsWrapperFactory, useValue: mockFactory },
-            { provide: PrintService, useFactory: () => mockPrintService }
+            { provide: PrintService, useFactory: () => mockPrintService },
+            AnnotationApiService
           ]
         }
       })
       .overrideModule(BrowserDynamicTestingModule, {
         set: {
-          entryComponents: [AnnotationsComponent]
+          entryComponents: [AnnotationSetComponent]
         }
       })
       .compileComponents();

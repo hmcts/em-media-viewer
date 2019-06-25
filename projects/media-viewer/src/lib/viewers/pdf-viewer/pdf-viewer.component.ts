@@ -26,8 +26,8 @@ import {
   ZoomValue
 } from '../../events/viewer-operations';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
-import { AnnotationSet } from '../../annotations/annotation-set.model';
-import {AnnotationsComponent} from '../../annotations/annotations.component';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import {AnnotationSetComponent} from '../../annotations/annotation-set/annotation-set.component';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -81,19 +81,17 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   }
 
   onPageRendered(e: {pageNumber: number, source: {rotation: number, scale: number, div: Element}}) {
-    if (this.showAnnotations) {
-      const pageAnnotations = this.annotationSet.annotations.filter(a => a.page === e.pageNumber);
-      if (pageAnnotations && pageAnnotations.length) {
-        const annotationsFactory = this.componentFactoryResolver.resolveComponentFactory(AnnotationsComponent);
-        const annotationsComponent = this.viewContainerRef.createComponent(annotationsFactory);
-        annotationsComponent.instance.annotations = pageAnnotations;
-        annotationsComponent.instance.zoom = e.source.scale;
-        annotationsComponent.instance.rotate = e.source.rotation;
-        annotationsComponent.instance.width = e.source.rotation % 180 === 0 ? e.source.div.clientWidth : e.source.div.clientHeight;
-        annotationsComponent.instance.height = e.source.rotation % 180 === 0 ? e.source.div.clientHeight : e.source.div.clientWidth;
-        const annotationsElement = (annotationsComponent.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-        e.source.div.appendChild(annotationsElement);
-      }
+    if (this.showAnnotations && this.annotationSet) {
+      const factory = this.componentFactoryResolver.resolveComponentFactory(AnnotationSetComponent);
+      const component = this.viewContainerRef.createComponent(factory);
+      component.instance.annotationSet = this.annotationSet;
+      component.instance.page = e.pageNumber;
+      component.instance.zoom = e.source.scale;
+      component.instance.rotate = e.source.rotation;
+      component.instance.width = e.source.rotation % 180 === 0 ? e.source.div.clientWidth : e.source.div.clientHeight;
+      component.instance.height = e.source.rotation % 180 === 0 ? e.source.div.clientHeight : e.source.div.clientWidth;
+      const annotationsElement = (component.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+      e.source.div.appendChild(annotationsElement);
     }
   }
 

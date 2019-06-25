@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AnnotationSet } from './annotation-set.model';
-import { Annotation } from './annotation.model';
-import { Comment } from './comment/comment.model';
+import { AnnotationSet } from './annotation-set/annotation-set.model';
+import { Annotation } from './annotation-set/annotation/annotation.model';
+import { Comment } from './annotation-set/annotation/comment/comment.model';
 import { catchError, map } from 'rxjs/operators';
 import uuid from 'uuid/v4';
 

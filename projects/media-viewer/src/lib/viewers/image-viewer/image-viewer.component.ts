@@ -10,9 +10,9 @@ import {
 } from '../../events/viewer-operations';
 import { PrintService } from '../../print.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import { Annotation } from '../../annotations/annotation.model';
-import { AnnotationSet } from '../../annotations/annotation-set.model';
-import { Rectangle } from '../../annotations/rectangle/rectangle.model';
+import { Annotation } from '../../annotations/annotation-set/annotation/annotation.model';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import { Rectangle } from '../../annotations/annotation-set/annotation/rectangle/rectangle.model';
 import uuid from 'uuid/v4';
 
 @Component({
@@ -109,14 +109,6 @@ export class ImageViewerComponent implements OnChanges {
 
   onLoadError() {
     this.errorMessage = `Could not load the image "${this.url}"`;
-  }
-
-  public updateAnnotation(updatedAnnotation: Annotation) {
-    const annotations = this.annotationSet.annotations.filter(annotation => annotation.id !== updatedAnnotation.id);
-
-    annotations.push(updatedAnnotation);
-    this.annotationSet.annotations = annotations;
-    this.api.postAnnotationSet(this.annotationSet);
   }
 
   public onMouseDown(event: MouseEvent) {

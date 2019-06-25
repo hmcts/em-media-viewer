@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Comment } from './comment.model';
-import { User } from '../user/user.model';
+import { User } from '../../../user/user.model';
 import {Rectangle} from '../rectangle/rectangle.model';
 
 @Component({

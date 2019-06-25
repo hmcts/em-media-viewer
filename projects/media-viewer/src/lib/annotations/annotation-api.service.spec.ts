@@ -1,9 +1,9 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { async, inject, TestBed } from '@angular/core/testing';
 import { AnnotationApiService } from './annotation-api.service';
-import { AnnotationSet } from './annotation-set.model';
+import { AnnotationSet } from './annotation-set/annotation-set.model';
 import { User } from './user/user.model';
-import { Annotation } from './annotation.model';
+import { Annotation } from './annotation-set/annotation/annotation.model';
 import mockAnnotationSet from '../../assets/annotation-set.json';
 
 describe('AnnotationApiService', () => {
