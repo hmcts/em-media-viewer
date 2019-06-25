@@ -1,4 +1,4 @@
-<ng-container *ngFor="let rectangle of annotation.rectangles; index as i">
+<ng-container *ngFor="let rectangle of annotation.rectangles">
   <mv-anno-rectangle
     (click)="toggleSelection(true)"
     [selected]="selected"
