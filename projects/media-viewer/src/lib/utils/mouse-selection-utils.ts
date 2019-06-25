@@ -1,8 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
 export class MouseSelectionUtils {
 
   // Return the absolute positioning of the top, left x & y coordinates relative to the localElement

@@ -1,12 +1,6 @@
-import { TestBed } from '@angular/core/testing';
 import {MouseSelectionUtils} from './mouse-selection-utils';
 
 describe('Mouse Selection Utilities', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [MouseSelectionUtils]
-    });
-  });
   it('should return an X and Y Object Model ', () => {
     // Generate a Fake Mouse Event for Testing purposes
     const mouseEvent = new MouseEvent('click', {
