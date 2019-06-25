@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { AnnotationApiService } from './annotation-api.service';
-import { AnnotationComponent } from './annotation.component';
-import { AnnotationsComponent } from './annotations.component';
-import { RectangleComponent } from './rectangle/rectangle.component';
-import { CommentComponent } from './comment/comment.component';
+import { AnnotationComponent } from './annotation-set/annotation/annotation.component';
+import { AnnotationSetComponent } from './annotation-set/annotation-set.component';
+import { RectangleComponent } from './annotation-set/annotation/rectangle/rectangle.component';
+import { CommentComponent } from './annotation-set/annotation/comment/comment.component';
 import { AngularDraggableModule } from 'angular2-draggable';
-import { PopupToolbarComponent } from './rectangle/popup-toolbar/popup-toolbar.component';
+import { PopupToolbarComponent } from './annotation-set/annotation/rectangle/popup-toolbar/popup-toolbar.component';
 
 @NgModule({
   imports: [
@@ -21,21 +21,21 @@ import { PopupToolbarComponent } from './rectangle/popup-toolbar/popup-toolbar.c
   ],
   declarations: [
     AnnotationComponent,
-    AnnotationsComponent,
+    AnnotationSetComponent,
     RectangleComponent,
     CommentComponent,
     PopupToolbarComponent
   ],
   entryComponents: [
     AnnotationComponent,
-    AnnotationsComponent
+    AnnotationSetComponent
   ],
   providers: [
     AnnotationApiService
   ],
   exports: [
     AnnotationComponent,
-    AnnotationsComponent
+    AnnotationSetComponent
   ]
 })
 export class AnnotationsModule { }
