@@ -1,7 +1,6 @@
 <div id="viewer-wrapper">
-  <ng-container *ngFor="let annotation of annotationSet?.annotations">
+  <ng-container *ngFor="let annotation of annotationSet ? annotationSet.annotations : []">
     <mv-annotation [annotation]="annotation" [zoom]="zoom"
-                   [selectedAnnotation]="selectedAnnotation"
                    (update)="updateAnnotation($event)"></mv-annotation>
   </ng-container>
   <div *ngIf="!errorMessage" id="image-container" class="image-container" [ngStyle]="{ transform: zoomStyle }">

@@ -3,20 +3,21 @@ import { AppPage } from './app.po';
 
 export class ZoomPage extends AppPage{
 
-  zoomIn() {
-    return element(by.id('zoomIn')).click();
+  async zoomIn() {
+    await this.clickElement(by.id('zoomIn'));
   }
 
-  zoomOut() {
-    return element(by.id('zoomOut')).click();
+  async zoomOut() {
+    await this.clickElement(by.id('zoomOut'));
   }
 
-  currentZoom() {
-    return element(by.id('customScaleOption')).getText();
+  async currentZoom() {
+    const el = await element(by.id('customScaleOption'));
+    return el.getText();
   }
 
   async setZoomTo(zoomOption) {
-    await element(by.id('scaleSelect')).click();
-    return element(by.cssContainingText('select[id="scaleSelect"] option', zoomOption)).click();
+    await this.clickElement(by.id('scaleSelect'));
+    await this.clickElement(by.cssContainingText('select[id="scaleSelect"] option', zoomOption));
   }
 }

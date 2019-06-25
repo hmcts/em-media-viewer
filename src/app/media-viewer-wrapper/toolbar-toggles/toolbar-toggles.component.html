@@ -38,7 +38,7 @@
           <span class="govuk-!-font-weight-bold">Annotate</span>
         </div>
         <div class="govuk-grid-column-full">
-          <label class="switch govuk-!-margin-right-2">
+          <label for="toggleAnnotations" class="switch govuk-!-margin-right-2">
             <input type="checkbox" id="toggleAnnotations" [checked]="toggleAnnotations.getValue()" (change)="toggleAnnotations.next($event.target.checked)">
             <span class="slider round"></span>
           </label>

@@ -6,12 +6,12 @@ export class RotatePage extends AppPage {
   height: number;
   width: number;
 
-  rotateClockwise() {
-    return element(by.id('pageRotateCw')).click();
+  async rotateClockwise() {
+    await this.clickElement(by.id('pageRotateCw'));
   }
 
-  rotateCounterClockwise() {
-    return element(by.id('pageRotateCcw')).click();
+  async rotateCounterClockwise() {
+    await this.clickElement(by.id('pageRotateCcw'));
   }
 
   async checkPdfIsRotated() {
@@ -23,8 +23,10 @@ export class RotatePage extends AppPage {
     expect(this.height).toEqual(originalWidth);
   }
 
-  checkImageIsRotatedBy(rotation: string) {
-    expect(element(by.css('img')).getAttribute('style')).toEqual('transform: rotate('+ rotation +'deg);');
+  async checkImageIsRotatedBy(rotation: string) {
+    const el = await element(by.css('img'));
+    const elementStyle = await el.getAttribute('style');
+    expect(elementStyle).toEqual('transform: rotate(' + rotation + 'deg);');
   }
 
   async captureCurrentOrientation() {
