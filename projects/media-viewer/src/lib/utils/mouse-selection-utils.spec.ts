@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import {MouseSelectionUtils} from './mouse-selection-utils';
 
-fdescribe('Mouse Selection Utilities', () => {
+describe('Mouse Selection Utilities', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [MouseSelectionUtils]
