@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Annotation } from './annotation.model';
-import { Subject } from 'rxjs';
 import { Rectangle } from './rectangle/rectangle.model';
 
 @Component({
@@ -29,7 +28,6 @@ export class AnnotationComponent {
 
   public onCommentUpdate(text: string) {
     this.annotation.comments[0].content = text;
-
     this.update.emit(this.annotation);
   }
 
