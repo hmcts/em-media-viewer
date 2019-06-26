@@ -5,8 +5,8 @@ import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { annotationSet } from '../../../../assets/annotation-set';
-import { Subject } from 'rxjs';
 import { PopupToolbarComponent } from './rectangle/popup-toolbar/popup-toolbar.component';
+import { EventEmitter } from '@angular/core';
 
 describe('AnnotationComponent', () => {
   let component: AnnotationComponent;
@@ -31,7 +31,8 @@ describe('AnnotationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AnnotationComponent);
     component = fixture.componentInstance;
-    component.annotation = { ...annotationSet.annotations[0] } ;
+    component.annotation = { ...annotationSet.annotations[0] };
+    component.select = new EventEmitter<boolean>();
     fixture.detectChanges();
   });
 
@@ -40,9 +41,13 @@ describe('AnnotationComponent', () => {
   });
 
   it('select the annotation', async () => {
-    component.toggleSelection(true);
-
-    expect(component.selected).toBe(true);
+    await new Promise(resolve => {
+      component.select.subscribe(selected => {
+        expect(selected).toBe(true);
+        resolve();
+      });
+      component.toggleSelection(true);
+    });
   });
 
   it('deletes a comment', async () => {
