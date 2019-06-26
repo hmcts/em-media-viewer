@@ -116,8 +116,12 @@ export class PdfJsWrapper {
     return this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + rotation) % 360;
   }
 
-  public getRotate(): number {
+  public getPagesRotation(): number {
     return this.pdfViewer.pagesRotation;
+  }
+
+  public getNormalisedPagesRotation(): number {
+    return (this.getPagesRotation() + 360) % 360;
   }
 
 }
