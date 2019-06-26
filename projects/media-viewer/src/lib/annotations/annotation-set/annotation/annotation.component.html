@@ -3,6 +3,7 @@
     <mv-anno-rectangle
       (click)="toggleSelection(true)"
       (update)="onRectangleUpdate($event)"
+      (delete)="onRectangleDelete($event)"
       [selected]="selected"
       [zoom]="zoom"
       [rotate]="rotate"
