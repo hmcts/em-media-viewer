@@ -22,7 +22,7 @@ export class AnnotationComponent {
     this.select.emit(selected);
   }
 
-  public deleteComment() {
+  public onCommentDelete() {
     this.annotation.comments = [];
     this.update.emit(this.annotation);
   }
