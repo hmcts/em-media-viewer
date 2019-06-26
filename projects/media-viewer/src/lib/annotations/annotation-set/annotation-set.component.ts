@@ -18,6 +18,8 @@ export class AnnotationSetComponent {
   @Input() page: number;
   @Output() update = new EventEmitter<Annotation>();
 
+  selected = -1;
+
   constructor(
     private readonly api: AnnotationApiService
   ) {}
@@ -33,5 +35,10 @@ export class AnnotationSetComponent {
 
     this.annotationSet.annotations = annotations;
     this.api.postAnnotationSet(this.annotationSet);
+  }
+
+  public onAnnotationSelected(selected: boolean, i: number) {
+    console.log(selected, i);
+    this.selected = selected ? i : -1;
   }
 }
