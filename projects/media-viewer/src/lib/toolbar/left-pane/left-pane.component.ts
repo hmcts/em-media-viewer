@@ -8,7 +8,7 @@ import {ToolbarEventsService} from '../../shared/toolbar-events.service';
   templateUrl: './left-pane.component.html',
   styleUrls: ['../../styles/main.scss']
 })
-export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
+export class ToolbarLeftPaneComponent {
   // Input Properties
   @Input() changePageByDelta: Subject<ChangePageByDeltaOperation>;
   @Input() setCurrentPage: Subject<SetCurrentPageOperation>;
@@ -19,30 +19,7 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   @Input() showNavigationBtns: boolean;
   @Input() sidebarOpen: BehaviorSubject<boolean>;
   @Input() searchBarHidden: BehaviorSubject<boolean>;
-  // Local presentation state that can be pre-initialised from the template
-  highlightMode = false;
-  drawMode = false;
-
-  // local array of any subscriptions so that we can tidy them up later
-  private subscriptions: Subscription[] = [];
   constructor(private readonly toolbarEventsService: ToolbarEventsService) {}
-
-  ngOnInit(): void {
-    // Listen for any changes invoked on the toolbar events Service and initialise any default behaviour state
-    this.subscriptions.push(this.toolbarEventsService.highlightMode.subscribe((toggleValue) => {
-      this.highlightMode = toggleValue;
-    }));
-    this.subscriptions.push(this.toolbarEventsService.drawMode.subscribe((toggleValue) => {
-      this.drawMode = toggleValue;
-    }));
-  }
-
-  ngOnDestroy(): void {
-    // Clean up any subscriptions that we may have
-    for (const subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
-  }
 
   // Handler onClick Event of the Highlight Mode Button
   onClickHighlightToggle() {
