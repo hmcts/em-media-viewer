@@ -20,8 +20,8 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   @Input() sidebarOpen: BehaviorSubject<boolean>;
   @Input() searchBarHidden: BehaviorSubject<boolean>;
   // Local presentation state that can be pre-initialised from the template
-  @Input() highlightMode = false;
-  @Input() drawMode = false;
+  private highlightMode = false;
+  private drawMode = false;
 
   // local array of any subscriptions so that we can tidy them up later
   private subscriptions: Subscription[] = [];
