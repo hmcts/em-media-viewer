@@ -1,11 +1,10 @@
 import { Observable } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AnnotationSet } from './annotation-set/annotation-set.model';
-import { Annotation } from './annotation-set/annotation/annotation.model';
-import { Comment } from './annotation-set/annotation/comment/comment.model';
 import { catchError, map } from 'rxjs/operators';
 import uuid from 'uuid/v4';
+import { AnnotationSet } from './annotation-set/annotation-set.model';
+import { Annotation } from './annotation-set/annotation/annotation.model';
 
 @Injectable()
 export class AnnotationApiService {
@@ -49,9 +48,10 @@ export class AnnotationApiService {
     return [].concat(...annotations.map(a => a.comments));
   }
 
-  public deleteAnnotation(annotationId: string): Observable<HttpResponse<Annotation>> {
+  public deleteAnnotation(annotationId: string): Observable<Annotation> {
     const url = `/em-anno/annotations/${annotationId}`;
-    return this.httpClient.delete<Annotation>(url, { observe: 'response' });
+    return this.httpClient.delete<Annotation>(url, { observe: 'response' })
+      .pipe(map(resp => resp.body));
   }
 
   public postAnnotation(annotation: Partial<Annotation>): Observable<Annotation> {
