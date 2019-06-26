@@ -12,7 +12,8 @@
      (click)="onClick()">
 </div>
 <mv-popup-toolbar
-  *ngIf="selected"
-  [top]="rectangle.y * zoom"
-  [left]="(rectangle.x + (rectangle.width / 2)) * zoom"
+  *ngIf="true"
+  [rectangle]="rectangle"
+  [zoom]="zoom"
+  [rotate]="rotate"
 ></mv-popup-toolbar>

@@ -68,6 +68,9 @@ describe('CommentComponent', () => {
     component.comment = {...mockComment};
     component.rectangle = {...mockRectangle};
     nativeElement = fixture.debugElement.nativeElement;
+    nativeElement.style.position = 'absolute';
+    nativeElement.style.width = '100px';
+    nativeElement.style.height = '100px';
     fixture.detectChanges();
   });
 
@@ -176,7 +179,7 @@ describe('CommentComponent', () => {
   it('rotate 0 should align to right and vertically with highlight', () => {
     component.rotate = 0;
     const style = component.formNgStyle();
-    expect(style.right).toBe('0px');
+    expect(style.left).toBe('100px');
     expect(style.top).toBe('10px');
   });
 
@@ -194,10 +197,10 @@ describe('CommentComponent', () => {
     expect(style.top).toBe('30px');
   });
 
-  it('rotate 270 (-90) should align to bottom and horizontally with highlight (accounting for highlight dimensions)', () => {
+  it('rotate 270 should align to bottom and horizontally with highlight (accounting for highlight dimensions)', () => {
     component.rotate = 270;
     const style = component.formNgStyle();
-    expect(style.bottom).toBe('0px');
+    expect(style.top).toBe('100px');
     expect(style.left).toBe('110px');
   });
 
