@@ -105,7 +105,7 @@ export class CommentComponent {
   }
 
   private getFirstNonNullParentProperty(el: Node, property: string) {
-    return el.parentNode ? ( el.parentNode[property] ?
-      el.parentNode[property] : this.getFirstNonNullParentProperty(el.parentNode, property)) : null;
+    return !el.parentNode ? null : ( el.parentNode[property] ?
+      el.parentNode[property] : this.getFirstNonNullParentProperty(el.parentNode, property));
   }
 }
