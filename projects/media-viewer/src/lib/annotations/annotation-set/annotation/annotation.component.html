@@ -5,12 +5,13 @@
       (update)="onRectangleUpdate($event)"
       [selected]="selected"
       [zoom]="zoom"
+      [rotate]="rotate"
+      (update)="onRectangleUpdate($event)"
       [rectangle]="rectangle"
       [draggable]="draggable"
       [color]="annotation.color">
     </mv-anno-rectangle>
   </ng-container>
-
   <mv-anno-comment
     *ngIf="annotation.comments[0]"
     (click)="toggleSelection(true)"
