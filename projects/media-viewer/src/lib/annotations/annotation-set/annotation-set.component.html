@@ -1,6 +1,14 @@
-<div [ngClass]="'rotation rot' + rotate"
+<div #container
+     [ngClass]="'rotation rot' + rotate"
      [style.width]="width ? (width + 'px') : '100%'"
-     [style.height]="height ? (height + 'px') : '100%'">
+     [style.height]="height ? (height + 'px') : '100%'"
+     (mousedown)="onMouseDown($event)"
+     (mousemove)="onMouseMove($event)"
+     (mouseup)="onMouseUp($event)"
+  >
+
+  <div *ngIf="drawMode" #newRectangle class="newRectangle" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></div>
+
   <ng-container *ngFor="let annotation of getAnnotationsOnPage(); index as i" >
     <mv-annotation [annotation]="annotation"
                    [zoom]="zoom"

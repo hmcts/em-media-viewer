@@ -32,18 +32,14 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   errorMessage: string;
 
   @ViewChild('img') img: ElementRef;
-  @ViewChild('newRectangle') newRectangle: ElementRef;
   rotation = 0;
   zoom = 1;
 
-  drawStartX = -1;
-  drawStartY = -1;
   // local array of any subscriptions so that we can tidy them up later
   private subscriptions: Subscription[] = [];
 
   constructor(
     private readonly printService: PrintService,
-    private readonly api: AnnotationApiService,
     private readonly toolbarEventsService: ToolbarEventsService
   ) { }
 
@@ -128,61 +124,4 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     this.errorMessage = `Could not load the image "${this.url}"`;
   }
 
-  public onMouseDown(event: MouseEvent) {
-    if (this.annotationSet && this.drawMode) {
-      this.drawStartX = event.pageX - (window.scrollX + this.img.nativeElement.getBoundingClientRect().left);
-      this.drawStartY = event.pageY - (window.scrollY + this.img.nativeElement.getBoundingClientRect().top);
-
-      this.newRectangle.nativeElement.style.display = 'block';
-      this.newRectangle.nativeElement.style.top =  this.drawStartY + 'px';
-      this.newRectangle.nativeElement.style.left = this.drawStartX + 'px';
-
-      event.preventDefault();
-    }
-  }
-
-  public onMouseMove(event: MouseEvent) {
-    if (this.annotationSet && this.drawMode && this.drawStartX > 0 && this.drawStartY > 0) {
-      this.newRectangle.nativeElement.style.height =
-        (event.pageY - this.drawStartY - (window.scrollY + this.img.nativeElement.getBoundingClientRect().top)) + 'px';
-      this.newRectangle.nativeElement.style.width =
-        (event.pageX - this.drawStartX - (window.scrollX + this.img.nativeElement.getBoundingClientRect().left)) + 'px';
-
-      event.preventDefault();
-    }
-  }
-
-  public onMouseUp(event: MouseEvent) {
-    if (this.annotationSet && this.drawMode) {
-      const rectangle = {
-        id: uuid(),
-        x: +this.newRectangle.nativeElement.style.left.slice(0, -2),
-        y: +this.newRectangle.nativeElement.style.top.slice(0, -2),
-        width: +this.newRectangle.nativeElement.style.width.slice(0, -2),
-        height: +this.newRectangle.nativeElement.style.height.slice(0, -2),
-      };
-
-      const annotation = {
-        id: uuid(),
-        annotationSetId: this.annotationSet.id,
-        color: 'FFFF00',
-        comments: [],
-        page: 1,
-        rectangles: [rectangle as Rectangle],
-        type: 'highlight'
-      };
-
-      this.api
-        .postAnnotation(annotation)
-        .subscribe(a => this.annotationSet.annotations.push(a));
-
-      this.drawStartX = -1;
-      this.drawStartY = -1;
-      this.newRectangle.nativeElement.style.display = 'none';
-      this.newRectangle.nativeElement.style.width = '0';
-      this.newRectangle.nativeElement.style.height = '0';
-
-      event.preventDefault();
-    }
-  }
 }
