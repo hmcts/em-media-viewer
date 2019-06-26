@@ -11,8 +11,8 @@ describe('Toolbar Events Service', () => {
     service = null;
   });
   it('should create', () => {
-        expect(service).toBeTruthy();
-    });
+      expect(service).toBeTruthy();
+  });
   it('should turn off drawMode if HighlightMode is toggled on', () => {
       service.highlightMode.next(false);
       service.drawMode.next(true);
