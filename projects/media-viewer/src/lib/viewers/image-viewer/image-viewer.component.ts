@@ -55,9 +55,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   }
   ngOnDestroy(): void {
     // Clean up any subscriptions that we may have
-    this.subscriptions.forEach((subscription) => {
+    for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
-    });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

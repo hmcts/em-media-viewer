@@ -39,9 +39,9 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Clean up any subscriptions that we may have
-    this.subscriptions.forEach((subscription) => {
+    for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
-    });
+    }
   }
 
   // Handler onClick Event of the Highlight Mode Button
