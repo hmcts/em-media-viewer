@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../../../user/user.model';
 import {Rectangle} from '../rectangle/rectangle.model';
@@ -25,6 +25,7 @@ export class CommentComponent {
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() rectangle: Rectangle;
+  @ViewChild('form') form: ElementRef;
 
   @Input()
   set comment(comment: Comment) {
@@ -50,7 +51,7 @@ export class CommentComponent {
     if (this.rotate === 0) {
       return {
         top: this.rectangle.y * this.zoom + 'px',
-        right: '0px'
+        left: this.getFirstNonNullParentProperty(this.form.nativeElement, 'clientWidth') + 'px'
       };
     } else if (this.rotate === 90) {
       return {
@@ -66,7 +67,7 @@ export class CommentComponent {
       };
     } else if (this.rotate === 270) {
       return {
-        bottom: '0px',
+        top: this.getFirstNonNullParentProperty(this.form.nativeElement, 'clientHeight') + 'px',
         left: (this.rectangle.x * this.zoom) + (this.rectangle.width * this.zoom) + 'px',
         'transform-origin': 'top left'
       };
@@ -101,5 +102,10 @@ export class CommentComponent {
   public onSave() {
     this.updated.emit(this.fullComment);
     this.editable = false;
+  }
+
+  private getFirstNonNullParentProperty(el: Node, property: string) {
+    return el.parentNode ? ( el.parentNode[property] ?
+      el.parentNode[property] : this.getFirstNonNullParentProperty(el.parentNode, property)) : null;
   }
 }

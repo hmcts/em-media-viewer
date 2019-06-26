@@ -37,13 +37,12 @@ export class PopupToolbarComponent {
       };
     } else if (this.rotate === 270) {
       return {
-        transform: 'rotate(90deg)',
-        'transform-origin': 'center center',
-        top: (this.rectangle.y ) * this.zoom + 'px',
-        left: ((this.rectangle.x + (this.rectangle.width / 2)) * this.zoom) - (this.HEIGHT / 2) + 'px'
+        transform: 'rotate(-270deg)',
+        'transform-origin': 'top left',
+        top: (this.rectangle.y + (this.rectangle.height / 2)) * this.zoom - (this.WIDTH / 2) + 'px',
+        left: (this.rectangle.x + (this.rectangle.width)) * this.zoom + this.HEIGHT + 'px'
       };
     }
-    return null;
   }
 
 }
