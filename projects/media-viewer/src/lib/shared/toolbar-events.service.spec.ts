@@ -1,4 +1,4 @@
-import {ToolbarEventsService} from './toolbar.events.service';
+import {ToolbarEventsService} from './toolbar-events.service';
 
 describe('Toolbar Events Service', () => {
   let service: ToolbarEventsService;

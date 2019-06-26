@@ -10,7 +10,6 @@ export class ToolbarEventsService {
   // Register Observable Subject Events relevant to the Toolbar
   highlightMode = new BehaviorSubject<HighlightMode>(false);
   drawMode = new BehaviorSubject<DrawMode>(false);
-  constructor() {}
 
   // Function to inform Observers that highlightMode has been enabled
   public toggleHighlightMode(): void {

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../shared/viewer-operations';
 import {BehaviorSubject, Subject, Subscription} from 'rxjs';
-import {ToolbarEventsService} from '../../shared/toolbar.events.service';
+import {ToolbarEventsService} from '../../shared/toolbar-events.service';
 
 @Component({
   selector: 'mv-tb-left-pane',
