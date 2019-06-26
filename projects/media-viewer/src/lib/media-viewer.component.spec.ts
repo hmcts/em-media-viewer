@@ -8,7 +8,7 @@ import {
   ImageViewerToolbarButtons,
   PdfViewerToolbarButtons,
   UnsupportedViewerToolbarButtons
-} from './events/toolbar-button-toggles';
+} from './shared/toolbar-button-toggles';
 import {ErrorMessageComponent} from './viewers/error-message/error.message.component';
 import { AnnotationsModule } from './annotations/annotations.module';
 

@@ -13,6 +13,10 @@ import {
   ZoomValue
 } from './viewer-operations';
 
+/**
+ * @deprecated Please DO NOT ADD to this file
+ * Instead please add new Operations to toolbar.events.service.ts
+ */
 export class ActionEvents {
   public readonly rotate = new Subject<RotateOperation>();
   public readonly search = new Subject<SearchOperation>().pipe(debounceTime(250));

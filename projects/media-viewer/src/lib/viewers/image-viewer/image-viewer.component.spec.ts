@@ -8,7 +8,7 @@ import {
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
-} from '../../events/viewer-operations';
+} from '../../shared/viewer-operations';
 import { PrintService } from '../../print.service';
 import {ErrorMessageComponent} from '../error-message/error.message.component';
 import {By} from '@angular/platform-browser';
