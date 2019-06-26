@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ToolbarButtonToggles } from '../../events/toolbar-button-toggles';
+import { ToolbarButtonToggles } from '../../shared/toolbar-button-toggles';
 import {
   ChangePageByDeltaOperation,
   DownloadOperation,
@@ -11,7 +11,7 @@ import {
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
-} from '../../events/viewer-operations';
+} from '../../shared/viewer-operations';
 import { Subject, BehaviorSubject } from 'rxjs';
 
 @Component({

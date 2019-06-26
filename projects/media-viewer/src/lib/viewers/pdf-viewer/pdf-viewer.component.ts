@@ -24,7 +24,7 @@ import {
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
-} from '../../events/viewer-operations';
+} from '../../shared/viewer-operations';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import {AnnotationSetComponent} from '../../annotations/annotation-set/annotation-set.component';

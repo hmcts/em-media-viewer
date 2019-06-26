@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SearchOperation, SearchResultsCount } from '../../events/viewer-operations';
+import { SearchOperation, SearchResultsCount } from '../../shared/viewer-operations';
 
 @Component({
   selector: 'mv-search-bar',

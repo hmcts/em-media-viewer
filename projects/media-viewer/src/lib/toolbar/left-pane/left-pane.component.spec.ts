@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarLeftPaneComponent } from './left-pane.component';
-import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../events/viewer-operations';
+import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../shared/viewer-operations';
 import { BehaviorSubject, Subject } from 'rxjs';
 import {By} from '@angular/platform-browser';
+import {ToolbarEventsService} from '../../shared/toolbar.events.service';
 
 describe('ToolbarLeftPaneComponent', () => {
   let component: ToolbarLeftPaneComponent;
@@ -10,7 +11,8 @@ describe('ToolbarLeftPaneComponent', () => {
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
-      declarations: [ ToolbarLeftPaneComponent ]
+      declarations: [ ToolbarLeftPaneComponent ],
+      providers: [ToolbarEventsService]
     })
       .compileComponents();
   }));
@@ -21,8 +23,8 @@ describe('ToolbarLeftPaneComponent', () => {
     component.showHighlightBtn = true;
     component.sidebarOpen = new BehaviorSubject(false);
     component.searchBarHidden = new BehaviorSubject(true);
-    component.drawMode = new BehaviorSubject(false);
-    component.highlightMode = new BehaviorSubject(false);
+    component.drawMode = false;
+    component.highlightMode = false;
     component.changePageByDelta = new Subject<ChangePageByDeltaOperation>();
     component.setCurrentPage = new Subject<SetCurrentPageOperation>();
     fixture.detectChanges();
@@ -80,27 +82,21 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should start with both annotation modes deactivated', () => {
-    expect(component.highlightMode.getValue()).toBeFalsy();
-    expect(component.drawMode.getValue()).toBeFalsy();
+    expect(component.highlightMode).toBeFalsy();
+    expect(component.drawMode).toBeFalsy();
   });
 
-  it('should turn on the highlight button if permitted', () => {
-    expect(component.highlightMode.getValue()).toBeFalsy();
-    component.onClickHighlight();
-    expect(component.highlightMode.getValue()).toBeTruthy();
+  it('should toggle on the highlight button', () => {
+    expect(component.highlightMode).toBeFalsy();
+    component.onClickHighlightToggle();
+    expect(component.highlightMode).toBeTruthy();
   });
 
-  it('should turn off the highlight button if permitted', () => {
-    component.highlightMode.next(true);
-    expect(component.highlightMode.getValue()).toBeTruthy();
-    component.onClickHighlight();
-    expect(component.highlightMode.getValue()).toBeFalsy();
-  });
-
-  it('should turn on the draw button if permitted', () => {
-    expect(component.drawMode.getValue()).toBeFalsy();
-    component.onClickDraw();
-    expect(component.drawMode.getValue()).toBeTruthy();
+  it('should toggle off the highlight button', () => {
+    component.onClickHighlightToggle();
+    expect(component.highlightMode).toBeTruthy();
+    component.onClickHighlightToggle();
+    expect(component.highlightMode).toBeFalsy();
   });
 
   it('should show the draw button if permitted', () => {
@@ -109,39 +105,35 @@ describe('ToolbarLeftPaneComponent', () => {
     expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toBeTruthy();
   });
 
-  it('should toggle the draw button if permitted', () => {
-    expect(component.drawMode.getValue()).toBeFalsy();
-    component.onClickDraw();
-    expect(component.drawMode.getValue()).toBeTruthy();
+  it('should toggle on the draw button', () => {
+    expect(component.drawMode).toBeFalsy();
+    component.onClickDrawToggle();
+    expect(component.drawMode).toBeTruthy();
   });
 
-  it('should turn off the draw button if permitted', () => {
-    component.drawMode.next(true);
-    expect(component.drawMode.getValue()).toBeTruthy();
-    component.onClickDraw();
-    expect(component.drawMode.getValue()).toBeFalsy();
+  it('should  toggle off the draw button', () => {
+    component.onClickDrawToggle();
+    expect(component.drawMode).toBeTruthy();
+    component.onClickDrawToggle();
+    expect(component.drawMode).toBeFalsy();
   });
 
   it('should turn draw mode off when highlight is selected', () => {
-    component.highlightMode.next(false);
-    component.drawMode.next(true);
-    expect(component.highlightMode.getValue()).toBeFalsy();
-    expect(component.drawMode.getValue()).toBeTruthy();
-
-    component.onClickHighlight();
-    expect(component.highlightMode.getValue()).toBeTruthy();
-    expect(component.drawMode.getValue()).toBeFalsy();
+    component.onClickDrawToggle();
+    expect(component.drawMode).toBeTruthy();
+    expect(component.highlightMode).toBeFalsy();
+    component.onClickHighlightToggle();
+    expect(component.highlightMode).toBeTruthy();
+    expect(component.drawMode).toBeFalsy();
   });
 
   it('should turn highlight mode off when draw is selected', () => {
-    component.drawMode.next(false);
-    component.highlightMode.next(true);
-    expect(component.drawMode.getValue()).toBeFalsy();
-    expect(component.highlightMode.getValue()).toBeTruthy();
-
-    component.onClickDraw();
-    expect(component.drawMode.getValue()).toBeTruthy();
-    expect(component.highlightMode.getValue()).toBeFalsy();
+    component.onClickHighlightToggle();
+    expect(component.highlightMode).toBeTruthy();
+    expect(component.drawMode).toBeFalsy();
+    component.onClickDrawToggle();
+    expect(component.drawMode).toBeTruthy();
+    expect(component.highlightMode).toBeFalsy();
   });
 
 });
