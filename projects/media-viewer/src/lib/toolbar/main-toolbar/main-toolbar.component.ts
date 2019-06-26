@@ -31,7 +31,6 @@ export class MainToolbarComponent {
   @Input() rotateEvent: Subject<RotateOperation>;
   @Input() changePageByDeltaEvent: Subject<ChangePageByDeltaOperation>;
   @Input() setCurrentPageEvent: Subject<SetCurrentPageOperation>;
-  @Input() highlightMode: BehaviorSubject<boolean>;
   @Input() downloadEvent: Subject<DownloadOperation>;
   @Input() printEvent: Subject<PrintOperation>;
 }

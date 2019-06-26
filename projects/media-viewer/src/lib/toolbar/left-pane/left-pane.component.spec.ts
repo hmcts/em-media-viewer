@@ -3,7 +3,7 @@ import { ToolbarLeftPaneComponent } from './left-pane.component';
 import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../shared/viewer-operations';
 import { BehaviorSubject, Subject } from 'rxjs';
 import {By} from '@angular/platform-browser';
-import {ToolbarEventsService} from '../../shared/toolbar.events.service';
+import {ToolbarEventsService} from '../../shared/toolbar-events.service';
 
 describe('ToolbarLeftPaneComponent', () => {
   let component: ToolbarLeftPaneComponent;

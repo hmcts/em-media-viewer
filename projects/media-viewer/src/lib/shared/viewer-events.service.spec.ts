@@ -1,4 +1,4 @@
-import {ViewerEventsService} from './viewer.events.service';
+import {ViewerEventsService} from './viewer-events.service';
 import {Subscription} from 'rxjs';
 
 

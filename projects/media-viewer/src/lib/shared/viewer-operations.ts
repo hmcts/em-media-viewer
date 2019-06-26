@@ -1,16 +1,16 @@
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class DownloadOperation {}
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class PrintOperation {}
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class RotateOperation {
   constructor(
@@ -19,7 +19,7 @@ export class RotateOperation {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class ZoomOperation {
   constructor(
@@ -28,7 +28,7 @@ export class ZoomOperation {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class StepZoomOperation {
   constructor(
@@ -37,14 +37,14 @@ export class StepZoomOperation {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export interface ZoomValue {
   value: number;
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class SearchOperation {
   constructor(
@@ -58,7 +58,7 @@ export class SearchOperation {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export interface SearchResultsCount {
   current: number;
@@ -66,7 +66,7 @@ export interface SearchResultsCount {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class SetCurrentPageOperation {
   constructor(public pageNumber: number) {
@@ -74,7 +74,7 @@ export class SetCurrentPageOperation {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class ChangePageByDeltaOperation {
   constructor(public delta: number) {
@@ -82,7 +82,7 @@ export class ChangePageByDeltaOperation {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class NewDocumentLoadInit {
   constructor(public documentUrl: string) {
@@ -90,7 +90,7 @@ export class NewDocumentLoadInit {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class DocumentLoadProgress {
   constructor(public loaded: number, public total: number) {
@@ -98,7 +98,7 @@ export class DocumentLoadProgress {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class DocumentLoaded {
   constructor(public document: any) {
@@ -106,7 +106,7 @@ export class DocumentLoaded {
 }
 /**
  * @deprecated Please DO NOT ADD to this file
- * Instead please add new Operations to viewer.events.service.ts
+ * Instead please add new Operations to viewer-events.service.ts
  */
 export class DocumentLoadFailed {
   constructor() {

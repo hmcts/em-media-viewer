@@ -14,7 +14,7 @@ import { Annotation } from '../../annotations/annotation-set/annotation/annotati
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { Rectangle } from '../../annotations/annotation-set/annotation/rectangle/rectangle.model';
 import uuid from 'uuid/v4';
-import {ToolbarEventsService} from '../../shared/toolbar.events.service';
+import {ToolbarEventsService} from '../../shared/toolbar-events.service';
 
 @Component({
     selector: 'mv-image-viewer',
