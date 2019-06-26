@@ -19,8 +19,7 @@ export class ToolbarLeftPaneComponent {
   @Input() showNavigationBtns: boolean;
   @Input() sidebarOpen: BehaviorSubject<boolean>;
   @Input() searchBarHidden: BehaviorSubject<boolean>;
-  constructor(private readonly toolbarEventsService: ToolbarEventsService) {}
-
+  constructor(readonly toolbarEventsService: ToolbarEventsService) {}
   // Handler onClick Event of the Highlight Mode Button
   onClickHighlightToggle() {
     // Emit an event that HighlightMode has been enabled/disabled
