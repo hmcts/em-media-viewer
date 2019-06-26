@@ -50,7 +50,7 @@ export class CommentComponent {
   formNgStyle() {
     if (this.rotate === 0) {
       return {
-        top: this.rectangle.y * this.zoom + 'px',
+        top: (this.rectangle.y * this.zoom) + 'px',
         left: this.getFirstNonNullParentProperty(this.form.nativeElement, 'clientWidth') + 'px'
       };
     } else if (this.rotate === 90) {

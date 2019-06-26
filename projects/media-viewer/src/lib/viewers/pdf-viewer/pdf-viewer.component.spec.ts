@@ -38,6 +38,7 @@ describe('PdfViewerComponent', () => {
     downloadFile: () => {},
     setPageNumber: () => {},
     changePageNumber: () => {},
+    getNormalisedPagesRotation: () => 0,
     currentPageChanged: new Subject<SetCurrentPageOperation>(),
     searchResults: new Subject<SearchResultsCount>(),
     documentLoadInit: new Subject<NewDocumentLoadInit>(),
@@ -197,7 +198,7 @@ describe('PdfViewerComponent', () => {
     expect(component.loadingDocument).toBe(false);
   });
 
-  it('on document load failed expect error message xx', () => {
+  it('on page rendered render annotation set if annotations enabled', () => {
     component.annotationSet = annotationSet;
     component.showAnnotations = true;
     const div = document.createElement('div');
