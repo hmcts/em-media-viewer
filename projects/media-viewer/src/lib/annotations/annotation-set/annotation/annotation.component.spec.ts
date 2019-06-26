@@ -53,7 +53,7 @@ describe('AnnotationComponent', () => {
   it('deletes a comment', async () => {
     spyOn(component.update, 'emit');
 
-    component.deleteComment();
+    component.onCommentDelete();
 
     expect(component.annotation.comments.length).toBe(0);
     expect(component.update.emit).toHaveBeenCalledWith(component.annotation);

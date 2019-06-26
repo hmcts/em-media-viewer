@@ -6,7 +6,6 @@
       [selected]="selected"
       [zoom]="zoom"
       [rotate]="rotate"
-      (update)="onRectangleUpdate($event)"
       [rectangle]="rectangle"
       [draggable]="draggable"
       [color]="annotation.color">
@@ -15,9 +14,9 @@
   <mv-anno-comment
     *ngIf="annotation.comments[0]"
     (click)="toggleSelection(true)"
-    [rotate]="rotate"
-    (delete)="deleteComment()"
+    (delete)="onCommentDelete()"
     (updated)="onCommentUpdate($event)"
+    [rotate]="rotate"
     [selected]="selected"
     [comment]="annotation.comments[0]"
     [rectangle]="annotation.rectangles[0]"
