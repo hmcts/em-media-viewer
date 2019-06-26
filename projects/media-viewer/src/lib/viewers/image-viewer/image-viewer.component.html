@@ -1,15 +1,12 @@
 <div id="viewer-wrapper">
 
-  <div *ngIf="drawMode" #newRectangle class="newRectangle" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></div>
   <div *ngIf="!errorMessage"
        id="image-container"
        class="image-container"
-       (mousedown)="onMouseDown($event)"
-       (mousemove)="onMouseMove($event)"
-       (mouseup)="onMouseUp($event)"
   >
     <img #img *ngIf="url" [ngClass]="'rot' + rotation" data-hook="dm.viewer.img" [src]="url" [style.width]="img.naturalWidth * zoom + 'px'" (error)="onLoadError()"/>
     <mv-annotation-set [annotationSet]="annotationSet"
+                       [drawMode]="drawMode | async"
                        [zoom]="zoom"
                        [page]="1"
                        [rotate]="rotation">
@@ -17,3 +14,4 @@
   </div>
   <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>
 </div>
+
