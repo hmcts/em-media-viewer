@@ -23,8 +23,6 @@ describe('ToolbarLeftPaneComponent', () => {
     component.showHighlightBtn = true;
     component.sidebarOpen = new BehaviorSubject(false);
     component.searchBarHidden = new BehaviorSubject(true);
-    component.drawMode = false;
-    component.highlightMode = false;
     component.changePageByDelta = new Subject<ChangePageByDeltaOperation>();
     component.setCurrentPage = new Subject<SetCurrentPageOperation>();
     fixture.detectChanges();
@@ -82,21 +80,24 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should start with both annotation modes deactivated', () => {
-    expect(component.highlightMode).toBeFalsy();
-    expect(component.drawMode).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
   });
 
   it('should toggle on the highlight button', () => {
-    expect(component.highlightMode).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
     component.onClickHighlightToggle();
-    expect(component.highlightMode).toBeTruthy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toHaveClass('toggled');
   });
 
   it('should toggle off the highlight button', () => {
     component.onClickHighlightToggle();
-    expect(component.highlightMode).toBeTruthy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toHaveClass('toggled');
     component.onClickHighlightToggle();
-    expect(component.highlightMode).toBeFalsy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
   });
 
   it('should show the draw button if permitted', () => {
@@ -106,34 +107,40 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should toggle on the draw button', () => {
-    expect(component.drawMode).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
     component.onClickDrawToggle();
-    expect(component.drawMode).toBeTruthy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toHaveClass('toggled');
   });
 
   it('should  toggle off the draw button', () => {
     component.onClickDrawToggle();
-    expect(component.drawMode).toBeTruthy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toHaveClass('toggled');
     component.onClickDrawToggle();
-    expect(component.drawMode).toBeFalsy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
   });
 
   it('should turn draw mode off when highlight is selected', () => {
     component.onClickDrawToggle();
-    expect(component.drawMode).toBeTruthy();
-    expect(component.highlightMode).toBeFalsy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
     component.onClickHighlightToggle();
-    expect(component.highlightMode).toBeTruthy();
-    expect(component.drawMode).toBeFalsy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
   });
 
   it('should turn highlight mode off when draw is selected', () => {
     component.onClickHighlightToggle();
-    expect(component.highlightMode).toBeTruthy();
-    expect(component.drawMode).toBeFalsy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
     component.onClickDrawToggle();
-    expect(component.drawMode).toBeTruthy();
-    expect(component.highlightMode).toBeFalsy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
   });
-
 });
