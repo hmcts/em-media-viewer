@@ -14,11 +14,12 @@ export class AnnotationComponent {
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() draggable: boolean;
+  @Input() selected: boolean;
   @Output() update = new EventEmitter<Annotation>();
-  selected = false;
+  @Output() select = new EventEmitter<boolean>();
 
   public toggleSelection(selected: boolean) {
-    this.selected = selected;
+    this.select.emit(selected);
   }
 
   public deleteComment() {
