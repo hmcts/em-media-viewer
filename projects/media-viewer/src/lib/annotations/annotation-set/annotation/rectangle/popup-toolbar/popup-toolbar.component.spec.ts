@@ -47,4 +47,28 @@ describe('PopupToolbarComponent', () => {
     expect(element.styles.left).toEqual('-25px');
     expect(element.styles.top).toEqual('30px');
   });
+
+  it('rotate 90 should align to top and horizontally with highlight', () => {
+    component.rotate = 90;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('30px');
+    expect(element.styles.top).toEqual('285px');
+  });
+
+  it('rotate 180 should align to left and horizontally with highlight (accounting for highlight dimensions)', () => {
+    component.rotate = 180;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('-25px');
+    expect(element.styles.top).toEqual('130px');
+  });
+
+  it('rotate 270 should align to bottom and horizontally with highlight (accounting for highlight dimensions)', () => {
+    component.rotate = 270;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('270px');
+    expect(element.styles.top).toEqual('-65px');
+  });
 });
