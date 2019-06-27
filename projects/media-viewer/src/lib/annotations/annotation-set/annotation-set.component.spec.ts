@@ -88,7 +88,6 @@ describe('AnnotationSetComponent', () => {
 
     component.newRectangle = new ElementRef(document.createElement('div'));
     component.drawMode = true;
-    component.selected = 1;
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
     component.onMouseMove({ pageY: 100, pageX: 100 } as MouseEvent);
     component.onMouseUp();
@@ -96,7 +95,6 @@ describe('AnnotationSetComponent', () => {
     expect(spy).toHaveBeenCalled();
 
     expect(component.annotationSet.annotations[component.annotationSet.annotations.length - 1].id).toEqual('new');
-    expect(component.selected).toEqual(-1);
   });
 
 });
