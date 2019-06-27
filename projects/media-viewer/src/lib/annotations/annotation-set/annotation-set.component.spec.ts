@@ -50,7 +50,7 @@ describe('AnnotationSetComponent', () => {
 
   it('update annotations', () => {
     const spy = spyOn(api, 'postAnnotationSet').and.returnValues(of(annotationSet));
-    const annotation = Object.assign({}, annotationSet.annotations[0]);
+    const annotation = { ...annotationSet.annotations[0] };
 
     annotation.color = 'red';
     component.onAnnotationUpdate(annotation);
