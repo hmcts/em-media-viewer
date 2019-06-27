@@ -1,4 +1,4 @@
-import { by, element } from 'protractor';
+import {by, element, ElementFinder} from 'protractor';
 import { AppPage } from './app.po';
 
 export class NavigatePage extends AppPage {
@@ -15,6 +15,7 @@ export class NavigatePage extends AppPage {
 
   async number() {
     await this.waitForElement(by.id('pageNumber'));
-    return element(by.id('pageNumber')).getAttribute('value');
+    console.log(element(by.id('pageNumber')).getAttribute('value'));
+    await element(by.id('pageNumber')).getAttribute('value');
   }
 }
