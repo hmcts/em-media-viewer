@@ -35,16 +35,35 @@ export class CommentComponent {
     this.fullComment = comment.content;
   }
 
-  onCommentClick() {
-    this.click.emit();
-  }
-
   onEdit() {
     this.editable = true;
   }
 
   onCancel() {
     this.editable = false;
+  }
+
+  public onDelete() {
+    this.delete.emit();
+  }
+
+  public onSave() {
+    this.updated.emit(this.fullComment);
+    this.editable = false;
+  }
+
+  onCommentClick() {
+    this.click.emit();
+  }
+
+  get commentText() {
+    return !this.selected && this.fullComment.length > this.MAX_COMMENT_LENGTH
+      ? this.fullComment.substring(0, this.MAX_COMMENT_LENGTH - 3) + '...'
+      : this.fullComment;
+  }
+
+  set commentText(text: string) {
+    this.fullComment = text;
   }
 
   formNgStyle() {
@@ -83,25 +102,6 @@ export class CommentComponent {
       !this.editable ? 'view-mode' : 'edit-mode',
       !this.selected ? 'collapsed' : 'expanded',
     ];
-  }
-
-  get commentText() {
-    return !this.selected && this.fullComment.length > this.MAX_COMMENT_LENGTH
-      ? this.fullComment.substring(0, this.MAX_COMMENT_LENGTH - 3) + '...'
-      : this.fullComment;
-  }
-
-  set commentText(text: string) {
-    this.fullComment = text;
-  }
-
-  public onDelete() {
-    this.delete.emit();
-  }
-
-  public onSave() {
-    this.updated.emit(this.fullComment);
-    this.editable = false;
   }
 
   private getFirstNonNullParentProperty(el: Node, property: string) {
