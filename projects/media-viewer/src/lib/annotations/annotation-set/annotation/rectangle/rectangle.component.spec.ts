@@ -62,6 +62,15 @@ describe('RectangleComponent', () => {
   it('should emit a click', () => {
     const clickEmitEventSpy = spyOn(component.click, 'emit');
     component.onClick();
+
     expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should emit delete event', () => {
+    const deleteEventSpy = spyOn(component.delete, 'emit');
+
+    component.deleteHighlight();
+
+    expect(deleteEventSpy).toHaveBeenCalledWith(mockRectangle.id);
   });
 });
