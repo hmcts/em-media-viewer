@@ -13,6 +13,10 @@ import {
   ZoomValue
 } from './viewer-operations';
 
+/**
+ * @deprecated Please DO NOT ADD to this file
+ * Instead please add new Operations to toolbar-events.service.ts
+ */
 export class ActionEvents {
   public readonly rotate = new Subject<RotateOperation>();
   public readonly search = new Subject<SearchOperation>().pipe(debounceTime(250));
@@ -24,5 +28,4 @@ export class ActionEvents {
   public readonly download = new Subject<DownloadOperation>();
   public readonly setCurrentPage = new Subject<SetCurrentPageOperation>();
   public readonly changePageByDelta = new Subject<ChangePageByDeltaOperation>();
-  public readonly highlightMode = new BehaviorSubject<boolean>(false);
 }

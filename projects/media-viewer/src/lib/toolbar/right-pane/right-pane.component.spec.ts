@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarRightPaneComponent } from './right-pane.component';
-import { ActionEvents } from '../../events/action-events';
-import { DownloadOperation, PrintOperation } from '../../events/viewer-operations';
-import { ToolbarButtonToggles } from '../../events/toolbar-button-toggles';
+import { DownloadOperation, PrintOperation } from '../../shared/viewer-operations';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 describe('ToolbarRightPaneComponent', () => {

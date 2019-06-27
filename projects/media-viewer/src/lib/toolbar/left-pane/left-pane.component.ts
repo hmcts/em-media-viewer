@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../events/viewer-operations';
-import { BehaviorSubject, Subject } from 'rxjs';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../shared/viewer-operations';
+import {BehaviorSubject, Subject, Subscription} from 'rxjs';
+import {ToolbarEventsService} from '../../shared/toolbar-events.service';
 
 @Component({
   selector: 'mv-tb-left-pane',
@@ -8,7 +9,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
   styleUrls: ['../../styles/main.scss']
 })
 export class ToolbarLeftPaneComponent {
-
+  // Input Properties
   @Input() changePageByDelta: Subject<ChangePageByDeltaOperation>;
   @Input() setCurrentPage: Subject<SetCurrentPageOperation>;
   @Input() pageNumber = 1;
@@ -18,10 +19,17 @@ export class ToolbarLeftPaneComponent {
   @Input() showNavigationBtns: boolean;
   @Input() sidebarOpen: BehaviorSubject<boolean>;
   @Input() searchBarHidden: BehaviorSubject<boolean>;
-  @Input() drawMode: BehaviorSubject<boolean>;
-  @Input() highlightMode: BehaviorSubject<boolean>;
-
-  constructor() {}
+  constructor(readonly toolbarEventsService: ToolbarEventsService) {}
+  // Handler onClick Event of the Highlight Mode Button
+  onClickHighlightToggle() {
+    // Emit an event that HighlightMode has been enabled/disabled
+    this.toolbarEventsService.toggleHighlightMode();
+  }
+  // Handler onClick Event of the Draw Mode Button
+  onClickDrawToggle() {
+    // Emit an event that HighlightMode has been enabled/disabled
+    this.toolbarEventsService.toggleDrawMode();
+  }
 
   toggleSideBar() {
     this.sidebarOpen.next(!this.sidebarOpen.getValue());
@@ -49,19 +57,4 @@ export class ToolbarLeftPaneComponent {
       this.pageNumber = operation.pageNumber;
     }
   }
-
-  onClickDraw() {
-    this.drawMode.next(!this.drawMode.getValue());
-    if (this.drawMode.getValue() && this.highlightMode.getValue()) {
-      this.highlightMode.next(false);
-    }
-  }
-
-  onClickHighlight() {
-    this.highlightMode.next(!this.highlightMode.getValue());
-    if (this.highlightMode.getValue() && this.drawMode.getValue()) {
-      this.drawMode.next(false);
-    }
-  }
-
 }
