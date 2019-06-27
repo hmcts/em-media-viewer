@@ -66,7 +66,6 @@ describe('AnnotationComponent', () => {
   });
 
   it('remove the rectangle from the annotation', async () => {
-    component.annotation = { ...annotationSet.annotations[0] };
     const additionalRectangle = { ...component.annotation.rectangles[0] };
     additionalRectangle.id = 'additional-rectangle-id-1234';
     component.annotation.rectangles = [ ...component.annotation.rectangles ];
@@ -81,7 +80,6 @@ describe('AnnotationComponent', () => {
   });
 
   it('delete the annotation', async () => {
-    component.annotation = { ...annotationSet.annotations[0] };
     const rectangleId = component.annotation.rectangles[0].id;
     spyOn(component.delete, 'emit');
 
