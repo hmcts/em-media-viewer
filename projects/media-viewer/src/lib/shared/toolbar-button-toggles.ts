@@ -15,8 +15,6 @@ export class ToolbarButtonToggles {
   public readonly subToolbarHidden = new BehaviorSubject(true);
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly searchBarHidden = new BehaviorSubject(true);
-  public readonly drawMode = new BehaviorSubject(false);
-  public readonly highlightMode = new BehaviorSubject(false);
 
   public showPrintBtn = false;
   public showDownloadBtn = false;

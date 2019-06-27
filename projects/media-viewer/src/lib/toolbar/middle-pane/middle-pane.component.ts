@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { RotateOperation, StepZoomOperation, ZoomOperation, ZoomValue } from '../../events/viewer-operations';
+import { RotateOperation, StepZoomOperation, ZoomOperation, ZoomValue } from '../../shared/viewer-operations';
 
 @Component({
   selector: 'mv-tb-middle-pane',

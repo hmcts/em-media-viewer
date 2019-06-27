@@ -1,5 +1,5 @@
-import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import { Subject } from 'rxjs';
+import {Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Subject, Subscription} from 'rxjs';
 import {
   DownloadOperation,
   PrintOperation,
@@ -7,27 +7,28 @@ import {
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
-} from '../../events/viewer-operations';
+} from '../../shared/viewer-operations';
 import { PrintService } from '../../print.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { Annotation } from '../../annotations/annotation-set/annotation/annotation.model';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { Rectangle } from '../../annotations/annotation-set/annotation/rectangle/rectangle.model';
 import uuid from 'uuid/v4';
+import {ToolbarEventsService} from '../../shared/toolbar-events.service';
 
 @Component({
     selector: 'mv-image-viewer',
     templateUrl: './image-viewer.component.html',
     styleUrls: ['./image-viewer.component.scss'],
 })
-export class ImageViewerComponent implements OnChanges {
+export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() zoomValue: Subject<ZoomValue>;
-  @Input() drawMode: Subject<boolean>;
   @Input() annotationSet: AnnotationSet | null;
 
+  drawMode = false;
   errorMessage: string;
 
   @ViewChild('img') img: ElementRef;
@@ -37,11 +38,27 @@ export class ImageViewerComponent implements OnChanges {
 
   drawStartX = -1;
   drawStartY = -1;
+  // local array of any subscriptions so that we can tidy them up later
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private readonly printService: PrintService,
-    private readonly api: AnnotationApiService
+    private readonly api: AnnotationApiService,
+    private readonly toolbarEventsService: ToolbarEventsService
   ) { }
+
+  ngOnInit(): void {
+    // Listen for any changes invoked on the toolbar events Service and initialise any default behaviour state
+    this.subscriptions.push(this.toolbarEventsService.drawMode.subscribe((toggleValue) => {
+      this.drawMode = toggleValue;
+    }));
+  }
+  ngOnDestroy(): void {
+    // Clean up any subscriptions that we may have
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.url) {
@@ -164,7 +181,6 @@ export class ImageViewerComponent implements OnChanges {
       this.newRectangle.nativeElement.style.display = 'none';
       this.newRectangle.nativeElement.style.width = '0';
       this.newRectangle.nativeElement.style.height = '0';
-      this.drawMode.next(false);
 
       event.preventDefault();
     }

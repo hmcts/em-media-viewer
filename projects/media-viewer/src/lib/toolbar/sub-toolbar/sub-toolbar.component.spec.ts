@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SubToolbarComponent } from './sub-toolbar.component';
-import { DownloadOperation, PrintOperation } from '../../events/viewer-operations';
+import { DownloadOperation, PrintOperation } from '../../shared/viewer-operations';
 import { Subject } from 'rxjs';
 
 describe('SubToolbarComponent', () => {

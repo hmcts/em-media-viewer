@@ -14,7 +14,7 @@ import {
   StepZoomOperation,
   ZoomOperation,
   ZoomValue
-} from '../../events/viewer-operations';
+} from '../../shared/viewer-operations';
 import { PrintService } from '../../print.service';
 import {CUSTOM_ELEMENTS_SCHEMA, SimpleChange} from '@angular/core';
 import {ErrorMessageComponent} from '../error-message/error.message.component';

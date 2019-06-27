@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
 import { FormsModule } from '@angular/forms';
-import { ActionEvents } from '../../events/action-events';
-import { SearchOperation } from '../../events/viewer-operations';
+import { ActionEvents } from '../../shared/action-events';
+import { SearchOperation } from '../../shared/viewer-operations';
 import { BehaviorSubject } from 'rxjs';
 
 describe('SearchBarComponent', () => {
