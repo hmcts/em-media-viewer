@@ -1,8 +1,8 @@
 @MediaViewer
-Feature: Media Viewer Toolbar Scenarios
+Feature: Media Viewer Test Suite
   As a user
   I want to navigate to media viewer application
-  So that I can enable the toolbar toggle buttons
+  So that I can perform media viewer workflow's
 
   Background:
     Given I am on Media Viewer Page
@@ -13,23 +13,16 @@ Feature: Media Viewer Toolbar Scenarios
     And I enable toggle buttons
     Then I expect toolbar buttons should be enabled
 
-  @PDFViewer_NextPage
-  Scenario Outline: Navigate Next Page on PDF Document
-    When I click next button on the pdf doc
-    Then I should see page number should be '<page_number>'
+  @PDFViewer_Navigation
+  Scenario Outline: PDF Viewer Page Navigation
+    And I click next button on the pdf
+    Then I should see next page number should be '<page_number>'
+    And I click previous button on the pdf
+    Then I should see previous page number should be '<page_number2>'
 
     Examples:
-      | page_number |
-      | 2           |
-
-  @PDFViewer_PreviousPage
-  Scenario Outline: Navigate Previous Page PDF Document
-    When I click previous button on the pdf doc
-    Then I should see page number should be '<page_number>'
-
-    Examples:
-      | page_number |
-      | 1           |
+      | page_number |page_number2|
+      | 2           |       1     |
 
 
 

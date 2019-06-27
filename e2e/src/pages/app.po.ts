@@ -54,7 +54,7 @@ export class AppPage {
   async waitForElement(selector: Locator) {
     await browser.wait(async () => {
       return (await element(selector)).isPresent();
-    }, 10000, 'failed to load search results');
+    }, 30000, 'failed to load search results');
   }
 
   async waitForElementsArray(selector: Locator) {
