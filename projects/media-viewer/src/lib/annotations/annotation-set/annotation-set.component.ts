@@ -43,6 +43,7 @@ export class AnnotationSetComponent {
         const index = this.annotationSet.annotations.findIndex(a => a.id === newAnnotation.id);
 
         this.annotationSet.annotations[index] = newAnnotation;
+        setTimeout(() => this.selected = index, 0);
       });
   }
 
