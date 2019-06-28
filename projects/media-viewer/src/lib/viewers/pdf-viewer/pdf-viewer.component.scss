@@ -12,3 +12,12 @@
 .loadingMessage {
   text-align: center;
 }
+
+.highlightMode > .page > .textLayer {
+  z-index: 1000;
+}
+
+.drawMode > .page > mv-annotation-set > div {
+  z-index: 1000;
+}
+
