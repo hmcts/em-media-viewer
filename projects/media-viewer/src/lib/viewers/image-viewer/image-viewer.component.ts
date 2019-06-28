@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {Subject, Subscription} from 'rxjs';
+import {Subject, Subscription, BehaviorSubject} from 'rxjs';
 import {
   DownloadOperation,
   PrintOperation,
@@ -28,6 +28,7 @@ export class ImageViewerComponent implements OnChanges {
   @Input() zoomValue: Subject<ZoomValue>;
   @Input() annotationSet: AnnotationSet | null;
 
+  drawMode: BehaviorSubject<boolean>;
   errorMessage: string;
 
   @ViewChild('img') img: ElementRef;
@@ -36,8 +37,10 @@ export class ImageViewerComponent implements OnChanges {
 
   constructor(
     private readonly printService: PrintService,
-    public readonly toolbarEventsService: ToolbarEventsService
-  ) { }
+    private readonly toolbarEventsService: ToolbarEventsService
+  ) {
+    this.drawMode = toolbarEventsService.drawMode;
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.url) {
