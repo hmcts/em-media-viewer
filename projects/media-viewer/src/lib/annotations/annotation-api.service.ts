@@ -49,10 +49,12 @@ export class AnnotationApiService {
     return [].concat(...annotations.map(a => a.comments));
   }
 
-  public deleteAnnotation(annotationId: string): Observable<Annotation> {
+  public deleteAnnotation(annotationId: string): Observable<null> {
     const url = `/em-anno/annotations/${annotationId}`;
-    return this.httpClient.delete<Annotation>(url, { observe: 'response' })
-      .pipe(map(resp => resp.body));
+
+    return this.httpClient
+      .delete<null>(url, { observe: 'response' })
+      .pipe(map(response => response.body));
   }
 
   public postAnnotation(annotation: Partial<Annotation>): Observable<Annotation> {

@@ -14,6 +14,7 @@
                    [zoom]="zoom"
                    [rotate]="rotate"
                    [selected]="selected === i"
+                   [draggable]="!(drawMode | async)"
                    (select)="onAnnotationSelected($event, i)"
                    (update)="onAnnotationUpdate($event)"
                    (delete)="onAnnotationDelete($event)"

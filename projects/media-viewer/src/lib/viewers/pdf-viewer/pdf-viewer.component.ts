@@ -86,6 +86,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
       const component = this.viewContainerRef.createComponent(factory);
       component.instance.annotationSet = this.annotationSet;
       component.instance.page = e.pageNumber;
+      component.instance.drawMode = new BehaviorSubject(false); // awaiting implementation
       component.instance.zoom = e.source.scale;
       component.instance.rotate = this.pdfWrapper.getNormalisedPagesRotation();
       component.instance.width = this.pdfWrapper.getNormalisedPagesRotation() % 180 === 0 ?

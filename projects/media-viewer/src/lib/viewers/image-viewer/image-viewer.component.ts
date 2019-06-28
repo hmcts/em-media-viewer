@@ -21,40 +21,23 @@ import {ToolbarEventsService} from '../../shared/toolbar-events.service';
     templateUrl: './image-viewer.component.html',
     styleUrls: ['./image-viewer.component.scss'],
 })
-export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
+export class ImageViewerComponent implements OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() zoomValue: Subject<ZoomValue>;
   @Input() annotationSet: AnnotationSet | null;
 
-  drawMode = false;
   errorMessage: string;
 
   @ViewChild('img') img: ElementRef;
   rotation = 0;
   zoom = 1;
 
-  // local array of any subscriptions so that we can tidy them up later
-  private subscriptions: Subscription[] = [];
-
   constructor(
     private readonly printService: PrintService,
     private readonly toolbarEventsService: ToolbarEventsService
   ) { }
-
-  ngOnInit(): void {
-    // Listen for any changes invoked on the toolbar events Service and initialise any default behaviour state
-    this.subscriptions.push(this.toolbarEventsService.drawMode.subscribe((toggleValue) => {
-      this.drawMode = toggleValue;
-    }));
-  }
-  ngOnDestroy(): void {
-    // Clean up any subscriptions that we may have
-    for (const subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
-  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.url) {
