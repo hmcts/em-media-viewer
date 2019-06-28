@@ -36,7 +36,7 @@ export class ImageViewerComponent implements OnChanges {
 
   constructor(
     private readonly printService: PrintService,
-    private readonly toolbarEventsService: ToolbarEventsService
+    public readonly toolbarEventsService: ToolbarEventsService
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
