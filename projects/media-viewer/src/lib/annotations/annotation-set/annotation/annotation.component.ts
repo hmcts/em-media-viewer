@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
 
@@ -19,8 +19,10 @@ export class AnnotationComponent {
   @Output() select = new EventEmitter<boolean>();
   @Output() delete = new EventEmitter<Annotation>();
 
-  public toggleSelection(selected: boolean) {
-    this.select.emit(selected);
+  @ViewChild('container') container: ElementRef;
+
+  public onSelect() {
+    this.select.emit(true);
   }
 
   public onCommentDelete() {
@@ -40,6 +42,12 @@ export class AnnotationComponent {
     this.update.emit(this.annotation);
   }
 
+  public onFocusOut(event: FocusEvent) {
+    if (!this.container.nativeElement.contains(event.relatedTarget)) {
+      this.select.emit(false);
+    }
+  }
+
   public onRectangleDelete(rectangleId: string) {
     this.annotation.rectangles = this.annotation.rectangles.filter(r => r.id !== rectangleId);
     if (this.annotation.rectangles.length > 0) {
@@ -48,4 +56,5 @@ export class AnnotationComponent {
       this.delete.emit(this.annotation);
     }
   }
+
 }
