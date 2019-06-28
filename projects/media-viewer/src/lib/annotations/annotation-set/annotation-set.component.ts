@@ -46,6 +46,11 @@ export class AnnotationSetComponent {
     this.api.postAnnotationSet(this.annotationSet);
   }
 
+  public onAnnotationDelete(annotation: Annotation) {
+    this.annotationSet.annotations = this.annotationSet.annotations.filter(a => a.id !== annotation.id);
+    this.api.postAnnotationSet(this.annotationSet);
+  }
+
   public onAnnotationSelected(selected: boolean, i: number) {
     this.selected = selected ? i : -1;
   }

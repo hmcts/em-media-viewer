@@ -11,9 +11,9 @@
      (rzStop)="onResize($event)"
      (click)="onClick()">
 </div>
-<mv-popup-toolbar
-  *ngIf="selected"
-  [rectangle]="rectangle"
-  [zoom]="zoom"
-  [rotate]="rotate"
+<mv-popup-toolbar *ngIf="selected"
+                  [rectangle]="rectangle"
+                  [zoom]="zoom"
+                  [rotate]="rotate"
+                  (deleteHighlight)="deleteHighlight()"
 ></mv-popup-toolbar>

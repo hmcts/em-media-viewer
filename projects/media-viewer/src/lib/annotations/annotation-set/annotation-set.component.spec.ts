@@ -55,8 +55,18 @@ describe('AnnotationSetComponent', () => {
     annotation.color = 'red';
     component.onAnnotationUpdate(annotation);
 
-    annotationSet.annotations[0] = annotation;
     expect(spy).toHaveBeenCalledWith(annotationSet);
+  });
+
+  it('delete annotation', () => {
+    spyOn(api, 'postAnnotationSet');
+    const annotations = { ...annotationSet.annotations };
+    const annotation = { ...annotations[0] };
+
+    component.onAnnotationUpdate(annotation);
+
+    expect(api.postAnnotationSet).toHaveBeenCalledWith(annotationSet);
+    expect(annotations).not.toEqual(component.annotationSet.annotations);
   });
 
   it('select an annotation', () => {
