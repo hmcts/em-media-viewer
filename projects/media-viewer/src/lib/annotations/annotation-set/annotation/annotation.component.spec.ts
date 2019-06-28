@@ -64,4 +64,32 @@ describe('AnnotationComponent', () => {
 
     expect(component.annotation.comments[0].content).toEqual('Updated text');
   });
+
+  it('remove the rectangle from the annotation', async () => {
+    const additionalRectangle = { ...component.annotation.rectangles[0] };
+    additionalRectangle.id = 'additional-rectangle-id-1234';
+    component.annotation.rectangles = [ ...component.annotation.rectangles ];
+    component.annotation.rectangles.push(additionalRectangle);
+    spyOn(component.update, 'emit');
+    const rectangles = { ...component.annotation.rectangles };
+
+    component.onRectangleDelete('additional-rectangle-id-1234');
+
+    expect(component.update.emit).toHaveBeenCalledWith(component.annotation);
+    expect(rectangles).not.toEqual(component.annotation.rectangles);
+  });
+
+  it('delete the annotation', async () => {
+    const rectangleId = component.annotation.rectangles[0].id;
+    spyOn(component.delete, 'emit');
+
+    expect(component.annotation.rectangles.length).toBe(1);
+
+    const rectangles = { ...component.annotation.rectangles };
+
+    component.onRectangleDelete(rectangleId);
+
+    expect(rectangles).not.toEqual(component.annotation.rectangles);
+    expect(component.delete.emit).toHaveBeenCalledWith(component.annotation);
+  });
 });

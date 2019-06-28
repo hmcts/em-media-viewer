@@ -16,6 +16,7 @@
                    [selected]="selected === i"
                    (select)="onAnnotationSelected($event, i)"
                    (update)="onAnnotationUpdate($event)"
+                   (delete)="onAnnotationDelete($event)"
     >
     </mv-annotation>
   </ng-container>
