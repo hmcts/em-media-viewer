@@ -64,8 +64,6 @@ export class AnnotationSetComponent {
       this.newRectangle.nativeElement.style.top =  this.drawStartY + 'px';
       this.newRectangle.nativeElement.style.left = this.drawStartX + 'px';
     }
-
-    return false;
   }
 
   public onMouseMove(event: MouseEvent) {
@@ -75,8 +73,6 @@ export class AnnotationSetComponent {
       this.newRectangle.nativeElement.style.width =
         (event.pageX - this.drawStartX - (window.scrollX + this.container.nativeElement.getBoundingClientRect().left)) + 'px';
     }
-
-    return false;
   }
 
   public onMouseUp() {
@@ -108,11 +104,6 @@ export class AnnotationSetComponent {
       this.newRectangle.nativeElement.style.display = 'none';
       this.newRectangle.nativeElement.style.width = '0';
       this.newRectangle.nativeElement.style.height = '0';
-
     }
-
-    this.selected = -1;
-
-    return false;
   }
 }

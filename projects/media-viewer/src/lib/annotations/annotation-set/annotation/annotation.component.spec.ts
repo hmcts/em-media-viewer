@@ -46,7 +46,19 @@ describe('AnnotationComponent', () => {
         expect(selected).toBe(true);
         resolve();
       });
-      component.toggleSelection(true);
+      component.onSelect();
+    });
+  });
+
+  it('deselect the annotation', async () => {
+    await new Promise(resolve => {
+      component.select.subscribe(selected => {
+        expect(selected).toBe(false);
+        resolve();
+      });
+
+      const relatedTarget = document.createElement('span');
+      component.onFocusOut({ relatedTarget } as any);
     });
   });
 
