@@ -17,6 +17,7 @@ export class AnnotationComponent {
   @Input() selected: boolean;
   @Output() update = new EventEmitter<Annotation>();
   @Output() select = new EventEmitter<boolean>();
+  @Output() delete = new EventEmitter<Annotation>();
 
   @ViewChild('container') container: ElementRef;
 
@@ -46,4 +47,14 @@ export class AnnotationComponent {
       this.select.emit(false);
     }
   }
+
+  public onRectangleDelete(rectangleId: string) {
+    this.annotation.rectangles = this.annotation.rectangles.filter(r => r.id !== rectangleId);
+    if (this.annotation.rectangles.length > 0) {
+      this.update.emit(this.annotation);
+    } else {
+      this.delete.emit(this.annotation);
+    }
+  }
+
 }
