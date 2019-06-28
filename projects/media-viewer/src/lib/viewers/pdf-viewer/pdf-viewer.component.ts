@@ -7,7 +7,7 @@ import {
   OnChanges,
   SimpleChanges,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef, ViewEncapsulation
 } from '@angular/core';
 import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -28,11 +28,13 @@ import {
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import {AnnotationSetComponent} from '../../annotations/annotation-set/annotation-set.component';
+import {ToolbarEventsService} from '../../shared/toolbar-events.service';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.css']
+  styleUrls: ['./pdf-viewer.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
@@ -59,6 +61,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
+    readonly toolbarEventsService: ToolbarEventsService
   ) {}
 
   async ngAfterContentInit(): Promise<void> {
