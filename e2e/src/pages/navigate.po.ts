@@ -14,8 +14,10 @@ export class NavigatePage extends AppPage {
   }
 
   async number() {
-    await this.waitForElement(by.id('pageNumber'));
-    console.log(element(by.id('pageNumber')).getAttribute('value'));
-    await element(by.id('pageNumber')).getAttribute('value');
+    // await this.waitForElement(by.id('pageNumber'));
+    const  page = element(by.xpath('//*[@id="pageNumber"]')).getAttribute('value');
+    console.log('Page Number ' + page)
+    console.log(element(by.xpath('//*[@id="pageNumber"]')).getAttribute('value'));
+    return await element(by.xpath('//*[@id="pageNumber"]')).getAttribute('value');
   }
 }

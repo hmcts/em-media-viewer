@@ -13,7 +13,7 @@ Feature: Media Viewer Test Suite
     And I enable toggle buttons
     Then I expect toolbar buttons should be enabled
 
-  @PDFViewer_Navigation
+  @PDF_Page_Navigation
   Scenario Outline: PDF Viewer Page Navigation
     And I click next button on the pdf
     Then I should see next page number should be '<page_number>'
