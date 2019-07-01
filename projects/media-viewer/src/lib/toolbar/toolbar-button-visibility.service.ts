@@ -16,9 +16,9 @@ export class ToolbarButtonVisibilityService {
   public showOpenFile = false;
   public showBookmark = false;
   public showHighlight = false;
-  public showSearchBarToggle = false;
-  public showSubToolbarToggle = false;
-  public showSidebarToggle = false;
+  public showSearchBar = false;
+  public showSubToolbar = false;
+  public showSidebar = false;
 
   /**
    * Reset the visibility of all buttons to false then set the value from the options
@@ -36,9 +36,9 @@ export class ToolbarButtonVisibilityService {
     this.showOpenFile = false;
     this.showBookmark = false;
     this.showHighlight = false;
-    this.showSearchBarToggle = false;
-    this.showSubToolbarToggle = false;
-    this.showSidebarToggle = false;
+    this.showSearchBar = false;
+    this.showSubToolbar = false;
+    this.showSidebar = false;
 
     for (const key in options) {
       this[key] = options[key];
@@ -55,7 +55,7 @@ export const defaultPdfOptions = {
   showNavigation: true,
   showZoom: true,
   showRotate: true,
-  showSearchBarToggle: true
+  showSearchBar: true
 };
 
 /**
