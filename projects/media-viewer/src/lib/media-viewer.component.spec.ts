@@ -6,6 +6,7 @@ import { UnsupportedViewerComponent } from './viewers/unsupported-viewer/unsuppo
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { AnnotationsModule } from './annotations/annotations.module';
+import { SimpleChange } from '@angular/core';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -42,6 +43,13 @@ describe('MediaViewerComponent', () => {
   it('should not support content', () => {
     component.contentType = 'unsupported';
     expect(component.contentTypeUnsupported()).toBeTruthy();
+  });
+
+  it('should reset the event state when the url is changed', async () => {
+    component.toolbarEvents.zoomValue.next(2);
+    component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });
+
+    expect(component.toolbarEvents.zoomValue.value).toBe(1);
   });
 
 });

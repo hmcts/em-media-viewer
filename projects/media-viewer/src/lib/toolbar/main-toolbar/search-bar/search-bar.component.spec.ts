@@ -1,9 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
 import { FormsModule } from '@angular/forms';
-import { ActionEvents } from '../../../shared/action-events';
-import { SearchOperation } from '../../../shared/viewer-operations';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import { ToolbarEventService } from '../../toolbar-event.service';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -14,7 +13,7 @@ describe('SearchBarComponent', () => {
     return TestBed.configureTestingModule({
       declarations: [ SearchBarComponent ],
       imports: [FormsModule],
-      providers: [ ToolbarButtonVisibilityService ]
+      providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
     })
     .compileComponents();
   }));
@@ -26,8 +25,6 @@ describe('SearchBarComponent', () => {
     searchInput = component.findInput.nativeElement;
     searchInput.value = 'searchTerm';
 
-    const actionEvents = new ActionEvents();
-    component.searchEvents = actionEvents.search as any;
     fixture.detectChanges();
   });
 
@@ -59,16 +56,16 @@ describe('SearchBarComponent', () => {
   });
 
   it('should run search event', () => {
-    const searchSpy = spyOn(component.searchEvents, 'next');
+    const searchSpy = spyOn(component.toolbarEvents.search, 'next');
     component.searchText = 'searchTerm';
-    const mockSearchOperation = new SearchOperation(
-      'searchTerm',
-      component.highlightAll,
-      component.matchCase,
-      component.wholeWord,
-      false,
-      true
-    );
+    const mockSearchOperation = {
+      searchTerm: 'searchTerm',
+      highlightAll: component.highlightAll,
+      matchCase: component.matchCase,
+      wholeWord: component.wholeWord,
+      previous: false,
+      reset: true
+    };
     component.search();
     expect(searchSpy).toHaveBeenCalledWith(mockSearchOperation);
   });
@@ -103,41 +100,52 @@ describe('SearchBarComponent', () => {
 
   it('should emit search next event', () => {
     component.toolbarButtons.searchBarHidden.next(false);
-    const searchSpy = spyOn(component.searchEvents, 'next');
+    const searchSpy = spyOn(component.toolbarEvents.search, 'next');
     component.searchText = 'searchTerm';
     const searchNextButton = nativeElement.querySelector('button[id=findNext]');
     searchNextButton.click();
 
-    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation('searchTerm', true, false, false, false, false));
+    const mockSearchOperation = {
+      searchTerm: 'searchTerm',
+      highlightAll: true,
+      matchCase: false,
+      wholeWord: false,
+      previous: false,
+      reset: false
+    };
+
+    expect(searchSpy).toHaveBeenCalledWith(mockSearchOperation);
   });
 
   it('should emit search previous event', () => {
     component.toolbarButtons.searchBarHidden.next(false);
-    const searchSpy = spyOn(component.searchEvents, 'next');
+    const searchSpy = spyOn(component.toolbarEvents.search, 'next');
     component.searchText = 'searchTerm';
     const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');
     searchPrevButton.click();
 
-    expect(searchSpy).toHaveBeenCalledWith(new SearchOperation('searchTerm', true, false, false, true, false));
+    const mockSearchOperation = {
+      searchTerm: 'searchTerm',
+      highlightAll: true,
+      matchCase: false,
+      wholeWord: false,
+      previous: true,
+      reset: false
+    };
+
+    expect(searchSpy).toHaveBeenCalledWith(mockSearchOperation);
   });
 
   it('should set search result count with results found', () => {
-    component.searchResultsCount = {current: 1, total: 4};
+    component.toolbarEvents.searchResultsCount.next({current: 1, total: 4});
     expect(component.haveResults).toBeTruthy();
     expect(component.resultsText).toEqual('1 of 4 matches');
   });
 
   it('should set search result count with no results found', () => {
-    component.searchResultsCount = {current: null, total: null};
+    component.toolbarEvents.searchResultsCount.next({current: null, total: null});
     expect(component.haveResults).toBeFalsy();
     expect(component.resultsText).toEqual('Phrase not found');
   });
 
-  it('should not set search result count if null is passed in', () => {
-    component.haveResults = true;
-    component.resultsText = 'unchanged string';
-    component.searchResultsCount = null;
-    expect(component.haveResults).toEqual(true);
-    expect(component.resultsText).toEqual('unchanged string');
-  });
 });

@@ -1,42 +1,35 @@
 import * as pdfjsLib from 'pdfjs-dist';
-import { PDFViewer, DownloadManager, PdfPageView } from 'pdfjs-dist/web/pdf_viewer';
+import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
-import {
-  DocumentLoaded, DocumentLoadFailed,
-  DocumentLoadProgress, NewDocumentLoadInit,
-  SearchOperation,
-  SearchResultsCount,
-  SetCurrentPageOperation
-} from '../../../shared/viewer-operations';
 import { Subject } from 'rxjs';
+import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
 export class PdfJsWrapper {
 
   constructor(
-    public readonly searchResults: Subject<SearchResultsCount>,
-    public readonly currentPageChanged: Subject<SetCurrentPageOperation>,
     private readonly pdfViewer: PDFViewer,
     private readonly downloadManager: DownloadManager,
-    public readonly documentLoadInit: Subject<NewDocumentLoadInit>,
+    private readonly toolbarEvents: ToolbarEventService,
+    public readonly documentLoadInit: Subject<string>,
     public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
-    public readonly documentLoaded: Subject<DocumentLoaded>,
-    public readonly documentLoadFailed: Subject<DocumentLoadFailed>,
+    public readonly documentLoaded: Subject<any>,
+    public readonly documentLoadFailed: Subject<undefined>,
     public readonly pageRendered: Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>
   ) {
 
     // bind to internal PDF.js event bus
     this.pdfViewer.eventBus.on('pagerendered', e => this.pageRendered.next(e));
-    this.pdfViewer.eventBus.on('pagechanging', e => this.currentPageChanged.next(new SetCurrentPageOperation(e.pageNumber)));
+    this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPage.next(e.pageNumber));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
     this.pdfViewer.eventBus.on('updatefindcontrolstate', event => {
       if (event.state !== FindState.PENDING) {
-        this.searchResults.next(event.matchesCount);
+        this.toolbarEvents.searchResultsCount.next(event.matchesCount);
       }
     });
     this.pdfViewer.eventBus.on('updatefindmatchescount', event => {
-      this.searchResults.next(event.matchesCount);
+      this.toolbarEvents.searchResultsCount.next(event.matchesCount);
     });
   }
 
@@ -48,21 +41,21 @@ export class PdfJsWrapper {
     });
 
     loadingTask.onProgress = ({loaded, total}) => {
-      this.documentLoadProgress.next(new DocumentLoadProgress(loaded, total));
+      this.documentLoadProgress.next({ loaded, total });
     };
 
-    this.documentLoadInit.next(new NewDocumentLoadInit(documentUrl));
+    this.documentLoadInit.next(documentUrl);
 
     try {
       const pdfDocument = await loadingTask;
 
-      this.documentLoaded.next(new DocumentLoaded(pdfDocument));
+      this.documentLoaded.next(pdfDocument);
 
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
 
     } catch (e) {
-      this.documentLoadFailed.next(new DocumentLoadFailed());
+      this.documentLoadFailed.next();
     }
 
   }
@@ -96,12 +89,14 @@ export class PdfJsWrapper {
     this.pdfViewer.eventBus.dispatch('findbarclose');
   }
 
-  public setZoom(zoomValue: number): number {
-    return this.pdfViewer.currentScaleValue = this.getZoomValue(zoomValue);
+  public setZoom(zoomValue: number): void {
+    this.pdfViewer.currentScaleValue = this.getZoomValue(zoomValue);
+    this.toolbarEvents.zoomValue.next(this.pdfViewer.currentScaleValue);
   }
 
-  public stepZoom(zoomValue: number): number {
-    return this.pdfViewer.currentScaleValue  = Math.round(this.getZoomValue((+this.pdfViewer.currentScaleValue) + zoomValue) * 10) / 10;
+  public stepZoom(zoomValue: number): void {
+    this.pdfViewer.currentScaleValue = Math.round(this.getZoomValue((+this.pdfViewer.currentScaleValue) + zoomValue) * 10) / 10;
+    this.toolbarEvents.zoomValue.next(this.pdfViewer.currentScaleValue);
   }
 
   private getZoomValue(zoomValue: number): number {
@@ -131,3 +126,9 @@ enum FindState {
   WRAPPED = 2,
   PENDING = 3,
 }
+
+export interface DocumentLoadProgress {
+  loaded: number;
+  total: number;
+}
+

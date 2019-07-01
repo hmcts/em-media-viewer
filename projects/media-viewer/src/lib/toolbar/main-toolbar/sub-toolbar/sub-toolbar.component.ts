@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { DownloadOperation, PrintOperation } from '../../../shared/viewer-operations';
-import { Subject } from 'rxjs';
+import { Component } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import { ToolbarEventService } from '../../toolbar-event.service';
 
 @Component({
   selector: 'mv-sub-toolbar',
@@ -10,18 +9,17 @@ import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.
 })
 export class SubToolbarComponent {
 
-  @Input() printEvent: Subject<PrintOperation>;
-  @Input() downloadEvent: Subject<DownloadOperation>;
-
   constructor(
-    public readonly toolbarButtons: ToolbarButtonVisibilityService
+    public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    public readonly toolbarEvents: ToolbarEventService
   ) {}
 
   printFile() {
-    this.printEvent.next(new PrintOperation());
+    this.toolbarEvents.print.next();
   }
 
   downloadFile() {
-    this.downloadEvent.next(new DownloadOperation());
+    this.toolbarEvents.download.next();
   }
+
 }

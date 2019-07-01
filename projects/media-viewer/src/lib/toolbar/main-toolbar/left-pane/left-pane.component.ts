@@ -1,6 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../../shared/viewer-operations';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 
@@ -9,26 +7,28 @@ import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.
   templateUrl: './left-pane.component.html',
   styleUrls: ['../../../styles/main.scss']
 })
-export class ToolbarLeftPaneComponent {
-  // Input Properties
-  @Input() changePageByDelta: Subject<ChangePageByDeltaOperation>;
-  @Input() setCurrentPage: Subject<SetCurrentPageOperation>;
-  @Input() pageNumber = 1;
+export class ToolbarLeftPaneComponent implements OnInit {
+
+  public pageNumber = 1;
 
   constructor(
-    public readonly toolbarEventsService: ToolbarEventService,
+    public readonly toolbarEvents: ToolbarEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService
   ) {}
+
+  public ngOnInit(): void {
+    this.toolbarEvents.setCurrentPage.subscribe(pageNumber => this.setCurrentPage(pageNumber));
+  }
 
   // Handler onClick Event of the Highlight Mode Button
   onClickHighlightToggle() {
     // Emit an event that HighlightMode has been enabled/disabled
-    this.toolbarEventsService.toggleHighlightMode();
+    this.toolbarEvents.toggleHighlightMode();
   }
   // Handler onClick Event of the Draw Mode Button
   onClickDrawToggle() {
     // Emit an event that HighlightMode has been enabled/disabled
-    this.toolbarEventsService.toggleDrawMode();
+    this.toolbarEvents.toggleDrawMode();
   }
 
   toggleSideBar() {
@@ -40,21 +40,18 @@ export class ToolbarLeftPaneComponent {
   }
 
   increasePageNumber() {
-    this.changePageByDelta.next(new ChangePageByDeltaOperation(1));
+    this.toolbarEvents.changePageByDelta.next(1);
   }
 
   decreasePageNumber() {
-    this.changePageByDelta.next(new ChangePageByDeltaOperation(-1));
+    this.toolbarEvents.changePageByDelta.next(-1);
   }
 
-  setCurrentPageNumber(pageNumber: string) {
-    this.setCurrentPage.next(new SetCurrentPageOperation(Number.parseInt(pageNumber, 0)));
+  onPageNumberInputChange(pageNumber: string) {
+    this.toolbarEvents.setCurrentPage.next(Number.parseInt(pageNumber, 0));
   }
 
-  @Input()
-  set currentPage(operation: SetCurrentPageOperation | null) {
-    if (operation) {
-      this.pageNumber = operation.pageNumber;
-    }
+  private setCurrentPage(pageNumber: number) {
+    this.pageNumber = pageNumber;
   }
 }

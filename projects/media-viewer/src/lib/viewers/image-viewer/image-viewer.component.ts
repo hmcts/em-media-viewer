@@ -1,13 +1,5 @@
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
-import {
-  DownloadOperation,
-  PrintOperation,
-  RotateOperation,
-  StepZoomOperation,
-  ZoomOperation,
-  ZoomValue
-} from '../../shared/viewer-operations';
+import { Subscription } from 'rxjs';
 import { PrintService } from '../../print.service';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
@@ -21,7 +13,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
-  @Input() zoomValue: Subject<ZoomValue>;
   @Input() annotationSet: AnnotationSet | null;
 
   drawMode = false;
@@ -36,15 +27,21 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private readonly printService: PrintService,
-    private readonly toolbarEventsService: ToolbarEventService
+    public readonly toolbarEvents: ToolbarEventService
   ) { }
 
   ngOnInit(): void {
     // Listen for any changes invoked on the toolbar events Service and initialise any default behaviour state
-    this.subscriptions.push(this.toolbarEventsService.drawMode.subscribe((toggleValue) => {
-      this.drawMode = toggleValue;
-    }));
+    this.subscriptions.push(
+      this.toolbarEvents.drawMode.subscribe(toggleValue => this.drawMode = toggleValue),
+      this.toolbarEvents.rotate.subscribe(rotation => this.setRotation(rotation)),
+      this.toolbarEvents.zoom.subscribe(zoom => this.setZoom(zoom)),
+      this.toolbarEvents.stepZoom.subscribe(zoom => this.stepZoom(zoom)),
+      this.toolbarEvents.print.subscribe(() => this.printService.printDocumentNatively(this.url)),
+      this.toolbarEvents.download.subscribe(() => this.download()),
+    );
   }
+
   ngOnDestroy(): void {
     // Clean up any subscriptions that we may have
     for (const subscription of this.subscriptions) {
@@ -55,56 +52,42 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.url) {
       this.errorMessage = null;
+      this.toolbarEvents.reset();
     }
   }
 
-  @Input()
-  set rotateOperation(operation: RotateOperation | null) {
-    if (operation) {
-      this.rotation = (this.rotation + operation.rotation + 360) % 360;
+  private setRotation(rotation: number) {
+    this.rotation = this.rotation + rotation + 360 % 360;
+  }
+
+  private setZoom(zoomFactor: number) {
+    if (!isNaN(zoomFactor)) {
+      this.setZoomValue(this.calculateZoomValue(zoomFactor)).then(() => {});
     }
   }
 
-  @Input()
-  set zoomOperation(operation: ZoomOperation | null) {
-    if (operation && !isNaN(operation.zoomFactor)) {
-      this.setZoomValue(this.calculateZoomValue(+operation.zoomFactor)).then(() => {});
-    }
-  }
-
-  @Input()
-  set stepZoomOperation(operation: StepZoomOperation | null) {
-    if (operation && !isNaN(operation.zoomFactor)) {
-      this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, operation.zoomFactor) * 10) / 10)
+  private stepZoom(zoomFactor: number) {
+    if (!isNaN(zoomFactor)) {
+      this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10)
         .then(() => {});
     }
   }
 
-  @Input()
-  set printOperation(operation: PrintOperation | null) {
-    if (operation) {
-      this.printService.printDocumentNatively(this.url);
-    }
-  }
-
-  @Input()
-  set downloadOperation(operation: DownloadOperation | null) {
-    if (operation) {
-      const a = document.createElement('a');
-      document.body.appendChild(a);
-      a.setAttribute('style', 'display: none');
-      a.href = this.url;
-      a.download = this.downloadFileName;
-      a.click();
-      a.remove();
-    }
+  private download() {
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    a.href = this.url;
+    a.download = this.downloadFileName;
+    a.click();
+    a.remove();
   }
 
   // the returned promise is a work-around
   setZoomValue(zoomValue) {
     return new Promise((resolve) => {
       this.zoom = zoomValue;
-      this.zoomValue.next({ value: zoomValue });
+      this.toolbarEvents.zoomValue.next(zoomValue);
       resolve(true);
     });
   }

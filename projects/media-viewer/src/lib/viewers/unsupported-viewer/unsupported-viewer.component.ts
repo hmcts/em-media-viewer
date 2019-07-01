@@ -1,12 +1,12 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { DownloadOperation } from '../../shared/viewer-operations';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-unsupported-viewer',
   templateUrl: './unsupported-viewer.component.html',
   styleUrls: ['./unsupported-viewer.component.scss']
 })
-export class UnsupportedViewerComponent {
+export class UnsupportedViewerComponent implements OnInit {
 
   @Input() url: string;
   @Input() originalUrl: string;
@@ -14,10 +14,11 @@ export class UnsupportedViewerComponent {
 
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
-  @Input()
-  set downloadOperation(operation: DownloadOperation) {
-    if (operation) {
-      this.downloadLink.nativeElement.click();
-    }
+  constructor(
+    public readonly toolbarEvents: ToolbarEventService
+  ) {}
+
+  public ngOnInit(): void {
+    this.toolbarEvents.download.subscribe(() => this.downloadLink.nativeElement.click());
   }
 }
