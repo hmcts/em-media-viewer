@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 
@@ -7,8 +7,7 @@ import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.
   templateUrl: './left-pane.component.html',
   styleUrls: ['../../../styles/main.scss']
 })
-export class ToolbarLeftPaneComponent implements OnInit {
-
+export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   public pageNumber = 1;
 
   constructor(
@@ -18,6 +17,10 @@ export class ToolbarLeftPaneComponent implements OnInit {
 
   public ngOnInit(): void {
     this.toolbarEvents.setCurrentPage.subscribe(pageNumber => this.setCurrentPage(pageNumber));
+  }
+
+  public ngOnDestroy(): void {
+    this.toolbarEvents.setCurrentPage.unsubscribe();
   }
 
   // Handler onClick Event of the Highlight Mode Button

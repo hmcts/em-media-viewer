@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 import { SearchResultsCount, ToolbarEventService } from '../../toolbar-event.service';
 
@@ -7,7 +7,7 @@ import { SearchResultsCount, ToolbarEventService } from '../../toolbar-event.ser
   templateUrl: './search-bar.component.html',
   styleUrls: ['../../../styles/main.scss']
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnDestroy {
 
   @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
 
@@ -25,6 +25,10 @@ export class SearchBarComponent implements OnInit {
 
   public ngOnInit(): void {
     this.toolbarEvents.searchResultsCount.subscribe(results => this.setSearchResultsCount(results));
+  }
+
+  public ngOnDestroy(): void {
+    this.toolbarEvents.searchResultsCount.unsubscribe();
   }
 
   @HostListener('window:keydown', ['$event'])
