@@ -12,7 +12,6 @@ export class CommentComponent {
 
   private readonly MAX_COMMENT_LENGTH = 50;
 
-  editable = false;
   lastUpdate: string;
   fullComment: string;
   author: User;
@@ -22,6 +21,7 @@ export class CommentComponent {
   @Output() delete = new EventEmitter();
   @Output() updated = new EventEmitter<String>();
   @Input() selected: boolean;
+  @Input() editable: boolean;
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() rectangle: Rectangle;

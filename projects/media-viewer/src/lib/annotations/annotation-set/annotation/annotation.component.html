@@ -4,6 +4,7 @@
       (click)="onSelect()"
       (update)="onRectangleUpdate($event)"
       (delete)="onRectangleDelete($event)"
+      (addOrEditComment)="onCommentAddOrEdit()"
       [selected]="selected"
       [zoom]="zoom"
       [rotate]="rotate"
@@ -19,6 +20,7 @@
     (updated)="onCommentUpdate($event)"
     [rotate]="rotate"
     [selected]="selected"
+    [editable]="editable"
     [comment]="annotation.comments[0]"
     [rectangle]="annotation.rectangles[0]"
     [zoom]="zoom">
