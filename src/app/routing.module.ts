@@ -8,6 +8,7 @@ import { MediaViewerModule } from '../../projects/media-viewer/src/lib/media-vie
 import { ToolbarModule } from '../../projects/media-viewer/src/lib/toolbar/toolbar.module';
 import { ToolbarTogglesComponent } from './media-viewer-wrapper/toolbar-toggles/toolbar-toggles.component';
 import { CommentsSummaryModule } from '../../projects/media-viewer/src/lib/comments-summary/comments-summary.module';
+import { ToggleComponent } from './media-viewer-wrapper/toolbar-toggles/toggle/toggle.component';
 
 const routes: Routes = [{
     path: '',
@@ -17,7 +18,8 @@ const routes: Routes = [{
 @NgModule({
   declarations: [
     MediaViewerWrapperComponent,
-    ToolbarTogglesComponent
+    ToolbarTogglesComponent,
+    ToggleComponent
   ],
   imports: [
     CommonModule,

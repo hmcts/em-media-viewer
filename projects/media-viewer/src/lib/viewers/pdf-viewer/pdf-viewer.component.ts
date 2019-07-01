@@ -8,7 +8,7 @@ import {
   OnChanges,
   SimpleChanges,
   ViewChild,
-  ViewContainerRef,
+  ViewContainerRef, ViewEncapsulation,
   OnDestroy
 } from '@angular/core';
 import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
@@ -22,7 +22,8 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.scss']
+  styleUrls: ['./pdf-viewer.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 

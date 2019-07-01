@@ -1,11 +1,11 @@
 <div id="toolbarViewerLeft">
-  <button *ngIf="toolbarButtons.showSidebarToggle"
+  <button *ngIf="toolbarButtons.showSidebar"
           id="sidebarToggle" class="toolbarButton" title="Toggle Sidebar" tabindex="11"
           data-l10n-id="toggle_sidebar" (click)="toggleSideBar()">
     <span data-l10n-id="toggle_sidebar_label">Toggle Sidebar</span>
   </button>
   <div class="toolbarButtonSpacer"></div>
-  <button *ngIf="toolbarButtons.showSearchBarToggle"
+  <button *ngIf="toolbarButtons.showSearchBar"
           id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar"
           (click)="toggleSearchBar()">
     <span data-l10n-id="findbar_label">Find</span>
