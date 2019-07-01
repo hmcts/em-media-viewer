@@ -1,5 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
 
+@Injectable({providedIn: 'root'})
 export class ToolbarButtonVisibilityService {
   public readonly subToolbarHidden = new BehaviorSubject(true);
   public readonly sidebarOpen = new BehaviorSubject(false);

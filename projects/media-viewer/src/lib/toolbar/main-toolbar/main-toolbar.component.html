@@ -1,21 +1,11 @@
-<mv-search-bar [searchEvents]="searchEvent"
-               [searchResultsCount]="searchResultsCountEvent | async"></mv-search-bar>
-<mv-sub-toolbar [printEvent]="printEvent"
-                [downloadEvent]="downloadEvent"></mv-sub-toolbar>
+<mv-search-bar></mv-search-bar>
+<mv-sub-toolbar></mv-sub-toolbar>
 <div class="toolbar">
   <div id="toolbarContainer">
     <div id="toolbarViewer">
-      <mv-tb-left-pane [currentPage]="currentPage"
-                       [changePageByDelta]="changePageByDeltaEvent"
-                       [setCurrentPage]="setCurrentPageEvent"
-      ></mv-tb-left-pane>
-      <mv-tb-right-pane [downloadEvent]="downloadEvent"
-                        [printEvent]="printEvent">
-      </mv-tb-right-pane>
-      <mv-tb-middle-pane [zoomEvent]="zoomEvent"
-                         [stepZoomEvent]="stepZoomEvent"
-                         [rotateEvent]="rotateEvent"
-                         [zoomValue]="(zoomValueEvent | async) || { value: 1 }"></mv-tb-middle-pane>
+      <mv-tb-left-pane></mv-tb-left-pane>
+      <mv-tb-right-pane></mv-tb-right-pane>
+      <mv-tb-middle-pane></mv-tb-middle-pane>
     </div>
     <div id="loadingBar">
       <div class="progress">

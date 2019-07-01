@@ -1,16 +1,14 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
-import { SearchOperation, SearchResultsCount } from '../../../shared/viewer-operations';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import { SearchResultsCount, ToolbarEventService } from '../../toolbar-event.service';
 
 @Component({
   selector: 'mv-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['../../../styles/main.scss']
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit {
 
-  @Input() searchEvents: Subject<SearchOperation>;
   @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
 
   highlightAll = true;
@@ -21,11 +19,16 @@ export class SearchBarComponent {
   haveResults = false;
 
   constructor(
-    public readonly toolbarButtons: ToolbarButtonVisibilityService
+    public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    public readonly toolbarEvents: ToolbarEventService
   ) {}
 
+  public ngOnInit(): void {
+    this.toolbarEvents.searchResultsCount.subscribe(results => this.setSearchResultsCount(results));
+  }
+
   @HostListener('window:keydown', ['$event'])
-  onWindowKeyDown(e: KeyboardEvent): void {
+  public onWindowKeyDown(e: KeyboardEvent): void {
     if (e.code === 'F3' || (e.ctrlKey && e.code === 'KeyF')) {
       e.preventDefault();
 
@@ -34,50 +37,47 @@ export class SearchBarComponent {
     }
   }
 
-  searchNext() {
-    this.searchEvents.next(new SearchOperation(
-      this.searchText,
-      this.highlightAll,
-      this.matchCase,
-      this.wholeWord,
-      false,
-      false
-    ));
+  public searchNext(): void {
+    this.toolbarEvents.search.next({
+      searchTerm: this.searchText,
+      highlightAll: this.highlightAll,
+      matchCase: this.matchCase,
+      wholeWord: this.wholeWord,
+      previous: false,
+      reset: false
+    });
   }
 
-  searchPrev() {
-    this.searchEvents.next(new SearchOperation(
-      this.searchText,
-      this.highlightAll,
-      this.matchCase,
-      this.wholeWord,
-      true,
-      false
-    ));
+  public searchPrev(): void {
+    this.toolbarEvents.search.next({
+      searchTerm: this.searchText,
+      highlightAll: this.highlightAll,
+      matchCase: this.matchCase,
+      wholeWord: this.wholeWord,
+      previous: true,
+      reset: false
+    });
   }
 
-  search() {
-    this.searchEvents.next(new SearchOperation(
-      this.searchText,
-      this.highlightAll,
-      this.matchCase,
-      this.wholeWord,
-      false,
-      true
-    ));
+  public search(): void {
+    this.toolbarEvents.search.next({
+      searchTerm: this.searchText,
+      highlightAll: this.highlightAll,
+      matchCase: this.matchCase,
+      wholeWord: this.wholeWord,
+      previous: false,
+      reset: true
+    });
   }
 
-  @Input()
-  set searchResultsCount(results: SearchResultsCount | null) {
-    if (results) {
-      this.haveResults = results.total > 0;
-      this.resultsText = this.haveResults
-        ? `${results.current} of ${results.total} matches`
-        : 'Phrase not found';
-    }
+  private setSearchResultsCount(results: SearchResultsCount): void {
+    this.haveResults = results.total > 0;
+    this.resultsText = this.haveResults
+      ? `${results.current} of ${results.total} matches`
+      : 'Phrase not found';
   }
 
-  public onInputKeyPress(e: KeyboardEvent) {
+  public onInputKeyPress(e: KeyboardEvent): void {
     if (e.key === 'Escape') {
       this.toolbarButtons.searchBarHidden.next(true);
     }

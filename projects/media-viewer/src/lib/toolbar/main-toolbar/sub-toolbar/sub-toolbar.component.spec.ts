@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SubToolbarComponent } from './sub-toolbar.component';
-import { DownloadOperation, PrintOperation } from '../../../shared/viewer-operations';
-import { Subject } from 'rxjs';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import { ToolbarEventService } from '../../toolbar-event.service';
 
 describe('SubToolbarComponent', () => {
   let component: SubToolbarComponent;
@@ -12,7 +11,7 @@ describe('SubToolbarComponent', () => {
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [ SubToolbarComponent ],
-      providers: [ ToolbarButtonVisibilityService ]
+      providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
     })
     .compileComponents();
   }));
@@ -21,8 +20,6 @@ describe('SubToolbarComponent', () => {
     fixture = TestBed.createComponent(SubToolbarComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.printEvent = new Subject<PrintOperation>();
-    component.downloadEvent = new Subject<DownloadOperation>();
     fixture.detectChanges();
   });
 
@@ -31,18 +28,18 @@ describe('SubToolbarComponent', () => {
   });
 
   it('should emit print event', () => {
-    const printSpy = spyOn(component.printEvent, 'next');
+    const printSpy = spyOn(component.toolbarEvents.print, 'next');
     const printBtn = nativeElement.querySelector('button[id=secondaryPrint]');
     printBtn.click();
 
-    expect(printSpy).toHaveBeenCalledWith(new PrintOperation());
+    expect(printSpy).toHaveBeenCalledWith();
   });
 
   it('should emit download event', () => {
-    const downloadSpy = spyOn(component.downloadEvent, 'next');
+    const downloadSpy = spyOn(component.toolbarEvents.download, 'next');
     const downloadBtn = nativeElement.querySelector('button[id=secondaryDownload]');
     downloadBtn.click();
 
-    expect(downloadSpy).toHaveBeenCalledWith(new DownloadOperation());
+    expect(downloadSpy).toHaveBeenCalledWith();
   });
 });

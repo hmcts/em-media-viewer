@@ -1,15 +1,46 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 // Toolbar Custom-Event Types
 export type HighlightMode = boolean;
 export type DrawMode = boolean;
+export interface SearchOperation {
+  searchTerm: string;
+  highlightAll: boolean;
+  matchCase: boolean;
+  wholeWord: boolean;
+  previous: boolean;
+  reset: boolean;
+}
+export interface SearchResultsCount {
+  current: number;
+  total: number;
+}
 
 @Injectable({providedIn: 'root'})
 export class ToolbarEventService {
-  // Register Observable Subject Events relevant to the Toolbar
-  highlightMode = new BehaviorSubject<HighlightMode>(false);
-  drawMode = new BehaviorSubject<DrawMode>(false);
+  public readonly highlightMode = new BehaviorSubject<HighlightMode>(false);
+  public readonly drawMode = new BehaviorSubject<DrawMode>(false);
+  public readonly rotate = new Subject<number>();
+  public readonly search = new Subject<SearchOperation>();
+  public readonly searchResultsCount = new Subject<SearchResultsCount>();
+  public readonly zoom = new Subject<number>();
+  public readonly stepZoom = new Subject<number>();
+  public readonly zoomValue = new BehaviorSubject<number>(1);
+  public readonly print = new Subject();
+  public readonly download = new Subject();
+  public readonly setCurrentPage = new Subject<number>();
+  public readonly changePageByDelta = new Subject<number>();
+
+  /**
+   * Reset the stateful behaviour subjects
+   */
+  public reset(): void {
+    this.setCurrentPage.next(1);
+    this.zoomValue.next(1);
+    this.highlightMode.next(false);
+    this.drawMode.next(false);
+  }
 
   // Function to inform Observers that highlightMode has been enabled
   public toggleHighlightMode(): void {

@@ -1,7 +1,6 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
-import { RotateOperation, StepZoomOperation, ZoomOperation, ZoomValue } from '../../../shared/viewer-operations';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import { ToolbarEventService } from '../../toolbar-event.service';
 
 @Component({
   selector: 'mv-tb-middle-pane',
@@ -10,27 +9,23 @@ import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.
 })
 export class ToolbarMiddlePaneComponent {
 
-  @Input() zoomEvent: Subject<ZoomOperation>;
-  @Input() stepZoomEvent: Subject<StepZoomOperation>;
-  @Input() rotateEvent: Subject<RotateOperation>;
-  @Input() zoomValue: ZoomValue;
-
   @ViewChild('zoomSelect') zoomSelect: ElementRef;
 
   constructor(
-    public readonly toolbarButtons: ToolbarButtonVisibilityService
+    public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    public readonly toolbarEvents: ToolbarEventService
   ) {}
 
-  zoom(zoomFactor: number) {
-    this.zoomEvent.next(new ZoomOperation(zoomFactor));
+  zoom(zoomFactor: string) {
+    this.toolbarEvents.zoom.next(+zoomFactor);
   }
 
   stepZoom(zoomFactor: number) {
-    this.stepZoomEvent.next(new StepZoomOperation(zoomFactor));
+    this.toolbarEvents.stepZoom.next(zoomFactor);
     this.zoomSelect.nativeElement.selected = 'selected';
   }
 
   rotate(rotation: number) {
-    this.rotateEvent.next(new RotateOperation(rotation));
+    this.toolbarEvents.rotate.next(rotation);
   }
 }

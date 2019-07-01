@@ -1,7 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarLeftPaneComponent } from './left-pane.component';
-import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../../shared/viewer-operations';
-import { Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ToolbarEventService } from '../../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
@@ -22,8 +20,6 @@ describe('ToolbarLeftPaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarLeftPaneComponent);
     component = fixture.componentInstance;
     component.toolbarButtons.showHighlight = true;
-    component.changePageByDelta = new Subject<ChangePageByDeltaOperation>();
-    component.setCurrentPage = new Subject<SetCurrentPageOperation>();
     fixture.detectChanges();
   });
 
@@ -56,25 +52,25 @@ describe('ToolbarLeftPaneComponent', () => {
   }));
 
   it('should go to next page', () => {
-    const pageChangerSpy = spyOn(component.changePageByDelta, 'next');
+    const pageChangerSpy = spyOn(component.toolbarEvents.changePageByDelta, 'next');
     component.increasePageNumber();
-    expect(pageChangerSpy).toHaveBeenCalledWith(new ChangePageByDeltaOperation(1));
+    expect(pageChangerSpy).toHaveBeenCalledWith(1);
   });
 
   it('should go to previous page', () => {
-    const pageChangerSpy = spyOn(component.changePageByDelta, 'next');
+    const pageChangerSpy = spyOn(component.toolbarEvents.changePageByDelta, 'next');
     component.decreasePageNumber();
-    expect(pageChangerSpy).toHaveBeenCalledWith(new ChangePageByDeltaOperation(-1));
+    expect(pageChangerSpy).toHaveBeenCalledWith(-1);
   });
 
   it('should go to selected page', () => {
-    const pageChangerSpy = spyOn(component.setCurrentPage, 'next');
-    component.setCurrentPageNumber('4');
-    expect(pageChangerSpy).toHaveBeenCalledWith(new SetCurrentPageOperation(4));
+    const pageChangerSpy = spyOn(component.toolbarEvents.setCurrentPage, 'next');
+    component.onPageNumberInputChange('4');
+    expect(pageChangerSpy).toHaveBeenCalledWith(4);
   });
 
   it('should update page number', () => {
-    component.currentPage = new SetCurrentPageOperation(4);
+    component.toolbarEvents.setCurrentPage.next(4);
     expect(component.pageNumber).toEqual(4);
   });
 
