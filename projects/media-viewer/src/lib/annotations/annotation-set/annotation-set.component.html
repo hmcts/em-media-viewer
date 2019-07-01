@@ -13,6 +13,7 @@
     <mv-annotation [annotation]="annotation"
                    [zoom]="zoom"
                    [rotate]="rotate"
+                   [draggable]="rotate === 0"
                    [selected]="selected === i"
                    (select)="onAnnotationSelected($event, i)"
                    (update)="onAnnotationUpdate($event)"
