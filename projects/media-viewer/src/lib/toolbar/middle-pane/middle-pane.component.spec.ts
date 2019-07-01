@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarMiddlePaneComponent } from './middle-pane.component';
-import { ActionEvents } from '../../../shared/action-events';
-import { RotateOperation, StepZoomOperation, ZoomOperation } from '../../../shared/viewer-operations';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import { ActionEvents } from '../../shared/action-events';
+import { RotateOperation, StepZoomOperation, ZoomOperation } from '../../shared/viewer-operations';
 
 describe('ToolbarMiddlePaneComponent', () => {
   let component: ToolbarMiddlePaneComponent;
@@ -11,8 +10,7 @@ describe('ToolbarMiddlePaneComponent', () => {
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
-      declarations: [ ToolbarMiddlePaneComponent ],
-      providers: [ ToolbarButtonVisibilityService ]
+      declarations: [ ToolbarMiddlePaneComponent ]
     })
     .compileComponents();
   }));
@@ -21,8 +19,8 @@ describe('ToolbarMiddlePaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarMiddlePaneComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.toolbarButtons.showRotate = true;
-    component.toolbarButtons.showZoom = true;
+    component.showRotateBtns = true;
+    component.showZoomBtns = true;
     component.zoomEvent = new ActionEvents().zoom;
     component.rotateEvent = new ActionEvents().rotate;
     component.stepZoomEvent = new ActionEvents().stepZoom;

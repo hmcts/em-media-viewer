@@ -1,25 +1,25 @@
-import { Component, Input } from '@angular/core';
-import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../../shared/viewer-operations';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { ToolbarEventService } from '../../toolbar-event.service';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../shared/viewer-operations';
+import {BehaviorSubject, Subject, Subscription} from 'rxjs';
+import {ToolbarEventsService} from '../../shared/toolbar-events.service';
 
 @Component({
   selector: 'mv-tb-left-pane',
   templateUrl: './left-pane.component.html',
-  styleUrls: ['../../../styles/main.scss']
+  styleUrls: ['../../styles/main.scss']
 })
 export class ToolbarLeftPaneComponent {
   // Input Properties
   @Input() changePageByDelta: Subject<ChangePageByDeltaOperation>;
   @Input() setCurrentPage: Subject<SetCurrentPageOperation>;
   @Input() pageNumber = 1;
-
-  constructor(
-    public readonly toolbarEventsService: ToolbarEventService,
-    public readonly toolbarButtons: ToolbarButtonVisibilityService
-  ) {}
-
+  @Input() showSidebarToggleBtn: boolean;
+  @Input() showSearchbarToggleBtn: boolean;
+  @Input() showHighlightBtn: boolean;
+  @Input() showNavigationBtns: boolean;
+  @Input() sidebarOpen: BehaviorSubject<boolean>;
+  @Input() searchBarHidden: BehaviorSubject<boolean>;
+  constructor(readonly toolbarEventsService: ToolbarEventsService) {}
   // Handler onClick Event of the Highlight Mode Button
   onClickHighlightToggle() {
     // Emit an event that HighlightMode has been enabled/disabled
@@ -32,11 +32,11 @@ export class ToolbarLeftPaneComponent {
   }
 
   toggleSideBar() {
-    this.toolbarButtons.sidebarOpen.next(!this.toolbarButtons.sidebarOpen.getValue());
+    this.sidebarOpen.next(!this.sidebarOpen.getValue());
   }
 
   toggleSearchBar() {
-    this.toolbarButtons.searchBarHidden.next(!this.toolbarButtons.searchBarHidden.getValue());
+    this.searchBarHidden.next(!this.searchBarHidden.getValue());
   }
 
   increasePageNumber() {

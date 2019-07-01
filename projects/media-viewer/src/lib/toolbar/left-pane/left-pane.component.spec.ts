@@ -1,10 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarLeftPaneComponent } from './left-pane.component';
-import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../../shared/viewer-operations';
-import { Subject } from 'rxjs';
-import { By } from '@angular/platform-browser';
-import { ToolbarEventService } from '../../toolbar-event.service';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import { ChangePageByDeltaOperation, SetCurrentPageOperation } from '../../shared/viewer-operations';
+import { BehaviorSubject, Subject } from 'rxjs';
+import {By} from '@angular/platform-browser';
+import {ToolbarEventsService} from '../../shared/toolbar-events.service';
 
 describe('ToolbarLeftPaneComponent', () => {
   let component: ToolbarLeftPaneComponent;
@@ -13,7 +12,7 @@ describe('ToolbarLeftPaneComponent', () => {
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [ ToolbarLeftPaneComponent ],
-      providers: [ ToolbarEventService, ToolbarButtonVisibilityService ]
+      providers: [ToolbarEventsService]
     })
       .compileComponents();
   }));
@@ -21,7 +20,9 @@ describe('ToolbarLeftPaneComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarLeftPaneComponent);
     component = fixture.componentInstance;
-    component.toolbarButtons.showHighlight = true;
+    component.showHighlightBtn = true;
+    component.sidebarOpen = new BehaviorSubject(false);
+    component.searchBarHidden = new BehaviorSubject(true);
     component.changePageByDelta = new Subject<ChangePageByDeltaOperation>();
     component.setCurrentPage = new Subject<SetCurrentPageOperation>();
     fixture.detectChanges();
@@ -32,26 +33,26 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should not show sidebar', async(() => {
-    component.toolbarButtons.sidebarOpen.asObservable()
+    component.sidebarOpen.asObservable()
       .subscribe(sidebarOpen => expect(sidebarOpen).toBeFalsy());
   }));
 
   it('should toggle sidebar open', async(() => {
     component.toggleSideBar();
 
-    component.toolbarButtons.sidebarOpen.asObservable()
+    component.sidebarOpen.asObservable()
       .subscribe(sidebarOpen => expect(sidebarOpen).toBeTruthy());
   }));
 
   it('should not show searchbar', async(() => {
-    component.toolbarButtons.searchBarHidden.asObservable()
+    component.searchBarHidden.asObservable()
       .subscribe(searchBarHidden => expect(searchBarHidden).toBeTruthy());
   }));
 
   it('should toggle searchbar visible', async(() => {
     component.toggleSearchBar();
 
-    component.toolbarButtons.searchBarHidden.asObservable()
+    component.searchBarHidden.asObservable()
       .subscribe(searchBarHidden => expect(searchBarHidden).toBeFalsy());
   }));
 
@@ -100,7 +101,7 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should show the draw button if permitted', () => {
-    component.toolbarButtons.showHighlight = true;
+    component.showHighlightBtn = true;
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toBeTruthy();
   });
