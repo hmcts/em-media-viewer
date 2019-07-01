@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 import { SearchResultsCount, ToolbarEventService } from '../../toolbar-event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-search-bar',
@@ -18,17 +19,23 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   searchText = '';
   haveResults = false;
 
+  private subscriptions: Subscription[] = [];
+
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService
   ) {}
 
   public ngOnInit(): void {
-    this.toolbarEvents.searchResultsCount.subscribe(results => this.setSearchResultsCount(results));
+    this.subscriptions.push(
+      this.toolbarEvents.searchResultsCount.subscribe(results => this.setSearchResultsCount(results))
+    );
   }
 
-  public ngOnDestroy(): void {
-    this.toolbarEvents.searchResultsCount.unsubscribe();
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   @HostListener('window:keydown', ['$event'])

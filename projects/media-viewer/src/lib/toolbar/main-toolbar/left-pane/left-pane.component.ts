@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-tb-left-pane',
@@ -9,6 +10,7 @@ import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.
 })
 export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   public pageNumber = 1;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     public readonly toolbarEvents: ToolbarEventService,
@@ -16,11 +18,15 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.toolbarEvents.setCurrentPage.subscribe(pageNumber => this.setCurrentPage(pageNumber));
+    this.subscriptions.push(
+      this.toolbarEvents.setCurrentPage.subscribe(pageNumber => this.setCurrentPage(pageNumber))
+    );
   }
 
-  public ngOnDestroy(): void {
-    this.toolbarEvents.setCurrentPage.unsubscribe();
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   // Handler onClick Event of the Highlight Mode Button
