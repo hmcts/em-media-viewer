@@ -15,14 +15,12 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() downloadFileName: string;
   @Input() annotationSet: AnnotationSet | null;
 
-  drawMode = false;
   errorMessage: string;
 
   @ViewChild('img') img: ElementRef;
   rotation = 0;
   zoom = 1;
 
-  // local array of any subscriptions so that we can tidy them up later
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -33,7 +31,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     // Listen for any changes invoked on the toolbar events Service and initialise any default behaviour state
     this.subscriptions.push(
-      this.toolbarEvents.drawMode.subscribe(toggleValue => this.drawMode = toggleValue),
       this.toolbarEvents.rotate.subscribe(rotation => this.setRotation(rotation)),
       this.toolbarEvents.zoom.subscribe(zoom => this.setZoom(zoom)),
       this.toolbarEvents.stepZoom.subscribe(zoom => this.stepZoom(zoom)),
