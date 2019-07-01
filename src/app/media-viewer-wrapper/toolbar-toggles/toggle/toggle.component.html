@@ -1,0 +1,10 @@
+<div class="govuk-grid-row"><div class="govuk-grid-column-full">
+  <span class="govuk-!-font-weight-bold">{{ label | titlecase }}</span>
+</div>
+  <div class="govuk-grid-column-full">
+    <label [for]="label+'-btn-toggle'" class="switch govuk-!-margin-right-2">
+      <input type="checkbox" [id]="label+'-btn-toggle'" [(ngModel)]="toolbarButtons[subject]">
+      <span class="slider round"></span>
+    </label>
+  </div>
+</div>
