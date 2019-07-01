@@ -1,9 +1,9 @@
-import {ToolbarEventsService} from './toolbar-events.service';
+import {ToolbarEventService} from './toolbar-event.service';
 
-describe('Toolbar Events Service', () => {
-  let service: ToolbarEventsService;
+describe('Toolbar Event Service', () => {
+  let service: ToolbarEventService;
   beforeEach(() => {
-    service = new ToolbarEventsService();
+    service = new ToolbarEventService();
     service.drawMode.next(false);
     service.highlightMode.next(false);
   });

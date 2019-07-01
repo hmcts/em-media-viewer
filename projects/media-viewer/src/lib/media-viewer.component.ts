@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActionEvents } from './shared/action-events';
-import { getToolbarButtonToggles, ToolbarButtonToggles } from './shared/toolbar-button-toggles';
+import { ToolbarButtonVisibilityService } from './toolbar/toolbar-button-visibility.service';
 import { SetCurrentPageOperation } from './shared/viewer-operations';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
+
 @Component({
   selector: 'mv-media-viewer',
   templateUrl: './media-viewer.component.html',
   styleUrls: ['styles/main.scss']
 })
-export class MediaViewerComponent implements OnInit {
+export class MediaViewerComponent {
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -18,18 +19,15 @@ export class MediaViewerComponent implements OnInit {
   @Input() showToolbar = true;
   @Input() showAnnotations = false;
   @Input() showCommentSummary: Subject<boolean>;
-  @Input() toolbarButtonToggles: ToolbarButtonToggles;
   @Input() commentSummaryToggle: Subject<SetCurrentPageOperation>;
   @Input() annotationSet: AnnotationSet;
   currentPageChanged = new Subject<SetCurrentPageOperation>();
 
   private supportedContentTypes = ['pdf', 'image'];
 
-  ngOnInit(): void {
-    if (!this.toolbarButtonToggles) {
-      this.toolbarButtonToggles = getToolbarButtonToggles(this.contentType);
-    }
-  }
+  constructor(
+    public readonly toolbarButtons: ToolbarButtonVisibilityService
+  ) {}
 
   contentTypeUnsupported(): boolean {
     return this.supportedContentTypes.indexOf(this.contentType) < 0;

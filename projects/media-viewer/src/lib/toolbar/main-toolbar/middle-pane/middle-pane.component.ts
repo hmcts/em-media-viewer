@@ -1,11 +1,12 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { RotateOperation, StepZoomOperation, ZoomOperation, ZoomValue } from '../../shared/viewer-operations';
+import { RotateOperation, StepZoomOperation, ZoomOperation, ZoomValue } from '../../../shared/viewer-operations';
+import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 
 @Component({
   selector: 'mv-tb-middle-pane',
   templateUrl: './middle-pane.component.html',
-  styleUrls: ['../../styles/main.scss']
+  styleUrls: ['../../../styles/main.scss']
 })
 export class ToolbarMiddlePaneComponent {
 
@@ -13,12 +14,12 @@ export class ToolbarMiddlePaneComponent {
   @Input() stepZoomEvent: Subject<StepZoomOperation>;
   @Input() rotateEvent: Subject<RotateOperation>;
   @Input() zoomValue: ZoomValue;
-  @Input() showZoomBtns: boolean;
-  @Input() showRotateBtns: boolean;
 
   @ViewChild('zoomSelect') zoomSelect: ElementRef;
 
-  constructor() {}
+  constructor(
+    public readonly toolbarButtons: ToolbarButtonVisibilityService
+  ) {}
 
   zoom(zoomFactor: number) {
     this.zoomEvent.next(new ZoomOperation(zoomFactor));

@@ -1,12 +1,12 @@
-import {ViewerEventsService} from './viewer-events.service';
+import {ViewerEventService} from './viewer-event.service';
 import {Subscription} from 'rxjs';
 
 
 describe('Viewer Events Service', () => {
-  let service: ViewerEventsService;
+  let service: ViewerEventService;
   let subscription: Subscription;
   beforeEach(() => {
-    service = new ViewerEventsService();
+    service = new ViewerEventService();
   });
   afterEach(() => {
     service = null;
