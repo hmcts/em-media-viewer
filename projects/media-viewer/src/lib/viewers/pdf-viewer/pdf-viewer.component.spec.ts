@@ -3,18 +3,6 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
-import {
-  ChangePageByDeltaOperation, DocumentLoaded, DocumentLoadFailed, DocumentLoadProgress,
-  DownloadOperation, NewDocumentLoadInit,
-  PrintOperation,
-  RotateOperation,
-  SearchOperation,
-  SearchResultsCount,
-  SetCurrentPageOperation,
-  StepZoomOperation,
-  ZoomOperation,
-  ZoomValue
-} from '../../shared/viewer-operations';
 import { PrintService } from '../../print.service';
 import {CUSTOM_ELEMENTS_SCHEMA, SimpleChange} from '@angular/core';
 import {ErrorMessageComponent} from '../error-message/error.message.component';
@@ -23,6 +11,8 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {AnnotationSetComponent} from '../../annotations/annotation-set/annotation-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -39,12 +29,10 @@ describe('PdfViewerComponent', () => {
     setPageNumber: () => {},
     changePageNumber: () => {},
     getNormalisedPagesRotation: () => 0,
-    currentPageChanged: new Subject<SetCurrentPageOperation>(),
-    searchResults: new Subject<SearchResultsCount>(),
-    documentLoadInit: new Subject<NewDocumentLoadInit>(),
+    documentLoadInit: new Subject<string>(),
     documentLoadProgress: new Subject<DocumentLoadProgress>(),
-    documentLoaded: new Subject<DocumentLoaded>(),
-    documentLoadFailed: new Subject<DocumentLoadFailed>(),
+    documentLoaded: new Subject<any>(),
+    documentLoadFailed: new Subject(),
     pageRendered: new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>()
   };
 
@@ -63,7 +51,8 @@ describe('PdfViewerComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        AnnotationApiService
+        AnnotationApiService,
+        ToolbarEventService
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -87,9 +76,6 @@ describe('PdfViewerComponent', () => {
 
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
-    component.zoomValue = new BehaviorSubject<ZoomValue>({value: 1});
-    component.currentPageChanged = new Subject<SetCurrentPageOperation>();
-    component.searchResults = new Subject<SearchResultsCount>();
 
     await component.ngAfterContentInit();
   });
@@ -98,58 +84,11 @@ describe('PdfViewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should perform rotate operation', () => {
-    spyOn(mockWrapper, 'rotate');
-    component.rotateOperation = new RotateOperation(90);
-    expect(mockWrapper.rotate).toHaveBeenCalledWith(90);
-  });
-
-  it('should perform zoom operation', () => {
-    spyOn(component.zoomValue, 'next');
-    spyOn(mockWrapper, 'setZoom');
-    component.zoomOperation = new ZoomOperation(4);
-    expect(component.zoomValue.next).toHaveBeenCalled();
-    expect(mockWrapper.setZoom).toHaveBeenCalledWith(4);
-  });
-
-  it('should call step zoom operation', () => {
-    spyOn(component.zoomValue, 'next');
-    spyOn(mockWrapper, 'stepZoom');
-    component.stepZoomOperation = new StepZoomOperation(0.5);
-    expect(component.zoomValue.next).toHaveBeenCalled();
-    expect(mockWrapper.stepZoom).toHaveBeenCalledWith(0.5);
-  });
-
-  it('should call the search operation', () => {
-    spyOn(mockWrapper, 'search');
-    const searchOperation = new SearchOperation('searchTerm', false, false, false, false, false);
-    component.searchOperation = searchOperation;
-    expect(mockWrapper.search).toHaveBeenCalledWith(searchOperation);
-  });
-
   it('should call the print operation', () => {
     spyOn(mockPrintService, 'printDocumentNatively');
     component.url = 'derp';
-    component.printOperation = new PrintOperation();
+    component.toolbarEvents.print.next();
     expect(mockPrintService.printDocumentNatively).toHaveBeenCalledWith(component.url);
-  });
-
-  it('should download the pdf', () => {
-    spyOn(mockWrapper, 'downloadFile');
-    component.downloadOperation = new DownloadOperation();
-    expect(mockWrapper.downloadFile).toHaveBeenCalledWith(component.url, component.downloadFileName);
-  });
-
-  it('should call set current page operation', () => {
-    spyOn(mockWrapper, 'setPageNumber');
-    component.setCurrentPage = new SetCurrentPageOperation(2);
-    expect(mockWrapper.setPageNumber).toHaveBeenCalledWith(2);
-  });
-
-  it('should call change current page operation', () => {
-    spyOn(mockWrapper, 'changePageNumber');
-    component.changePageByDelta = new ChangePageByDeltaOperation(-2);
-    expect(mockWrapper.changePageNumber).toHaveBeenCalledWith(-2);
   });
 
   it('clear the search when the search bar is closed', () => {
@@ -170,16 +109,16 @@ describe('PdfViewerComponent', () => {
   });
 
   it('on NewDocumentLoadInit indicate document is loading', () => {
-    mockWrapper.documentLoadInit.next(new NewDocumentLoadInit('abc'));
+    mockWrapper.documentLoadInit.next('abc');
     expect(component.loadingDocument).toBeTruthy();
   });
 
   it('on DocumentLoadProgress indicate document loading progress', () => {
-    mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(10, 100));
+    mockWrapper.documentLoadProgress.next({ loaded: 10, total: 100 });
     expect(component.loadingDocumentProgress).toBe(10);
-    mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(90, 100));
+    mockWrapper.documentLoadProgress.next({ loaded: 90, total: 100 });
     expect(component.loadingDocumentProgress).toBe(90);
-    mockWrapper.documentLoadProgress.next(new DocumentLoadProgress(200, 100));
+    mockWrapper.documentLoadProgress.next({ loaded: 200, total: 100 });
     expect(component.loadingDocumentProgress).toBe(100);
   });
 
@@ -193,7 +132,7 @@ describe('PdfViewerComponent', () => {
   });
 
   it('on document load failed expect error message', () => {
-    mockWrapper.documentLoadFailed.next(new DocumentLoadFailed());
+    mockWrapper.documentLoadFailed.next();
     expect(component.errorMessage).toContain('Could not load the document');
     expect(component.loadingDocument).toBe(false);
   });

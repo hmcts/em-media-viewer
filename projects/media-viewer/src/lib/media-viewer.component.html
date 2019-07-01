@@ -2,49 +2,20 @@
 
   <mv-side-bar *ngIf="showToolbar" id="sidebarContainer"></mv-side-bar>
   <div id="mainContainer" style="min-height: 10000px;">
-    <mv-main-toolbar *ngIf="showToolbar"
-                     [currentPage]="currentPageChanged | async"
-                     [searchEvent]="actionEvents.search"
-                     [searchResultsCountEvent]="actionEvents.searchResultsCount"
-                     [zoomEvent]="actionEvents.zoom"
-                     [stepZoomEvent]="actionEvents.stepZoom"
-                     [zoomValueEvent]="actionEvents.zoomValue"
-                     [rotateEvent]="actionEvents.rotate"
-                     [changePageByDeltaEvent]="actionEvents.changePageByDelta"
-                     [setCurrentPageEvent]="actionEvents.setCurrentPage"
-                     [downloadEvent]="actionEvents.download"
-                     [printEvent]="actionEvents.print"></mv-main-toolbar>
+    <mv-main-toolbar *ngIf="showToolbar"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    [url]="url"
                    [annotationSet]="showAnnotations ? annotationSet : null"
-                   [downloadFileName]="downloadFileName"
-                   [zoomOperation]="actionEvents?.zoom | async"
-                   [stepZoomOperation]="actionEvents?.stepZoom | async"
-                   [zoomValue]="actionEvents?.zoomValue"
-                   [searchOperation]="actionEvents?.search | async"
-                   [searchResults]="actionEvents?.searchResultsCount"
-                   [downloadOperation]="actionEvents?.download | async"
-                   [printOperation]="actionEvents?.print | async"
-                   [rotateOperation]="actionEvents?.rotate | async"
-                   [setCurrentPage]="actionEvents?.setCurrentPage | async"
-                   [changePageByDelta]="actionEvents?.changePageByDelta | async"
-                   [currentPageChanged]="currentPageChanged">
+                   [downloadFileName]="downloadFileName">
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"
                      [annotationSet]="showAnnotations ? annotationSet : null"
-                     [downloadFileName]="downloadFileName"
-                     [zoomOperation]="actionEvents?.zoom | async"
-                     [stepZoomOperation]="actionEvents?.stepZoom | async"
-                     [zoomValue]="actionEvents?.zoomValue"
-                     [printOperation]="actionEvents?.print | async"
-                     [rotateOperation]="actionEvents?.rotate | async"
-                     [downloadOperation]="actionEvents?.download | async">
+                     [downloadFileName]="downloadFileName">
     </mv-image-viewer>
     <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
                            [url]="url"
-                           [downloadFileName]="downloadFileName"
-                           [downloadOperation]="actionEvents?.download | async">
+                           [downloadFileName]="downloadFileName">
     </mv-unsupported-viewer>
   </div>
 </div>
