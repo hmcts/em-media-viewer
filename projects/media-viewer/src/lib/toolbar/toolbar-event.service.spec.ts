@@ -1,9 +1,9 @@
-import {ToolbarEventsService} from './toolbar-events.service';
+import {ToolbarEventService} from './toolbar-event.service';
 
-describe('Toolbar Events Service', () => {
-  let service: ToolbarEventsService;
+describe('Toolbar Event Service', () => {
+  let service: ToolbarEventService;
   beforeEach(() => {
-    service = new ToolbarEventsService();
+    service = new ToolbarEventService();
     service.drawMode.next(false);
     service.highlightMode.next(false);
   });
@@ -35,4 +35,13 @@ describe('Toolbar Events Service', () => {
     service.toggleDrawMode();
     expect(service.highlightMode.getValue()).toBeFalsy();
   });
+
+  it('should reset', () => {
+    service.zoomValue.next(2);
+    service.drawMode.next(true);
+    service.reset();
+    expect(service.zoomValue.getValue()).toBe(1);
+    expect(service.drawMode.getValue()).toBeFalsy();
+  });
+
 });

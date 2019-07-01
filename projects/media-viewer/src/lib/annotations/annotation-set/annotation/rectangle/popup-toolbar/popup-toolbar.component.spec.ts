@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PopupToolbarComponent } from './popup-toolbar.component';
 import { By } from '@angular/platform-browser';
+import { EventEmitter } from '@angular/core';
 
 describe('PopupToolbarComponent', () => {
   let component: PopupToolbarComponent;
@@ -40,6 +41,16 @@ describe('PopupToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should delete highlight', function () {
+    const mockDeleteEvent = new EventEmitter();
+    spyOn(mockDeleteEvent, 'emit');
+    component.deleteHighlight = mockDeleteEvent;
+    const deleteBtn = fixture.debugElement.query(By.css('button[title=Delete]'));
+    deleteBtn.triggerEventHandler('mousedown', {});
+
+    expect(mockDeleteEvent.emit).toHaveBeenCalledWith();
   });
 
   it('adjust its position', () => {

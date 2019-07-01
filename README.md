@@ -58,13 +58,10 @@ component entry point:
 ```
 <mv-media-viewer [url]="'assets/example.pdf'"
                  [downloadFileName]="'example.pdf'"
-                 [actionEvents]=actionEvents
                  [showToolbar]="true"
                  [contentType]="'pdf'">
 </mv-media-viewer>  
 ```
-
-The optional `actionEvents` property is an instance of the `ActionEvents` class which acts like an event bus. The `actionEvents` instance will contain subscribable event streams for toolbar actions such as zoom, rotate and search. Can be used to interact with the viewer in case the default toolbar is disabled.
 
 ### Toolbar
 
