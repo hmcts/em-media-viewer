@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { ToolbarButtonToggles } from '../../../../projects/media-viewer/src/lib/shared/toolbar-button-toggles';
+import { ToolbarButtonVisibilityService } from '../../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
 
 @Component({
   selector: 'app-toolbar-toggles',
@@ -8,8 +8,11 @@ import { ToolbarButtonToggles } from '../../../../projects/media-viewer/src/lib/
   styleUrls: ['./toolbar-toggles.component.scss']
 })
 export class ToolbarTogglesComponent {
-  @Input() toolbarButtons: ToolbarButtonToggles;
   @Output() toggleToolbar = new BehaviorSubject(true);
   @Output() toggleAnnotations = new BehaviorSubject(true);
   @Input() showCommentSummary: Subject<boolean>;
+
+  constructor(
+    public readonly toolbarButtons: ToolbarButtonVisibilityService
+  ) {}
 }

@@ -1,15 +1,8 @@
-import { PdfJsWrapper } from './pdf-js-wrapper';
-import {
-  DocumentLoaded, DocumentLoadFailed,
-  DocumentLoadProgress,
-  NewDocumentLoadInit,
-  SearchOperation,
-  SearchResultsCount,
-  SetCurrentPageOperation
-} from '../../../shared/viewer-operations';
+import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 describe('PdfJsWrapper', () => {
   const downloadManager = new pdfjsViewer.DownloadManager({});
@@ -34,14 +27,13 @@ describe('PdfJsWrapper', () => {
   };
 
   const wrapper = new PdfJsWrapper(
-    new Subject<SearchResultsCount>(),
-    new Subject<SetCurrentPageOperation>(),
     mockViewer,
     downloadManager,
-    new Subject<NewDocumentLoadInit>(),
+    new ToolbarEventService(),
+    new Subject<string>(),
     new Subject<DocumentLoadProgress>(),
-    new Subject<DocumentLoaded>(),
-    new Subject<DocumentLoadFailed>(),
+    new Subject<any>(),
+    new Subject(),
     new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>(),
   );
 
@@ -126,8 +118,15 @@ describe('PdfJsWrapper', () => {
 
   it('should call the search operation', () => {
     spyOn(mockViewer.findController, 'executeCommand');
-    const searchOperation = new SearchOperation('searchTerm', false, false, false, false, false);
 
+    const searchOperation = {
+      searchTerm: 'searchTerm',
+      highlightAll: false,
+      matchCase: false,
+      wholeWord: false,
+      previous: false,
+      reset: false
+    };
     wrapper.search(searchOperation);
 
     expect(mockViewer.findController.executeCommand).toHaveBeenCalledWith('findagain', {
@@ -159,4 +158,5 @@ describe('PdfJsWrapper', () => {
     wrapper.changePageNumber(-2);
     expect(mockViewer.currentPageNumber).toEqual(-1);
   });
+
 });

@@ -1,5 +1,5 @@
 <div id="toolbarViewerMiddle">
-  <div class="splitToolbarButton" *ngIf="showRotateBtns">
+  <div class="splitToolbarButton" *ngIf="toolbarButtons.showRotate">
     <button id="pageRotateCcw" class="toolbarButton rotateCcw" title="Rotate Counterclockwise"
             tabindex="59" data-l10n-id="page_rotate_ccw" (click)="rotate(-90)">
       <span data-l10n-id="page_rotate_ccw_label">Rotate Counterclockwise</span>
@@ -11,14 +11,14 @@
     </button>
   </div>
   <div class="toolbarButtonSpacer"></div>
-  <ng-container *ngIf="showZoomBtns">
+  <ng-container *ngIf="toolbarButtons.showZoom">
     <button id="zoomOut" class="toolbarButton zoomOut" title="Zoom Out" tabindex="21" data-l10n-id="zoom_out"
             (click)="stepZoom(-0.1)">
       <span data-l10n-id="zoom_out_label">Zoom Out</span>
     </button>
     <span id="scaleSelectContainer" class="dropdownToolbarButton">
       <select id="scaleSelect" title="Zoom" tabindex="23" data-l10n-id="zoom" (change)="zoom($event.target.value)">
-        <option #zoomSelect id="customScaleOption" title="" [value]="zoomValue.value">{{zoomValue.value * 100 | number: '1.0-0'}}%</option>
+        <option #zoomSelect id="customScaleOption" title="" [value]="toolbarEvents.zoomValue.value">{{(toolbarEvents.zoomValue.value) * 100 | number: '1.0-0'}}%</option>
         <option title="" value="0.1" data-l10n-id="page_scale_percent"
                 data-l10n-args='{ "scale": 10 }'>10%</option>
         <option title="" value="0.25" data-l10n-id="page_scale_percent"
