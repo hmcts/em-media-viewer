@@ -1,38 +1,21 @@
 <mv-search-bar [searchEvents]="searchEvent"
-               [searchResultsCount]="searchResultsCountEvent | async"
-               [searchBarHidden]="toolbarButtons?.searchBarHidden"></mv-search-bar>
+               [searchResultsCount]="searchResultsCountEvent | async"></mv-search-bar>
 <mv-sub-toolbar [printEvent]="printEvent"
-                [downloadEvent]="downloadEvent"
-                [subToolbarHidden]="toolbarButtons?.subToolbarHidden | async"></mv-sub-toolbar>
+                [downloadEvent]="downloadEvent"></mv-sub-toolbar>
 <div class="toolbar">
   <div id="toolbarContainer">
     <div id="toolbarViewer">
       <mv-tb-left-pane [currentPage]="currentPage"
                        [changePageByDelta]="changePageByDeltaEvent"
                        [setCurrentPage]="setCurrentPageEvent"
-                       [showSidebarToggleBtn]="toolbarButtons?.showSidebarToggleBtn"
-                       [showSearchbarToggleBtn]="toolbarButtons?.showSearchbarToggleBtn"
-                       [showNavigationBtns]="toolbarButtons?.showNavigationBtns"
-                       [searchBarHidden]="toolbarButtons?.searchBarHidden"
-                       [showHighlightBtn]="toolbarButtons?.showHighlightBtn"
-                       [sidebarOpen]="toolbarButtons?.sidebarOpen"
       ></mv-tb-left-pane>
       <mv-tb-right-pane [downloadEvent]="downloadEvent"
-                        [printEvent]="printEvent"
-                        [subToolbarHidden]="toolbarButtons?.subToolbarHidden"
-                        [showPresentationModeBtn]="toolbarButtons?.showPresentationModeBtn"
-                        [showOpenFileBtn]="toolbarButtons?.showOpenFileBtn"
-                        [showDownloadBtn]="toolbarButtons?.showDownloadBtn"
-                        [showPrintBtn]="toolbarButtons?.showPrintBtn"
-                        [showBookmarkBtn]="toolbarButtons?.showBookmarkBtn"
-                        [showSubToolbarToggleBtn]="toolbarButtons?.showSubToolbarToggleBtn">
+                        [printEvent]="printEvent">
       </mv-tb-right-pane>
       <mv-tb-middle-pane [zoomEvent]="zoomEvent"
                          [stepZoomEvent]="stepZoomEvent"
                          [rotateEvent]="rotateEvent"
-                         [zoomValue]="(zoomValueEvent | async) || { value: 1 }"
-                         [showZoomBtns]="toolbarButtons?.showZoomBtns"
-                         [showRotateBtns]="toolbarButtons?.showRotateBtns"></mv-tb-middle-pane>
+                         [zoomValue]="(zoomValueEvent | async) || { value: 1 }"></mv-tb-middle-pane>
     </div>
     <div id="loadingBar">
       <div class="progress">

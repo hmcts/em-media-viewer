@@ -1,15 +1,10 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MediaViewerComponent} from './media-viewer.component';
-import {PdfViewerComponent} from './viewers/pdf-viewer/pdf-viewer.component';
-import {ImageViewerComponent} from './viewers/image-viewer/image-viewer.component';
-import {UnsupportedViewerComponent} from './viewers/unsupported-viewer/unsupported-viewer.component';
-import {ToolbarModule} from './toolbar/toolbar.module';
-import {
-  ImageViewerToolbarButtons,
-  PdfViewerToolbarButtons,
-  UnsupportedViewerToolbarButtons
-} from './shared/toolbar-button-toggles';
-import {ErrorMessageComponent} from './viewers/error-message/error.message.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MediaViewerComponent } from './media-viewer.component';
+import { PdfViewerComponent } from './viewers/pdf-viewer/pdf-viewer.component';
+import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.component';
+import { UnsupportedViewerComponent } from './viewers/unsupported-viewer/unsupported-viewer.component';
+import { ToolbarModule } from './toolbar/toolbar.module';
+import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { AnnotationsModule } from './annotations/annotations.module';
 
 describe('MediaViewerComponent', () => {
@@ -49,24 +44,4 @@ describe('MediaViewerComponent', () => {
     expect(component.contentTypeUnsupported()).toBeTruthy();
   });
 
-  it('should set toolbarButtonToggles for pdf', function () {
-    component.contentType = 'pdf';
-    component.ngOnInit();
-
-    expect(component.toolbarButtonToggles).toEqual(new PdfViewerToolbarButtons());
-  });
-
-  it('should set toolbarButtonToggles for image', function () {
-    component.contentType = 'image';
-    component.ngOnInit();
-
-    expect(component.toolbarButtonToggles).toEqual(new ImageViewerToolbarButtons());
-  });
-
-  it('should set toolbarButtonToggles for unsupported types', function () {
-    component.contentType = 'unsupported';
-    component.ngOnInit();
-
-    expect(component.toolbarButtonToggles).toEqual(new UnsupportedViewerToolbarButtons());
-  });
 });

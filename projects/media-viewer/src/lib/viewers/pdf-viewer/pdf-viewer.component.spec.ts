@@ -200,7 +200,6 @@ describe('PdfViewerComponent', () => {
 
   it('on page rendered render annotation set if annotations enabled', () => {
     component.annotationSet = annotationSet;
-    component.showAnnotations = true;
     const div = document.createElement('div');
     mockWrapper.pageRendered.next({pageNumber: 1, source: {rotation: 0, scale: 1, div: div}});
     expect(div.childNodes).not.toBeNull();

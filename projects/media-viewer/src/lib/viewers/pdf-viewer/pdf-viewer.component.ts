@@ -2,7 +2,8 @@ import {
   AfterContentInit,
   Component,
   ComponentFactoryResolver,
-  ElementRef, EmbeddedViewRef,
+  ElementRef,
+  EmbeddedViewRef,
   Input,
   OnChanges,
   SimpleChanges,
@@ -27,12 +28,12 @@ import {
 } from '../../shared/viewer-operations';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
-import {AnnotationSetComponent} from '../../annotations/annotation-set/annotation-set.component';
+import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.css']
+  styleUrls: ['./pdf-viewer.component.scss']
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
@@ -41,8 +42,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   @Input() searchResults: Subject<SearchResultsCount>;
   @Input() zoomValue: BehaviorSubject<ZoomValue>;
   @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
-  @Input() showAnnotations: boolean;
-  @Input() annotationSet: AnnotationSet;
+  @Input() annotationSet: AnnotationSet | null;
   @Input() highlightMode: BehaviorSubject<boolean>;
 
   loadingDocument = false;
@@ -56,8 +56,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private viewContainerRef: ViewContainerRef,
+    private readonly componentFactoryResolver: ComponentFactoryResolver,
+    private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
   ) {}
 
@@ -81,7 +81,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   }
 
   onPageRendered(e: {pageNumber: number, source: {rotation: number, scale: number, div: Element}}) {
-    if (this.showAnnotations && this.annotationSet) {
+    if (this.annotationSet) {
       const factory = this.componentFactoryResolver.resolveComponentFactory(AnnotationSetComponent);
       const component = this.viewContainerRef.createComponent(factory);
       component.instance.annotationSet = this.annotationSet;

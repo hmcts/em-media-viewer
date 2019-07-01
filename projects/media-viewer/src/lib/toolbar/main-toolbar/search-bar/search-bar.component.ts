@@ -1,15 +1,15 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SearchOperation, SearchResultsCount } from '../../shared/viewer-operations';
+import { SearchOperation, SearchResultsCount } from '../../../shared/viewer-operations';
+import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 
 @Component({
   selector: 'mv-search-bar',
   templateUrl: './search-bar.component.html',
-  styleUrls: ['../../styles/main.scss']
+  styleUrls: ['../../../styles/main.scss']
 })
 export class SearchBarComponent {
 
-  @Input() searchBarHidden: Subject<boolean>;
   @Input() searchEvents: Subject<SearchOperation>;
   @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
 
@@ -20,14 +20,16 @@ export class SearchBarComponent {
   searchText = '';
   haveResults = false;
 
-  constructor() {}
+  constructor(
+    public readonly toolbarButtons: ToolbarButtonVisibilityService
+  ) {}
 
   @HostListener('window:keydown', ['$event'])
   onWindowKeyDown(e: KeyboardEvent): void {
     if (e.code === 'F3' || (e.ctrlKey && e.code === 'KeyF')) {
       e.preventDefault();
 
-      this.searchBarHidden.next(false);
+      this.toolbarButtons.searchBarHidden.next(false);
       setTimeout(() => this.findInput.nativeElement.focus(), 200);
     }
   }
@@ -77,7 +79,7 @@ export class SearchBarComponent {
 
   public onInputKeyPress(e: KeyboardEvent) {
     if (e.key === 'Escape') {
-      this.searchBarHidden.next(true);
+      this.toolbarButtons.searchBarHidden.next(true);
     }
   }
 }
