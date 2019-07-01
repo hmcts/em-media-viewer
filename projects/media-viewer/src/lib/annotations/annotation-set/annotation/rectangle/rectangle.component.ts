@@ -27,10 +27,14 @@ export class RectangleComponent {
   onMove(el: HTMLElement) {
     const [left, top] = el.style.transform.match(/\d+/g);
 
-    this.rectangle.x = +left / this.zoom;
-    this.rectangle.y = +top / this.zoom;
+    const newX = +left / this.zoom;
+    const newY = +top / this.zoom;
 
-    this.update.emit(this.rectangle);
+    if (Math.abs(newX - this.rectangle.x) > 2 || Math.abs(newY - this.rectangle.y)) {
+      this.rectangle.x = newX;
+      this.rectangle.y = newY;
+      this.update.emit(this.rectangle);
+    }
   }
 
   onResize(event: IResizeEvent) {

@@ -90,12 +90,12 @@ describe('AnnotationApiService', () => {
 
   it('delete annotation', async(() => {
     api.deleteAnnotation(annotation.id).subscribe((response) => {
-      expect(response.annotationSetId).toEqual(annotationSet.id);
+      expect(response).toEqual(null);
     });
 
     const req = httpMock.expectOne(`/em-anno/annotations/${annotation.id}`);
     expect(req.request.method).toBe('DELETE');
-    req.flush(annotation);
+    req.flush(null);
   }));
 
   it('save annotation', async(() => {

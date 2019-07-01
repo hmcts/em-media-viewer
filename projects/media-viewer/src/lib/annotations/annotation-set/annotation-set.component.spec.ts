@@ -9,8 +9,9 @@ import { PopupToolbarComponent } from './annotation/rectangle/popup-toolbar/popu
 import { AnnotationComponent } from './annotation/annotation.component';
 import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 import { ElementRef } from '@angular/core';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -33,7 +34,8 @@ describe('AnnotationSetComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        { provide: AnnotationApiService, useValue: api }
+        { provide: AnnotationApiService, useValue: api },
+        ToolbarEventService
       ]
     }).compileComponents();
 
@@ -49,23 +51,23 @@ describe('AnnotationSetComponent', () => {
   });
 
   it('update annotations', () => {
-    const spy = spyOn(api, 'postAnnotationSet').and.returnValues(of(annotationSet));
     const annotation = { ...annotationSet.annotations[0] };
+    const spy = spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
 
     annotation.color = 'red';
     component.onAnnotationUpdate(annotation);
 
-    expect(spy).toHaveBeenCalledWith(annotationSet);
+    expect(spy).toHaveBeenCalledWith(annotation);
   });
 
   it('delete annotation', () => {
-    spyOn(api, 'postAnnotationSet');
+    spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
     const annotations = { ...annotationSet.annotations };
     const annotation = { ...annotations[0] };
 
-    component.onAnnotationUpdate(annotation);
+    component.onAnnotationDelete(annotation);
 
-    expect(api.postAnnotationSet).toHaveBeenCalledWith(annotationSet);
+    expect(api.deleteAnnotation).toHaveBeenCalledWith(annotation.id);
     expect(annotations).not.toEqual(component.annotationSet.annotations);
   });
 
@@ -83,7 +85,7 @@ describe('AnnotationSetComponent', () => {
 
   it('starts drawing on mousedown', () => {
     component.newRectangle = new ElementRef(document.createElement('div'));
-    component.drawMode = true;
+    component.toolbarEvents.drawMode.next(true);
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
 
     expect(component.newRectangle.nativeElement.style.left).toEqual('10px');
@@ -97,7 +99,7 @@ describe('AnnotationSetComponent', () => {
     const spy = spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
 
     component.newRectangle = new ElementRef(document.createElement('div'));
-    component.drawMode = true;
+    component.toolbarEvents.drawMode.next(true);
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
     component.onMouseMove({ pageY: 100, pageX: 100 } as MouseEvent);
     component.onMouseUp();
