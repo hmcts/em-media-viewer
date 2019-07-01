@@ -24,6 +24,9 @@ export class ToolbarButtonVisibilityService {
    * Reset the visibility of all buttons to false then set the value from the options
    */
   public reset(options: Partial<ToolbarButtonVisibilityService>): void {
+    this.subToolbarHidden.next(true);
+    this.sidebarOpen.next(false);
+    this.searchBarHidden.next(true);
     this.showPrint = false;
     this.showDownload = false;
     this.showNavigation = false;
