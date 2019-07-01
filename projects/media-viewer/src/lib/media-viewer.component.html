@@ -1,4 +1,4 @@
-<div id="outerContainer" [ngClass]="{ sidebarOpen: toolbarButtonToggles?.sidebarOpen | async }">
+<div id="outerContainer" [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async }">
 
   <mv-side-bar *ngIf="showToolbar" id="sidebarContainer"></mv-side-bar>
   <div id="mainContainer" style="min-height: 10000px;">
@@ -13,12 +13,10 @@
                      [changePageByDeltaEvent]="actionEvents.changePageByDelta"
                      [setCurrentPageEvent]="actionEvents.setCurrentPage"
                      [downloadEvent]="actionEvents.download"
-                     [printEvent]="actionEvents.print"
-                     [toolbarButtons]="toolbarButtonToggles"></mv-main-toolbar>
+                     [printEvent]="actionEvents.print"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    [url]="url"
-                   [showAnnotations]="showAnnotations"
-                   [annotationSet]="annotationSet"
+                   [annotationSet]="showAnnotations ? annotationSet : null"
                    [downloadFileName]="downloadFileName"
                    [zoomOperation]="actionEvents?.zoom | async"
                    [stepZoomOperation]="actionEvents?.stepZoom | async"
@@ -30,8 +28,7 @@
                    [rotateOperation]="actionEvents?.rotate | async"
                    [setCurrentPage]="actionEvents?.setCurrentPage | async"
                    [changePageByDelta]="actionEvents?.changePageByDelta | async"
-                   [currentPageChanged]="currentPageChanged"
-                   [searchBarHidden]="toolbarButtonToggles?.searchBarHidden | async">
+                   [currentPageChanged]="currentPageChanged">
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      [url]="url"

@@ -6,7 +6,7 @@ export type HighlightMode = boolean;
 export type DrawMode = boolean;
 
 @Injectable({providedIn: 'root'})
-export class ToolbarEventsService {
+export class ToolbarEventService {
   // Register Observable Subject Events relevant to the Toolbar
   highlightMode = new BehaviorSubject<HighlightMode>(false);
   drawMode = new BehaviorSubject<DrawMode>(false);
