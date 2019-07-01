@@ -11,6 +11,7 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of, BehaviorSubject } from 'rxjs';
 import { ElementRef } from '@angular/core';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -33,14 +34,14 @@ describe('AnnotationSetComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        { provide: AnnotationApiService, useValue: api }
+        { provide: AnnotationApiService, useValue: api },
+        ToolbarEventService
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AnnotationSetComponent);
     component = fixture.componentInstance;
     component.annotationSet = annotationSet;
-    component.drawMode = new BehaviorSubject<boolean>(false);
     component.page = 1;
     fixture.detectChanges();
   });
@@ -84,7 +85,7 @@ describe('AnnotationSetComponent', () => {
 
   it('starts drawing on mousedown', () => {
     component.newRectangle = new ElementRef(document.createElement('div'));
-    component.drawMode.next(true);
+    component.toolbarEvents.drawMode.next(true);
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
 
     expect(component.newRectangle.nativeElement.style.left).toEqual('10px');
@@ -98,7 +99,7 @@ describe('AnnotationSetComponent', () => {
     const spy = spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
 
     component.newRectangle = new ElementRef(document.createElement('div'));
-    component.drawMode.next(true);
+    component.toolbarEvents.drawMode.next(true);
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
     component.onMouseMove({ pageY: 100, pageX: 100 } as MouseEvent);
     component.onMouseUp();

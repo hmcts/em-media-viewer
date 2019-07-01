@@ -5,6 +5,7 @@ import { AnnotationSet } from './annotation-set.model';
 import { Rectangle } from './annotation/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { Subject, BehaviorSubject } from 'rxjs';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -19,7 +20,6 @@ export class AnnotationSetComponent {
   @Input() width: number;
   @Input() height: number;
   @Input() page: number;
-  @Input() drawMode: BehaviorSubject<boolean>;
 
   @ViewChild('newRectangle') newRectangle: ElementRef;
   @ViewChild('container') container: ElementRef;
@@ -29,7 +29,8 @@ export class AnnotationSetComponent {
   drawStartY = -1;
 
   constructor(
-    private readonly api: AnnotationApiService
+    private readonly api: AnnotationApiService,
+    public readonly toolbarEvents: ToolbarEventService
   ) {}
 
   public getAnnotationsOnPage(): Annotation[] {
@@ -60,7 +61,7 @@ export class AnnotationSetComponent {
   }
 
   public onMouseDown(event: MouseEvent) {
-    if (this.annotationSet && this.drawMode.value) {
+    if (this.annotationSet && this.toolbarEvents.drawMode.value) {
       this.drawStartX = event.pageX - (window.scrollX + this.container.nativeElement.getBoundingClientRect().left);
       this.drawStartY = event.pageY - (window.scrollY + this.container.nativeElement.getBoundingClientRect().top);
 
@@ -71,7 +72,7 @@ export class AnnotationSetComponent {
   }
 
   public onMouseMove(event: MouseEvent) {
-    if (this.annotationSet && this.drawMode.value && this.drawStartX > 0 && this.drawStartY > 0) {
+    if (this.annotationSet && this.toolbarEvents.drawMode.value && this.drawStartX > 0 && this.drawStartY > 0) {
       this.newRectangle.nativeElement.style.height =
         (event.pageY - this.drawStartY - (window.scrollY + this.container.nativeElement.getBoundingClientRect().top)) + 'px';
       this.newRectangle.nativeElement.style.width =
@@ -80,7 +81,7 @@ export class AnnotationSetComponent {
   }
 
   public onMouseUp() {
-    if (this.annotationSet && this.drawMode.value) {
+    if (this.annotationSet && this.toolbarEvents.drawMode.value) {
       const rectangle = {
         id: uuid(),
         x: +this.newRectangle.nativeElement.style.left.slice(0, -2),
@@ -104,7 +105,7 @@ export class AnnotationSetComponent {
           .postAnnotation(annotation)
           .subscribe(a => this.annotationSet.annotations.push(a));
 
-        this.drawMode.next(false);
+        this.toolbarEvents.drawMode.next(false);
       }
 
       this.drawStartX = -1;
