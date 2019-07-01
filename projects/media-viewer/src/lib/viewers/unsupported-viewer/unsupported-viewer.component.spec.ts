@@ -31,4 +31,16 @@ describe('UnsupportedViewerComponent', () => {
     expect(clickSpy).toHaveBeenCalledWith();
   });
 
+  it('unsubscribe', () => {
+    const unsubSpy = spyOn(component.toolbarEvents.download, 'unsubscribe');
+    component.ngOnDestroy();
+    expect(unsubSpy).toHaveBeenCalled();
+  });
+
+  it('subscribe', () => {
+    const subSpy = spyOn(component.toolbarEvents.download, 'subscribe');
+    component.ngOnInit();
+    expect(subSpy).toHaveBeenCalled();
+  });
+
 });
