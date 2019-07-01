@@ -1,5 +1,5 @@
-import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import {Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Subject, Subscription} from 'rxjs';
 import {
   DownloadOperation,
   PrintOperation,
@@ -9,8 +9,12 @@ import {
   ZoomValue
 } from '../../shared/viewer-operations';
 import { PrintService } from '../../print.service';
+import { AnnotationApiService } from '../../annotations/annotation-api.service';
+import { Annotation } from '../../annotations/annotation-set/annotation/annotation.model';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
-import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { Rectangle } from '../../annotations/annotation-set/annotation/rectangle/rectangle.model';
+import uuid from 'uuid/v4';
+import {ToolbarEventsService} from '../../shared/toolbar-events.service';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -36,7 +40,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private readonly printService: PrintService,
-    private readonly toolbarEventsService: ToolbarEventService
+    private readonly toolbarEventsService: ToolbarEventsService
   ) { }
 
   ngOnInit(): void {

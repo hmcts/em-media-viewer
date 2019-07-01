@@ -13,7 +13,7 @@ export type TextSelected = TextSelectionRectangle[];
 
 
 @Injectable({providedIn: 'root'})
-export class ViewerEventService {
+export class ViewerEventsService {
   // Register Observable Subject Events relevant to the Viewers
   textSelected = new Subject<TextSelected>();
   constructor() {}

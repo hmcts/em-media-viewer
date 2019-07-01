@@ -1,13 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ToolbarButtonToggles } from '../../../projects/media-viewer/src/lib/shared/toolbar-button-toggles';
 import { Subject } from 'rxjs';
 import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/annotations/annotation-api.service';
 import { imageAnnotationSet } from '../../assets/mock-data/image-annotation-set';
 import { pdfAnnotationSet } from '../../assets/mock-data/pdf-annotation-set';
-import {
-  defaultImageOptions,
-  defaultPdfOptions, defaultUnsupportedOptions,
-  ToolbarButtonVisibilityService
-} from '../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
 
 @Component({
   selector: 'media-viewer-wrapper',
@@ -28,14 +24,12 @@ export class MediaViewerWrapperComponent {
 
   showToolbar = true;
   showAnnotations = false;
+  toolbarButtons = new ToolbarButtonToggles();
   showCommentSummary = new Subject<boolean>();
 
   constructor(
-    public readonly api: AnnotationApiService,
-    public readonly toolbarButtons: ToolbarButtonVisibilityService
-  ) {
-    this.selectTab(this.selectedTab);
-  }
+    public api: AnnotationApiService
+  ) {}
 
   selectTab(newTab: string) {
     this.selectedTab = newTab;
@@ -43,14 +37,11 @@ export class MediaViewerWrapperComponent {
     if (newTab === 'pdf') {
       this.url = this.pdfUrl;
       this.annotationSet = pdfAnnotationSet;
-      this.toolbarButtons.reset({ ...defaultPdfOptions, showHighlight: this.showAnnotations });
     } else if (newTab === 'image') {
       this.url = this.imageUrl;
       this.annotationSet = imageAnnotationSet;
-      this.toolbarButtons.reset({ ...defaultImageOptions, showHighlight: this.showAnnotations });
     } else {
       this.url = this.unsupportedUrl;
-      this.toolbarButtons.reset(defaultUnsupportedOptions);
     }
   }
 
@@ -60,7 +51,7 @@ export class MediaViewerWrapperComponent {
 
   toggleAnnotations(showAnnotations: boolean) {
     this.showAnnotations = showAnnotations;
-    this.toolbarButtons.showHighlight = showAnnotations;
+    this.toolbarButtons.showHighlightBtn = showAnnotations;
   }
 
   tabLinkStyle(currentTab: string) {

@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SubToolbarComponent } from './sub-toolbar.component';
-import { DownloadOperation, PrintOperation } from '../../../shared/viewer-operations';
+import { DownloadOperation, PrintOperation } from '../../shared/viewer-operations';
 import { Subject } from 'rxjs';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 
 describe('SubToolbarComponent', () => {
   let component: SubToolbarComponent;
@@ -11,8 +10,7 @@ describe('SubToolbarComponent', () => {
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
-      declarations: [ SubToolbarComponent ],
-      providers: [ ToolbarButtonVisibilityService ]
+      declarations: [ SubToolbarComponent ]
     })
     .compileComponents();
   }));

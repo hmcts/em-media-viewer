@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarRightPaneComponent } from './right-pane.component';
-import { DownloadOperation, PrintOperation } from '../../../shared/viewer-operations';
-import { Subject } from 'rxjs';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
+import { DownloadOperation, PrintOperation } from '../../shared/viewer-operations';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 describe('ToolbarRightPaneComponent', () => {
   let component: ToolbarRightPaneComponent;
@@ -11,8 +10,7 @@ describe('ToolbarRightPaneComponent', () => {
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
-      declarations: [ ToolbarRightPaneComponent ],
-      providers: [ ToolbarButtonVisibilityService ]
+      declarations: [ ToolbarRightPaneComponent ]
     })
     .compileComponents();
   }));
@@ -21,8 +19,9 @@ describe('ToolbarRightPaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarRightPaneComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
-    component.toolbarButtons.showPrint = true;
-    component.toolbarButtons.showDownload = true;
+    component.showPrintBtn = true;
+    component.showDownloadBtn = true;
+    component.subToolbarHidden = new BehaviorSubject<boolean>(true);
     component.printEvent = new Subject<PrintOperation>();
     component.downloadEvent = new Subject<DownloadOperation>();
 
@@ -34,7 +33,7 @@ describe('ToolbarRightPaneComponent', () => {
   });
 
   it('should not show secondary toolbar', async(() => {
-    component.toolbarButtons.subToolbarHidden.asObservable()
+    component.subToolbarHidden.asObservable()
       .subscribe(subToolbarHidden => expect(subToolbarHidden).toBeTruthy());
   }));
 
@@ -42,7 +41,7 @@ describe('ToolbarRightPaneComponent', () => {
   it('should toggle secondary toolbar visible', async(() => {
     component.toggleSecondaryToolbar();
 
-    component.toolbarButtons.subToolbarHidden.asObservable()
+    component.subToolbarHidden.asObservable()
       .subscribe(subToolbarHidden => expect(subToolbarHidden).toBeFalsy());
   }));
 
