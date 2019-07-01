@@ -35,4 +35,13 @@ describe('Toolbar Event Service', () => {
     service.toggleDrawMode();
     expect(service.highlightMode.getValue()).toBeFalsy();
   });
+
+  it('should reset', () => {
+    service.zoomValue.next(2);
+    service.drawMode.next(true);
+    service.reset();
+    expect(service.zoomValue.getValue()).toBe(1);
+    expect(service.drawMode.getValue()).toBeFalsy();
+  });
+
 });
