@@ -5,8 +5,7 @@
         <h2 class="govuk-heading-m  govuk-!-margin-top-4">Media Viewer Demo</h2>
       </div>
       <div class="govuk-grid-column-two-thirds">
-        <app-toolbar-toggles [toolbarButtons]="toolbarButtons"
-                             [showCommentSummary]="showCommentSummary"
+        <app-toolbar-toggles [showCommentSummary]="showCommentSummary"
                              (toggleAnnotations)="toggleAnnotations($event)"
                              (toggleToolbar)="toggleToolbar($event)"></app-toolbar-toggles>
       </div>
@@ -74,7 +73,6 @@
     <section [id]="selectedTab">
         <mv-media-viewer [url]="url"
                          [downloadFileName]="filename"
-                         [toolbarButtonToggles]="toolbarButtons"
                          [contentType]="selectedTab"
                          [annotationSet]="annotationSet"
                          [showCommentSummary]="showCommentSummary"
