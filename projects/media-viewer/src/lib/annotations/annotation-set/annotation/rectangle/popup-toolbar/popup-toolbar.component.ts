@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import {Rectangle} from '../rectangle.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Rectangle} from '../rectangle.model';
 
 @Component({
   selector: 'mv-popup-toolbar',
@@ -14,6 +14,8 @@ export class PopupToolbarComponent {
   @Input() rectangle: Rectangle;
   @Input() zoom = 1;
   @Input() rotate = 0;
+  @Output() deleteHighlight = new EventEmitter();
+
 
   popupStyles() {
     if (this.rotate === 0) {

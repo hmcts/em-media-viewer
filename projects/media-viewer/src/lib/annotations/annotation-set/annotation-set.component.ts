@@ -46,6 +46,11 @@ export class AnnotationSetComponent {
     this.api.postAnnotationSet(this.annotationSet);
   }
 
+  public onAnnotationDelete(annotation: Annotation) {
+    this.annotationSet.annotations = this.annotationSet.annotations.filter(a => a.id !== annotation.id);
+    this.api.postAnnotationSet(this.annotationSet);
+  }
+
   public onAnnotationSelected(selected: boolean, i: number) {
     this.selected = selected ? i : -1;
   }
@@ -59,8 +64,6 @@ export class AnnotationSetComponent {
       this.newRectangle.nativeElement.style.top =  this.drawStartY + 'px';
       this.newRectangle.nativeElement.style.left = this.drawStartX + 'px';
     }
-
-    return false;
   }
 
   public onMouseMove(event: MouseEvent) {
@@ -70,8 +73,6 @@ export class AnnotationSetComponent {
       this.newRectangle.nativeElement.style.width =
         (event.pageX - this.drawStartX - (window.scrollX + this.container.nativeElement.getBoundingClientRect().left)) + 'px';
     }
-
-    return false;
   }
 
   public onMouseUp() {
@@ -103,11 +104,6 @@ export class AnnotationSetComponent {
       this.newRectangle.nativeElement.style.display = 'none';
       this.newRectangle.nativeElement.style.width = '0';
       this.newRectangle.nativeElement.style.height = '0';
-
     }
-
-    this.selected = -1;
-
-    return false;
   }
 }

@@ -1,18 +1,9 @@
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
-import { Subject } from 'rxjs';
-import {
-  DownloadOperation,
-  PrintOperation,
-  RotateOperation,
-  StepZoomOperation,
-  ZoomOperation,
-  ZoomValue
-} from '../../shared/viewer-operations';
 import { PrintService } from '../../print.service';
-import {ErrorMessageComponent} from '../error-message/error.message.component';
-import {By} from '@angular/platform-browser';
-import {SimpleChange} from '@angular/core';
+import { ErrorMessageComponent } from '../error-message/error.message.component';
+import { By } from '@angular/platform-browser';
+import { SimpleChange } from '@angular/core';
 import { AnnotationsModule } from '../../annotations/annotations.module';
 import { annotationSet } from '../../../assets/annotation-set';
 
@@ -40,7 +31,6 @@ describe('ImageViewerComponent', () => {
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
     component.url = DOCUMENT_URL;
-    component.zoomValue = new Subject<ZoomValue>();
     component.annotationSet = annotationSet;
     fixture.detectChanges();
   });
@@ -50,7 +40,7 @@ describe('ImageViewerComponent', () => {
   });
 
   it('should rotate image', () => {
-    component.rotateOperation = new RotateOperation(90);
+    component.toolbarEvents.rotate.next(90);
 
     expect(component.rotation).toBe(90);
   });
@@ -58,27 +48,27 @@ describe('ImageViewerComponent', () => {
   describe('zoom operation', () => {
 
     it('should zoom image by factor of 0.5 ', () => {
-      component.zoomOperation = new ZoomOperation(0.5);
+      component.toolbarEvents.zoom.next(0.5);
       expect(component.zoom).toBe(0.5);
     });
 
     it('should zoom image by factor of 2', () => {
-      component.zoomOperation = new StepZoomOperation(2);
+      component.toolbarEvents.zoom.next(2);
 
       expect(component.zoom).toBe(2);
     });
 
     it('should zoom image by maximum value 5', () => {
-      component.zoomOperation = new ZoomOperation(5);
-      component.stepZoomOperation = new StepZoomOperation(0.1);
+      component.toolbarEvents.zoom.next(5);
+      component.toolbarEvents.stepZoom.next(0.1);
 
       expect(component.zoom).toBe(5);
 
     });
 
     it('should zoom image by minimum value 0.1', () => {
-      component.zoomOperation = new ZoomOperation(0.1);
-      component.stepZoomOperation = new StepZoomOperation(-0.1);
+      component.toolbarEvents.zoom.next(0.1);
+      component.toolbarEvents.stepZoom.next(-0.1);
 
       expect(component.zoom).toBe(0.1);
     });
@@ -86,7 +76,7 @@ describe('ImageViewerComponent', () => {
 
   it('should trigger print', inject([PrintService], (printService: PrintService) => {
     const printSpy = spyOn(printService, 'printDocumentNatively');
-    component.printOperation = new PrintOperation();
+    component.toolbarEvents.print.next();
 
     expect(printSpy).toHaveBeenCalledWith(DOCUMENT_URL);
   }));
@@ -96,7 +86,7 @@ describe('ImageViewerComponent', () => {
     spyOn(document, 'createElement').and.returnValue(anchor);
     component.downloadFileName = 'download-filename';
 
-    component.downloadOperation = new DownloadOperation();
+    component.toolbarEvents.download.next();
 
     expect(document.createElement).toHaveBeenCalledWith('a');
     expect(anchor.href).toContain(DOCUMENT_URL);

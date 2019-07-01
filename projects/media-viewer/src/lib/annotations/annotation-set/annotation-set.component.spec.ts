@@ -55,8 +55,18 @@ describe('AnnotationSetComponent', () => {
     annotation.color = 'red';
     component.onAnnotationUpdate(annotation);
 
-    annotationSet.annotations[0] = annotation;
     expect(spy).toHaveBeenCalledWith(annotationSet);
+  });
+
+  it('delete annotation', () => {
+    spyOn(api, 'postAnnotationSet');
+    const annotations = { ...annotationSet.annotations };
+    const annotation = { ...annotations[0] };
+
+    component.onAnnotationUpdate(annotation);
+
+    expect(api.postAnnotationSet).toHaveBeenCalledWith(annotationSet);
+    expect(annotations).not.toEqual(component.annotationSet.annotations);
   });
 
   it('select an annotation', () => {
@@ -88,7 +98,6 @@ describe('AnnotationSetComponent', () => {
 
     component.newRectangle = new ElementRef(document.createElement('div'));
     component.drawMode = true;
-    component.selected = 1;
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
     component.onMouseMove({ pageY: 100, pageX: 100 } as MouseEvent);
     component.onMouseUp();
@@ -96,7 +105,6 @@ describe('AnnotationSetComponent', () => {
     expect(spy).toHaveBeenCalled();
 
     expect(component.annotationSet.annotations[component.annotationSet.annotations.length - 1].id).toEqual('new');
-    expect(component.selected).toEqual(-1);
   });
 
 });

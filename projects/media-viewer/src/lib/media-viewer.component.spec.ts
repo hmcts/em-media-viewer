@@ -1,16 +1,12 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MediaViewerComponent} from './media-viewer.component';
-import {PdfViewerComponent} from './viewers/pdf-viewer/pdf-viewer.component';
-import {ImageViewerComponent} from './viewers/image-viewer/image-viewer.component';
-import {UnsupportedViewerComponent} from './viewers/unsupported-viewer/unsupported-viewer.component';
-import {ToolbarModule} from './toolbar/toolbar.module';
-import {
-  ImageViewerToolbarButtons,
-  PdfViewerToolbarButtons,
-  UnsupportedViewerToolbarButtons
-} from './shared/toolbar-button-toggles';
-import {ErrorMessageComponent} from './viewers/error-message/error.message.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MediaViewerComponent } from './media-viewer.component';
+import { PdfViewerComponent } from './viewers/pdf-viewer/pdf-viewer.component';
+import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.component';
+import { UnsupportedViewerComponent } from './viewers/unsupported-viewer/unsupported-viewer.component';
+import { ToolbarModule } from './toolbar/toolbar.module';
+import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { AnnotationsModule } from './annotations/annotations.module';
+import { SimpleChange } from '@angular/core';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -49,24 +45,11 @@ describe('MediaViewerComponent', () => {
     expect(component.contentTypeUnsupported()).toBeTruthy();
   });
 
-  it('should set toolbarButtonToggles for pdf', function () {
-    component.contentType = 'pdf';
-    component.ngOnInit();
+  it('should reset the event state when the url is changed', async () => {
+    component.toolbarEvents.zoomValue.next(2);
+    component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });
 
-    expect(component.toolbarButtonToggles).toEqual(new PdfViewerToolbarButtons());
+    expect(component.toolbarEvents.zoomValue.value).toBe(1);
   });
 
-  it('should set toolbarButtonToggles for image', function () {
-    component.contentType = 'image';
-    component.ngOnInit();
-
-    expect(component.toolbarButtonToggles).toEqual(new ImageViewerToolbarButtons());
-  });
-
-  it('should set toolbarButtonToggles for unsupported types', function () {
-    component.contentType = 'unsupported';
-    component.ngOnInit();
-
-    expect(component.toolbarButtonToggles).toEqual(new UnsupportedViewerToolbarButtons());
-  });
 });
