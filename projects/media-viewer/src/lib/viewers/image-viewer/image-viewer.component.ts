@@ -1,28 +1,18 @@
-import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
-import {
-  DownloadOperation,
-  PrintOperation,
-  RotateOperation,
-  StepZoomOperation,
-  ZoomOperation,
-  ZoomValue
-} from '../../events/viewer-operations';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PrintService } from '../../print.service';
-import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import { Annotation } from '../../annotations/annotation.model';
-import { AnnotationSet } from '../../annotations/annotation-set.model';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 @Component({
     selector: 'mv-image-viewer',
     templateUrl: './image-viewer.component.html',
     styleUrls: ['./image-viewer.component.scss'],
 })
-export class ImageViewerComponent implements OnChanges {
+export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
-  @Input() zoomValue: Subject<ZoomValue>;
   @Input() annotationSet: AnnotationSet | null;
 
   errorMessage: string;
@@ -30,80 +20,76 @@ export class ImageViewerComponent implements OnChanges {
   @ViewChild('img') img: ElementRef;
   rotation = 0;
   zoom = 1;
-  rotationStyle;
-  zoomStyle;
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private readonly printService: PrintService,
-    private readonly api: AnnotationApiService
+    public readonly toolbarEvents: ToolbarEventService
   ) { }
+
+  ngOnInit(): void {
+    // Listen for any changes invoked on the toolbar events Service and initialise any default behaviour state
+    this.subscriptions.push(
+      this.toolbarEvents.rotate.subscribe(rotation => this.setRotation(rotation)),
+      this.toolbarEvents.zoom.subscribe(zoom => this.setZoom(zoom)),
+      this.toolbarEvents.stepZoom.subscribe(zoom => this.stepZoom(zoom)),
+      this.toolbarEvents.print.subscribe(() => this.printService.printDocumentNatively(this.url)),
+      this.toolbarEvents.download.subscribe(() => this.download()),
+    );
+  }
+
+  ngOnDestroy(): void {
+    // Clean up any subscriptions that we may have
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.url) {
       this.errorMessage = null;
+      this.toolbarEvents.reset();
     }
   }
 
+  private setRotation(rotation: number) {
+    this.rotation = this.rotation + rotation + 360 % 360;
+  }
 
-  @Input()
-  set rotateOperation(operation: RotateOperation | null) {
-    if (operation) {
-      this.rotation += operation.rotation;
-      this.setImageStyles();
+  private setZoom(zoomFactor: number) {
+    if (!isNaN(zoomFactor)) {
+      this.setZoomValue(this.calculateZoomValue(zoomFactor)).then(() => {});
     }
   }
 
-  @Input()
-  set zoomOperation(operation: ZoomOperation | null) {
-    if (operation && !isNaN(operation.zoomFactor)) {
-      this.zoom = this.updateZoomValue(+operation.zoomFactor);
-      this.setZoomValue(this.zoom)
-        .then(() => this.setImageStyles());
+  private stepZoom(zoomFactor: number) {
+    if (!isNaN(zoomFactor)) {
+      this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10)
+        .then(() => {});
     }
   }
 
-  @Input()
-  set stepZoomOperation(operation: StepZoomOperation | null) {
-    if (operation && !isNaN(operation.zoomFactor)) {
-      this.zoom = Math.round(this.updateZoomValue(this.zoom, operation.zoomFactor) * 10) / 10;
-      this.setZoomValue(this.zoom)
-        .then(() => this.setImageStyles());
-    }
+  private download() {
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    a.href = this.url;
+    a.download = this.downloadFileName;
+    a.click();
+    a.remove();
   }
 
-  @Input()
-  set printOperation(operation: PrintOperation | null) {
-    if (operation) {
-      this.printService.printDocumentNatively(this.url);
-    }
-  }
-
-  @Input()
-  set downloadOperation(operation: DownloadOperation | null) {
-    if (operation) {
-      const a = document.createElement('a');
-      document.body.appendChild(a);
-      a.setAttribute('style', 'display: none');
-      a.href = this.url;
-      a.download = this.downloadFileName;
-      a.click();
-      a.remove();
-    }
-  }
-
-  setImageStyles() {
-    this.zoomStyle = `scale(${this.zoom})`;
-    this.rotationStyle = `rotate(${this.rotation}deg)`;
-  }
-
+  // the returned promise is a work-around
   setZoomValue(zoomValue) {
     return new Promise((resolve) => {
-      this.zoomValue.next({ value: zoomValue });
+      this.zoom = zoomValue;
+      this.toolbarEvents.zoomValue.next(zoomValue);
       resolve(true);
     });
   }
 
-  updateZoomValue(zoomValue, increment = 0) {
+  calculateZoomValue(zoomValue, increment = 0) {
     const newZoomValue = zoomValue + increment;
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
@@ -114,11 +100,4 @@ export class ImageViewerComponent implements OnChanges {
     this.errorMessage = `Could not load the image "${this.url}"`;
   }
 
-  public updateAnnotation(updatedAnnotation: Annotation) {
-    const annotations = this.annotationSet.annotations
-      .filter(annotation => annotation.id !== updatedAnnotation.id);
-    annotations.push(updatedAnnotation);
-    this.annotationSet.annotations = annotations;
-    this.api.postAnnotationSet(this.annotationSet);
-  }
 }

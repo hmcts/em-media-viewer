@@ -2,6 +2,7 @@ import { PdfJsWrapperFactory } from './pdf-js-wrapper.provider';
 import { PdfViewerComponent } from '../pdf-viewer.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ErrorMessageComponent } from '../../error-message/error.message.component';
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
@@ -11,7 +12,8 @@ describe('PdfJsWrapperFactory', () => {
     return TestBed.configureTestingModule({
       declarations: [ PdfViewerComponent, ErrorMessageComponent ],
       providers: [
-        PdfJsWrapperFactory
+        PdfJsWrapperFactory,
+        ToolbarEventService
       ]
     })
     .compileComponents();
@@ -23,7 +25,7 @@ describe('PdfJsWrapperFactory', () => {
   });
 
   it('creates a wrapper', () => {
-    const factory = new PdfJsWrapperFactory();
+    const factory = new PdfJsWrapperFactory(new ToolbarEventService());
     const wrapper = factory.create(component.viewerContainer);
 
     expect(wrapper).not.toBeNull();

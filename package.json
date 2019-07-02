@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "npm run build:node && ng build --prod && ng run media-viewer:serve",
     "build:node": "cd api && npm run build",
-    "start:ng": "ng serve --proxy-config proxy.config.json",
+    "start:ng": "ng serve --proxy-config proxy.config.js",
     "start:node": "cd api && npm run start-dev-node",
     "watch:node": "cd api && npm run watch-dev-node",
     "postBuild": "ts-node ./scripts/css-bundle.ts",

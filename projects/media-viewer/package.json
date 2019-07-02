@@ -15,9 +15,10 @@
   },
   "dependencies": {
     "@hmcts/frontend": "^0.0.34-alpha",
+    "angular2-draggable": "^2.3.0",
     "govuk-frontend": "^2.11.0",
     "pdfjs-dist": "^2.0.943",
-    "angular2-draggable": "^2.3.0"
+    "uuid": "^3.3.2"
   },
   "peerDependencies": {
     "@angular/common": "^7.2.15",
@@ -28,5 +29,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@types/uuid": "^3.4.4"
   }
 }
