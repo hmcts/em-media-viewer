@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
 
@@ -61,22 +62,20 @@ export class AnnotationComponent {
   }
 
   public onCommentAddOrEdit() {
-    if (this.annotation.comments.length > 0) {
-      this.select.emit(true);
-    } else {
+    if (this.annotation.comments.length == 0) {
       this.annotation.comments.push({
         annotationId: this.annotation.id,
         content: "",
         createdBy: "",
         createdByDetails: undefined,
-        createdDate: "",
-        id: "",
+        createdDate: new Date().getTime().toString(),
+        id: uuid(),
         lastModifiedBy: "",
         lastModifiedByDetails: undefined,
         lastModifiedDate: ""
       });
-      this.update.emit(this.annotation);
     }
+    this.select.emit(true);
     this.editable = true;
   }
 
