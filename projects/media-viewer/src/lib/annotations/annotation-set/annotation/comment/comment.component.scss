@@ -1,0 +1,103 @@
+form {
+  position: absolute;
+  width: 380px;
+  right: 0;
+  z-index: 1;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  padding: 20px 20px 0;
+}
+
+form textarea {
+  width: 100%;
+  padding: 2px;
+  border: none;
+
+  font-size: 17px;
+  font-family: "nta", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  resize: none;
+}
+
+textarea.view-mode:focus {
+  outline: none;
+}
+
+#detailsWrapper {
+  padding: 0;
+}
+
+#detailsWrapper.expanded {
+  margin-bottom: 15px;
+}
+
+.commentBtns {
+  height: 50px;
+}
+
+.expanded {
+  margin-top: 0px;
+}
+
+.collapsed {
+  height: 30px;
+}
+textarea.expanded {
+  margin-bottom: 10px;
+}
+
+textarea.collapsed {
+  margin-top: -25px;
+  max-height: 20px;
+  overflow: hidden;
+}
+
+.collapsed > time {
+  display: none;
+}
+
+textarea.edit-mode {
+  outline: 5px auto #0B0C0C;
+}
+
+textarea.view-mode {
+  outline: none;
+}
+
+.aui-comment__header {
+  margin-bottom: 10px;
+}
+
+.rotation {
+  position: absolute;
+
+}
+
+.rot90 {
+  -webkit-transform: rotate(-90deg); /* Safari */
+  -moz-transform: rotate(-90deg); /* Firefox 3.6 Firefox 4 */
+  /*-moz-transform-origin: right top; */
+  -ms-transform: rotate(-90deg); /* IE9 */
+  -o-transform: rotate(-90deg); /* Opera */
+  transform: rotate(-90deg); /* W3C */
+}
+
+.rot180 {
+  -webkit-transform: rotate(-180deg); /* Safari */
+  -moz-transform: rotate(-180deg); /* Firefox 3.6 Firefox 4 */
+  /*-moz-transform-origin: right top; */
+  -ms-transform: rotate(-180deg); /* IE9 */
+  -o-transform: rotate(-180deg); /* Opera */
+  transform: rotate(-180deg); /* W3C */
+}
+
+.rot270 {
+  -webkit-transform: rotate(90deg); /* Safari */
+  -moz-transform: rotate(90deg); /* Firefox 3.6 Firefox 4 */
+  -ms-transform: rotate(90deg); /* IE9 */
+  -o-transform: rotate(90deg); /* Opera */
+  transform: rotate(90deg); /* W3C */
+
+}
