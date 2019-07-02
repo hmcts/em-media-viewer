@@ -1,42 +1,42 @@
-  <form #form (click)="onCommentClick()" class="aui-comment"
-        [ngStyle]="formNgStyle()"
-        [ngClass]="'rotation rot' + rotate">
-    <div id="detailsWrapper" class="aui-comment__header">
-      <span *ngIf="author && !editor" class="aui-comment__author">
-        {{ author.forename }} {{ author.surname }}
-      </span>
-      <span *ngIf="editor" class="aui-comment__author">
-        Modified By: {{ editor.forename }} {{ editor.surname }}
-      </span>
-      <time [hidden]="!selected" class="aui-comment__meta">
-        {{ lastUpdate | date: 'd MMMM y h:mm a' }}
-      </time>
-    </div>
-    <textarea type="text" required name="content"
-              [ngClass]="commentStyle()" [(ngModel)]="commentText" [readOnly]="!editable">
-    </textarea>
-    <div [hidden]="!selected" class="aui-comment__footer commentBtns">
-      <button *ngIf="!editable; else Save"
-              class="govuk-button" type="submit" role="button"
-              (click)="onEdit()">
-        Edit
-      </button>
-      <button *ngIf="!editable; else Cancel"
-              (click)="onDelete()"
-              class="govuk-button govuk-button--secondary"
-              role="button">
-        Delete
-      </button>
-    </div>
-    <ng-template #Save>
-      <button class="govuk-button" type="submit" role="button" (click)="onSave()">
-        Save
-      </button>
-    </ng-template>
-    <ng-template #Cancel>
-      <button class="govuk-button govuk-button--secondary" role="button" (click)="onCancel()">
-        Cancel
-      </button>
-    </ng-template>
-  </form>
+<form #form (click)="onCommentClick()" class="aui-comment"
+      [ngStyle]="formNgStyle()"
+      [ngClass]="'rotation rot' + rotate">
+  <div id="detailsWrapper" class="aui-comment__header">
+    <span *ngIf="author && !editor" class="aui-comment__author">
+      {{ author.forename }} {{ author.surname }}
+    </span>
+    <span *ngIf="editor" class="aui-comment__author">
+      Modified By: {{ editor.forename }} {{ editor.surname }}
+    </span>
+    <time [hidden]="!selected" class="aui-comment__meta">
+      {{ lastUpdate | date: 'd MMMM y h:mm a' }}
+    </time>
+  </div>
+  <textarea #textArea type="text" required name="content" (focusout)="onFocusOut()"
+            [ngClass]="commentStyle()" [(ngModel)]="commentText" [readOnly]="!editable">
+  </textarea>
+  <div [hidden]="!selected" class="aui-comment__footer commentBtns">
+    <button *ngIf="!editable; else Save"
+            class="govuk-button" type="submit" role="button"
+            (click)="onEdit()">
+      Edit
+    </button>
+    <button *ngIf="!editable; else Cancel"
+            (click)="onDelete()"
+            class="govuk-button govuk-button--secondary"
+            role="button">
+      Delete
+    </button>
+  </div>
+  <ng-template #Save>
+    <button class="govuk-button" type="submit" role="button" (click)="onSave()">
+      Save
+    </button>
+  </ng-template>
+  <ng-template #Cancel>
+    <button class="govuk-button govuk-button--secondary" role="button" (click)="onCancel()">
+      Cancel
+    </button>
+  </ng-template>
+</form>
 
