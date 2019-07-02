@@ -14,7 +14,7 @@ export class RectangleComponent {
   @Input() color: String;
   @Input() zoom: number;
   @Input() rotate: number;
-  @Input() draggable = true;
+  @Input() draggable: boolean;
 
   @Output() click = new EventEmitter();
   @Output() update = new EventEmitter<Rectangle>();
