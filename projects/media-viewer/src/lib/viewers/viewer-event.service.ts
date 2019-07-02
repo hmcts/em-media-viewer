@@ -1,25 +1,20 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
+import {Rectangle} from '../annotations/annotation-set/annotation/rectangle/rectangle.model';
 
-
-// Viewer Custom-Event Types
-export interface TextSelectionRectangle {
-  x: number;
-  y: number;
-  height: number;
-  width: number;
+export interface TextHighlight {
+  page: number;
+  event: MouseEvent;
 }
-export type TextSelected = TextSelectionRectangle[];
-
 
 @Injectable({providedIn: 'root'})
 export class ViewerEventService {
   // Register Observable Subject Events relevant to the Viewers
-  textSelected = new Subject<TextSelected>();
+  public readonly highlightedText = new Subject<TextHighlight>();
   constructor() {}
 
   // Function to inform Observers that text has been selected in the viewer
-  public onTextSelection(selectionData: TextSelected): void {
-    // DO SOMETHING IN THE FUTURE
+  public onTextSelection(selectionData: TextHighlight): void {
+    this.highlightedText.next(selectionData);
   }
 }

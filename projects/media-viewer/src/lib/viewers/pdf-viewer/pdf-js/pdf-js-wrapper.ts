@@ -68,7 +68,9 @@ export class PdfJsWrapper {
   public setPageNumber(pageNumber: number): void {
     this.pdfViewer.currentPageNumber = pageNumber;
   }
-
+  public getPageNumber(): number {
+    return this.pdfViewer.currentPageNumber;
+  }
   public changePageNumber(numPages: number): void {
     this.pdfViewer.currentPageNumber += numPages;
   }
@@ -116,6 +118,9 @@ export class PdfJsWrapper {
     return (this.pdfViewer.pagesRotation + 360) % 360;
   }
 
+  public getCurrentPDFZoomValue(): number {
+    return this.pdfViewer.currentScaleValue;
+  }
 }
 
 /**
