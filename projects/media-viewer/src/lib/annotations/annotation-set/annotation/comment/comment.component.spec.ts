@@ -45,7 +45,7 @@ describe('CommentComponent', () => {
       'surname': 'Rijks',
       'email': 'jeroen.rijks@hmcts.net'
     },
-  }
+  };
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
@@ -122,6 +122,48 @@ describe('CommentComponent', () => {
     expect(component.editable).toBe(false);
   });
 
+  it('should select comment when content not yet saved', () => {
+    component.author = undefined;
+    component.fullComment = "comment content";
+    component._selected = false;
+
+    expect(component.selected).toBeTruthy();
+  });
+
+  it('should keep comment editable when content not yet saved', () => {
+    component.author = undefined;
+    component.fullComment = "comment content";
+    component._editable = false;
+
+    expect(component.editable).toBeTruthy();
+  });
+
+  it('should set focus on textArea when comment made editable', (done) => {
+    spyOn(component.textArea.nativeElement, 'focus');
+
+    component.editable = true;
+
+    expect(component.selected).toBe(true);
+
+    setTimeout(() => {
+      expect(component.textArea.nativeElement.focus).toHaveBeenCalledWith();
+      done();
+    }, 0);
+  });
+
+  it('should not set focus on textArea when comment made non-editable', (done) => {
+    spyOn(component.textArea.nativeElement, 'focus');
+
+    component.editable = false;
+
+    expect(component.selected).toBe(false);
+
+    setTimeout(() => {
+      expect(component.textArea.nativeElement.focus).not.toHaveBeenCalledWith();
+      done();
+    }, 0);
+  });
+
   it('should set commentStyle to uneditable', () => {
     component.editable = false;
     const commentStyleValue = component.commentStyle();
@@ -162,8 +204,7 @@ describe('CommentComponent', () => {
 
   it('should get unselected long comment', () => {
     component.selected = false;
-    const longComment = 'This comment is longer than the maximum comment length, which is 50. Therefore, the comment should be shortened.';
-    component.fullComment = longComment;
+    component.fullComment = 'This comment is longer than the maximum comment length, which is 50. Therefore, the comment should be shortened.';
     const retrievedCommentText = component.commentText;
     expect(retrievedCommentText).toBe('This comment is longer than the maximum comment...');
   });
