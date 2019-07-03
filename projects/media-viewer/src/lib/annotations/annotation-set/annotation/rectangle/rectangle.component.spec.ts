@@ -73,4 +73,12 @@ describe('RectangleComponent', () => {
 
     expect(deleteEventSpy).toHaveBeenCalledWith(mockRectangle.id);
   });
+
+  it('should emit comment event', () => {
+    const commentEventSpy = spyOn(component.addOrEditComment, 'emit');
+
+    component.onAddOrEditComment();
+
+    expect(commentEventSpy).toHaveBeenCalledWith();
+  });
 });
