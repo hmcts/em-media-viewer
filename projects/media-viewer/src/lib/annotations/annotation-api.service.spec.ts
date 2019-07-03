@@ -1,9 +1,9 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { async, inject, TestBed } from '@angular/core/testing';
 import { AnnotationApiService } from './annotation-api.service';
-import { AnnotationSet } from './annotation-set.model';
+import { AnnotationSet } from './annotation-set/annotation-set.model';
 import { User } from './user/user.model';
-import { Annotation } from './annotation.model';
+import { Annotation } from './annotation-set/annotation/annotation.model';
 import mockAnnotationSet from '../../assets/annotation-set.json';
 
 describe('AnnotationApiService', () => {
@@ -78,9 +78,9 @@ describe('AnnotationApiService', () => {
     req.flush(annotationSet);
   }));
 
-  it('fetch', async(() => {
+  it('get annotation set', async(() => {
     api.getAnnotationSet(dmDocumentId).subscribe((response) => {
-      expect(response.body.documentId).toBe(dmDocumentId);
+      expect(response.documentId).toBe(dmDocumentId);
     });
 
     const req = httpMock.expectOne(`/em-anno/annotation-sets/filter?documentId=${dmDocumentId}`);
@@ -89,18 +89,18 @@ describe('AnnotationApiService', () => {
   }));
 
   it('delete annotation', async(() => {
-    api.deleteAnnotation(annotation).subscribe((response) => {
-      expect(response.body.annotationSetId).toEqual(annotationSet.id);
+    api.deleteAnnotation(annotation.id).subscribe((response) => {
+      expect(response).toEqual(null);
     });
 
     const req = httpMock.expectOne(`/em-anno/annotations/${annotation.id}`);
     expect(req.request.method).toBe('DELETE');
-    req.flush(annotation);
+    req.flush(null);
   }));
 
   it('save annotation', async(() => {
     api.postAnnotation(annotation).subscribe((response) => {
-      expect(response.body.annotationSetId).toEqual(annotationSet.id);
+      expect(response.annotationSetId).toEqual(annotationSet.id);
     });
 
     const req = httpMock.expectOne('/em-anno/annotations');
@@ -121,4 +121,21 @@ describe('AnnotationApiService', () => {
     req.flush(mockAnnotationSet);
   }));
 
+
+  it('gets an annotation set or creates it if it does not exist', async(() => {
+    api.getOrCreateAnnotationSet(dmDocumentId).subscribe((response) => {
+      expect(response.documentId).toBe(dmDocumentId);
+    });
+
+    const req1 = httpMock.expectOne(`/em-anno/annotation-sets/filter?documentId=${dmDocumentId}`);
+    expect(req1.request.method).toBe('GET');
+    req1.error(new ErrorEvent('Not found'), { status: 404 });
+
+    const req2 = httpMock.expectOne('/em-anno/annotation-sets');
+    expect(req2.request.method).toBe('POST');
+    expect(req2.request.body.documentId).toBe(dmDocumentId);
+    expect(req2.request.body.id).toBeTruthy();
+
+    req2.flush(annotationSet);
+  }));
 });

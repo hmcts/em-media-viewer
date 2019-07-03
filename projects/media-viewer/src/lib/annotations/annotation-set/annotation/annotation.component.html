@@ -1,0 +1,26 @@
+<div #container class="annotation-wrapper" tabindex="1" (focusout)="onFocusOut($event)">
+  <ng-container *ngFor="let rectangle of annotation.rectangles">
+    <mv-anno-rectangle
+      (click)="onSelect()"
+      (update)="onRectangleUpdate($event)"
+      (delete)="onRectangleDelete($event)"
+      [selected]="selected"
+      [zoom]="zoom"
+      [rotate]="rotate"
+      [rectangle]="rectangle"
+      [draggable]="draggable"
+      [color]="annotation.color">
+    </mv-anno-rectangle>
+  </ng-container>
+  <mv-anno-comment
+    *ngIf="annotation.comments[0]"
+    (click)="onSelect()"
+    (delete)="onCommentDelete()"
+    (updated)="onCommentUpdate($event)"
+    [rotate]="rotate"
+    [selected]="selected"
+    [comment]="annotation.comments[0]"
+    [rectangle]="annotation.rectangles[0]"
+    [zoom]="zoom">
+  </mv-anno-comment>
+</div>
