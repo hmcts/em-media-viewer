@@ -48,7 +48,7 @@ export class CommentComponent {
   @Input()
   set editable(editable: boolean) {
     this._editable = editable;
-    this.selected = true;
+    this.selected = editable;
     if (editable) {
       setTimeout(() => this.textArea.nativeElement.focus(), 0);
     }
