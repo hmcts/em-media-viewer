@@ -1,18 +1,18 @@
-import { browser, by, element, Locator, protractor } from 'protractor';
+import {browser, by, element, ElementFinder, Locator, protractor} from 'protractor';
 import { By } from '@angular/platform-browser';
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
 
   async navigateTo() {
-    await browser.waitForAngularEnabled(false);
+    // await browser.waitForAngularEnabled(false);
     await browser.driver.navigate().to(browser.baseUrl);
 
     return await browser.driver.manage().window().maximize();
   }
 
   async preparePage() {
-    /*await this.navigateTo(); */
+    await this.navigateTo();
     await this.showToolbarButtons();
   }
 
@@ -34,6 +34,8 @@ export class AppPage {
         this.clickElement(by.css('label[for="zoom-btn-toggle"]')),
         this.clickElement(by.css('label[for="toggleAnnotations"]'))
       ]);
+    } else {
+      console.log('allready checked');
     }
   }
 
@@ -61,5 +63,19 @@ export class AppPage {
     await browser.wait(async () => {
       return (await element.all(selector).isPresent());
     }, 30000, 'failed to load search results');
+  }
+
+  async getItem(el: ElementFinder) {
+    const item = protractor.promise.defer();
+    browser.wait(function() {
+      return element(by.id('el')).getAttribute('attribute').then(function(value) {
+        const result = value !== '';
+        if (result) {
+          item.fulfill(value);
+        }
+        return result;
+      });
+    });
+    return item.promise;
   }
 }
