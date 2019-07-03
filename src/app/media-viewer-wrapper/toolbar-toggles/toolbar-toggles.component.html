@@ -1,24 +1,12 @@
 <table style="float: right; margin-top: 15px;">
   <tr>
     <ng-container *ngIf="toggleToolbar.getValue()">
-      <ng-container [ngTemplateOutlet]="toolbarToggle"
-                    [ngTemplateOutletContext]="{ key: 'showSearchbarToggleBtn', label: 'search' }">
-      </ng-container>
-      <ng-container [ngTemplateOutlet]="toolbarToggle"
-                    [ngTemplateOutletContext]="{ key: 'showNavigationBtns', label: 'navigate' }">
-      </ng-container>
-      <ng-container [ngTemplateOutlet]="toolbarToggle"
-                    [ngTemplateOutletContext]="{ key: 'showRotateBtns', label: 'rotate' }">
-      </ng-container>
-      <ng-container [ngTemplateOutlet]="toolbarToggle"
-                    [ngTemplateOutletContext]="{ key: 'showZoomBtns', label: 'zoom' }">
-      </ng-container>
-      <ng-container [ngTemplateOutlet]="toolbarToggle"
-                    [ngTemplateOutletContext]="{ key: 'showPrintBtn', label: 'print' }">
-      </ng-container>
-      <ng-container [ngTemplateOutlet]="toolbarToggle"
-                    [ngTemplateOutletContext]="{ key: 'showDownloadBtn', label: 'download' }">
-      </ng-container>
+      <td app-toggle [label]="'search'" [subject]="'showSearchBar'"></td>
+      <td app-toggle [label]="'navigate'" [subject]="'showNavigation'"></td>
+      <td app-toggle [label]="'rotate'" [subject]="'showRotate'"></td>
+      <td app-toggle [label]="'zoom'" [subject]="'showZoom'"></td>
+      <td app-toggle [label]="'print'" [subject]="'showPrint'"></td>
+      <td app-toggle [label]="'download'" [subject]="'showDownload'"></td>
     </ng-container>
     <td>
       <div class="govuk-grid-row"><div class="govuk-grid-column-full">
@@ -60,19 +48,3 @@
     </td>
   </tr>
 </table>
-<ng-template #toolbarToggle let-key="key" let-label="label ">
-  <td>
-    <div class="govuk-grid-row"><div class="govuk-grid-column-full">
-      <span class="govuk-!-font-weight-bold">{{ label | titlecase }}</span>
-    </div>
-      <div class="govuk-grid-column-full">
-        <label [for]="label+'-btn-toggle'" class="switch govuk-!-margin-right-2">
-          <input type="checkbox" [checked]="toolbarButtons[key]"
-                 [name]="key" [id]="label+'-btn-toggle'" [(ngModel)]="toolbarButtons[key]">
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </div>
-  </td>
-</ng-template>
-

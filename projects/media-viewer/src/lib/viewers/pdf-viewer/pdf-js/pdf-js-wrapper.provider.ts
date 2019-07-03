@@ -1,16 +1,15 @@
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
-import { ElementRef } from '@angular/core';
-import { PdfJsWrapper } from './pdf-js-wrapper';
-import {
-  DocumentLoaded, DocumentLoadFailed,
-  DocumentLoadProgress,
-  NewDocumentLoadInit,
-  SearchResultsCount,
-  SetCurrentPageOperation
-} from '../../../events/viewer-operations';
+import { ElementRef, Injectable } from '@angular/core';
+import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
+@Injectable({providedIn: 'root'})
 export class PdfJsWrapperFactory {
+
+  constructor(
+    private readonly toolbarEvents: ToolbarEventService
+  ) {}
 
   public create(container: ElementRef): PdfJsWrapper {
     const pdfLinkService = new pdfjsViewer.PDFLinkService();
@@ -30,15 +29,14 @@ export class PdfJsWrapperFactory {
     pdfLinkService.setViewer(pdfViewer);
 
     return new PdfJsWrapper(
-      new Subject<SearchResultsCount>(),
-      new Subject<SetCurrentPageOperation>(),
       pdfViewer,
       new pdfjsViewer.DownloadManager({}),
-      new Subject<NewDocumentLoadInit>(),
+      this.toolbarEvents,
+      new Subject<string>(),
       new Subject<DocumentLoadProgress>(),
-      new Subject<DocumentLoaded>(),
-      new Subject<DocumentLoadFailed>(),
-      new Subject<boolean>()
+      new Subject<any>(),
+      new Subject(),
+      new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>()
     );
   }
 

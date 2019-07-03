@@ -1,0 +1,22 @@
+.pdfContainer {
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden {
+  display:none!important;
+}
+
+.loadingMessage {
+  text-align: center;
+}
+
+.highlightMode > .page > .textLayer {
+  z-index: 1000;
+}
+
+.drawMode > .page > mv-annotation-set > div {
+  z-index: 1000;
+}

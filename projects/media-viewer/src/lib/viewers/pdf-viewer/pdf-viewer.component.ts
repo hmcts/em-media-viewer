@@ -3,49 +3,33 @@ import {
   Component,
   ComponentFactoryResolver,
   ElementRef,
+  EmbeddedViewRef,
   Input,
   OnChanges,
   SimpleChanges,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef, ViewEncapsulation,
+  OnDestroy
 } from '@angular/core';
-import { PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { PrintService } from '../../print.service';
-import {
-  ChangePageByDeltaOperation,
-  DocumentLoadProgress,
-  DownloadOperation,
-  PrintOperation,
-  RotateOperation,
-  SearchOperation,
-  SearchResultsCount,
-  SetCurrentPageOperation,
-  StepZoomOperation,
-  ZoomOperation,
-  ZoomValue
-} from '../../events/viewer-operations';
+import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
-import { AnnotationComponent } from '../../annotations/annotation.component';
-import { AnnotationsViewInjector } from './annotations-view.injector';
-import { AnnotationSet } from '../../annotations/annotation-set.model';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { PrintService } from '../../print.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.css']
+  styleUrls: ['./pdf-viewer.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class PdfViewerComponent implements AfterContentInit, OnChanges {
+export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() url: string;
   @Input() downloadFileName: string;
-  @Input() searchResults: Subject<SearchResultsCount>;
-  @Input() zoomValue: BehaviorSubject<ZoomValue>;
-  @Input() currentPageChanged: Subject<SetCurrentPageOperation>;
-  @Input() showAnnotations: boolean;
-  @Input() annotationSet: AnnotationSet;
-
-  annotationsViewInjector: AnnotationsViewInjector;
+  @Input() annotationSet: AnnotationSet | null;
 
   loadingDocument = false;
   loadingDocumentProgress: number;
@@ -55,23 +39,34 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
   @ViewChild('pdfViewer') pdfViewer: ElementRef;
 
   private pdfWrapper: PdfJsWrapper;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private viewContainerRef: ViewContainerRef,
-    private readonly printService: PrintService
+    private readonly componentFactoryResolver: ComponentFactoryResolver,
+    private readonly viewContainerRef: ViewContainerRef,
+    private readonly printService: PrintService,
+    public readonly toolbarEvents: ToolbarEventService
   ) {}
 
   async ngAfterContentInit(): Promise<void> {
     this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
-    this.pdfWrapper.currentPageChanged.subscribe(v => this.currentPageChanged.next(v));
-    this.pdfWrapper.searchResults.subscribe(v => this.searchResults.next(v));
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe(() => this.onDocumentLoadFailed());
-    this.pdfWrapper.pagesRendered.subscribe(() => this.toggleAnnotations());
+    this.pdfWrapper.pageRendered.subscribe((e) => this.onPageRendered(e));
+
+    this.subscriptions.push(
+      this.toolbarEvents.print.subscribe(() => this.printService.printDocumentNatively(this.url)),
+      this.toolbarEvents.download.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
+      this.toolbarEvents.rotate.subscribe(rotation => this.pdfWrapper.rotate(rotation)),
+      this.toolbarEvents.zoom.subscribe(zoom => this.pdfWrapper.setZoom(zoom)),
+      this.toolbarEvents.stepZoom.subscribe(zoom => this.pdfWrapper.stepZoom(zoom)),
+      this.toolbarEvents.search.subscribe(search => this.pdfWrapper.search(search)),
+      this.toolbarEvents.setCurrentPage.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
+      this.toolbarEvents.changePageByDelta.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber))
+    );
 
     await this.pdfWrapper.loadDocument(this.url);
   }
@@ -80,19 +75,29 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
     if (changes.url && this.pdfWrapper) {
       await this.pdfWrapper.loadDocument(this.url);
     }
-    if (changes.showAnnotations) {
-      this.toggleAnnotations();
+  }
+
+  ngOnDestroy(): void {
+    // Clean up any subscriptions that we may have
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
-  toggleAnnotations() {
-    if (this.showAnnotations) {
-      if(!this.annotationsViewInjector) {
-        const annotationFactory = this.componentFactoryResolver
-          .resolveComponentFactory(AnnotationComponent);
-        this.annotationsViewInjector = new AnnotationsViewInjector(annotationFactory, this.viewContainerRef)
-      }
-      this.annotationsViewInjector.addToDom(this.annotationSet.annotations, this.zoomValue, this.pdfViewer);
+  onPageRendered(e: {pageNumber: number, source: {rotation: number, scale: number, div: Element}}) {
+    if (this.annotationSet) {
+      const factory = this.componentFactoryResolver.resolveComponentFactory(AnnotationSetComponent);
+      const component = this.viewContainerRef.createComponent(factory);
+      component.instance.annotationSet = this.annotationSet;
+      component.instance.page = e.pageNumber;
+      component.instance.zoom = e.source.scale;
+      component.instance.rotate = this.pdfWrapper.getNormalisedPagesRotation();
+      component.instance.width = this.pdfWrapper.getNormalisedPagesRotation() % 180 === 0 ?
+        e.source.div.clientWidth : e.source.div.clientHeight;
+      component.instance.height = this.pdfWrapper.getNormalisedPagesRotation() % 180 === 0 ?
+        e.source.div.clientHeight : e.source.div.clientWidth;
+      const annotationsElement = (component.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+      e.source.div.appendChild(annotationsElement);
     }
   }
 
@@ -110,74 +115,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
 
   private onDocumentLoaded() {
     this.loadingDocument = false;
-    if (this.showAnnotations) {
-      this.toggleAnnotations();
-    }
   }
 
   private onDocumentLoadFailed() {
     this.loadingDocument = false;
     this.errorMessage = `Could not load the document "${this.url}"`;
-  }
-
-  @Input()
-  set rotateOperation(operation: RotateOperation | null) {
-    if (operation) {
-      this.pdfWrapper.rotate(operation.rotation);
-    }
-  }
-
-  @Input()
-  set zoomOperation(operation: ZoomOperation | null) {
-    if (operation) {
-      this.zoomValue.next({
-        value: this.pdfWrapper.setZoom(operation.zoomFactor)
-      });
-    }
-  }
-
-  @Input()
-  set stepZoomOperation(operation: StepZoomOperation | null) {
-    if (operation) {
-      this.zoomValue.next({
-        value: this.pdfWrapper.stepZoom(operation.zoomFactor)
-      });
-    }
-  }
-
-  @Input()
-  set searchOperation(operation: SearchOperation | null) {
-    if (operation) {
-      this.pdfWrapper.search(operation);
-    }
-  }
-
-  @Input()
-  set printOperation(operation: PrintOperation | null) {
-    if (operation) {
-      this.printService.printDocumentNatively(this.url);
-    }
-  }
-
-  @Input()
-  set downloadOperation(operation: DownloadOperation | null) {
-    if (operation) {
-      this.pdfWrapper.downloadFile(this.url, this.downloadFileName);
-    }
-  }
-
-  @Input()
-  set setCurrentPage(operation: SetCurrentPageOperation | null) {
-    if (operation) {
-      this.pdfWrapper.setPageNumber(operation.pageNumber);
-    }
-  }
-
-  @Input()
-  set changePageByDelta(operation: ChangePageByDeltaOperation | null) {
-    if (operation) {
-      this.pdfWrapper.changePageNumber(operation.delta);
-    }
   }
 
   @Input()
@@ -187,5 +129,16 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges {
     }
   }
 
+  mouseDown(event: MouseEvent) {
+    if (this.toolbarEvents.highlightMode) {
+      console.log('mouseDown - ', event);
+    }
+  }
+
+  mouseUp(event: MouseEvent) {
+    if (this.toolbarEvents.highlightMode) {
+      console.log('mouseUp - ', event);
+    }
+  }
 
 }
