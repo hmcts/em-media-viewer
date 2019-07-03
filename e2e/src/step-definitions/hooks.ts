@@ -1,10 +1,10 @@
 import {After, Before, Status} from 'cucumber';
-import { browser } from 'protractor';
+import {browser} from 'protractor';
+import * as fs from 'fs';
 
 Before({tags: '@MediaViewer'}, async () => {
   await browser.waitForAngularEnabled(false);
   return await browser.driver.navigate().to(browser.baseUrl);
-  /*return browser.driver.manage().window().maximize(); */
 });
 
 After(function () {
@@ -15,11 +15,10 @@ After(function () {
 After(async (scenario) => {
   if (scenario.result.status === Status.FAILED) {
     const screenshot = await browser.takeScreenshot();
-    // const stream = fs.createWriteStream('./reports/fail.png');
-    //
-    // stream.write(new Buffer(screenshot, 'base64'));
-    // stream.end();
-    return this.attach(screenshot, 'image/png');
+    const stream = fs.createWriteStream('./fail.png');
+    stream.write(new Buffer(screenshot, 'base64'));
+    stream.end();
   }
 });
+
 
