@@ -60,6 +60,6 @@ export class AppPage {
   async waitForElementsArray(selector: Locator) {
     await browser.wait(async () => {
       return (await element.all(selector).isPresent());
-    }, 10000, 'failed to load search results');
+    }, 30000, 'failed to load search results');
   }
 }

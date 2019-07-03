@@ -1,14 +1,13 @@
 import {When, Given, Then} from 'cucumber';
-// tslint:disable-next-line:import-spacing
 import {NavigatePage} from '../pages/navigate.po';
 import {AppPage} from '../pages/app.po';
-import {by, element, ElementFinder} from 'protractor';
+import {by} from 'protractor';
 import * as chai from 'chai';
 
 const expect = chai.expect;
 
 const page = new AppPage();
-const navigatePage = new NavigatePage();
+const navigatePage: NavigatePage = new NavigatePage();
 
 Given('I am on Media Viewer Page', async () => {
   await page.preparePage();
@@ -31,29 +30,28 @@ When('I click next button on the pdf', async () => {
   await page.selectPdfViewer();
   await page.preparePage();
   await page.waitForPdfToLoad();
-  await navigatePage.goToNextPage();
+  // await navigatePage.goToNextPage();
+  await  navigatePage.next.click();
 });
 
 When('I click previous button on the pdf', async () => {
   await page.selectPdfViewer();
   await page.preparePage();
   await page.waitForPdfToLoad();
-  await navigatePage.goToPreviousPage();
+  await navigatePage.previous.click();
 });
 
 
 Then('I should see next page number should be {string}', async (text: string) => {
   const number: number = +text;
-  const num = await element(by.id('pageNumber'));
-  expect(num.getAttribute('value')).to.equal(number);
-  console.log('true' + expect(num.getAttribute('value')).to.equal(number));
-   // expect(num).to.equal(number);
-});
+  console.log('Page Number ' + navigatePage.pageNumber.getAttribute('value'));
+  chai.expect(navigatePage.pageNumber.getAttribute('value')).to.equal(number);
+})
 
 
 Then('I should see previous page number should be {string}', async (text: string) => {
   const number: number = +text;
   console.log('Input 2::-->' + number);
-  // chai.expect(navigatePage.number()).to.equal(number);
+  chai.expect(navigatePage.pageNumber.getAttribute('value')).to.equal(number);
 });
 
