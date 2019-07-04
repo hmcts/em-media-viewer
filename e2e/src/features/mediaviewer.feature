@@ -10,19 +10,21 @@ Feature: Media Viewer Test Suite
 
   @Toggle_Buttons
   Scenario: Enable Toolbar Toggle buttons
-    And I enable toggle buttons
+    When I enable toggle buttons
     Then I expect toolbar buttons should be enabled
 
   @PDF_Page_Navigation
   Scenario Outline: PDF Viewer Page Navigation
-    And I click next button on the pdf
+    When I click next button on the pdf
     Then I should see next page number should be '<page_number>'
-    And I click previous button on the pdf
+
+    When I click previous button on the pdf
     Then I should see previous page number should be '<page_number2>'
 
     Examples:
       | page_number |page_number2|
-      | 2           |       1     |
+      | 2           |       1    |
+
 
 
 
