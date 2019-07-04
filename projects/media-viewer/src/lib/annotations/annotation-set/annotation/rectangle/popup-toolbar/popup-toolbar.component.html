@@ -1,13 +1,14 @@
 <div class="toolbar" [ngStyle]="popupStyles()">
-  <button
-    type="button"
-    title="Delete"
-    class="aui__toolbar-button aui__toolbar-button--comments contextual-btn leftButton"
-    (mousedown)="deleteHighlight.emit()">
+  <button type="button"
+          title="Delete"
+          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn leftButton"
+          (mousedown)="deleteHighlight.emit()">
     <span>Remove Highlight</span>
   </button>
-  <button type="button" title="Comment"
-          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton">
+  <button type="button"
+          title="Comment"
+          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton"
+          (mousedown)="addOrEditComment.emit()">
     <span>Comment</span></button>
   <div class="arrow-down">
     <div class="inner-triangle"></div>

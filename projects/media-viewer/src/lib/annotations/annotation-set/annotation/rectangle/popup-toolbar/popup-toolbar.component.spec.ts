@@ -24,7 +24,7 @@ describe('PopupToolbarComponent', () => {
       'surname': 'Rijks',
       'email': 'jeroen.rijks@hmcts.net'
     },
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -43,7 +43,7 @@ describe('PopupToolbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should delete highlight', function () {
+  it('should delete highlight', () => {
     const mockDeleteEvent = new EventEmitter();
     spyOn(mockDeleteEvent, 'emit');
     component.deleteHighlight = mockDeleteEvent;
@@ -51,6 +51,16 @@ describe('PopupToolbarComponent', () => {
     deleteBtn.triggerEventHandler('mousedown', {});
 
     expect(mockDeleteEvent.emit).toHaveBeenCalledWith();
+  });
+
+  it('should create comment', () => {
+    const mockCommentEvent = new EventEmitter();
+    spyOn(mockCommentEvent, 'emit');
+    component.addOrEditComment = mockCommentEvent;
+    const commentBtn = fixture.debugElement.query(By.css('button[title=Comment]'));
+    commentBtn.triggerEventHandler('mousedown', {});
+
+    expect(mockCommentEvent.emit).toHaveBeenCalledWith();
   });
 
   it('adjust its position', () => {

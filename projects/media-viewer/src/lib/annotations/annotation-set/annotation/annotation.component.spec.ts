@@ -62,6 +62,35 @@ describe('AnnotationComponent', () => {
     });
   });
 
+  it('create a comment', async () => {
+    component.annotation.comments = [];
+    spyOn(component.select, 'emit');
+
+    component.onCommentAddOrEdit();
+
+    expect(component.annotation.comments.length).toBeGreaterThan(0);
+    expect(component.annotation.comments[0].annotationId).toEqual(component.annotation.id);
+    expect(component.annotation.comments[0].content).toBe("");
+    expect(component.annotation.comments[0].createdByDetails).toBe(undefined);
+    expect(component.select.emit).toHaveBeenCalledWith(true);
+    expect(component.editable).toBe(true);
+  });
+
+  it('create a comment', async () => {
+    let comments = component.annotation.comments;
+    spyOn(comments, 'push');
+    spyOn(component.select, 'emit');
+
+    component.onCommentAddOrEdit();
+
+    expect(comments.push).not.toHaveBeenCalled();
+    expect(comments[0].content).not.toBe("");
+    expect(comments[0].createdByDetails).not.toBe(undefined);
+    expect(component.select.emit).toHaveBeenCalledWith(true);
+    expect(component.editable).toBe(true);
+  });
+
+
   it('deletes a comment', async () => {
     spyOn(component.update, 'emit');
 

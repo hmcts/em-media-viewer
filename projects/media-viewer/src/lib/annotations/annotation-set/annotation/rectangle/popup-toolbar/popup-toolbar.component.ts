@@ -15,6 +15,7 @@ export class PopupToolbarComponent {
   @Input() zoom = 1;
   @Input() rotate = 0;
   @Output() deleteHighlight = new EventEmitter();
+  @Output() addOrEditComment = new EventEmitter();
 
 
   popupStyles() {
