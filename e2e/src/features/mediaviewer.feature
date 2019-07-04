@@ -23,10 +23,4 @@ Feature: Media Viewer Test Suite
 
     Examples:
       | page_number |page_number2|
-      | 2           |       1    |
-
-
-
-
-
-
+      | 2           |       3    |
