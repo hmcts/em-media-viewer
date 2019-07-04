@@ -40,7 +40,6 @@ When('I click previous button on the pdf', async () => {
 
 Then('I should see next page number should be {string}', async (text: string) => {
   const value = await navigatePage.pageNumber.getAttribute('value');
-  console.log('PageNumber99::->' + value);
   expect(value).to.equal(text);
 });
 
