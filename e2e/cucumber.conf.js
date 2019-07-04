@@ -23,7 +23,7 @@ exports.config = {
     const options = {
       theme: 'bootstrap',
       jsonFile: './cucumber.json',
-      output: './cucumber.html',
+      output: './reports/cucumber/cucumber.html',
       reportSuiteAsScenarios: true,
       launchReport: false,
       metadata: {
