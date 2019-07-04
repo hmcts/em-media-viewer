@@ -19,10 +19,10 @@ export class NavigatePage extends AppPage {
   }
 
   async goToNextPage() {
-    await this.next.click();
+    await (await this.next).click();
   }
 
   async goToPreviousPage() {
-    await this.previous.click();
+    await (await this.previous).click();
   }
 }
