@@ -4,13 +4,9 @@ import * as fs from 'fs';
 
 Before({tags: '@MediaViewer'}, async () => {
   await browser.waitForAngularEnabled(false);
-  return await browser.driver.navigate().to(browser.baseUrl);
+  await browser.driver.navigate().to(browser.baseUrl);
 });
 
-After(function () {
-  console.log('Successfully run the tests');
-
-});
 
 After(async (scenario) => {
   if (scenario.result.status === Status.FAILED) {
