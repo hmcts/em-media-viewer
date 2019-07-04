@@ -13,11 +13,6 @@ exports.config = {
     './src/**/*.feature',
   ],
   onPrepare: function () {
-
-    const {Given, Then, When} = require('cucumber');
-    global.Given = Given;
-    global.When = When;
-    global.Then = Then;
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.e2e.json')
     });
