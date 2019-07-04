@@ -38,13 +38,13 @@ When('I click previous button on the pdf', async () => {
   await navigatePage.goToPreviousPage();
 });
 
-Then('I should see next page number should be {string}', async (text: string) => {
+Then('I should see next page number should be {string}', async (expected: string) => {
   const value = await navigatePage.pageNumber.getAttribute('value');
-  expect(value).to.equal(text);
+  expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
 });
 
-Then('I should see previous page number should be {string}', async (text: string) => {
+Then('I should see previous page number should be {string}', async (expected: string) => {
   const value = await navigatePage.pageNumber.getAttribute('value');
-  expect(value).to.equal(text);
+  expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
 });
 
