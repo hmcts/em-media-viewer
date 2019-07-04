@@ -12,7 +12,7 @@ exports.config = {
 // Firefox local setup
   exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
   capabilities: {
-    browserName: 'firefox',
+    browserName: 'chrome',
   },
 // // Chrome local setup
 //   capabilities: {

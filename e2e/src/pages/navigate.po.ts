@@ -1,20 +1,28 @@
-import { by, element } from 'protractor';
-import { AppPage } from './app.po';
+import {by, element, ElementFinder} from 'protractor';
+import {AppPage} from './app.po';
 
-export class NavigatePage extends AppPage{
+export class NavigatePage extends AppPage {
+  public pageNumber: ElementFinder;
+  public next: ElementFinder;
+  public previous: ElementFinder;
 
-  async goToNextPage() {
-    await this.waitForElement(by.id('next'));
-    await this.clickElement(by.id('next'));
-  }
-
-  async goToPreviousPage() {
-    await this.waitForElement(by.id('previous'));
-    await this.clickElement(by.id('previous'));
+  constructor() {
+    super();
+    this.next = element(by.id('next'));
+    this.previous = element(by.id('previous'));
+    this.pageNumber = element(by.id('pageNumber'));
   }
 
   async number() {
     await this.waitForElement(by.id('pageNumber'));
     return element(by.id('pageNumber')).getAttribute('value');
+  }
+
+  async goToNextPage() {
+    await (await this.next).click();
+  }
+
+  async goToPreviousPage() {
+    await (await this.previous).click();
   }
 }

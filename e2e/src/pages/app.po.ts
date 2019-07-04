@@ -5,9 +5,7 @@ const until = protractor.ExpectedConditions;
 export class AppPage {
 
   async navigateTo() {
-    await browser.waitForAngularEnabled(false);
     await browser.driver.navigate().to(browser.baseUrl);
-
     return await browser.driver.manage().window().maximize();
   }
 

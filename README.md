@@ -81,3 +81,12 @@ The toolbar may be toggled off by setting `showToolbase` to false. The toolbar i
   yarn install; export S2S_SECRET={{insert secret here}}; export IDAM_SECRET={{insert secret here}}; export APP_ENV=local; yarn watch-dev-node;
   ``` 
 - go to http://localhost:3000 and the viewer should load the document.
+
+### Cucumber Tests
+ ```
+  npm run package, npm run e2e:cucumber
+  ```
+  
+   
+  
+
