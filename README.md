@@ -82,9 +82,9 @@ The toolbar may be toggled off by setting `showToolbase` to false. The toolbar i
   ``` 
 - go to http://localhost:3000 and the viewer should load the document.
 
-### E2e Tests/ Cucumber Tests
+### Cucumber Tests
  ```
-  npm run package, npm run cucumber-e2e
+  npm run package, npm run e2e:cucumber
   ```
   
    
