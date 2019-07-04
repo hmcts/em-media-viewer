@@ -12,20 +12,21 @@ export class CommentComponent {
 
   private readonly MAX_COMMENT_LENGTH = 50;
 
-  editable = false;
   lastUpdate: string;
   fullComment: string;
   author: User;
   editor: User;
+  _editable: boolean;
+  _selected: boolean;
 
   @Output() click = new EventEmitter();
   @Output() delete = new EventEmitter();
   @Output() updated = new EventEmitter<String>();
-  @Input() selected: boolean;
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() rectangle: Rectangle;
   @ViewChild('form') form: ElementRef;
+  @ViewChild('textArea') textArea: ElementRef;
 
   @Input()
   set comment(comment: Comment) {
@@ -33,6 +34,34 @@ export class CommentComponent {
     this.author = comment.createdByDetails;
     this.editor = comment.lastModifiedByDetails;
     this.fullComment = comment.content;
+  }
+
+  @Input()
+  set selected(selected: boolean) {
+    this._selected = selected;
+  }
+
+  get selected() {
+    return this._selected || Boolean(!this.author && this.fullComment);
+  }
+
+  @Input()
+  set editable(editable: boolean) {
+    this._editable = editable;
+    this.selected = editable;
+    if (editable) {
+      setTimeout(() => this.textArea.nativeElement.focus(), 0);
+    }
+  }
+
+  get editable(): boolean {
+    return this._editable || Boolean(!this.author && this.fullComment);
+  }
+
+  onFocusOut() {
+    if (!this.author && !this.fullComment) {
+      this.delete.emit();
+    }
   }
 
   onEdit() {

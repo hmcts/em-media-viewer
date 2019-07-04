@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
 
@@ -18,6 +19,8 @@ export class AnnotationComponent {
   @Output() update = new EventEmitter<Annotation>();
   @Output() select = new EventEmitter<boolean>();
   @Output() delete = new EventEmitter<Annotation>();
+
+  editable = false;
 
   @ViewChild('container') container: ElementRef;
 
@@ -45,6 +48,7 @@ export class AnnotationComponent {
   public onFocusOut(event: FocusEvent) {
     if (!this.container.nativeElement.contains(event.relatedTarget)) {
       this.select.emit(false);
+      this.editable = false;
     }
   }
 
@@ -55,6 +59,24 @@ export class AnnotationComponent {
     } else {
       this.delete.emit(this.annotation);
     }
+  }
+
+  public onCommentAddOrEdit() {
+    if (this.annotation.comments.length == 0) {
+      this.annotation.comments.push({
+        annotationId: this.annotation.id,
+        content: "",
+        createdBy: "",
+        createdByDetails: undefined,
+        createdDate: new Date().getTime().toString(),
+        id: uuid(),
+        lastModifiedBy: "",
+        lastModifiedByDetails: undefined,
+        lastModifiedDate: ""
+      });
+    }
+    this.select.emit(true);
+    this.editable = true;
   }
 
 }
