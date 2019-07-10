@@ -38,6 +38,7 @@ export class PdfJsWrapper {
       url: documentUrl,
       cMapUrl: 'assets/minified/cmaps',
       cMapPacked: true,
+      withCredentials: true
     });
 
     loadingTask.onProgress = ({loaded, total}) => {
