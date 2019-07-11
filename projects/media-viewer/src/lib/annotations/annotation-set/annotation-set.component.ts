@@ -7,6 +7,7 @@ import uuid from 'uuid';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { TextHighlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Subscription } from 'rxjs';
+import { PageRenderEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -33,6 +34,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly api: AnnotationApiService,
+    private readonly annotationSetElement: ElementRef,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService
   ) {}
@@ -47,6 +49,16 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  initialise(pageRenderEvent: PageRenderEvent) {
+    this.zoom = pageRenderEvent.source.scale;
+    this.rotate = pageRenderEvent.source.rotation;
+    this.width = this.rotate % 180 === 0 ?
+      pageRenderEvent.source.div.clientWidth : pageRenderEvent.source.div.clientHeight;
+    this.height = this.rotate % 180 === 0 ?
+      pageRenderEvent.source.div.clientHeight : pageRenderEvent.source.div.clientWidth;
+    pageRenderEvent.source.div.appendChild(this.annotationSetElement.nativeElement);
   }
 
   private createTextHighlightAnnotation(highlightPage: number, rectangle: Rectangle[]): void {

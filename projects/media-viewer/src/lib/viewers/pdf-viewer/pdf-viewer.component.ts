@@ -11,7 +11,7 @@ import {
   ViewContainerRef, ViewEncapsulation,
   OnDestroy, ComponentRef
 } from '@angular/core';
-import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
+import { DocumentLoadProgress, PageRenderEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
@@ -104,11 +104,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     });
   }
 
-  onPageRendered(e: {pageNumber: number, source: {rotation: number, scale: number, div: Element}}) {
-    console.log(e.pageNumber);
-    const annotationComponent = this.annotationSetComponents.find((annotation) => annotation.instance.page === e.pageNumber);
+  onPageRendered(pageRenderEvent: PageRenderEvent) {
+    console.log(pageRenderEvent.pageNumber);
+    const annotationComponent = this.annotationSetComponents.find((annotation) => annotation.instance.page === pageRenderEvent.pageNumber);
     if (annotationComponent) {
-      this.initialiseAnnotationSetComponent(annotationComponent, e);
+      annotationComponent.instance.initialise(pageRenderEvent);
     }
   }
 
@@ -120,17 +120,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     return component;
   }
 
-  initialiseAnnotationSetComponent(component: ComponentRef<AnnotationSetComponent>,
-                               e: {pageNumber: number, source: {rotation: number, scale: number, div: Element}}) {
-    component.instance.zoom = e.source.scale;
-    component.instance.rotate = this.pdfWrapper.getNormalisedPagesRotation();
-    component.instance.width = this.pdfWrapper.getNormalisedPagesRotation() % 180 === 0 ?
-      e.source.div.clientWidth : e.source.div.clientHeight;
-    component.instance.height = this.pdfWrapper.getNormalisedPagesRotation() % 180 === 0 ?
-      e.source.div.clientHeight : e.source.div.clientWidth;
-    const annotationsElement = (component.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-    e.source.div.appendChild(annotationsElement);
-  }
+
 
   destroyAnnotationSetComponent() {
     for (const annotationSet of this.annotationSetComponents) {
@@ -168,21 +158,18 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onMouseUp(event: MouseEvent) {
-    // If Highlight Mode Raise a TextSelection Event
     if (this.toolbarEvents.highlightMode.getValue()) {
       const currentPage = this.pdfWrapper.getPageNumber();
-      const currentZoom = this.pdfWrapper.getCurrentPDFZoomValue();
-      const currentRotation = this.pdfWrapper.getNormalisedPagesRotation();
 
       if (!this.pages.includes(currentPage)) {
         const component = this.createAnnotationSetComponent(currentPage);
         this.pages.push(currentPage);
         this.annotationSetComponents.push(component);
-        this.initialiseAnnotationSetComponent(component, {
+        component.instance.initialise({
           pageNumber: currentPage,
           source: {
-            rotation: currentRotation,
-            scale: currentZoom,
+            rotation: this.pdfWrapper.getNormalisedPagesRotation(),
+            scale: this.pdfWrapper.getCurrentPDFZoomValue(),
             div: this.pdfViewer.nativeElement.querySelector(`div.page[data-page-number="${currentPage}"]`)
           }
         });
