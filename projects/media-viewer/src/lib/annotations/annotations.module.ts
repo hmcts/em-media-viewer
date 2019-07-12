@@ -9,7 +9,7 @@ import { AnnotationSetComponent } from './annotation-set/annotation-set.componen
 import { RectangleComponent } from './annotation-set/annotation/rectangle/rectangle.component';
 import { CommentComponent } from './annotation-set/annotation/comment/comment.component';
 import { AngularDraggableModule } from 'angular2-draggable';
-import { PopupToolbarComponent } from './annotation-set/annotation/rectangle/popup-toolbar/popup-toolbar.component';
+import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar/popup-toolbar.component';
 
 @NgModule({
   imports: [

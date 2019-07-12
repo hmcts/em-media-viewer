@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Rectangle} from '../rectangle.model';
+import { Rectangle} from '../rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-popup-toolbar',

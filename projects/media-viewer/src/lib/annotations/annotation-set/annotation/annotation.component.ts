@@ -52,16 +52,11 @@ export class AnnotationComponent {
     }
   }
 
-  public onRectangleDelete(rectangleId: string) {
-    this.annotation.rectangles = this.annotation.rectangles.filter(r => r.id !== rectangleId);
-    if (this.annotation.rectangles.length > 0) {
-      this.update.emit(this.annotation);
-    } else {
-      this.delete.emit(this.annotation);
-    }
+  public deleteHighlight() {
+    this.delete.emit(this.annotation);
   }
 
-  public onCommentAddOrEdit() {
+  public addOrEditComment() {
     if (this.annotation.comments.length == 0) {
       this.annotation.comments.push({
         annotationId: this.annotation.id,
@@ -79,4 +74,7 @@ export class AnnotationComponent {
     this.editable = true;
   }
 
+  topRectangle() {
+    return this.annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
+  }
 }
