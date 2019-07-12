@@ -1,7 +1,7 @@
 <div id="outerContainer" [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async }">
 
   <mv-side-bar *ngIf="showToolbar" id="sidebarContainer"></mv-side-bar>
-  <div id="mainContainer" style="min-height: 10000px;">
+  <div id="mainContainer">
     <mv-main-toolbar *ngIf="showToolbar"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    [url]="url"
