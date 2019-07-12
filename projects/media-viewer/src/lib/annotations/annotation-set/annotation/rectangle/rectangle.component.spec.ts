@@ -65,20 +65,4 @@ describe('RectangleComponent', () => {
 
     expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
   });
-
-  it('should emit delete event', () => {
-    const deleteEventSpy = spyOn(component.delete, 'emit');
-
-    component.deleteHighlight();
-
-    expect(deleteEventSpy).toHaveBeenCalledWith(mockRectangle.id);
-  });
-
-  it('should emit comment event', () => {
-    const commentEventSpy = spyOn(component.addOrEditComment, 'emit');
-
-    component.onAddOrEditComment();
-
-    expect(commentEventSpy).toHaveBeenCalledWith();
-  });
 });

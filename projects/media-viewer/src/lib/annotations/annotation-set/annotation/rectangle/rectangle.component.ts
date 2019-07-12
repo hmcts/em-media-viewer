@@ -18,8 +18,6 @@ export class RectangleComponent {
 
   @Output() click = new EventEmitter();
   @Output() update = new EventEmitter<Rectangle>();
-  @Output() delete = new EventEmitter<string>();
-  @Output() addOrEditComment = new EventEmitter<void>();
 
   onClick() {
     this.click.emit();
@@ -43,13 +41,5 @@ export class RectangleComponent {
     this.rectangle.height = event.size.height / this.zoom;
 
     this.update.emit(this.rectangle);
-  }
-
-  deleteHighlight() {
-    this.delete.emit(this.rectangle.id);
-  }
-
-  onAddOrEditComment() {
-    this.addOrEditComment.emit();
   }
 }
