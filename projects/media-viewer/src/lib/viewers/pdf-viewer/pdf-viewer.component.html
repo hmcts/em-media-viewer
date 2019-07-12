@@ -1,6 +1,7 @@
 <div #viewerContainer class="pdfContainer"
-     style="height: 99%; position: absolute;" [ngClass]="{ hidden: errorMessage }">
-  <div #pdfViewer (mouseup)="onMouseUp($event)" class="pdfViewer" [ngClass]="{ hidden: loadingDocument,  highlightMode: toolbarEvents.highlightMode | async, drawMode: toolbarEvents.drawMode | async }">
+     style="height: 99%; min-height: 100vh; position: absolute;" [ngClass]="{ hidden: errorMessage }">
+  <div #pdfViewer (mouseup)="onMouseUp($event)" class="pdfViewer"
+       [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}

@@ -3,7 +3,6 @@ import {
   Component,
   ComponentFactoryResolver,
   ElementRef,
-  EmbeddedViewRef,
   Input,
   OnChanges,
   SimpleChanges,
@@ -17,10 +16,8 @@ import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.m
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
-import uuid from 'uuid';
-import {Rectangle} from '../../annotations/annotation-set/annotation/rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -33,6 +30,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Input() url: string;
   @Input() downloadFileName: string;
   @Input() annotationSet: AnnotationSet | null;
+
+  highlightMode: BehaviorSubject<boolean>;
+  drawMode: BehaviorSubject<boolean>;
 
   loadingDocument = false;
   loadingDocumentProgress: number;
@@ -51,9 +51,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     private readonly componentFactoryResolver: ComponentFactoryResolver,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
-    public readonly toolbarEvents: ToolbarEventService,
-    public readonly viewerEvents: ViewerEventService,
-  ) {}
+    private readonly toolbarEvents: ToolbarEventService,
+    private readonly viewerEvents: ViewerEventService,
+  ) {
+    this.highlightMode = toolbarEvents.highlightMode;
+    this.drawMode = toolbarEvents.drawMode;
+  }
 
   async ngAfterContentInit(): Promise<void> {
     this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
