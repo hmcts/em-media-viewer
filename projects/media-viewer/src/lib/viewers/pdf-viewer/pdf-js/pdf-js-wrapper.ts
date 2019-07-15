@@ -144,6 +144,6 @@ export interface PageRenderEvent {
     rotation: number,
     scale: number,
     div: Element
-  }
+  };
 }
 

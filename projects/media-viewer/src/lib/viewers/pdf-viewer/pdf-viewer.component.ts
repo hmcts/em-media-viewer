@@ -123,13 +123,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     return component;
   }
 
-
-
   destroyAnnotationSetComponent() {
     for (const annotationSet of this.annotationSetComponents) {
       annotationSet.destroy();
     }
     this.annotationSetComponents = [];
+    this.pages = [];
   }
 
   private onDocumentLoadInit() {
