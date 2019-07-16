@@ -92,8 +92,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           for (let i = 0; i < rectangles.length; i++) {
             const zoomValue = this.zoom;
             const rect = rectangles[i];
-            const width = (rect.right - rect.left) / zoomValue;
-            const height = (rect.bottom - rect.top) / zoomValue;
+            let width = (rect.right - rect.left) / zoomValue;
+            let height = (rect.bottom - rect.top) / zoomValue;
             // Identify the localElement from the MouseEvent
             const localElement = (<Element>textHighlight.event.target) || (<Element>textHighlight.event.srcElement);
             // Get the VIEWPORT-relative coordinates of the rectangle. x & y including scroll offset
@@ -102,8 +102,30 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
             // Get the bounding rectangle of the target parent (the textLayer)
             const boxRectangle = localElement.parentElement.getBoundingClientRect();
             // adjust the rectangle x and y taking into account the local container element
-            const localX = (viewportX - (boxRectangle.left)) / zoomValue;
-            const localY = (viewportY - (boxRectangle.top)) / zoomValue;
+            let localX = 0;
+            let localY = 0;
+
+            switch (this.rotate) {
+              case 90:
+                localX = (viewportY - boxRectangle.top) / zoomValue;
+                localY = this.height - ((viewportX - boxRectangle.left + width) / zoomValue);
+                width = (rect.bottom - rect.top) / zoomValue;
+                height = (rect.right - rect.left) / zoomValue;
+                break;
+              case 180:
+                localX = this.width - (viewportX - boxRectangle.left + width) / zoomValue;
+                localY = this.height - (viewportY - boxRectangle.top + height) / zoomValue;
+                break;
+              case 270:
+                localX = this.width - ((viewportY - boxRectangle.top + height) / zoomValue);
+                localY = (viewportX - boxRectangle.left) / zoomValue;
+                width = (rect.bottom - rect.top) / zoomValue;
+                height = (rect.right - rect.left) / zoomValue;
+                break;
+              default:
+                localX = (viewportX - boxRectangle.left) / zoomValue;
+                localY = (viewportY - boxRectangle.top) / zoomValue;
+            }
 
             selectionRectangles.push({id: uuid(), x: localX, y: localY, height: height, width: width} as Rectangle);
           }
