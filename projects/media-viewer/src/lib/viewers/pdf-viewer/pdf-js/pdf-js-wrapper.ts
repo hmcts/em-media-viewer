@@ -111,11 +111,11 @@ export class PdfJsWrapper {
   }
 
   public rotate(rotation: number): number {
-    return this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + rotation) % 360;
+    return this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + rotation) %360;
   }
 
   public getNormalisedPagesRotation(): number {
-    return (this.pdfViewer.pagesRotation + 360) % 360;
+    return this.pdfViewer.pagesRotation;
   }
 
   public getCurrentPDFZoomValue(): number {

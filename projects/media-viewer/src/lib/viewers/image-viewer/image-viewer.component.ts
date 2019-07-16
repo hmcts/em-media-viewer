@@ -54,7 +54,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private setRotation(rotation: number) {
-    this.rotation = (this.rotation + rotation + 360) % 360;
+    this.rotation = (this.rotation + rotation) %360;
   }
 
   private async setZoom(zoomFactor: number) {
