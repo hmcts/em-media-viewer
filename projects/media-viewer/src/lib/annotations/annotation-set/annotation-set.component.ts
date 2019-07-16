@@ -34,7 +34,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly api: AnnotationApiService,
-    private readonly annotationSetElement: ElementRef,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService
   ) {}
@@ -58,7 +57,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       pageRenderEvent.source.div.clientWidth : pageRenderEvent.source.div.clientHeight;
     this.height = this.rotate % 180 === 0 ?
       pageRenderEvent.source.div.clientHeight : pageRenderEvent.source.div.clientWidth;
-    pageRenderEvent.source.div.appendChild(this.annotationSetElement.nativeElement);
+    pageRenderEvent.source.div.appendChild(this.container.nativeElement);
   }
 
   private createTextHighlightAnnotation(highlightPage: number, rectangle: Rectangle[]): void {
