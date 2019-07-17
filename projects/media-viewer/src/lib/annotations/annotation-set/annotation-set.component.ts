@@ -50,14 +50,13 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     }
   }
 
-  initialise(pageRenderEvent: PageRenderEvent) {
-    this.zoom = pageRenderEvent.source.scale;
-    this.rotate = pageRenderEvent.source.rotation;
-    this.width = this.rotate % 180 === 0 ?
-      pageRenderEvent.source.div.clientWidth : pageRenderEvent.source.div.clientHeight;
-    this.height = this.rotate % 180 === 0 ?
-      pageRenderEvent.source.div.clientHeight : pageRenderEvent.source.div.clientWidth;
-    pageRenderEvent.source.div.appendChild(this.container.nativeElement);
+  initialise(eventSource: PageRenderEvent['source']) {
+    this.zoom = eventSource.scale;
+    this.rotate = eventSource.rotation;
+    const element = eventSource.div;
+    this.width = this.rotate % 180 === 0 ? element.clientWidth : element.clientHeight;
+    this.height = this.rotate % 180 === 0 ? element.clientHeight : element.clientWidth;
+    element.appendChild(this.container.nativeElement);
   }
 
   private createTextHighlightAnnotation(highlightPage: number, rectangle: Rectangle[]): void {
@@ -89,41 +88,36 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           const rectangles = range.getClientRects();
           const selectionRectangles: Rectangle[] = [];
           for (let i = 0; i < rectangles.length; i++) {
-            const zoomValue = this.zoom;
-            const rect = rectangles[i];
-            let width = (rect.right - rect.left) / zoomValue;
-            let height = (rect.bottom - rect.top) / zoomValue;
-            // Identify the localElement from the MouseEvent
             const localElement = (<Element>textHighlight.event.target) || (<Element>textHighlight.event.srcElement);
-            // Get the VIEWPORT-relative coordinates of the rectangle. x & y including scroll offset
-            const viewportX: number = rect.left;
-            const viewportY: number = rect.top;
-            // Get the bounding rectangle of the target parent (the textLayer)
-            const boxRectangle = localElement.parentElement.getBoundingClientRect();
-            // adjust the rectangle x and y taking into account the local container element
+            const textLayerRect = localElement.parentElement.getBoundingClientRect();
+
+            const rect = rectangles[i];
+            let width = (rect.right - rect.left) / this.zoom;
+            let height = (rect.bottom - rect.top) / this.zoom;
+
             let localX = 0;
             let localY = 0;
 
             switch (this.rotate) {
               case 90:
-                localX = (viewportY - boxRectangle.top) / zoomValue;
-                localY = this.height - ((viewportX - boxRectangle.left + width) / zoomValue);
-                width = (rect.bottom - rect.top) / zoomValue;
-                height = (rect.right - rect.left) / zoomValue;
+                localX = (rect.top - textLayerRect.top) / this.zoom;
+                localY = this.height - ((rect.left - textLayerRect.left + width) / this.zoom);
+                width = (rect.bottom - rect.top) / this.zoom;
+                height = (rect.right - rect.left) / this.zoom;
                 break;
               case 180:
-                localX = this.width - (viewportX - boxRectangle.left + width) / zoomValue;
-                localY = this.height - (viewportY - boxRectangle.top + height) / zoomValue;
+                localX = this.width - (rect.left - textLayerRect.left + width) / this.zoom;
+                localY = this.height - (rect.top - textLayerRect.top + height) / this.zoom;
                 break;
               case 270:
-                localX = this.width - ((viewportY - boxRectangle.top + height) / zoomValue);
-                localY = (viewportX - boxRectangle.left) / zoomValue;
-                width = (rect.bottom - rect.top) / zoomValue;
-                height = (rect.right - rect.left) / zoomValue;
+                localX = this.width - ((rect.top - textLayerRect.top + height) / this.zoom);
+                localY = (rect.left - textLayerRect.left) / this.zoom;
+                width = (rect.bottom - rect.top) / this.zoom;
+                height = (rect.right - rect.left) / this.zoom;
                 break;
               default:
-                localX = (viewportX - boxRectangle.left) / zoomValue;
-                localY = (viewportY - boxRectangle.top) / zoomValue;
+                localX = (rect.left - textLayerRect.left) / this.zoom;
+                localY = (rect.top - textLayerRect.top) / this.zoom;
             }
 
             selectionRectangles.push({id: uuid(), x: localX, y: localY, height: height, width: width} as Rectangle);
@@ -168,21 +162,13 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   public onMouseDown(event: MouseEvent) {
     if (this.annotationSet && this.toolbarEvents.drawMode.value) {
-      this.drawStartX = event.pageX - (window.scrollX + this.container.nativeElement.getBoundingClientRect().left);
-      this.drawStartY = event.pageY - (window.scrollY + this.container.nativeElement.getBoundingClientRect().top);
-
-      this.newRectangle.nativeElement.style.display = 'block';
-      this.newRectangle.nativeElement.style.top =  this.drawStartY + 'px';
-      this.newRectangle.nativeElement.style.left = this.drawStartX + 'px';
+      this.createHighlight(event);
     }
   }
 
   public onMouseMove(event: MouseEvent) {
-    if (this.annotationSet && this.toolbarEvents.drawMode.value && this.drawStartX > 0 && this.drawStartY > 0) {
-      this.newRectangle.nativeElement.style.height =
-        (event.pageY - this.drawStartY - (window.scrollY + this.container.nativeElement.getBoundingClientRect().top)) + 'px';
-      this.newRectangle.nativeElement.style.width =
-        (event.pageX - this.drawStartX - (window.scrollX + this.container.nativeElement.getBoundingClientRect().left)) + 'px';
+    if (this.annotationSet && this.toolbarEvents.drawMode.value) {
+      this.updateHighlight(event);
     }
   }
 
@@ -190,10 +176,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     if (this.annotationSet && this.toolbarEvents.drawMode.value) {
       const rectangle = {
         id: uuid(),
-        x: +this.newRectangle.nativeElement.style.left.slice(0, -2),
-        y: +this.newRectangle.nativeElement.style.top.slice(0, -2),
-        width: +this.newRectangle.nativeElement.style.width.slice(0, -2),
-        height: +this.newRectangle.nativeElement.style.height.slice(0, -2),
+        x: +this.newRectStyle().left.slice(0, -2),
+        y: +this.newRectStyle().top.slice(0, -2),
+        width: +this.newRectStyle().width.slice(0, -2),
+        height: +this.newRectStyle().height.slice(0, -2),
       };
 
       const annotation = {
@@ -213,12 +199,43 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
         this.toolbarEvents.drawMode.next(false);
       }
-
-      this.drawStartX = -1;
-      this.drawStartY = -1;
-      this.newRectangle.nativeElement.style.display = 'none';
-      this.newRectangle.nativeElement.style.width = '0';
-      this.newRectangle.nativeElement.style.height = '0';
+      this.resetHighlight();
     }
   }
+
+  private createHighlight(event: MouseEvent) {
+    this.drawStartX = event.pageX - (window.scrollX + this.containerRect().left);
+    this.drawStartY = event.pageY - (window.scrollY + this.containerRect().top);
+
+    this.newRectStyle().display = 'block';
+    this.newRectStyle().top =  this.drawStartY + 'px';
+    this.newRectStyle().left = this.drawStartX + 'px';
+  }
+
+  private updateHighlight(event: MouseEvent) {
+    if (this.drawStartX > 0 && this.drawStartY > 0) {
+      this.newRectStyle().height =
+        (event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top)) + 'px';
+      this.newRectStyle().width =
+        (event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left)) + 'px';
+    }
+  }
+
+  private resetHighlight() {
+    this.drawStartX = -1;
+    this.drawStartY = -1;
+    this.newRectStyle().display = 'none';
+    this.newRectStyle().width = '0';
+    this.newRectStyle().height = '0';
+  }
+
+  private newRectStyle() {
+    return this.newRectangle.nativeElement.style;
+  }
+
+  private containerRect() {
+    return this.container.nativeElement.getBoundingClientRect();
+  }
+
+
 }
