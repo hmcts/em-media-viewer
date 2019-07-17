@@ -54,19 +54,20 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private setRotation(rotation: number) {
-    this.rotation = this.rotation + rotation + 360 % 360;
+    this.rotation = (this.rotation + rotation) %360;
   }
 
-  private setZoom(zoomFactor: number) {
+  private async setZoom(zoomFactor: number) {
     if (!isNaN(zoomFactor)) {
-      this.setZoomValue(this.calculateZoomValue(zoomFactor)).then(() => {});
+      await this.setZoomValue(this.calculateZoomValue(zoomFactor));
+      this.img.nativeElement.width = this.img.nativeElement.naturalWidth * this.zoom;
     }
   }
 
-  private stepZoom(zoomFactor: number) {
+  private async stepZoom(zoomFactor: number) {
     if (!isNaN(zoomFactor)) {
-      this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10)
-        .then(() => {});
+      await this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10);
+      this.img.nativeElement.width = this.img.nativeElement.naturalWidth * this.zoom;
     }
   }
 

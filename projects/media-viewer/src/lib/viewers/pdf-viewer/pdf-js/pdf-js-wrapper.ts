@@ -68,7 +68,9 @@ export class PdfJsWrapper {
   public setPageNumber(pageNumber: number): void {
     this.pdfViewer.currentPageNumber = pageNumber;
   }
-
+  public getPageNumber(): number {
+    return this.pdfViewer.currentPageNumber;
+  }
   public changePageNumber(numPages: number): void {
     this.pdfViewer.currentPageNumber += numPages;
   }
@@ -109,13 +111,16 @@ export class PdfJsWrapper {
   }
 
   public rotate(rotation: number): number {
-    return this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + rotation) % 360;
+    return this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + rotation) %360;
   }
 
   public getNormalisedPagesRotation(): number {
-    return (this.pdfViewer.pagesRotation + 360) % 360;
+    return this.pdfViewer.pagesRotation;
   }
 
+  public getCurrentPDFZoomValue(): number {
+    return this.pdfViewer.currentScaleValue;
+  }
 }
 
 /**
@@ -131,5 +136,14 @@ enum FindState {
 export interface DocumentLoadProgress {
   loaded: number;
   total: number;
+}
+
+export interface PageRenderEvent {
+  pageNumber: number;
+  source: {
+    rotation: number,
+    scale: number,
+    div: Element
+  };
 }
 
