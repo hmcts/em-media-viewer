@@ -57,27 +57,29 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   async createRectangles(textHighlight: TextHighlight) {
-    if (window.getSelection) {
-      const selection = window.getSelection();
+    if (textHighlight.page === this.page) {
+      if (window.getSelection) {
+        const selection = window.getSelection();
 
-      if (selection.rangeCount && !selection.isCollapsed) {
-        const range = selection.getRangeAt(0).cloneRange();
-        const clientRects = range.getClientRects();
+        if (selection.rangeCount && !selection.isCollapsed) {
+          const range = selection.getRangeAt(0).cloneRange();
+          const clientRects = range.getClientRects();
 
-        if (clientRects) {
-          const localElement = (<Element>textHighlight.event.target) || (<Element>textHighlight.event.srcElement);
-          const textLayerRect = localElement.parentElement.getBoundingClientRect();
+          if (clientRects) {
+            const localElement = (<Element>textHighlight.event.target) || (<Element>textHighlight.event.srcElement);
+            const textLayerRect = localElement.parentElement.getBoundingClientRect();
 
-          const selectionRectangles: Rectangle[] = [];
-          for (let i = 0; i < clientRects.length; i++) {
-            selectionRectangles.push(
-              this.createRectangle(clientRects[i], textLayerRect)
-            );
+            const selectionRectangles: Rectangle[] = [];
+            for (let i = 0; i < clientRects.length; i++) {
+              selectionRectangles.push(
+                this.createRectangle(clientRects[i], textLayerRect)
+              );
+            }
+            await this.createAnnotation(selectionRectangles);
+
+            const selectedText = window.getSelection();
+            selectedText.removeAllRanges();
           }
-          await this.createAnnotation(textHighlight.page, selectionRectangles);
-
-          const selectedText = window.getSelection();
-          selectedText.removeAllRanges();
         }
       }
     }
@@ -94,20 +96,20 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
     switch (this.rotate) {
       case 90:
-        rectangle.x = (rect.top - textLayerRect.top) / this.zoom;
-        rectangle.y = this.height - ((rect.left - textLayerRect.left + rectangle.width) / this.zoom);
         rectangle.width = (rect.bottom - rect.top) / this.zoom;
         rectangle.height = (rect.right - rect.left) / this.zoom;
+        rectangle.x = (rect.top - textLayerRect.top) / this.zoom;
+        rectangle.y = ((this.height - (rect.left - textLayerRect.left)) / this.zoom) - rectangle.height;
         break;
       case 180:
-        rectangle.x = this.width - (rect.left - textLayerRect.left + rectangle.width) / this.zoom;
-        rectangle.y = this.height - (rect.top - textLayerRect.top + rectangle.height) / this.zoom;
+        rectangle.x = ((this.width - (rect.left - textLayerRect.left)) / this.zoom) - rectangle.width;
+        rectangle.y = ((this.height - (rect.top - textLayerRect.top)) / this.zoom) - rectangle.height;
         break;
       case 270:
-        rectangle.x = this.width - ((rect.top - textLayerRect.top + rectangle.height) / this.zoom);
-        rectangle.y = (rect.left - textLayerRect.left) / this.zoom;
         rectangle.width = (rect.bottom - rect.top) / this.zoom;
         rectangle.height = (rect.right - rect.left) / this.zoom;
+        rectangle.x = ((this.width - (rect.top - textLayerRect.top)) / this.zoom) - rectangle.width;
+        rectangle.y = (rect.left - textLayerRect.left) / this.zoom;
         break;
       default:
         rectangle.x = (rect.left - textLayerRect.left) / this.zoom;
@@ -116,11 +118,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     return rectangle as Rectangle;
   }
 
-  private createAnnotation(highlightPage: number, rectangle: Rectangle[]): void {
-    console.log('page = ' + highlightPage);
-    console.log('annotationSetPage = ' + this.page);
-    if (highlightPage === this.page) {
-      const annotation = {
+  private createAnnotation(rectangle: Rectangle[]): void {
+    const annotation = {
         id: uuid(),
         annotationSetId: this.annotationSet.id,
         color: 'FFFF00',
@@ -131,7 +130,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       };
       console.log('creating annotation');
       this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
-    }
   }
 
   public getAnnotationsOnPage(): Annotation[] {
