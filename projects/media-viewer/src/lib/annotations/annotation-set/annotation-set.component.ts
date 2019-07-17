@@ -84,7 +84,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   private createRectangle(rect: any, textLayerRect: any) {
-    let rectangle = {
+    const rectangle = {
       id: uuid(),
       x: 0,
       y: 0,
@@ -177,10 +177,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     if (this.annotationSet && this.toolbarEvents.drawMode.value) {
       const rectangle = {
         id: uuid(),
-        x: +this.newRectStyle().left.slice(0, -2),
-        y: +this.newRectStyle().top.slice(0, -2),
-        width: +this.newRectStyle().width.slice(0, -2),
-        height: +this.newRectStyle().height.slice(0, -2),
+        x: +this.newRectStyle().left.slice(0, -2) / this.zoom,
+        y: +this.newRectStyle().top.slice(0, -2) / this.zoom,
+        width: +this.newRectStyle().width.slice(0, -2) / this.zoom,
+        height: +this.newRectStyle().height.slice(0, -2) / this.zoom,
       };
 
       const annotation = {
