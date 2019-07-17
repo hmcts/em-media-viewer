@@ -111,7 +111,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     console.log(pageRenderEvent.pageNumber);
     const annotationComponent = this.annotationSetComponents.find((annotation) => annotation.instance.page === pageRenderEvent.pageNumber);
     if (annotationComponent) {
-      annotationComponent.instance.initialise(pageRenderEvent);
+      annotationComponent.instance.initialise(pageRenderEvent.source);
     }
   }
 
@@ -168,12 +168,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         this.pages.push(currentPage);
         this.annotationSetComponents.push(component);
         component.instance.initialise({
-          pageNumber: currentPage,
-          source: {
-            rotation: this.pdfWrapper.getNormalisedPagesRotation(),
-            scale: this.pdfWrapper.getCurrentPDFZoomValue(),
-            div: this.pdfViewer.nativeElement.querySelector(`div.page[data-page-number="${currentPage}"]`)
-          }
+          rotation: this.pdfWrapper.getNormalisedPagesRotation(),
+          scale: this.pdfWrapper.getCurrentPDFZoomValue(),
+          div: this.pdfViewer.nativeElement.querySelector(`div.page[data-page-number="${currentPage}"]`)
         });
       }
 
