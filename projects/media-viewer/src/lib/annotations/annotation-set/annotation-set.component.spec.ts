@@ -5,7 +5,7 @@ import { RectangleComponent } from './annotation/rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { annotationSet } from '../../../assets/annotation-set';
-import { PopupToolbarComponent } from './annotation/rectangle/popup-toolbar/popup-toolbar.component';
+import { PopupToolbarComponent } from './annotation/popup-toolbar/popup-toolbar.component';
 import { AnnotationComponent } from './annotation/annotation.component';
 import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
