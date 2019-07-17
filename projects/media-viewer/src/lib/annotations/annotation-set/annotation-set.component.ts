@@ -44,10 +44,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Clean up any subscriptions that we may have
-    for (const subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   initialise(eventSource: PageRenderEvent['source']) {
@@ -59,7 +56,67 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     element.appendChild(this.container.nativeElement);
   }
 
-  private createTextHighlightAnnotation(highlightPage: number, rectangle: Rectangle[]): void {
+  async createRectangles(textHighlight: TextHighlight) {
+    if (window.getSelection) {
+      const selection = window.getSelection();
+
+      if (selection.rangeCount && !selection.isCollapsed) {
+        const range = selection.getRangeAt(0).cloneRange();
+        const clientRects = range.getClientRects();
+
+        if (clientRects) {
+          const localElement = (<Element>textHighlight.event.target) || (<Element>textHighlight.event.srcElement);
+          const textLayerRect = localElement.parentElement.getBoundingClientRect();
+
+          const selectionRectangles: Rectangle[] = [];
+          for (let i = 0; i < clientRects.length; i++) {
+            selectionRectangles.push(
+              this.createRectangle(clientRects[i], textLayerRect)
+            );
+          }
+          await this.createAnnotation(textHighlight.page, selectionRectangles);
+
+          const selectedText = window.getSelection();
+          selectedText.removeAllRanges();
+        }
+      }
+    }
+  }
+
+  private createRectangle(rect: any, textLayerRect: any) {
+    let rectangle = {
+      id: uuid(),
+      x: 0,
+      y: 0,
+      height: (rect.bottom - rect.top) / this.zoom,
+      width: (rect.right - rect.left) / this.zoom
+    };
+
+    switch (this.rotate) {
+      case 90:
+        rectangle.x = (rect.top - textLayerRect.top) / this.zoom;
+        rectangle.y = this.height - ((rect.left - textLayerRect.left + rectangle.width) / this.zoom);
+        rectangle.width = (rect.bottom - rect.top) / this.zoom;
+        rectangle.height = (rect.right - rect.left) / this.zoom;
+        break;
+      case 180:
+        rectangle.x = this.width - (rect.left - textLayerRect.left + rectangle.width) / this.zoom;
+        rectangle.y = this.height - (rect.top - textLayerRect.top + rectangle.height) / this.zoom;
+        break;
+      case 270:
+        rectangle.x = this.width - ((rect.top - textLayerRect.top + rectangle.height) / this.zoom);
+        rectangle.y = (rect.left - textLayerRect.left) / this.zoom;
+        rectangle.width = (rect.bottom - rect.top) / this.zoom;
+        rectangle.height = (rect.right - rect.left) / this.zoom;
+        break;
+      default:
+        rectangle.x = (rect.left - textLayerRect.left) / this.zoom;
+        rectangle.y = (rect.top - textLayerRect.top) / this.zoom;
+    }
+    return rectangle as Rectangle;
+  }
+
+  private createAnnotation(highlightPage: number, rectangle: Rectangle[]): void {
     console.log('page = ' + highlightPage);
     console.log('annotationSetPage = ' + this.page);
     if (highlightPage === this.page) {
@@ -74,62 +131,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       };
       console.log('creating annotation');
       this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
-    }
-  }
-
-  async createRectangles(textHighlight: TextHighlight) {
-    if (window.getSelection) {
-      const selection = window.getSelection();
-
-      if (selection.rangeCount && !selection.isCollapsed) {
-        const range = selection.getRangeAt(0).cloneRange();
-
-        if (range.getClientRects) {
-          const rectangles = range.getClientRects();
-          const selectionRectangles: Rectangle[] = [];
-          for (let i = 0; i < rectangles.length; i++) {
-            const localElement = (<Element>textHighlight.event.target) || (<Element>textHighlight.event.srcElement);
-            const textLayerRect = localElement.parentElement.getBoundingClientRect();
-
-            const rect = rectangles[i];
-            let width = (rect.right - rect.left) / this.zoom;
-            let height = (rect.bottom - rect.top) / this.zoom;
-
-            let localX = 0;
-            let localY = 0;
-
-            switch (this.rotate) {
-              case 90:
-                localX = (rect.top - textLayerRect.top) / this.zoom;
-                localY = this.height - ((rect.left - textLayerRect.left + width) / this.zoom);
-                width = (rect.bottom - rect.top) / this.zoom;
-                height = (rect.right - rect.left) / this.zoom;
-                break;
-              case 180:
-                localX = this.width - (rect.left - textLayerRect.left + width) / this.zoom;
-                localY = this.height - (rect.top - textLayerRect.top + height) / this.zoom;
-                break;
-              case 270:
-                localX = this.width - ((rect.top - textLayerRect.top + height) / this.zoom);
-                localY = (rect.left - textLayerRect.left) / this.zoom;
-                width = (rect.bottom - rect.top) / this.zoom;
-                height = (rect.right - rect.left) / this.zoom;
-                break;
-              default:
-                localX = (rect.left - textLayerRect.left) / this.zoom;
-                localY = (rect.top - textLayerRect.top) / this.zoom;
-            }
-
-            selectionRectangles.push({id: uuid(), x: localX, y: localY, height: height, width: width} as Rectangle);
-          }
-
-          await this.createTextHighlightAnnotation(textHighlight.page, selectionRectangles);
-
-          // Clear down the native selection
-          const selectedText = window.getSelection();
-          selectedText.removeAllRanges();
-        }
-      }
     }
   }
 
@@ -162,13 +163,13 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   public onMouseDown(event: MouseEvent) {
     if (this.annotationSet && this.toolbarEvents.drawMode.value) {
-      this.createHighlight(event);
+      this.initialiseNewRect(event);
     }
   }
 
   public onMouseMove(event: MouseEvent) {
     if (this.annotationSet && this.toolbarEvents.drawMode.value) {
-      this.updateHighlight(event);
+      this.updateNewRect(event);
     }
   }
 
@@ -199,11 +200,11 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
         this.toolbarEvents.drawMode.next(false);
       }
-      this.resetHighlight();
+      this.resetNewRect();
     }
   }
 
-  private createHighlight(event: MouseEvent) {
+  private initialiseNewRect(event: MouseEvent) {
     this.drawStartX = event.pageX - (window.scrollX + this.containerRect().left);
     this.drawStartY = event.pageY - (window.scrollY + this.containerRect().top);
 
@@ -212,7 +213,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.newRectStyle().left = this.drawStartX + 'px';
   }
 
-  private updateHighlight(event: MouseEvent) {
+  private updateNewRect(event: MouseEvent) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
       this.newRectStyle().height =
         (event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top)) + 'px';
@@ -221,7 +222,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     }
   }
 
-  private resetHighlight() {
+  private resetNewRect() {
     this.drawStartX = -1;
     this.drawStartY = -1;
     this.newRectStyle().display = 'none';
@@ -236,6 +237,4 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   private containerRect() {
     return this.container.nativeElement.getBoundingClientRect();
   }
-
-
 }
