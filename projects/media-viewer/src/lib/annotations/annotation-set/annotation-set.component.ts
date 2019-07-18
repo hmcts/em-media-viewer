@@ -207,16 +207,53 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.drawStartY = event.pageY - (window.scrollY + this.containerRect().top);
 
     this.newRectStyle().display = 'block';
-    this.newRectStyle().top =  this.drawStartY + 'px';
-    this.newRectStyle().left = this.drawStartX + 'px';
+
+    switch (this.rotate) {
+      case 90:
+        this.newRectStyle().top =  this.height - this.drawStartX + 'px';
+        this.newRectStyle().left = this.drawStartY + 'px';
+        break;
+      case 180:
+        this.newRectStyle().top =  this.height - this.drawStartY + 'px';
+        this.newRectStyle().left = this.width - this.drawStartX + 'px';
+        break;
+      case 270:
+        this.newRectStyle().top =  this.drawStartX + 'px';
+        this.newRectStyle().left = this.width - this.drawStartY + 'px';
+        break;
+      default:
+        this.newRectStyle().top =  this.drawStartY + 'px';
+        this.newRectStyle().left = this.drawStartX + 'px';
+    }
   }
 
   private updateNewRect(event: MouseEvent) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
-      this.newRectStyle().height =
-        (event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top)) + 'px';
-      this.newRectStyle().width =
-        (event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left)) + 'px';
+      switch (this.rotate) {
+        case 90:
+          this.newRectStyle().height =
+            -(event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left)) + 'px';
+          this.newRectStyle().width =
+            (event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top)) + 'px';
+          break;
+        case 180:
+          this.newRectStyle().height =
+            -(event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top)) + 'px';
+          this.newRectStyle().width =
+            -(event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left)) + 'px';
+          break;
+        case 270:
+          this.newRectStyle().height =
+            (event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left)) + 'px';
+          this.newRectStyle().width =
+            -(event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top)) + 'px';
+          break;
+        default:
+          this.newRectStyle().height =
+            (event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top)) + 'px';
+          this.newRectStyle().width =
+            (event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left)) + 'px';
+      }
     }
   }
 
