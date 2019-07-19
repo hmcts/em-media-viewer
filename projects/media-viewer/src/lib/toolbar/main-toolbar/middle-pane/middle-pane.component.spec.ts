@@ -37,12 +37,12 @@ describe('ToolbarMiddlePaneComponent', () => {
     expect(rotateSpy).toHaveBeenCalledWith(90);
   });
 
-  it('should emit rotate event with -90 degrees', () => {
+  it('should emit rotate event with 270 degrees', () => {
     const rotateSpy = spyOn(component.toolbarEvents.rotate, 'next');
     const rotateCtrClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCcw]');
     rotateCtrClkwiseBtn.click();
 
-    expect(rotateSpy).toHaveBeenCalledWith(-90);
+    expect(rotateSpy).toHaveBeenCalledWith(270);
   });
 
   it('should emit zoom out event', () => {

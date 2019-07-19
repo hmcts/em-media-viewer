@@ -31,7 +31,7 @@ describe('ImageViewerComponent', () => {
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
     component.url = DOCUMENT_URL;
-    component.annotationSet = annotationSet;
+    component.annotationSet = { ...annotationSet };
     fixture.detectChanges();
   });
 
