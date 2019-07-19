@@ -41,7 +41,7 @@ describe('AnnotationSetComponent', () => {
 
     fixture = TestBed.createComponent(AnnotationSetComponent);
     component = fixture.componentInstance;
-    component.annotationSet = annotationSet;
+    component.annotationSet = { ...annotationSet };
     component.page = 1;
     fixture.detectChanges();
   });
