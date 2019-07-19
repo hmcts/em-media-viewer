@@ -4,11 +4,11 @@ import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
 import { PrintService } from '../../print.service';
-import {CUSTOM_ELEMENTS_SCHEMA, SimpleChange} from '@angular/core';
-import {ErrorMessageComponent} from '../error-message/error.message.component';
-import {By} from '@angular/platform-browser';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {AnnotationSetComponent} from '../../annotations/annotation-set/annotation-set.component';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { ErrorMessageComponent } from '../error-message/error.message.component';
+import { By } from '@angular/platform-browser';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
@@ -38,7 +38,7 @@ describe('PdfViewerComponent', () => {
     documentLoadProgress: new Subject<DocumentLoadProgress>(),
     documentLoaded: new Subject<any>(),
     documentLoadFailed: new Subject(),
-    pageRendered: new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>()
+    pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>()
   };
 
   const mockViewerEvent = {
@@ -62,9 +62,9 @@ describe('PdfViewerComponent', () => {
       providers: [
         AnnotationApiService,
         ToolbarEventService,
-        {provide: PdfJsWrapperFactory, useValue: mockFactory},
-        {provide: ViewerEventService, useValue: mockViewerEvent},
-        {provide: PrintService, useFactory: () => mockPrintService},
+        { provide: PdfJsWrapperFactory, useValue: mockFactory },
+        { provide: ViewerEventService, useValue: mockViewerEvent },
+        { provide: PrintService, useFactory: () => mockPrintService },
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -152,14 +152,14 @@ describe('PdfViewerComponent', () => {
 
   it('should initialise the annotationSet components', async () => {
     const divElement = document.createElement('div');
-    const pageRenderEvent = {pageNumber: 1, source: {rotation: 0, scale: 1, div: divElement}};
+    const pageRenderEvent = { pageNumber: 1, source: { rotation: 0, scale: 1, div: divElement } };
     const annotationSetComponent = component.createAnnotationSetComponent(pageRenderEvent.pageNumber);
     component.annotationSetComponents.push(annotationSetComponent);
     spyOn(annotationSetComponent.instance, 'initialise');
 
     await component.onPageRendered(pageRenderEvent);
 
-    expect(component.annotationSetComponents[0].instance.initialise).toHaveBeenCalledWith(pageRenderEvent);
+    expect(annotationSetComponent.instance.initialise).toHaveBeenCalledWith(pageRenderEvent.source);
   });
 
   it('should create annotation set components', () => {
