@@ -4,11 +4,8 @@
      [style.height]="height ? (height + 'px') : '100%'"
      (mousedown)="onMouseDown($event)"
      (mousemove)="onMouseMove($event)"
-     (mouseup)="onMouseUp()"
-  >
-
+     (mouseup)="onMouseUp()">
   <div *ngIf="toolbarEvents.drawMode" #newRectangle class="newRectangle" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp()"></div>
-
   <ng-container *ngFor="let annotation of getAnnotationsOnPage(); index as i" >
     <mv-annotation [annotation]="annotation"
                    [zoom]="zoom"
@@ -18,8 +15,7 @@
                    [draggable]="!(toolbarEvents.drawMode | async)"
                    (select)="onAnnotationSelected($event, i)"
                    (update)="onAnnotationUpdate($event)"
-                   (delete)="onAnnotationDelete($event)"
-    >
+                   (delete)="onAnnotationDelete($event)">
     </mv-annotation>
   </ng-container>
 </div>

@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/annotations/annotation-api.service';
-import { imageAnnotationSet } from '../../assets/mock-data/image-annotation-set';
-import { pdfAnnotationSet } from '../../assets/mock-data/pdf-annotation-set';
 import {
   defaultImageOptions,
   defaultPdfOptions, defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
 } from '../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
+import { AnnotationSet } from '../../../projects/media-viewer/src/lib/annotations/annotation-set/annotation-set.model';
 
 @Component({
   selector: 'media-viewer-wrapper',
@@ -23,11 +22,11 @@ export class MediaViewerWrapperComponent {
 
   selectedTab = 'pdf';
   url = this.pdfUrl;
-  annotationSet = pdfAnnotationSet;
+  annotationSet: AnnotationSet;
   comments = [];
 
   showToolbar = true;
-  showAnnotations = false;
+  enableAnnotations = false;
   showCommentSummary = new Subject<boolean>();
 
   constructor(
@@ -42,12 +41,10 @@ export class MediaViewerWrapperComponent {
 
     if (newTab === 'pdf') {
       this.url = this.pdfUrl;
-      this.annotationSet = pdfAnnotationSet;
-      this.toolbarButtons.reset({ ...defaultPdfOptions, showHighlight: this.showAnnotations });
+      this.toolbarButtons.reset({ ...defaultPdfOptions, showHighlight: this.enableAnnotations });
     } else if (newTab === 'image') {
       this.url = this.imageUrl;
-      this.annotationSet = imageAnnotationSet;
-      this.toolbarButtons.reset({ ...defaultImageOptions, showHighlight: this.showAnnotations });
+      this.toolbarButtons.reset({ ...defaultImageOptions, showHighlight: this.enableAnnotations });
     } else {
       this.url = this.unsupportedUrl;
       this.toolbarButtons.reset(defaultUnsupportedOptions);
@@ -59,7 +56,7 @@ export class MediaViewerWrapperComponent {
   }
 
   toggleAnnotations(showAnnotations: boolean) {
-    this.showAnnotations = showAnnotations;
+    this.enableAnnotations = showAnnotations;
     this.toolbarButtons.showHighlight = showAnnotations;
   }
 
@@ -71,8 +68,8 @@ export class MediaViewerWrapperComponent {
     if (newUrl.startsWith('/documents/')) {
       const documentId = newUrl.split('/')[2];
 
-      this.api.getComments(documentId).subscribe(comments => this.comments = comments);
       this.api.getOrCreateAnnotationSet(documentId).subscribe(annotationSet => this.annotationSet = annotationSet);
+      this.api.getComments(documentId).subscribe(comments => this.comments = comments);
       this.url = newUrl.endsWith('/binary') ? newUrl : newUrl + '/binary';
     }
   }

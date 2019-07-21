@@ -13,6 +13,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
+
+  @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
   errorMessage: string;

@@ -28,7 +28,7 @@ import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar
   ],
   entryComponents: [
     AnnotationComponent,
-    AnnotationSetComponent
+    AnnotationSetComponent,
   ],
   providers: [
     AnnotationApiService
