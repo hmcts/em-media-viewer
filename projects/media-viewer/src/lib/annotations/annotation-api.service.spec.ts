@@ -62,7 +62,7 @@ describe('AnnotationApiService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('createAnnotationSet', async(() => {
+  it('should createAnnotationSet', async(() => {
     const requestBody = {
       documentId: dmDocumentId,
       id: '6d1f5e09-98ad-4891-aecc-936282b06148'

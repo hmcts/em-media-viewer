@@ -7,7 +7,7 @@ import uuid from 'uuid';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { TextHighlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Subscription } from 'rxjs';
-import { PageRenderEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
+import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -47,7 +47,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  initialise(eventSource: PageRenderEvent['source']) {
+  initialise(eventSource: PageEvent['source']) {
     this.zoom = eventSource.scale;
     this.rotate = eventSource.rotation;
     const element = eventSource.div;

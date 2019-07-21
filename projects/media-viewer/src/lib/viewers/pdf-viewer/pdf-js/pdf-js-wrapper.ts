@@ -138,7 +138,7 @@ export interface DocumentLoadProgress {
   total: number;
 }
 
-export interface PageRenderEvent {
+export interface PageEvent {
   pageNumber: number;
   source: {
     rotation: number,

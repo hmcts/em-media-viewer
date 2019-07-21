@@ -17,7 +17,7 @@ export interface SearchResultsCount {
   total: number;
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ToolbarEventService {
   public readonly highlightMode = new BehaviorSubject<HighlightMode>(false);
   public readonly drawMode = new BehaviorSubject<DrawMode>(false);

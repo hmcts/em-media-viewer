@@ -4,7 +4,8 @@
        class="image-container"
   >
     <img #img *ngIf="url" [ngClass]="'rot' + rotation" data-hook="dm.viewer.img" [src]="url" (error)="onLoadError()"/>
-    <mv-annotation-set [annotationSet]="annotationSet"
+    <mv-annotation-set *ngIf="enableAnnotations"
+                       [annotationSet]="annotationSet"
                        [zoom]="zoom"
                        [page]="1"
                        [rotate]="rotation">
