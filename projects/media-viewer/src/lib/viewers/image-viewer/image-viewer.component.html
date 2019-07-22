@@ -8,9 +8,10 @@
                        [annotationSet]="annotationSet"
                        [zoom]="zoom"
                        [page]="1"
-                       [rotate]="rotation">
+                       [rotate]="rotation"
+                       [height]="img !== undefined ? img.nativeElement.height : 0"
+                       [width]="img !== undefined ? img.nativeElement.width : 0">
     </mv-annotation-set>
   </div>
   <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>
 </div>
-

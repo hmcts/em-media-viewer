@@ -100,6 +100,7 @@ describe('AnnotationSetComponent', () => {
 
     component.newRectangle = new ElementRef(document.createElement('div'));
     component.toolbarEvents.drawMode.next(true);
+    component.zoom = 1;
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
     component.onMouseMove({ pageY: 100, pageX: 100 } as MouseEvent);
     component.onMouseUp();
