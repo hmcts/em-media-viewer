@@ -57,34 +57,36 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   async createRectangles(textHighlight: TextHighlight) {
-    if (window.getSelection) {
-      const selection = window.getSelection();
+    if (textHighlight.page === this.page) {
+      if (window.getSelection) {
+        const selection = window.getSelection();
 
-      if (selection.rangeCount && !selection.isCollapsed) {
-        const range = selection.getRangeAt(0).cloneRange();
-        const clientRects = range.getClientRects();
+        if (selection.rangeCount && !selection.isCollapsed) {
+          const range = selection.getRangeAt(0).cloneRange();
+          const clientRects = range.getClientRects();
 
-        if (clientRects) {
-          const localElement = (<Element>textHighlight.event.target) || (<Element>textHighlight.event.srcElement);
-          const textLayerRect = localElement.parentElement.getBoundingClientRect();
+          if (clientRects) {
+            const localElement = (<Element>textHighlight.event.target) || (<Element>textHighlight.event.srcElement);
+            const textLayerRect = localElement.parentElement.getBoundingClientRect();
 
-          const selectionRectangles: Rectangle[] = [];
-          for (let i = 0; i < clientRects.length; i++) {
-            selectionRectangles.push(
-              this.createRectangle(clientRects[i], textLayerRect)
-            );
+            const selectionRectangles: Rectangle[] = [];
+            for (let i = 0; i < clientRects.length; i++) {
+              selectionRectangles.push(
+                this.createRectangle(clientRects[i], textLayerRect)
+              );
+            }
+            await this.createAnnotation(selectionRectangles);
+
+            const selectedText = window.getSelection();
+            selectedText.removeAllRanges();
           }
-          await this.createAnnotation(textHighlight.page, selectionRectangles);
-
-          const selectedText = window.getSelection();
-          selectedText.removeAllRanges();
         }
       }
     }
   }
 
   private createRectangle(rect: any, textLayerRect: any) {
-    let rectangle = {
+    const rectangle = {
       id: uuid(),
       x: 0,
       y: 0,
@@ -94,20 +96,20 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
     switch (this.rotate) {
       case 90:
-        rectangle.x = (rect.top - textLayerRect.top) / this.zoom;
-        rectangle.y = this.height - ((rect.left - textLayerRect.left + rectangle.width) / this.zoom);
         rectangle.width = (rect.bottom - rect.top) / this.zoom;
         rectangle.height = (rect.right - rect.left) / this.zoom;
+        rectangle.x = (rect.top - textLayerRect.top) / this.zoom;
+        rectangle.y = ((this.height - (rect.left - textLayerRect.left)) / this.zoom) - rectangle.height;
         break;
       case 180:
-        rectangle.x = this.width - (rect.left - textLayerRect.left + rectangle.width) / this.zoom;
-        rectangle.y = this.height - (rect.top - textLayerRect.top + rectangle.height) / this.zoom;
+        rectangle.x = ((this.width - (rect.left - textLayerRect.left)) / this.zoom) - rectangle.width;
+        rectangle.y = ((this.height - (rect.top - textLayerRect.top)) / this.zoom) - rectangle.height;
         break;
       case 270:
-        rectangle.x = this.width - ((rect.top - textLayerRect.top + rectangle.height) / this.zoom);
-        rectangle.y = (rect.left - textLayerRect.left) / this.zoom;
         rectangle.width = (rect.bottom - rect.top) / this.zoom;
         rectangle.height = (rect.right - rect.left) / this.zoom;
+        rectangle.x = ((this.width - (rect.top - textLayerRect.top)) / this.zoom) - rectangle.width;
+        rectangle.y = (rect.left - textLayerRect.left) / this.zoom;
         break;
       default:
         rectangle.x = (rect.left - textLayerRect.left) / this.zoom;
@@ -116,11 +118,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     return rectangle as Rectangle;
   }
 
-  private createAnnotation(highlightPage: number, rectangle: Rectangle[]): void {
-    console.log('page = ' + highlightPage);
-    console.log('annotationSetPage = ' + this.page);
-    if (highlightPage === this.page) {
-      const annotation = {
+  private createAnnotation(rectangle: Rectangle[]): void {
+    const annotation = {
         id: uuid(),
         annotationSetId: this.annotationSet.id,
         color: 'FFFF00',
@@ -131,7 +130,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       };
       console.log('creating annotation');
       this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
-    }
   }
 
   public getAnnotationsOnPage(): Annotation[] {
@@ -177,10 +175,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     if (this.annotationSet && this.toolbarEvents.drawMode.value) {
       const rectangle = {
         id: uuid(),
-        x: +this.newRectStyle().left.slice(0, -2),
-        y: +this.newRectStyle().top.slice(0, -2),
-        width: +this.newRectStyle().width.slice(0, -2),
-        height: +this.newRectStyle().height.slice(0, -2),
+        x: +this.newRectStyle().left.slice(0, -2) / this.zoom,
+        y: +this.newRectStyle().top.slice(0, -2) / this.zoom,
+        width: +this.newRectStyle().width.slice(0, -2) / this.zoom,
+        height: +this.newRectStyle().height.slice(0, -2) / this.zoom,
       };
 
       const annotation = {
@@ -209,16 +207,63 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.drawStartY = event.pageY - (window.scrollY + this.containerRect().top);
 
     this.newRectStyle().display = 'block';
-    this.newRectStyle().top =  this.drawStartY + 'px';
-    this.newRectStyle().left = this.drawStartX + 'px';
+
+    switch (this.rotate) {
+      case 90:
+        this.newRectStyle().top =  this.height - this.drawStartX + 'px';
+        this.newRectStyle().left = this.drawStartY + 'px';
+        break;
+      case 180:
+        this.newRectStyle().top =  this.height - this.drawStartY + 'px';
+        this.newRectStyle().left = this.width - this.drawStartX + 'px';
+        break;
+      case 270:
+        this.newRectStyle().top =  this.drawStartX + 'px';
+        this.newRectStyle().left = this.width - this.drawStartY + 'px';
+        break;
+      default:
+        this.newRectStyle().top =  this.drawStartY + 'px';
+        this.newRectStyle().left = this.drawStartX + 'px';
+    }
   }
 
   private updateNewRect(event: MouseEvent) {
+    const rect = {
+      top: this.drawStartY,
+      left: this.drawStartX,
+      height: this.height,
+      width: this.width
+    };
+    let newRectPos;
     if (this.drawStartX > 0 && this.drawStartY > 0) {
-      this.newRectStyle().height =
-        (event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top)) + 'px';
-      this.newRectStyle().width =
-        (event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left)) + 'px';
+      switch (this.rotate) {
+        case 90:
+          rect.height = -(event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left));
+          rect.width = (event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top));
+          rect.top = this.height - this.drawStartX;
+          rect.left = this.drawStartY;
+          break;
+        case 180:
+          rect.height = -(event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top));
+          rect.width = -(event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left));
+          rect.top =  this.height - this.drawStartY;
+          rect.left = this.width - this.drawStartX;
+          break;
+        case 270:
+          rect.height = (event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left));
+          rect.width = -(event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top));
+          rect.top =  this.drawStartX;
+          rect.left = this.width - this.drawStartY;
+          break;
+        default:
+          rect.height = (event.pageY - this.drawStartY - (window.scrollY + this.containerRect().top));
+          rect.width = (event.pageX - this.drawStartX - (window.scrollX + this.containerRect().left));
+      }
+      newRectPos = this.calculateRectPos(rect.top, rect.left, rect.height, rect.width);
+      this.newRectStyle().top = newRectPos.top + 'px';
+      this.newRectStyle().left = newRectPos.left + 'px';
+      this.newRectStyle().height = newRectPos.height + 'px';
+      this.newRectStyle().width = newRectPos.width + 'px';
     }
   }
 
@@ -236,5 +281,24 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   private containerRect() {
     return this.container.nativeElement.getBoundingClientRect();
+  }
+
+  calculateRectPos(top, left, height, width) {
+    if (height < 0) {
+      height = Math.abs(height);
+      top -= height;
+    }
+
+    if (width < 0) {
+      width = Math.abs(width);
+      left -= width;
+    }
+
+    return {
+      top: top,
+      left: left,
+      height: height,
+      width: width
+    };
   }
 }
