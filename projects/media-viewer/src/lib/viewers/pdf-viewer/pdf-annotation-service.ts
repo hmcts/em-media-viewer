@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, ComponentRef, ElementRef, Injectable, Input, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, ElementRef, Injectable, ViewContainerRef } from '@angular/core';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
@@ -58,7 +58,7 @@ export class PdfAnnotationService {
     }
   }
 
-  onTextSelected(mouseEvent: MouseEvent) {
+  onPageSelected(mouseEvent: MouseEvent) {
     const pageEvent = {
       pageNumber: this.pdfWrapper.getPageNumber(),
       source: {
@@ -69,7 +69,7 @@ export class PdfAnnotationService {
       }
     };
 
-    if (this.toolbarEvents.highlightMode.getValue()) {
+    if (this.toolbarEvents.highlightMode.getValue() || this.toolbarEvents.drawMode.getValue()) {
       const currentPage = pageEvent.pageNumber;
 
       if (!this.pages.includes(currentPage)) {
@@ -79,9 +79,22 @@ export class PdfAnnotationService {
         component.instance.initialise(pageEvent.source);
       }
 
+      if (this.toolbarEvents.drawMode.getValue()) {
+        setTimeout(() => {
+          this.viewerEvents.onShapeSelection({
+            page: this.pdfWrapper.getPageNumber(),
+            event: mouseEvent
+          });
+        }, 0);
+      }
+    }
+  }
+
+  onHighlightSelected(mouseEvent: MouseEvent) {
+    if (this.toolbarEvents.highlightMode.getValue()) {
       setTimeout(() => {
         this.viewerEvents.onTextSelection({
-          page: currentPage,
+          page: this.pdfWrapper.getPageNumber(),
           event: mouseEvent
         });
       }, 0);
