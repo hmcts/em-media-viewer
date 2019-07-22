@@ -15,7 +15,8 @@ export class MediaViewerComponent implements OnChanges {
   @Input() downloadFileName: string;
   @Input() contentType: string;
   @Input() showToolbar = true;
-  @Input() showAnnotations = false;
+
+  @Input() enableAnnotations = false;
   @Input() showCommentSummary: Subject<boolean>;
   @Input() annotationSet: AnnotationSet;
 

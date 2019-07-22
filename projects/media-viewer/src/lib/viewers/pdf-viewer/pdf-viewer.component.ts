@@ -1,34 +1,37 @@
 import {
   AfterContentInit,
   Component,
-  ComponentFactoryResolver,
   ElementRef,
   Input,
   OnChanges,
+  OnDestroy,
   SimpleChanges,
   ViewChild,
-  ViewContainerRef, ViewEncapsulation,
-  OnDestroy, ComponentRef
+  ViewContainerRef,
+  ViewEncapsulation
 } from '@angular/core';
-import { DocumentLoadProgress, PageRenderEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
+import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
-import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
+import { PdfAnnotationService } from './pdf-annotation-service';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.scss'],
+  providers: [PdfAnnotationService],
   encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() url: string;
   @Input() downloadFileName: string;
+
+  @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
   highlightMode: BehaviorSubject<boolean>;
@@ -43,16 +46,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
-  pages = [];
-  annotationSetComponents: ComponentRef<AnnotationSetComponent>[] = [];
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
-    private readonly componentFactoryResolver: ComponentFactoryResolver,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
+    private readonly annotationService: PdfAnnotationService
   ) {
     this.highlightMode = toolbarEvents.highlightMode;
     this.drawMode = toolbarEvents.drawMode;
@@ -64,7 +65,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe(() => this.onDocumentLoadFailed());
-    this.pdfWrapper.pageRendered.subscribe((e) => this.onPageRendered(e));
+    this.pdfWrapper.pageRendered.subscribe((event) => this.annotationService.onPageRendered(event));
+    this.annotationService.init(this.pdfWrapper, this.pdfViewer);
 
     this.subscriptions.push(
       this.toolbarEvents.print.subscribe(() => this.printService.printDocumentNatively(this.url)),
@@ -76,59 +78,24 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.toolbarEvents.setCurrentPage.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
       this.toolbarEvents.changePageByDelta.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber))
     );
-
-    await this.pdfWrapper.loadDocument(this.url);
-    this.onPageLoaded();
+    await this.loadDocument();
   }
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.url && this.pdfWrapper) {
-      this.destroyAnnotationSetComponent();
-      await this.pdfWrapper.loadDocument(this.url);
-      this.onPageLoaded();
+      await this.loadDocument();
     }
   }
 
   ngOnDestroy(): void {
-    // Clean up any subscriptions that we may have
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
   }
 
-  onPageLoaded() {
-    this.pages = [];
-    this.annotationSet.annotations.forEach(annotation => {
-      if (!this.pages.includes(annotation.page)) {
-        const component = this.createAnnotationSetComponent(annotation.page);
-        this.pages.push(annotation.page);
-        this.annotationSetComponents.push(component);
-      }
-    });
-  }
-
-  onPageRendered(pageRenderEvent: PageRenderEvent) {
-    console.log(pageRenderEvent.pageNumber);
-    const annotationComponent = this.annotationSetComponents.find((annotation) => annotation.instance.page === pageRenderEvent.pageNumber);
-    if (annotationComponent) {
-      annotationComponent.instance.initialise(pageRenderEvent.source);
-    }
-  }
-
-  createAnnotationSetComponent(page: number): ComponentRef<AnnotationSetComponent> {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(AnnotationSetComponent);
-    const component = this.viewContainerRef.createComponent(factory);
-    component.instance.annotationSet = this.annotationSet;
-    component.instance.page = page;
-    return component;
-  }
-
-  destroyAnnotationSetComponent() {
-    for (const annotationSet of this.annotationSetComponents) {
-      annotationSet.destroy();
-    }
-    this.annotationSetComponents = [];
-    this.pages = [];
+  private async loadDocument() {
+    await this.pdfWrapper.loadDocument(this.url);
+    this.annotationService.setupAnnotationSet(this.annotationSet);
   }
 
   private onDocumentLoadInit() {
@@ -159,27 +126,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
   }
 
-  onMouseUp(event: MouseEvent) {
-    if (this.toolbarEvents.highlightMode.getValue()) {
-      const currentPage = this.pdfWrapper.getPageNumber();
-
-      if (!this.pages.includes(currentPage)) {
-        const component = this.createAnnotationSetComponent(currentPage);
-        this.pages.push(currentPage);
-        this.annotationSetComponents.push(component);
-        component.instance.initialise({
-          rotation: this.pdfWrapper.getNormalisedPagesRotation(),
-          scale: this.pdfWrapper.getCurrentPDFZoomValue(),
-          div: this.pdfViewer.nativeElement.querySelector(`div.page[data-page-number="${currentPage}"]`)
-        });
-      }
-
-      setTimeout(() => {
-        this.viewerEvents.onTextSelection({
-          page: currentPage,
-          event: event
-        });
-      }, 0);
-    }
+  onMouseUp(mouseEvent: MouseEvent) {
+    this.annotationService.onTextSelected(mouseEvent);
   }
 }
