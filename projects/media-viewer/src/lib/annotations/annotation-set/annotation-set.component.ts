@@ -26,7 +26,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   @ViewChild('newRectangle') newRectangle: ElementRef;
   @ViewChild('container') container: ElementRef;
 
-  selected = -1;
+  selectedAnnotation;
   drawStartX = -1;
   drawStartY = -1;
 
@@ -128,9 +128,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         page: this.page,
         rectangles: rectangle,
         type: 'highlight'
-      };
-      console.log('creating annotation');
-      this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
+    };
+    console.log('creating annotation');
+    this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
+    this.selectedAnnotation = annotation.id;
   }
 
   public getAnnotationsOnPage(): Annotation[] {
@@ -144,7 +145,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         const index = this.annotationSet.annotations.findIndex(a => a.id === newAnnotation.id);
 
         this.annotationSet.annotations[index] = newAnnotation;
-        setTimeout(() => this.selected = index, 0);
       });
   }
 
@@ -154,10 +154,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.annotationSet.annotations = this.annotationSet.annotations.filter(a => a.id !== annotation.id);
       });
-  }
-
-  public onAnnotationSelected(selected: boolean, i: number) {
-    this.selected = selected ? i : -1;
   }
 
   public onMouseDown(event: MouseEvent) {
@@ -198,6 +194,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           .subscribe(a => this.annotationSet.annotations.push(a));
 
         this.toolbarEvents.drawMode.next(false);
+        this.selectedAnnotation = annotation.id;
       }
       this.resetNewRect();
     }
