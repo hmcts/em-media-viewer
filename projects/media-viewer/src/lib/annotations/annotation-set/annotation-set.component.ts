@@ -145,6 +145,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         const index = this.annotationSet.annotations.findIndex(a => a.id === newAnnotation.id);
 
         this.annotationSet.annotations[index] = newAnnotation;
+        this.selectedAnnotation = newAnnotation.id;
       });
   }
 
@@ -153,6 +154,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       .deleteAnnotation(annotation.id)
       .subscribe(() => {
         this.annotationSet.annotations = this.annotationSet.annotations.filter(a => a.id !== annotation.id);
+        this.selectedAnnotation = -1;
       });
   }
 
