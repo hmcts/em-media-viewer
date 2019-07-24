@@ -71,18 +71,6 @@ describe('AnnotationSetComponent', () => {
     expect(annotations).not.toEqual(component.annotationSet.annotations);
   });
 
-  it('select an annotation', () => {
-    component.onAnnotationSelected(true, 1);
-
-    expect(component.selected).toEqual(1);
-  });
-
-  it('deselects an annotation', () => {
-    component.onAnnotationSelected(false, 1);
-
-    expect(component.selected).toEqual(-1);
-  });
-
   it('starts drawing on mousedown', () => {
     component.newRectangle = new ElementRef(document.createElement('div'));
     component.toolbarEvents.drawMode.next(true);
