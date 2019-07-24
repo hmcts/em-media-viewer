@@ -13,6 +13,7 @@ export class CommentComponent {
   private readonly MAX_COMMENT_LENGTH = 50;
 
   lastUpdate: string;
+  originalComment: string;
   fullComment: string;
   author: User;
   editor: User;
@@ -33,7 +34,8 @@ export class CommentComponent {
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
     this.editor = comment.lastModifiedByDetails;
-    this.fullComment = comment.content;
+    this.originalComment = comment.content;
+    this.fullComment = this.originalComment;
   }
 
   @Input()
@@ -48,7 +50,6 @@ export class CommentComponent {
   @Input()
   set editable(editable: boolean) {
     this._editable = editable;
-    this.selected = editable;
     if (editable) {
       setTimeout(() => this.textArea.nativeElement.focus(), 0);
     }
@@ -70,6 +71,7 @@ export class CommentComponent {
 
   onCancel() {
     this.editable = false;
+    this.fullComment = this.originalComment;
   }
 
   public onDelete() {
