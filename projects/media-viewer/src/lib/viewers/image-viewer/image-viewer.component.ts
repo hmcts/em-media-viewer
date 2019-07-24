@@ -1,4 +1,14 @@
-import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef, EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PrintService } from '../../print.service';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
@@ -17,6 +27,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
+  @Output() imageLoadStatus = new EventEmitter<string>();
+
   errorMessage: string;
 
   @ViewChild('img') img: ElementRef;
@@ -31,7 +43,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    // Listen for any changes invoked on the toolbar events Service and initialise any default behaviour state
     this.subscriptions.push(
       this.toolbarEvents.rotate.subscribe(rotation => this.setRotation(rotation)),
       this.toolbarEvents.zoom.subscribe(zoom => this.setZoom(zoom)),
@@ -101,6 +112,10 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   onLoadError() {
     this.errorMessage = `Could not load the image "${this.url}"`;
+    this.imageLoadStatus.emit("FAILURE");
   }
 
+  onLoad() {
+    this.imageLoadStatus.emit("SUCCESS");
+  }
 }

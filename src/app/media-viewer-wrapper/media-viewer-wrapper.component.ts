@@ -3,7 +3,8 @@ import { Subject } from 'rxjs';
 import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/annotations/annotation-api.service';
 import {
   defaultImageOptions,
-  defaultPdfOptions, defaultUnsupportedOptions,
+  defaultPdfOptions,
+  defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
 } from '../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
 import { AnnotationSet } from '../../../projects/media-viewer/src/lib/annotations/annotation-set/annotation-set.model';
@@ -25,13 +26,15 @@ export class MediaViewerWrapperComponent {
   annotationSet: AnnotationSet;
   comments = [];
 
+  mediaLoadStatus: string;
+
   showToolbar = true;
   enableAnnotations = false;
   showCommentSummary = new Subject<boolean>();
 
   constructor(
-    public readonly api: AnnotationApiService,
-    public readonly toolbarButtons: ToolbarButtonVisibilityService
+    private readonly api: AnnotationApiService,
+    private readonly toolbarButtons: ToolbarButtonVisibilityService
   ) {
     this.selectTab(this.selectedTab);
   }
@@ -71,6 +74,13 @@ export class MediaViewerWrapperComponent {
       this.api.getOrCreateAnnotationSet(documentId).subscribe(annotationSet => this.annotationSet = annotationSet);
       this.api.getComments(documentId).subscribe(comments => this.comments = comments);
       this.url = newUrl.endsWith('/binary') ? newUrl : newUrl + '/binary';
+    } else {
+      this.url = newUrl;
     }
+  }
+
+  onMediaLoad(loadStatus: string) {
+    this.mediaLoadStatus = loadStatus;
+    setTimeout(() => this.mediaLoadStatus = undefined, 2000);
   }
 }

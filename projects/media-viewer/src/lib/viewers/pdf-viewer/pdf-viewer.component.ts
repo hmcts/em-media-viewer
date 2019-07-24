@@ -1,10 +1,10 @@
 import {
   AfterContentInit,
   Component,
-  ElementRef,
+  ElementRef, EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
+  OnDestroy, Output,
   SimpleChanges,
   ViewChild,
   ViewContainerRef,
@@ -27,6 +27,8 @@ import { PdfAnnotationService } from './pdf-annotation-service';
   encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
+
+  @Output() pdfLoadStatus = new EventEmitter<string>();
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -112,11 +114,13 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private onDocumentLoaded() {
     this.loadingDocument = false;
+    this.pdfLoadStatus.emit("SUCCESS");
   }
 
   private onDocumentLoadFailed() {
     this.loadingDocument = false;
     this.errorMessage = `Could not load the document "${this.url}"`;
+    this.pdfLoadStatus.emit("FAILURE");
   }
 
   @Input()
