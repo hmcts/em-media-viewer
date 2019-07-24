@@ -5,7 +5,7 @@ import { AnnotationSet } from './annotation-set.model';
 import { Rectangle } from './annotation/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { TextHighlight, ViewerEventService } from '../../viewers/viewer-event.service';
+import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
@@ -26,7 +26,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   @ViewChild('newRectangle') newRectangle: ElementRef;
   @ViewChild('container') container: ElementRef;
 
-  selected = -1;
+  selectedAnnotation;
   drawStartX = -1;
   drawStartY = -1;
 
@@ -41,6 +41,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('init annotation-set');
     this.subscriptions.push(this.viewerEvents.highlightedText.subscribe((highlight) => this.createRectangles(highlight)));
+    this.subscriptions.push(this.viewerEvents.highlightedShape.subscribe((highlight) => this.onMouseDown(highlight.event)));
   }
 
   ngOnDestroy(): void {
@@ -56,8 +57,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     element.appendChild(this.container.nativeElement);
   }
 
-  async createRectangles(textHighlight: TextHighlight) {
-    if (textHighlight.page === this.page) {
+  async createRectangles(highlight: Highlight) {
+    if (highlight.page === this.page) {
       if (window.getSelection) {
         const selection = window.getSelection();
 
@@ -66,7 +67,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           const clientRects = range.getClientRects();
 
           if (clientRects) {
-            const localElement = (<Element>textHighlight.event.target) || (<Element>textHighlight.event.srcElement);
+            const localElement = (<Element>highlight.event.target) || (<Element>highlight.event.srcElement);
             const textLayerRect = localElement.parentElement.getBoundingClientRect();
 
             const selectionRectangles: Rectangle[] = [];
@@ -127,9 +128,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         page: this.page,
         rectangles: rectangle,
         type: 'highlight'
-      };
-      console.log('creating annotation');
-      this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
+    };
+    console.log('creating annotation');
+    this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
+    this.selectedAnnotation = annotation.id;
   }
 
   public getAnnotationsOnPage(): Annotation[] {
@@ -143,7 +145,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         const index = this.annotationSet.annotations.findIndex(a => a.id === newAnnotation.id);
 
         this.annotationSet.annotations[index] = newAnnotation;
-        setTimeout(() => this.selected = index, 0);
       });
   }
 
@@ -153,10 +154,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.annotationSet.annotations = this.annotationSet.annotations.filter(a => a.id !== annotation.id);
       });
-  }
-
-  public onAnnotationSelected(selected: boolean, i: number) {
-    this.selected = selected ? i : -1;
   }
 
   public onMouseDown(event: MouseEvent) {
@@ -186,7 +183,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         annotationSetId: this.annotationSet.id,
         color: 'FFFF00',
         comments: [],
-        page: 1,
+        page: this.page,
         rectangles: [rectangle as Rectangle],
         type: 'highlight'
       };
@@ -197,6 +194,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           .subscribe(a => this.annotationSet.annotations.push(a));
 
         this.toolbarEvents.drawMode.next(false);
+        this.selectedAnnotation = annotation.id;
       }
       this.resetNewRect();
     }

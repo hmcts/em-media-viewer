@@ -17,7 +17,6 @@ export class AnnotationComponent {
   @Input() draggable: boolean;
   @Input() selected: boolean;
   @Output() update = new EventEmitter<Annotation>();
-  @Output() select = new EventEmitter<boolean>();
   @Output() delete = new EventEmitter<Annotation>();
 
   editable = false;
@@ -25,7 +24,7 @@ export class AnnotationComponent {
   @ViewChild('container') container: ElementRef;
 
   public onSelect() {
-    this.select.emit(true);
+    this.selected = true;
   }
 
   public onCommentDelete() {
@@ -47,8 +46,8 @@ export class AnnotationComponent {
 
   public onFocusOut(event: FocusEvent) {
     if (!this.container.nativeElement.contains(event.relatedTarget)) {
-      this.select.emit(false);
       this.editable = false;
+      this.selected = false;
     }
   }
 
@@ -57,20 +56,20 @@ export class AnnotationComponent {
   }
 
   public addOrEditComment() {
-    if (this.annotation.comments.length == 0) {
+    if (this.annotation.comments.length === 0) {
       this.annotation.comments.push({
         annotationId: this.annotation.id,
-        content: "",
-        createdBy: "",
+        content: '',
+        createdBy: '',
         createdByDetails: undefined,
         createdDate: new Date().getTime().toString(),
         id: uuid(),
-        lastModifiedBy: "",
+        lastModifiedBy: '',
         lastModifiedByDetails: undefined,
-        lastModifiedDate: ""
+        lastModifiedDate: ''
       });
     }
-    this.select.emit(true);
+    this.selected = true;
     this.editable = true;
   }
 

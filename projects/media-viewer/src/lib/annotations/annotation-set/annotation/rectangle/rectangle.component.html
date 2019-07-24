@@ -1,4 +1,6 @@
-<div [ngDraggable]="draggable"
+<div #rectElement
+     [tabindex]="rectangle.id"
+     [ngDraggable]="draggable"
      [ngResizable]="draggable"
      rzHandles="all"
      class="rectangle"
