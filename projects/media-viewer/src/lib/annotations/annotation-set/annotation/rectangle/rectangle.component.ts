@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Rectangle } from './rectangle.model';
 import { IResizeEvent } from 'angular2-draggable/lib/models/resize-event';
 
@@ -9,7 +9,6 @@ import { IResizeEvent } from 'angular2-draggable/lib/models/resize-event';
 })
 export class RectangleComponent {
 
-  @Input() selected: boolean;
   @Input() rectangle: Rectangle;
   @Input() color: String;
   @Input() zoom: number;
@@ -18,6 +17,21 @@ export class RectangleComponent {
 
   @Output() click = new EventEmitter();
   @Output() update = new EventEmitter<Rectangle>();
+
+  _selected = false;
+  @ViewChild('rectElement') rectElement: ElementRef;
+
+  @Input()
+  set selected(selected: boolean) {
+    this._selected = selected;
+    if (this._selected) {
+      setTimeout(() => this.rectElement.nativeElement.focus(), 0);
+    }
+  }
+
+  get selected() {
+    return this._selected;
+  }
 
   onClick() {
     this.click.emit();

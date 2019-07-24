@@ -15,25 +15,13 @@ export class AnnotationComponent {
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() draggable: boolean;
+  @Input() selected: boolean;
   @Output() update = new EventEmitter<Annotation>();
   @Output() delete = new EventEmitter<Annotation>();
 
   editable = false;
-  _selected = false;
 
   @ViewChild('container') container: ElementRef;
-
-  @Input()
-  set selected(selected: boolean) {
-    this._selected = selected;
-    if (this._selected) {
-      setTimeout(() => this.container.nativeElement.focus(), 0);
-    }
-  }
-
-  get selected() {
-    return this._selected;
-  }
 
   public onSelect() {
     this.selected = true;
