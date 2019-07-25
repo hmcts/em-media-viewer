@@ -14,7 +14,6 @@ export class AnnotationComponent {
   @Input() commentsLeftOffset: number;
   @Input() zoom: number;
   @Input() rotate: number;
-  @Input() draggable: boolean;
   @Input() selected: boolean;
   @Output() update = new EventEmitter<Annotation>();
   @Output() delete = new EventEmitter<Annotation>();

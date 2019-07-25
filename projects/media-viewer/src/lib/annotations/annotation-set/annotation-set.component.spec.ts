@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentComponent } from './annotation/comment/comment.component';
 import { RectangleComponent } from './annotation/rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
-import { AngularDraggableModule } from 'angular2-draggable';
 import { annotationSet } from '../../../assets/annotation-set';
 import { PopupToolbarComponent } from './annotation/popup-toolbar/popup-toolbar.component';
 import { AnnotationComponent } from './annotation/annotation.component';
@@ -109,7 +108,6 @@ describe('AnnotationSetComponent', () => {
       ],
       imports: [
         FormsModule,
-        AngularDraggableModule,
         HttpClientTestingModule
       ],
       providers: [

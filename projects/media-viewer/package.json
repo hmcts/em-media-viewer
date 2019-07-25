@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@hmcts/frontend": "^0.0.34-alpha",
-    "angular2-draggable": "^2.3.0",
     "govuk-frontend": "^2.11.0",
     "pdfjs-dist": "^2.0.943",
     "uuid": "^3.3.2"
