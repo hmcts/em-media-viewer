@@ -1,4 +1,10 @@
-import { ComponentFactoryResolver, ComponentRef, ElementRef, Injectable, ViewContainerRef } from '@angular/core';
+import {
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  Injectable,
+  ViewContainerRef
+} from '@angular/core';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
@@ -35,11 +41,9 @@ export class PdfAnnotationService {
   }
 
   setupAnnotationSet(annotationSet: AnnotationSet) {
+    this.destroy();
     if (annotationSet) {
       this.annotationSet = annotationSet;
-      this.annotationSetComponents.forEach(component => component.destroy());
-      this.annotationSetComponents = [];
-      this.pages = [];
       this.annotationSet.annotations.forEach(annotation => {
         if (!this.pages.includes(annotation.page)) {
           const component = this.createAnnotationSetComponent(annotation.page);
@@ -48,6 +52,12 @@ export class PdfAnnotationService {
         }
       });
     }
+  }
+
+  destroy() {
+    this.annotationSetComponents.forEach(component => component.destroy());
+    this.annotationSetComponents = [];
+    this.pages = [];
   }
 
   onPageRendered(pageRenderEvent: PageEvent) {

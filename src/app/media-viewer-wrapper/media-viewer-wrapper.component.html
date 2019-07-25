@@ -86,7 +86,7 @@
     <mv-comments-summary *ngIf="showCommentSummary | async"
                          [title]="'Document Title'"
                          [showCommentSummary]="showCommentSummary"
-                         [comments]="comments"></mv-comments-summary>
+                         [comments]="(comments | async) || []"></mv-comments-summary>
     <section [id]="selectedTab">
         <mv-media-viewer [url]="url"
                          [downloadFileName]="filename"
