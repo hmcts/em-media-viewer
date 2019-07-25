@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentComponent } from './comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
-import { AngularDraggableModule } from 'angular2-draggable';
 import { annotationSet } from '../../../../assets/annotation-set';
 import { PopupToolbarComponent } from './popup-toolbar/popup-toolbar.component';
 import { EventEmitter } from '@angular/core';
@@ -21,8 +20,7 @@ describe('AnnotationComponent', () => {
         PopupToolbarComponent
       ],
       imports: [
-        FormsModule,
-        AngularDraggableModule
+        FormsModule
       ]
     })
     .compileComponents();

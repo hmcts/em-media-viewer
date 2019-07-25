@@ -8,7 +8,6 @@ import { AnnotationComponent } from './annotation-set/annotation/annotation.comp
 import { AnnotationSetComponent } from './annotation-set/annotation-set.component';
 import { RectangleComponent } from './annotation-set/annotation/rectangle/rectangle.component';
 import { CommentComponent } from './annotation-set/annotation/comment/comment.component';
-import { AngularDraggableModule } from 'angular2-draggable';
 import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar/popup-toolbar.component';
 
 @NgModule({
@@ -16,8 +15,7 @@ import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar
     NgtUniversalModule,
     CommonModule,
     FormsModule,
-    HttpClientModule,
-    AngularDraggableModule
+    HttpClientModule
   ],
   declarations: [
     AnnotationComponent,
