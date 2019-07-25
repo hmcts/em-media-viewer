@@ -10,9 +10,7 @@
     <mv-annotation [annotation]="annotation"
                    [zoom]="zoom"
                    [rotate]="rotate"
-                   [draggable]="rotate === 0"
                    [selected]="selectedAnnotation === annotation.id"
-                   [draggable]="!(toolbarEvents.drawMode | async)"
                    (update)="onAnnotationUpdate($event)"
                    (delete)="onAnnotationDelete($event)">
     </mv-annotation>
