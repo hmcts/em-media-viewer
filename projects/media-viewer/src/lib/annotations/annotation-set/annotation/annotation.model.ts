@@ -1,6 +1,6 @@
 import { ApiPersisted } from '../../api-persisted.model';
 import { Rectangle } from './rectangle/rectangle.model';
-import { Comment } from './comment/comment.model';
+import { Comment } from '../../comment-set/comment/comment.model';
 
 export interface Annotation extends ApiPersisted {
   annotationSetId: string;

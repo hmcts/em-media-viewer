@@ -17,5 +17,9 @@
                        [width]="img !== undefined ? img.nativeElement.width : 0">
     </mv-annotation-set>
   </div>
+  <mv-comment-set *ngIf="enableAnnotations"
+                  [annotationSet]="annotationSet"
+                  [page]="1">
+  </mv-comment-set>
   <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>
 </div>

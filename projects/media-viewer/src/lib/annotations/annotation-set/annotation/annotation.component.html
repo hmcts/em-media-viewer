@@ -17,16 +17,4 @@
       [color]="annotation.color">
     </mv-anno-rectangle>
   </ng-container>
-  <mv-anno-comment
-    *ngIf="annotation.comments[0]"
-    (click)="onSelect()"
-    (delete)="onCommentDelete()"
-    (updated)="onCommentUpdate($event)"
-    [rotate]="rotate"
-    [selected]="selected"
-    [editable]="editable"
-    [comment]="annotation.comments[0]"
-    [rectangle]="topRectangle()"
-    [zoom]="zoom">
-  </mv-anno-comment>
 </div>
