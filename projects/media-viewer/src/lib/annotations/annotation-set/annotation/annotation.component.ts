@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
@@ -24,16 +24,6 @@ export class AnnotationComponent {
 
   public onSelect() {
     this.selected = true;
-  }
-
-  public onCommentDelete() {
-    this.annotation.comments = [];
-    this.update.emit(this.annotation);
-  }
-
-  public onCommentUpdate(text: string) {
-    this.annotation.comments[0].content = text;
-    this.update.emit(this.annotation);
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {

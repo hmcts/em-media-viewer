@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Comment } from '../annotations/annotation-set/annotation/comment/comment.model';
+import { Comment } from '../annotations/comment-set/comment/comment.model';
 import { PrintService } from '../print.service';
 
 @Component({
