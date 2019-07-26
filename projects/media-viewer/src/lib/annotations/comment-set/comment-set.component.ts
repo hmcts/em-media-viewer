@@ -3,7 +3,6 @@ import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
-import { AnnotationService } from '../annotation.service';
 
 @Component({
   selector: 'mv-comment-set',
@@ -19,8 +18,7 @@ export class CommentSetComponent {
   editable = false;
   selected = false;
 
-  constructor(private readonly api: AnnotationApiService,
-              private readonly annotationService: AnnotationService) { }
+  constructor(private readonly api: AnnotationApiService) { }
 
   public getCommentsOnPage(): Comment[] {
     return this.annotationSet.annotations.map(a => {
