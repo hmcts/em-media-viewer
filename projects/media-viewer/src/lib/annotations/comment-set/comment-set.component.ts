@@ -3,6 +3,7 @@ import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
+import { AnnotationService } from '../annotation.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 @Component({
@@ -21,7 +22,9 @@ export class CommentSetComponent {
 
   @ViewChild('container') container: ElementRef;
 
-  constructor(private readonly api: AnnotationApiService) { }
+  constructor(private readonly api: AnnotationApiService,
+              private readonly annotationService: AnnotationService) { }
+
 
   initialise(eventSource: PageEvent['source']) {
     const element = eventSource.div;
