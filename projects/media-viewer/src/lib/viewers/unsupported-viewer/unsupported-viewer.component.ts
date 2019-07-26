@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Subscription } from 'rxjs';
 
@@ -8,9 +8,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./unsupported-viewer.component.scss']
 })
 export class UnsupportedViewerComponent implements OnInit, OnDestroy {
+
   @Input() url: string;
   @Input() originalUrl: string;
   @Input() downloadFileName: string;
+
+  @Output() loadStatus = new EventEmitter<string>();
+
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
   private subscriptions: Subscription[] = [];
@@ -23,6 +27,7 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.toolbarEvents.download.subscribe(() => this.downloadLink.nativeElement.click())
     );
+    this.loadStatus.emit("UNSUPPORTED");
   }
 
   ngOnDestroy(): void {

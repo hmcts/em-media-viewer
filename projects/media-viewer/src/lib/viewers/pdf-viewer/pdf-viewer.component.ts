@@ -2,9 +2,11 @@ import {
   AfterContentInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
+  Output,
   SimpleChanges,
   ViewChild,
   ViewContainerRef,
@@ -27,6 +29,8 @@ import { PdfAnnotationService } from './pdf-annotation-service';
   encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
+
+  @Output() pdfLoadStatus = new EventEmitter<string>();
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -88,9 +92,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   ngOnDestroy(): void {
-    for (const subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.annotationService.destroy();
   }
 
   private async loadDocument() {
@@ -112,11 +115,13 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private onDocumentLoaded() {
     this.loadingDocument = false;
+    this.pdfLoadStatus.emit("SUCCESS");
   }
 
   private onDocumentLoadFailed() {
     this.loadingDocument = false;
     this.errorMessage = `Could not load the document "${this.url}"`;
+    this.pdfLoadStatus.emit("FAILURE");
   }
 
   @Input()

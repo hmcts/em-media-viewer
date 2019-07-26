@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/annotations/annotation-api.service';
 import {
   defaultImageOptions,
-  defaultPdfOptions, defaultUnsupportedOptions,
+  defaultPdfOptions,
+  defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
 } from '../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
 import { AnnotationSet } from '../../../projects/media-viewer/src/lib/annotations/annotation-set/annotation-set.model';
+import { Component } from '@angular/core';
+import { Comment } from '../../../projects/media-viewer/src/lib/annotations/annotation-set/annotation/comment/comment.model';
 
 @Component({
   selector: 'media-viewer-wrapper',
@@ -22,16 +24,18 @@ export class MediaViewerWrapperComponent {
 
   selectedTab = 'pdf';
   url = this.pdfUrl;
-  annotationSet: AnnotationSet;
-  comments = [];
+  annotationSet: Observable<AnnotationSet>;
+  comments: Observable<Comment[]>;
+
+  mediaLoadStatus: string;
 
   showToolbar = true;
   enableAnnotations = false;
   showCommentSummary = new Subject<boolean>();
 
   constructor(
-    public readonly api: AnnotationApiService,
-    public readonly toolbarButtons: ToolbarButtonVisibilityService
+    private readonly api: AnnotationApiService,
+    private readonly toolbarButtons: ToolbarButtonVisibilityService
   ) {
     this.selectTab(this.selectedTab);
   }
@@ -49,6 +53,7 @@ export class MediaViewerWrapperComponent {
       this.url = this.unsupportedUrl;
       this.toolbarButtons.reset(defaultUnsupportedOptions);
     }
+    this.setDocumentUrl(this.url);
   }
 
   toggleToolbar(showToolbar: boolean) {
@@ -68,9 +73,17 @@ export class MediaViewerWrapperComponent {
     if (newUrl.startsWith('/documents/')) {
       const documentId = newUrl.split('/')[2];
 
-      this.api.getOrCreateAnnotationSet(documentId).subscribe(annotationSet => this.annotationSet = annotationSet);
-      this.api.getComments(documentId).subscribe(comments => this.comments = comments);
+      this.annotationSet = this.api.getOrCreateAnnotationSet(documentId);
+      this.comments = this.api.getComments(documentId);
       this.url = newUrl.endsWith('/binary') ? newUrl : newUrl + '/binary';
+    } else {
+      this.url = newUrl;
+      this.annotationSet = null;
     }
+  }
+
+  onMediaLoad(loadStatus: string) {
+    this.mediaLoadStatus = loadStatus;
+    setTimeout(() => this.mediaLoadStatus = undefined, 2000);
   }
 }

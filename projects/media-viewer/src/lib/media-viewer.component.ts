@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { ToolbarButtonVisibilityService } from './toolbar/toolbar-button-visibility.service';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from './toolbar/toolbar-event.service';
@@ -16,9 +16,11 @@ export class MediaViewerComponent implements OnChanges {
   @Input() contentType: string;
   @Input() showToolbar = true;
 
+  @Output() mediaLoadStatus = new EventEmitter<string>();
+
   @Input() enableAnnotations = false;
   @Input() showCommentSummary: Subject<boolean>;
-  @Input() annotationSet: AnnotationSet;
+  @Input() annotationSet: Observable<AnnotationSet>;
 
   private supportedContentTypes = ['pdf', 'image'];
 
@@ -37,4 +39,7 @@ export class MediaViewerComponent implements OnChanges {
     }
   }
 
+  onMediaLoad(status: string) {
+    this.mediaLoadStatus.emit(status);
+  }
 }

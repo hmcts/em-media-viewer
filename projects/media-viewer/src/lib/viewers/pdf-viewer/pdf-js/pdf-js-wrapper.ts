@@ -16,7 +16,7 @@ export class PdfJsWrapper {
     public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
     public readonly documentLoaded: Subject<any>,
     public readonly documentLoadFailed: Subject<undefined>,
-    public readonly pageRendered: Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>
+    public readonly pageRendered: Subject<PageEvent>
   ) {
 
     // bind to internal PDF.js event bus
