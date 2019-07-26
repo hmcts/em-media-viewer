@@ -1,6 +1,6 @@
 import { AnnotationComponent } from './annotation.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommentComponent } from './comment/comment.component';
+import { CommentComponent } from '../../comment-set/comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../../assets/annotation-set';

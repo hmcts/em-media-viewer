@@ -7,8 +7,10 @@ import { AnnotationApiService } from './annotation-api.service';
 import { AnnotationComponent } from './annotation-set/annotation/annotation.component';
 import { AnnotationSetComponent } from './annotation-set/annotation-set.component';
 import { RectangleComponent } from './annotation-set/annotation/rectangle/rectangle.component';
-import { CommentComponent } from './annotation-set/annotation/comment/comment.component';
+import { CommentComponent } from './comment-set/comment/comment.component';
 import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar/popup-toolbar.component';
+import { CommentSetComponent } from './comment-set/comment-set.component';
+import { AnnotationService } from './annotation.service';
 
 @NgModule({
   imports: [
@@ -22,7 +24,8 @@ import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar
     AnnotationSetComponent,
     RectangleComponent,
     CommentComponent,
-    PopupToolbarComponent
+    PopupToolbarComponent,
+    CommentSetComponent
   ],
   entryComponents: [
     AnnotationComponent,
@@ -33,7 +36,8 @@ import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar
   ],
   exports: [
     AnnotationComponent,
-    AnnotationSetComponent
+    AnnotationSetComponent,
+    CommentSetComponent
   ]
 })
 export class AnnotationsModule { }

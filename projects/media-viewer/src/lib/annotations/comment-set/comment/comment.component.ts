@@ -1,7 +1,7 @@
-import {Component, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Comment } from './comment.model';
-import { User } from '../../../user/user.model';
-import {Rectangle} from '../rectangle/rectangle.model';
+import { User } from '../../user/user.model';
+import { Rectangle } from '../../annotation-set/annotation/rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -17,12 +17,13 @@ export class CommentComponent {
   fullComment: string;
   author: User;
   editor: User;
+  _comment: Comment;
   _editable: boolean;
   _selected: boolean;
 
   @Output() click = new EventEmitter();
-  @Output() delete = new EventEmitter();
-  @Output() updated = new EventEmitter<String>();
+  @Output() delete = new EventEmitter<Comment>();
+  @Output() updated = new EventEmitter<Comment>();
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() rectangle: Rectangle;
@@ -31,6 +32,7 @@ export class CommentComponent {
 
   @Input()
   set comment(comment: Comment) {
+    this._comment = comment;
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
     this.editor = comment.lastModifiedByDetails;
@@ -61,7 +63,7 @@ export class CommentComponent {
 
   onFocusOut() {
     if (!this.author && !this.fullComment) {
-      this.delete.emit();
+      this.delete.emit(this._comment);
     }
   }
 
@@ -75,11 +77,12 @@ export class CommentComponent {
   }
 
   public onDelete() {
-    this.delete.emit();
+    this.delete.emit(this._comment);
   }
 
   public onSave() {
-    this.updated.emit(this.fullComment);
+    this._comment.content = this.fullComment;
+    this.updated.emit(this._comment);
     this.editable = false;
   }
 

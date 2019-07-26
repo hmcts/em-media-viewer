@@ -1,0 +1,13 @@
+<div #container class="comment-container">
+  <ng-container *ngFor="let comment of getCommentsOnPage()">
+    <mv-anno-comment
+      *ngIf="comment"
+      (click)="onSelect()"
+      (delete)="onCommentDelete($event)"
+      (updated)="onCommentUpdate($event)"
+      [selected]="selected"
+      [editable]="editable"
+      [comment]="comment">
+    </mv-anno-comment>
+  </ng-container>
+</div>
