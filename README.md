@@ -63,6 +63,12 @@ component entry point:
 </mv-media-viewer>  
 ```
 
+#### backend setup
+- the media-viewer expects calls to the backend to be proxied by the consuming application. This includes the following APIs:
+  - '/documents', endpoint to be proxied to the 'document-store'
+  - '/em-anno', endpoint to be proxied to the 'annotations-api', if annotations are turned on
+
+
 ### Toolbar
 
 The toolbar may be toggled off by setting `showToolbase` to false. The toolbar itself is available as a module that can be included into the DOM at a different location if necessary. 
