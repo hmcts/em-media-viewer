@@ -197,7 +197,7 @@ describe('PdfViewerComponent', () => {
     expect(mockViewerEvent.onTextSelection).not.toHaveBeenCalled();
   });
 
-  fit('should create annotation set component for highlight text selected page', () => {
+  it('should create annotation set component for highlight text selected page', () => {
     const mouseEvent = new MouseEvent('mouseup');
     spyOn(mockAnnotationService, 'onHighlightSelected');
 
