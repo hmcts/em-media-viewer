@@ -32,7 +32,6 @@ describe('AnnotationComponent', () => {
     fixture = TestBed.createComponent(AnnotationComponent);
     component = fixture.componentInstance;
     component.annotation = { ...annotationSet.annotations[0] };
-    component.select = new EventEmitter<boolean>();
     fixture.detectChanges();
   });
 
@@ -41,52 +40,39 @@ describe('AnnotationComponent', () => {
   });
 
   it('select the annotation', async () => {
-    await new Promise(resolve => {
-      component.select.subscribe(selected => {
-        expect(selected).toBe(true);
-        resolve();
-      });
       component.onSelect();
-    });
+
+      expect(component.selected).toBe(true);
   });
 
   it('deselect the annotation', async () => {
-    await new Promise(resolve => {
-      component.select.subscribe(selected => {
-        expect(selected).toBe(false);
-        resolve();
-      });
-
       const relatedTarget = document.createElement('span');
       component.onFocusOut({ relatedTarget } as any);
-    });
+
+      expect(component.selected).toBe(false);
   });
 
   it('create a comment', async () => {
     component.annotation.comments = [];
-    spyOn(component.select, 'emit');
 
     component.addOrEditComment();
 
     expect(component.annotation.comments.length).toBeGreaterThan(0);
     expect(component.annotation.comments[0].annotationId).toEqual(component.annotation.id);
-    expect(component.annotation.comments[0].content).toBe("");
+    expect(component.annotation.comments[0].content).toBe('');
     expect(component.annotation.comments[0].createdByDetails).toBe(undefined);
-    expect(component.select.emit).toHaveBeenCalledWith(true);
     expect(component.editable).toBe(true);
   });
 
   it('create a comment', async () => {
-    let comments = component.annotation.comments;
+    const comments = component.annotation.comments;
     spyOn(comments, 'push');
-    spyOn(component.select, 'emit');
 
     component.addOrEditComment();
 
     expect(comments.push).not.toHaveBeenCalled();
-    expect(comments[0].content).not.toBe("");
+    expect(comments[0].content).not.toBe('');
     expect(comments[0].createdByDetails).not.toBe(undefined);
-    expect(component.select.emit).toHaveBeenCalledWith(true);
     expect(component.editable).toBe(true);
   });
 

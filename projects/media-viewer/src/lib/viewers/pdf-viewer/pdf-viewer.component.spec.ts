@@ -49,8 +49,8 @@ describe('PdfViewerComponent', () => {
   const mockAnnotationService = {
     init: () => {},
     setupAnnotationSet: () => {},
-    onPageRendered: () => {},
-    onTextSelected: () => {},
+    onPageSelected: () => {},
+    onHighlightSelected: () => {},
   };
 
   const mockFactory = {
@@ -188,21 +188,21 @@ describe('PdfViewerComponent', () => {
   it('should not highlight text when in view mode for selected page', () => {
     const mouseEvent = new MouseEvent('mouseup');
     spyOn(toolbarEvent.highlightMode, 'getValue').and.returnValue(false);
-    spyOn(mockAnnotationService, 'onTextSelected');
+    spyOn(mockAnnotationService, 'onHighlightSelected');
     spyOn(mockViewerEvent, 'onTextSelection');
 
     component.onMouseUp(mouseEvent);
 
-    expect(mockAnnotationService.onTextSelected).not.toHaveBeenCalled();
+    expect(mockAnnotationService.onHighlightSelected).not.toHaveBeenCalled();
     expect(mockViewerEvent.onTextSelection).not.toHaveBeenCalled();
   });
 
   fit('should create annotation set component for highlight text selected page', () => {
     const mouseEvent = new MouseEvent('mouseup');
-    spyOn(mockAnnotationService, 'onTextSelected');
+    spyOn(mockAnnotationService, 'onHighlightSelected');
 
     component.onMouseUp(mouseEvent);
 
-    expect(mockAnnotationService.onTextSelected).toHaveBeenCalled();
+    expect(mockAnnotationService.onHighlightSelected).toHaveBeenCalled();
   });
 });
