@@ -7,7 +7,10 @@
       (updated)="onCommentUpdate($event)"
       [selected]="selected"
       [editable]="editable"
-      [comment]="comment">
+      [zoom]="zoom"
+      [rotate]="rotate"
+      [comment]="comment"
+      [rectangle]="topRectangle(comment.annotationId)">
     </mv-anno-comment>
   </ng-container>
 </div>
