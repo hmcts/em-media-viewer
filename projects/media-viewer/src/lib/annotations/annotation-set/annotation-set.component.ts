@@ -77,9 +77,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
               );
             }
             await this.createAnnotation(selectionRectangles);
-
-            const selectedText = window.getSelection();
-            selectedText.removeAllRanges();
+            selection.removeAllRanges();
           }
         }
       }
