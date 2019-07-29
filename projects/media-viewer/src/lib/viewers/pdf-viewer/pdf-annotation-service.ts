@@ -65,7 +65,9 @@ export class PdfAnnotationService {
 
   destroy() {
     this.annotationSetComponents.forEach(component => component.destroy());
+    this.commentSetComponents.forEach(component => component.destroy());
     this.annotationSetComponents = [];
+    this.commentSetComponents = [];
     this.pages = [];
   }
 
