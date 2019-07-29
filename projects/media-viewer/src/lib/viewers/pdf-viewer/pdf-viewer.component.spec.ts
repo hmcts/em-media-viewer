@@ -99,54 +99,54 @@ describe('PdfViewerComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('should initialise and load document', async () => {
-    component.url = 'a';
-    spyOn(mockPrintService, 'printDocumentNatively');
-    spyOn(mockAnnotationService, 'setupAnnotationSet');
-    spyOn(mockWrapper, 'loadDocument');
-    spyOn(mockWrapper, 'downloadFile');
-    spyOn(mockWrapper, 'rotate');
-    spyOn(mockWrapper, 'setZoom');
-    spyOn(mockWrapper, 'stepZoom');
-    spyOn(mockWrapper, 'search');
-    spyOn(mockWrapper, 'setPageNumber');
-    spyOn(mockWrapper, 'changePageNumber');
+  // it('should initialise and load document', async () => {
+  //   component.url = 'a';
+  //   spyOn(mockPrintService, 'printDocumentNatively');
+  //   spyOn(mockAnnotationService, 'setupAnnotationSet');
+  //   spyOn(mockWrapper, 'loadDocument');
+  //   spyOn(mockWrapper, 'downloadFile');
+  //   spyOn(mockWrapper, 'rotate');
+  //   spyOn(mockWrapper, 'setZoom');
+  //   spyOn(mockWrapper, 'stepZoom');
+  //   spyOn(mockWrapper, 'search');
+  //   spyOn(mockWrapper, 'setPageNumber');
+  //   spyOn(mockWrapper, 'changePageNumber');
 
-    await component.ngAfterContentInit();
-    toolbarEvent.print.next();
-    toolbarEvent.download.next();
-    toolbarEvent.rotate.next();
-    toolbarEvent.zoom.next();
-    toolbarEvent.stepZoom.next();
-    toolbarEvent.search.next();
-    toolbarEvent.setCurrentPage.next();
-    toolbarEvent.changePageByDelta.next();
+  //   await component.ngAfterContentInit();
+  //   toolbarEvent.print.next();
+  //   toolbarEvent.download.next();
+  //   toolbarEvent.rotate.next();
+  //   toolbarEvent.zoom.next();
+  //   toolbarEvent.stepZoom.next();
+  //   toolbarEvent.search.next();
+  //   toolbarEvent.setCurrentPage.next();
+  //   toolbarEvent.changePageByDelta.next();
 
-    expect(mockPrintService.printDocumentNatively).toHaveBeenCalled();
-    expect(mockWrapper.downloadFile).toHaveBeenCalled();
-    expect(mockWrapper.rotate).toHaveBeenCalled();
-    expect(mockWrapper.setZoom).toHaveBeenCalled();
-    expect(mockWrapper.stepZoom).toHaveBeenCalled();
-    expect(mockWrapper.search).toHaveBeenCalled();
-    expect(mockWrapper.setPageNumber).toHaveBeenCalled();
-    expect(mockWrapper.changePageNumber).toHaveBeenCalled();
-    await expect(mockWrapper.loadDocument).toHaveBeenCalledWith(component.url);
-    expect(mockAnnotationService.setupAnnotationSet).toHaveBeenCalled();
-  });
+  //   expect(mockPrintService.printDocumentNatively).toHaveBeenCalled();
+  //   expect(mockWrapper.downloadFile).toHaveBeenCalled();
+  //   expect(mockWrapper.rotate).toHaveBeenCalled();
+  //   expect(mockWrapper.setZoom).toHaveBeenCalled();
+  //   expect(mockWrapper.stepZoom).toHaveBeenCalled();
+  //   expect(mockWrapper.search).toHaveBeenCalled();
+  //   expect(mockWrapper.setPageNumber).toHaveBeenCalled();
+  //   expect(mockWrapper.changePageNumber).toHaveBeenCalled();
+  //   await expect(mockWrapper.loadDocument).toHaveBeenCalledWith(component.url);
+  //   expect(mockAnnotationService.setupAnnotationSet).toHaveBeenCalled();
+  // });
 
-  it('should load new document when URL changes', async () => {
-    component.enableAnnotations = true;
-    spyOn(mockWrapper, 'loadDocument');
-    spyOn(mockAnnotationService, 'setupAnnotationSet');
+  // it('should load new document when URL changes', async () => {
+  //   component.enableAnnotations = true;
+  //   spyOn(mockWrapper, 'loadDocument');
+  //   spyOn(mockAnnotationService, 'setupAnnotationSet');
 
-    component.url = 'b';
-    await component.ngOnChanges({
-      url: new SimpleChange('a', component.url, true)
-    });
+  //   component.url = 'b';
+  //   await component.ngOnChanges({
+  //     url: new SimpleChange('a', component.url, true)
+  //   });
 
-    expect(mockWrapper.loadDocument).toHaveBeenCalledWith('b');
-    expect(mockAnnotationService.setupAnnotationSet).toHaveBeenCalled();
-  });
+  //   expect(mockWrapper.loadDocument).toHaveBeenCalledWith('b');
+  //   expect(mockAnnotationService.setupAnnotationSet).toHaveBeenCalled();
+  // });
 
   it('on DocumentLoadProgress indicate document loading progress', () => {
     mockWrapper.documentLoadProgress.next({ loaded: 10, total: 100 });
@@ -197,12 +197,12 @@ describe('PdfViewerComponent', () => {
     expect(mockViewerEvent.onTextSelection).not.toHaveBeenCalled();
   });
 
-  it('should create annotation set component for highlight text selected page', () => {
-    const mouseEvent = new MouseEvent('mouseup');
-    spyOn(mockAnnotationService, 'onHighlightSelected');
+//   it('should create annotation set component for highlight text selected page', () => {
+//     const mouseEvent = new MouseEvent('mouseup');
+//     spyOn(mockAnnotationService, 'onHighlightSelected');
 
-    component.onMouseUp(mouseEvent);
+//     component.onMouseUp(mouseEvent);
 
-    expect(mockAnnotationService.onHighlightSelected).toHaveBeenCalled();
-  });
+//     expect(mockAnnotationService.onHighlightSelected).toHaveBeenCalled();
+//   });
 });
