@@ -29,6 +29,7 @@ import { CommentSetComponent } from './comment-set/comment-set.component';
   entryComponents: [
     AnnotationComponent,
     AnnotationSetComponent,
+    CommentSetComponent
   ],
   providers: [
     AnnotationApiService
