@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
+import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 @Component({
   selector: 'mv-comment-set',
@@ -18,7 +19,15 @@ export class CommentSetComponent {
   editable = false;
   selected = false;
 
+  @ViewChild('container') container: ElementRef;
+
   constructor(private readonly api: AnnotationApiService) { }
+
+  initialise(eventSource: PageEvent['source']) {
+    const element = eventSource.div;
+    element.appendChild(this.container.nativeElement);
+
+  }
 
   public getCommentsOnPage(): Comment[] {
     return this.annotationSet.annotations.map(a => {
