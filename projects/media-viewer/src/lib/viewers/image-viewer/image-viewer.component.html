@@ -8,7 +8,7 @@
          data-hook="dm.viewer.img"
          (error)="onLoadError()"
          (load)="onLoad()"/>
-    <mv-annotation-set *ngIf="enableAnnotations"
+    <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
                        [annotationSet]="annotationSet"
                        [zoom]="zoom"
                        [page]="1"
@@ -17,9 +17,11 @@
                        [width]="img !== undefined ? img.nativeElement.width : 0">
     </mv-annotation-set>
   </div>
-  <mv-comment-set *ngIf="enableAnnotations"
+  <mv-comment-set *ngIf="enableAnnotations && annotationSet"
                   [annotationSet]="annotationSet"
-                  [page]="1">
+                  [page]="1"
+                  [zoom]="zoom"
+                  [rotate]="rotation">
   </mv-comment-set>
   <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>
 </div>

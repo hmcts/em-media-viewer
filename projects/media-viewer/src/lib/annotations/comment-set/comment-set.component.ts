@@ -15,6 +15,8 @@ export class CommentSetComponent {
 
   @Input() annotationSet: AnnotationSet;
   @Input() page: number;
+  @Input() zoom: number;
+  @Input() rotate: number;
 
   comments: Comment[];
   editable = false;
@@ -27,9 +29,10 @@ export class CommentSetComponent {
 
 
   initialise(eventSource: PageEvent['source']) {
+    this.zoom = eventSource.scale;
+    this.rotate = eventSource.rotation;
     const element = eventSource.div;
     element.appendChild(this.container.nativeElement);
-
   }
 
   public getCommentsOnPage(): Comment[] {
@@ -67,13 +70,9 @@ export class CommentSetComponent {
       });
   }
 
-  // topRectangle(annotationId) {
-  //   return this.annotationSet.annotations.find(annotation => {
-  //     if (annotation.id === annotationId) {
-  //       return annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
-  //     } else {
-  //       return { annotationId: 0, height: 0,  width: 0, x: 0, y: 0 };
-  //     }
-  //   });
-  // }
+  topRectangle(annotationId: string) {
+    const annotation = this.annotationSet.annotations.find((annotation) => annotation.id === annotationId);
+    return annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
+
+  }
 }
