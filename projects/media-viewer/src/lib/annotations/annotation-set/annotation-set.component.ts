@@ -59,19 +59,25 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   async createRectangles(highlight: Highlight) {
     if (highlight.page === this.page) {
+      console.log('a');
       if (window.getSelection) {
+        console.log('b');
         const selection = window.getSelection();
 
         if (selection.rangeCount && !selection.isCollapsed) {
+          console.log('c');
           const range = selection.getRangeAt(0).cloneRange();
           const clientRects = range.getClientRects();
 
           if (clientRects) {
+            console.log('d');
             const localElement = (<Element>highlight.event.target) || (<Element>highlight.event.srcElement);
+            console.log(localElement.innerHTML);
             const textLayerRect = localElement.parentElement.getBoundingClientRect();
 
             const selectionRectangles: Rectangle[] = [];
             for (let i = 0; i < clientRects.length; i++) {
+              console.log('e');
               selectionRectangles.push(
                 this.createRectangle(clientRects[i], textLayerRect)
               );

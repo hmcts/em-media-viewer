@@ -20,6 +20,63 @@ describe('AnnotationSetComponent', () => {
 
   const api = new AnnotationApiService({}  as any);
 
+  const mocks: any = {
+    mockElement: {
+      parentElement: {
+        getBoundingClientRect(): any {
+          return mocks.mockClientRect;
+        }
+      }
+    },
+    mockClientRects: [],
+    mockHighlight: {
+      page: 1,
+      event: {
+        pageY: 10,
+        pageX: 10,
+        target: null,
+        srcElement: null
+      } as any,
+    },
+    mockSelection: {
+      rangeCount: 2,
+      isCollapsed: false,
+      getRangeAt(n: Number): any {
+        return mocks.mockRange;
+      },
+      removeAllRanges(): any {
+      }
+    },
+    mockClientRect: {
+      top: 10,
+      bottom: 20,
+      left: 15,
+      right: 30,
+    },
+    mockAnnotationRectangle: {
+      annotationId: 'id',
+      height: 12,
+      width: 5,
+      x: 2,
+      y: 3
+    },
+    mockRange: {
+      cloneRange(): any {
+        return mocks.mockRange;
+      },
+      getClientRects(): any {
+        return mocks.mockClientRects;
+      }
+    },
+    mockRectangle: {
+      annotationId: '12345',
+      height: 50,
+      width: 40,
+      x: 30,
+      y: 20
+    }
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -45,6 +102,10 @@ describe('AnnotationSetComponent', () => {
     component.annotationSet = { ...annotationSet };
     component.page = 1;
     fixture.detectChanges();
+
+    mocks.mockHighlight.target = mocks.mockElement;
+    mocks.mockHighlight.srcElement = mocks.mockElement;
+    mocks.mockClientRects = [mocks.mockClientRect, mocks.mockClientRect];
   });
 
   it('should create', () => {
@@ -100,11 +161,11 @@ describe('AnnotationSetComponent', () => {
   });
 
   it('should use initialise method to set values', () => {
-    const mockElement = document.createElement('div');
+    const mockRealElement = document.createElement('div');
     const mockEventSource: PageEvent['source'] = {
       rotation: 0,
       scale: 50,
-      div: mockElement
+      div: mockRealElement
     };
 
     component.initialise(mockEventSource);
@@ -115,69 +176,32 @@ describe('AnnotationSetComponent', () => {
     expect(mockEventSource.div.textContent).toContain(component.container.nativeElement.textContent);
   });
 
-  fit('should create rectangles', async () => {
-    component.page = 1;
+  // fit('should create rectangles', async () => {
+  //   spyOn(window, 'getSelection').and.returnValue(mocks.mockSelection);
+  //   const createRectangleSpy = spyOn<any>(component, 'createRectangle').and.returnValue(mocks.mockAnnotationRectangle);
+  //   const createAnnotationSpy = spyOn<any>(component, 'createAnnotation');
+  //   const removeRangesSpy = spyOn(mocks.mockSelection, 'removeAllRanges');
+  //   await component.createRectangles(mocks.mockHighlight);
 
-    const mockElement: any = {
-      parentElement: {
-        getBoundingClientRect(): any {
-          return mockClientRect;
-        }
-      }
-    }
+  //   expect(createRectangleSpy).toHaveBeenCalledTimes(2);
+  //   // expect(createRectangleSpy).toHaveBeenCalledWith(mocks.mockClientRect, mocks.mockClientRect);
+  //   expect(createAnnotationSpy).toHaveBeenCalledWith([mocks.mockAnnotationRectangle, mocks.mockAnnotationRectangle]);
+  //   expect(removeRangesSpy).toHaveBeenCalled();
+  // });
 
-    const mockHighlight: any = {
-      page: 1,
-      event: {
-        pageY: 10,
-        pageX: 10,
-        target: mockElement,
-        srcElement: mockElement
-      } as any,
-    }
+  // it('should create unrotated rectangle', async () => {
+  //   component.rotate = 0;
+  //   const createRectangleSpy = spyOn<any>(component, 'createRectangle');
+  //   const createAnnotationSpy = spyOn<any>(component, 'createAnnotation');
+  //   const apiSpy = spyOn<any>(api, 'postAnnotation').and.returnValue(); // something
+  //   // check that selected Annotation has changed
+  //   // check that rotation is as expected in the annotation that's been set
 
-    const mockSelection: any = {
-      rangeCount: 2,
-      isCollapsed: false,
-      getRangeAt(n: Number): any {
-        return mockRange;
-      },
-      removeAllRanges(): any {
-      }
-    }
+  //   await component.createRectangles(mocks.mockHighlight);
+  //   expect(createRectangleSpy).toHaveBeenCalledWith(mocks.mockClientRect);
+  //   expect(createAnnotationSpy).toHaveBeenCalledWith(mocks.mockRectangle);
 
-    const mockClientRect: any = {
-    }
+  //   //
 
-    const mockClientRects: any = [mockClientRect, mockClientRect];
-
-    const mockAnnotationRectangle: any = {
-      annotationId: 'id',
-      height: 12,
-      width: 5,
-      x: 2,
-      y: 3
-    }
-
-    const mockRange: any = {
-      cloneRange(): any {
-        return mockRange;
-      },
-      getClientRects(): any {
-        return mockClientRects;
-      }
-    }
-
-    spyOn(window, 'getSelection').and.returnValue(mockSelection);
-    const createRectangleSpy = spyOn<any>(component, 'createRectangle').and.returnValue(mockAnnotationRectangle);
-    const createAnnotationSpy = spyOn<any>(component, 'createAnnotation');
-    const removeRangesSpy = spyOn(mockSelection, 'removeAllRanges');
-    await component.createRectangles(mockHighlight);
-
-    expect(createRectangleSpy).toHaveBeenCalledTimes(2);
-    expect(createRectangleSpy).toHaveBeenCalledWith(mockClientRect, mockClientRect);
-    expect(createAnnotationSpy).toHaveBeenCalledWith([mockAnnotationRectangle, mockAnnotationRectangle]);
-    expect(removeRangesSpy).toHaveBeenCalled();
-  });
-
+  // });
 });
