@@ -7,7 +7,7 @@ import { ToolbarEventService } from './toolbar/toolbar-event.service';
 @Component({
   selector: 'mv-media-viewer',
   templateUrl: './media-viewer.component.html',
-  styleUrls: ['styles/main.scss']
+  styleUrls: ['styles/main.scss', './media-viewer.component.scss']
 })
 export class MediaViewerComponent implements OnChanges {
 
