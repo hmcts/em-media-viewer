@@ -6,7 +6,6 @@ import { Comment } from './comment/comment.model';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { CommentComponent } from './comment/comment.component';
 import { AnnotationService } from '../annotation.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-comment-set',

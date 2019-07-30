@@ -17,13 +17,14 @@ export class AnnotationComponent {
   @Input() selected: boolean;
   @Output() update = new EventEmitter<Annotation>();
   @Output() delete = new EventEmitter<Annotation>();
+  @Output() annotationClick = new EventEmitter();
 
   editable = false;
 
   @ViewChild('container') container: ElementRef;
 
   public onSelect() {
-    this.selected = true;
+    this.annotationClick.emit(this.annotation.id);
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
@@ -37,6 +38,7 @@ export class AnnotationComponent {
     if (!this.container.nativeElement.contains(event.relatedTarget)) {
       this.editable = false;
       this.selected = false;
+      this.annotationClick.emit('');
     }
   }
 
