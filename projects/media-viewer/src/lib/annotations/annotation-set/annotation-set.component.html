@@ -10,9 +10,10 @@
     <mv-annotation [annotation]="annotation"
                    [zoom]="zoom"
                    [rotate]="rotate"
-                   [selected]="selectedAnnotation === annotation.id"
+                   [selected]="selectedAnnotationId === annotation.id"
                    (update)="onAnnotationUpdate($event)"
-                   (delete)="onAnnotationDelete($event)">
+                   (delete)="onAnnotationDelete($event)"
+                   (annotationClick)="onAnnotationClick($event)">
     </mv-annotation>
   </ng-container>
 </div>
