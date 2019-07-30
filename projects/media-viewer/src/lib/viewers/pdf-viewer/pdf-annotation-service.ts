@@ -77,6 +77,12 @@ export class PdfAnnotationService {
     if (annotationComponent) {
       annotationComponent.instance.initialise(pageRenderEvent.source);
     }
+
+    const commentComponent = this.commentSetComponents
+      .find((comment) => comment.instance.page === pageRenderEvent.pageNumber);
+    if (commentComponent) {
+      commentComponent.instance.initialise(pageRenderEvent.source);
+    }
   }
 
   onPageSelected(mouseEvent: MouseEvent) {

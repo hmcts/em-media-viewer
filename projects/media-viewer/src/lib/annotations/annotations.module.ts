@@ -10,6 +10,7 @@ import { RectangleComponent } from './annotation-set/annotation/rectangle/rectan
 import { CommentComponent } from './comment-set/comment/comment.component';
 import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar/popup-toolbar.component';
 import { CommentSetComponent } from './comment-set/comment-set.component';
+import { AnnotationService } from './annotation.service';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { CommentSetComponent } from './comment-set/comment-set.component';
     CommentSetComponent
   ],
   providers: [
-    AnnotationApiService
+    AnnotationApiService,
+    AnnotationService
   ],
   exports: [
     AnnotationComponent,

@@ -21,12 +21,16 @@ export class CommentComponent {
   _editable: boolean;
   _selected: boolean;
 
-  @Output() click = new EventEmitter();
+  _rectangle;
+  commentTopPos;
+  commentLeftPos;
+
+  @Output() commentClick = new EventEmitter();
+  @Output() commentRendered = new EventEmitter();
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<Comment>();
   @Input() rotate = 0;
   @Input() zoom = 1;
-  @Input() rectangle: Rectangle;
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
@@ -41,8 +45,16 @@ export class CommentComponent {
   }
 
   @Input()
+  set rectangle(rectangle: Rectangle) {
+    this._rectangle = rectangle;
+    this.commentTopPos = this._rectangle.y;
+    this.commentLeftPos = this._rectangle.x;
+  }
+
+  @Input()
   set selected(selected: boolean) {
     this._selected = selected;
+    this.commentRendered.emit();
   }
 
   get selected() {
@@ -87,7 +99,10 @@ export class CommentComponent {
   }
 
   onCommentClick() {
-    this.click.emit();
+    if (!this._selected) {
+      this.selected = true;
+      this.commentClick.emit(this._comment.annotationId);
+    }
   }
 
   get commentText() {
@@ -103,25 +118,25 @@ export class CommentComponent {
   formNgStyle() {
     if (this.rotate === 0) {
       return {
-        top: (this.rectangle.y * this.zoom) + 'px',
+        top: (this.commentTopPos * this.zoom) + 'px',
         left: this.getFirstNonNullParentProperty(this.form.nativeElement, 'clientWidth') + 'px'
       };
     } else if (this.rotate === 90) {
       return {
         top: '0px',
-        left: this.rectangle.x * this.zoom + 'px',
+        left: this.commentLeftPos * this.zoom + 'px',
         'transform-origin': 'top left'
       };
     } else if (this.rotate === 180) {
       return {
-        top: ((this.rectangle.y * this.zoom) + (this.rectangle.height * this.zoom)) + 'px',
+        top: ((this.commentTopPos * this.zoom) + (this.rectangle.height * this.zoom)) + 'px',
         left: '0px',
         'transform-origin': 'top left'
       };
     } else if (this.rotate === 270) {
       return {
         top: this.getFirstNonNullParentProperty(this.form.nativeElement, 'clientHeight') + 'px',
-        left: (this.rectangle.x * this.zoom) + (this.rectangle.width * this.zoom) + 'px',
+        left: (this.commentLeftPos * this.zoom) + (this.rectangle.width * this.zoom) + 'px',
         'transform-origin': 'top left'
       };
     }

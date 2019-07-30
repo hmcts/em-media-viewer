@@ -1,16 +1,18 @@
 <div #container class="comment-container">
   <ng-container *ngFor="let comment of getCommentsOnPage()">
     <mv-anno-comment
+      #commentComponent
       *ngIf="comment"
-      (click)="onSelect()"
+      (commentClick)="onSelect($event)"
       (delete)="onCommentDelete($event)"
       (updated)="onCommentUpdate($event)"
-      [selected]="selected"
+      [selected]="comment.annotationId === selectAnnotationId"
       [editable]="editable"
       [zoom]="zoom"
       [rotate]="rotate"
       [comment]="comment"
-      [rectangle]="topRectangle(comment.annotationId)">
+      [rectangle]="topRectangle(comment.annotationId)"
+      (commentRendered)="redrawCommentComponents()">
     </mv-anno-comment>
   </ng-container>
 </div>
