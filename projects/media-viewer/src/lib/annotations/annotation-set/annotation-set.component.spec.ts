@@ -9,10 +9,15 @@ import { PopupToolbarComponent } from './annotation/popup-toolbar/popup-toolbar.
 import { AnnotationComponent } from './annotation/annotation.component';
 import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { ElementRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
+import { MockSchemaRegistry } from '@angular/compiler/testing';
+import { Annotation } from './annotation/annotation.model';
+import { strict } from 'assert';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { Rectangle } from './annotation/rectangle/rectangle.model';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -20,60 +25,89 @@ describe('AnnotationSetComponent', () => {
 
   const api = new AnnotationApiService({}  as any);
 
-  const mocks: any = {
-    mockElement: {
-      parentElement: {
-        getBoundingClientRect(): any {
-          return mocks.mockClientRect;
-        }
+  let mockElement: any = {
+    parentElement: {
+      getBoundingClientRect(): unknown {
+        return mockTextLayerRect;
       }
+    }
+  };
+
+  let mockHighlight: any = {
+    page: 1,
+    event: {
+      pageY: 10,
+      pageX: 10,
+      target: mockElement,
+      srcElement: mockElement
+    } as any,
+  };
+
+  let mockSelection: any = {
+    rangeCount: 2,
+    isCollapsed: false,
+    getRangeAt(n: Number): any {
+      return mockRange;
     },
-    mockClientRects: [],
-    mockHighlight: {
+    removeAllRanges(): any {
+    }
+  };
+
+  let mockTextLayerRect: any = {
+    top: 0,
+    left: 0,
+  };
+
+  let mockClientRect: any = {
+    top: 10,
+    bottom: 100,
+    left: 25,
+    right: 100,
+  };
+
+  let mockClientRects: any = [mockClientRect, mockClientRect];
+
+  let mockAnnotationRectangle: any = {
+    annotationId: 'id',
+    height: 12,
+    width: 5,
+    x: 2,
+    y: 3
+  };
+
+  let mockRange: any = {
+    cloneRange(): any {
+      return mockRange;
+    },
+    getClientRects(): any {
+      return mockClientRects;
+    }
+  };
+
+  let mockRectangle: any = {
+    annotationId: '12345',
+    height: 50,
+    width: 40,
+    x: 30,
+    y: 20
+  };
+
+  let fakeApi: any = {
+    returnedAnnotation: {
+      id: 'testId',
+      annotationSetId: 'testAnnotationSetId',
+      color: 'FFFF00',
+      comments: [],
       page: 1,
-      event: {
-        pageY: 10,
-        pageX: 10,
-        target: null,
-        srcElement: null
-      } as any,
+      rectangles: [],
+      type: 'highlight'
     },
-    mockSelection: {
-      rangeCount: 2,
-      isCollapsed: false,
-      getRangeAt(n: Number): any {
-        return mocks.mockRange;
-      },
-      removeAllRanges(): any {
-      }
-    },
-    mockClientRect: {
-      top: 10,
-      bottom: 20,
-      left: 15,
-      right: 30,
-    },
-    mockAnnotationRectangle: {
-      annotationId: 'id',
-      height: 12,
-      width: 5,
-      x: 2,
-      y: 3
-    },
-    mockRange: {
-      cloneRange(): any {
-        return mocks.mockRange;
-      },
-      getClientRects(): any {
-        return mocks.mockClientRects;
-      }
-    },
-    mockRectangle: {
-      annotationId: '12345',
-      height: 50,
-      width: 40,
-      x: 30,
-      y: 20
+    postAnnotation(annotation: any): Observable<any> {
+      fakeApi.returnedAnnotation.id = annotation.id;
+      fakeApi.returnedAnnotation.annotationSetId = annotation.annotationSetId;
+      fakeApi.returnedAnnotation.page = annotation.page;
+      fakeApi.returnedAnnotation.rectangles = annotation.rectangles;
+      return of(fakeApi.returnedAnnotation);
     }
   }
 
@@ -103,9 +137,9 @@ describe('AnnotationSetComponent', () => {
     component.page = 1;
     fixture.detectChanges();
 
-    mocks.mockHighlight.target = mocks.mockElement;
-    mocks.mockHighlight.srcElement = mocks.mockElement;
-    mocks.mockClientRects = [mocks.mockClientRect, mocks.mockClientRect];
+    spyOn(mockElement.parentElement, 'getBoundingClientRect').and.returnValue(mockClientRect);
+    spyOn(mockHighlight.event, 'target').and.returnValue(mockElement);
+    spyOn(mockHighlight.event, 'srcElement').and.returnValue(mockElement);
   });
 
   it('should create', () => {
@@ -176,32 +210,41 @@ describe('AnnotationSetComponent', () => {
     expect(mockEventSource.div.textContent).toContain(component.container.nativeElement.textContent);
   });
 
-  // fit('should create rectangles', async () => {
-  //   spyOn(window, 'getSelection').and.returnValue(mocks.mockSelection);
-  //   const createRectangleSpy = spyOn<any>(component, 'createRectangle').and.returnValue(mocks.mockAnnotationRectangle);
-  //   const createAnnotationSpy = spyOn<any>(component, 'createAnnotation');
-  //   const removeRangesSpy = spyOn(mocks.mockSelection, 'removeAllRanges');
-  //   await component.createRectangles(mocks.mockHighlight);
+  it('should create rectangles', async () => {
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    const createRectangleSpy = spyOn<any>(component, 'createRectangle').and.returnValue(mockAnnotationRectangle);
+    const createAnnotationSpy = spyOn<any>(component, 'createAnnotation');
+    const removeRangesSpy = spyOn(mockSelection, 'removeAllRanges');
+    await component.createRectangles(mockHighlight);
 
-  //   expect(createRectangleSpy).toHaveBeenCalledTimes(2);
-  //   // expect(createRectangleSpy).toHaveBeenCalledWith(mocks.mockClientRect, mocks.mockClientRect);
-  //   expect(createAnnotationSpy).toHaveBeenCalledWith([mocks.mockAnnotationRectangle, mocks.mockAnnotationRectangle]);
-  //   expect(removeRangesSpy).toHaveBeenCalled();
-  // });
+    expect(createRectangleSpy).toHaveBeenCalledTimes(2);
+    expect(createRectangleSpy).toHaveBeenCalledWith(mockClientRect, mockClientRect);
+    expect(createAnnotationSpy).toHaveBeenCalledWith([mockAnnotationRectangle, mockAnnotationRectangle]);
+    expect(removeRangesSpy).toHaveBeenCalled();
+  });
 
-  // it('should create unrotated rectangle', async () => {
-  //   component.rotate = 0;
-  //   const createRectangleSpy = spyOn<any>(component, 'createRectangle');
-  //   const createAnnotationSpy = spyOn<any>(component, 'createAnnotation');
-  //   const apiSpy = spyOn<any>(api, 'postAnnotation').and.returnValue(); // something
-  //   // check that selected Annotation has changed
-  //   // check that rotation is as expected in the annotation that's been set
+  fit('should create unrotated rectangle', async () => {
+    component.annotationSet.id = '123';
+    component.rotate = 0;
+    component.zoom = 1;
 
-  //   await component.createRectangles(mocks.mockHighlight);
-  //   expect(createRectangleSpy).toHaveBeenCalledWith(mocks.mockClientRect);
-  //   expect(createAnnotationSpy).toHaveBeenCalledWith(mocks.mockRectangle);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
 
-  //   //
+    await component.createRectangles(mockHighlight);
+    
+    expect(component.selectedAnnotation).toEqual(fakeApi.returnedAnnotation.id);
+    
+    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
+    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
+    const expectedRectangle = fakeApi.returnedAnnotation.rectangles[fakeApi.returnedAnnotation.rectangles.length - 1];
+    expect(finalRectangle).toEqual(expectedRectangle);
+    
+    // check that rectangle is based off of these + rotation angle
+    // top: 10,
+    // bottom: 100,
+    // left: 25,
+    // right: 100
 
-  // });
+  });
 });

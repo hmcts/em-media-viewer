@@ -8,6 +8,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
+import { text } from '@angular/core/src/render3';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -59,28 +60,21 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   async createRectangles(highlight: Highlight) {
     if (highlight.page === this.page) {
-      console.log('a');
       if (window.getSelection) {
-        console.log('b');
         const selection = window.getSelection();
 
         if (selection.rangeCount && !selection.isCollapsed) {
-          console.log('c');
           const range = selection.getRangeAt(0).cloneRange();
           const clientRects = range.getClientRects();
 
           if (clientRects) {
-            console.log('d');
             const localElement = (<Element>highlight.event.target) || (<Element>highlight.event.srcElement);
-            console.log(localElement.innerHTML);
             const textLayerRect = localElement.parentElement.getBoundingClientRect();
 
             const selectionRectangles: Rectangle[] = [];
             for (let i = 0; i < clientRects.length; i++) {
-              console.log('e');
-              selectionRectangles.push(
-                this.createRectangle(clientRects[i], textLayerRect)
-              );
+              const selectionRectangle = this.createRectangle(clientRects[i], textLayerRect);
+              selectionRectangles.push(selectionRectangle);
             }
             await this.createAnnotation(selectionRectangles);
             selection.removeAllRanges();
@@ -123,17 +117,16 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     return rectangle as Rectangle;
   }
 
-  private createAnnotation(rectangle: Rectangle[]): void {
+  private createAnnotation(rectangles: Rectangle[]): void {
     const annotation = {
         id: uuid(),
         annotationSetId: this.annotationSet.id,
         color: 'FFFF00',
         comments: [],
         page: this.page,
-        rectangles: rectangle,
+        rectangles: rectangles,
         type: 'highlight'
     };
-    console.log('creating annotation');
     this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
     this.selectedAnnotation = annotation.id;
   }
