@@ -19,12 +19,11 @@ export class AnnotationComponent {
   @Output() delete = new EventEmitter<Annotation>();
   @Output() annotationClick = new EventEmitter();
 
-  editable = false;
-
   @ViewChild('container') container: ElementRef;
 
   public onSelect() {
-    this.annotationClick.emit(this.annotation.id);
+    this.selected = true;
+    this.annotationClick.emit({ annotationId: this.annotation.id, editable: false });
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
@@ -36,9 +35,8 @@ export class AnnotationComponent {
 
   public onFocusOut(event: FocusEvent) {
     if (!this.container.nativeElement.contains(event.relatedTarget)) {
-      this.editable = false;
       this.selected = false;
-      this.annotationClick.emit('');
+      // this.annotationClick.emit({ annotationId: '', editable: false });
     }
   }
 
@@ -61,7 +59,7 @@ export class AnnotationComponent {
       });
     }
     this.selected = true;
-    this.editable = true;
+    this.annotationClick.emit({ annotationId: this.annotation.id, editable: true });
   }
 
   topRectangle() {
