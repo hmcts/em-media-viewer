@@ -70,7 +70,7 @@ export class MediaViewerWrapperComponent {
   }
 
   setDocumentUrl(newUrl: string) {
-    if (newUrl.startsWith('/documents/')) {
+    if (newUrl.includes('/documents/')) {
       const documentId = newUrl.split('/')[2];
 
       this.annotationSet = this.api.getOrCreateAnnotationSet(documentId);
