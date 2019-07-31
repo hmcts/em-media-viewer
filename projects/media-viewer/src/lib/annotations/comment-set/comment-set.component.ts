@@ -5,7 +5,7 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { CommentComponent } from './comment/comment.component';
-import { AnnotationService } from '../annotation.service';
+import { AnnotationService, SelectionAnnotation } from '../annotation.service';
 
 @Component({
   selector: 'mv-comment-set',
@@ -20,8 +20,7 @@ export class CommentSetComponent implements OnInit {
   @Input() rotate: number;
 
   comments: Comment[];
-  editable = false;
-  selectAnnotationId = '';
+  selectAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
@@ -30,7 +29,7 @@ export class CommentSetComponent implements OnInit {
               private readonly annotationService: AnnotationService) { }
 
   ngOnInit() {
-    this.annotationService.selectedAnnotation.subscribe((selectedAnnotationId) => this.selectAnnotationId = selectedAnnotationId);
+    this.annotationService.selectedAnnotation.subscribe((selectedAnnotation) => this.selectAnnotation = selectedAnnotation);
   }
 
   ngOnDestroy() {
@@ -79,6 +78,7 @@ export class CommentSetComponent implements OnInit {
 
         this.annotationSet.annotations[index] = newAnnotation;
       });
+    this.annotationService.onAnnotationSelection({annotationId: annotation.id, editable: false});
   }
 
   topRectangle(annotationId: string) {

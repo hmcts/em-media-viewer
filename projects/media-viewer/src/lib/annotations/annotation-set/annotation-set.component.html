@@ -10,7 +10,7 @@
     <mv-annotation [annotation]="annotation"
                    [zoom]="zoom"
                    [rotate]="rotate"
-                   [selected]="selectedAnnotationId === annotation.id"
+                   [selected]="selectedAnnotation.annotationId === annotation.id"
                    (update)="onAnnotationUpdate($event)"
                    (delete)="onAnnotationDelete($event)"
                    (annotationClick)="onAnnotationClick($event)">

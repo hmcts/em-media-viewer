@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@
 import { Comment } from './comment.model';
 import { User } from '../../user/user.model';
 import { Rectangle } from '../../annotation-set/annotation/rectangle/rectangle.model';
+import { SelectionAnnotation } from '../../annotation.service';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -25,7 +26,7 @@ export class CommentComponent {
   commentTopPos;
   commentLeftPos;
 
-  @Output() commentClick = new EventEmitter();
+  @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() commentRendered = new EventEmitter();
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<Comment>();
@@ -101,7 +102,7 @@ export class CommentComponent {
   onCommentClick() {
     if (!this._selected) {
       this.selected = true;
-      this.commentClick.emit(this._comment.annotationId);
+      this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
     }
   }
 
