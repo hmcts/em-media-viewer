@@ -10,20 +10,21 @@ import { Comment } from './annotation-set/annotation/comment/comment.model';
 @Injectable()
 export class AnnotationApiService {
 
+  private annotationSetBaseUrl = '/em-anno/annotation-sets';
+  private annotationBaseUrl = '/em-anno/annotation';
+
   constructor(
     private readonly httpClient: HttpClient
   ) { }
 
   public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
-    const url = '/em-anno/annotation-sets';
-
     return this.httpClient
-      .post<AnnotationSet>(url, body, { observe: 'response' })
+      .post<AnnotationSet>(this.annotationSetBaseUrl, body, { observe: 'response' })
       .pipe(map(response => response.body));
   }
 
   public getAnnotationSet(documentId: string): Observable<AnnotationSet> {
-    const url = `/em-anno/annotation-sets/filter?documentId=${documentId}`;
+    const url = `${this.annotationSetBaseUrl}/filter?documentId=${documentId}`;
 
     return this.httpClient
       .get<AnnotationSet>(url, { observe: 'response' })
@@ -31,8 +32,8 @@ export class AnnotationApiService {
       .pipe(catchError(() => []));
   }
 
-  public getComments(documentId: string): Observable<Comment[]> {
-    return this.getAnnotationSet(documentId)
+  public getComments(annotationSet: Observable<AnnotationSet>): Observable<Comment[]> {
+    return annotationSet
       .pipe(map(this.sortAnnotations))
       .pipe(map(this.extractComments))
       .pipe(catchError(() => []));
@@ -50,7 +51,7 @@ export class AnnotationApiService {
   }
 
   public deleteAnnotation(annotationId: string): Observable<null> {
-    const url = `/em-anno/annotations/${annotationId}`;
+    const url = `${this.annotationBaseUrl}/${annotationId}`;
 
     return this.httpClient
       .delete<null>(url, { observe: 'response' })
@@ -58,19 +59,26 @@ export class AnnotationApiService {
   }
 
   public postAnnotation(annotation: Partial<Annotation>): Observable<Annotation> {
-    const url = `/em-anno/annotations`;
-
     return this.httpClient
-      .post<Annotation>(url, annotation, { observe: 'response' })
+      .post<Annotation>(this.annotationBaseUrl, annotation, { observe: 'response' })
       .pipe(map(response => response.body));
   }
 
-  public getOrCreateAnnotationSet(documentId: string): Observable<AnnotationSet> {
-    const url = `/em-anno/annotation-sets/filter?documentId=${documentId}`;
+  public getOrCreateAnnotationSet(url: string): Observable<AnnotationSet> {
+    const fixedUrl = this.fixFindCall(url);
 
     return this.httpClient
-      .get<AnnotationSet>(url, { observe: 'response' })
+      .get<AnnotationSet>(fixedUrl, { observe: 'response' })
       .pipe(map(response => response.body))
-      .pipe(catchError(() => this.postAnnotationSet({ id: uuid(), documentId })));
+      .pipe(catchError(() => this.postAnnotationSet({ id: uuid(), documentId: this.extractDocumentId(url) })));
   }
+
+  private fixFindCall(url: string): string {
+    return `${this.annotationSetBaseUrl}/filter?documentId=${this.extractDocumentId(url)}`;
+  }
+
+  private extractDocumentId(url: string): string {
+    return url.startsWith('/documents/') ? url.split('/')[2] : url;
+  }
+
 }
