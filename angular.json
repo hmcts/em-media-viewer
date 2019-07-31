@@ -121,7 +121,8 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "media-viewer-demo-app:build",
-            "port": 3000
+            "port": 3000,
+            "proxyConfig": "proxy.config.json"
           },
           "configurations": {
             "production": {
