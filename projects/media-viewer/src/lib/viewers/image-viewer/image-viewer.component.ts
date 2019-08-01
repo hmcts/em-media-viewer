@@ -118,4 +118,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   onLoad() {
     this.imageLoadStatus.emit('SUCCESS');
   }
+
+  getImageHeight(img) {
+    return this.rotation % 180 !== 0 ? img.offsetWidth + 15 : img.offsetHeight + 15;
+  }
 }
