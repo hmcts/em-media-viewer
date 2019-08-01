@@ -60,7 +60,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   async createRectangles(highlight: Highlight) {
     if (highlight.page === this.page) {
-      if (window.getSelection) {
+      if (window.getSelection()) {
         const selection = window.getSelection();
 
         if (selection.rangeCount && !selection.isCollapsed) {

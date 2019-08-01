@@ -9,7 +9,7 @@ import { PopupToolbarComponent } from './annotation/popup-toolbar/popup-toolbar.
 import { AnnotationComponent } from './annotation/annotation.component';
 import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of, Observable } from 'rxjs';
+import { of, Observable, empty } from 'rxjs';
 import { ElementRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
@@ -201,7 +201,6 @@ describe('AnnotationSetComponent', () => {
     component.onMouseUp();
 
     expect(spy).toHaveBeenCalled();
-
     expect(component.annotationSet.annotations[component.annotationSet.annotations.length - 1].id).toEqual('new');
   });
 
@@ -232,6 +231,36 @@ describe('AnnotationSetComponent', () => {
     expect(createRectangleSpy).toHaveBeenCalledWith(mockClientRect, mockTextLayerRect);
     expect(createAnnotationSpy).toHaveBeenCalledWith([mockAnnotationRectangle, mockAnnotationRectangle]);
     expect(removeRangesSpy).toHaveBeenCalled();
+  });
+
+  it('should not create rectangles if not on right page', async () => {
+    component.page = 2;
+    const windowSpy = spyOn(window, 'getSelection');
+    await component.createRectangles(mockHighlight);
+    expect(windowSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not create rectangles if no window selection', async () => {
+    spyOn(window, 'getSelection').and.returnValue(null);
+    const createRectangleSpy = spyOn<any>(component, 'createRectangle');
+    await component.createRectangles(mockHighlight);
+
+    expect(createRectangleSpy).toHaveBeenCalledTimes(0);
+    expect(createRectangleSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not create rectangles if no selection range count', async () => {
+    spyOn<any>(mockSelection, 'rangeCount').and.returnValue(null);
+    const cloneRangeSpy = spyOn(mockSelection, 'getRangeAt');
+    await component.createRectangles(mockHighlight);
+    expect(cloneRangeSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not create rectangles if no selection range count', async () => {
+    spyOn<any>(mockSelection, 'isCollapsed').and.returnValue(true);
+    const cloneRangeSpy = spyOn(mockSelection, 'getRangeAt');
+    await component.createRectangles(mockHighlight);
+    expect(cloneRangeSpy).toHaveBeenCalledTimes(0);
   });
 
   it('should add annotation to annotationset', async () => {
