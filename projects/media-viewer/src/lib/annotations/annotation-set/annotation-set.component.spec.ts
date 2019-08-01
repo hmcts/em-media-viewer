@@ -84,14 +84,6 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  let mockRectangle: any = {
-    annotationId: '12345',
-    height: 50,
-    width: 40,
-    x: 30,
-    y: 20
-  };
-
   let fakeApi: any = {
     returnedAnnotation: {
       id: 'testId',
@@ -135,9 +127,12 @@ describe('AnnotationSetComponent', () => {
     component = fixture.componentInstance;
     component.annotationSet = { ...annotationSet };
     component.page = 1;
+    component.rotate = 0;
+    component.height = 400;
+    component.width = 200;
+    component.zoom = 1;
     fixture.detectChanges();
 
-    spyOn(mockElement.parentElement, 'getBoundingClientRect').and.returnValue(mockClientRect);
     spyOn(mockHighlight.event, 'target').and.returnValue(mockElement);
     spyOn(mockHighlight.event, 'srcElement').and.returnValue(mockElement);
   });
@@ -170,10 +165,26 @@ describe('AnnotationSetComponent', () => {
   it('starts drawing on mousedown', () => {
     component.newRectangle = new ElementRef(document.createElement('div'));
     component.toolbarEvents.drawMode.next(true);
+    const initialiseNewRectSpy = spyOn<any>(component, 'initialiseNewRect').and.callThrough();
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
 
+    expect(initialiseNewRectSpy).toHaveBeenCalled();
     expect(component.newRectangle.nativeElement.style.left).toEqual('10px');
     expect(component.newRectangle.nativeElement.style.top).toEqual('10px');
+  });
+
+  it('does not mousedown if no annotationSet', () => {
+    component.annotationSet = null;
+    const initialiseNewRectSpy = spyOn<any>(component, 'initialiseNewRect');
+    component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
+    expect(initialiseNewRectSpy).toHaveBeenCalledTimes(0);
+  });
+
+  it('does not mousedown if not in draw mode', () => {
+    spyOn<any>(component.toolbarEvents, 'drawMode').and.returnValue(false);
+    const initialiseNewRectSpy = spyOn<any>(component, 'initialiseNewRect');
+    component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
+    expect(initialiseNewRectSpy).toHaveBeenCalledTimes(0);
   });
 
   it('finishes drawing on mouseup', () => {
@@ -218,33 +229,82 @@ describe('AnnotationSetComponent', () => {
     await component.createRectangles(mockHighlight);
 
     expect(createRectangleSpy).toHaveBeenCalledTimes(2);
-    expect(createRectangleSpy).toHaveBeenCalledWith(mockClientRect, mockClientRect);
+    expect(createRectangleSpy).toHaveBeenCalledWith(mockClientRect, mockTextLayerRect);
     expect(createAnnotationSpy).toHaveBeenCalledWith([mockAnnotationRectangle, mockAnnotationRectangle]);
     expect(removeRangesSpy).toHaveBeenCalled();
   });
 
-  fit('should create unrotated rectangle', async () => {
-    component.annotationSet.id = '123';
-    component.rotate = 0;
-    component.zoom = 1;
-
+  it('should add annotation to annotationset', async () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
     spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
 
     await component.createRectangles(mockHighlight);
-    
+
     expect(component.selectedAnnotation).toEqual(fakeApi.returnedAnnotation.id);
     
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
-    const expectedRectangle = fakeApi.returnedAnnotation.rectangles[fakeApi.returnedAnnotation.rectangles.length - 1];
+    const expectedRectangle = fakeApi.returnedAnnotation.rectangles[1];
     expect(finalRectangle).toEqual(expectedRectangle);
-    
-    // check that rectangle is based off of these + rotation angle
-    // top: 10,
-    // bottom: 100,
-    // left: 25,
-    // right: 100
-
   });
+
+  it('should create unrotated rectangle', async () => {
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
+
+    await component.createRectangles(mockHighlight);
+
+    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
+    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
+    expect(finalRectangle.x).toEqual(25);
+    expect(finalRectangle.y).toEqual(10);
+    expect(finalRectangle.height).toEqual(90);
+    expect(finalRectangle.width).toEqual(75);
+  });
+
+  it('should create 90 degree rotated rectangle', async () => {
+    component.rotate = 90;
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
+
+    await component.createRectangles(mockHighlight);
+
+    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
+    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
+    expect(finalRectangle.x).toEqual(10);
+    expect(finalRectangle.y).toEqual(285);
+    expect(finalRectangle.height).toEqual(75);
+    expect(finalRectangle.width).toEqual(90);
+  });
+
+  it('should create 180 degree rotated rectangle', async () => {
+    component.rotate = 180;
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
+
+    await component.createRectangles(mockHighlight);
+
+    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
+    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
+    expect(finalRectangle.x).toEqual(100);
+    expect(finalRectangle.y).toEqual(300);
+    expect(finalRectangle.height).toEqual(90);
+    expect(finalRectangle.width).toEqual(75);
+  });
+
+  it('should create 270 degree rotated rectangle', async () => {
+    component.rotate = 270;
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
+
+    await component.createRectangles(mockHighlight);
+
+    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
+    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
+    expect(finalRectangle.x).toEqual(115);
+    expect(finalRectangle.y).toEqual(25);
+    expect(finalRectangle.height).toEqual(75);
+    expect(finalRectangle.width).toEqual(90);
+  });
+
 });
