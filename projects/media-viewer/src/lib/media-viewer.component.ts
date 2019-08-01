@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { ToolbarButtonVisibilityService } from './toolbar/toolbar-button-visibility.service';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from './toolbar/toolbar-event.service';
+import { AnnotationApiService } from './annotations/annotation-api.service';
 
 @Component({
   selector: 'mv-media-viewer',
@@ -11,7 +12,6 @@ import { ToolbarEventService } from './toolbar/toolbar-event.service';
 })
 export class MediaViewerComponent implements OnChanges {
 
-  @Input() url: string;
   @Input() downloadFileName: string;
   @Input() contentType: string;
   @Input() showToolbar = true;
@@ -20,14 +20,31 @@ export class MediaViewerComponent implements OnChanges {
 
   @Input() enableAnnotations = false;
   @Input() showCommentSummary: Subject<boolean>;
-  @Input() annotationSet: Observable<AnnotationSet>;
+
+  _url: string;
+  annotationSet: Observable<AnnotationSet>;
+
+
 
   private supportedContentTypes = ['pdf', 'image'];
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
-    public readonly toolbarEvents: ToolbarEventService
+    public readonly toolbarEvents: ToolbarEventService,
+    private readonly api: AnnotationApiService
   ) {}
+
+  @Input()
+  set url(url: string) {
+    this._url = url;
+    if (this.enableAnnotations) {
+      this.annotationSet = this.api.getOrCreateAnnotationSet(url);
+    }
+  }
+
+  get url() {
+    return this._url;
+  }
 
   contentTypeUnsupported(): boolean {
     return this.supportedContentTypes.indexOf(this.contentType) < 0;

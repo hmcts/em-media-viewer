@@ -7,14 +7,14 @@ import {
   ToolbarButtonVisibilityService
 } from '../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
 import { AnnotationSet } from '../../../projects/media-viewer/src/lib/annotations/annotation-set/annotation-set.model';
-import { Component } from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component} from '@angular/core';
 import { Comment } from '../../../projects/media-viewer/src/lib/annotations/annotation-set/annotation/comment/comment.model';
 
 @Component({
   selector: 'media-viewer-wrapper',
   templateUrl: './media-viewer-wrapper.component.html'
 })
-export class MediaViewerWrapperComponent {
+export class MediaViewerWrapperComponent implements AfterContentInit {
 
   pdfUrl = 'assets/example.pdf';
   imageUrl = 'assets/example.jpg';
@@ -23,8 +23,7 @@ export class MediaViewerWrapperComponent {
   unsupportedType = 'txt';
 
   selectedTab = 'pdf';
-  url = this.pdfUrl;
-  annotationSet: Observable<AnnotationSet>;
+  url;
   comments: Observable<Comment[]>;
 
   mediaLoadStatus: string;
@@ -37,6 +36,9 @@ export class MediaViewerWrapperComponent {
     private readonly api: AnnotationApiService,
     private readonly toolbarButtons: ToolbarButtonVisibilityService
   ) {
+  }
+
+  ngAfterContentInit() {
     this.selectTab(this.selectedTab);
   }
 
@@ -70,16 +72,7 @@ export class MediaViewerWrapperComponent {
   }
 
   setDocumentUrl(newUrl: string) {
-    if (newUrl.includes('/documents/')) {
-      const documentId = newUrl.split('/')[2];
-
-      this.annotationSet = this.api.getOrCreateAnnotationSet(documentId);
-      this.comments = this.api.getComments(documentId);
-      this.url = newUrl.endsWith('/binary') ? newUrl : newUrl + '/binary';
-    } else {
-      this.url = newUrl;
-      this.annotationSet = null;
-    }
+    this.url = newUrl;
   }
 
   onMediaLoad(loadStatus: string) {
