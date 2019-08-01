@@ -23,8 +23,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   unsupportedType = 'txt';
 
   selectedTab = 'pdf';
-  url
-  annotationSet: Observable<AnnotationSet>;
+  url;
   comments: Observable<Comment[]>;
 
   mediaLoadStatus: string;
@@ -74,12 +73,6 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   setDocumentUrl(newUrl: string) {
     this.url = newUrl;
-    if (this.enableAnnotations) {
-      this.annotationSet = this.api.getOrCreateAnnotationSet(newUrl);
-      this.comments = this.api.getComments(this.annotationSet);
-    } else {
-      this.annotationSet = null;
-    }
   }
 
   onMediaLoad(loadStatus: string) {

@@ -11,7 +11,7 @@ import { Comment } from './annotation-set/annotation/comment/comment.model';
 export class AnnotationApiService {
 
   private annotationSetBaseUrl = '/em-anno/annotation-sets';
-  private annotationBaseUrl = '/em-anno/annotation';
+  private annotationBaseUrl = '/em-anno/annotations';
 
   constructor(
     private readonly httpClient: HttpClient
@@ -78,7 +78,8 @@ export class AnnotationApiService {
   }
 
   private extractDocumentId(url: string): string {
-    return url.startsWith('/documents/') ? url.split('/')[2] : url;
+    url = url.startsWith('/documents/') ? url.split('/documents/')[1] : url;
+    return url.replace('/binary', '');
   }
 
 }
