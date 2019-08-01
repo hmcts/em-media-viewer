@@ -18,13 +18,12 @@
       </mv-annotation-set>
     </div>
   </div>
-  <div class="split right" [style.height.px]="getImageHeight(img)">
   <mv-comment-set *ngIf="enableAnnotations && annotationSet"
                   [annotationSet]="annotationSet"
                   [page]="1"
                   [zoom]="zoom"
-                  [rotate]="rotation">
+                  [rotate]="rotation"
+                  [height]="getImageHeight(img)">
   </mv-comment-set>
-  </div>
   <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>
 </div>

@@ -10,7 +10,7 @@ import { AnnotationService, SelectionAnnotation } from '../annotation.service';
 @Component({
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
-  styleUrls: ['./comment-set.component.css']
+  styleUrls: ['./comment-set.component.scss']
 })
 export class CommentSetComponent implements OnInit {
 
@@ -18,6 +18,7 @@ export class CommentSetComponent implements OnInit {
   @Input() page: number;
   @Input() zoom: number;
   @Input() rotate: number;
+  @Input() height: number;
 
   comments: Comment[];
   selectAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
