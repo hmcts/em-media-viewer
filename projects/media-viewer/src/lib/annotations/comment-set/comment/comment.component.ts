@@ -117,31 +117,9 @@ export class CommentComponent {
   }
 
   formNgStyle() {
-    if (this.rotate === 0) {
-      return {
-        top: (this.commentTopPos * this.zoom) + 'px',
-        left: this.getFirstNonNullParentProperty(this.form.nativeElement, 'clientWidth') + 'px'
-      };
-    } else if (this.rotate === 90) {
-      return {
-        top: '0px',
-        left: this.commentLeftPos * this.zoom + 'px',
-        'transform-origin': 'top left'
-      };
-    } else if (this.rotate === 180) {
-      return {
-        top: ((this.commentTopPos * this.zoom) + (this.rectangle.height * this.zoom)) + 'px',
-        left: '0px',
-        'transform-origin': 'top left'
-      };
-    } else if (this.rotate === 270) {
-      return {
-        top: this.getFirstNonNullParentProperty(this.form.nativeElement, 'clientHeight') + 'px',
-        left: (this.commentLeftPos * this.zoom) + (this.rectangle.width * this.zoom) + 'px',
-        'transform-origin': 'top left'
-      };
-    }
-    return null;
+    return {
+      top: (this.commentTopPos * this.zoom) + 'px'
+    };
   }
 
   commentStyle() {
