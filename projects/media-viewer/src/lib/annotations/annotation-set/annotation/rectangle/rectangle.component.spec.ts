@@ -43,6 +43,13 @@ describe('RectangleComponent', () => {
       }
   };
 
+  const mockIResizeEvent : any = {
+      size : {
+        width : 50,
+        height : 50
+      }
+  };
+
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [
@@ -82,6 +89,13 @@ describe('RectangleComponent', () => {
   it('should emit on moving of element', () => {
     const clickEmitEventSpy = spyOn(component.update, 'emit');
     component.onMove(mockHtmlElement);
+
+    expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should emit on resize', () => {
+    const clickEmitEventSpy = spyOn(component.update, 'emit');
+    component.onResize(mockIResizeEvent);
 
     expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
   });
