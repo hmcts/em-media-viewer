@@ -27,14 +27,17 @@ describe('Viewer Events Service', () => {
   });
 
   it('should select the text', () => {
+    const textSelectSpy = spyOn(service.highlightedText, 'next');
     service.onTextSelection(mockHighLight);
-    expect(service).toBeTruthy();
+
+    expect(textSelectSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should select the Shape', () => {
+    const shapeSelectSpy = spyOn(service.highlightedShape, 'next');
     service.onShapeSelection(mockHighLight);
-    console.log('jjj ' , service.highlightedShape)
-    expect(service).toBeTruthy();
+
+    expect(shapeSelectSpy).toHaveBeenCalledTimes(1);
   });
 
 });
