@@ -31,6 +31,18 @@ describe('RectangleComponent', () => {
       y: 10,
   };
 
+  const mockHtmlElement : any = {
+      style : {
+        top : '0px',
+        left : '300px',
+        transform: {
+          match(regex: any) :string {
+            return '300,0';
+          }
+        }
+      }
+  };
+
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [
@@ -51,6 +63,7 @@ describe('RectangleComponent', () => {
     fixture = TestBed.createComponent(RectangleComponent);
     component = fixture.componentInstance;
     component.rectangle = mockRectangle;
+    component.zoom = 1;
     nativeElement = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });
@@ -65,4 +78,12 @@ describe('RectangleComponent', () => {
 
     expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('should emit on moving of element', () => {
+    const clickEmitEventSpy = spyOn(component.update, 'emit');
+    component.onMove(mockHtmlElement);
+
+    expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
+  });
+
 });
