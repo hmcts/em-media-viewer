@@ -1,7 +1,7 @@
 <div id="viewer-wrapper" *ngIf="url && !errorMessage">
   <div class="split left">
     <div id="image-container"
-         class="image-container" [style.height.px]="img.offsetHeight + 15">
+         class="image-container" [style.height.px]="getImageHeight(img)">
       <img #img
            [src]="url"
            [ngClass]="'rot' + rotation"
@@ -18,7 +18,7 @@
       </mv-annotation-set>
     </div>
   </div>
-  <div class="split right" [style.height.px]="img.offsetHeight">
+  <div class="split right" [style.height.px]="getImageHeight(img)">
   <mv-comment-set *ngIf="enableAnnotations && annotationSet"
                   [annotationSet]="annotationSet"
                   [page]="1"
