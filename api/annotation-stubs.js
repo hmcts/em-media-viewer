@@ -1,24 +1,20 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-// var fs = require("fs");
 
 app.use(bodyParser.json());
 
 app.get('/em-anno/annotation-sets/filter', function (req, res) {
-  var documentId = req.query.documentId;
 
-  if (documentId.endsWith('example.pdf')) {
-    res.json({
-      id: 1,
-      documentId: 'example.pdf',
-      annotations: []
-    });
-  }
+  res.json({
+    id: 1,
+    documentId: req.query.documentId,
+    annotations: []
+  });
 
 });
 
-app.post('/em-anno/annotation-set', function (req, res) {
+app.post('/em-anno/annotation-sets', function (req, res) {
 
   var json = req.body;
 
@@ -28,7 +24,7 @@ app.post('/em-anno/annotation-set', function (req, res) {
 
 });
 
-app.post('/em-anno/annotation', function (req, res) {
+app.post('/em-anno/annotations', function (req, res) {
 
   var json = req.body;
 
@@ -36,7 +32,7 @@ app.post('/em-anno/annotation', function (req, res) {
 
 });
 
-app.delete('/em-anno/annotation/:id', function (req, res) {
+app.delete('/em-anno/annotations/:id', function (req, res) {
   res.end('');
 
 });
