@@ -1,4 +1,5 @@
 <div id="viewer-wrapper">
+  <div class="split left">
   <div *ngIf="!errorMessage"
        id="image-container"
        class="image-container">
@@ -17,11 +18,14 @@
                        [width]="img !== undefined ? img.nativeElement.width : 0">
     </mv-annotation-set>
   </div>
+  </div>
+  <div class="split right">
   <mv-comment-set *ngIf="enableAnnotations && annotationSet"
                   [annotationSet]="annotationSet"
                   [page]="1"
                   [zoom]="zoom"
                   [rotate]="rotation">
   </mv-comment-set>
+  </div>
   <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>
 </div>
