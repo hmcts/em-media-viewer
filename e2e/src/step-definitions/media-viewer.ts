@@ -48,3 +48,24 @@ Then('I should see previous page number should be {string}', async (expected: st
   expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
 });
 
+When('I click Annotate button', async () => {
+
+});
+
+Then('I see Annotate button must be enabled', async () => {
+});
+
+When('I select a text on pdf doc', async () => {
+});
+
+Then('I expect text highlight popup should appear', async () => {
+});
+
+Then('I add a comment to the selected PDF text', async () => {
+});
+
+Then('I check whether the comment has been created or not?', async () => {
+});
+
+Then('I verify whether the comment has been saved or not?', async () => {
+});
