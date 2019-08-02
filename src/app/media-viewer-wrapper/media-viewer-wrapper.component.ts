@@ -6,9 +6,8 @@ import {
   defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
 } from '../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
-import { AnnotationSet } from '../../../projects/media-viewer/src/lib/annotations/annotation-set/annotation-set.model';
+import { AfterContentInit, Component } from '@angular/core';
 import { Comment } from '../../../projects/media-viewer/src/lib/annotations/comment-set/comment/comment.model';
-import {AfterContentInit, AfterViewInit, Component} from '@angular/core';
 
 @Component({
   selector: 'media-viewer-wrapper',
