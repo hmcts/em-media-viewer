@@ -217,6 +217,18 @@ describe('PdfViewerComponent', () => {
     expect(component.loadingDocument).toBe(false);
   });
 
+  it('should load new document when URL changes', async () => {
+    component.enableAnnotations = true;
+    let spyComponentLoadDocument = spyOn<any>(component, 'loadDocument');
+
+    component.url = 'b';
+    await component.ngOnChanges({
+      url: new SimpleChange('a', component.url, true)
+    });
+
+    expect(spyComponentLoadDocument).toHaveBeenCalled();
+  });
+
 //   it('should create annotation set component for highlight text selected page', () => {
 //     const mouseEvent = new MouseEvent('mouseup');
 //     spyOn(mockAnnotationService, 'onHighlightSelected');
