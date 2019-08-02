@@ -5,6 +5,12 @@
   height: 100%;
 }
 
+.pdfViewer {
+  width: 72.5%;
+  overflow: auto;
+  float: left;
+}
+
 .hidden {
   display:none!important;
 }
