@@ -34,7 +34,7 @@ export class CommentSetComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.annotationService.selectedAnnotation) {
+    if (this.annotationService.selectedAnnotation && !this.annotationService.selectedAnnotation.closed) {
       this.annotationService.selectedAnnotation.unsubscribe();
     }
   }
