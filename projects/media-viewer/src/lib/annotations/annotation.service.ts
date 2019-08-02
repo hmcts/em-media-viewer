@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 export interface SelectionAnnotation {
   annotationId: string;
@@ -14,5 +14,9 @@ export class AnnotationService {
 
   public onAnnotationSelection(annotation: SelectionAnnotation): void {
     this.selectedAnnotation.next(annotation);
+  }
+
+  getSelectedAnnotation(): Observable<SelectionAnnotation> {
+    return this.selectedAnnotation.asObservable();
   }
 }
