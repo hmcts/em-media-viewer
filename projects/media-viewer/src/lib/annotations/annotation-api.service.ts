@@ -78,7 +78,7 @@ export class AnnotationApiService {
   }
 
   private extractDocumentId(url: string): string {
-    url = url.startsWith('/documents/') ? url.split('/documents/')[1] : url;
+    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
     return url.replace('/binary', '');
   }
 
