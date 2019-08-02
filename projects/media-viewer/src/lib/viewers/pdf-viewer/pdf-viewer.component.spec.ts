@@ -35,7 +35,7 @@ describe('PdfViewerComponent', () => {
     getPageNumber: () => {},
     getCurrentPDFZoomValue: () => {},
     getNormalisedPagesRotation: () => 0,
-    documentLoadInit: new Subject<string>(),
+    documentLoadInit: new Subject<any>(),
     documentLoadProgress: new Subject<DocumentLoadProgress>(),
     documentLoaded: new Subject<any>(),
     documentLoadFailed: new Subject(),
@@ -195,6 +195,26 @@ describe('PdfViewerComponent', () => {
 
     expect(mockAnnotationService.onHighlightSelected).not.toHaveBeenCalled();
     expect(mockViewerEvent.onTextSelection).not.toHaveBeenCalled();
+  });
+
+  it('should select the page', () => {
+    const mouseEvent = new MouseEvent('mousedown');
+    spyOn(mockAnnotationService, 'onPageSelected');
+    component.onMouseDown(mouseEvent);
+    expect(mockAnnotationService.onPageSelected).not.toHaveBeenCalled();
+  });
+
+  it('should initialize loading of document', () => {
+    mockWrapper.documentLoadInit.next();
+    expect(component.loadingDocument).toBe(true);
+    expect(component.loadingDocumentProgress).toBe(null);
+    expect(component.errorMessage).toBe(null);
+  });
+
+  it('should change status of loading document to false after document has been loaded', () => {
+    component.loadingDocument = true;
+    mockWrapper.documentLoaded.next();
+    expect(component.loadingDocument).toBe(false);
   });
 
 //   it('should create annotation set component for highlight text selected page', () => {
