@@ -6,6 +6,7 @@ import { Comment } from './comment/comment.model';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { CommentComponent } from './comment/comment.component';
 import { AnnotationService, SelectionAnnotation } from '../annotation.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-comment-set',
@@ -22,6 +23,7 @@ export class CommentSetComponent implements OnInit {
 
   comments: Comment[];
   selectAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
+  subscription: Subscription;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
@@ -30,12 +32,13 @@ export class CommentSetComponent implements OnInit {
               private readonly annotationService: AnnotationService) { }
 
   ngOnInit() {
-    this.annotationService.selectedAnnotation.subscribe((selectedAnnotation) => this.selectAnnotation = selectedAnnotation);
+    this.subscription = this.annotationService.getSelectedAnnotation()
+      .subscribe((selectedAnnotation) => this.selectAnnotation = selectedAnnotation);
   }
 
   ngOnDestroy() {
-    if (this.annotationService.selectedAnnotation && !this.annotationService.selectedAnnotation.closed) {
-      this.annotationService.selectedAnnotation.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 
