@@ -43,10 +43,11 @@ export class CommentSetComponent implements OnInit {
   }
 
   initialise(eventSource: PageEvent['source']) {
+    this.height = eventSource.div.clientHeight;
     this.zoom = eventSource.scale;
     this.rotate = eventSource.rotation;
     const element = eventSource.div;
-    element.appendChild(this.container.nativeElement);
+    element.parentElement.parentElement.appendChild(this.container.nativeElement);
   }
 
   public getCommentsOnPage(): Comment[] {

@@ -1,20 +1,18 @@
-<div class="split right" [style.height.px]="height">
-  <div #container class="comment-container">
-    <ng-container *ngFor="let comment of getCommentsOnPage()">
-      <mv-anno-comment
-        #commentComponent
-        *ngIf="comment"
-        (commentClick)="onSelect($event)"
-        (delete)="onCommentDelete($event)"
-        (updated)="onCommentUpdate($event)"
-        [selected]="comment.annotationId === selectAnnotation.annotationId"
-        [editable]="comment.annotationId === selectAnnotation.annotationId ? selectAnnotation.editable : false"
-        [zoom]="zoom"
-        [rotate]="rotate"
-        [comment]="comment"
-        [rectangle]="topRectangle(comment.annotationId)"
-        (commentRendered)="redrawCommentComponents()">
-      </mv-anno-comment>
-    </ng-container>
-  </div>
+<div #container class="split right comment-container" [style.height.px]="height">
+  <ng-container *ngFor="let comment of getCommentsOnPage()">
+    <mv-anno-comment
+      #commentComponent
+      *ngIf="comment"
+      (commentClick)="onSelect($event)"
+      (delete)="onCommentDelete($event)"
+      (updated)="onCommentUpdate($event)"
+      [selected]="comment.annotationId === selectAnnotation.annotationId"
+      [editable]="comment.annotationId === selectAnnotation.annotationId ? selectAnnotation.editable : false"
+      [zoom]="zoom"
+      [rotate]="rotate"
+      [comment]="comment"
+      [rectangle]="topRectangle(comment.annotationId)"
+      (commentRendered)="redrawCommentComponents()">
+    </mv-anno-comment>
+  </ng-container>
 </div>
