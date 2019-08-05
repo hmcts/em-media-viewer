@@ -51,11 +51,11 @@ Then('I should see previous page number should be {string}', async (expected: st
 });
 
 When('I click Annotate button', async () => {
-  await this.clickElement(by.css('label[for="toggleAnnotations"]'));
-  await this.clickElement(by.css('label[for="toggleAnnotations"]'));
+  await toolBar.clickTextIcon();
+  await toolBar.clickTextIcon();
 });
 
-Then('I expect Annotate button must be enabled', async () => {
+Then('I expect Annotate button must be enabled', async function() {
   const screenshot = await browser.takeScreenshot();
   this.attach(screenshot, 'image/png');
 });
@@ -65,6 +65,9 @@ When('I select a text on pdf doc', async () => {
 });
 
 Then('I expect text highlight popup should appear', async () => {
+});
+
+Then(/^I select a text on pdf$/, async () => {
 });
 
 Then('I add a comment to the selected PDF text', async () => {

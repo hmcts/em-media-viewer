@@ -1,4 +1,4 @@
-@Annotations @MediaViewer
+@MediaViewer @Annotations
 Feature:  Media Viewer Annotations
 
   Background:
@@ -13,7 +13,6 @@ Feature:  Media Viewer Annotations
     Then I expect text highlight popup should appear
     And I add a comment to the selected PDF text
     Then I check whether the comment has been created
-
 
 
   @PDFTextHighlight_Comment
