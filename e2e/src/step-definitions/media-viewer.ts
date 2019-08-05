@@ -1,11 +1,13 @@
 import {When, Given, Then} from 'cucumber';
 import {AppPage} from '../pages/app.po';
-import {by} from 'protractor';
+import {browser, by} from 'protractor';
 import {NavigatePage} from '../pages/navigate.po';
 import {expect} from 'chai';
+import {ToolBar} from '../pages/toolbar.po';
 
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
+const toolBar = new ToolBar();
 
 Given('I am on Media Viewer Page', async () => {
   await page.preparePage();
@@ -49,13 +51,17 @@ Then('I should see previous page number should be {string}', async (expected: st
 });
 
 When('I click Annotate button', async () => {
-
+  await this.clickElement(by.css('label[for="toggleAnnotations"]'));
+  await this.clickElement(by.css('label[for="toggleAnnotations"]'));
 });
 
-Then('I see Annotate button must be enabled', async () => {
+Then('I expect Annotate button must be enabled', async () => {
+  const screenshot = await browser.takeScreenshot();
+  this.attach(screenshot, 'image/png');
 });
 
 When('I select a text on pdf doc', async () => {
+  await toolBar.clickTextIcon();
 });
 
 Then('I expect text highlight popup should appear', async () => {
@@ -64,8 +70,8 @@ Then('I expect text highlight popup should appear', async () => {
 Then('I add a comment to the selected PDF text', async () => {
 });
 
-Then('I check whether the comment has been created or not?', async () => {
+Then('I check whether the comment has been created', async () => {
 });
 
-Then('I verify whether the comment has been saved or not?', async () => {
+Then('I verify whether the comment has been saved', async () => {
 });
