@@ -24,6 +24,8 @@ export class CommentSetComponent implements OnInit {
   comments: Comment[];
   selectAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
   subscription: Subscription;
+  pageContainer;
+  pageWrapper;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
@@ -40,14 +42,34 @@ export class CommentSetComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.pageContainer.remove();
+    this.pageWrapper.remove();
   }
 
   initialise(eventSource: PageEvent['source']) {
+    this.setCommentSetValues(eventSource);
+    const element = eventSource.div;
+
+    if (!this.pageContainer) {
+      const pageWrapper =  document.createElement('div');
+      pageWrapper.setAttribute('class', 'pageWrapper');
+
+      const pageContainer =  document.createElement('div');
+      pageContainer.setAttribute('class', 'pageContainer');
+      element.insertAdjacentElement('beforebegin', pageContainer);
+      pageWrapper.appendChild(element);
+      pageContainer.appendChild(pageWrapper);
+
+      this.pageContainer = pageContainer;
+      this.pageWrapper = pageWrapper;
+    }
+    this.pageContainer.appendChild(this.container.nativeElement);
+  }
+
+  setCommentSetValues(eventSource: PageEvent['source']) {
     this.height = eventSource.div.clientHeight;
     this.zoom = eventSource.scale;
     this.rotate = eventSource.rotation;
-    const element = eventSource.div;
-    element.parentElement.parentElement.appendChild(this.container.nativeElement);
   }
 
   public getCommentsOnPage(): Comment[] {

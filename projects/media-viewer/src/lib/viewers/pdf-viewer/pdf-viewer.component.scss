@@ -5,9 +5,13 @@
   height: 100%;
 }
 
-.pdfViewer {
-  width: 72.5%;
+.pageContainer {
   overflow: auto;
+}
+
+.pageWrapper {
+  overflow-x: auto;
+  width: 72.5%;
   float: left;
 }
 
@@ -20,6 +24,10 @@
 }
 
 .highlightMode > .page > .textLayer {
+  z-index: 1000;
+}
+
+.highlightMode > .pageContainer > .pageWrapper > .page >.textLayer {
   z-index: 1000;
 }
 
