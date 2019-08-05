@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../../user/user.model';
 import { Rectangle } from '../../annotation-set/annotation/rectangle/rectangle.model';
@@ -9,7 +9,7 @@ import { SelectionAnnotation } from '../../annotation.service';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent {
+export class CommentComponent implements OnChanges {
 
   private readonly MAX_COMMENT_LENGTH = 50;
 
@@ -35,6 +35,10 @@ export class CommentComponent {
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
+  ngOnChanges(): void {
+    this.commentRendered.emit();
+  }
+
   @Input()
   set comment(comment: Comment) {
     this._comment = comment;
@@ -55,7 +59,6 @@ export class CommentComponent {
   @Input()
   set selected(selected: boolean) {
     this._selected = selected;
-    this.commentRendered.emit();
   }
 
   get selected() {
