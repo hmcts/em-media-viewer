@@ -88,7 +88,7 @@ export class CommentSetComponent implements OnInit {
     const annotation = this.annotationSet.annotations.find(anno => anno.id === comment.annotationId);
     annotation.comments = [];
     this.onAnnotationUpdate(annotation);
-
+    this.redrawCommentComponents();
   }
 
   public onCommentUpdate(comment: Comment) {
@@ -155,7 +155,8 @@ export class CommentSetComponent implements OnInit {
   isOverlapping(commentItem: CommentComponent, previousCommentItem: CommentComponent): CommentComponent {
     commentItem.commentTopPos = commentItem._rectangle.y;
     if (previousCommentItem) {
-      const endOfPreviousCommentItem = (previousCommentItem.commentTopPos + previousCommentItem.form.nativeElement.getBoundingClientRect().height);
+      const endOfPreviousCommentItem = (previousCommentItem.commentTopPos
+        + (previousCommentItem.form.nativeElement.getBoundingClientRect().height / this.zoom));
       if (commentItem.commentTopPos <= endOfPreviousCommentItem) {
         commentItem.commentTopPos = endOfPreviousCommentItem;
       }
