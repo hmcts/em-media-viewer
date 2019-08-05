@@ -3,11 +3,11 @@ import {by} from 'protractor';
 
 export class ToolBar extends AppPage {
 
-  async clickToolBarButton() {
+  async clickTextIcon() {
     await this.clickElement(by.id('toggleHighlightButton'));
   }
 
-  async dontClickToolBarButton() {
+  async dontClickTextIcon() {
     await this.clickElement(by.id('toggleHighlightButton'));
   }
 
