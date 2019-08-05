@@ -6,8 +6,11 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
 
 describe('PdfAnnotationService', () => {
-  let service: PdfAnnotationService;
+  let pdfService: PdfAnnotationService;
   let factory: ComponentFactoryResolver;
+  let toolbarEvent: ToolbarEventService;
+  let viewerEventService: ViewerEventService;
+
   // const mockFactoryResolver = {
   //   resolveComponentFactory: () => {}
   // };
@@ -16,7 +19,7 @@ describe('PdfAnnotationService', () => {
   //   instance: {
   //     annotationSet: annotationSet,
   //     page: Number
-  //   }    
+  //   }
   // };
 
   beforeEach(() => {
@@ -29,18 +32,34 @@ describe('PdfAnnotationService', () => {
         ComponentFactoryResolver
         // { provide: ComponentFactoryResolver, useValue: mockFactoryResolver },
         // { provide: ViewContainerRef, useValue: mockContainerRef },
+        // { provide: ToolbarEventService, useValue: toolbarEvent },
+        // { provide: ViewerEventService, useValue: viewerEventService }
+
       ]
     });
+  });
 
-    service = TestBed.get(PdfAnnotationService);
+  beforeEach(()=>{
+    pdfService = TestBed.get(PdfAnnotationService);
     factory = TestBed.get(ComponentFactoryResolver);
-
+    toolbarEvent = TestBed.get(ToolbarEventService);
+    viewerEventService = TestBed.get(ViewerEventService);
 
   });
 
   it('should be created', inject([PdfAnnotationService], (service: PdfAnnotationService) => {
     expect(service).toBeTruthy();
   }));
+
+  it('should highlight the text on selected page', ()=>{
+    const mouseEvent = new MouseEvent('click');
+    spyOn(pdfService, 'onHighlightSelected').and.callThrough();
+    spyOn(toolbarEvent.highlightMode, 'getValue').and.returnValue(true);
+    pdfService.onHighlightSelected(mouseEvent);
+
+    expect(pdfService.onHighlightSelected).toHaveBeenCalled();
+
+  });
 
   // fit('should store annotationSet components for the pages annotations exist when loaded', () => {
   //   spyOn(service, 'onPageRendered');
