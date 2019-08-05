@@ -36,7 +36,7 @@ export class PdfJsWrapperFactory {
       new Subject<DocumentLoadProgress>(),
       new Subject<any>(),
       new Subject(),
-      new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>()
+      new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: HTMLElement}}>()
     );
   }
 

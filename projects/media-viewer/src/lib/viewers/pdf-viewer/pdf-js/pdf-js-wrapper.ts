@@ -143,7 +143,7 @@ export interface PageEvent {
   source: {
     rotation: number,
     scale: number,
-    div: Element
+    div: HTMLElement
   };
 }
 

@@ -51,16 +51,15 @@ export class PdfAnnotationService {
           const component = this.createAnnotationSetComponent(annotation.page);
           this.pages.push(annotation.page);
           this.annotationSetComponents.push(component);
-          this.setupCommentSet(annotation.page);
         }
       });
     }
   }
 
-  setupCommentSet(page: number) {
+  setupCommentSet(page: number): ComponentRef<CommentSetComponent> {
     const component = this.createCommentSetComponent(page);
-    this.pages.push(page);
     this.commentSetComponents.push(component);
+    return component;
   }
 
   destroy() {
@@ -78,10 +77,13 @@ export class PdfAnnotationService {
       annotationComponent.instance.initialise(pageRenderEvent.source);
     }
 
-    const commentComponent = this.commentSetComponents
-      .find((comment) => comment.instance.page === pageRenderEvent.pageNumber);
-    if (commentComponent) {
-      commentComponent.instance.initialise(pageRenderEvent.source);
+    let commentSetComponent = this.commentSetComponents
+      .find((commentSet) => commentSet.instance.page === pageRenderEvent.pageNumber);
+    if (!commentSetComponent) {
+      commentSetComponent = this.setupCommentSet(pageRenderEvent.pageNumber);
+      commentSetComponent.instance.initialise(pageRenderEvent.source);
+    } else if (this.commentSetComponents) {
+      commentSetComponent.instance.setCommentSetValues(pageRenderEvent.source);
     }
   }
 
@@ -103,9 +105,7 @@ export class PdfAnnotationService {
         this.pages.push(currentPage);
         const annotationSetComponent = this.createAnnotationSetComponent(currentPage);
         this.annotationSetComponents.push(annotationSetComponent);
-        const commentSetComponent = this.createCommentSetComponent(currentPage);
         annotationSetComponent.instance.initialise(pageEvent.source);
-        commentSetComponent.instance.initialise(pageEvent.source);
       }
 
       if (this.toolbarEvents.drawMode.getValue()) {
