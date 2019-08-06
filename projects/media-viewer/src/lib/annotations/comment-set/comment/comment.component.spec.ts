@@ -99,7 +99,7 @@ describe('CommentComponent', () => {
   });
 
   it('should emit a click', () => {
-    const clickEmitEventSpy = spyOn(component.click, 'emit');
+    const clickEmitEventSpy = spyOn(component.commentClick, 'emit');
     component.onCommentClick();
     expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
   });
@@ -124,7 +124,7 @@ describe('CommentComponent', () => {
 
   it('should select comment when content not yet saved', () => {
     component.author = undefined;
-    component.fullComment = "comment content";
+    component.fullComment = 'comment content';
     component._selected = false;
 
     expect(component.selected).toBeTruthy();
@@ -132,7 +132,7 @@ describe('CommentComponent', () => {
 
   it('should keep comment editable when content not yet saved', () => {
     component.author = undefined;
-    component.fullComment = "comment content";
+    component.fullComment = 'comment content';
     component._editable = false;
 
     expect(component.editable).toBeTruthy();
@@ -204,45 +204,19 @@ describe('CommentComponent', () => {
 
   it('should get unselected long comment', () => {
     component.selected = false;
-    component.fullComment = 'This comment is longer than the maximum comment length, which is 50. Therefore, the comment should be shortened.';
+    component.fullComment = 'This comment is longer than the maximum comment length, ' +
+      'which is 50. Therefore, the comment should be shortened.';
     const retrievedCommentText = component.commentText;
     expect(retrievedCommentText).toBe('This comment is longer than the maximum comment...');
   });
 
   it('should get selected long comment', () => {
     component.selected = true;
-    const longComment = 'This comment is longer than the maximum comment length, which is 50. Therefore, the comment should be shortened.';
+    const longComment = 'This comment is longer than the maximum comment length, which is 50. ' +
+      'Therefore, the comment should be shortened.';
     component.fullComment = longComment;
     const retrievedCommentText = component.commentText;
     expect(retrievedCommentText).toBe(longComment);
-  });
-
-  it('rotate 0 should align to right and vertically with highlight', () => {
-    component.rotate = 0;
-    const style = component.formNgStyle();
-    expect(style.left).toBe('100px');
-    expect(style.top).toBe('10px');
-  });
-
-  it('rotate 90 should align to top and horizontally with highlight', () => {
-    component.rotate = 90;
-    const style = component.formNgStyle();
-    expect(style.left).toBe('10px');
-    expect(style.top).toBe('0px');
-  });
-
-  it('rotate 180 should align to left and horizontally with highlight (accounting for highlight dimensions)', () => {
-    component.rotate = 180;
-    const style = component.formNgStyle();
-    expect(style.left).toBe('0px');
-    expect(style.top).toBe('30px');
-  });
-
-  it('rotate 270 should align to bottom and horizontally with highlight (accounting for highlight dimensions)', () => {
-    component.rotate = 270;
-    const style = component.formNgStyle();
-    expect(style.top).toBe('100px');
-    expect(style.left).toBe('110px');
   });
 
 });

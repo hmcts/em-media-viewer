@@ -5,7 +5,6 @@ import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../../assets/annotation-set';
 import { PopupToolbarComponent } from './popup-toolbar/popup-toolbar.component';
-import { EventEmitter } from '@angular/core';
 
 describe('AnnotationComponent', () => {
   let component: AnnotationComponent;
@@ -59,7 +58,6 @@ describe('AnnotationComponent', () => {
     expect(component.annotation.comments[0].annotationId).toEqual(component.annotation.id);
     expect(component.annotation.comments[0].content).toBe('');
     expect(component.annotation.comments[0].createdByDetails).toBe(undefined);
-    expect(component.editable).toBe(true);
   });
 
   it('create a comment', async () => {
@@ -71,23 +69,6 @@ describe('AnnotationComponent', () => {
     expect(comments.push).not.toHaveBeenCalled();
     expect(comments[0].content).not.toBe('');
     expect(comments[0].createdByDetails).not.toBe(undefined);
-    expect(component.editable).toBe(true);
-  });
-
-
-  it('deletes a comment', async () => {
-    spyOn(component.update, 'emit');
-
-    component.onCommentDelete();
-
-    expect(component.annotation.comments.length).toBe(0);
-    expect(component.update.emit).toHaveBeenCalledWith(component.annotation);
-  });
-
-  it('updates a comment', async () => {
-    component.onCommentUpdate('Updated text');
-
-    expect(component.annotation.comments[0].content).toEqual('Updated text');
   });
 
   it('delete the annotation', async () => {
