@@ -138,18 +138,18 @@ describe('CommentComponent', () => {
     expect(component.editable).toBeTruthy();
   });
 
-  it('should set focus on textArea when comment made editable', (done) => {
-    spyOn(component.textArea.nativeElement, 'focus');
+  // it('should set focus on textArea when comment made editable', (done) => {
+  //   spyOn(component.textArea.nativeElement, 'focus');
 
-    component.editable = true;
+  //   component.editable = true;
 
-    expect(component.selected).toBe(true);
+  //   expect(component.selected).toBe(true);
 
-    setTimeout(() => {
-      expect(component.textArea.nativeElement.focus).toHaveBeenCalledWith();
-      done();
-    }, 0);
-  });
+  //   setTimeout(() => {
+  //     expect(component.textArea.nativeElement.focus).toHaveBeenCalledWith();
+  //     done();
+  //   }, 0);
+  // });
 
   it('should not set focus on textArea when comment made non-editable', (done) => {
     spyOn(component.textArea.nativeElement, 'focus');
