@@ -8,6 +8,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
+import { text } from '@angular/core/src/render3';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -59,7 +60,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   async createRectangles(highlight: Highlight) {
     if (highlight.page === this.page) {
-      if (window.getSelection) {
+      if (window.getSelection()) {
         const selection = window.getSelection();
 
         if (selection.rangeCount && !selection.isCollapsed) {
@@ -72,14 +73,11 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
             const selectionRectangles: Rectangle[] = [];
             for (let i = 0; i < clientRects.length; i++) {
-              selectionRectangles.push(
-                this.createRectangle(clientRects[i], textLayerRect)
-              );
+              const selectionRectangle = this.createRectangle(clientRects[i], textLayerRect);
+              selectionRectangles.push(selectionRectangle);
             }
             await this.createAnnotation(selectionRectangles);
-
-            const selectedText = window.getSelection();
-            selectedText.removeAllRanges();
+            selection.removeAllRanges();
           }
         }
       }
@@ -97,20 +95,20 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
     switch (this.rotate) {
       case 90:
-        rectangle.width = (rect.bottom - rect.top) / this.zoom;
-        rectangle.height = (rect.right - rect.left) / this.zoom;
         rectangle.x = (rect.top - textLayerRect.top) / this.zoom;
         rectangle.y = ((this.height - (rect.left - textLayerRect.left)) / this.zoom) - rectangle.height;
+        rectangle.height = (rect.right - rect.left) / this.zoom;
+        rectangle.width = (rect.bottom - rect.top) / this.zoom;
         break;
       case 180:
         rectangle.x = ((this.width - (rect.left - textLayerRect.left)) / this.zoom) - rectangle.width;
         rectangle.y = ((this.height - (rect.top - textLayerRect.top)) / this.zoom) - rectangle.height;
         break;
       case 270:
-        rectangle.width = (rect.bottom - rect.top) / this.zoom;
-        rectangle.height = (rect.right - rect.left) / this.zoom;
         rectangle.x = ((this.width - (rect.top - textLayerRect.top)) / this.zoom) - rectangle.width;
         rectangle.y = (rect.left - textLayerRect.left) / this.zoom;
+        rectangle.height = (rect.right - rect.left) / this.zoom;
+        rectangle.width = (rect.bottom - rect.top) / this.zoom;
         break;
       default:
         rectangle.x = (rect.left - textLayerRect.left) / this.zoom;
@@ -119,17 +117,16 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     return rectangle as Rectangle;
   }
 
-  private createAnnotation(rectangle: Rectangle[]): void {
+  private createAnnotation(rectangles: Rectangle[]): void {
     const annotation = {
         id: uuid(),
         annotationSetId: this.annotationSet.id,
         color: 'FFFF00',
         comments: [],
         page: this.page,
-        rectangles: rectangle,
+        rectangles: rectangles,
         type: 'highlight'
     };
-    console.log('creating annotation');
     this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
     this.selectedAnnotation = annotation.id;
   }
