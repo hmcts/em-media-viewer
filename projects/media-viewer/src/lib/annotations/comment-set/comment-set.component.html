@@ -1,4 +1,4 @@
-<div #container class="split right comment-container" [style.height.px]="height">
+<div #container class="split right comment-container" [style.height.px]="height" (click)="onContainerClick($event)">
   <ng-container *ngFor="let comment of getCommentsOnPage()">
     <mv-anno-comment
       #commentComponent
