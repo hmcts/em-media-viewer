@@ -62,7 +62,7 @@ export class CommentComponent implements OnChanges {
   }
 
   get selected() {
-    return this._selected || Boolean(!this.author && this.fullComment);
+    return this._selected;
   }
 
   @Input()
@@ -74,7 +74,7 @@ export class CommentComponent implements OnChanges {
   }
 
   get editable(): boolean {
-    return this._editable || Boolean(!this.author && this.fullComment);
+    return this._editable;
   }
 
   onFocusOut() {
@@ -133,10 +133,5 @@ export class CommentComponent implements OnChanges {
       !this.editable ? 'view-mode' : 'edit-mode',
       !this.selected ? 'collapsed' : 'expanded',
     ];
-  }
-
-  private getFirstNonNullParentProperty(el: Node, property: string) {
-    return !el.parentNode ? null : ( el.parentNode[property] ?
-      el.parentNode[property] : this.getFirstNonNullParentProperty(el.parentNode, property));
   }
 }
