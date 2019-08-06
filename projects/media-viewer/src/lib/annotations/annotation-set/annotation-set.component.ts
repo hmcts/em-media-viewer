@@ -9,8 +9,6 @@ import { Highlight, ViewerEventService } from '../../viewers/viewer-event.servic
 import { Subscription } from 'rxjs';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { AnnotationService, SelectionAnnotation } from '../annotation.service';
-import { text } from '@angular/core/src/render3';
-import { AnnotationService } from '../annotation.service';
 
 @Component({
   selector: 'mv-annotation-set',
