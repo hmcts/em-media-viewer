@@ -1,6 +1,5 @@
 import { AnnotationSetComponent } from './annotation-set.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommentComponent } from './annotation/comment/comment.component';
 import { RectangleComponent } from './annotation/rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../assets/annotation-set';
@@ -8,10 +7,11 @@ import { PopupToolbarComponent } from './annotation/popup-toolbar/popup-toolbar.
 import { AnnotationComponent } from './annotation/annotation.component';
 import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of, Observable, empty } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { ElementRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
+import {CommentComponent} from '../comment-set/comment/comment.component';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -19,7 +19,7 @@ describe('AnnotationSetComponent', () => {
 
   const api = new AnnotationApiService({}  as any);
 
-  let mockElement: any = {
+  const mockElement: any = {
     parentElement: {
       getBoundingClientRect(): unknown {
         return mockTextLayerRect;
@@ -27,7 +27,7 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  let mockHighlight: any = {
+  const mockHighlight: any = {
     page: 1,
     event: {
       pageY: 10,
@@ -37,7 +37,7 @@ describe('AnnotationSetComponent', () => {
     } as any,
   };
 
-  let mockSelection: any = {
+  const mockSelection: any = {
     rangeCount: 2,
     isCollapsed: false,
     getRangeAt(n: Number): any {
@@ -47,21 +47,21 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  let mockTextLayerRect: any = {
+  const mockTextLayerRect: any = {
     top: 0,
     left: 0,
   };
 
-  let mockClientRect: any = {
+  const mockClientRect: any = {
     top: 10,
     bottom: 100,
     left: 25,
     right: 100,
   };
 
-  let mockClientRects: any = [mockClientRect, mockClientRect];
+  const mockClientRects: any = [mockClientRect, mockClientRect];
 
-  let mockAnnotationRectangle: any = {
+  const mockAnnotationRectangle: any = {
     annotationId: 'id',
     height: 12,
     width: 5,
@@ -69,7 +69,7 @@ describe('AnnotationSetComponent', () => {
     y: 3
   };
 
-  let mockRange: any = {
+  const mockRange: any = {
     cloneRange(): any {
       return mockRange;
     },
@@ -78,7 +78,7 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  let fakeApi: any = {
+  const fakeApi: any = {
     returnedAnnotation: {
       id: 'testId',
       annotationSetId: 'testAnnotationSetId',

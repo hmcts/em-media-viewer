@@ -27,7 +27,7 @@ export class CommentComponent implements OnChanges {
   commentLeftPos;
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
-  @Output() commentRendered = new EventEmitter();
+  @Output() commentRendered = new EventEmitter<Comment>();
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<Comment>();
   @Input() rotate = 0;
@@ -36,7 +36,7 @@ export class CommentComponent implements OnChanges {
   @ViewChild('textArea') textArea: ElementRef;
 
   ngOnChanges(): void {
-    this.commentRendered.emit();
+    this.commentRendered.emit(this._comment);
   }
 
   @Input()
