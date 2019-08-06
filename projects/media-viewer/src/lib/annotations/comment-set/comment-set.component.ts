@@ -42,8 +42,12 @@ export class CommentSetComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.pageContainer.remove();
-    this.pageWrapper.remove();
+    if (this.pageContainer) {
+      this.pageContainer.remove();
+    }
+    if (this.pageContainer) {
+      this.pageWrapper.remove();
+    }
   }
 
   initialise(eventSource: PageEvent['source']) {
@@ -126,6 +130,19 @@ export class CommentSetComponent implements OnInit {
     return this.commentComponents.map((comment: CommentComponent) => {
       return comment;
     }).sort((a: CommentComponent, b: CommentComponent) => {
+      if (this.rotate === 90) {
+        a.commentTopPos = a._rectangle.x;
+        b.commentTopPos = b._rectangle.x;
+      } else if (this.rotate === 180) {
+        a.commentTopPos = this.height - (a._rectangle.y + a._rectangle.height);
+        b.commentTopPos = this.height - (b._rectangle.y + b._rectangle.height);
+      } else if (this.rotate === 270) {
+        a.commentTopPos = this.height - (a._rectangle.x + a._rectangle.width);
+        b.commentTopPos = this.height - (b._rectangle.x + b._rectangle.width);
+      } else {
+        a.commentTopPos = a._rectangle.y;
+        b.commentTopPos = b._rectangle.y;
+      }
       return this.processSort(a, b);
     });
   }
@@ -153,7 +170,6 @@ export class CommentSetComponent implements OnInit {
   difference(a: number, b: number): number { return Math.abs(a - b); }
 
   isOverlapping(commentItem: CommentComponent, previousCommentItem: CommentComponent): CommentComponent {
-    commentItem.commentTopPos = commentItem._rectangle.y;
     if (previousCommentItem) {
       const endOfPreviousCommentItem = (previousCommentItem.commentTopPos
         + (previousCommentItem.form.nativeElement.getBoundingClientRect().height / this.zoom));
