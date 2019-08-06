@@ -20,32 +20,35 @@ export class PopupToolbarComponent {
 
   popupStyles() {
     if (this.rotate === 0) {
+      const top = this.rectangle.y * this.zoom - this.HEIGHT;
       return {
-        top: this.rectangle.y * this.zoom - this.HEIGHT + 'px',
+        top: (top <= 0 ? this.HEIGHT : top) + 'px',
         left: ((this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.WIDTH / 2)) + 'px'
       };
     } else if (this.rotate === 90) {
+      const top = this.rectangle.y * this.zoom + this.rectangle.height / 2 * this.zoom + this.WIDTH / 2;
       return {
         transform: 'rotate(-90deg)',
         'transform-origin': 'top left',
-        top: this.rectangle.y * this.zoom + this.rectangle.height / 2 * this.zoom + this.WIDTH / 2 + 'px',
+        top: (top <= 0 ? this.HEIGHT : top) + 'px',
         left: (this.rectangle.x * this.zoom) - (this.HEIGHT) + 'px'
       };
     } else if (this.rotate === 180) {
+      const top = (this.rectangle.y + this.rectangle.height) * this.zoom + 10;
       return {
         transform: 'rotate(-180deg)',
         'transform-origin': 'center center',
-        top: (this.rectangle.y + this.rectangle.height) * this.zoom + 10  + 'px',
+        top: (top <= 0 ? this.HEIGHT : top)  + 'px',
         left: ((this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.WIDTH / 2)) + 'px'
       };
     } else if (this.rotate === 270) {
+      const top = (this.rectangle.y + (this.rectangle.height / 2)) * this.zoom - (this.WIDTH / 2);
       return {
         transform: 'rotate(-270deg)',
         'transform-origin': 'top left',
-        top: (this.rectangle.y + (this.rectangle.height / 2)) * this.zoom - (this.WIDTH / 2) + 'px',
+        top: (top <= 0 ? this.HEIGHT : top) + 'px',
         left: (this.rectangle.x + (this.rectangle.width)) * this.zoom + this.HEIGHT + 'px'
       };
     }
   }
-
 }
