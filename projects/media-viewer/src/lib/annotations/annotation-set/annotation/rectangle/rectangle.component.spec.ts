@@ -84,18 +84,4 @@ describe('RectangleComponent', () => {
     expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should emit on moving of element', () => {
-    const clickEmitEventSpy = spyOn(component.update, 'emit');
-    component.onMove(mockHtmlElement);
-
-    expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('should emit on resize', () => {
-    const clickEmitEventSpy = spyOn(component.update, 'emit');
-    component.onResize(mockIResizeEvent);
-
-    expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
-  });
-
 });
