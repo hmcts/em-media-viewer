@@ -1,4 +1,4 @@
-import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js-wrapper';
+import {DocumentLoadProgress, PageEvent, PdfJsWrapper} from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -34,7 +34,7 @@ describe('PdfJsWrapper', () => {
     new Subject<DocumentLoadProgress>(),
     new Subject<any>(),
     new Subject(),
-    new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: Element}}>(),
+    new Subject<PageEvent>(),
   );
 
   it('downloads a file', () => {
