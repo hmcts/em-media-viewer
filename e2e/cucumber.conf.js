@@ -5,12 +5,12 @@ exports.config = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   capabilities: {
-    browserName: 'firefox',
+    browserName: 'chrome',
   },
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   specs: [
-    './src/**/*.feature',
+    './src/**/annotations.feature',
   ],
   onPrepare: function () {
     require('ts-node').register({

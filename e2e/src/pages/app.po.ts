@@ -60,4 +60,13 @@ export class AppPage {
       return (await element.all(selector).isPresent());
     }, 10000, 'failed to load search results');
   }
+
+  async selectPDFText() {
+    const range = document.createRange();
+    await range.selectNode(document.body.querySelector('.ui-rich-text-editor__input').firstChild);
+    const sel = window.getSelection();
+    await sel.removeAllRanges();
+    await sel.addRange(range);
+
+  }
 }
