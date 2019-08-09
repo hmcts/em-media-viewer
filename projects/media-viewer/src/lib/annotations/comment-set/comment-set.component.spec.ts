@@ -10,6 +10,7 @@ import { AnnotationService } from '../annotation.service';
 import { annotationSet } from '../../../assets/annotation-set';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { Observable, of } from 'rxjs';
+import { Annotation } from '../annotation-set/annotation/annotation.model';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -17,6 +18,78 @@ describe('CommentSetComponent', () => {
 
   const api = new AnnotationApiService({}  as any);
   const mockAnnotationService = new AnnotationService();
+
+  const annotation: Annotation = {
+    createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+    createdByDetails: {
+      forename: 'em-showcase',
+      surname: 'testuser',
+      email: 'emshowcase@hmcts.net'
+    },
+    lastModifiedByDetails: {
+      forename: 'em-showcase',
+      surname: 'testuser',
+      email: 'emshowcase@hmcts.net'
+    },
+    createdDate: '2019-05-28T08:48:19.681Z',
+    lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+    lastModifiedDate: '2019-05-28T08:48:33.206Z',
+    id: '123',
+    page: 1,
+    color: 'FFFF00',
+    annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
+    comments: [],
+    rectangles: [],
+    type: 'highlight'
+  };
+
+  const annotation2: Annotation = {
+    createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+    createdByDetails: {
+      forename: 'em-showcase',
+      surname: 'testuser',
+      email: 'emshowcase@hmcts.net'
+    },
+    lastModifiedByDetails: {
+      forename: 'em-showcase',
+      surname: 'testuser',
+      email: 'emshowcase@hmcts.net'
+    },
+    createdDate: '2019-05-28T08:48:19.681Z',
+    lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+    lastModifiedDate: '2019-05-28T08:48:33.206Z',
+    id: '123',
+    page: 1,
+    color: 'FFFF00',
+    annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
+    comments: [],
+    rectangles: [],
+    type: 'highlight'
+  };
+
+  const annotation3: Annotation = {
+    createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+    createdByDetails: {
+      forename: 'em-showcase',
+      surname: 'testuser',
+      email: 'emshowcase@hmcts.net'
+    },
+    lastModifiedByDetails: {
+      forename: 'em-showcase',
+      surname: 'testuser',
+      email: 'emshowcase@hmcts.net'
+    },
+    createdDate: '2019-05-28T08:48:19.681Z',
+    lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+    lastModifiedDate: '2019-05-28T08:48:33.206Z',
+    id: '123',
+    page: 2,
+    color: 'FFFF00',
+    annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
+    comments: [],
+    rectangles: [],
+    type: 'highlight'
+  };
 
   const mockComment = {
     createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
@@ -174,7 +247,8 @@ describe('CommentSetComponent', () => {
   });
 
   it('should return all the comments for the page', () => {
-    component.annotationSet = { ...annotationSet };
+    const annotations = [annotation, annotation2, annotation3];
+    component.annotationSet.annotations = annotations;
 
     const commentsForPage = component.getCommentsOnPage();
 
