@@ -131,7 +131,7 @@ export class CommentComponent implements OnChanges {
       'form-control',
       'mimic-focus',
       !this.editable ? 'view-mode' : 'edit-mode',
-      !this.selected ? 'collapsed' : 'expanded',
+      !this.selected && !this.editable ? 'collapsed' : 'expanded',
     ];
   }
 }
