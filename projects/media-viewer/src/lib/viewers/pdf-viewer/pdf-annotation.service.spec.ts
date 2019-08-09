@@ -108,7 +108,7 @@ describe('PdfAnnotationService', () => {
   });
 
   it('should destroy all references to any sets and pages', () => {
-    pdfService.destroy();
+    pdfService.destroyComponents();
 
     expect(pdfService.commentSetComponents.length).toEqual(0);
     expect(pdfService.annotationSetComponents.length).toEqual(0);

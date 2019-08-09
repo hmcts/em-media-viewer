@@ -297,9 +297,9 @@ describe('AnnotationSetComponent', () => {
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
     expect(finalRectangle.x).toEqual(10);
-    expect(finalRectangle.y).toEqual(300);
-    expect(finalRectangle.height).toEqual(75);
-    expect(finalRectangle.width).toEqual(90);
+    expect(finalRectangle.y).toEqual(285);
+    expect(finalRectangle.height).toEqual(90);
+    expect(finalRectangle.width).toEqual(75);
   });
 
   it('should create 180 degree rotated rectangle', async () => {
