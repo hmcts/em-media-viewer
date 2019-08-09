@@ -82,7 +82,7 @@ export class PdfAnnotationService {
     if (!commentSetComponent) {
       commentSetComponent = this.setupCommentSet(pageRenderEvent.pageNumber);
       commentSetComponent.instance.initialise(pageRenderEvent.source);
-    } else if (this.commentSetComponents) {
+    } else if (commentSetComponent) {
       commentSetComponent.instance.setCommentSetValues(pageRenderEvent.source);
     }
   }

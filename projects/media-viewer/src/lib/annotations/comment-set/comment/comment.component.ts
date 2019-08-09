@@ -77,12 +77,6 @@ export class CommentComponent implements OnChanges {
     return this._editable;
   }
 
-  onFocusOut() {
-    if (!this.author && !this.fullComment) {
-      this.delete.emit(this._comment);
-    }
-  }
-
   onEdit() {
     this.editable = true;
   }
@@ -106,6 +100,12 @@ export class CommentComponent implements OnChanges {
     if (!this._selected) {
       this.selected = true;
       this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
+    }
+  }
+
+  onFocusOut() {
+    if (!this.author && !this.fullComment) {
+      this.delete.emit(this._comment);
     }
   }
 

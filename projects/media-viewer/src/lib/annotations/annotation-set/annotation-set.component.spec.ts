@@ -12,12 +12,14 @@ import { ElementRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import {CommentComponent} from '../comment-set/comment/comment.component';
+import { AnnotationService } from '../annotation.service';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
   let fixture: ComponentFixture<AnnotationSetComponent>;
 
   const api = new AnnotationApiService({}  as any);
+  const mockAnnotationService = new AnnotationService();
 
   const mockElement: any = {
     parentElement: {
@@ -95,7 +97,7 @@ describe('AnnotationSetComponent', () => {
       fakeApi.returnedAnnotation.rectangles = annotation.rectangles;
       return of(fakeApi.returnedAnnotation);
     }
-  }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -112,6 +114,7 @@ describe('AnnotationSetComponent', () => {
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
+        { provide: AnnotationService, useValue: mockAnnotationService },
         ToolbarEventService
       ]
     }).compileComponents();
@@ -210,7 +213,7 @@ describe('AnnotationSetComponent', () => {
     expect(component.rotate).toEqual(mockEventSource.rotation);
     expect(component.width).toEqual(mockEventSource.div.clientHeight);
     expect(component.height).toEqual(mockEventSource.div.clientWidth);
-    expect(mockEventSource.div.textContent).toContain(component.container.nativeElement.textContent);
+    expect(mockEventSource.div.childNodes).toContain(component.container.nativeElement  );
   });
 
   it('should create rectangles', async () => {
@@ -262,7 +265,7 @@ describe('AnnotationSetComponent', () => {
 
     await component.createRectangles(mockHighlight);
 
-    expect(component.selectedAnnotation).toEqual(fakeApi.returnedAnnotation.id);
+    expect(component.selectedAnnotation).toEqual({ annotationId: fakeApi.returnedAnnotation.id, editable: false });
 
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];

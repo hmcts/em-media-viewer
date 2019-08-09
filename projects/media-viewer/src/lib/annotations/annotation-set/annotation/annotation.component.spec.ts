@@ -62,13 +62,12 @@ describe('AnnotationComponent', () => {
 
   it('create a comment', async () => {
     const comments = component.annotation.comments;
-    spyOn(comments, 'push');
 
     component.addOrEditComment();
 
-    expect(comments.push).not.toHaveBeenCalled();
     expect(comments[0].content).not.toBe('');
     expect(comments[0].createdByDetails).not.toBe(undefined);
+    expect(comments.length).toBe(1);
   });
 
   it('delete the annotation', async () => {

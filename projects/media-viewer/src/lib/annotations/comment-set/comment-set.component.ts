@@ -80,12 +80,8 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     this.rotate = eventSource.rotation;
   }
 
-  public getCommentsOnPage(): Comment[] {
-    return this.annotationSet.annotations.map(a => {
-      if (a.page === this.page) {
-        return a.comments[0];
-      }
-    });
+  public getCommentsOnPage(): Annotation[] {
+    return this.annotationSet.annotations.filter(a => a.page === this.page);
   }
 
   public onSelect(annotationId) {
@@ -113,7 +109,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
         this.annotationSet.annotations[index] = newAnnotation;
       });
-    this.annotationService.onAnnotationSelection({annotationId: annotation.id, editable: false});
+    this.annotationService.onAnnotationSelection({ annotationId: annotation.id, editable: false });
   }
 
   topRectangle(annotationId: string) {
