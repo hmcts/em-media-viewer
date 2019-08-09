@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
@@ -14,27 +14,16 @@ export class AnnotationComponent {
   @Input() commentsLeftOffset: number;
   @Input() zoom: number;
   @Input() rotate: number;
-  @Input() draggable: boolean;
   @Input() selected: boolean;
   @Output() update = new EventEmitter<Annotation>();
   @Output() delete = new EventEmitter<Annotation>();
-
-  editable = false;
+  @Output() annotationClick = new EventEmitter();
 
   @ViewChild('container') container: ElementRef;
 
   public onSelect() {
     this.selected = true;
-  }
-
-  public onCommentDelete() {
-    this.annotation.comments = [];
-    this.update.emit(this.annotation);
-  }
-
-  public onCommentUpdate(text: string) {
-    this.annotation.comments[0].content = text;
-    this.update.emit(this.annotation);
+    this.annotationClick.emit({ annotationId: this.annotation.id, editable: false });
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
@@ -46,8 +35,8 @@ export class AnnotationComponent {
 
   public onFocusOut(event: FocusEvent) {
     if (!this.container.nativeElement.contains(event.relatedTarget)) {
-      this.editable = false;
       this.selected = false;
+      // this.annotationClick.emit({ annotationId: '', editable: false });
     }
   }
 
@@ -70,7 +59,7 @@ export class AnnotationComponent {
       });
     }
     this.selected = true;
-    this.editable = true;
+    this.annotationClick.emit({ annotationId: this.annotation.id, editable: true });
   }
 
   topRectangle() {

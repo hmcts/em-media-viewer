@@ -4,9 +4,8 @@ import { AnnotationApiService } from './annotation-api.service';
 import { AnnotationSet } from './annotation-set/annotation-set.model';
 import { User } from './user/user.model';
 import { Annotation } from './annotation-set/annotation/annotation.model';
-import mockAnnotationSet from '../../assets/annotation-set.json';
-import { Observable, of } from 'rxjs';
-import { Comment } from './annotation-set/annotation/comment/comment.model';
+import { of } from 'rxjs';
+import { Comment } from './comment-set/comment/comment.model';
 
 describe('AnnotationApiService', () => {
   let httpMock: HttpTestingController;

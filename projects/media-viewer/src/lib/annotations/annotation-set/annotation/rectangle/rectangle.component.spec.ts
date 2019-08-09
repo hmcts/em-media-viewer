@@ -2,7 +2,6 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RectangleComponent } from './rectangle.component';
 import { FormsModule } from '@angular/forms';
-import { AngularDraggableModule } from 'angular2-draggable';
 
 describe('RectangleComponent', () => {
   let component: RectangleComponent;
@@ -56,8 +55,7 @@ describe('RectangleComponent', () => {
         RectangleComponent,
       ],
       imports: [
-        FormsModule,
-        AngularDraggableModule,
+        FormsModule
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -71,6 +69,7 @@ describe('RectangleComponent', () => {
     component = fixture.componentInstance;
     component.rectangle = mockRectangle;
     component.zoom = 1;
+    component.selected = false;
     nativeElement = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });
@@ -86,18 +85,12 @@ describe('RectangleComponent', () => {
     expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should emit on moving of element', () => {
-    const clickEmitEventSpy = spyOn(component.update, 'emit');
-    component.onMove(mockHtmlElement);
+  it('should select the rectangle if select is true.', () => {
+    component.selected = true;
 
-    expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('should emit on resize', () => {
-    const clickEmitEventSpy = spyOn(component.update, 'emit');
-    component.onResize(mockIResizeEvent);
-
-    expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
+    setTimeout(() => {
+      expect(component.rectElement.nativeElement.focus).toHaveBeenCalledTimes(1);
+    }, 1);
   });
 
 });

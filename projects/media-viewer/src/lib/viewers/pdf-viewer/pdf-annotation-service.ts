@@ -11,6 +11,7 @@ import { ViewerEventService } from '../viewer-event.service';
 import { BehaviorSubject } from 'rxjs';
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 import { PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
+import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 
 @Injectable()
 export class PdfAnnotationService {
@@ -21,6 +22,7 @@ export class PdfAnnotationService {
 
   pages = [];
   annotationSetComponents: ComponentRef<AnnotationSetComponent>[] = [];
+  commentSetComponents: ComponentRef<CommentSetComponent>[] = [];
 
   highlightMode: BehaviorSubject<boolean>;
   drawMode: BehaviorSubject<boolean>;
@@ -54,9 +56,17 @@ export class PdfAnnotationService {
     }
   }
 
+  setupCommentSet(page: number): ComponentRef<CommentSetComponent> {
+    const component = this.createCommentSetComponent(page);
+    this.commentSetComponents.push(component);
+    return component;
+  }
+
   destroy() {
     this.annotationSetComponents.forEach(component => component.destroy());
+    this.commentSetComponents.forEach(component => component.destroy());
     this.annotationSetComponents = [];
+    this.commentSetComponents = [];
     this.pages = [];
   }
 
@@ -65,6 +75,15 @@ export class PdfAnnotationService {
       .find((annotation) => annotation.instance.page === pageRenderEvent.pageNumber);
     if (annotationComponent) {
       annotationComponent.instance.initialise(pageRenderEvent.source);
+    }
+
+    let commentSetComponent = this.commentSetComponents
+      .find((commentSet) => commentSet.instance.page === pageRenderEvent.pageNumber);
+    if (!commentSetComponent) {
+      commentSetComponent = this.setupCommentSet(pageRenderEvent.pageNumber);
+      commentSetComponent.instance.initialise(pageRenderEvent.source);
+    } else if (commentSetComponent) {
+      commentSetComponent.instance.setCommentSetValues(pageRenderEvent.source);
     }
   }
 
@@ -83,10 +102,10 @@ export class PdfAnnotationService {
       const currentPage = pageEvent.pageNumber;
 
       if (!this.pages.includes(currentPage)) {
-        const component = this.createAnnotationSetComponent(currentPage);
         this.pages.push(currentPage);
-        this.annotationSetComponents.push(component);
-        component.instance.initialise(pageEvent.source);
+        const annotationSetComponent = this.createAnnotationSetComponent(currentPage);
+        this.annotationSetComponents.push(annotationSetComponent);
+        annotationSetComponent.instance.initialise(pageEvent.source);
       }
 
       if (this.toolbarEvents.drawMode.getValue()) {
@@ -113,6 +132,14 @@ export class PdfAnnotationService {
 
   private createAnnotationSetComponent(page: number): ComponentRef<AnnotationSetComponent> {
     const factory = this.componentFactoryResolver.resolveComponentFactory(AnnotationSetComponent);
+    const component = this.viewContainerRef.createComponent(factory);
+    component.instance.annotationSet = this.annotationSet;
+    component.instance.page = page;
+    return component;
+  }
+
+  private createCommentSetComponent(page: number): ComponentRef<CommentSetComponent> {
+    const factory = this.componentFactoryResolver.resolveComponentFactory(CommentSetComponent);
     const component = this.viewContainerRef.createComponent(factory);
     component.instance.annotationSet = this.annotationSet;
     component.instance.page = page;

@@ -1,26 +1,27 @@
 import { AnnotationSetComponent } from './annotation-set.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommentComponent } from './annotation/comment/comment.component';
 import { RectangleComponent } from './annotation/rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
-import { AngularDraggableModule } from 'angular2-draggable';
 import { annotationSet } from '../../../assets/annotation-set';
 import { PopupToolbarComponent } from './annotation/popup-toolbar/popup-toolbar.component';
 import { AnnotationComponent } from './annotation/annotation.component';
 import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of, Observable, empty } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { ElementRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
+import {CommentComponent} from '../comment-set/comment/comment.component';
+import { AnnotationService } from '../annotation.service';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
   let fixture: ComponentFixture<AnnotationSetComponent>;
 
   const api = new AnnotationApiService({}  as any);
+  const mockAnnotationService = new AnnotationService();
 
-  let mockElement: any = {
+  const mockElement: any = {
     parentElement: {
       getBoundingClientRect(): unknown {
         return mockTextLayerRect;
@@ -28,7 +29,7 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  let mockHighlight: any = {
+  const mockHighlight: any = {
     page: 1,
     event: {
       pageY: 10,
@@ -38,7 +39,7 @@ describe('AnnotationSetComponent', () => {
     } as any,
   };
 
-  let mockSelection: any = {
+  const mockSelection: any = {
     rangeCount: 2,
     isCollapsed: false,
     getRangeAt(n: Number): any {
@@ -48,21 +49,21 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  let mockTextLayerRect: any = {
+  const mockTextLayerRect: any = {
     top: 0,
     left: 0,
   };
 
-  let mockClientRect: any = {
+  const mockClientRect: any = {
     top: 10,
     bottom: 100,
     left: 25,
     right: 100,
   };
 
-  let mockClientRects: any = [mockClientRect, mockClientRect];
+  const mockClientRects: any = [mockClientRect, mockClientRect];
 
-  let mockAnnotationRectangle: any = {
+  const mockAnnotationRectangle: any = {
     annotationId: 'id',
     height: 12,
     width: 5,
@@ -70,7 +71,7 @@ describe('AnnotationSetComponent', () => {
     y: 3
   };
 
-  let mockRange: any = {
+  const mockRange: any = {
     cloneRange(): any {
       return mockRange;
     },
@@ -79,7 +80,7 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  let fakeApi: any = {
+  const fakeApi: any = {
     returnedAnnotation: {
       id: 'testId',
       annotationSetId: 'testAnnotationSetId',
@@ -96,7 +97,7 @@ describe('AnnotationSetComponent', () => {
       fakeApi.returnedAnnotation.rectangles = annotation.rectangles;
       return of(fakeApi.returnedAnnotation);
     }
-  }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -109,11 +110,11 @@ describe('AnnotationSetComponent', () => {
       ],
       imports: [
         FormsModule,
-        AngularDraggableModule,
         HttpClientTestingModule
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
+        { provide: AnnotationService, useValue: mockAnnotationService },
         ToolbarEventService
       ]
     }).compileComponents();
@@ -212,7 +213,7 @@ describe('AnnotationSetComponent', () => {
     expect(component.rotate).toEqual(mockEventSource.rotation);
     expect(component.width).toEqual(mockEventSource.div.clientHeight);
     expect(component.height).toEqual(mockEventSource.div.clientWidth);
-    expect(mockEventSource.div.textContent).toContain(component.container.nativeElement.textContent);
+    expect(mockEventSource.div.childNodes).toContain(component.container.nativeElement  );
   });
 
   it('should create rectangles', async () => {
@@ -264,7 +265,7 @@ describe('AnnotationSetComponent', () => {
 
     await component.createRectangles(mockHighlight);
 
-    expect(component.selectedAnnotation).toEqual(fakeApi.returnedAnnotation.id);
+    expect(component.selectedAnnotation).toEqual({ annotationId: fakeApi.returnedAnnotation.id, editable: false });
 
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
@@ -331,4 +332,11 @@ describe('AnnotationSetComponent', () => {
     expect(finalRectangle.width).toEqual(90);
   });
 
+  it('should calculate the new rectangle position', async () => {
+    const rectangle = { top: 100, left: 100, height: -10, width: -10 };
+
+    const newRectPos = component.calculateRectPos(rectangle.top, rectangle.left, rectangle.height, rectangle.width);
+
+    expect(newRectPos).toEqual({ top: 90, left: 90, height: 10, width: 10 });
+  });
 });
