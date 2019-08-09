@@ -6,7 +6,7 @@
       {{ author.forename }} {{ author.surname }}
     </span>
     <span *ngIf="editor" class="aui-comment__author">
-      Modified By: {{ editor.forename }} {{ editor.surname }}
+      {{ editor.forename }} {{ editor.surname }}
     </span>
     <time [hidden]="!selected" class="aui-comment__meta">
       {{ lastUpdate | date: 'd MMMM y h:mm a' }}

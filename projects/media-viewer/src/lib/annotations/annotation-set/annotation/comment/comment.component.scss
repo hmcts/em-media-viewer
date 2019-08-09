@@ -25,6 +25,16 @@ textarea.view-mode:focus {
   outline: none;
 }
 
+span {
+  font-size: 22px;
+  color: #000000;
+}
+
+textarea {
+  font-size: 22px;
+  color: #000000;
+}
+
 #detailsWrapper {
   padding: 0;
 }
@@ -52,6 +62,11 @@ textarea.collapsed {
   margin-top: -25px;
   max-height: 20px;
   overflow: hidden;
+}
+
+time {
+  font-size: 19px;
+  color: #6F777B;
 }
 
 .collapsed > time {
@@ -99,5 +114,4 @@ textarea.view-mode {
   -ms-transform: rotate(90deg); /* IE9 */
   -o-transform: rotate(90deg); /* Opera */
   transform: rotate(90deg); /* W3C */
-
 }
