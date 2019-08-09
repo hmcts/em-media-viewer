@@ -77,6 +77,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
             }
             await this.createAnnotation(selectionRectangles);
             selection.removeAllRanges();
+            this.toolbarEvents.highlightMode.next(false);
           }
         }
       }
