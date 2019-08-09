@@ -8,14 +8,14 @@
     <span *ngIf="editor" class="aui-comment__author">
       Modified By: {{ editor.forename }} {{ editor.surname }}
     </span>
-    <time [hidden]="!selected" class="aui-comment__meta">
+    <time [hidden]="!selected && !this.editable" class="aui-comment__meta">
       {{ lastUpdate | date: 'd MMMM y h:mm a' }}
     </time>
   </div>
   <textarea #textArea type="text" required name="content" (focusout)="onFocusOut()"
             [ngClass]="commentStyle()" [(ngModel)]="commentText" [readOnly]="!editable">
   </textarea>
-  <div [hidden]="!selected" class="aui-comment__footer commentBtns">
+  <div [hidden]="!selected && !this.editable" class="aui-comment__footer commentBtns">
     <button *ngIf="!editable; else Save"
             class="govuk-button" type="submit" role="button"
             (click)="onEdit()">
