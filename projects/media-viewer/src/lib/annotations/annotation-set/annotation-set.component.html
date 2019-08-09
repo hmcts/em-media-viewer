@@ -10,11 +10,10 @@
     <mv-annotation [annotation]="annotation"
                    [zoom]="zoom"
                    [rotate]="rotate"
-                   [draggable]="rotate === 0"
-                   [selected]="selectedAnnotation === annotation.id"
-                   [draggable]="!(toolbarEvents.drawMode | async)"
+                   [selected]="selectedAnnotation.annotationId === annotation.id"
                    (update)="onAnnotationUpdate($event)"
-                   (delete)="onAnnotationDelete($event)">
+                   (delete)="onAnnotationDelete($event)"
+                   (annotationClick)="onAnnotationClick($event)">
     </mv-annotation>
   </ng-container>
 </div>

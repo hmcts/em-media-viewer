@@ -1,14 +1,15 @@
-import {Component, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { Comment } from './comment.model';
-import { User } from '../../../user/user.model';
-import {Rectangle} from '../rectangle/rectangle.model';
+import { User } from '../../user/user.model';
+import { Rectangle } from '../../annotation-set/annotation/rectangle/rectangle.model';
+import { SelectionAnnotation } from '../../annotation.service';
 
 @Component({
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent {
+export class CommentComponent implements OnChanges {
 
   private readonly MAX_COMMENT_LENGTH = 50;
 
@@ -17,20 +18,30 @@ export class CommentComponent {
   fullComment: string;
   author: User;
   editor: User;
+  _comment: Comment;
   _editable: boolean;
   _selected: boolean;
 
-  @Output() click = new EventEmitter();
-  @Output() delete = new EventEmitter();
-  @Output() updated = new EventEmitter<String>();
+  _rectangle;
+  commentTopPos;
+  commentLeftPos;
+
+  @Output() commentClick = new EventEmitter<SelectionAnnotation>();
+  @Output() commentRendered = new EventEmitter<Comment>();
+  @Output() delete = new EventEmitter<Comment>();
+  @Output() updated = new EventEmitter<Comment>();
   @Input() rotate = 0;
   @Input() zoom = 1;
-  @Input() rectangle: Rectangle;
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
+  ngOnChanges(): void {
+    this.commentRendered.emit(this._comment);
+  }
+
   @Input()
   set comment(comment: Comment) {
+    this._comment = comment;
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
     this.editor = comment.lastModifiedByDetails;
@@ -39,12 +50,19 @@ export class CommentComponent {
   }
 
   @Input()
+  set rectangle(rectangle: Rectangle) {
+    this._rectangle = rectangle;
+    this.commentTopPos = this._rectangle.y;
+    this.commentLeftPos = this._rectangle.x;
+  }
+
+  @Input()
   set selected(selected: boolean) {
     this._selected = selected;
   }
 
   get selected() {
-    return this._selected || Boolean(!this.author && this.fullComment);
+    return this._selected;
   }
 
   @Input()
@@ -56,13 +74,7 @@ export class CommentComponent {
   }
 
   get editable(): boolean {
-    return this._editable || Boolean(!this.author && this.fullComment);
-  }
-
-  onFocusOut() {
-    if (!this.author && !this.fullComment) {
-      this.delete.emit();
-    }
+    return this._editable;
   }
 
   onEdit() {
@@ -75,16 +87,26 @@ export class CommentComponent {
   }
 
   public onDelete() {
-    this.delete.emit();
+    this.delete.emit(this._comment);
   }
 
   public onSave() {
-    this.updated.emit(this.fullComment);
+    this._comment.content = this.fullComment;
+    this.updated.emit(this._comment);
     this.editable = false;
   }
 
   onCommentClick() {
-    this.click.emit();
+    if (!this._selected) {
+      this.selected = true;
+      this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
+    }
+  }
+
+  onFocusOut() {
+    if (!this.author && !this.fullComment) {
+      this.delete.emit(this._comment);
+    }
   }
 
   get commentText() {
@@ -98,31 +120,9 @@ export class CommentComponent {
   }
 
   formNgStyle() {
-    if (this.rotate === 0) {
-      return {
-        top: (this.rectangle.y * this.zoom) + 'px',
-        left: this.getFirstNonNullParentProperty(this.form.nativeElement, 'clientWidth') + 'px'
-      };
-    } else if (this.rotate === 90) {
-      return {
-        top: '0px',
-        left: this.rectangle.x * this.zoom + 'px',
-        'transform-origin': 'top left'
-      };
-    } else if (this.rotate === 180) {
-      return {
-        top: ((this.rectangle.y * this.zoom) + (this.rectangle.height * this.zoom)) + 'px',
-        left: '0px',
-        'transform-origin': 'top left'
-      };
-    } else if (this.rotate === 270) {
-      return {
-        top: this.getFirstNonNullParentProperty(this.form.nativeElement, 'clientHeight') + 'px',
-        left: (this.rectangle.x * this.zoom) + (this.rectangle.width * this.zoom) + 'px',
-        'transform-origin': 'top left'
-      };
-    }
-    return null;
+    return {
+      top: (this.commentTopPos * this.zoom) + 'px'
+    };
   }
 
   commentStyle() {
@@ -133,10 +133,5 @@ export class CommentComponent {
       !this.editable ? 'view-mode' : 'edit-mode',
       !this.selected ? 'collapsed' : 'expanded',
     ];
-  }
-
-  private getFirstNonNullParentProperty(el: Node, property: string) {
-    return !el.parentNode ? null : ( el.parentNode[property] ?
-      el.parentNode[property] : this.getFirstNonNullParentProperty(el.parentNode, property));
   }
 }

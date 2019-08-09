@@ -17,7 +17,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 @Component({
     selector: 'mv-image-viewer',
     templateUrl: './image-viewer.component.html',
-    styleUrls: ['./image-viewer.component.scss'],
+    styleUrls: ['./image-viewer.component.scss', '../../media-viewer.component.scss'],
 })
 export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
@@ -117,5 +117,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   onLoad() {
     this.imageLoadStatus.emit('SUCCESS');
+  }
+
+  getImageHeight(img) {
+    return this.rotation % 180 !== 0 ? img.offsetWidth + 15 : img.offsetHeight + 15;
   }
 }

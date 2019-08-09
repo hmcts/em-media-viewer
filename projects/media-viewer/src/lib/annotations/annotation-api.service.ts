@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import uuid from 'uuid/v4';
 import { AnnotationSet } from './annotation-set/annotation-set.model';
 import { Annotation } from './annotation-set/annotation/annotation.model';
-import { Comment } from './annotation-set/annotation/comment/comment.model';
+import { Comment } from './comment-set/comment/comment.model';
 
 @Injectable()
 export class AnnotationApiService {
@@ -78,7 +78,7 @@ export class AnnotationApiService {
   }
 
   private extractDocumentId(url: string): string {
-    url = url.startsWith('/documents/') ? url.split('/documents/')[1] : url;
+    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
     return url.replace('/binary', '');
   }
 

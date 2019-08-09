@@ -1,13 +1,18 @@
-#viewer-wrapper {
+.image-container {
   position: absolute;
+  width: 73.5%;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 img {
+  position: absolute;
   -webkit-transform-origin: left bottom;
   -moz-transform-origin: left bottom;
   -ms-transform-origin: left bottom;
   -o-transform-origin: left bottom;
   transform-origin: left bottom;
+  overflow: auto;
 }
 
 .rot90 {

@@ -1,21 +1,29 @@
-<div id="viewer-wrapper">
-  <div *ngIf="!errorMessage"
-       id="image-container"
-       class="image-container">
-    <img #img *ngIf="url"
-         [src]="url"
-         [ngClass]="'rot' + rotation"
-         data-hook="dm.viewer.img"
-         (error)="onLoadError()"
-         (load)="onLoad()"/>
-    <mv-annotation-set *ngIf="enableAnnotations"
-                       [annotationSet]="annotationSet"
-                       [zoom]="zoom"
-                       [page]="1"
-                       [rotate]="rotation"
-                       [height]="img !== undefined ? img.nativeElement.height : 0"
-                       [width]="img !== undefined ? img.nativeElement.width : 0">
-    </mv-annotation-set>
+<div id="viewer-wrapper" *ngIf="url && !errorMessage">
+  <div class="split left">
+    <div id="image-container"
+         class="image-container" [style.height.px]="getImageHeight(img)">
+      <img #img
+           [src]="url"
+           [ngClass]="'rot' + rotation"
+           data-hook="dm.viewer.img"
+           (error)="onLoadError()"
+           (load)="onLoad()"/>
+      <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
+                         [annotationSet]="annotationSet"
+                         [zoom]="zoom"
+                         [page]="1"
+                         [rotate]="rotation"
+                         [height]="img !== undefined ? img.offsetHeight : 0"
+                         [width]="img !== undefined ? img.offsetWidth : 0">
+      </mv-annotation-set>
+    </div>
   </div>
-  <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>
+  <mv-comment-set *ngIf="enableAnnotations && annotationSet"
+                  [annotationSet]="annotationSet"
+                  [page]="1"
+                  [zoom]="zoom"
+                  [rotate]="rotation"
+                  [height]="getImageHeight(img)">
+  </mv-comment-set>
 </div>
+<mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>

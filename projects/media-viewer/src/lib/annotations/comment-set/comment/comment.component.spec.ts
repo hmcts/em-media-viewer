@@ -79,6 +79,8 @@ describe('CommentComponent', () => {
   });
 
   it('should set comment if date modified exists', () => {
+    component.comment = {...mockComment};
+
     expect(component.lastUpdate).toEqual(mockComment.lastModifiedDate);
     expect(component.author).toEqual(mockComment.createdByDetails);
     expect(component.editor).toEqual(mockComment.lastModifiedByDetails);
@@ -90,8 +92,10 @@ describe('CommentComponent', () => {
     modifiedMockComment.lastModifiedDate = null;
     modifiedMockComment.lastModifiedBy = null;
     modifiedMockComment.lastModifiedByDetails = null;
+
     component.comment = modifiedMockComment;
     fixture.detectChanges();
+
     expect(component.lastUpdate).toEqual(modifiedMockComment.createdDate);
     expect(component.author).toEqual(modifiedMockComment.createdByDetails);
     expect(component.editor).toEqual(modifiedMockComment.lastModifiedByDetails);
@@ -99,7 +103,7 @@ describe('CommentComponent', () => {
   });
 
   it('should emit a click', () => {
-    const clickEmitEventSpy = spyOn(component.click, 'emit');
+    const clickEmitEventSpy = spyOn(component.commentClick, 'emit');
     component.onCommentClick();
     expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
   });
@@ -122,22 +126,6 @@ describe('CommentComponent', () => {
     expect(component.editable).toBe(false);
   });
 
-  it('should select comment when content not yet saved', () => {
-    component.author = undefined;
-    component.fullComment = "comment content";
-    component._selected = false;
-
-    expect(component.selected).toBeTruthy();
-  });
-
-  it('should keep comment editable when content not yet saved', () => {
-    component.author = undefined;
-    component.fullComment = "comment content";
-    component._editable = false;
-
-    expect(component.editable).toBeTruthy();
-  });
-
   // it('should set focus on textArea when comment made editable', (done) => {
   //   spyOn(component.textArea.nativeElement, 'focus');
 
@@ -151,17 +139,14 @@ describe('CommentComponent', () => {
   //   }, 0);
   // });
 
-  it('should not set focus on textArea when comment made non-editable', (done) => {
-    spyOn(component.textArea.nativeElement, 'focus');
+  it('should not set focus on textArea when comment made non-editable', () => {
+    component.editable = true;
+    component.selected = true;
+    component.fullComment = 'test comment';
+    component.onSave();
 
-    component.editable = false;
-
-    expect(component.selected).toBe(false);
-
-    setTimeout(() => {
-      expect(component.textArea.nativeElement.focus).not.toHaveBeenCalledWith();
-      done();
-    }, 0);
+    expect(component.selected).toBe(true);
+    expect(component.editable).toBe(false);
   });
 
   it('should set commentStyle to uneditable', () => {
@@ -204,45 +189,19 @@ describe('CommentComponent', () => {
 
   it('should get unselected long comment', () => {
     component.selected = false;
-    component.fullComment = 'This comment is longer than the maximum comment length, which is 50. Therefore, the comment should be shortened.';
+    component.fullComment = 'This comment is longer than the maximum comment length, ' +
+      'which is 50. Therefore, the comment should be shortened.';
     const retrievedCommentText = component.commentText;
     expect(retrievedCommentText).toBe('This comment is longer than the maximum comment...');
   });
 
   it('should get selected long comment', () => {
     component.selected = true;
-    const longComment = 'This comment is longer than the maximum comment length, which is 50. Therefore, the comment should be shortened.';
+    const longComment = 'This comment is longer than the maximum comment length, which is 50. ' +
+      'Therefore, the comment should be shortened.';
     component.fullComment = longComment;
     const retrievedCommentText = component.commentText;
     expect(retrievedCommentText).toBe(longComment);
-  });
-
-  it('rotate 0 should align to right and vertically with highlight', () => {
-    component.rotate = 0;
-    const style = component.formNgStyle();
-    expect(style.left).toBe('100px');
-    expect(style.top).toBe('10px');
-  });
-
-  it('rotate 90 should align to top and horizontally with highlight', () => {
-    component.rotate = 90;
-    const style = component.formNgStyle();
-    expect(style.left).toBe('10px');
-    expect(style.top).toBe('0px');
-  });
-
-  it('rotate 180 should align to left and horizontally with highlight (accounting for highlight dimensions)', () => {
-    component.rotate = 180;
-    const style = component.formNgStyle();
-    expect(style.left).toBe('0px');
-    expect(style.top).toBe('30px');
-  });
-
-  it('rotate 270 should align to bottom and horizontally with highlight (accounting for highlight dimensions)', () => {
-    component.rotate = 270;
-    const style = component.formNgStyle();
-    expect(style.top).toBe('100px');
-    expect(style.left).toBe('110px');
   });
 
 });

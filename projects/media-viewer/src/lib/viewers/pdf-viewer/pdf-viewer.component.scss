@@ -5,6 +5,16 @@
   height: 100%;
 }
 
+.pageContainer {
+  overflow: auto;
+}
+
+.pageWrapper {
+  overflow-x: auto;
+  width: 72.5%;
+  float: left;
+}
+
 .hidden {
   display:none!important;
 }
@@ -14,6 +24,10 @@
 }
 
 .highlightMode > .page > .textLayer {
+  z-index: 1000;
+}
+
+.highlightMode > .pageContainer > .pageWrapper > .page >.textLayer {
   z-index: 1000;
 }
 
