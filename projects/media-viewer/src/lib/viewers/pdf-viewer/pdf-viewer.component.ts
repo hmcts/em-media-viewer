@@ -93,6 +93,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.annotationService.destroy();
   }
 
   private async loadDocument() {
