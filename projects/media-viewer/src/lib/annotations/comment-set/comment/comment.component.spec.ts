@@ -79,6 +79,8 @@ describe('CommentComponent', () => {
   });
 
   it('should set comment if date modified exists', () => {
+    component.comment = {...mockComment};
+
     expect(component.lastUpdate).toEqual(mockComment.lastModifiedDate);
     expect(component.author).toEqual(mockComment.createdByDetails);
     expect(component.editor).toEqual(mockComment.lastModifiedByDetails);
@@ -90,8 +92,10 @@ describe('CommentComponent', () => {
     modifiedMockComment.lastModifiedDate = null;
     modifiedMockComment.lastModifiedBy = null;
     modifiedMockComment.lastModifiedByDetails = null;
+
     component.comment = modifiedMockComment;
     fixture.detectChanges();
+
     expect(component.lastUpdate).toEqual(modifiedMockComment.createdDate);
     expect(component.author).toEqual(modifiedMockComment.createdByDetails);
     expect(component.editor).toEqual(modifiedMockComment.lastModifiedByDetails);
@@ -122,22 +126,6 @@ describe('CommentComponent', () => {
     expect(component.editable).toBe(false);
   });
 
-  it('should select comment when content not yet saved', () => {
-    component.author = undefined;
-    component.fullComment = 'comment content';
-    component._selected = false;
-
-    expect(component.selected).toBeTruthy();
-  });
-
-  it('should keep comment editable when content not yet saved', () => {
-    component.author = undefined;
-    component.fullComment = 'comment content';
-    component._editable = false;
-
-    expect(component.editable).toBeTruthy();
-  });
-
   // it('should set focus on textArea when comment made editable', (done) => {
   //   spyOn(component.textArea.nativeElement, 'focus');
 
@@ -151,17 +139,14 @@ describe('CommentComponent', () => {
   //   }, 0);
   // });
 
-  it('should not set focus on textArea when comment made non-editable', (done) => {
-    spyOn(component.textArea.nativeElement, 'focus');
+  it('should not set focus on textArea when comment made non-editable', () => {
+    component.editable = true;
+    component.selected = true;
+    component.fullComment = 'test comment';
+    component.onSave();
 
-    component.editable = false;
-
-    expect(component.selected).toBe(false);
-
-    setTimeout(() => {
-      expect(component.textArea.nativeElement.focus).not.toHaveBeenCalledWith();
-      done();
-    }, 0);
+    expect(component.selected).toBe(true);
+    expect(component.editable).toBe(false);
   });
 
   it('should set commentStyle to uneditable', () => {
