@@ -69,6 +69,7 @@ describe('RectangleComponent', () => {
     component = fixture.componentInstance;
     component.rectangle = mockRectangle;
     component.zoom = 1;
+    component.selected = false;
     nativeElement = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });
@@ -82,6 +83,14 @@ describe('RectangleComponent', () => {
     component.onClick();
 
     expect(clickEmitEventSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should select the rectangle if select is true.', () => {
+    component.selected = true;
+
+    setTimeout(() => {
+      expect(component.rectElement.nativeElement.focus).toHaveBeenCalledTimes(1);
+    }, 1);
   });
 
 });
