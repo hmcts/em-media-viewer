@@ -332,4 +332,11 @@ describe('AnnotationSetComponent', () => {
     expect(finalRectangle.width).toEqual(90);
   });
 
+  it('should calculate the new rectangle position', async () => {
+    const rectangle = { top: 100, left: 100, height: -10, width: -10 };
+
+    const newRectPos = component.calculateRectPos(rectangle.top, rectangle.left, rectangle.height, rectangle.width);
+
+    expect(newRectPos).toEqual({ top: 90, left: 90, height: 10, width: 10 });
+  });
 });
