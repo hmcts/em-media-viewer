@@ -13,11 +13,6 @@ import { of, Observable, empty } from 'rxjs';
 import { ElementRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
-import { MockSchemaRegistry } from '@angular/compiler/testing';
-import { Annotation } from './annotation/annotation.model';
-import { strict } from 'assert';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { Rectangle } from './annotation/rectangle/rectangle.model';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -270,7 +265,7 @@ describe('AnnotationSetComponent', () => {
     await component.createRectangles(mockHighlight);
 
     expect(component.selectedAnnotation).toEqual(fakeApi.returnedAnnotation.id);
-    
+
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
     const expectedRectangle = fakeApi.returnedAnnotation.rectangles[1];
@@ -301,7 +296,7 @@ describe('AnnotationSetComponent', () => {
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
     expect(finalRectangle.x).toEqual(10);
-    expect(finalRectangle.y).toEqual(285);
+    expect(finalRectangle.y).toEqual(300);
     expect(finalRectangle.height).toEqual(75);
     expect(finalRectangle.width).toEqual(90);
   });
@@ -330,7 +325,7 @@ describe('AnnotationSetComponent', () => {
 
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
-    expect(finalRectangle.x).toEqual(115);
+    expect(finalRectangle.x).toEqual(100);
     expect(finalRectangle.y).toEqual(25);
     expect(finalRectangle.height).toEqual(75);
     expect(finalRectangle.width).toEqual(90);
