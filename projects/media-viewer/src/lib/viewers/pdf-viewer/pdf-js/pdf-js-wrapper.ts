@@ -56,7 +56,7 @@ export class PdfJsWrapper {
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
 
     } catch (e) {
-      this.documentLoadFailed.next();
+      this.documentLoadFailed.next(e);
     }
 
   }
@@ -111,7 +111,7 @@ export class PdfJsWrapper {
   }
 
   public rotate(rotation: number): number {
-    return this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + rotation) %360;
+    return this.pdfViewer.pagesRotation = (this.pdfViewer.pagesRotation + rotation) % 360;
   }
 
   public getNormalisedPagesRotation(): number {

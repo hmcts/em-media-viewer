@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 import { PrintService } from '../../print.service';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { MediaLoadStatus, ResponseType } from '../error-message/ViewerException';
+import { ViewerUtilService} from '../viewer-util.service';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -27,7 +29,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
-  @Output() imageLoadStatus = new EventEmitter<string>();
+  @Output() imageLoadStatus = new EventEmitter<MediaLoadStatus>();
 
   errorMessage: string;
 
@@ -35,11 +37,14 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   rotation = 0;
   zoom = 1;
 
+  resp: any;
+
   private subscriptions: Subscription[] = [];
 
   constructor(
     private readonly printService: PrintService,
-    public readonly toolbarEvents: ToolbarEventService
+    private readonly viewerUtilService: ViewerUtilService,
+    public readonly toolbarEvents: ToolbarEventService,
   ) { }
 
   ngOnInit(): void {
@@ -110,13 +115,15 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     return newZoomValue;
   }
 
-  onLoadError() {
+  onLoadError(url) {
+    this.viewerUtilService.validateFile(url);
+    console.log(this.resp);
     this.errorMessage = `Could not load the image "${this.url}"`;
-    this.imageLoadStatus.emit('FAILURE');
+    this.imageLoadStatus.emit({statusType: ResponseType.FAILURE});
   }
 
   onLoad() {
-    this.imageLoadStatus.emit('SUCCESS');
+    this.imageLoadStatus.emit({statusType: ResponseType.SUCCESS});
   }
 
   getImageHeight(img) {
