@@ -1,6 +1,6 @@
 import {When, Given, Then} from 'cucumber';
 import {AppPage} from '../pages/app.po';
-import {browser, by} from 'protractor';
+import {browser, by, element} from 'protractor';
 import {NavigatePage} from '../pages/navigate.po';
 import {expect} from 'chai';
 import {ToolBar} from '../pages/toolbar.po';
@@ -53,14 +53,31 @@ Then('I should see previous page number should be {string}', async (expected: st
   expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
 });
 
+
+When('the user selects the print option', async () => {
+  await printPage.clickPrint();
+});
+
+
+When('the user selects the printer', function () {
+  element(by.css('#first [value=\'HP OfficeJet Pro 8710\']')).click();
+});
+
+
+Then('I expect the file is queued for printing', function () {
+  printPage.switchToPrintTab();
+  const screenshots =  browser.takeScreenshot();
+  this.attach(screenshots, 'image/png');
+});
+
 When('I click Annotate button', async () => {
   await toolBar.clickTextIcon();
   await toolBar.clickTextIcon();
 });
 
-Then('I expect Annotate button must be enabled', async function() {
-  const screenshot = await browser.takeScreenshot();
-  this.attach(screenshot, 'image/png');
+Then('I expect Annotate button must be enabled', async function () {
+  const screenshots = await browser.takeScreenshot();
+  this.attach(screenshots, 'image/png');
 });
 
 When('I select a text on pdf doc', async () => {
@@ -85,14 +102,3 @@ Then('I verify whether the comment has been saved', async () => {
 });
 
 
-When('the user selects the print option', async () => {
-  await printPage.clickPrint();
-});
-
-
-When('the user selects the printer', function () {
-});
-
-
-Then('I expect the file is queued for printing', function () {
-});
