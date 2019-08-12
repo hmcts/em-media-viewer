@@ -11,6 +11,11 @@ import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 import { ToolbarEventService } from './toolbar-event.service';
 
+export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
+export { ToolbarEventService } from './toolbar-event.service';
+
+
+
 @NgModule({
   declarations: [
     SearchBarComponent,
