@@ -103,6 +103,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
     switch (this.rotate) {
       case 90:
+        rectangle.width = (rect.bottom - rect.top) / this.zoom;
+        rectangle.height = (rect.right - rect.left) / this.zoom;
         rectangle.x = (rect.top - textLayerRect.top) / this.zoom;
         rectangle.y = ((this.height - (rect.left - textLayerRect.left)) / this.zoom) - rectangle.height;
         break;
