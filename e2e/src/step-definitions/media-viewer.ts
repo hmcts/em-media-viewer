@@ -4,10 +4,13 @@ import {browser, by} from 'protractor';
 import {NavigatePage} from '../pages/navigate.po';
 import {expect} from 'chai';
 import {ToolBar} from '../pages/toolbar.po';
+import {PrintPage} from '../pages/print.po';
+
 
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
 const toolBar = new ToolBar();
+const printPage = new PrintPage();
 
 Given('I am on Media Viewer Page', async () => {
   await page.preparePage();
@@ -79,4 +82,17 @@ Then('I check whether the comment has been created', async () => {
 });
 
 Then('I verify whether the comment has been saved', async () => {
+});
+
+
+When('the user selects the print option', async () => {
+  await printPage.clickPrint();
+});
+
+
+When('the user selects the printer', function () {
+});
+
+
+Then('I expect the file is queued for printing', function () {
 });
