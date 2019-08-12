@@ -62,11 +62,10 @@ export class AppPage {
   }
 
   async selectPDFText() {
-    const range = document.createRange();
-    await range.selectNode(document.body.querySelector('.ui-rich-text-editor__input').firstChild);
-    const sel = window.getSelection();
-    await sel.removeAllRanges();
-    await sel.addRange(range);
+    // const hotkeys = require('protractor-hotkeys');
+    // hotkeys
+    //   .trigger('mod+a');
+    // await this.clickElement(by.xpath('*//div[text()=\'Abstract\']'));
 
   }
 }
