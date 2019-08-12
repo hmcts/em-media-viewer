@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 export class ToolbarButtonVisibilityService {
-  public readonly subToolbarHidden = new BehaviorSubject(true);
-  public readonly sidebarOpen = new BehaviorSubject(false);
-  public readonly searchBarHidden = new BehaviorSubject(true);
+  public subToolbarHidden = new BehaviorSubject(true);
+  public sidebarOpen = new BehaviorSubject(false);
+  public searchBarHidden = new BehaviorSubject(true);
 
   public showPrint = false;
   public showDownload = false;
