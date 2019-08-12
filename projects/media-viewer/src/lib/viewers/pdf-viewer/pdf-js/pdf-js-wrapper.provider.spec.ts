@@ -12,7 +12,6 @@ describe('PdfJsWrapperFactory', () => {
     return TestBed.configureTestingModule({
       declarations: [ PdfViewerComponent, ErrorMessageComponent ],
       providers: [
-        PdfJsWrapperFactory,
         ToolbarEventService
       ]
     })

@@ -79,19 +79,17 @@ describe('RectangleComponent', () => {
   });
 
   it('should emit a click', () => {
-    spyOn(component.click, 'emit');
+    spyOn(component.select, 'emit');
     component.onClick();
 
-    expect(component.click.emit).toHaveBeenCalledTimes(1);
+    expect(component.select.emit).toHaveBeenCalledTimes(1);
   });
 
   it('should select the rectangle if select is true.', () => {
     spyOn(component.rectElement.nativeElement, 'focus');
     component.selected = true;
-
-    setTimeout(() => {
-      expect(component.rectElement.nativeElement.focus).toHaveBeenCalledTimes(1);
-    }, 1);
+    component.ngAfterContentInit();
+    expect(component.rectElement.nativeElement.focus).toHaveBeenCalledTimes(1);
   });
 
 });

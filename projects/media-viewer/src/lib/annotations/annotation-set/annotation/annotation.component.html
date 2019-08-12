@@ -8,7 +8,7 @@
   ></mv-popup-toolbar>
   <ng-container *ngFor="let rectangle of annotation.rectangles">
     <mv-anno-rectangle
-      (click)="onSelect()"
+      (select)="onSelect()"
       (update)="onRectangleUpdate($event)"
       [selected]="selected"
       [zoom]="zoom"
