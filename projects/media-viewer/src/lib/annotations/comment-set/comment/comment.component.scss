@@ -8,6 +8,11 @@ form {
   padding: 20px 20px 0;
 }
 
+span, textarea {
+  font-size: 22px;
+  color: #000000;
+}
+
 form textarea {
   width: 100%;
   padding: 2px;
@@ -52,6 +57,11 @@ textarea.collapsed {
   margin-top: -25px;
   max-height: 20px;
   overflow: hidden;
+}
+
+time {
+  font-size: 19px;
+  color: #6F777B;
 }
 
 .collapsed > time {
