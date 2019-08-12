@@ -5,7 +5,7 @@ exports.config = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   capabilities: {
-    browserName: 'chrome',
+    browserName: 'firefox',
   },
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
