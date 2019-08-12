@@ -62,7 +62,7 @@ Then('I expect Annotate button must be enabled', async function() {
 
 When('I select a text on pdf doc', async () => {
   await toolBar.clickTextIcon();
-  page.selectPDFText();
+  await page.selectPDFText();
 
 });
 
