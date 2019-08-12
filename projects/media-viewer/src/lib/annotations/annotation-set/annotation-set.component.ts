@@ -138,7 +138,9 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   public getAnnotationsOnPage(): Annotation[] {
-    return this.annotationSet.annotations.filter(a => a.page === this.page);
+    if (this.annotationSet) {
+      return this.annotationSet.annotations.filter(a => a.page === this.page);
+    }
   }
 
   public onAnnotationUpdate(annotation: Annotation) {

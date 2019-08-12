@@ -81,7 +81,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   public getCommentsOnPage(): Annotation[] {
-    if (this.annotationSet.annotations) {
+    if (this.annotationSet) {
       return this.annotationSet.annotations.filter(a => a.page === this.page);
     }
   }
