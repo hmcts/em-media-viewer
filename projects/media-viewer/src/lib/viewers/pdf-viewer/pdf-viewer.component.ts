@@ -20,6 +20,7 @@ import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation-service';
+import { MediaLoadStatus, ResponseType } from '../error-message/ViewerException';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -30,7 +31,7 @@ import { PdfAnnotationService } from './pdf-annotation-service';
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 
-  @Output() pdfLoadStatus = new EventEmitter<string>();
+  @Output() pdfLoadStatus = new EventEmitter<MediaLoadStatus>();
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -68,7 +69,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
-    this.pdfWrapper.documentLoadFailed.subscribe(() => this.onDocumentLoadFailed());
+    this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
     this.pdfWrapper.pageRendered.subscribe((event) => this.annotationService.onPageRendered(event));
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
 
@@ -115,13 +116,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private onDocumentLoaded() {
     this.loadingDocument = false;
-    this.pdfLoadStatus.emit("SUCCESS");
+    this.pdfLoadStatus.emit({statusType: ResponseType.SUCCESS});
   }
 
-  private onDocumentLoadFailed() {
+  private onDocumentLoadFailed(error: Error) {
+    console.log(error);
     this.loadingDocument = false;
-    this.errorMessage = `Could not load the document "${this.url}"`;
-    this.pdfLoadStatus.emit("FAILURE");
+    this.errorMessage = error.message;
+    this.pdfLoadStatus.emit({statusType: ResponseType.FAILURE, statusMessage: this.errorMessage});
   }
 
   @Input()
