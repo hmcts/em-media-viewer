@@ -190,14 +190,14 @@ describe('CommentComponent', () => {
   it('should get unselected long comment', () => {
     component.selected = false;
     component.fullComment = 'This comment is longer than the maximum comment length, ' +
-      'which is 50. Therefore, the comment should be shortened.';
+      `which is ${component.MAX_COMMENT_LENGTH}. Therefore, the comment should be shortened.`;
     const retrievedCommentText = component.commentText;
-    expect(retrievedCommentText).toBe('This comment is longer than the maximum comment...');
+    expect(retrievedCommentText).toBe('This comment is longer than the maximum comme...');
   });
 
   it('should get selected long comment', () => {
     component.selected = true;
-    const longComment = 'This comment is longer than the maximum comment length, which is 50. ' +
+    const longComment = `This comment is longer than the maximum comment length, which is ${component.MAX_COMMENT_LENGTH}. ` +
       'Therefore, the comment should be shortened.';
     component.fullComment = longComment;
     const retrievedCommentText = component.commentText;
