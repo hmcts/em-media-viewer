@@ -93,6 +93,22 @@ The toolbar may be toggled off by setting `showToolbase` to false. The toolbar i
   npm run package, npm run e2e:cucumber
   ```
   
-   
-  
+### Viewer Exceptions
 
+When exceptions are thrown by the different Media Views, the exception encapsulated in an object called `ViewerException` and passed up the chain to be used by consuming service.
+
+The structure of the `ViewerException` exception class can be seen below:
+
+    exceptionType: error.name,
+    detail: {
+      httpResponseCode: error.status,
+      message: error.message
+    }
+
+The list of exceptions thrown by the Media Viewer are as follows:
+- UnknownErrorException
+- MissingPdfException
+- InvalidPDFException
+- UnexpectedResponseException
+- HttpErrorResponse
+- PasswordException
