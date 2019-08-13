@@ -10,8 +10,10 @@ import { Comment } from './comment-set/comment/comment.model';
 @Injectable()
 export class AnnotationApiService {
 
-  private annotationSetBaseUrl = '/em-anno/annotation-sets';
-  private annotationBaseUrl = '/em-anno/annotations';
+  public annotationApiUrl = '/em-anno';
+
+  private annotationSetBaseUrl = '/annotation-sets';
+  private annotationBaseUrl = '/annotations';
 
   constructor(
     private readonly httpClient: HttpClient
@@ -19,12 +21,12 @@ export class AnnotationApiService {
 
   public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
     return this.httpClient
-      .post<AnnotationSet>(this.annotationSetBaseUrl, body, { observe: 'response' })
+      .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' })
       .pipe(map(response => response.body));
   }
 
   public getAnnotationSet(documentId: string): Observable<AnnotationSet> {
-    const url = `${this.annotationSetBaseUrl}/filter?documentId=${documentId}`;
+    const url = `${this.annotationSetsFullUrl}/filter?documentId=${documentId}`;
 
     return this.httpClient
       .get<AnnotationSet>(url, { observe: 'response' })
@@ -51,7 +53,7 @@ export class AnnotationApiService {
   }
 
   public deleteAnnotation(annotationId: string): Observable<null> {
-    const url = `${this.annotationBaseUrl}/${annotationId}`;
+    const url = `${this.annotationFullsUrl}/${annotationId}`;
 
     return this.httpClient
       .delete<null>(url, { observe: 'response' })
@@ -60,7 +62,7 @@ export class AnnotationApiService {
 
   public postAnnotation(annotation: Partial<Annotation>): Observable<Annotation> {
     return this.httpClient
-      .post<Annotation>(this.annotationBaseUrl, annotation, { observe: 'response' })
+      .post<Annotation>(this.annotationFullsUrl, annotation, { observe: 'response' })
       .pipe(map(response => response.body));
   }
 
@@ -74,12 +76,20 @@ export class AnnotationApiService {
   }
 
   private fixFindCall(url: string): string {
-    return `${this.annotationSetBaseUrl}/filter?documentId=${this.extractDocumentId(url)}`;
+    return `${this.annotationSetsFullUrl}/filter?documentId=${this.extractDocumentId(url)}`;
   }
 
   private extractDocumentId(url: string): string {
     url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
     return url.replace('/binary', '');
+  }
+
+  get annotationSetsFullUrl() {
+    return this.annotationApiUrl + this.annotationSetBaseUrl;
+  }
+
+  get annotationFullsUrl() {
+    return this.annotationApiUrl + this.annotationBaseUrl;
   }
 
 }
