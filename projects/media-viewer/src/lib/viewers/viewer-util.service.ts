@@ -5,13 +5,11 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class ViewerUtilService {
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient) {
   }
 
-  public validateFile(name: string) {
-    return this.http.head(name).subscribe(
-      response => console.log('success', response),
-      error => console.log('error erorrrrreerer', error)
-    );
+  public validateFile(fileName: string) {
+    return this.http.head(fileName);
   }
 }

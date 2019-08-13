@@ -13,8 +13,8 @@ import { Subscription } from 'rxjs';
 import { PrintService } from '../../print.service';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { MediaLoadStatus, ResponseType } from '../error-message/ViewerException';
-import { ViewerUtilService} from '../viewer-util.service';
+import {ResponseType, ViewerException} from '../error-message/ViewerException';
+import { ViewerUtilService } from '../viewer-util.service';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -29,7 +29,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
-  @Output() imageLoadStatus = new EventEmitter<MediaLoadStatus>();
+  @Output() imageLoadStatus = new EventEmitter<ResponseType>();
+  @Output() imageViewerException = new EventEmitter<ViewerException>();
 
   errorMessage: string;
 
@@ -37,9 +38,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   rotation = 0;
   zoom = 1;
 
-  resp: any;
-
   private subscriptions: Subscription[] = [];
+  private viewerException: ViewerException;
+  private response: Subscription;
 
   constructor(
     private readonly printService: PrintService,
@@ -62,6 +63,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+    // this.response.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -72,7 +74,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private setRotation(rotation: number) {
-    this.rotation = (this.rotation + rotation) %360;
+    this.rotation = (this.rotation + rotation) % 360;
   }
 
   private async setZoom(zoomFactor: number) {
@@ -116,14 +118,21 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onLoadError(url) {
-    this.viewerUtilService.validateFile(url);
-    console.log(this.resp);
+    this.response = this.viewerUtilService.validateFile(url)
+      .subscribe(
+      next => next,
+      error => {
+        this.viewerException = new ViewerException(error.name,
+          {httpResponseCode: error.status, message: error.message});
+      });
+
     this.errorMessage = `Could not load the image "${this.url}"`;
-    this.imageLoadStatus.emit({statusType: ResponseType.FAILURE});
+    this.imageLoadStatus.emit(ResponseType.FAILURE);
+    this.imageViewerException.emit(this.viewerException);
   }
 
   onLoad() {
-    this.imageLoadStatus.emit({statusType: ResponseType.SUCCESS});
+    this.imageLoadStatus.emit(ResponseType.SUCCESS);
   }
 
   getImageHeight(img) {

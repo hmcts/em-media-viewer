@@ -1,27 +1,20 @@
-export interface MediaLoadStatus {
-  statusType: ResponseType;
-  statusCode?: number;
-  statusMessage?: string;
-}
-
 export enum ResponseType {
   SUCCESS = 'SUCCESS',
   FAILURE = 'FAILURE',
   UNSUPPORTED = 'UNSUPPORTED'
 }
 
-export enum ExceptionType {
-
+export interface ExceptionDetail {
+  httpResponseCode?: string;
+  message?: string;
 }
 
-export class MediaLoadException {
-  type: ExceptionType;
-  result: ResponseType;
-  message: string;
+export class ViewerException {
+  exceptionType?: string;
+  detail?: ExceptionDetail;
 
-  constructor(type: ExceptionType, result: ResponseType, message: string) {
-    this.type = type;
-    this.result = result;
-    this.message = message;
+  constructor(exceptionType?: string, detail?: ExceptionDetail) {
+    this.exceptionType = exceptionType;
+    this.detail = detail;
   }
 }
