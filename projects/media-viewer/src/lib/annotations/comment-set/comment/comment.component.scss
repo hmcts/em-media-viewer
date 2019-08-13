@@ -79,3 +79,10 @@ textarea.view-mode {
 .aui-comment__header {
   margin-bottom: 10px;
 }
+
+.unselectedText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
