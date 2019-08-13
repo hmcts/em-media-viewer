@@ -23,7 +23,8 @@ export class PdfJsWrapperFactory {
       container: container.nativeElement,
       linkService: pdfLinkService,
       findController: pdfFindController,
-      eventBus: eventBus
+      eventBus: eventBus,
+      imageResourcesPath: '/assets/images/'
     });
 
     pdfLinkService.setViewer(pdfViewer);
