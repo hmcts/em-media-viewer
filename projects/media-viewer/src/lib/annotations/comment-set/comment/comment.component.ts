@@ -11,7 +11,7 @@ import { SelectionAnnotation } from '../../annotation.service';
 })
 export class CommentComponent implements OnChanges {
 
-  private readonly MAX_COMMENT_LENGTH = 50;
+  private readonly MAX_COMMENT_LENGTH = 48;
 
   lastUpdate: string;
   originalComment: string;
