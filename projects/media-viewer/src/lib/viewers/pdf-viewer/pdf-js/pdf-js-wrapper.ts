@@ -21,7 +21,7 @@ export class PdfJsWrapper {
 
     // bind to internal PDF.js event bus
     this.pdfViewer.eventBus.on('pagerendered', e => this.pageRendered.next(e));
-    this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPage.next(e.pageNumber));
+    this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPageInputValue.next(e.pageNumber));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
     this.pdfViewer.eventBus.on('updatefindcontrolstate', event => {
       if (event.state !== FindState.PENDING) {
