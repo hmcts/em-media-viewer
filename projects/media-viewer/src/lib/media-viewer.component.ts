@@ -4,7 +4,7 @@ import { ToolbarButtonVisibilityService } from './toolbar/toolbar-button-visibil
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from './toolbar/toolbar-event.service';
 import { AnnotationApiService } from './annotations/annotation-api.service';
-import { MediaLoadStatus } from './viewers/error-message/ViewerException';
+import { ViewerException } from './viewers/error-message/ViewerException';
 
 @Component({
   selector: 'mv-media-viewer',
@@ -17,15 +17,14 @@ export class MediaViewerComponent implements OnChanges {
   @Input() contentType: string;
   @Input() showToolbar = true;
 
-  @Output() mediaLoadStatus = new EventEmitter<MediaLoadStatus>();
+  @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
+  @Output() viewerException = new EventEmitter<ViewerException>();
 
   @Input() enableAnnotations = false;
   @Input() showCommentSummary: Subject<boolean>;
 
   _url: string;
   annotationSet: Observable<AnnotationSet>;
-
-
 
   private supportedContentTypes = ['pdf', 'image'];
 
@@ -57,7 +56,11 @@ export class MediaViewerComponent implements OnChanges {
     }
   }
 
-  onMediaLoad(status: MediaLoadStatus) {
+  onMediaLoad(status: ResponseType) {
     this.mediaLoadStatus.emit(status);
+  }
+
+  onLoadException(exception: ViewerException) {
+    this.viewerException.emit(exception);
   }
 }

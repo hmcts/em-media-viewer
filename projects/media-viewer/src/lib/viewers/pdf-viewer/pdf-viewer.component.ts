@@ -20,7 +20,7 @@ import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation-service';
-import { MediaLoadStatus, ResponseType } from '../error-message/ViewerException';
+import {ResponseType, ViewerException} from '../error-message/ViewerException';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -31,7 +31,8 @@ import { MediaLoadStatus, ResponseType } from '../error-message/ViewerException'
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 
-  @Output() pdfLoadStatus = new EventEmitter<MediaLoadStatus>();
+  @Output() pdfLoadStatus = new EventEmitter<ResponseType>();
+  @Output() pdfViewerException = new EventEmitter<ViewerException>();
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -51,6 +52,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
+  private viewerException: ViewerException;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
@@ -116,14 +118,16 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private onDocumentLoaded() {
     this.loadingDocument = false;
-    this.pdfLoadStatus.emit({statusType: ResponseType.SUCCESS});
+    this.pdfLoadStatus.emit(ResponseType.SUCCESS);
   }
 
   private onDocumentLoadFailed(error: Error) {
-    console.log(error);
     this.loadingDocument = false;
-    this.errorMessage = error.message;
-    this.pdfLoadStatus.emit({statusType: ResponseType.FAILURE, statusMessage: this.errorMessage});
+    this.viewerException = new ViewerException(error.name, {message: error.message});
+    this.errorMessage = `Could not load the document "${this.url}"`;
+
+    this.pdfLoadStatus.emit(ResponseType.FAILURE);
+    this.pdfViewerException.emit(this.viewerException);
   }
 
   @Input()

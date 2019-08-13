@@ -8,7 +8,6 @@ import {
 } from '../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
 import { AfterContentInit, Component } from '@angular/core';
 import { Comment } from '../../../projects/media-viewer/src/lib/annotations/comment-set/comment/comment.model';
-import { MediaLoadStatus } from '../../../projects/media-viewer/src/lib/viewers/error-message/ViewerException';
 
 @Component({
   selector: 'media-viewer-wrapper',
@@ -75,8 +74,8 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
     this.url = newUrl;
   }
 
-  onMediaLoad(loadStatus: MediaLoadStatus) {
-    this.mediaLoadStatus = loadStatus.statusType;
+  onMediaLoad(loadStatus: ResponseType) {
+    this.mediaLoadStatus = loadStatus;
     setTimeout(() => this.mediaLoadStatus = undefined, 2000);
   }
 }

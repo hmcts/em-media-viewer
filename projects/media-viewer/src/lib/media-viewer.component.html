@@ -5,6 +5,7 @@
     <mv-main-toolbar *ngIf="showToolbar"></mv-main-toolbar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (pdfLoadStatus)="onMediaLoad($event)"
+                   (pdfViewerException)="onLoadException($event)"
                    [url]="url"
                    [enableAnnotations]="enableAnnotations"
                    [annotationSet]="enableAnnotations ? (annotationSet | async) : null"
@@ -12,6 +13,7 @@
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      (imageLoadStatus)="onMediaLoad($event)"
+                     (imageViewerException)="onLoadException($event)"
                      [url]="url"
                      [enableAnnotations]="enableAnnotations"
                      [annotationSet]="enableAnnotations ? (annotationSet | async) : null"
@@ -20,7 +22,8 @@
     <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
                            [url]="url"
                            [downloadFileName]="downloadFileName"
-                           (loadStatus)="onMediaLoad($event)">
+                           (loadStatus)="onMediaLoad($event)"
+                           (unsupportedViewerException)="onLoadException($event)">
     </mv-unsupported-viewer>
   </div>
 </div>
