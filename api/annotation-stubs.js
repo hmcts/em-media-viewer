@@ -6,11 +6,8 @@ app.use(bodyParser.json());
 
 app.get('/em-anno/annotation-sets/filter', function (req, res) {
 
-  res.json({
-    id: 1,
-    documentId: req.query.documentId,
-    annotations: []
-  });
+  res.status(404);
+  res.end();
 
 });
 
@@ -18,7 +15,7 @@ app.post('/em-anno/annotation-sets', function (req, res) {
 
   var json = req.body;
 
-  json.id = '' + Math.floor(Math.random() + 10000);
+  json.annotations = [];
 
   res.json(json);
 
