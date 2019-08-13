@@ -30,6 +30,7 @@ export class ToolbarEventService {
   public readonly print = new Subject();
   public readonly download = new Subject();
   public readonly setCurrentPage = new Subject<number>();
+  public readonly setCurrentPageInputValue = new Subject<number>();
   public readonly changePageByDelta = new Subject<number>();
 
   /**

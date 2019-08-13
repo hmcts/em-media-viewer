@@ -99,40 +99,39 @@ describe('PdfViewerComponent', () => {
     expect(component).toBeDefined();
   });
 
-  // it('should initialise and load document', async () => {
-  //   component.url = 'a';
-  //   spyOn(mockPrintService, 'printDocumentNatively');
-  //   spyOn(mockAnnotationService, 'setupAnnotationSet');
-  //   spyOn(mockWrapper, 'loadDocument');
-  //   spyOn(mockWrapper, 'downloadFile');
-  //   spyOn(mockWrapper, 'rotate');
-  //   spyOn(mockWrapper, 'setZoom');
-  //   spyOn(mockWrapper, 'stepZoom');
-  //   spyOn(mockWrapper, 'search');
-  //   spyOn(mockWrapper, 'setPageNumber');
-  //   spyOn(mockWrapper, 'changePageNumber');
+  it('should initialise and load document', () => {
+    component.url = 'a';
+    spyOn(mockPrintService, 'printDocumentNatively');
+    spyOn(mockAnnotationService, 'setupAnnotationSet');
+    spyOn(mockWrapper, 'loadDocument');
+    spyOn(mockWrapper, 'downloadFile');
+    spyOn(mockWrapper, 'rotate');
+    spyOn(mockWrapper, 'setZoom');
+    spyOn(mockWrapper, 'stepZoom');
+    spyOn(mockWrapper, 'search');
+    spyOn(mockWrapper, 'setPageNumber');
+    spyOn(mockWrapper, 'changePageNumber');
 
-  //   await component.ngAfterContentInit();
-  //   toolbarEvent.print.next();
-  //   toolbarEvent.download.next();
-  //   toolbarEvent.rotate.next();
-  //   toolbarEvent.zoom.next();
-  //   toolbarEvent.stepZoom.next();
-  //   toolbarEvent.search.next();
-  //   toolbarEvent.setCurrentPage.next();
-  //   toolbarEvent.changePageByDelta.next();
+    component.ngAfterContentInit();
+    toolbarEvent.print.next();
+    toolbarEvent.download.next();
+    toolbarEvent.rotate.next();
+    toolbarEvent.zoom.next();
+    toolbarEvent.stepZoom.next();
+    toolbarEvent.search.next();
+    toolbarEvent.setCurrentPage.next();
+    toolbarEvent.changePageByDelta.next();
 
-  //   expect(mockPrintService.printDocumentNatively).toHaveBeenCalled();
-  //   expect(mockWrapper.downloadFile).toHaveBeenCalled();
-  //   expect(mockWrapper.rotate).toHaveBeenCalled();
-  //   expect(mockWrapper.setZoom).toHaveBeenCalled();
-  //   expect(mockWrapper.stepZoom).toHaveBeenCalled();
-  //   expect(mockWrapper.search).toHaveBeenCalled();
-  //   expect(mockWrapper.setPageNumber).toHaveBeenCalled();
-  //   expect(mockWrapper.changePageNumber).toHaveBeenCalled();
-  //   await expect(mockWrapper.loadDocument).toHaveBeenCalledWith(component.url);
-  //   expect(mockAnnotationService.setupAnnotationSet).toHaveBeenCalled();
-  // });
+    expect(mockPrintService.printDocumentNatively).toHaveBeenCalled();
+    expect(mockWrapper.downloadFile).toHaveBeenCalled();
+    expect(mockWrapper.rotate).toHaveBeenCalled();
+    expect(mockWrapper.setZoom).toHaveBeenCalled();
+    expect(mockWrapper.stepZoom).toHaveBeenCalled();
+    expect(mockWrapper.search).toHaveBeenCalled();
+    expect(mockWrapper.setPageNumber).toHaveBeenCalled();
+    expect(mockWrapper.changePageNumber).toHaveBeenCalled();
+    expect(mockWrapper.loadDocument).toHaveBeenCalledWith(component.url);
+  });
 
   // it('should load new document when URL changes', async () => {
   //   component.enableAnnotations = true;

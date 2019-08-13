@@ -7,6 +7,7 @@ import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.
 describe('ToolbarLeftPaneComponent', () => {
   let component: ToolbarLeftPaneComponent;
   let fixture: ComponentFixture<ToolbarLeftPaneComponent>;
+  let toolbarService: ToolbarEventService;
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
@@ -19,12 +20,20 @@ describe('ToolbarLeftPaneComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarLeftPaneComponent);
     component = fixture.componentInstance;
+    toolbarService = TestBed.get(ToolbarEventService);
     component.toolbarButtons.showHighlight = true;
     fixture.detectChanges();
   });
 
   it('should be created', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get the page number of the current page', () => {
+    component.ngOnInit();
+    toolbarService.setCurrentPageInputValue.next(2);
+
+    expect(component.pageNumber).toEqual(2);
   });
 
   it('should not show sidebar', async(() => {
