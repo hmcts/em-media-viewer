@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 import { PrintService } from '../../print.service';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import {ResponseType, ViewerException} from '../error-message/ViewerException';
+import { ResponseType, ViewerException } from '../error-message/ViewerException';
 import { ViewerUtilService } from '../viewer-util.service';
 
 @Component({
@@ -63,7 +63,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
-    // this.response.unsubscribe();
+    this.response.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
