@@ -12,9 +12,12 @@
       {{ lastUpdate | date: 'd MMMM y h:mm a' }}
     </time>
   </div>
-  <textarea #textArea type="text" required name="content" (focusout)="onFocusOut()"
+  <textarea [hidden]="!selected" #textArea type="text" required name="content" (focusout)="onFocusOut()"
             [ngClass]="commentStyle()" [(ngModel)]="commentText" [readOnly]="!editable">
   </textarea>
+  <div *ngIf="!selected" class="unselectedText">
+    {{fullComment}}
+  </div>
   <div [hidden]="!selected && !this.editable" class="aui-comment__footer commentBtns">
     <button *ngIf="!editable; else Save"
             class="govuk-button" type="submit" role="button"
