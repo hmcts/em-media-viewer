@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { AnnotationApiService } from './annotation-api.service';
 import { AnnotationComponent } from './annotation-set/annotation/annotation.component';
 import { AnnotationSetComponent } from './annotation-set/annotation-set.component';
@@ -14,7 +13,6 @@ import { AnnotationService } from './annotation.service';
 
 @NgModule({
   imports: [
-    NgtUniversalModule,
     CommonModule,
     FormsModule,
     HttpClientModule
