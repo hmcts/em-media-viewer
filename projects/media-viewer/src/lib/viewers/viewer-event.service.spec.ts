@@ -6,9 +6,9 @@ describe('Viewer Events Service', () => {
   let service: ViewerEventService;
   let subscription: Subscription;
 
-  const mockHighLight : any = {
+  const mockHighLight: any = {
     page : 2
-  }
+  };
 
   beforeEach(() => {
     service = new ViewerEventService();
