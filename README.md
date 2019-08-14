@@ -95,7 +95,7 @@ The toolbar may be toggled off by setting `showToolbase` to false. The toolbar i
   
 ### Viewer Exceptions
 
-When exceptions are thrown by the different Media Views, the exception encapsulated in an object called `ViewerException` and passed up the chain to be used by consuming service.
+When exceptions are thrown by the different Media Viewers, the exception is encapsulated in an object called `ViewerException` and passed up the chain to be used by consuming service.
 
 The structure of the `ViewerException` exception class can be seen below:
 
