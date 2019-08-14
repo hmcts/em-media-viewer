@@ -1,8 +1,12 @@
 import { browser, by, element, Locator, protractor } from 'protractor';
 import { By } from '@angular/platform-browser';
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
+
+  commentButton : By = By.css(".toolbar button[title='Comment']");
+  annotationTextArea : By = By.css("textarea");
 
   async navigateTo() {
     await browser.driver.navigate().to(browser.baseUrl);
@@ -46,7 +50,7 @@ export class AppPage {
   async selectUnsupportedViewer() { await this.clickElement(by.id('unsupported-tab')); }
 
   async waitForPdfToLoad() {
-    await browser.wait(until.presenceOf(element(by.css('div[class="page"'))), 3000, 'PDF viewer taking too long to load');
+    await browser.wait(until.presenceOf(element(by.css('div[class="page"'))), 15000, 'PDF viewer taking too long to load');
   }
 
   async waitForElement(selector: Locator) {
@@ -67,5 +71,43 @@ export class AppPage {
     //   .trigger('mod+a');
     // await this.clickElement(by.xpath('*//div[text()=\'Abstract\']'));
 
+  }
+
+  async getClassAttributeOfAnElement(selector : By) : Promise<string[]> {
+    var splitClasses:string[] = [];
+    return await element(selector).getAttribute('class').then( (classes) => {
+      splitClasses = classes.split(' ');
+      return splitClasses;
+    }).catch(() => {return []});
+  }
+
+  async highLightTextOnPdfPage(text : string){
+    await browser.executeScript(() => {
+      var range = document.createRange();
+      var xpath = "//div[text()='" + text + "']";
+      var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+      range.selectNodeContents(matchingElement);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+
+    this.getHighlightPopUp();
+  }
+
+  async getHighlightPopUp(){
+    await browser.executeScript(() => {
+      let mousedown = document.createEvent("Event");
+      mousedown.initEvent("mousedown", true, true);
+      let mouseup = document.createEvent("Event");
+      mouseup.initEvent("mouseup", true, true);
+      var pageHandle = document.getElementsByClassName("pdfViewer")[0];
+      pageHandle.dispatchEvent(mousedown);
+      pageHandle.dispatchEvent(mouseup);
+    });
+  }
+
+  async clickOnCommentButton(){
+    element(this.commentButton).click();
   }
 }

@@ -102,3 +102,19 @@ Then('I verify whether the comment has been saved', async () => {
 });
 
 
+Then('I should be able to add comment for the highlight', async () => {
+  await page.clickOnCommentButton();
+});
+
+When('I highlight text on a PDF document', async () => {
+  await page.waitForPdfToLoad();
+  // await sleep(10000);
+  await toolBar.enableTextHighLightMode();
+  // await sleep(5000);
+  await page.highLightTextOnPdfPage("Dynamic languages such as JavaScript are more difficult to com-");
+  // await sleep(5000);
+});
+
+function sleep(time: number){
+  return new Promise(resolve => setTimeout(resolve, time));
+}
