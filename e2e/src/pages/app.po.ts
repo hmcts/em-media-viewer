@@ -5,8 +5,13 @@ const until = protractor.ExpectedConditions;
 
 export class AppPage {
 
-  commentButton : By = By.css(".toolbar button[title='Comment']");
-  annotationTextArea : By = By.css("textarea");
+  contextToolbar: By = by.css("mv-popup-toolbar .toolbar");
+  commentButton: By = by.css("mv-popup-toolbar .toolbar button[title='Comment']");
+  removeHighligtButton: By = by.css("mv-popup-toolbar .toolbar button[title='Comment']");
+  annotationTextArea: By = by.css("textarea");
+  saveButton: By = by.xpath("//button[text()=' Save ']");
+
+  textXpath = '';
 
   async navigateTo() {
     await browser.driver.navigate().to(browser.baseUrl);
@@ -43,11 +48,17 @@ export class AppPage {
     return await element(by.css('media-viewer-wrapper h2')).getText();
   }
 
-  async selectPdfViewer() { await this.clickElement(by.id('pdf-tab')); }
+  async selectPdfViewer() {
+    await this.clickElement(by.id('pdf-tab'));
+  }
 
-  async selectImageViewer() { await this.clickElement(by.id('image-tab')); }
+  async selectImageViewer() {
+    await this.clickElement(by.id('image-tab'));
+  }
 
-  async selectUnsupportedViewer() { await this.clickElement(by.id('unsupported-tab')); }
+  async selectUnsupportedViewer() {
+    await this.clickElement(by.id('unsupported-tab'));
+  }
 
   async waitForPdfToLoad() {
     await browser.wait(until.presenceOf(element(by.css('div[class="page"'))), 15000, 'PDF viewer taking too long to load');
@@ -73,19 +84,20 @@ export class AppPage {
 
   }
 
-  async getClassAttributeOfAnElement(selector : By) : Promise<string[]> {
-    var splitClasses:string[] = [];
-    return await element(selector).getAttribute('class').then( (classes) => {
+  async getClassAttributeOfAnElement(selector: By): Promise<string[]> {
+    var splitClasses: string[] = [];
+    return await element(selector).getAttribute('class').then((classes) => {
       splitClasses = classes.split(' ');
       return splitClasses;
-    }).catch(() => {return []});
+    }).catch(() => {
+      return []
+    });
   }
 
-  async highLightTextOnPdfPage(text : string){
+  async highLightTextOnPdfPage() {
     await browser.executeScript(() => {
       var range = document.createRange();
-      var xpath = "//div[text()='" + text + "']";
-      var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+      var matchingElement = document.evaluate("//div[text()='Dynamic languages such as JavaScript are more difficult to com-']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
       range.selectNodeContents(matchingElement);
       var sel = window.getSelection();
       sel.removeAllRanges();
@@ -95,7 +107,7 @@ export class AppPage {
     this.getHighlightPopUp();
   }
 
-  async getHighlightPopUp(){
+  async getHighlightPopUp() {
     await browser.executeScript(() => {
       let mousedown = document.createEvent("Event");
       mousedown.initEvent("mousedown", true, true);
@@ -107,7 +119,28 @@ export class AppPage {
     });
   }
 
-  async clickOnCommentButton(){
-    element(this.commentButton).click();
+  async clickOnCommentButton() {
+    await element(this.commentButton).click();
+  }
+
+  async enterTextInAnnotation(text: string) {
+    await element(this.annotationTextArea).sendKeys(text);
+  }
+
+  async clickOnSaveButton() {
+    await element(this.saveButton).click();
+  }
+
+  async isContextToolBarVisible(): Promise<boolean> {
+    var isVisible = false;
+    await element(this.contextToolbar).isDisplayed().then((value) => {
+      if (value == true) {
+        isVisible = true;
+        return isVisible;
+      }
+    }).catch(() => {
+      return false
+    });
+    return isVisible;
   }
 }
