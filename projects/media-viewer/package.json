@@ -23,7 +23,6 @@
     "@angular/common": "^7.2.15",
     "@angular/core": "^7.2.15",
     "@angular/forms": "^7.2.15",
-    "@ng-toolkit/universal": "^7.1.2",
     "@angular/platform-browser": "^7.2.15"
   },
   "publishConfig": {
