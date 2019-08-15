@@ -92,6 +92,11 @@ The toolbar may be toggled off by setting `showToolbase` to false. The toolbar i
  ```
   npm run package, npm run e2e:cucumber
   ```
+### Annotation API
+
+To override the default Annotation API path (or URL for cross domain calls) use "annotationApiUrl" parameter
+
+<mv-media-viewer annotationApiUrl=""http://my-gateway.com/my-context-path""  ... ></mv-media-viewer>
   
 ### Viewer Exceptions
 

@@ -94,6 +94,7 @@ describe('AnnotationApiService', () => {
     });
 
     api = TestBed.get(AnnotationApiService);
+    api.annotationApiUrl = '/my-context-path';
     httpMock = TestBed.get(HttpTestingController);
   });
 
@@ -111,7 +112,7 @@ describe('AnnotationApiService', () => {
       expect(response.documentId).toEqual(dmDocumentId);
     });
 
-    const req = httpMock.expectOne('/em-anno/annotation-sets');
+    const req = httpMock.expectOne('/my-context-path/annotation-sets');
     expect(req.request.method).toBe('POST');
     expect(req.request.body.documentId).toBe(dmDocumentId);
     expect(req.request.body.id).toBeTruthy();
@@ -123,7 +124,7 @@ describe('AnnotationApiService', () => {
       expect(response.documentId).toBe(dmDocumentId);
     });
 
-    const req = httpMock.expectOne(`/em-anno/annotation-sets/filter?documentId=${dmDocumentId}`);
+    const req = httpMock.expectOne(`/my-context-path/annotation-sets/filter?documentId=${dmDocumentId}`);
     expect(req.request.method).toBe('GET');
     req.flush(annotationSet);
   }));
@@ -133,7 +134,7 @@ describe('AnnotationApiService', () => {
       expect(response).toEqual(null);
     });
 
-    const req = httpMock.expectOne(`/em-anno/annotations/${annotation.id}`);
+    const req = httpMock.expectOne(`/my-context-path/annotations/${annotation.id}`);
     expect(req.request.method).toBe('DELETE');
     req.flush(null);
   }));
@@ -143,7 +144,7 @@ describe('AnnotationApiService', () => {
       expect(response.annotationSetId).toEqual(annotationSet.id);
     });
 
-    const req = httpMock.expectOne('/em-anno/annotations');
+    const req = httpMock.expectOne('/my-context-path/annotations');
     expect(req.request.method).toBe('POST');
     req.flush(annotation);
   }));
@@ -163,11 +164,11 @@ describe('AnnotationApiService', () => {
       expect(response.documentId).toBe(dmDocumentId);
     });
 
-    const req1 = httpMock.expectOne(`/em-anno/annotation-sets/filter?documentId=${dmDocumentId}`);
+    const req1 = httpMock.expectOne(`/my-context-path/annotation-sets/filter?documentId=${dmDocumentId}`);
     expect(req1.request.method).toBe('GET');
     req1.error(new ErrorEvent('Not found'), { status: 404 });
 
-    const req2 = httpMock.expectOne('/em-anno/annotation-sets');
+    const req2 = httpMock.expectOne('/my-context-path/annotation-sets');
     expect(req2.request.method).toBe('POST');
     expect(req2.request.body.documentId).toBe(dmDocumentId);
     expect(req2.request.body.id).toBeTruthy();
