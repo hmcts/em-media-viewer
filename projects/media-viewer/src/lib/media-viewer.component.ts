@@ -1,6 +1,19 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ToolbarButtonVisibilityService } from './toolbar/toolbar-button-visibility.service';
+import {
+  defaultImageOptions,
+  defaultPdfOptions,
+  defaultUnsupportedOptions,
+  ToolbarButtonVisibilityService
+} from './toolbar/toolbar-button-visibility.service';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from './toolbar/toolbar-event.service';
 import { AnnotationApiService } from './annotations/annotation-api.service';
@@ -10,7 +23,7 @@ import { AnnotationApiService } from './annotations/annotation-api.service';
   templateUrl: './media-viewer.component.html',
   styleUrls: ['styles/main.scss', './media-viewer.component.scss']
 })
-export class MediaViewerComponent implements OnChanges {
+export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
   @Input() downloadFileName: string;
   @Input() contentType: string;
@@ -34,6 +47,10 @@ export class MediaViewerComponent implements OnChanges {
     private readonly api: AnnotationApiService
   ) {}
 
+  ngAfterContentInit() {
+    this.setToolbarButtons();
+  }
+
   @Input()
   set url(url: string) {
     this._url = url;
@@ -52,11 +69,22 @@ export class MediaViewerComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.url) {
+      this.setToolbarButtons();
       this.toolbarEvents.reset();
     }
   }
 
   onMediaLoad(status: string) {
     this.mediaLoadStatus.emit(status);
+  }
+
+  setToolbarButtons() {
+    if (this.contentType === this.supportedContentTypes[0]) {
+      this.toolbarButtons.reset({ ...defaultPdfOptions, showHighlight: this.enableAnnotations });
+    } else if (this.contentType === this.supportedContentTypes[1]) {
+      this.toolbarButtons.reset({ ...defaultImageOptions, showHighlight: this.enableAnnotations });
+    } else {
+      this.toolbarButtons.reset({ ...defaultUnsupportedOptions });
+    }
   }
 }
