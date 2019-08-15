@@ -20,7 +20,7 @@ import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation-service';
-import {ResponseType, ViewerException} from '../error-message/viewer-exception.model';
+import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
 
 @Component({
   selector: 'mv-pdf-viewer',
