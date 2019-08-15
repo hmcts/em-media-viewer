@@ -18,8 +18,6 @@ form textarea {
   padding: 2px;
   border: none;
 
-  font-size: 17px;
-  font-family: "nta", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
@@ -81,6 +79,8 @@ textarea.view-mode {
 }
 
 .unselectedText {
+  font-size: 22px;
+  color: #000000;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
