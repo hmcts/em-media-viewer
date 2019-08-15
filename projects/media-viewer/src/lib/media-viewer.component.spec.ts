@@ -74,7 +74,7 @@ describe('MediaViewerComponent', () => {
     component.enableAnnotations = true;
 
     component.setToolbarButtons();
-    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultPdfOptions, showHighlight: true });
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultPdfOptions, showHighlightButton: true, showDrawButton: true });
   });
 
   it('should set the default toolbar behaviour for image viewer', () => {
@@ -83,7 +83,7 @@ describe('MediaViewerComponent', () => {
     component.enableAnnotations = true;
 
     component.setToolbarButtons();
-    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultImageOptions, showHighlight: true });
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultImageOptions, showDrawButton: true });
   });
 
   it('should set the default toolbar behaviour for unsupported viewer', () => {

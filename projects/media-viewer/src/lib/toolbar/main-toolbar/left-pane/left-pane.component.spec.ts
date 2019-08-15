@@ -22,6 +22,7 @@ describe('ToolbarLeftPaneComponent', () => {
     component = fixture.componentInstance;
     toolbarService = TestBed.get(ToolbarEventService);
     component.toolbarButtons.showHighlightButton = true;
+    component.toolbarButtons.showDrawButton = true;
     fixture.detectChanges();
   });
 
