@@ -46,13 +46,10 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
     if (newTab === 'pdf') {
       this.url = this.pdfUrl;
-      this.toolbarButtons.reset({ ...defaultPdfOptions, showHighlight: this.enableAnnotations });
     } else if (newTab === 'image') {
       this.url = this.imageUrl;
-      this.toolbarButtons.reset({ ...defaultImageOptions, showHighlight: this.enableAnnotations });
     } else {
       this.url = this.unsupportedUrl;
-      this.toolbarButtons.reset(defaultUnsupportedOptions);
     }
     this.setDocumentUrl(this.url);
   }
