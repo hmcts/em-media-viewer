@@ -65,7 +65,7 @@ describe('PopupToolbarComponent', () => {
 
   it('adjust its position', () => {
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.left).toEqual('-25px');
+    expect(element.styles.left).toEqual('0px');
     expect(element.styles.top).toEqual('30px');
   });
 
@@ -90,6 +90,6 @@ describe('PopupToolbarComponent', () => {
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.left).toEqual('270px');
-    expect(element.styles.top).toEqual('-65px');
+    expect(element.styles.top).toEqual('0px');
   });
 });
