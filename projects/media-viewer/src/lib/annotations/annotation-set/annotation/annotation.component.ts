@@ -36,7 +36,6 @@ export class AnnotationComponent {
   public onFocusOut(event: FocusEvent) {
     if (!this.container.nativeElement.contains(event.relatedTarget)) {
       this.selected = false;
-      // this.annotationClick.emit({ annotationId: '', editable: false });
     }
   }
 
