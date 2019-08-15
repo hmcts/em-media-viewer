@@ -9,7 +9,7 @@ Feature:  Media Viewer Annotations
   Scenario: Add Non Textual Highlight and add comment in image viewer
     When I highlight a portion of image
     Then I should be able to add comment for the highlight
-    Then The context toolbar should disappear
+#    Then The context toolbar should disappear
 
   @EM-1968 @EM-1348 @Image_Delete_Comment
   Scenario: Delete Non Textual comment in image viewer
