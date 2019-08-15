@@ -23,4 +23,17 @@ export class ToolBar extends AppPage {
           }else {
           }
       }
+
+  async enableDrawHighLightMode(){
+        if(!(await this.getClassAttributeOfAnElement(by.id('toggleDrawButton')).then( (classes) => classes.includes('toggled')))) {
+            await this.clickElement(by.id('toggleDrawButton'));
+          }
+      }
+
+  async disableDrawHighLightMode(){
+        if(await this.getClassAttributeOfAnElement(by.id('toggleDrawButton')).then( (classes) => classes.includes('toggled'))){
+            await this.clickElement(by.id('toggleDrawButton'));
+          }else {
+          }
+      }
 }

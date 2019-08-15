@@ -1,6 +1,6 @@
 import { browser, by, element, Locator, protractor } from 'protractor';
 import { By } from '@angular/platform-browser';
-import {String, StringBuilder} from "typescript-string-operations";
+import {String} from "typescript-string-operations";
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
@@ -98,6 +98,27 @@ export class AppPage {
     });
   }
 
+  async drawOnImagePage(){
+
+    await  browser.executeScript( () => {
+      let imageElement = document.getElementsByTagName("mv-annotation-set")[0].childNodes[0];
+
+      let mouseDownEvent = document.createEvent("MouseEvents");
+      let mouseMoveEvent = document.createEvent("MouseEvents");
+      let mouseUpEvent = document.createEvent("MouseEvents");
+
+
+      mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false,      false, 0, null);
+      mouseMoveEvent.initMouseEvent("mousemove", true, true, window, 1, 750, 750, 900, 900, false, false, false, false, 0, null);
+      mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false,      false, 0, null);
+
+      imageElement.dispatchEvent(mouseDownEvent);
+      imageElement.dispatchEvent(mouseMoveEvent);
+      imageElement.dispatchEvent(mouseUpEvent);
+    });
+
+  }
+
   async highLightTextOnPdfPage() {
     await browser.executeScript(() => {
       var range = document.createRange();
@@ -122,6 +143,7 @@ export class AppPage {
       pageHandle.dispatchEvent(mouseup);
     });
   }
+
 
   async clickOnCommentButton() {
     await element(this.commentButton).click();
@@ -156,11 +178,12 @@ export class AppPage {
     var comments : string[] = [];
     await browser.findElements(this.annotationTextArea).then( (elements) => {
       for (const element of elements) {
-         element.getAttribute("ng-reflect-model").then( (a) => comments.push(a)).catch( () => {return [];});
+        element.getAttribute("ng-reflect-model").then( (a) => comments.push(a)).catch( () => {return [];});
       }
       return comments;
     } );
     return comments;
   }
+
 
 }
