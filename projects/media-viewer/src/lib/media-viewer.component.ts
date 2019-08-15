@@ -23,6 +23,8 @@ export class MediaViewerComponent implements OnChanges {
   @Input() enableAnnotations = false;
   @Input() showCommentSummary: Subject<boolean>;
 
+  @Input() annotationApiUrl;
+
   _url: string;
   annotationSet: Observable<AnnotationSet>;
 
@@ -32,7 +34,11 @@ export class MediaViewerComponent implements OnChanges {
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly api: AnnotationApiService
-  ) {}
+  ) {
+    if (this.annotationApiUrl) {
+      api.annotationApiUrl = this.annotationApiUrl;
+    }
+  }
 
   @Input()
   set url(url: string) {
