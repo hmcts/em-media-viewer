@@ -47,7 +47,6 @@
     "@angular/platform-browser-dynamic": "^7.2.15",
     "@angular/platform-server": "^7.2.15",
     "@angular/router": "^7.2.15",
-    "@ng-toolkit/universal": "^7.1.2",
     "@nguniversal/express-engine": "^7.1.1",
     "@nguniversal/module-map-ngfactory-loader": "^7.1.1",
     "body-parser": "^1.19.0",
