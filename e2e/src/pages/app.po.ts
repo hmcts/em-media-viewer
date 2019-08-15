@@ -1,4 +1,4 @@
-import { browser, by, element, Locator, protractor } from 'protractor';
+import {browser, by, element, ElementFinder, Locator, protractor, WebElement} from 'protractor';
 import { By } from '@angular/platform-browser';
 import {String} from "typescript-string-operations";
 const until = protractor.ExpectedConditions;
@@ -11,6 +11,7 @@ export class AppPage {
   removeHighLightButton: By = by.css("mv-popup-toolbar .toolbar button[title='Comment']");
   annotationTextArea: By = by.css("textarea");
   saveButton: By = by.xpath("//button[text()=' Save ']");
+  editButton: By = by.xpath("//button[text()=' Edit ']");
   commentDeleteButtonXpath: string = "//textarea[@ng-reflect-model='{0}']/..//button[text()=' Delete ']";
 
   // commentDeleteButtonXpath: string = "//textarea[@ng-reflect-model='This is comment number 1']/..//button[text()=' Delete ']";
@@ -157,6 +158,10 @@ export class AppPage {
     await element(this.saveButton).click();
   }
 
+  async clickOnEditButton() {
+    await element(this.editButton).click();
+  }
+
   async isContextToolBarVisible(): Promise<boolean> {
     var isVisible = false;
     await element(this.contextToolbar).isDisplayed().then((value) => {
@@ -170,12 +175,12 @@ export class AppPage {
     return isVisible;
   }
 
-  async deleteTextualComment(comment: string) {
+  async deleteComment(comment: string) {
     await element(by.xpath(String.Format(this.commentDeleteButtonXpath, comment))).click();
   }
 
   async getAllComments() : Promise<string[]>{
-    var comments : string[] = [];
+    let comments : string[] = [];
     await browser.findElements(this.annotationTextArea).then( (elements) => {
       for (const element of elements) {
         element.getAttribute("ng-reflect-model").then( (a) => comments.push(a)).catch( () => {return [];});
@@ -185,5 +190,15 @@ export class AppPage {
     return comments;
   }
 
+  async updateComment(comment : string, newComment : string) {
+    await this.clickOnEditButton();
+    await element(this.annotationTextArea).clear();
+    await element(this.annotationTextArea).sendKeys(newComment);
+    await this.clickOnSaveButton();
+  }
+
+  async getComment() : Promise<string> {
+    return await element(this.annotationTextArea).getAttribute("ng-reflect-model").then( (a) => {return a;});
+  }
 
 }

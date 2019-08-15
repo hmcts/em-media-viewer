@@ -11,6 +11,8 @@ const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
 const toolBar = new ToolBar();
 const printPage = new PrintPage();
+const comment_1  = 'This is comment number 1';
+const comment_new  = 'This is comment number 1 new';
 
 Given('I am on Media Viewer Page', async () => {
   await page.preparePage();
@@ -101,9 +103,9 @@ Then('I check whether the comment has been created', async () => {
 Then('I verify whether the comment has been saved', async () => {
 });
 
-let addPdfComment = async () => {
+let addComment = async () => {
   await page.clickOnCommentButton();
-  await page.enterTextInAnnotation("This is comment number 1");
+  await page.enterTextInAnnotation(comment_1);
   await page.clickOnSaveButton();
 }
 
@@ -121,7 +123,11 @@ let highLightOnImage = async () =>{
   await page.drawOnImagePage();
 }
 
-Then('I should be able to add comment for the highlight', addPdfComment);
+let deleteComment = async () => {
+  await page.deleteComment(comment_1);
+}
+
+Then('I should be able to add comment for the highlight', addComment);
 
 When('I highlight text on a PDF document', highLightTextInPdf);
 
@@ -133,17 +139,15 @@ Then('The context toolbar should disappear', async () => {
   expect(await page.isContextToolBarVisible()).false;
 });
 
-When('I select a textual comment and delete', async () => {
-  await page.deleteTextualComment("This is comment number 1");
-});
+When('I select a textual comment and delete', deleteComment);
 
 Given('The PDF has atleast one comment', async () => {
   await highLightTextInPdf();
-  await addPdfComment();
+  await addComment();
 });
 
 Then('The comment should be deleted', async () => {
-  expect(await page.getAllComments()).not.contain("This is comment number 1");
+  expect(await page.getAllComments()).not.contain(comment_1);
 });
 
 Given('I change to Image Viewer tab', async () => {
@@ -151,3 +155,19 @@ Given('I change to Image Viewer tab', async () => {
 });
 
 When('I highlight a portion of image', highLightOnImage);
+
+Given('The image has atleast one non-textual comment', async () => {
+  await highLightOnImage();
+  await addComment();
+});
+
+When('I select a non-textual comment and delete', deleteComment);
+
+When('I update a non-textual comment and save', async () => {
+  await page.updateComment(comment_1, comment_new);
+});
+
+Then('The old comment should be replaced with new comment', async () => {
+  let comment = await page.getComment();
+  expect(comment).to.contain(comment_new);
+});
