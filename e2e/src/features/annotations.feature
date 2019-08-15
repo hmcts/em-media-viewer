@@ -22,11 +22,11 @@ Feature:  Media Viewer Annotations
     And I add a comment to the selected PDF text
     Then I verify whether the comment has been saved
 
-  @EM-1247 @Print_file
-  Scenario: Enable user to print file
-    When the user selects the print option
-    And the user selects the printer
-    Then I expect the file is queued for printing
+#  @EM-1247 @Print_file
+#  Scenario: Enable user to print file
+#    When the user selects the print option
+#    And the user selects the printer
+#    Then I expect the file is queued for printing
 
 
   @EM-1717 @PDF_Add_Annotation
