@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Subscription } from 'rxjs';
-import {ResponseType, ViewerException} from '../error-message/viewer-exception.model';
+import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
 import { ViewerUtilService } from '../viewer-util.service';
 
 @Component({

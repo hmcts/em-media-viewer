@@ -1,8 +1,8 @@
 import { ViewerUtilService } from './viewer-util.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
-import {Observable, scheduled} from 'rxjs';
-import {ViewerException} from './error-message/viewer-exception.model';
+import { Observable } from 'rxjs';
+import { ViewerException } from './error-message/viewer-exception.model';
 
 describe('ViewerUtilService', () => {
   let service: ViewerUtilService;

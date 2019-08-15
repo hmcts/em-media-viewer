@@ -7,7 +7,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { SimpleChange } from '@angular/core';
-import {ResponseType, ViewerException} from './viewers/error-message/viewer-exception.model';
+import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
