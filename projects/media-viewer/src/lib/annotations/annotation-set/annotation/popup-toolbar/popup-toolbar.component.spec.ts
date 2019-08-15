@@ -39,6 +39,11 @@ describe('PopupToolbarComponent', () => {
     fixture.detectChanges();
   }));
 
+  afterEach(() => {
+    component.rectangle.x = 100;
+    component.rectangle.y = 100;
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -91,5 +96,17 @@ describe('PopupToolbarComponent', () => {
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.left).toEqual('270px');
     expect(element.styles.top).toEqual('0px');
+  });
+
+  it('top should default to 30px when annotation is at the top of the page', () => {
+    component.rectangle.y = 0;
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.top).toEqual('30px');
+  });
+
+  it('left should default to 0px when annotation is at the far left of the page', () => {
+    component.rectangle.x = 0;
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('0px');
   });
 });
