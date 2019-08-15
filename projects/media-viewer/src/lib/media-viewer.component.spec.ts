@@ -8,6 +8,7 @@ import { ErrorMessageComponent } from './viewers/error-message/error.message.com
 import { AnnotationsModule } from './annotations/annotations.module';
 import { SimpleChange } from '@angular/core';
 import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
+import { defaultImageOptions, defaultPdfOptions, defaultUnsupportedOptions } from './toolbar/toolbar-button-visibility.service';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -36,6 +37,13 @@ describe('MediaViewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should set the default toolbar behaviours', () => {
+    const toolbarButtonsSpy = spyOn(component, 'setToolbarButtons');
+
+    component.ngAfterContentInit();
+    expect(toolbarButtonsSpy).toHaveBeenCalled();
+  });
+
   it('should support content', () => {
     component.contentType = 'pdf';
     expect(component.contentTypeUnsupported()).toBeFalsy();
@@ -58,6 +66,32 @@ describe('MediaViewerComponent', () => {
 
     component.onMediaLoad(ResponseType.SUCCESS);
     expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should set the default toolbar behaviour for pdf viewer', () => {
+    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'reset');
+    component.contentType = 'pdf';
+    component.enableAnnotations = true;
+
+    component.setToolbarButtons();
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultPdfOptions, showHighlight: true });
+  });
+
+  it('should set the default toolbar behaviour for image viewer', () => {
+    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'reset');
+    component.contentType = 'image';
+    component.enableAnnotations = true;
+
+    component.setToolbarButtons();
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultImageOptions, showHighlight: true });
+  });
+
+  it('should set the default toolbar behaviour for unsupported viewer', () => {
+    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'reset');
+    component.contentType = 'xxxxxx';
+
+    component.setToolbarButtons();
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions });
   });
 
   it('onLoadException should emit a ViewerException', async () => {
