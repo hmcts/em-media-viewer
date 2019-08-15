@@ -34,7 +34,7 @@ import { MediaViewerModule } from 'media-viewer';
 })
 ```
 
-import assets to your angular.json 
+import assets to your angular.json
 
 ```
 {
