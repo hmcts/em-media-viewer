@@ -101,24 +101,40 @@ Then('I check whether the comment has been created', async () => {
 Then('I verify whether the comment has been saved', async () => {
 });
 
-
-Then('I should be able to add comment for the highlight', async () => {
+let addPdfComment = async () => {
   await page.clickOnCommentButton();
   await page.enterTextInAnnotation("This is comment number 1");
   await page.clickOnSaveButton();
-});
+}
 
-When('I highlight text on a PDF document', async () => {
+let highLightTextInPdf = async () =>{
   await page.waitForPdfToLoad();
   await sleep(5000);
   await toolBar.enableTextHighLightMode();
   await page.highLightTextOnPdfPage();
-});
+}
+
+Then('I should be able to add comment for the highlight', addPdfComment);
+
+When('I highlight text on a PDF document', highLightTextInPdf);
 
 function sleep(time: number){
   return new Promise(resolve => setTimeout(resolve, time));
 }
 
-Then('the popup should disappear', async () => {
+Then('The context toolbar should disappear', async () => {
   expect(await page.isContextToolBarVisible()).false;
+});
+
+When('I select a textual comment and delete', async () => {
+  await page.deleteTextualComment("This is comment number 1");
+});
+
+Given('The PDF has atleast one comment', async () => {
+  await highLightTextInPdf();
+  await addPdfComment();
+});
+
+Then('The comment should be deleted', async () => {
+  expect(await page.getAllComments()).not.contain("This is comment number 1");
 });

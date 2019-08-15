@@ -1,17 +1,21 @@
 import { browser, by, element, Locator, protractor } from 'protractor';
 import { By } from '@angular/platform-browser';
-import {el} from "@angular/platform-browser/testing/src/browser_util";
+import {String, StringBuilder} from "typescript-string-operations";
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
 
+
   contextToolbar: By = by.css("mv-popup-toolbar .toolbar");
   commentButton: By = by.css("mv-popup-toolbar .toolbar button[title='Comment']");
-  removeHighligtButton: By = by.css("mv-popup-toolbar .toolbar button[title='Comment']");
+  removeHighLightButton: By = by.css("mv-popup-toolbar .toolbar button[title='Comment']");
   annotationTextArea: By = by.css("textarea");
   saveButton: By = by.xpath("//button[text()=' Save ']");
+  commentDeleteButtonXpath: string = "//textarea[@ng-reflect-model='{0}']/..//button[text()=' Delete ']";
 
-  textXpath = '';
+  // commentDeleteButtonXpath: string = "//textarea[@ng-reflect-model='This is comment number 1']/..//button[text()=' Delete ']";
+  // allComments : string = "//textarea";
+
 
   async navigateTo() {
     await browser.driver.navigate().to(browser.baseUrl);
@@ -143,4 +147,20 @@ export class AppPage {
     });
     return isVisible;
   }
+
+  async deleteTextualComment(comment: string) {
+    await element(by.xpath(String.Format(this.commentDeleteButtonXpath, comment))).click();
+  }
+
+  async getAllComments() : Promise<string[]>{
+    var comments : string[] = [];
+    await browser.findElements(this.annotationTextArea).then( (elements) => {
+      for (const element of elements) {
+         element.getAttribute("ng-reflect-model").then( (a) => comments.push(a)).catch( () => {return [];});
+      }
+      return comments;
+    } );
+    return comments;
+  }
+
 }
