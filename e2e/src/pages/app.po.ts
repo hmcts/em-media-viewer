@@ -1,6 +1,6 @@
 import { browser, by, element, Locator, protractor } from 'protractor';
 import { By } from '@angular/platform-browser';
-import {String, StringBuilder} from "typescript-string-operations";
+import {String} from "typescript-string-operations";
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
