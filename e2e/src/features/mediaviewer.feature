@@ -22,5 +22,5 @@ Feature: Media Viewer Test Suite
     Then I should see previous page number should be '<page_number2>'
 
     Examples:
-      | page_number |page_number2|
-      | 2           |       3    |
+      | page_number | page_number2 |
+      | 2           | 1            |
