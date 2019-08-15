@@ -15,6 +15,8 @@ export class AnnotationComponent {
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() selected: boolean;
+  @Input() height: number;
+  @Input() width: number;
   @Output() update = new EventEmitter<Annotation>();
   @Output() delete = new EventEmitter<Annotation>();
   @Output() annotationClick = new EventEmitter();
