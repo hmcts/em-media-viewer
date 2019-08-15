@@ -1,7 +1,6 @@
 import {browser, by, element, ElementFinder, Locator, protractor, WebElement} from 'protractor';
 import { By } from '@angular/platform-browser';
 import {String} from "typescript-string-operations";
-import {WebdriverWebElement} from "protractor/built/element";
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
