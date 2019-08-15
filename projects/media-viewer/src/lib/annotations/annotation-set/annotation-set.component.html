@@ -11,6 +11,8 @@
                    [zoom]="zoom"
                    [rotate]="rotate"
                    [selected]="selectedAnnotation.annotationId === annotation.id"
+                   [height]="height"
+                   [width]="width"
                    (update)="onAnnotationUpdate($event)"
                    (delete)="onAnnotationDelete($event)"
                    (annotationClick)="onAnnotationClick($event)">
