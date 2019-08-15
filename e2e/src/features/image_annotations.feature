@@ -11,7 +11,7 @@ Feature:  Media Viewer Annotations
     Then I should be able to add comment for the highlight
     Then The context toolbar should disappear
 
-  @EM-1348 @Image_Delete_Comment
+  @EM-1968 @EM-1348 @Image_Delete_Comment
   Scenario: Delete Non Textual comment in image viewer
     Given The image has atleast one non-textual comment
     When I select a non-textual comment and delete
