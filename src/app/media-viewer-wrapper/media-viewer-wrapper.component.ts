@@ -74,7 +74,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
     this.url = newUrl;
   }
 
-  onMediaLoad(loadStatus: string) {
+  onMediaLoad(loadStatus: ResponseType) {
     this.mediaLoadStatus = loadStatus;
     setTimeout(() => this.mediaLoadStatus = undefined, 2000);
   }

@@ -14,7 +14,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation-service';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { ViewerException } from '../error-message/viewer-exception.model';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -166,7 +166,9 @@ describe('PdfViewerComponent', () => {
   });
 
   it('on document load failed expect error message', () => {
-    mockWrapper.documentLoadFailed.next();
+    mockWrapper.documentLoadFailed.next((error) => {
+      throw new ViewerException(error);
+    });
     expect(component.errorMessage).toContain('Could not load the document');
     expect(component.loadingDocument).toBe(false);
   });
@@ -218,7 +220,7 @@ describe('PdfViewerComponent', () => {
 
   it('should load new document when URL changes', async () => {
     component.enableAnnotations = true;
-    let spyComponentLoadDocument = spyOn<any>(component, 'loadDocument');
+    const spyComponentLoadDocument = spyOn<any>(component, 'loadDocument');
 
     component.url = 'b';
     await component.ngOnChanges({
