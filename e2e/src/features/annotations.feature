@@ -33,4 +33,10 @@ Feature:  Media Viewer Annotations
   Scenario: Highlight text and add comment
     When I highlight text on a PDF document
     Then I should be able to add comment for the highlight
-    Then the popup should disappear
+    Then The context toolbar should disappear
+
+  @EM-1961 @PDF_Delete_Annotation
+  Scenario: Delete Textual comment
+    Given The PDF has atleast one comment
+    When I select a textual comment and delete
+    Then The comment should be deleted
