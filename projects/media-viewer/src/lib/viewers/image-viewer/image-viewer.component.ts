@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 import { PrintService } from '../../print.service';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
+import { ViewerUtilService } from '../viewer-util.service';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -27,7 +29,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
-  @Output() imageLoadStatus = new EventEmitter<string>();
+  @Output() imageLoadStatus = new EventEmitter<ResponseType>();
+  @Output() imageViewerException = new EventEmitter<ViewerException>();
 
   errorMessage: string;
 
@@ -36,10 +39,13 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   zoom = 1;
 
   private subscriptions: Subscription[] = [];
+  private viewerException: ViewerException;
+  private response: Subscription;
 
   constructor(
     private readonly printService: PrintService,
-    public readonly toolbarEvents: ToolbarEventService
+    private readonly viewerUtilService: ViewerUtilService,
+    public readonly toolbarEvents: ToolbarEventService,
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +63,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+    this.response.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -67,7 +74,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private setRotation(rotation: number) {
-    this.rotation = (this.rotation + rotation) %360;
+    this.rotation = (this.rotation + rotation) % 360;
   }
 
   private async setZoom(zoomFactor: number) {
@@ -110,13 +117,22 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     return newZoomValue;
   }
 
-  onLoadError() {
+  onLoadError(url) {
+    this.response = this.viewerUtilService.validateFile(url)
+      .subscribe(
+      next => next,
+      error => {
+        this.viewerException = new ViewerException(error.name,
+          {httpResponseCode: error.status, message: error.message});
+      });
+
     this.errorMessage = `Could not load the image "${this.url}"`;
-    this.imageLoadStatus.emit('FAILURE');
+    this.imageLoadStatus.emit(ResponseType.FAILURE);
+    this.imageViewerException.emit(this.viewerException);
   }
 
   onLoad() {
-    this.imageLoadStatus.emit('SUCCESS');
+    this.imageLoadStatus.emit(ResponseType.SUCCESS);
   }
 
   getImageHeight(img) {

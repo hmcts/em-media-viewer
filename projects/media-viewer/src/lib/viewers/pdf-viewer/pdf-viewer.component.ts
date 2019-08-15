@@ -20,6 +20,7 @@ import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation-service';
+import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -30,7 +31,8 @@ import { PdfAnnotationService } from './pdf-annotation-service';
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 
-  @Output() pdfLoadStatus = new EventEmitter<string>();
+  @Output() pdfLoadStatus = new EventEmitter<ResponseType>();
+  @Output() pdfViewerException = new EventEmitter<ViewerException>();
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -50,6 +52,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
+  private viewerException: ViewerException;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
@@ -68,7 +71,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
-    this.pdfWrapper.documentLoadFailed.subscribe(() => this.onDocumentLoadFailed());
+    this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
     this.pdfWrapper.pageRendered.subscribe((event) => this.annotationService.onPageRendered(event));
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
 
@@ -115,13 +118,16 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private onDocumentLoaded() {
     this.loadingDocument = false;
-    this.pdfLoadStatus.emit("SUCCESS");
+    this.pdfLoadStatus.emit(ResponseType.SUCCESS);
   }
 
-  private onDocumentLoadFailed() {
+  private onDocumentLoadFailed(error: Error) {
     this.loadingDocument = false;
+    this.viewerException = new ViewerException(error.name, {message: error.message});
     this.errorMessage = `Could not load the document "${this.url}"`;
-    this.pdfLoadStatus.emit("FAILURE");
+
+    this.pdfLoadStatus.emit(ResponseType.FAILURE);
+    this.pdfViewerException.emit(this.viewerException);
   }
 
   @Input()

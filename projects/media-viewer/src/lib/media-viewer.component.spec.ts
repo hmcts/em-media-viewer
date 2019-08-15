@@ -7,6 +7,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { SimpleChange } from '@angular/core';
+import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -52,4 +53,18 @@ describe('MediaViewerComponent', () => {
     expect(component.toolbarEvents.zoomValue.value).toBe(1);
   });
 
+  it('onMediaLoad should emit a ResponseType', async () => {
+    const emitSpy = spyOn(component.mediaLoadStatus, 'emit');
+
+    component.onMediaLoad(ResponseType.SUCCESS);
+    expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('onLoadException should emit a ViewerException', async () => {
+    const viewerException = new ViewerException();
+    const emitSpy = spyOn(component.viewerException, 'emit');
+
+    component.onLoadException(viewerException);
+    expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
 });

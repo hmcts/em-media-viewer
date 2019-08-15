@@ -112,7 +112,8 @@ describe('ImageViewerComponent', () => {
   });
 
   it('on load error show error message', () => {
-    component.onLoadError();
+    component.url = 'x';
+    component.onLoadError(component.url);
     expect(component.errorMessage).toContain('Could not load the image');
   });
 });
