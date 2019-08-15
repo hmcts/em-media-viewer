@@ -170,7 +170,7 @@ export class AppPage {
     return isVisible;
   }
 
-  async deleteTextualComment(comment: string) {
+  async deleteComment(comment: string) {
     await element(by.xpath(String.Format(this.commentDeleteButtonXpath, comment))).click();
   }
 

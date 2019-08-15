@@ -101,7 +101,7 @@ Then('I check whether the comment has been created', async () => {
 Then('I verify whether the comment has been saved', async () => {
 });
 
-let addPdfComment = async () => {
+let addComment = async () => {
   await page.clickOnCommentButton();
   await page.enterTextInAnnotation("This is comment number 1");
   await page.clickOnSaveButton();
@@ -121,7 +121,11 @@ let highLightOnImage = async () =>{
   await page.drawOnImagePage();
 }
 
-Then('I should be able to add comment for the highlight', addPdfComment);
+let deleteComment = async () => {
+  await page.deleteComment("This is comment number 1");
+}
+
+Then('I should be able to add comment for the highlight', addComment);
 
 When('I highlight text on a PDF document', highLightTextInPdf);
 
@@ -133,13 +137,11 @@ Then('The context toolbar should disappear', async () => {
   expect(await page.isContextToolBarVisible()).false;
 });
 
-When('I select a textual comment and delete', async () => {
-  await page.deleteTextualComment("This is comment number 1");
-});
+When('I select a textual comment and delete', deleteComment);
 
 Given('The PDF has atleast one comment', async () => {
   await highLightTextInPdf();
-  await addPdfComment();
+  await addComment();
 });
 
 Then('The comment should be deleted', async () => {
@@ -151,3 +153,10 @@ Given('I change to Image Viewer tab', async () => {
 });
 
 When('I highlight a portion of image', highLightOnImage);
+
+Given('The image has atleast one non-textual comment', async () => {
+  await highLightOnImage();
+  await addComment();
+});
+
+When('I select a non-textual comment and delete', deleteComment);
