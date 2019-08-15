@@ -10,7 +10,7 @@ exports.config = {
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   specs: [
-    './src/**/*.feature',
+    './src/**/annotations.feature',
   ],
   onPrepare: function () {
     require('ts-node').register({
