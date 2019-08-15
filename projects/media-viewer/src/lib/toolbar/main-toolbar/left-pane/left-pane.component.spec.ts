@@ -21,7 +21,7 @@ describe('ToolbarLeftPaneComponent', () => {
     fixture = TestBed.createComponent(ToolbarLeftPaneComponent);
     component = fixture.componentInstance;
     toolbarService = TestBed.get(ToolbarEventService);
-    component.toolbarButtons.showHighlight = true;
+    component.toolbarButtons.showHighlightButton = true;
     fixture.detectChanges();
   });
 
@@ -105,7 +105,7 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should show the draw button if permitted', () => {
-    component.toolbarButtons.showHighlight = true;
+    component.toolbarButtons.showHighlightButton = true;
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toBeTruthy();
   });

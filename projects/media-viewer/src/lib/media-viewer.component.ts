@@ -86,9 +86,9 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
   setToolbarButtons() {
     if (this.contentType === this.supportedContentTypes[0]) {
-      this.toolbarButtons.reset({ ...defaultPdfOptions, showHighlight: this.enableAnnotations });
+      this.toolbarButtons.reset({ ...defaultPdfOptions, showHighlightButton: this.enableAnnotations, showDrawButton: this.enableAnnotations });
     } else if (this.contentType === this.supportedContentTypes[1]) {
-      this.toolbarButtons.reset({ ...defaultImageOptions, showHighlight: this.enableAnnotations });
+      this.toolbarButtons.reset({ ...defaultImageOptions, showDrawButton: this.enableAnnotations });
     } else {
       this.toolbarButtons.reset({ ...defaultUnsupportedOptions });
     }
