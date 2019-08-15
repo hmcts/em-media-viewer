@@ -15,7 +15,8 @@ export class ToolbarButtonVisibilityService {
   public showPresentationMode = false;
   public showOpenFile = false;
   public showBookmark = false;
-  public showHighlight = false;
+  public showHighlightButton = false;
+  public showDrawButton = false;
   public showSearchBar = false;
   public showSubToolbar = false;
   public showSidebar = false;
@@ -35,7 +36,8 @@ export class ToolbarButtonVisibilityService {
     this.showPresentationMode = false;
     this.showOpenFile = false;
     this.showBookmark = false;
-    this.showHighlight = false;
+    this.showHighlightButton = false;
+    this.showDrawButton = false;
     this.showSearchBar = false;
     this.showSubToolbar = false;
     this.showSidebar = false;

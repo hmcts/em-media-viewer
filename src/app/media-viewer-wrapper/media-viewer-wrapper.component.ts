@@ -60,7 +60,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   toggleAnnotations(showAnnotations: boolean) {
     this.enableAnnotations = showAnnotations;
-    this.toolbarButtons.showHighlight = showAnnotations;
+    this.toolbarButtons.showHighlightButton = showAnnotations;
   }
 
   tabLinkStyle(currentTab: string) {
