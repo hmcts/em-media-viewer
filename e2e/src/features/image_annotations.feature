@@ -16,3 +16,9 @@ Feature:  Media Viewer Annotations
     Given The image has atleast one non-textual comment
     When I select a non-textual comment and delete
     Then The comment should be deleted
+
+  @EM-1347 @Image_Update_Comment
+  Scenario: Update Non Textual comment in image viewer
+    Given The image has atleast one non-textual comment
+    When I update a non-textual comment and save
+    Then The old comment should be replaced with new comment
