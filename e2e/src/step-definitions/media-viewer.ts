@@ -119,7 +119,6 @@ let highLightOnImage = async () =>{
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();
   await page.drawOnImagePage();
-  await sleep(5000);
 }
 
 Then('I should be able to add comment for the highlight', addPdfComment);
