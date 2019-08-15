@@ -87,7 +87,7 @@ describe('RectangleComponent', () => {
 
   it('should select the rectangle if select is true.', () => {
     spyOn(component.rectElement.nativeElement, 'focus');
-    component.selected = true;
+    component._selected = true;
     component.ngAfterViewInit();
     expect(component.rectElement.nativeElement.focus).toHaveBeenCalledTimes(1);
   });
