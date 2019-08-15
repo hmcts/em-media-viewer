@@ -11,6 +11,8 @@ const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
 const toolBar = new ToolBar();
 const printPage = new PrintPage();
+const comment_1  = 'This is comment number 1';
+const comment_new  = 'This is comment number 1 new';
 
 Given('I am on Media Viewer Page', async () => {
   await page.preparePage();
@@ -103,7 +105,7 @@ Then('I verify whether the comment has been saved', async () => {
 
 let addComment = async () => {
   await page.clickOnCommentButton();
-  await page.enterTextInAnnotation("This is comment number 1");
+  await page.enterTextInAnnotation(comment_1);
   await page.clickOnSaveButton();
 }
 
@@ -122,7 +124,7 @@ let highLightOnImage = async () =>{
 }
 
 let deleteComment = async () => {
-  await page.deleteComment("This is comment number 1");
+  await page.deleteComment(comment_1);
 }
 
 Then('I should be able to add comment for the highlight', addComment);
@@ -145,7 +147,7 @@ Given('The PDF has atleast one comment', async () => {
 });
 
 Then('The comment should be deleted', async () => {
-  expect(await page.getAllComments()).not.contain("This is comment number 1");
+  expect(await page.getAllComments()).not.contain(comment_1);
 });
 
 Given('I change to Image Viewer tab', async () => {
@@ -160,3 +162,12 @@ Given('The image has atleast one non-textual comment', async () => {
 });
 
 When('I select a non-textual comment and delete', deleteComment);
+
+When('I update a non-textual comment and save', async () => {
+  await page.updateComment(comment_1, comment_new);
+});
+
+Then('The old comment should be replaced with new comment', async () => {
+  let comment = await page.getComment();
+  expect(comment).to.contain(comment_new);
+});
