@@ -99,33 +99,23 @@ export class AppPage {
   }
 
   async drawOnImagePage(){
-console.log("inside drawonimagepage");
 
-  await  browser.executeScript( () => {
-    let mouseDownEvent = document.createEvent("MouseEvent");
-    let mouseMoveEvent = document.createEvent("MouseEvents");
-    let mouseUpEvent = document.createEvent("MouseEvent");
+    await  browser.executeScript( () => {
+      let imageElement = document.getElementsByTagName("mv-annotation-set")[0].childNodes[0];
 
-    let imageElement = document.getElementsByTagName("img")[0];
+      let mouseDownEvent = document.createEvent("MouseEvents");
+      let mouseMoveEvent = document.createEvent("MouseEvents");
+      let mouseUpEvent = document.createEvent("MouseEvents");
 
-    mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 10, 10, 10, 10, false, false, false,      false, 0, null);
-    mouseMoveEvent.initMouseEvent("mousemove", true, true, window, 1, 20, 30, 20, 30, false, false, false, false, 0, null);
-    mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 20, 30, 20, 30, false, false, false,      false, 0, null);
 
-    imageElement.dispatchEvent(mouseDownEvent);
-    imageElement.dispatchEvent(mouseMoveEvent);
-    imageElement.dispatchEvent(mouseUpEvent);
+      mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false,      false, 0, null);
+      mouseMoveEvent.initMouseEvent("mousemove", true, true, window, 1, 750, 750, 900, 900, false, false, false, false, 0, null);
+      mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false,      false, 0, null);
 
-    var range = document.createRange();
-    var matchingElement = document.getElementsByTagName("img")[0];
-    range.selectNodeContents(matchingElement);
-    var sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-
-  });
-    this.sleep(5000);
-    this.getHighlightPopUp();
+      imageElement.dispatchEvent(mouseDownEvent);
+      imageElement.dispatchEvent(mouseMoveEvent);
+      imageElement.dispatchEvent(mouseUpEvent);
+    });
 
   }
 
@@ -153,6 +143,7 @@ console.log("inside drawonimagepage");
       pageHandle.dispatchEvent(mouseup);
     });
   }
+
 
   async clickOnCommentButton() {
     await element(this.commentButton).click();
@@ -187,7 +178,7 @@ console.log("inside drawonimagepage");
     var comments : string[] = [];
     await browser.findElements(this.annotationTextArea).then( (elements) => {
       for (const element of elements) {
-         element.getAttribute("ng-reflect-model").then( (a) => comments.push(a)).catch( () => {return [];});
+        element.getAttribute("ng-reflect-model").then( (a) => comments.push(a)).catch( () => {return [];});
       }
       return comments;
     } );
