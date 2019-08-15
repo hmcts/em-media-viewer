@@ -98,6 +98,37 @@ export class AppPage {
     });
   }
 
+  async drawOnImagePage(){
+console.log("inside drawonimagepage");
+
+  await  browser.executeScript( () => {
+    let mouseDownEvent = document.createEvent("MouseEvent");
+    let mouseMoveEvent = document.createEvent("MouseEvents");
+    let mouseUpEvent = document.createEvent("MouseEvent");
+
+    let imageElement = document.getElementsByTagName("img")[0];
+
+    mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 10, 10, 10, 10, false, false, false,      false, 0, null);
+    mouseMoveEvent.initMouseEvent("mousemove", true, true, window, 1, 20, 30, 20, 30, false, false, false, false, 0, null);
+    mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 20, 30, 20, 30, false, false, false,      false, 0, null);
+
+    imageElement.dispatchEvent(mouseDownEvent);
+    imageElement.dispatchEvent(mouseMoveEvent);
+    imageElement.dispatchEvent(mouseUpEvent);
+
+    var range = document.createRange();
+    var matchingElement = document.getElementsByTagName("img")[0];
+    range.selectNodeContents(matchingElement);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
+  });
+    this.sleep(5000);
+    this.getHighlightPopUp();
+
+  }
+
   async highLightTextOnPdfPage() {
     await browser.executeScript(() => {
       var range = document.createRange();
@@ -162,5 +193,6 @@ export class AppPage {
     } );
     return comments;
   }
+
 
 }
