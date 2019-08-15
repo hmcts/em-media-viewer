@@ -114,6 +114,13 @@ let highLightTextInPdf = async () =>{
   await page.highLightTextOnPdfPage();
 }
 
+let highLightOnImage = async () =>{
+  // await page.waitForPdfToLoad();
+  await sleep(5000);
+  await toolBar.enableDrawHighLightMode();
+  await page.drawOnImagePage();
+}
+
 Then('I should be able to add comment for the highlight', addPdfComment);
 
 When('I highlight text on a PDF document', highLightTextInPdf);
@@ -138,3 +145,9 @@ Given('The PDF has atleast one comment', async () => {
 Then('The comment should be deleted', async () => {
   expect(await page.getAllComments()).not.contain("This is comment number 1");
 });
+
+Given('I change to Image Viewer tab', async () => {
+  await page.selectImageViewer();
+});
+
+When('I highlight a portion of image', highLightOnImage);
