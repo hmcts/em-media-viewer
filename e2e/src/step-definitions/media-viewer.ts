@@ -5,14 +5,18 @@ import {NavigatePage} from '../pages/navigate.po';
 import {expect} from 'chai';
 import {ToolBar} from '../pages/toolbar.po';
 import {PrintPage} from '../pages/print.po';
+import {GenericMethods} from '../utils/genericMethods';
+import {CommentPage} from '../pages/comment.po';
 
 
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
 const toolBar = new ToolBar();
 const printPage = new PrintPage();
-const comment_1  = 'This is comment number 1';
-const comment_new  = 'This is comment number 1 new';
+const genericMethods = new GenericMethods();
+const commentPage = new CommentPage();
+const comment_1 = 'This is comment number 1';
+const comment_new = 'This is comment number 1 new';
 
 Given('I am on Media Viewer Page', async () => {
   await page.preparePage();
@@ -33,16 +37,16 @@ Then('I expect the page header to be {string}', async (text: string) => {
 
 When('I click next button on the pdf', async () => {
   await page.selectPdfViewer();
-  await page.preparePage();
   await page.waitForPdfToLoad();
   await navigatePage.goToNextPage();
+  await genericMethods.sleep(5000);
 });
 
 When('I click previous button on the pdf', async () => {
   await page.selectPdfViewer();
-  await page.preparePage();
   await page.waitForPdfToLoad();
   await navigatePage.goToPreviousPage();
+  await genericMethods.sleep(5000);
 });
 
 Then('I should see next page number should be {string}', async (expected: string) => {
@@ -66,9 +70,9 @@ When('the user selects the printer', function () {
 });
 
 
-Then('I expect the file is queued for printing', function () {
-  printPage.switchToPrintTab();
-  const screenshots =  browser.takeScreenshot();
+Then('I expect the file is queued for printing', async function () {
+  await genericMethods.switchWindows();
+  const screenshots = browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
 });
 
@@ -89,49 +93,40 @@ When('I select a text on pdf doc', async () => {
 });
 
 Then('I expect text highlight popup should appear', async () => {
+  await genericMethods.sleep(5000);
+  const screenshot = await browser.takeScreenshot();
+  this.attach(screenshot, 'image/png');
 });
 
-Then(/^I select a text on pdf$/, async () => {
-});
-
-Then('I add a comment to the selected PDF text', async () => {
-});
-
-Then('I check whether the comment has been created', async () => {
-});
-
-Then('I verify whether the comment has been saved', async () => {
-});
-
-let addComment = async () => {
+const addComment = async () => {
   await page.clickOnCommentButton();
   await page.enterTextInAnnotation(comment_1);
   await page.clickOnSaveButton();
-}
+};
 
-let highLightTextInPdf = async () =>{
+const highLightTextInPdf = async () => {
   await page.waitForPdfToLoad();
   await sleep(5000);
   await toolBar.enableTextHighLightMode();
   await page.highLightTextOnPdfPage();
-}
+};
 
-let highLightOnImage = async () =>{
+const highLightOnImage = async () => {
   // await page.waitForPdfToLoad();
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();
   await page.drawOnImagePage();
-}
+};
 
-let deleteComment = async () => {
+const deleteComment = async () => {
   await page.deleteComment(comment_1);
-}
+};
 
 Then('I should be able to add comment for the highlight', addComment);
 
 When('I highlight text on a PDF document', highLightTextInPdf);
 
-function sleep(time: number){
+function sleep(time: number) {
   return new Promise(resolve => setTimeout(resolve, time));
 }
 
@@ -168,6 +163,14 @@ When('I update a non-textual comment and save', async () => {
 });
 
 Then('The old comment should be replaced with new comment', async () => {
-  let comment = await page.getComment();
+  const comment = await page.getComment();
   expect(comment).to.contain(comment_new);
+});
+
+Then('I update the existing comment with {string}', async (text: string) => {
+  await commentPage.clickElement(commentPage.commentBox);
+  await genericMethods.sleep(5000);
+  // @ts-ignore
+  const actualComment = element(by.xpath(commentPage.commentBox)).getWebElement();
+  console.log(actualComment.getText());
 });

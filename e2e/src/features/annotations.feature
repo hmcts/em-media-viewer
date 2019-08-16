@@ -7,29 +7,13 @@ Feature:  Media Viewer Annotations
     When I click Annotate button
     Then I expect Annotate button must be enabled
 
-  @CreateAnnotation
-  Scenario: Create Annotations
-    When I select a text on pdf doc
-    Then I expect text highlight popup should appear
-    And I add a comment to the selected PDF text
-    Then I check whether the comment has been created
-
-
-  @PDFTextHighlight_Comment
+  @EM-1711 @PDF_Text_Highlight
   Scenario: Add a comment to PDF Text highlight
-    When I select a text on pdf
+    When I highlight text on a PDF document
     Then I expect text highlight popup should appear
-    And I add a comment to the selected PDF text
-    Then I verify whether the comment has been saved
-
-#  @EM-1247 @Print_file
-#  Scenario: Enable user to print file
-#    When the user selects the print option
-#    And the user selects the printer
-#    Then I expect the file is queued for printing
 
 
-  @EM-1717 @PDF_Add_Annotation
+  @EM-1717 @PDF_Add_Annotation @CreateAnnotation
   Scenario: Highlight text and add comment
     When I highlight text on a PDF document
     Then I should be able to add comment for the highlight
@@ -40,3 +24,14 @@ Feature:  Media Viewer Annotations
     Given The PDF has atleast one comment
     When I select a textual comment and delete
     Then The comment should be deleted
+
+  @EM-1718 @Comment_update @WIP
+  Scenario Outline: Update a PDF text Comment
+    When I highlight text on a PDF document
+    Then I should be able to add comment for the highlight
+    Then I update the existing comment with '<my_text>'
+    Then I verify the amended text has been saved
+
+    Examples:
+      | my_text          |
+      | comment number 2 |
