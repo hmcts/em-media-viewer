@@ -1,7 +1,9 @@
 import { by, element } from 'protractor';
 import { AppPage } from './app.po';
+import {By} from '@angular/platform-browser';
 
 export class CommentPage extends AppPage {
+  commentBox: By = by.xpath('//form[@class=\'aui-comment rotation rot0 ng-dirty ng-valid ng-touched\']//textarea[@name=\'content\']');
 
   async openModal() {
     const el = await element(by.css('input[id="toggleCommentSummary"]'));

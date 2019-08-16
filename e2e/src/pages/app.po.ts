@@ -1,18 +1,18 @@
 import {browser, by, element, ElementFinder, Locator, protractor, WebElement} from 'protractor';
-import { By } from '@angular/platform-browser';
-import {String} from "typescript-string-operations";
+import {By} from '@angular/platform-browser';
+import {String} from 'typescript-string-operations';
+
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
 
-
-  contextToolbar: By = by.css("mv-popup-toolbar .toolbar");
-  commentButton: By = by.css("mv-popup-toolbar .toolbar button[title='Comment']");
-  removeHighLightButton: By = by.css("mv-popup-toolbar .toolbar button[title='Comment']");
-  annotationTextArea: By = by.css("textarea");
-  saveButton: By = by.xpath("//button[text()=' Save ']");
-  editButton: By = by.xpath("//button[text()=' Edit ']");
-  commentDeleteButtonXpath: string = "//textarea[@ng-reflect-model='{0}']/..//button[text()=' Delete ']";
+  contextToolbar: By = by.css('mv-popup-toolbar .toolbar');
+  commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
+  removeHighLightButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
+  annotationTextArea: By = by.css('textarea');
+  saveButton: By = by.xpath('//button[text()=\' Save \']');
+  editButton: By = by.xpath('//button[text()=\' Edit \']');
+  commentDeleteButtonXpath: string = '//textarea[@ng-reflect-model=\'{0}\']/..//button[text()=\' Delete \']';
 
   // commentDeleteButtonXpath: string = "//textarea[@ng-reflect-model='This is comment number 1']/..//button[text()=' Delete ']";
   // allComments : string = "//textarea";
@@ -20,11 +20,12 @@ export class AppPage {
 
   async navigateTo() {
     await browser.driver.navigate().to(browser.baseUrl);
-    return await browser.driver.manage().window().maximize();
+    await browser.driver.manage().window().maximize();
   }
 
   async preparePage() {
     await this.navigateTo();
+    await browser.sleep(5000);
     await this.showToolbarButtons();
   }
 
@@ -81,37 +82,29 @@ export class AppPage {
     }, 10000, 'failed to load search results');
   }
 
-  async selectPDFText() {
-    // const hotkeys = require('protractor-hotkeys');
-    // hotkeys
-    //   .trigger('mod+a');
-    // await this.clickElement(by.xpath('*//div[text()=\'Abstract\']'));
-
-  }
-
   async getClassAttributeOfAnElement(selector: By): Promise<string[]> {
     var splitClasses: string[] = [];
     return await element(selector).getAttribute('class').then((classes) => {
       splitClasses = classes.split(' ');
       return splitClasses;
     }).catch(() => {
-      return []
+      return [];
     });
   }
 
-  async drawOnImagePage(){
+  async drawOnImagePage() {
 
-    await  browser.executeScript( () => {
-      let imageElement = document.getElementsByTagName("mv-annotation-set")[0].childNodes[0];
+    await browser.executeScript(() => {
+      let imageElement = document.getElementsByTagName('mv-annotation-set')[0].childNodes[0];
 
-      let mouseDownEvent = document.createEvent("MouseEvents");
-      let mouseMoveEvent = document.createEvent("MouseEvents");
-      let mouseUpEvent = document.createEvent("MouseEvents");
+      let mouseDownEvent = document.createEvent('MouseEvents');
+      let mouseMoveEvent = document.createEvent('MouseEvents');
+      let mouseUpEvent = document.createEvent('MouseEvents');
 
 
-      mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false,      false, 0, null);
-      mouseMoveEvent.initMouseEvent("mousemove", true, true, window, 1, 750, 750, 900, 900, false, false, false, false, 0, null);
-      mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false,      false, 0, null);
+      mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
+      mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 750, 750, 900, 900, false, false, false, false, 0, null);
+      mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false, false, 0, null);
 
       imageElement.dispatchEvent(mouseDownEvent);
       imageElement.dispatchEvent(mouseMoveEvent);
@@ -123,7 +116,7 @@ export class AppPage {
   async highLightTextOnPdfPage() {
     await browser.executeScript(() => {
       var range = document.createRange();
-      var matchingElement = document.evaluate("//div[text()='Dynamic languages such as JavaScript are more difficult to com-']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+      var matchingElement = document.evaluate('//div[text()=\'Dynamic languages such as JavaScript are more difficult to com-\']', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
       range.selectNodeContents(matchingElement);
       var sel = window.getSelection();
       sel.removeAllRanges();
@@ -135,11 +128,11 @@ export class AppPage {
 
   async getHighlightPopUp() {
     await browser.executeScript(() => {
-      let mousedown = document.createEvent("Event");
-      mousedown.initEvent("mousedown", true, true);
-      let mouseup = document.createEvent("Event");
-      mouseup.initEvent("mouseup", true, true);
-      var pageHandle = document.getElementsByClassName("pdfViewer")[0];
+      let mousedown = document.createEvent('Event');
+      mousedown.initEvent('mousedown', true, true);
+      let mouseup = document.createEvent('Event');
+      mouseup.initEvent('mouseup', true, true);
+      var pageHandle = document.getElementsByClassName('pdfViewer')[0];
       pageHandle.dispatchEvent(mousedown);
       pageHandle.dispatchEvent(mouseup);
     });
@@ -172,7 +165,7 @@ export class AppPage {
         return isVisible;
       }
     }).catch(() => {
-      return false
+      return false;
     });
     return isVisible;
   }
@@ -181,26 +174,30 @@ export class AppPage {
     await element(by.xpath(String.Format(this.commentDeleteButtonXpath, comment))).click();
   }
 
-  async getAllComments() : Promise<string[]>{
-    let comments : string[] = [];
-    await browser.findElements(this.annotationTextArea).then( (elements) => {
+  async getAllComments(): Promise<string[]> {
+    let comments: string[] = [];
+    await browser.findElements(this.annotationTextArea).then((elements) => {
       for (const element of elements) {
-        element.getAttribute("ng-reflect-model").then( (a) => comments.push(a)).catch( () => {return [];});
+        element.getAttribute('ng-reflect-model').then((a) => comments.push(a)).catch(() => {
+          return [];
+        });
       }
       return comments;
-    } );
+    });
     return comments;
   }
 
-  async updateComment(comment : string, newComment : string) {
+  async updateComment(comment: string, newComment: string) {
     await this.clickOnEditButton();
     await element(this.annotationTextArea).clear();
     await element(this.annotationTextArea).sendKeys(newComment);
     await this.clickOnSaveButton();
   }
 
-  async getComment() : Promise<string> {
-    return await element(this.annotationTextArea).getAttribute("ng-reflect-model").then( (a) => {return a;});
+  async getComment(): Promise<string> {
+    return await element(this.annotationTextArea).getAttribute('ng-reflect-model').then((a) => {
+      return a;
+    });
   }
 
 }
