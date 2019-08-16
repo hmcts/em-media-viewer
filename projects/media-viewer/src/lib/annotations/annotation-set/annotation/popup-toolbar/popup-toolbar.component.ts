@@ -19,7 +19,6 @@ export class PopupToolbarComponent {
   @Output() deleteHighlight = new EventEmitter();
   @Output() addOrEditComment = new EventEmitter();
 
-
   popupStyles() {
     if (this.rotate === 0) {
       const top = this.rectangle.y * this.zoom - this.HEIGHT;
