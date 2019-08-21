@@ -1,5 +1,6 @@
-import { browser, by, element } from 'protractor';
-import { AppPage } from './app.po';
+import {browser, by, element} from 'protractor';
+import {AppPage} from './app.po';
+
 
 export class PrintPage extends AppPage {
 
@@ -13,7 +14,17 @@ export class PrintPage extends AppPage {
 
   async switchToPrintTab() {
     const tabs = await browser.getAllWindowHandles();
-    expect(tabs.length).toEqual(2);
+    await expect(tabs.length).toEqual(2);
     await browser.switchTo().window(tabs[1]);
+  }
+
+  async closePrintDialog() {
+    await browser.getAllWindowHandles().then(async function (handles) {
+      browser.switchTo().window(handles[1]).then(async function () {
+        await browser.sleep(10000);
+        await browser.driver.close();
+        await browser.switchTo().window(handles[0]);
+      });
+    });
   }
 }

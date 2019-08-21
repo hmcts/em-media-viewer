@@ -1,7 +1,7 @@
 import {After, Before, Status} from 'cucumber';
 import {browser} from 'protractor';
 
-Before({tags: '@CreateAnnotation'}, async function() {
+Before({tags: '@MediaViewer and ~@WIP'}, async function() {
   await browser.waitForAngularEnabled(false);
   await browser.driver.navigate().to(browser.baseUrl);
 });
