@@ -1,7 +1,6 @@
 import {browser, by, element, ElementFinder, Locator, protractor, WebElement} from 'protractor';
 import {By} from '@angular/platform-browser';
 import {String} from 'typescript-string-operations';
-
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
@@ -20,7 +19,7 @@ export class AppPage {
 
   async navigateTo() {
     await browser.driver.navigate().to(browser.baseUrl);
-    await browser.driver.manage().window().maximize();
+    return await browser.driver.manage().window().maximize();
   }
 
   async preparePage() {

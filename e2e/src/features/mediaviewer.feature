@@ -25,8 +25,7 @@ Feature: Media Viewer Test Suite
       | page_number | page_number2 |
       | 2           | 1            |
 
-#  @EM-1247 @Print_Document
-#  Scenario: Enable user to print file
-#    When the user selects the print option
-#    And the user selects the printer
-#    Then I expect the file is queued for printing
+  @EM-1247 @Print_Document @WIP
+  Scenario: Enable user to print file
+    When the user selects the print option
+    Then I expect the print dialog should appear and the file is queued for printing

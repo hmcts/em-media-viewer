@@ -25,7 +25,7 @@ Feature:  Media Viewer Annotations
     When I select a textual comment and delete
     Then The comment should be deleted
 
-  @EM-1718 @Comment_update @WIP
+  @EM-1718 @Comment_update
   Scenario Outline: Update a PDF text Comment
     When I highlight text on a PDF document
     Then I should be able to add comment for the highlight

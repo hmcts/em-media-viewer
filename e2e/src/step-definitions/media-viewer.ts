@@ -65,15 +65,10 @@ When('the user selects the print option', async () => {
 });
 
 
-When('the user selects the printer', function () {
-  element(by.css('#first [value=\'HP OfficeJet Pro 8710\']')).click();
-});
-
-
-Then('I expect the file is queued for printing', async function () {
-  await genericMethods.switchWindows();
+Then('I expect the print dialog should appear and the file is queued for printing', async function () {
   const screenshots = browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
+  await printPage.switchToPrintTab();
 });
 
 When('I click Annotate button', async () => {
@@ -88,8 +83,6 @@ Then('I expect Annotate button must be enabled', async function () {
 
 When('I select a text on pdf doc', async () => {
   await toolBar.clickTextIcon();
-  await page.selectPDFText();
-
 });
 
 Then('I expect text highlight popup should appear', async () => {
@@ -168,9 +161,11 @@ Then('The old comment should be replaced with new comment', async () => {
 });
 
 Then('I update the existing comment with {string}', async (text: string) => {
-  await commentPage.clickElement(commentPage.commentBox);
-  await genericMethods.sleep(5000);
-  // @ts-ignore
-  const actualComment = element(by.xpath(commentPage.commentBox)).getWebElement();
-  console.log(actualComment.getText());
+  await addComment();
+});
+
+Then('I verify the amended text has been saved', async () => {
+  await page.updateComment(comment_1, comment_new);
+  const comment = await page.getComment();
+  expect(comment).to.contain(comment_new);
 });
