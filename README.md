@@ -99,6 +99,16 @@ To override the default Annotation API path (or URL for cross domain calls) use 
 <mv-media-viewer annotationApiUrl=""http://my-gateway.com/my-context-path""  ... ></mv-media-viewer>
   
 ### Viewer Exceptions
+The Media Viewer will return load status and provide exceptions if thrown for the host application to consume.
+```
+    <mv-media-viewer [url]="'assets/example.pdf'"
+                     [downloadFileName]="'example.pdf'"
+                     [showToolbar]="true"
+                     [contentType]="'pdf'"
+                     (mediaLoadStatus)="onMediaLoadStatus($event)"
+                     (viewerException)="onMediaLoadException($event)">
+    </mv-media-viewer>  
+```
 
 When exceptions are thrown by the different Media Viewers, the exception is encapsulated in an object called `ViewerException` and passed up the chain to be used by consuming service.
 
