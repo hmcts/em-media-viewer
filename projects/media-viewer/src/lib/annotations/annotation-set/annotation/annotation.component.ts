@@ -15,6 +15,8 @@ export class AnnotationComponent {
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() selected: boolean;
+  @Input() height: number;
+  @Input() width: number;
   @Output() update = new EventEmitter<Annotation>();
   @Output() delete = new EventEmitter<Annotation>();
   @Output() annotationClick = new EventEmitter();
@@ -36,7 +38,6 @@ export class AnnotationComponent {
   public onFocusOut(event: FocusEvent) {
     if (!this.container.nativeElement.contains(event.relatedTarget)) {
       this.selected = false;
-      // this.annotationClick.emit({ annotationId: '', editable: false });
     }
   }
 
