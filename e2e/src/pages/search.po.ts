@@ -1,7 +1,15 @@
-import { by, element, browser } from 'protractor';
-import { AppPage } from './app.po';
+import {by, element, ElementFinder} from 'protractor';
+import {AppPage} from './app.po';
+import {GenericMethods} from '../utils/genericMethods';
+
+const genericMethods = new GenericMethods();
 
 export class SearchPage extends AppPage {
+
+  searchCount: ElementFinder = element(by.xpath('//span[@id=\'findResultsCount\']'));
+  searchIcon: ElementFinder = element(by.xpath('//button[@id=\'viewFind\']'));
+  searchField: ElementFinder = element(by.css('#findbarInputContainer > input'));
+  findIndex: ElementFinder = element(by.xpath('//button[@id=\'findNext\']'));
 
   async toggleSearchBar() {
     return this.clickElement(by.id('viewFind'));
@@ -57,5 +65,22 @@ export class SearchPage extends AppPage {
   async searchResultsCounter() {
     await this.waitForElement(by.id('findResultsCount'));
     return element(by.id('findResultsCount')).getText();
+  }
+
+  async clickSearchIcon() {
+    await this.searchIcon.click();
+  }
+
+  async getSearchCount(): Promise<string> {
+    return await this.searchCount.getText();
+  }
+
+  async searchText(text: string) {
+    await this.searchField.sendKeys(text);
+    await genericMethods.sleep(10000);
+  }
+
+  async clickFindIndex() {
+    await this.findIndex.click();
   }
 }

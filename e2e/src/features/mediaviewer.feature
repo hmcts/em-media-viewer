@@ -29,3 +29,15 @@ Feature: Media Viewer Test Suite
   Scenario: Enable user to print file
     When the user selects the print option
     Then I expect the print dialog should appear and the file is queued for printing
+
+  @Search @EM-1246 @Search_with_MultipleWords
+  Scenario Outline: Enable Search within a document
+    When the user populate the content search field with a '<search_value>'
+    Then the search results are displayed and highlighted to the user
+    And the section of the document is viewable to the user
+
+    Examples:
+      | search_value |
+      | Trace Trees  |
+
+
