@@ -1,12 +1,12 @@
 import {Given, Then, When} from 'cucumber';
 import {AppPage} from '../pages/app.po';
-import {browser, by, element} from 'protractor';
+import {browser, by} from 'protractor';
 import {NavigatePage} from '../pages/navigate.po';
 import {expect} from 'chai';
 import {ToolBar} from '../pages/toolbar.po';
 import {PrintPage} from '../pages/print.po';
 import {GenericMethods} from '../utils/genericMethods';
-import {CommentPage} from '../pages/comment.po';
+import {SearchPage} from '../pages/search.po';
 
 
 const page = new AppPage();
@@ -14,7 +14,7 @@ const navigatePage: NavigatePage = new NavigatePage();
 const toolBar = new ToolBar();
 const printPage = new PrintPage();
 const genericMethods = new GenericMethods();
-const commentPage = new CommentPage();
+const searchPage = new SearchPage();
 const comment_1 = 'This is comment number 1';
 const comment_new = 'This is comment number 1 new';
 
@@ -168,4 +168,23 @@ Then('I verify the amended text has been saved', async () => {
   await page.updateComment(comment_1, comment_new);
   const comment = await page.getComment();
   expect(comment).to.contain(comment_new);
+});
+
+When(/^the user populate the content search field with a '(.*)'$/, async (text: string) => {
+  await searchPage.clickSearchIcon();
+  await searchPage.searchText(text);
+});
+
+Then(/^the search results are displayed and highlighted to the user$/, async () => {
+  const count: string = await searchPage.getSearchCount();
+  console.log('Total Search Count' + count);
+  expect(count).to.equal('1 of 19 matches');
+
+});
+When(/^the section of the document is viewable to the user$/, async function () {
+  await searchPage.clickFindIndex();
+  await searchPage.clickFindIndex();
+  await genericMethods.sleep(1000);
+  const viewableDoc = await browser.takeScreenshot();
+  this.attach(viewableDoc, 'image/png');
 });
