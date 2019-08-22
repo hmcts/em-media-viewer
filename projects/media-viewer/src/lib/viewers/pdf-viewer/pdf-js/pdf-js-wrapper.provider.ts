@@ -1,4 +1,5 @@
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
+import * as pdfjsOutlineViewer from 'pdfjs-dist/lib/web/pdf_outline_viewer';
 import { ElementRef, Injectable } from '@angular/core';
 import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
@@ -41,4 +42,14 @@ export class PdfJsWrapperFactory {
     );
   }
 
+  public createDocumentOutline(container: ElementRef) {
+    const linkService = new pdfjsViewer.PDFLinkService();
+    const eventBus = new pdfjsViewer.EventBus();
+
+    return new pdfjsOutlineViewer.PDFOutlineViewer({
+      container: container.nativeElement,
+      linkService: linkService,
+      eventBus: eventBus
+    });
+  }
 }

@@ -58,7 +58,6 @@ export class PdfJsWrapper {
     } catch (e) {
       this.documentLoadFailed.next(e);
     }
-
   }
 
   public downloadFile(url: string, filename: string): void {
