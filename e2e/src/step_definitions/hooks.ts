@@ -13,5 +13,3 @@ After(async function(scenario) {
     this.attach(screenshot, 'image/png');
   }
 });
-
-
