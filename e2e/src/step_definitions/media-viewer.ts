@@ -175,16 +175,20 @@ When(/^the user populate the content search field with a '(.*)'$/, async (text: 
   await searchPage.searchText(text);
 });
 
-Then(/^the search results are displayed and highlighted to the user$/, async () => {
+Then(/^the "([^"]*)" are displayed and highlighted to the user$/, async (search_count: string) => {
   const count: string = await searchPage.getSearchCount();
-  console.log('Total Search Count' + count);
-  expect(count).to.equal('1 of 19 matches');
-
+  expect(count).to.equal(search_count);
 });
+
 When(/^the section of the document is viewable to the user$/, async function () {
-  await searchPage.clickFindIndex();
   await searchPage.clickFindIndex();
   await genericMethods.sleep(1000);
   const viewableDoc = await browser.takeScreenshot();
   this.attach(viewableDoc, 'image/png');
 });
+
+const search = async (search_count: string) => {
+  await searchPage.clickFindIndex();
+  const count: string = await searchPage.getSearchCount();
+  expect(count).to.equal(search_count);
+};

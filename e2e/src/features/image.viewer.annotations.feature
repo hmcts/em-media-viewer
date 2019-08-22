@@ -1,5 +1,5 @@
 @MediaViewer @Annotations
-Feature:  Media Viewer Annotations
+Feature: Image Viewer Annotations
 
   Background:
     Given I am on Media Viewer Page
