@@ -1,8 +1,5 @@
-@MediaViewer
-Feature: Media Viewer Test Suite
-  As a user
-  I want to navigate to media viewer application
-  So that I can perform media viewer workflow's
+@MediaViewer @Navigation
+Feature: Navigation
 
   Background:
     Given I am on Media Viewer Page
@@ -24,8 +21,3 @@ Feature: Media Viewer Test Suite
     Examples:
       | page_number | page_number2 |
       | 2           | 1            |
-
-  @EM-1247 @Print_Document @WIP
-  Scenario: Enable user to print file
-    When the user selects the print option
-    Then I expect the print dialog should appear and the file is queued for printing
