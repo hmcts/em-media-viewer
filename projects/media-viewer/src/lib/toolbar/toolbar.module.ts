@@ -24,7 +24,7 @@ export { ToolbarEventService } from './toolbar-event.service';
     ToolbarLeftPaneComponent,
     ToolbarRightPaneComponent,
     MainToolbarComponent,
-    ToolbarMiddlePaneComponent
+    ToolbarMiddlePaneComponent,
   ],
   providers: [
     ToolbarButtonVisibilityService,
