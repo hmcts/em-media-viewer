@@ -1,5 +1,5 @@
 @MediaViewer @Annotations
-Feature:  Media Viewer Annotations
+Feature: PDF Viewer Annotations
 
   Background:
     Given I am on Media Viewer Page
