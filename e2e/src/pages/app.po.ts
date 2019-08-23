@@ -1,6 +1,7 @@
 import {browser, by, element, ElementFinder, Locator, protractor, WebElement} from 'protractor';
 import {By} from '@angular/platform-browser';
 import {String} from 'typescript-string-operations';
+
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
@@ -13,17 +14,13 @@ export class AppPage {
   editButton: By = by.xpath('//button[text()=\' Edit \']');
   commentDeleteButtonXpath: string = '//textarea[@ng-reflect-model=\'{0}\']/..//button[text()=\' Delete \']';
 
-  // commentDeleteButtonXpath: string = "//textarea[@ng-reflect-model='This is comment number 1']/..//button[text()=' Delete ']";
-  // allComments : string = "//textarea";
-
-
   async navigateTo() {
     await browser.driver.navigate().to(browser.baseUrl);
     return await browser.driver.manage().window().maximize();
   }
 
   async preparePage() {
-    await this.navigateTo();
+    // await this.navigateTo();
     await browser.sleep(5000);
     await this.showToolbarButtons();
   }
@@ -41,7 +38,7 @@ export class AppPage {
         this.clickElement(by.css('label[for="download-btn-toggle"]')),
         this.clickElement(by.css('label[for="navigate-btn-toggle"]')),
         this.clickElement(by.css('label[for="print-btn-toggle"]')),
-        this.clickElement(by.css('label[for="rotate-btn-toggle"]')),
+        // this.clickElement(by.css('label[for="rotate-btn-toggle"]')),
         this.clickElement(by.css('label[for="search-btn-toggle"]')),
         this.clickElement(by.css('label[for="zoom-btn-toggle"]')),
         this.clickElement(by.css('label[for="toggleAnnotations"]'))

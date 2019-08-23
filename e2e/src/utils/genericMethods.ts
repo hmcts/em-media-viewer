@@ -1,11 +1,12 @@
 import {browser} from 'protractor';
 
 export class GenericMethods {
+
   async sleep(time: number) {
     await browser.sleep(time);
   }
 
-  async switchWindows() {
+  async switchToParentWindow() {
     browser.getAllWindowHandles().then(async function (handles) {
       const tabs = await browser.getAllWindowHandles();
       await expect(tabs.length).toEqual(2);
@@ -15,4 +16,15 @@ export class GenericMethods {
     });
   }
 
+  async scrollDown() {
+    await browser.executeScript('window.scrollTo(0,10000);').then(async function () {
+      console.log('SCROLLED Down');
+    });
+  }
+
+  async scrollUp() {
+    await browser.executeScript('window.scrollTo(0,0);').then(async function () {
+      console.log('SCROLLED UP...');
+    });
+  }
 }

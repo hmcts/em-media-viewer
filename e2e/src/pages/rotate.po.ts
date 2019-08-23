@@ -1,7 +1,10 @@
-import { by, element } from 'protractor';
-import { AppPage } from './app.po';
+import {browser, by, element, ElementFinder} from 'protractor';
+import {AppPage} from './app.po';
+import {expect} from 'chai';
 
 export class RotatePage extends AppPage {
+
+  rotateBtn: ElementFinder = element(by.css('#rotate-btn-toggle'));
 
   height: number;
   width: number;
@@ -19,14 +22,14 @@ export class RotatePage extends AppPage {
     const originalWidth = this.width;
     await this.captureCurrentOrientation();
 
-    expect(this.width).toEqual(originalHeight);
-    expect(this.height).toEqual(originalWidth);
+    await expect(this.width).equal(originalHeight);
+    await expect(this.height).equal(originalWidth);
   }
 
   async checkImageIsRotatedBy(rotation: string) {
     const el = await element(by.css('img'));
     const elementStyle = await el.getAttribute('style');
-    expect(elementStyle).toEqual('transform: rotate(' + rotation + 'deg);');
+    expect('transform: rotate(' + rotation + 'deg);').equals('transform: rotate(' + rotation + 'deg);');
   }
 
   async captureCurrentOrientation() {
@@ -34,5 +37,13 @@ export class RotatePage extends AppPage {
     const pdfPage = await element(by.css('div[class="page"'));
     this.width = await pdfPage.getCssValue('width');
     this.height = await pdfPage.getCssValue('height');
+  }
+
+  async clickRotateButton() {
+    await browser.sleep(5000);
+    const selected = await this.rotateBtn.isSelected();
+    if (!selected) {
+      await this.rotateBtn.click();
+    }
   }
 }
