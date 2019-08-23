@@ -113,6 +113,13 @@ const highLightOnImage = async () => {
   await page.drawOnImagePage();
 };
 
+const drawOnPdf = async () => {
+  await page.waitForPdfToLoad();
+  await sleep(5000);
+  await toolBar.enableDrawHighLightMode();
+  await page.drawOnPDFPage();
+};
+
 const deleteComment = async () => {
   await page.deleteComment(comment_1);
 };
@@ -234,3 +241,5 @@ When(/^I use the "([^"]*)" viewer rotate feature$/, async (viewerType: string) =
 
 });
 
+
+When('I highlight a portion of pdf in a Draw mode', drawOnPdf);
