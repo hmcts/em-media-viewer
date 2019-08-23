@@ -7,6 +7,7 @@ import {ToolBar} from '../pages/toolbar.po';
 import {PrintPage} from '../pages/print.po';
 import {GenericMethods} from '../utils/genericMethods';
 import {SearchPage} from '../pages/search.po';
+import {RotatePage} from '../pages/rotate.po';
 
 
 const page = new AppPage();
@@ -15,6 +16,7 @@ const toolBar = new ToolBar();
 const printPage = new PrintPage();
 const genericMethods = new GenericMethods();
 const searchPage = new SearchPage();
+const rotatePage = new RotatePage();
 const comment_1 = 'This is comment number 1';
 const comment_new = 'This is comment number 1 new';
 
@@ -85,10 +87,10 @@ When('I select a text on pdf doc', async () => {
   await toolBar.clickTextIcon();
 });
 
-Then('I expect text highlight popup should appear', async () => {
+Then('I expect text highlight popup should appear', async function () {
   await genericMethods.sleep(5000);
-  const screenshot = await browser.takeScreenshot();
-  this.attach(screenshot, 'image/png');
+  const screenshots = await browser.takeScreenshot();
+  this.attach(screenshots, 'image/png');
 });
 
 const addComment = async () => {
@@ -194,10 +196,50 @@ When(/^the section of the document is viewable to the user$/, async function () 
   this.attach(viewableDoc, 'image/png');
 });
 
-const search = async (search_count: string) => {
-  await searchPage.clickFindIndex();
-  const count: string = await searchPage.getSearchCount();
-  expect(count).to.equal(search_count);
-};
+Then(/^I must rotate the "(.*)" document$/, async (viewerType: string) => {
+  switch (viewerType) {
+    case 'pdf' :
+      await rotatePage.captureCurrentOrientation();
+      await rotatePage.rotateClockwise();
+      await rotatePage.checkPdfIsRotated();
+      await rotatePage.captureCurrentOrientation();
+      await rotatePage.rotateCounterClockwise();
+      await rotatePage.checkPdfIsRotated();
+      break;
+
+    case 'image' :
+      await rotatePage.rotateClockwise();
+      await genericMethods.sleep(10000);
+      await rotatePage.checkImageIsRotatedBy('90');
+      await rotatePage.rotateCounterClockwise();
+      await rotatePage.checkImageIsRotatedBy('0');
+      break;
+
+    default:
+      console.log('media viewer input tab is not found');
+      break;
+  }
+});
+When(/^I use the "([^"]*)" viewer rotate feature$/, async (viewerType: string) => {
+  switch (viewerType) {
+
+    case 'pdf' :
+      await rotatePage.clickRotateButton();
+      await genericMethods.sleep(2000);
+      break;
+
+    case 'image' :
+      await rotatePage.selectImageViewer();
+      await genericMethods.sleep(20000);
+      await genericMethods.scrollDown();
+      break;
+
+    default:
+      console.log('media viewer input tab is not found');
+      break;
+  }
+
+});
+
 
 When('I highlight a portion of pdf in a Draw mode', drawOnPdf);
