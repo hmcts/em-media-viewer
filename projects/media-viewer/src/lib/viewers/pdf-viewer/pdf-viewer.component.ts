@@ -67,7 +67,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
+    this.pdfWrapper = await this.pdfJsWrapperFactory.create(this.viewerContainer);
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());

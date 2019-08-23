@@ -1,5 +1,4 @@
 import * as pdfjsLib from 'pdfjs-dist';
-import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
 import { Subject } from 'rxjs';
 import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
@@ -9,8 +8,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 export class PdfJsWrapper {
 
   constructor(
-    private readonly pdfViewer: PDFViewer,
-    private readonly downloadManager: DownloadManager,
+    private readonly pdfViewer,
+    private readonly downloadManager,
     private readonly toolbarEvents: ToolbarEventService,
     public readonly documentLoadInit: Subject<string>,
     public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
