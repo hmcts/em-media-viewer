@@ -91,6 +91,29 @@ export class AppPage {
     });
   }
 
+  async drawOnPDFPage() {
+    await browser.executeScript(() => {
+      let pageElement = document.getElementsByClassName('page')[0];
+
+      let mouseDownEvent = document.createEvent('MouseEvents');
+      let mouseMoveEvent = document.createEvent('MouseEvents');
+      let mouseUpEvent = document.createEvent('MouseEvents');
+
+      mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
+      mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 0, 0, 300, 300, false, false, false, false, 0, null);
+      mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false, false, 0, null);
+
+      pageElement.dispatchEvent(mouseDownEvent);
+      pageElement.dispatchEvent(mouseUpEvent);
+
+      let annotationElement = document.getElementsByClassName('newRectangle')[0];
+
+      annotationElement.dispatchEvent(mouseDownEvent);
+      annotationElement.dispatchEvent(mouseMoveEvent);
+      annotationElement.dispatchEvent(mouseUpEvent);
+    });
+  }
+
   async drawOnImagePage() {
 
     await browser.executeScript(() => {
