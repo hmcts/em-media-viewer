@@ -1,5 +1,5 @@
 @MediaViewer @PDF_Image_Rotation
-Feature: PDF & Image Rotate
+Feature: PDF & Image Rotation
 
   Background:
     Given I am on Media Viewer Page
