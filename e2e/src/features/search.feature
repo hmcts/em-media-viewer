@@ -1,5 +1,5 @@
 @MediaViewer @Search
-Feature: Media Viewer - Search
+Feature: Search
 
   Background:
     Given I am on Media Viewer Page
