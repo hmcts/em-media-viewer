@@ -66,10 +66,6 @@ export class AppPage {
     await browser.wait(until.presenceOf(element(by.css('div[class="page"'))), 15000, 'PDF viewer taking too long to load');
   }
 
-  async waitForImageToLoad() {
-    await browser.wait(until.presenceOf(element(by.css('div[class="page"'))), 15000, 'Image viewer taking too long to load');
-  }
-
   async waitForElement(selector: Locator) {
     await browser.wait(async () => {
       return (await element(selector)).isPresent();
