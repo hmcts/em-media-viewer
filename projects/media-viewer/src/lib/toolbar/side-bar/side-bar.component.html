@@ -2,26 +2,26 @@
   <div id="toolbarSidebar">
     <div class="splitToolbarButton toggled">
       <button id="viewThumbnail" class="toolbarButton toggled" title="Show Thumbnails" tabindex="2"
-              data-l10n-id="thumbs">
+              data-l10n-id="thumbs" [ngClass]="{toggled: showThumbnailView}" (click)="selectThumbnailView()">
         <span data-l10n-id="thumbs_label">Thumbnails</span>
       </button>
       <button id="viewOutline" class="toolbarButton"
               title="Show Document Outline (double-click to expand/collapse all items)" tabindex="3"
-              data-l10n-id="document_outline">
+              data-l10n-id="document_outline" [ngClass]="{toggled: showOutlineView}" (click)="selectOutlineView()">
         <span data-l10n-id="document_outline_label">Document Outline</span>
       </button>
       <button id="viewAttachments" class="toolbarButton" title="Show Attachments" tabindex="4"
-              data-l10n-id="attachments">
+              data-l10n-id="attachments" [ngClass]="{toggled: showAttachmentsView}" (click)="selectAttachmentView()">
         <span data-l10n-id="attachments_label">Attachments</span>
       </button>
     </div>
   </div>
   <div id="sidebarContent">
-    <div #outlineContainer id="thumbnailView">
+    <div id="thumbnailView" [ngClass]="{hidden: !showThumbnailView}">
     </div>
-    <div #outlineContainer id="outlineView">
-    </div>
-    <div #outlineContainer id="attachmentsView" class="hidden">
+    <mv-outline-view [url]="url" [ngClass]="{hidden: !showOutlineView}">
+    </mv-outline-view>
+    <div id="attachmentsView" [ngClass]="{hidden: !showAttachmentsView}">
     </div>
   </div>
   <div id="sidebarResizer"></div>
