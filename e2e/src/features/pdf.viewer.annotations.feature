@@ -41,3 +41,9 @@ Feature: PDF Viewer Annotations
     When I highlight a portion of pdf in a Draw mode
     Then I should be able to add comment for the highlight
 #    Then The context toolbar should disappear
+
+  @EM-1703 @PDFTextHighlight_Rotate
+  Scenario: PDF Text Highlighting - Rotate Support
+    Given the PDF viewer has atleast one highlight
+    When I rotate PDF doc the pdf text highlights should be rotate
+    Then I should expect pdf text highlights are inline with rotation
