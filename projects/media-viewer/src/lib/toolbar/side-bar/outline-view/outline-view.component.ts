@@ -14,13 +14,13 @@ import { PdfJsWrapperFactory } from '../../../viewers/pdf-viewer/pdf-js/pdf-js-w
 })
 export class OutlineViewComponent implements OnChanges, AfterContentInit {
 
-@Input() url: string;
-@ViewChild('outlineContainer') outlineContainer: ElementRef;
+  @Input() url: string;
+  @ViewChild('outlineContainer') outlineContainer: ElementRef;
 
   private pdfDocumentOutline: pdfjsOutlineViewer.PDFOutlineViewer;
+  private outline: {};
 
-  constructor(
-    private readonly pdfJsWrapperFactory: PdfJsWrapperFactory) {
+  constructor(private readonly pdfJsWrapperFactory: PdfJsWrapperFactory) {
   }
 
   async ngAfterContentInit() {
@@ -44,8 +44,14 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
 
     loadingTask.then(pdf => {
       pdf.getOutline().then((outline) => {
-        this.pdfDocumentOutline.render({ outline, });
+        this.outline = outline;
+        this.pdfDocumentOutline.render({outline: this.outline, });
+        this.generateOutlineStructure(this.outline);
       });
     });
+  }
+
+  generateOutlineStructure(outline) {
+    console.log(outline);
   }
 }
