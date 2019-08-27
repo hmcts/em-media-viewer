@@ -8,27 +8,30 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 @Injectable({providedIn: 'root'})
 export class PdfJsWrapperFactory {
 
+  private linkService: pdfjsViewer.PDFLinkService;
+  private eventBus: pdfjsViewer.EventBus;
+
   constructor(
-    private readonly toolbarEvents: ToolbarEventService
-  ) {}
+    private readonly toolbarEvents: ToolbarEventService) {
+    this.linkService = new pdfjsViewer.PDFLinkService();
+    this.eventBus = new pdfjsViewer.EventBus();
+  }
 
   public create(container: ElementRef): PdfJsWrapper {
-    const pdfLinkService = new pdfjsViewer.PDFLinkService();
-    const eventBus = new pdfjsViewer.EventBus();
     const pdfFindController = new pdfjsViewer.PDFFindController({
-      linkService: pdfLinkService,
-      eventBus: eventBus
+      linkService: this.linkService,
+      eventBus: this.eventBus
     });
 
     const pdfViewer = new pdfjsViewer.PDFViewer({
       container: container.nativeElement,
-      linkService: pdfLinkService,
+      linkService: this.linkService,
       findController: pdfFindController,
-      eventBus: eventBus,
+      eventBus: this.eventBus,
       imageResourcesPath: '/assets/images/'
     });
 
-    pdfLinkService.setViewer(pdfViewer);
+    this.linkService.setViewer(pdfViewer);
 
     return new PdfJsWrapper(
       pdfViewer,
@@ -43,13 +46,10 @@ export class PdfJsWrapperFactory {
   }
 
   public createDocumentOutline(container: ElementRef) {
-    const linkService = new pdfjsViewer.PDFLinkService();
-    const eventBus = new pdfjsViewer.EventBus();
-
     return new pdfjsOutlineViewer.PDFOutlineViewer({
       container: container.nativeElement,
-      linkService: linkService,
-      eventBus: eventBus
+      linkService: this.linkService,
+      eventBus: this.eventBus
     });
   }
 }

@@ -1,34 +1,52 @@
-import * as pdfjsLib from 'pdfjs-dist';
-import {AfterContentInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {PdfJsWrapperFactory} from "../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider";
+import {AfterContentInit, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'mv-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['../../styles/main.scss']
 })
-export class SideBarComponent implements AfterContentInit {
+export class SideBarComponent implements OnChanges, AfterContentInit {
 
-  @ViewChild('outlineContainer') outlineContainer: ElementRef;
+  private showThumbnailView: boolean;
+  private showOutlineView: boolean;
+  private showAttachmentsView: boolean;
 
-  constructor(
-    private readonly pdfJsWrapperFactory: PdfJsWrapperFactory) {
+  @Input() url: string;
+
+  constructor() {
   }
 
-  async ngAfterContentInit() {
-    const x = this.pdfJsWrapperFactory.createDocumentOutline(this.outlineContainer);
-    const loadingTask = pdfjsLib.getDocument({
-      url: 'assets/example3.pdf',
-      cMapUrl: 'assets/minified/cmaps',
-      cMapPacked: true,
-      withCredentials: true
-    });
+  ngAfterContentInit() {
+    this.showThumbnailView = true;
+    this.showOutlineView = false;
+    this.showAttachmentsView = false;
+  }
 
-    loadingTask.then(pdf => {
-      console.log(pdf);
-      pdf.getOutline().then((outline) => {
-        x.render({ outline, });
-      });
-    });
+  async ngOnChanges(changes: SimpleChanges) {
+    this.reset();
+  }
+
+  reset() {
+    this.showThumbnailView = true;
+    this.showOutlineView = false;
+    this.showAttachmentsView = false;
+  }
+
+  selectThumbnailView() {
+    this.showThumbnailView = true;
+    this.showOutlineView = false;
+    this.showAttachmentsView = false;
+  }
+
+  selectOutlineView() {
+    this.showThumbnailView = false;
+    this.showOutlineView = true;
+    this.showAttachmentsView = false;
+  }
+
+  selectAttachmentView() {
+    this.showThumbnailView = false;
+    this.showOutlineView = false;
+    this.showAttachmentsView = true;
   }
 }
