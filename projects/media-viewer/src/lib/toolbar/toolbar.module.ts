@@ -10,6 +10,7 @@ import { ToolbarMiddlePaneComponent } from './main-toolbar/middle-pane/middle-pa
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 import { ToolbarEventService } from './toolbar-event.service';
+import { OutlineViewComponent } from './side-bar/outline-view/outline-view.component';
 
 export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 export { ToolbarEventService } from './toolbar-event.service';
@@ -25,6 +26,7 @@ export { ToolbarEventService } from './toolbar-event.service';
     ToolbarRightPaneComponent,
     MainToolbarComponent,
     ToolbarMiddlePaneComponent,
+    OutlineViewComponent,
   ],
   providers: [
     ToolbarButtonVisibilityService,

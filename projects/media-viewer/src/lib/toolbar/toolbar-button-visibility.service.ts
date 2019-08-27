@@ -57,7 +57,8 @@ export const defaultPdfOptions = {
   showNavigation: true,
   showZoom: true,
   showRotate: true,
-  showSearchBar: true
+  showSearchBar: true,
+  showSidebar: true
 };
 
 /**
