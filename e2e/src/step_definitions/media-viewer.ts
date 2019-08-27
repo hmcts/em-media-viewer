@@ -124,6 +124,23 @@ const deleteComment = async () => {
   await page.deleteComment(comment_1);
 };
 
+const pdfRotate = async () => {
+  await rotatePage.captureCurrentOrientation();
+  await rotatePage.rotateClockwise();
+  await rotatePage.checkPdfIsRotated();
+  await rotatePage.captureCurrentOrientation();
+  await rotatePage.rotateCounterClockwise();
+  await rotatePage.checkPdfIsRotated();
+};
+
+const imageRotate = async () => {
+  await rotatePage.rotateClockwise();
+  await genericMethods.sleep(10000);
+  await rotatePage.checkImageIsRotatedBy('90');
+  await rotatePage.rotateCounterClockwise();
+  await rotatePage.checkImageIsRotatedBy('0');
+};
+
 Then('I should be able to add comment for the highlight', addComment);
 
 When('I highlight text on a PDF document', highLightTextInPdf);
@@ -199,20 +216,11 @@ When(/^the section of the document is viewable to the user$/, async function () 
 Then(/^I must rotate the "(.*)" document$/, async (viewerType: string) => {
   switch (viewerType) {
     case 'pdf' :
-      await rotatePage.captureCurrentOrientation();
-      await rotatePage.rotateClockwise();
-      await rotatePage.checkPdfIsRotated();
-      await rotatePage.captureCurrentOrientation();
-      await rotatePage.rotateCounterClockwise();
-      await rotatePage.checkPdfIsRotated();
+      await pdfRotate();
       break;
 
     case 'image' :
-      await rotatePage.rotateClockwise();
-      await genericMethods.sleep(10000);
-      await rotatePage.checkImageIsRotatedBy('90');
-      await rotatePage.rotateCounterClockwise();
-      await rotatePage.checkImageIsRotatedBy('0');
+      await imageRotate();
       break;
 
     default:
@@ -238,8 +246,22 @@ When(/^I use the "([^"]*)" viewer rotate feature$/, async (viewerType: string) =
       console.log('media viewer input tab is not found');
       break;
   }
-
 });
 
 
 When('I highlight a portion of pdf in a Draw mode', drawOnPdf);
+
+Given(/^the PDF viewer has atleast one highlight$/, highLightTextInPdf);
+
+When(/^I rotate PDF doc the pdf text highlights should be rotate$/, async () => {
+  await rotatePage.captureCurrentOrientation();
+  await rotatePage.rotateClockwise();
+  await browser.sleep(5000);
+});
+
+Then(/^I should expect pdf text highlights are inline with rotation$/, async function () {
+  const screenshot = await browser.takeScreenshot();
+  this.attach(screenshot, 'image/png');
+  await rotatePage.checkPdfIsRotated();
+});
+

@@ -41,3 +41,4 @@ Feature: PDF Viewer Annotations
     When I highlight a portion of pdf in a Draw mode
     Then I should be able to add comment for the highlight
 #    Then The context toolbar should disappear
+
