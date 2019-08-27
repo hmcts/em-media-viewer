@@ -160,6 +160,12 @@ Given('The PDF has atleast one comment', async () => {
   await addComment();
 });
 
+
+Given('The PDF has atleast one non-textual comment', async () => {
+  await drawOnPdf();
+  await addComment();
+});
+
 Then('The comment should be deleted', async () => {
   expect(await page.getAllComments()).not.contain(comment_1);
 });
@@ -186,12 +192,11 @@ Then('The old comment should be replaced with new comment', async () => {
   expect(comment).to.contain(comment_new);
 });
 
-Then('I update the existing comment with {string}', async (text: string) => {
-  await addComment();
+When('I update the existing comment', async () => {
+  await page.updateComment(comment_1, comment_new);
 });
 
 Then('I verify the amended text has been saved', async () => {
-  await page.updateComment(comment_1, comment_new);
   const comment = await page.getComment();
   expect(comment).to.contain(comment_new);
 });
