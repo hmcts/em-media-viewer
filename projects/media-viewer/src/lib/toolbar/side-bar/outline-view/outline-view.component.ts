@@ -29,6 +29,7 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.url && this.pdfDocumentOutline) {
+      this.outline = {};
       await this.renderOutlineView();
     }
   }
@@ -94,9 +95,11 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
   _addToggleButton(div, { count, items, }) {
     const toggler = document.createElement('div');
     toggler.className = 'outlineItemToggler outlineItemsHidden';
+
     if (count < 0 && Math.abs(count) === items.length) {
       toggler.classList.add('outlineItemsHidden');
     }
+
     toggler.onclick = (evt) => {
       evt.stopPropagation();
       toggler.classList.toggle('outlineItemsHidden');
@@ -106,6 +109,7 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
         this._toggleOutlineItem(div, shouldShowAll);
       }
     };
+
     div.insertBefore(toggler, div.firstChild);
   }
 
