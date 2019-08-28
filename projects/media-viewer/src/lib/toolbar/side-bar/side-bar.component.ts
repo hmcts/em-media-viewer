@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class SideBarComponent {
 
-
   @Input() url: string;
 
   constructor() {
