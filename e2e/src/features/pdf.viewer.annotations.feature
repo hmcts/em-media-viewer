@@ -26,15 +26,11 @@ Feature: PDF Viewer Annotations
     Then The comment should be deleted
 
   @EM-1718 @Comment_update
-  Scenario Outline: Update a PDF text Comment
+  Scenario: Update a PDF text Comment
     When I highlight text on a PDF document
     Then I should be able to add comment for the highlight
-    Then I update the existing comment with '<my_text>'
+    When I update the existing comment
     Then I verify the amended text has been saved
-
-    Examples:
-      | my_text          |
-      | comment number 2 |
 
   @EM-1991 @PDF_Non_Textual_Add_Comment
   Scenario: Add Non Textual Highlight and add comment in pdf viewer
@@ -42,3 +38,9 @@ Feature: PDF Viewer Annotations
     Then I should be able to add comment for the highlight
 #    Then The context toolbar should disappear
 
+
+  @EM-1992 @PDF_Non_Textual_Delete_Comment
+  Scenario: Delete Non Textual comment
+    Given The PDF has atleast one non-textual comment
+    When I select a non-textual comment and delete
+    Then The comment should be deleted
