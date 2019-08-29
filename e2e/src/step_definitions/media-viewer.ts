@@ -8,6 +8,7 @@ import {PrintPage} from '../pages/print.po';
 import {GenericMethods} from '../utils/genericMethods';
 import {SearchPage} from '../pages/search.po';
 import {RotatePage} from '../pages/rotate.po';
+import {CommentPage} from '../pages/comment.po';
 
 
 const page = new AppPage();
@@ -17,8 +18,11 @@ const printPage = new PrintPage();
 const genericMethods = new GenericMethods();
 const searchPage = new SearchPage();
 const rotatePage = new RotatePage();
-const comment_1 = 'This is comment number 1';
+const commentsPage = new CommentPage();
+
+const comment_1 = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
 const comment_new = 'This is comment number 1 new';
+const actual = 'Annotations Ellipsis EM-1814 story test';
 
 Given('I am on Media Viewer Page', async () => {
   await page.preparePage();
@@ -140,6 +144,7 @@ const imageRotate = async () => {
   await rotatePage.rotateCounterClockwise();
   await rotatePage.checkImageIsRotatedBy('0');
 };
+
 
 Then('I should be able to add comment for the highlight', addComment);
 
@@ -270,3 +275,14 @@ Then(/^I should expect pdf text highlights are inline with rotation$/, async fun
   await rotatePage.checkPdfIsRotated();
 });
 
+When(/^I click outside of the comment box$/, async () => {
+  await commentsPage.clickCommentsContainer();
+  await highLightTextInPdf();
+});
+
+Then(/^I expect comment should display in ellipsis format$/, async function () {
+  const comment = await commentsPage.getCommentsText();
+  expect(actual).to.contain(comment.split('+').pop());
+  const screenshot = await browser.takeScreenshot();
+  this.attach(screenshot, 'image/png');
+});
