@@ -72,7 +72,12 @@ export class AnnotationApiService {
     return this.httpClient
       .get<AnnotationSet>(fixedUrl, { observe: 'response' })
       .pipe(map(response => response.body))
-      .pipe(catchError(() => this.postAnnotationSet({ id: uuid(), documentId: this.extractDocumentId(url) })));
+      .pipe(
+        catchError(() => this.postAnnotationSet({
+          id: uuid(),
+          documentId: this.extractDocumentId(url)
+        }))
+      );
   }
 
   private fixFindCall(url: string): string {
