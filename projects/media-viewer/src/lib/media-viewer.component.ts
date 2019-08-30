@@ -26,6 +26,7 @@ import { ResponseType, ViewerException } from './viewers/error-message/viewer-ex
 })
 export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
+  @Input() url;
   @Input() downloadFileName: string;
   @Input() contentType: string;
   @Input() showToolbar = true;
@@ -35,10 +36,8 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
   @Input() enableAnnotations = false;
   @Input() showCommentSummary: Subject<boolean>;
-
   @Input() annotationApiUrl;
 
-  _url: string;
   annotationSet: Observable<AnnotationSet>;
 
   private supportedContentTypes = ['pdf', 'image'];
@@ -57,18 +56,6 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
     this.setToolbarButtons();
   }
 
-  @Input()
-  set url(url: string) {
-    this._url = url;
-    if (this.enableAnnotations) {
-      this.annotationSet = this.api.getOrCreateAnnotationSet(url);
-    }
-  }
-
-  get url() {
-    return this._url;
-  }
-
   contentTypeUnsupported(): boolean {
     return this.supportedContentTypes.indexOf(this.contentType) < 0;
   }
@@ -77,6 +64,12 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
     if (changes.url) {
       this.setToolbarButtons();
       this.toolbarEvents.reset();
+      if (this.enableAnnotations) {
+        this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
+      }
+    }
+    if(changes.annotationApiUrl) {
+      this.api.annotationApiUrl = this.annotationApiUrl;
     }
   }
 
