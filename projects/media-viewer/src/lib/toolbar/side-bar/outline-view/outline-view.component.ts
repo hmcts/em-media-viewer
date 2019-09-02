@@ -51,24 +51,8 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
     });
   }
 
-  _dispatchEvent(outlineCount) {
-    this.pdfDocumentOutline.eventBus.dispatch('outlineloaded', {
-      source: this,
-      outlineCount,
-    });
-  }
-
-  _bindLink(element, { url, newWindow, dest, }) {
+  bindOutlineLink(element, { url, newWindow, dest }) {
     const linkService = this.pdfDocumentOutline.linkService;
-    if (url) {
-      pdfjsLib.addLinkAttributes(element, {
-        url,
-        target: (newWindow ? pdfjsLib.LinkTarget.BLANK : linkService.externalLinkTarget),
-        rel: linkService.externalLinkRel,
-        enabled: linkService.externalLinkEnabled,
-      });
-      return;
-    }
 
     element.href = linkService.getDestinationHash(dest);
     element.onclick = () => {
@@ -79,7 +63,7 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
     };
   }
 
-  _setStyles(element, { bold, italic, }) {
+  setStyles(element, { bold, italic }) {
     let styleStr = '';
     if (bold) {
       styleStr += 'font-weight: bold;';
@@ -92,7 +76,7 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
     }
   }
 
-  _addToggleButton(div, { count, items, }) {
+  addToggleButton(div, { count, items, }) {
     const toggler = document.createElement('div');
     toggler.className = 'outlineItemToggler outlineItemsHidden';
 
@@ -103,36 +87,26 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
     toggler.onclick = (evt) => {
       evt.stopPropagation();
       toggler.classList.toggle('outlineItemsHidden');
-
-      if (evt.shiftKey) {
-        const shouldShowAll = !toggler.classList.contains('outlineItemsHidden');
-        this._toggleOutlineItem(div, shouldShowAll);
-      }
     };
 
     div.insertBefore(toggler, div.firstChild);
   }
 
-  _toggleOutlineItem(root, show = false) {
-    this.pdfDocumentOutline.lastToggleIsShow = show;
-    for (const toggler of root.querySelectorAll('.outlineItemToggler')) {
-      toggler.classList.toggle('outlineItemsHidden', !show);
+  resetOutline() {
+    let firstNode = this.outlineContainer.nativeElement.firstElementChild;
+    while (firstNode) {
+      this.outlineContainer.nativeElement.removeChild(firstNode);
+      firstNode = this.outlineContainer.nativeElement.firstElementChild;
     }
   }
 
   render({ outline, }) {
-    const DEFAULT_TITLE = '\u2013';
     let outlineCount = 0;
 
     if (this.outline) {
-      this.pdfDocumentOutline.reset();
+      this.resetOutline();
     }
     this.outline = outline || null;
-
-    if (!outline) {
-      this._dispatchEvent(outlineCount);
-      return;
-    }
 
     const fragment = document.createDocumentFragment();
     const queue = [{ parent: fragment, items: this.outline, }];
@@ -144,15 +118,15 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
         div.className = 'outlineItem';
 
         const element = document.createElement('a');
-        this._bindLink(element, levelData.items[item]);
-        this._setStyles(element, levelData.items[item]);
-        element.textContent = pdfjsLib.removeNullCharacters(levelData.items[item].title) || DEFAULT_TITLE;
+        this.bindOutlineLink(element, levelData.items[item]);
+        this.setStyles(element, levelData.items[item]);
+        element.textContent = pdfjsLib.removeNullCharacters(levelData.items[item].title) || 'outline ' + outlineCount + 1;
 
         div.appendChild(element);
 
         if (levelData.items[item].items.length > 0) {
           hasAnyNesting = true;
-          this._addToggleButton(div, levelData.items[item]);
+          this.addToggleButton(div, levelData.items[item]);
 
           const itemsDiv = document.createElement('div');
           itemsDiv.className = 'outlineItems';
@@ -169,6 +143,5 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
         (fragment.querySelectorAll('.outlineItemsHidden').length === 0);
     }
     this.pdfDocumentOutline.container.appendChild(fragment);
-    this._dispatchEvent(outlineCount);
   }
 }
