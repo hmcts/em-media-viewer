@@ -61,15 +61,15 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if(changes.annotationApiUrl) {
+      this.api.annotationApiUrl = this.annotationApiUrl;
+    }
     if (changes.url) {
       this.setToolbarButtons();
       this.toolbarEvents.reset();
       if (this.enableAnnotations) {
         this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
       }
-    }
-    if(changes.annotationApiUrl) {
-      this.api.annotationApiUrl = this.annotationApiUrl;
     }
   }
 
