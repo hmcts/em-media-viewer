@@ -45,8 +45,13 @@ Feature: PDF Viewer Annotations
     When I select a non-textual comment and delete
     Then The comment should be deleted
 
-    @EM-1814 @Comments_Ellipsis_Test
-    Scenario: Comments Ellipsis Test
-      Given The PDF has atleast one comment
-      When I click outside of the comment box
-      Then I expect comment should display in ellipsis format
+  @EM-1814 @Comments_Ellipsis_Test
+  Scenario: Comments Ellipsis Test
+    Given The PDF has atleast one long comment
+    When I click outside of the comment box
+    Then I expect comment should display in ellipsis format
+
+  @EM-2018 @PDF_Non_Textual
+  Scenario: Add multiple non-textual comments on PDF page
+    When I create multiple non-textual comments on a PDF document
+    Then I should be able to see all comments in the comments pane
