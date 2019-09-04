@@ -57,9 +57,7 @@ When('I click previous button on the pdf', async () => {
 
 When(/^I enter valid page number in page navigation text box:"([^"]*)"$/, async (num: number) => {
   await navigatePage.setPageNumber(num);
-  await genericMethods.sleep(10000);
   await navigatePage.clickOnPanel();
-  await genericMethods.sleep(10000);
 });
 
 Then('I should see next page number should be {string}', async (expected: string) => {
