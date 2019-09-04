@@ -9,7 +9,8 @@ export class AppPage {
   contextToolbar: By = by.css('mv-popup-toolbar .toolbar');
   commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
   removeHighLightButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
-  annotationTextArea: By = by.css('textarea');
+  annotationTextArea: By = by.css('textarea.expanded');
+  comments: By = by.css('textarea');
   saveButton: By = by.xpath('//button[text()=\' Save \']');
   editButton: By = by.xpath('//button[text()=\' Edit \']');
   commentDeleteButtonXpath: string = '//textarea[@ng-reflect-model=\'{0}\']/..//button[text()=\' Delete \']';
@@ -88,8 +89,8 @@ export class AppPage {
     });
   }
 
-  async drawOnPDFPage() {
-    await browser.executeScript(() => {
+  async drawOnPDFPage(xAxis: number, yAxis: number) {
+    await browser.executeScript((xAxis, yAxis) => {
       let pageElement = document.getElementsByClassName('page')[0];
 
       let mouseDownEvent = document.createEvent('MouseEvents');
@@ -97,7 +98,7 @@ export class AppPage {
       let mouseUpEvent = document.createEvent('MouseEvents');
 
       mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
-      mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 0, 0, 300, 300, false, false, false, false, 0, null);
+      mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 0, 0, xAxis, yAxis, false, false, false, false, 0, null);
       mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false, false, 0, null);
 
       pageElement.dispatchEvent(mouseDownEvent);
@@ -108,7 +109,7 @@ export class AppPage {
       annotationElement.dispatchEvent(mouseDownEvent);
       annotationElement.dispatchEvent(mouseMoveEvent);
       annotationElement.dispatchEvent(mouseUpEvent);
-    });
+    },xAxis,yAxis);
   }
 
   async drawOnImagePage() {
@@ -195,11 +196,9 @@ export class AppPage {
 
   async getAllComments(): Promise<string[]> {
     let comments: string[] = [];
-    await browser.findElements(this.annotationTextArea).then((elements) => {
+    await browser.findElements(this.comments).then( async (elements) => {
       for (const element of elements) {
-        element.getAttribute('ng-reflect-model').then((a) => comments.push(a)).catch(() => {
-          return [];
-        });
+         await element.getAttribute('ng-reflect-model').then((a) => comments.push(a));
       }
       return comments;
     });
