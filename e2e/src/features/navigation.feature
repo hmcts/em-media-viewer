@@ -16,8 +16,18 @@ Feature: Navigation
     Then I should see next page number should be '<page_number>'
 
     When I click previous button on the pdf
-    Then I should see previous page number should be '<page_number2>'
+    Then I expect the page navigation should take me to the expected "<page_number2>"
+#    Then I should see previous page number should be '<page_number2>'
 
     Examples:
       | page_number | page_number2 |
       | 2           | 1            |
+
+  @EM-1245
+  Scenario Outline: Enable page navigation within a file
+    When I enter valid page number in page navigation text box:"<page_number>"
+    Then I expect the page navigation should take me to the expected "<page_number>"
+
+    Examples:
+      | page_number |
+      | 7           |

@@ -38,7 +38,7 @@ exports.config = {
     plugin: ['pretty'],
     format: 'json:./cucumber.json',
     require: ['../e2e/src/step_definitions/*.ts'],
-    tags: "@MediaViewer",
+    tags: "@EM-1245",
   },
   noGlobals: true
 
