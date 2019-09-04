@@ -55,16 +55,29 @@ When('I click previous button on the pdf', async () => {
   await genericMethods.sleep(5000);
 });
 
+When(/^I enter valid page number in page navigation text box:"([^"]*)"$/, async (num: number) => {
+  await navigatePage.setPageNumber(num);
+  await genericMethods.sleep(10000);
+  await navigatePage.clickOnPanel();
+  await genericMethods.sleep(10000);
+});
+
 Then('I should see next page number should be {string}', async (expected: string) => {
   const value = await navigatePage.pageNumber.getAttribute('value');
   expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
 });
 
-Then('I should see previous page number should be {string}', async (expected: string) => {
+// Then('I should see previous page number should be {string}', async (expected: string) => {
+//   const value = await navigatePage.pageNumber.getAttribute('value');
+//   expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
+// });
+
+Then(/^I expect the page navigation should take me to the expected "([^"]*)"$/, async function (expected: string) {
   const value = await navigatePage.pageNumber.getAttribute('value');
   expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
+  const screenshot = await browser.takeScreenshot();
+  this.attach(screenshot, 'image/png');
 });
-
 
 When('the user selects the print option', async () => {
   await printPage.clickPrint();
@@ -286,3 +299,4 @@ Then(/^I expect comment should display in ellipsis format$/, async function () {
   const screenshot = await browser.takeScreenshot();
   this.attach(screenshot, 'image/png');
 });
+
