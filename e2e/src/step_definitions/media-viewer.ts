@@ -20,7 +20,10 @@ const searchPage = new SearchPage();
 const rotatePage = new RotatePage();
 const commentsPage = new CommentPage();
 
-const comment_1 = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
+const comment_ellipsis = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
+const comment_1 = 'This is comment number 1';
+const comment_2 = 'This is comment number 2';
+const comment_3 = 'This is comment number 3';
 const comment_new = 'This is comment number 1 new';
 const actual = 'Annotations Ellipsis EM-1814 story test';
 
@@ -97,9 +100,9 @@ Then('I expect text highlight popup should appear', async function () {
   this.attach(screenshots, 'image/png');
 });
 
-const addComment = async () => {
+const addComment = async (comment:string) => {
   await page.clickOnCommentButton();
-  await page.enterTextInAnnotation(comment_1);
+  await page.enterTextInAnnotation(comment);
   await page.clickOnSaveButton();
 };
 
@@ -117,12 +120,12 @@ const highLightOnImage = async () => {
   await page.drawOnImagePage();
 };
 
-const drawOnPdf = async () => {
+const drawOnPdf = async (xAxis:number, yAxis:number) =>  {
   await page.waitForPdfToLoad();
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();
-  await page.drawOnPDFPage();
-};
+  await page.drawOnPDFPage(xAxis, yAxis);
+}
 
 const deleteComment = async () => {
   await page.deleteComment(comment_1);
@@ -162,13 +165,13 @@ When('I select a textual comment and delete', deleteComment);
 
 Given('The PDF has atleast one comment', async () => {
   await highLightTextInPdf();
-  await addComment();
+  await addComment(comment_1);
 });
 
 
 Given('The PDF has atleast one non-textual comment', async () => {
-  await drawOnPdf();
-  await addComment();
+  await drawOnPdf(300, 300);
+  await addComment(comment_1);
 });
 
 Then('The comment should be deleted', async () => {
@@ -183,7 +186,7 @@ When('I highlight a portion of image', highLightOnImage);
 
 Given('The image has atleast one non-textual comment', async () => {
   await highLightOnImage();
-  await addComment();
+  await addComment(comment_1);
 });
 
 When('I select a non-textual comment and delete', deleteComment);
@@ -259,7 +262,9 @@ When(/^I use the "([^"]*)" viewer rotate feature$/, async (viewerType: string) =
 });
 
 
-When('I highlight a portion of pdf in a Draw mode', drawOnPdf);
+When('I highlight a portion of pdf in a Draw mode', async () => {
+  await drawOnPdf(300, 300);
+});
 
 Given(/^the PDF viewer has atleast one highlight$/, highLightTextInPdf);
 
@@ -285,4 +290,26 @@ Then(/^I expect comment should display in ellipsis format$/, async function () {
   expect(actual).to.contain(comment.split('+').pop());
   const screenshot = await browser.takeScreenshot();
   this.attach(screenshot, 'image/png');
+});
+
+
+When('I create multiple non-textual comments on a PDF document', async () => {
+  await drawOnPdf(300,300);
+  await addComment(comment_1);
+
+  await drawOnPdf(350,350);
+  await addComment(comment_2);
+
+  await drawOnPdf(400,400);
+  await addComment(comment_3);
+
+});
+
+Then('I should be able to see all comments in the comments pane', async () => {
+  expect(await page.getAllComments()).to.have.members([comment_1,comment_2,comment_3]);
+});
+
+Given('The PDF has atleast one long comment', async () =>{
+  await highLightTextInPdf();
+  await addComment(comment_ellipsis);
 });
