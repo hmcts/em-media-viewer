@@ -39,13 +39,9 @@ describe('OutlineViewComponent', () => {
 
   it('should call renderOutlineView', () => {
     const mockDocument = {
-      getOutline: () => new Promise(resolve => {
-        resolve({});
-      })
+      getOutline: () => new Promise(() => {})
     };
-    const pdf = new Promise(resolve => {
-      resolve(mockDocument);
-    });
+    const pdf = Promise.resolve(mockDocument);
     pdfjsLib.getDocument = () => pdf;
     spyOn(component, 'renderOutlineView');
 
@@ -56,13 +52,9 @@ describe('OutlineViewComponent', () => {
 
   it('should call renderOutlineView and set the outline to empty when a new url is loaded', () => {
     const mockDocument = {
-      getOutline: () => new Promise(resolve => {
-        resolve({});
-      })
+      getOutline: () => new Promise(() => {})
     };
-    const pdf = new Promise(resolve => {
-      resolve(mockDocument);
-    });
+    const pdf = Promise.resolve(mockDocument);
     pdfjsLib.getDocument = () => pdf;
     spyOn(component, 'renderOutlineView');
 
@@ -77,13 +69,9 @@ describe('OutlineViewComponent', () => {
   it('should get the document outline and render it', async () => {
     spyOn(component, 'render');
     const mockDocument = {
-      getOutline: () => new Promise(resolve => {
-        resolve({});
-      })
+      getOutline: () => new Promise(() => {})
     };
-    const pdf = new Promise(resolve => {
-      resolve(mockDocument);
-    });
+    const pdf = Promise.resolve(mockDocument);
     pdfjsLib.getDocument = () => pdf;
     await component.renderOutlineView();
 
@@ -129,13 +117,9 @@ describe('OutlineViewComponent', () => {
 
   it('should render the outline with nested outlines', async () => {
     const mockDocument = {
-      getOutline: () => new Promise(resolve => {
-        resolve({});
-      })
+      getOutline: () => new Promise(() => {})
     };
-    const pdf = new Promise(resolve => {
-      resolve(mockDocument);
-    });
+    const pdf = Promise.resolve(mockDocument);
     pdfjsLib.getDocument = () => pdf;
 
     await component.renderOutlineView();
