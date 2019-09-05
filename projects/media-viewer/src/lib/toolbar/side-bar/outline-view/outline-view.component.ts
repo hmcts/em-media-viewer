@@ -28,27 +28,23 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
   }
 
   async ngOnChanges(changes: SimpleChanges) {
-    if (changes.url && this.pdfDocumentOutline) {
+    if (changes.url) {
       this.outline = {};
       await this.renderOutlineView();
     }
   }
 
-  renderOutlineView() {
+  async renderOutlineView() {
     this.pdfDocumentOutline = this.pdfJsWrapperFactory.createDocumentOutline(this.outlineContainer);
-    const loadingTask = pdfjsLib.getDocument({
+    const pdf = await pdfjsLib.getDocument({
       url: this.url,
       cMapUrl: 'assets/minified/cmaps',
       cMapPacked: true,
       withCredentials: true
     });
 
-    loadingTask.then(pdf => {
-      pdf.getOutline().then((outline) => {
-        this.outline = outline;
-        this.render({outline: this.outline, });
-      });
-    });
+    this.outline = await pdf.getOutline();
+    this.render({ outline: this.outline });
   }
 
   bindOutlineLink(element, { url, newWindow, dest }) {
@@ -79,10 +75,6 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
   addToggleButton(div, { count, items, }) {
     const toggler = document.createElement('div');
     toggler.className = 'outlineItemToggler outlineItemsHidden';
-
-    if (count < 0 && Math.abs(count) === items.length) {
-      toggler.classList.add('outlineItemsHidden');
-    }
 
     toggler.onclick = (evt) => {
       evt.stopPropagation();
@@ -138,10 +130,10 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
       }
     }
     if (hasAnyNesting) {
-      this.pdfDocumentOutline.container.classList.add('outlineWithDeepNesting');
+      this.outlineContainer.nativeElement.classList.add('outlineWithDeepNesting');
       this.pdfDocumentOutline.lastToggleIsShow =
         (fragment.querySelectorAll('.outlineItemsHidden').length === 0);
     }
-    this.pdfDocumentOutline.container.appendChild(fragment);
+    this.outlineContainer.nativeElement.appendChild(fragment);
   }
 }
