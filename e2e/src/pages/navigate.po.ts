@@ -1,4 +1,4 @@
-import {by, element, ElementFinder} from 'protractor';
+import {browser, by, element, ElementFinder, Key, protractor} from 'protractor';
 import {AppPage} from './app.po';
 
 export class NavigatePage extends AppPage {
@@ -29,9 +29,7 @@ export class NavigatePage extends AppPage {
   async setPageNumber(num: number) {
     await this.pageNumber.clear();
     await this.pageNumber.sendKeys(num);
-  }
-
-  async clickOnPanel() {
-    await this.pageNumber.click();
+    await browser.sleep(5000);
+    await this.pageNumber.sendKeys(Key.ENTER);
   }
 }
