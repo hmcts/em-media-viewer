@@ -1,5 +1,7 @@
-<div #viewerContainer class="pdfContainer"
-     style="height: 99%; min-height: 100vh; position: absolute;" [ngClass]="{ hidden: errorMessage }">
+<div #viewerContainer
+     class="pdfContainer"
+     style="height: 99%; min-height: 100vh; position: absolute;"
+     [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage }">
   <div #pdfViewer (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" class="pdfViewer"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>

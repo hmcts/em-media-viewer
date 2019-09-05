@@ -101,7 +101,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private async loadDocument() {
     await this.pdfWrapper.loadDocument(this.url);
-    this.annotationService.setupAnnotationSet(this.annotationSet);
+    if (this.enableAnnotations) {
+      this.annotationService.setupAnnotationSet(this.annotationSet);
+    }
   }
 
   private onDocumentLoadInit() {
