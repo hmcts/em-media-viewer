@@ -1,8 +1,12 @@
 .image-container {
   position: absolute;
-  width: 73.5%;
+  width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+.image-container.annotations {
+  width: 73.5%;
 }
 
 img {
