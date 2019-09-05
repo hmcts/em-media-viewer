@@ -72,8 +72,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
-    this.pdfWrapper.pageRendered.subscribe((event) => this.annotationService.onPageRendered(event));
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
+
+    if (this.enableAnnotations) {
+      this.pdfWrapper.pageRendered.subscribe((event) => this.annotationService.onPageRendered(event));
+    }
 
     this.subscriptions.push(
       this.toolbarEvents.print.subscribe(() => this.printService.printDocumentNatively(this.url)),
