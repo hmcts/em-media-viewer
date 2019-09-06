@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { MediaViewerComponent } from './media-viewer.component';
 import { PdfViewerComponent } from './viewers/pdf-viewer/pdf-viewer.component';
 import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.component';
@@ -9,10 +9,14 @@ import { AnnotationsModule } from './annotations/annotations.module';
 import { SimpleChange } from '@angular/core';
 import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
 import { defaultImageOptions, defaultPdfOptions, defaultUnsupportedOptions } from './toolbar/toolbar-button-visibility.service';
+import { AnnotationApiService } from './annotations/annotation-api.service';
+import { of } from 'rxjs';
+import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
   let fixture: ComponentFixture<MediaViewerComponent>;
+  let api: AnnotationApiService;
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
@@ -31,6 +35,7 @@ describe('MediaViewerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MediaViewerComponent);
     component = fixture.componentInstance;
+    api = TestBed.get(AnnotationApiService);
   });
 
   it('should create', () => {
@@ -59,6 +64,41 @@ describe('MediaViewerComponent', () => {
     component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });
 
     expect(component.toolbarEvents.zoomValue.value).toBe(1);
+  });
+
+  it('should set annotationSet when annotations enabled', () => {
+    const annotationSet = of({} as AnnotationSet);
+    spyOn(api, 'getOrCreateAnnotationSet').and.returnValue(annotationSet);
+    component.annotationSet = null;
+
+    component.enableAnnotations = true;
+    component.ngOnChanges({
+      enableAnnotations: new SimpleChange(false, true, false)
+    });
+
+    expect(component.annotationSet).toBe(annotationSet);
+  });
+
+  it('should not set annotationSet when annotations disabled', () => {
+    component.annotationSet = null;
+
+    component.enableAnnotations = false;
+    component.ngOnChanges({
+      enableAnnotations: new SimpleChange(true, false, false)
+    });
+
+    expect(component.annotationSet).toBe(null);
+  });
+
+  it('should set annotationApiUrl', () => {
+    const ANNOTATION_API_URL = 'annotation-api-url';
+    component.annotationApiUrl = ANNOTATION_API_URL;
+
+    component.ngOnChanges({
+      annotationApiUrl: new SimpleChange(true, false, false)
+    });
+
+    expect(api.annotationApiUrl).toBe(ANNOTATION_API_URL);
   });
 
   it('onMediaLoad should emit a ResponseType', async () => {
