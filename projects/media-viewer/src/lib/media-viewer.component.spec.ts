@@ -69,7 +69,7 @@ describe('MediaViewerComponent', () => {
   });
 
   it('should set the default toolbar behaviour for pdf viewer', () => {
-    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'reset');
+    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'setup');
     component.contentType = 'pdf';
     component.enableAnnotations = true;
 
@@ -78,7 +78,7 @@ describe('MediaViewerComponent', () => {
   });
 
   it('should set the default toolbar behaviour for image viewer', () => {
-    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'reset');
+    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'setup');
     component.contentType = 'image';
     component.enableAnnotations = true;
 
@@ -87,7 +87,7 @@ describe('MediaViewerComponent', () => {
   });
 
   it('should set the default toolbar behaviour for unsupported viewer', () => {
-    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'reset');
+    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'setup');
     component.contentType = 'xxxxxx';
 
     component.setToolbarButtons();
