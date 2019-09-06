@@ -6,14 +6,14 @@ describe('Toolbar Button Visibility Service', () => {
     service = new ToolbarButtonVisibilityService();
   });
 
-  it('reset with values', () => {
+  it('setup with values', () => {
     service.searchBarHidden.next(false);
     const newValues = {
       showPrint: true,
       showDownload: true
     };
 
-    service.reset(newValues);
+    service.setup(newValues);
 
     expect(service.showPrint).toBeTruthy();
     expect(service.showDownload).toBeTruthy();
@@ -26,13 +26,13 @@ describe('Toolbar Button Visibility Service', () => {
       showDownload: true
     };
 
-    service.reset(oldValues);
+    service.setup(oldValues);
 
     const newValues = {
       showBookmark: true
     };
 
-    service.reset(newValues);
+    service.setup(newValues);
 
     expect(service.showPrint).toBeFalsy();
     expect(service.showDownload).toBeFalsy();

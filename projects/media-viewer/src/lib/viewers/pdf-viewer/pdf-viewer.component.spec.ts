@@ -15,12 +15,14 @@ import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation-service';
 import { ViewerException } from '../error-message/viewer-exception.model';
+import { AnnotationService } from '../../annotations/annotation.service';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
   let fixture: ComponentFixture<PdfViewerComponent>;
   let toolbarEvent: ToolbarEventService;
   let viewerEvent: ViewerEventService;
+  let annotationsDestroyed: boolean;
 
   const mockWrapper = {
     loadDocument: () => {},
@@ -51,6 +53,9 @@ describe('PdfViewerComponent', () => {
     setupAnnotationSet: () => {},
     onPageSelected: () => {},
     onHighlightSelected: () => {},
+    destroyComponents: () => {
+      annotationsDestroyed = true;
+    }
   };
 
   const mockFactory = {
@@ -68,11 +73,12 @@ describe('PdfViewerComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
+        AnnotationService,
         AnnotationApiService,
         ToolbarEventService,
         { provide: PdfJsWrapperFactory, useValue: mockFactory },
         { provide: ViewerEventService, useValue: mockViewerEvent },
-        { provide: PrintService, useFactory: () => mockPrintService },
+        { provide: PrintService, useFactory: () => mockPrintService }
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -132,20 +138,6 @@ describe('PdfViewerComponent', () => {
     expect(mockWrapper.changePageNumber).toHaveBeenCalled();
     expect(mockWrapper.loadDocument).toHaveBeenCalledWith(component.url);
   });
-
-  // it('should load new document when URL changes', async () => {
-  //   component.enableAnnotations = true;
-  //   spyOn(mockWrapper, 'loadDocument');
-  //   spyOn(mockAnnotationService, 'setupAnnotationSet');
-
-  //   component.url = 'b';
-  //   await component.ngOnChanges({
-  //     url: new SimpleChange('a', component.url, true)
-  //   });
-
-  //   expect(mockWrapper.loadDocument).toHaveBeenCalledWith('b');
-  //   expect(mockAnnotationService.setupAnnotationSet).toHaveBeenCalled();
-  // });
 
   it('on DocumentLoadProgress indicate document loading progress', () => {
     mockWrapper.documentLoadProgress.next({ loaded: 10, total: 100 });
@@ -230,12 +222,32 @@ describe('PdfViewerComponent', () => {
     expect(spyComponentLoadDocument).toHaveBeenCalled();
   });
 
-//   it('should create annotation set component for highlight text selected page', () => {
-//     const mouseEvent = new MouseEvent('mouseup');
-//     spyOn(mockAnnotationService, 'onHighlightSelected');
+  it('should load new document when annotations enabled', async () => {
+    annotationsDestroyed = false;
+    component.enableAnnotations = true;
+    const spyComponentLoadDocument = spyOn<any>(component, 'loadDocument');
+    spyOn<any>(mockAnnotationService, 'destroyComponents');
 
-//     component.onMouseUp(mouseEvent);
+    await component.ngOnChanges({
+      enableAnnotations: new SimpleChange(false, true, false)
+    });
 
-//     expect(mockAnnotationService.onHighlightSelected).toHaveBeenCalled();
-//   });
+    expect(spyComponentLoadDocument).toHaveBeenCalled();
+    expect(annotationsDestroyed).toBeFalsy();
+  });
+
+  it('should load document and destroy annotations when annotations disabled', async () => {
+    annotationsDestroyed = false;
+    component.enableAnnotations = false;
+    const spyComponentLoadDocument = spyOn<any>(component, 'loadDocument');
+
+    await component.ngOnChanges({
+      enableAnnotations: new SimpleChange(true, false, false)
+    });
+    fixture.detectChanges();
+
+    expect(spyComponentLoadDocument).toHaveBeenCalled();
+    expect(annotationsDestroyed).toBeTruthy();
+    expect(component.annotationSet).toBeNull();
+  });
 });
