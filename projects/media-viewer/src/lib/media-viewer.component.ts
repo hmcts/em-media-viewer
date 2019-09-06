@@ -29,7 +29,9 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   @Input() url;
   @Input() downloadFileName: string;
   @Input() contentType: string;
+
   @Input() showToolbar = true;
+  @Input() toolbarButtonOverrides: any = {};
 
   @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
   @Output() viewerException = new EventEmitter<ViewerException>();
@@ -39,8 +41,6 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   @Input() annotationApiUrl;
 
   annotationSet: Observable<AnnotationSet>;
-
-  private supportedContentTypes = ['pdf', 'image'];
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
@@ -57,7 +57,7 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   }
 
   contentTypeUnsupported(): boolean {
-    return this.supportedContentTypes.indexOf(this.contentType) < 0;
+    return !Object.keys(SupportedContentTypes).includes(this.contentType.toUpperCase());
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -71,6 +71,9 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
         this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
       }
     }
+    if (changes.enableAnnotations && this.enableAnnotations) {
+      this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
+    }
   }
 
   onMediaLoad(status: ResponseType) {
@@ -78,16 +81,30 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   }
 
   setToolbarButtons() {
-    if (this.contentType === this.supportedContentTypes[0]) {
-      this.toolbarButtons.reset({ ...defaultPdfOptions, showHighlightButton: this.enableAnnotations, showDrawButton: this.enableAnnotations });
-    } else if (this.contentType === this.supportedContentTypes[1]) {
-      this.toolbarButtons.reset({ ...defaultImageOptions, showDrawButton: this.enableAnnotations });
+    if (this.contentType === SupportedContentTypes.PDF) {
+      this.toolbarButtons.setup({
+        ...defaultPdfOptions, showHighlightButton: this.enableAnnotations, showDrawButton: this.enableAnnotations,
+        ...this.toolbarButtonOverrides
+      });
+    } else if (this.contentType === SupportedContentTypes.IMAGE) {
+      this.toolbarButtons.setup({
+        ...defaultImageOptions, showDrawButton: this.enableAnnotations,
+        ...this.toolbarButtonOverrides
+      });
     } else {
-      this.toolbarButtons.reset({ ...defaultUnsupportedOptions });
+      this.toolbarButtons.setup({
+        ...defaultUnsupportedOptions,
+        ...this.toolbarButtonOverrides
+      });
     }
   }
 
   onLoadException(exception: ViewerException) {
     this.viewerException.emit(exception);
   }
+}
+
+enum SupportedContentTypes {
+  PDF = 'pdf',
+  IMAGE = 'image'
 }

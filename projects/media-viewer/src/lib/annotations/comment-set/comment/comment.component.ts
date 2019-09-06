@@ -11,7 +11,7 @@ import { SelectionAnnotation } from '../../annotation.service';
 })
 export class CommentComponent implements OnChanges {
 
-  readonly MAX_COMMENT_LENGTH = 48;
+  readonly MAX_COMMENT_LENGTH;
 
   lastUpdate: string;
   originalComment: string;
@@ -34,6 +34,10 @@ export class CommentComponent implements OnChanges {
   @Input() zoom = 1;
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
+
+  constructor() {
+    this.MAX_COMMENT_LENGTH = 48;
+  }
 
   ngOnChanges(): void {
     this.commentRendered.emit(this._comment);
