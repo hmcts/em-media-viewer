@@ -71,6 +71,9 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
         this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
       }
     }
+    if (changes.enableAnnotations && this.enableAnnotations) {
+      this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
+    }
   }
 
   onMediaLoad(status: ResponseType) {
