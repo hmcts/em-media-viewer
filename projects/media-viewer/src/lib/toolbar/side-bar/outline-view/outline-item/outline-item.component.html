@@ -1,0 +1,13 @@
+<div #outlineItem class="outlineItem">
+  <div *ngIf="outline.items.length > 0" [ngClass]="{ 'outlineItemToggler': true, 'outlineItemsHidden': !showOutlineItems }" (click)="toggleOutline()"></div>
+  <a (click)="navigateLink()">
+    {{ outline.title }}
+  </a>
+  <div *ngIf="outline.items.length > 0" class="outlineItems">
+    <div *ngFor="let outline of outline.items">
+      <mv-outline-item
+        [outline]="outline"></mv-outline-item>
+    </div>
+  </div>
+</div>
+
