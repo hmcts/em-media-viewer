@@ -52,4 +52,8 @@ export class PdfJsWrapperFactory {
       eventBus: this.eventBus
     });
   }
+
+  public getLinkService() {
+    return this.linkService;
+  }
 }
