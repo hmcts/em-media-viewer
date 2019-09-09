@@ -11,8 +11,12 @@
 
 .pageWrapper {
   overflow-x: auto;
-  width: 72.5%;
+  width: 100%;
   float: left;
+}
+
+.pdfContainer.annotations .pageWrapper {
+  width: 72.5%;
 }
 
 .hidden {
