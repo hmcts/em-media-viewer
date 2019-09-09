@@ -45,14 +45,6 @@ export class PdfJsWrapperFactory {
     );
   }
 
-  public createDocumentOutline(container: ElementRef) {
-    return new pdfjsOutlineViewer.PDFOutlineViewer({
-      container: container.nativeElement,
-      linkService: this.linkService,
-      eventBus: this.eventBus
-    });
-  }
-
   public getLinkService() {
     return this.linkService;
   }
