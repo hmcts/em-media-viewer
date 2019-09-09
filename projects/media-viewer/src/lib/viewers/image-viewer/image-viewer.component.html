@@ -1,7 +1,8 @@
 <div id="viewer-wrapper" *ngIf="url && !errorMessage">
   <div class="split left">
     <div id="image-container"
-         class="image-container" [style.height.px]="getImageHeight(img)">
+         [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations }"
+         [style.height.px]="getImageHeight(img)">
       <img #img
            [src]="url"
            [ngClass]="'rot' + rotation"
