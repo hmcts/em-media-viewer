@@ -33,4 +33,18 @@ export class OutlineItemComponent implements OnInit {
   toggleOutline() {
     this.showOutlineItems = !this.showOutlineItems;
   }
+
+  getStyles() {
+    const style = {
+      'font-weight': '',
+      'font-style': ''
+    };
+    if (this.outline.bold) {
+      style['font-weight'] = 'bold';
+    }
+    if (this.outline.italic) {
+      style['font-style'] = 'italic';
+    }
+    return style;
+  }
 }
