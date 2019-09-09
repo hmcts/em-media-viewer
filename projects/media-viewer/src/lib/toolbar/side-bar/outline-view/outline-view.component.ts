@@ -1,10 +1,5 @@
 import * as pdfjsLib from 'pdfjs-dist';
-import * as pdfjsOutlineViewer from 'pdfjs-dist/lib/web/pdf_outline_viewer';
-import {
-  AfterContentInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
-import { PdfJsWrapperFactory } from '../../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
+import { AfterContentInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'mv-outline-view',
@@ -16,9 +11,9 @@ export class OutlineViewComponent implements OnChanges, AfterContentInit {
   @Input() url: string;
   @ViewChild('outlineContainer') outlineContainer: ElementRef;
 
-  private outline = [];
+  outline = [];
 
-  constructor(private readonly pdfJsWrapperFactory: PdfJsWrapperFactory) {
+  constructor() {
   }
 
   async ngAfterContentInit() {
