@@ -1,5 +1,4 @@
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
-import * as pdfjsOutlineViewer from 'pdfjs-dist/lib/web/pdf_outline_viewer';
 import { ElementRef, Injectable } from '@angular/core';
 import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
@@ -10,6 +9,7 @@ export class PdfJsWrapperFactory {
 
   private linkService: pdfjsViewer.PDFLinkService;
   private eventBus: pdfjsViewer.EventBus;
+  private pdfJsWrapper: PdfJsWrapper;
 
   constructor(
     private readonly toolbarEvents: ToolbarEventService) {
@@ -33,7 +33,7 @@ export class PdfJsWrapperFactory {
 
     this.linkService.setViewer(pdfViewer);
 
-    return new PdfJsWrapper(
+    this.pdfJsWrapper = new PdfJsWrapper(
       pdfViewer,
       new pdfjsViewer.DownloadManager({}),
       this.toolbarEvents,
@@ -43,9 +43,15 @@ export class PdfJsWrapperFactory {
       new Subject(),
       new Subject<{pageNumber: number, source: {rotation: number, scale: number, div: HTMLElement}}>()
     );
+
+    return this.pdfJsWrapper;
   }
 
   public getLinkService() {
     return this.linkService;
+  }
+
+  public navigateTo(destination: any[]) {
+    this.pdfJsWrapper.navigateTo(destination);
   }
 }

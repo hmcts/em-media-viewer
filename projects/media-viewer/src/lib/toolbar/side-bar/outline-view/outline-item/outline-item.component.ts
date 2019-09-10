@@ -26,7 +26,7 @@ export class OutlineItemComponent implements OnInit {
 
   navigateLink() {
     if (this.outline.dest) {
-      this.linkService.navigateTo(this.outline.dest);
+      this.pdfJsWrapperFactory.navigateTo(this.outline.dest);
     }
   }
 

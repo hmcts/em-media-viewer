@@ -8,6 +8,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
 export class PdfJsWrapper {
 
+  private zoomValue: number;
+
   constructor(
     private readonly pdfViewer: PDFViewer,
     private readonly downloadManager: DownloadManager,
@@ -31,6 +33,7 @@ export class PdfJsWrapper {
     this.pdfViewer.eventBus.on('updatefindmatchescount', event => {
       this.toolbarEvents.searchResultsCount.next(event.matchesCount);
     });
+    this.zoomValue = 1;
   }
 
   public async loadDocument(documentUrl: string) {
@@ -91,18 +94,32 @@ export class PdfJsWrapper {
     this.pdfViewer.eventBus.dispatch('findbarclose');
   }
 
+  public navigateTo(destination: any) {
+    if (destination instanceof Object) {
+      if (!destination[1].name.includes('XYZ')) {
+        destination[1] = { name: 'XYZ' };
+        destination[2] = null;
+        destination[3] = null;
+      }
+      destination[4] = this.zoomValue;
+    }
+    this.pdfViewer.linkService.navigateTo(destination);
+  }
+
   public setZoom(zoomValue: number): void {
     this.pdfViewer.currentScaleValue = this.getZoomValue(zoomValue);
+    this.zoomValue = this.pdfViewer.currentScaleValue;
     this.toolbarEvents.zoomValue.next(this.pdfViewer.currentScaleValue);
   }
 
   public stepZoom(zoomValue: number): void {
     this.pdfViewer.currentScaleValue = Math.round(this.getZoomValue((+this.pdfViewer.currentScaleValue) + zoomValue) * 10) / 10;
+    this.zoomValue = this.pdfViewer.currentScaleValue;
     this.toolbarEvents.zoomValue.next(this.pdfViewer.currentScaleValue);
   }
 
   private getZoomValue(zoomValue: number): number {
-    if (isNaN(zoomValue)) { return zoomValue; }
+    if (isNaN(zoomValue)) { return this.zoomValue; }
     if (zoomValue > 5) { return 5; }
     if (zoomValue < 0.1) { return 0.1; }
 
