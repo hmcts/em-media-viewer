@@ -75,6 +75,7 @@ Then('I should see next page number should be {string}', async (expected: string
 Then(/^I expect the page navigation should take me to the expected "([^"]*)"$/, async function (expected: string) {
   const value = await navigatePage.pageNumber.getAttribute('value');
   expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
+  expect(await page.isPageDataLoaded(parseInt(value))).to.equal(true);
   const screenshot = await browser.takeScreenshot();
   this.attach(screenshot, 'image/png');
 });

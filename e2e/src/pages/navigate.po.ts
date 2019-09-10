@@ -27,9 +27,14 @@ export class NavigatePage extends AppPage {
   }
 
   async setPageNumber(num: number) {
-    await this.pageNumber.clear();
-    await this.pageNumber.sendKeys(num);
-    await browser.sleep(5000);
-    await this.pageNumber.sendKeys(Key.ENTER);
+    await browser.executeScript((pageNum:string) => {
+      let input:HTMLInputElement = <HTMLInputElement>document.getElementById('pageNumber');
+      input.value = pageNum;
+      let evt = document.createEvent("HTMLEvents");
+       evt.initEvent("change", false, true);
+       input.dispatchEvent(evt);
+    }, num.toString());
+    await browser.sleep(3000);
+
   }
 }
