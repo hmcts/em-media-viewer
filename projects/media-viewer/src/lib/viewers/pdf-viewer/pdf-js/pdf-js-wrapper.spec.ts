@@ -5,37 +5,45 @@ import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 describe('PdfJsWrapper', () => {
-  const downloadManager = new pdfjsViewer.DownloadManager({});
 
-  const mockViewer = {
-    pagesRotation: 0,
-    currentPageNumber: 1,
-    currentScaleValue: 2,
-    eventBus: {
-      on: () => {
+  let downloadManager;
+  let mockViewer;
+  let wrapper;
+
+  beforeEach(() => {
+    downloadManager = new pdfjsViewer.DownloadManager({});
+
+    mockViewer = {
+      pagesRotation: 0,
+      currentPageNumber: 1,
+      currentScaleValue: 2,
+      eventBus: {
+        on: () => {
+        },
+        dispatch: () => {
+        }
       },
-      dispatch: () => {
+      setDocument: () => {},
+      linkService: {
+        setDocument: () => {},
+        navigateTo: () => {}
+      },
+      findController: {
+        executeCommand: () => {}
       }
-    },
-    setDocument: () => {},
-    linkService: {
-      setDocument: () => {}
-    },
-    findController: {
-      executeCommand: () => {}
-    }
-  };
+    };
 
-  const wrapper = new PdfJsWrapper(
-    mockViewer,
-    downloadManager,
-    new ToolbarEventService(),
-    new Subject<string>(),
-    new Subject<DocumentLoadProgress>(),
-    new Subject<any>(),
-    new Subject(),
-    new Subject<PageEvent>(),
-  );
+    wrapper = new PdfJsWrapper(
+      mockViewer,
+      downloadManager,
+      new ToolbarEventService(),
+      new Subject<string>(),
+      new Subject<DocumentLoadProgress>(),
+      new Subject<any>(),
+      new Subject(),
+      new Subject<PageEvent>(),
+    );
+  });
 
   it('downloads a file', () => {
     const downloadSpy = spyOn(downloadManager, 'downloadUrl');
@@ -88,6 +96,37 @@ describe('PdfJsWrapper', () => {
     expect(mockViewer.pagesRotation).toEqual(90);
   });
 
+  it('should set the zoomValue only if the zoom name includes XYZ', () => {
+    const navigateSpy = spyOn(mockViewer.linkService, 'navigateTo');
+    const destination = [];
+    destination[1] = { name: 'XYZ' };
+    wrapper.navigateTo(destination);
+
+    expect(destination[4]).toEqual(1);
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should populate the destination object if the zoom name does not include XYZ', () => {
+    const navigateSpy = spyOn(mockViewer.linkService, 'navigateTo');
+    const destination = [];
+    destination[1] = { name: 'FitH' };
+    wrapper.navigateTo(destination);
+
+    expect(destination[2]).toEqual(null);
+    expect(destination[3]).toEqual(null);
+    expect(destination[4]).toEqual(1);
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not alter the destination if it is not of type object', () => {
+    const navigateSpy = spyOn(mockViewer.linkService, 'navigateTo');
+    const destination = 1234;
+    wrapper.navigateTo(destination);
+
+    expect(destination).toEqual(1234);
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
+  });
+
   it('should perform zoom operation', () => {
     mockViewer.currentScaleValue = 1;
     wrapper.setZoom(2);
@@ -107,6 +146,13 @@ describe('PdfJsWrapper', () => {
     wrapper.setZoom(0.001);
 
     expect(mockViewer.currentScaleValue).toEqual(0.1);
+  });
+
+  it('should set scale value to this.zoomValue', () => {
+    mockViewer.currentScaleValue = 1;
+    wrapper.setZoom(NaN);
+
+    expect(mockViewer.currentScaleValue).toEqual(1);
   });
 
   it('should step the zoom', () => {
