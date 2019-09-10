@@ -94,7 +94,7 @@ export class PdfJsWrapper {
     this.pdfViewer.eventBus.dispatch('findbarclose');
   }
 
-  public navigateTo(destination: any) {
+  public navigateTo(destination: object | number) {
     if (destination instanceof Object) {
       if (!destination[1].name.includes('XYZ')) {
         destination[1] = { name: 'XYZ' };
