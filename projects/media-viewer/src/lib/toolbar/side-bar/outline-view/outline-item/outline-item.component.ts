@@ -10,7 +10,6 @@ import { Outline } from '../outline.model';
 })
 export class OutlineItemComponent implements OnInit {
 
-  private linkService: pdfjsOutlineViewer;
   @Input() outline: Outline;
 
   showOutlineItems: boolean;
@@ -21,7 +20,6 @@ export class OutlineItemComponent implements OnInit {
 
   ngOnInit() {
     this.showOutlineItems = false;
-    this.linkService = this.pdfJsWrapperFactory.getLinkService();
   }
 
   navigateLink() {
