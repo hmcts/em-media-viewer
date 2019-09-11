@@ -161,7 +161,9 @@ const imageRotate = async () => {
 };
 
 
-Then('I should be able to add comment for the highlight', addComment);
+Then('I should be able to add comment for the highlight', async() => {
+  await addComment(comment_1);
+});
 
 When('I highlight text on a PDF document', highLightTextInPdf);
 
