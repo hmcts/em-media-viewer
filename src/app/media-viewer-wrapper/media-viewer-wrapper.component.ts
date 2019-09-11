@@ -15,7 +15,7 @@ import { Comment } from '../../../projects/media-viewer/src/lib/annotations/comm
 })
 export class MediaViewerWrapperComponent implements AfterContentInit {
 
-  pdfUrl = 'assets/example.pdf';
+  pdfUrl = 'assets/example4.pdf';
   imageUrl = 'assets/example.jpg';
   unsupportedUrl = 'assets/unsupported.txt';
   filename = 'filename';

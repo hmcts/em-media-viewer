@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SideBarComponent } from './side-bar.component';
+import { OutlineViewComponent } from './outline-view/outline-view.component';
+import { OutlineItemComponent } from './outline-view/outline-item/outline-item.component';
 
 describe('SideBarComponent', () => {
   let component: SideBarComponent;
@@ -7,7 +9,11 @@ describe('SideBarComponent', () => {
 
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
-      declarations: [ SideBarComponent ]
+      declarations: [
+        SideBarComponent,
+        OutlineViewComponent,
+        OutlineItemComponent
+      ]
     })
     .compileComponents();
   }));
@@ -15,7 +21,6 @@ describe('SideBarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SideBarComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should be created', () => {

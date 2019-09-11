@@ -1,0 +1,8 @@
+<div #outlineContainer id="outlineView" class="outlineWithDeepNesting">
+  <div class="outlineItem">
+    <ng-container *ngFor="let outline of outline">
+      <mv-outline-item
+        [outline]="outline"></mv-outline-item>
+    </ng-container>
+  </div>
+</div>
