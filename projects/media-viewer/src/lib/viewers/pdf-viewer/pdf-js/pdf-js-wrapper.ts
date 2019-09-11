@@ -98,8 +98,8 @@ export class PdfJsWrapper {
     if (destination instanceof Object) {
       if (!destination[1].name.includes('XYZ')) {
         destination[1] = { name: 'XYZ' };
-        destination[2] = null;
-        destination[3] = null;
+        destination[2] = destination[2] || null;
+        destination[3] = destination[3] || null;
       }
       destination[4] = this.zoomValue;
     }
