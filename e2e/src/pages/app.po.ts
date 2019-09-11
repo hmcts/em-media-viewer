@@ -14,6 +14,7 @@ export class AppPage {
   saveButton: By = by.xpath('//button[text()=\' Save \']');
   editButton: By = by.xpath('//button[text()=\' Edit \']');
   commentDeleteButtonXpath: string = '//textarea[@ng-reflect-model=\'{0}\']/..//button[text()=\' Delete \']';
+  page:string = '.page[data-page-number="{0}"]';
 
   async navigateTo() {
     await browser.driver.navigate().to(browser.baseUrl);
@@ -215,6 +216,16 @@ export class AppPage {
   async getComment(): Promise<string> {
     return await element(this.annotationTextArea).getAttribute('ng-reflect-model').then((a) => {
       return a;
+    });
+  }
+
+  async isPageDataLoaded(pageNumber: number): Promise<boolean> {
+    let cssSel = String.Format(this.page, pageNumber);
+    return await element(by.css(cssSel)).getAttribute('data-loaded').then( (value) =>{
+      if(value == 'true') {
+        return true;
+      }
+      return false;
     });
   }
 
