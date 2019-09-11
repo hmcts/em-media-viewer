@@ -82,6 +82,9 @@ html[dir='rtl'] .attachmentsItem > button {
   display: inline-block;
   position: absolute;
 }
+.outlineItemToggler:focus::before {
+  border: 2px solid #ffbf47;
+}
 .outlineItemToggler.outlineItemsHidden::before {
   content: url(/assets/images/treeitem-collapsed.png);
 }
@@ -103,7 +106,6 @@ html[dir='rtl'] .outlineItemToggler {
 html[dir='rtl'] .outlineItemToggler::before {
   left: 4px;
 }
-
 .outlineItemToggler:hover,
 .outlineItemToggler:hover + a,
 .outlineItemToggler:hover ~ .outlineItems,
