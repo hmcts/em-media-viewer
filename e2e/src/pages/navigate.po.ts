@@ -1,4 +1,4 @@
-import {by, element, ElementFinder} from 'protractor';
+import {browser, by, element, ElementFinder, Key, protractor} from 'protractor';
 import {AppPage} from './app.po';
 
 export class NavigatePage extends AppPage {
@@ -24,5 +24,17 @@ export class NavigatePage extends AppPage {
 
   async goToPreviousPage() {
     await (await this.previous).click();
+  }
+
+  async setPageNumber(num: number) {
+    await browser.executeScript((pageNum:string) => {
+      let input:HTMLInputElement = <HTMLInputElement>document.getElementById('pageNumber');
+      input.value = pageNum;
+      let evt = document.createEvent("HTMLEvents");
+       evt.initEvent("change", false, true);
+       input.dispatchEvent(evt);
+    }, num.toString());
+    await browser.sleep(3000);
+
   }
 }
