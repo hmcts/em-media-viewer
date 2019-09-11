@@ -31,9 +31,9 @@
     "e2e": "ng e2e",
     "clean": "rimraf reports",
     "annotations:stub": "node api/annotation-stubs.js",
-    "webdriver:update": "webdriver-manager update --versions.chrome 76.0.3809.12 --versions.gecko v0.25.0",
-    "e2e:cucumber": "npm run webdriver:update && ng e2e --protractor-config e2e/cucumber.conf.js",
-    "e2e:travis": "webdriver-manager update && ng e2e --protractor-config 'e2e/ci.protractor.conf.js'"
+    "webdriver:update": "webdriver-manager update --versions.chrome 77.0.3865.40 --versions.gecko v0.25.0",
+    "e2e:cucumber": "npm run webdriver:update && ng e2e --webdriverUpdate=false --protractor-config e2e/cucumber.conf.js",
+    "e2e:travis": "webdriver-manager update && ng e2e --webdriverUpdate=false --protractor-config 'e2e/ci.protractor.conf.js'"
   },
   "dependencies": {
     "@angular-devkit/build-ng-packagr": "^0.13.9",

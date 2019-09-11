@@ -5,9 +5,9 @@ exports.config = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   capabilities: {
-    browserName: 'chrome',
+    browserName: 'firefox',
   },
-  chromeDriver: '../node_modules/webdriver-manager/selenium/chromedriver_76.0.3809.12',
+  chromeDriver: '../node_modules/webdriver-manager/selenium/chromedriver_77.0.3865.40',
   geckoDriver: '../node_modules/webdriver-manager/selenium/geckodriver-v0.25.0',
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
