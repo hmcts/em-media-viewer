@@ -16,13 +16,7 @@ export class AppPage {
   commentDeleteButtonXpath: string = '//textarea[@ng-reflect-model=\'{0}\']/..//button[text()=\' Delete \']';
   page:string = '.page[data-page-number="{0}"]';
 
-  async navigateTo() {
-    await browser.driver.navigate().to(browser.baseUrl);
-    return await browser.driver.manage().window().maximize();
-  }
-
   async preparePage() {
-    // await this.navigateTo();
     await browser.sleep(5000);
     await this.showToolbarButtons();
   }
@@ -137,7 +131,7 @@ export class AppPage {
   async highLightTextOnPdfPage() {
     await browser.executeScript(() => {
       var range = document.createRange();
-      var matchingElement = document.evaluate('//div[text()=\'Dynamic languages such as JavaScript are more difficult to com-\']', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+      var matchingElement = document.getElementsByClassName('textLayer')[0].children[4];
       range.selectNodeContents(matchingElement);
       var sel = window.getSelection();
       sel.removeAllRanges();
@@ -162,7 +156,7 @@ export class AppPage {
 
   async clickOnCommentButton() {
     // await browser.waitForAngular()  // This feature did not work hence adding sleep.
-    await browser.sleep(5000);
+    await browser.sleep(3000);
     await element(this.commentButton).click();
   }
 
