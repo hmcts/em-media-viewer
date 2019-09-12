@@ -2,6 +2,7 @@ import {After, AfterAll, Before, BeforeAll, Status} from 'cucumber';
 import {browser} from 'protractor';
 
 Before(async function () {
+  await browser.driver.manage().window().maximize();
   await browser.waitForAngularEnabled(false);
   await browser.driver.navigate().to(browser.baseUrl);
 });
