@@ -9,6 +9,7 @@ import {GenericMethods} from '../utils/genericMethods';
 import {SearchPage} from '../pages/search.po';
 import {RotatePage} from '../pages/rotate.po';
 import {CommentPage} from '../pages/comment.po';
+import {ZoomPage} from '../pages/zoom.po';
 
 
 const page = new AppPage();
@@ -19,6 +20,7 @@ const genericMethods = new GenericMethods();
 const searchPage = new SearchPage();
 const rotatePage = new RotatePage();
 const commentsPage = new CommentPage();
+const zoomPage = new ZoomPage();
 
 const comment_ellipsis = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
 const comment_1 = 'This is comment number 1';
@@ -67,10 +69,6 @@ Then('I should see next page number should be {string}', async (expected: string
   expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
 });
 
-// Then('I should see previous page number should be {string}', async (expected: string) => {
-//   const value = await navigatePage.pageNumber.getAttribute('value');
-//   expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
-// });
 
 Then(/^I expect the page navigation should take me to the expected "([^"]*)"$/, async function (expected: string) {
   const value = await navigatePage.pageNumber.getAttribute('value');
@@ -112,7 +110,7 @@ Then('I expect text highlight popup should appear', async function () {
   this.attach(screenshots, 'image/png');
 });
 
-const addComment = async (comment:string) => {
+const addComment = async (comment: string) => {
   await page.clickOnCommentButton();
   await page.enterTextInAnnotation(comment);
   await page.clickOnSaveButton();
@@ -132,12 +130,12 @@ const highLightOnImage = async () => {
   await page.drawOnImagePage();
 };
 
-const drawOnPdf = async (xAxis:number, yAxis:number) =>  {
+const drawOnPdf = async (xAxis: number, yAxis: number) => {
   await page.waitForPdfToLoad();
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();
   await page.drawOnPDFPage(xAxis, yAxis);
-}
+};
 
 const deleteComment = async () => {
   await page.deleteComment(comment_1);
@@ -160,6 +158,33 @@ const imageRotate = async () => {
   await rotatePage.checkImageIsRotatedBy('0');
 };
 
+const zoomInOutPdf = async (zoomOption: string) => {
+  await zoomPage.zoomIn();
+  expect(await zoomPage.currentZoom()).to.equal('110%');
+  await zoomPage.zoomOut();
+  expect(await zoomPage.currentZoom()).to.equal('100%');
+  await zoomPage.setZoomTo('25%');
+  expect(await zoomPage.currentZoom()).to.equal('25%');
+  await zoomPage.setZoomTo('500%');
+  await zoomPage.zoomIn();
+  expect(await zoomPage.currentZoom()).to.equal('500%');
+  await zoomPage.setZoomTo(zoomOption);
+  expect(await zoomPage.currentZoom()).to.equal(zoomOption);
+};
+
+const imageZoomInOut = async (zoomOption: string) => {
+  await zoomPage.zoomOut();
+  expect(await zoomPage.currentZoom()).to.equal('90%');
+  await zoomPage.zoomIn();
+  expect(await zoomPage.currentZoom()).to.equal('100%');
+  await zoomPage.setZoomTo('50%');
+  expect(await zoomPage.currentZoom()).to.equal('50%');
+  await zoomPage.setZoomTo('500%');
+  await zoomPage.zoomIn();
+  expect(await zoomPage.currentZoom()).to.equal('500%');
+  await zoomPage.setZoomTo(zoomOption);
+  expect(await zoomPage.currentZoom()).to.equal(zoomOption);
+};
 
 Then('I should be able to add comment for the highlight', addComment);
 
@@ -263,7 +288,7 @@ When(/^I use the "([^"]*)" viewer rotate feature$/, async (viewerType: string) =
 
     case 'image' :
       await rotatePage.selectImageViewer();
-      await genericMethods.sleep(20000);
+      await genericMethods.sleep(2000);
       await genericMethods.scrollDown();
       break;
 
@@ -306,22 +331,76 @@ Then(/^I expect comment should display in ellipsis format$/, async function () {
 
 
 When('I create multiple non-textual comments on a PDF document', async () => {
-  await drawOnPdf(300,300);
+  await drawOnPdf(300, 300);
   await addComment(comment_1);
 
-  await drawOnPdf(350,350);
+  await drawOnPdf(350, 350);
   await addComment(comment_2);
 
-  await drawOnPdf(400,400);
+  await drawOnPdf(400, 400);
   await addComment(comment_3);
 
 });
 
 Then('I should be able to see all comments in the comments pane', async () => {
-  expect(await page.getAllComments()).to.have.members([comment_1,comment_2,comment_3]);
+  expect(await page.getAllComments()).to.have.members([comment_1, comment_2, comment_3]);
 });
 
-Given('The PDF has atleast one long comment', async () =>{
+Given('The PDF has atleast one long comment', async () => {
   await highLightTextInPdf();
   await addComment(comment_ellipsis);
+});
+
+When(/^I use the "([^"]*)" viewer "(.*) feature$/, async function (viewerType: string) {
+  switch (viewerType) {
+
+    case 'pdf' :
+      await rotatePage.clickRotateButton();
+      await genericMethods.sleep(2000);
+      break;
+
+    case 'image' :
+      await rotatePage.selectImageViewer();
+      await genericMethods.sleep(20000);
+      await genericMethods.scrollDown();
+      break;
+
+    default:
+      console.log('media viewer input tab is not found');
+      break;
+  }
+});
+
+
+When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: string) {
+  switch (viewerType) {
+    case 'pdf' :
+      await zoomPage.selectPdfViewer();
+      break;
+
+    case 'image' :
+      await zoomPage.selectImageViewer();
+      break;
+
+    default:
+      console.log('please select the correct input type...');
+      break;
+  }
+});
+
+
+Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOption: string, viewerType: string) => {
+  switch (viewerType) {
+    case 'pdf' :
+      await zoomInOutPdf(zoomOption);
+      break;
+
+    case 'image' :
+      await imageZoomInOut(zoomOption);
+      break;
+
+    default:
+      console.log('please select the correct input type...');
+      break;
+  }
 });
