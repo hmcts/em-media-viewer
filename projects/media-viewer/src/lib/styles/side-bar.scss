@@ -3,7 +3,7 @@ $--sidebar-width: 20%;
   position: absolute;
   top: 32px;
   bottom: 0;
-  height: 100vh;
+  height: 100%;
   width: 200px; /* Here, and elsewhere below, keep the constant value for compatibility
                    with older browsers that lack support for CSS variables. */
   width: var($--sidebar-width);

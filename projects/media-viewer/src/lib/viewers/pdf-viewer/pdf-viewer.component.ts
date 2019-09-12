@@ -40,6 +40,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
+  @Input() height: string;
+
   highlightMode: BehaviorSubject<boolean>;
   drawMode: BehaviorSubject<boolean>;
 
