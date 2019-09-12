@@ -9,7 +9,7 @@ describe('zoom', () => {
   });
 
 
-  it('', async () => {
+  it('should display pdf zoomed in/out', async () => {
     await page.selectPdfViewer();
     await page.showToolbarButtons();
 
