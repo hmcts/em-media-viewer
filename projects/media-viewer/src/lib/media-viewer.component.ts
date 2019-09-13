@@ -32,6 +32,8 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
   @Input() showToolbar = true;
   @Input() toolbarButtonOverrides: any = {};
+  @Input() height = 'calc(100vh - 32px)';
+  @Input() width = '100%';
 
   @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
   @Output() viewerException = new EventEmitter<ViewerException>();

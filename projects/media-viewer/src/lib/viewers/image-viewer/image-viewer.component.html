@@ -1,4 +1,6 @@
-<div id="viewer-wrapper" *ngIf="url && !errorMessage">
+<div id="viewer-wrapper"
+     [ngStyle]="{ height: height }"
+     *ngIf="url && !errorMessage">
   <div class="split left">
     <div id="image-container"
          [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations }"
