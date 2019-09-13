@@ -83,7 +83,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.subscriptions.push(
       this.toolbarEvents.print.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.download.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
-      this.toolbarEvents.rotate.subscribe(rotation => this.pdfWrapper.rotate(rotation)),
+      this.toolbarEvents.rotate.subscribe(rotation => {
+        const pageNumber = this.pdfWrapper.getPageNumber();
+        this.pdfWrapper.rotate(rotation);
+        this.pdfWrapper.setPageNumber(pageNumber);
+      }),
       this.toolbarEvents.zoom.subscribe(zoom => this.pdfWrapper.setZoom(zoom)),
       this.toolbarEvents.stepZoom.subscribe(zoom => this.pdfWrapper.stepZoom(zoom)),
       this.toolbarEvents.search.subscribe(search => this.pdfWrapper.search(search)),
