@@ -1,5 +1,5 @@
 <div id="viewer-wrapper"
-     [ngStyle]="{ height: height ? height : ''}"
+     [ngStyle]="{ height: height ? height : 'calc(100vh - 32px)'}"
      *ngIf="url && !errorMessage">
   <div class="split left">
     <div id="image-container"
