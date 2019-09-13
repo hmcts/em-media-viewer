@@ -1,4 +1,6 @@
-<div id="outerContainer" [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async }">
+<div id="outerContainer"
+     [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async }"
+     [ngStyle]="{ width: width }">
 
   <mv-side-bar *ngIf="toolbarButtons.sidebarOpen"
                id="sidebarContainer"
@@ -11,7 +13,8 @@
                    [url]="url"
                    [enableAnnotations]="enableAnnotations"
                    [annotationSet]="enableAnnotations ? (annotationSet | async) : null"
-                   [downloadFileName]="downloadFileName">
+                   [downloadFileName]="downloadFileName"
+                   [height]="height">
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      (imageLoadStatus)="onMediaLoad($event)"
@@ -19,7 +22,8 @@
                      [url]="url"
                      [enableAnnotations]="enableAnnotations"
                      [annotationSet]="enableAnnotations ? (annotationSet | async) : null"
-                     [downloadFileName]="downloadFileName">
+                     [downloadFileName]="downloadFileName"
+                     [height]="height">
     </mv-image-viewer>
     <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
                            [url]="url"
