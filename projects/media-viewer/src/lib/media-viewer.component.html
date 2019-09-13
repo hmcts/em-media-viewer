@@ -2,7 +2,7 @@
      [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async }"
      [ngStyle]="{ width: width }">
 
-  <mv-side-bar *ngIf="toolbarButtons.sidebarOpen"
+  <mv-side-bar *ngIf="contentType === 'pdf' && toolbarButtons.sidebarOpen"
                id="sidebarContainer"
                [url]="url"></mv-side-bar>
   <div id="mainContainer">
