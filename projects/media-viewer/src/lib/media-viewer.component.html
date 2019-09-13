@@ -22,7 +22,8 @@
                      [url]="url"
                      [enableAnnotations]="enableAnnotations"
                      [annotationSet]="enableAnnotations ? (annotationSet | async) : null"
-                     [downloadFileName]="downloadFileName">
+                     [downloadFileName]="downloadFileName"
+                     [height]="height">
     </mv-image-viewer>
     <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
                            [url]="url"
