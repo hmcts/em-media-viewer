@@ -49,6 +49,8 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
     public readonly toolbarEvents: ToolbarEventService,
     private readonly api: AnnotationApiService
   ) {
+    this.width = this.width || '100%';
+    this.height = this.height || 'calc(100vh - 32px)';
     if (this.annotationApiUrl) {
       api.annotationApiUrl = this.annotationApiUrl;
     }

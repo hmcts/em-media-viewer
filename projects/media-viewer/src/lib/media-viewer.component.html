@@ -1,6 +1,6 @@
 <div id="outerContainer"
      [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async }"
-     [ngStyle]="{ width: width ? width : '100%' }">
+     [ngStyle]="{ width: width }">
 
   <mv-side-bar *ngIf="toolbarButtons.sidebarOpen"
                id="sidebarContainer"
