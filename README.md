@@ -98,6 +98,27 @@ To override the default Annotation API path (or URL for cross domain calls) use 
 
 <mv-media-viewer annotationApiUrl=""http://my-gateway.com/my-context-path""  ... ></mv-media-viewer>
   
+### Proxying the Annotation Api
+In order to use annotations on the media viewer, you need to proxy the calls.
+
+Example:
+```
+import * as proxy from "http-proxy-middleware";
+```
+Annotation Config:
+```
+const annotation = {
+    endpoints: ["/em-anno"],
+    target: "Enter URL",
+    pathRewrite: {
+        "^/em-anno": "/api"
+    }
+}
+```
+How to use the proxy:
+```
+this.app.use(proxy(annotation.endpoints, { target: annotation.target }));
+```
 ### Viewer Exceptions
 The Media Viewer will return load status and provide exceptions if thrown for the host application to consume.
 ```
