@@ -32,8 +32,8 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
   @Input() showToolbar = true;
   @Input() toolbarButtonOverrides: any = {};
-  @Input() height: string;
-  @Input() width: string;
+  @Input() height = 'calc(100vh - 32px)';
+  @Input() width = '100%';
 
   @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
   @Output() viewerException = new EventEmitter<ViewerException>();
@@ -49,8 +49,6 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
     public readonly toolbarEvents: ToolbarEventService,
     private readonly api: AnnotationApiService
   ) {
-    this.width = this.width || '100%';
-    this.height = this.height || 'calc(100vh - 32px)';
     if (this.annotationApiUrl) {
       api.annotationApiUrl = this.annotationApiUrl;
     }
