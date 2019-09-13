@@ -73,6 +73,20 @@ component entry point:
 
 The toolbar may be toggled off by setting `showToolbase` to false. The toolbar itself is available as a module that can be included into the DOM at a different location if necessary. 
 
+### Media Viewer Height and Width
+
+You can set height and width of the media viewer otherwise it will be set to default settings of 100%.
+
+```
+<mv-media-viewer [url]="'assets/example.pdf'"
+                 [downloadFileName]="'example.pdf'"
+                 [showToolbar]="true"
+                 [contentType]="'pdf'"
+                 [height]="'500px'"
+                 [width]="'500px'">
+</mv-media-viewer>  
+```
+
 ### Running development application (only for use with hmcts document store)
 - set environment variable to define if app connects to localhost or aat:
   ```
