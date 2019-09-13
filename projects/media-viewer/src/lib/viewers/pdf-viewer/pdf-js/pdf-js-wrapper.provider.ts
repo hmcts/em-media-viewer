@@ -47,10 +47,6 @@ export class PdfJsWrapperFactory {
     return this.pdfJsWrapper;
   }
 
-  public getLinkService() {
-    return this.linkService;
-  }
-
   public navigateTo(destination: any[]) {
     this.pdfJsWrapper.navigateTo(destination);
   }
