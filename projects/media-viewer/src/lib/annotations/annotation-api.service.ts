@@ -21,7 +21,7 @@ export class AnnotationApiService {
 
   public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
     return this.httpClient
-      .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' })
+      .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
   }
 
@@ -29,7 +29,7 @@ export class AnnotationApiService {
     const url = `${this.annotationSetsFullUrl}/filter?documentId=${documentId}`;
 
     return this.httpClient
-      .get<AnnotationSet>(url, { observe: 'response' })
+      .get<AnnotationSet>(url, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body))
       .pipe(catchError(() => []));
   }
@@ -56,13 +56,13 @@ export class AnnotationApiService {
     const url = `${this.annotationFullsUrl}/${annotationId}`;
 
     return this.httpClient
-      .delete<null>(url, { observe: 'response' })
+      .delete<null>(url, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
   }
 
   public postAnnotation(annotation: Partial<Annotation>): Observable<Annotation> {
     return this.httpClient
-      .post<Annotation>(this.annotationFullsUrl, annotation, { observe: 'response' })
+      .post<Annotation>(this.annotationFullsUrl, annotation, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
   }
 
@@ -70,7 +70,7 @@ export class AnnotationApiService {
     const fixedUrl = this.fixFindCall(url);
 
     return this.httpClient
-      .get<AnnotationSet>(fixedUrl, { observe: 'response' })
+      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body))
       .pipe(
         catchError(() => this.postAnnotationSet({
