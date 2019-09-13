@@ -29,6 +29,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
+  @Input() height: string;
+
   @Output() imageLoadStatus = new EventEmitter<ResponseType>();
   @Output() imageViewerException = new EventEmitter<ViewerException>();
 
