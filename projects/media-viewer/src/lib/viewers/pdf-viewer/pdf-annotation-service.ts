@@ -26,6 +26,7 @@ export class PdfAnnotationService {
 
   highlightMode: BehaviorSubject<boolean>;
   drawMode: BehaviorSubject<boolean>;
+  enableAnnotations: boolean;
 
   constructor(
     private readonly componentFactoryResolver: ComponentFactoryResolver,
@@ -42,9 +43,10 @@ export class PdfAnnotationService {
     this.pdfViewer = pdfViewer;
   }
 
-  setupAnnotationSet(annotationSet: AnnotationSet) {
+  setupAnnotationSet(annotationSet: AnnotationSet, enableAnnotations: boolean) {
     this.destroyComponents();
-    if (annotationSet) {
+    this.enableAnnotations = enableAnnotations;
+    if (this.enableAnnotations && annotationSet) {
       this.annotationSet = annotationSet;
       this.annotationSet.annotations.forEach(annotation => {
         if (!this.pages.includes(annotation.page)) {
@@ -143,6 +145,7 @@ export class PdfAnnotationService {
     const component = this.viewContainerRef.createComponent(factory);
     component.instance.annotationSet = this.annotationSet;
     component.instance.page = page;
+    component.instance.enableAnnotations = this.enableAnnotations;
     return component;
   }
 }

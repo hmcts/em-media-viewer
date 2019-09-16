@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 export class CommentSetComponent implements OnInit, OnDestroy {
 
   @Input() annotationSet: AnnotationSet;
+  @Input() enableAnnotations: boolean;
   @Input() page: number;
   @Input() zoom: number;
   @Input() rotate: number;
@@ -55,23 +56,25 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   initialise(eventSource: PageEvent['source']) {
-    this.setCommentSetValues(eventSource);
-    const element = eventSource.div;
+    if (this.enableAnnotations) {
+      this.setCommentSetValues(eventSource);
+      const element = eventSource.div;
 
-    if (!this.pageContainer) {
-      const pageWrapper =  document.createElement('div');
-      pageWrapper.setAttribute('class', 'pageWrapper');
+      if (!this.pageContainer) {
+        const pageWrapper =  document.createElement('div');
+        pageWrapper.setAttribute('class', 'pageWrapper');
 
-      const pageContainer =  document.createElement('div');
-      pageContainer.setAttribute('class', 'pageContainer');
-      element.insertAdjacentElement('beforebegin', pageContainer);
-      pageWrapper.appendChild(element);
-      pageContainer.appendChild(pageWrapper);
+        const pageContainer =  document.createElement('div');
+        pageContainer.setAttribute('class', 'pageContainer');
+        element.insertAdjacentElement('beforebegin', pageContainer);
+        pageWrapper.appendChild(element);
+        pageContainer.appendChild(pageWrapper);
 
-      this.pageContainer = pageContainer;
-      this.pageWrapper = pageWrapper;
+        this.pageContainer = pageContainer;
+        this.pageWrapper = pageWrapper;
+      }
+      this.pageContainer.appendChild(this.container.nativeElement);
     }
-    this.pageContainer.appendChild(this.container.nativeElement);
   }
 
   setCommentSetValues(eventSource: PageEvent['source']) {
