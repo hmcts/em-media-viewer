@@ -11,6 +11,10 @@ export class PopupToolbarComponent {
   readonly defaultHeight;
   readonly defaultWidth;
 
+  readonly LEFT_MAX_VALUE = 464;
+  readonly TOP_MAX_VALUE_90 = 351.5;
+  readonly TOP_MAX_VALUE_270 = 705;
+
   @Input() rectangle: Rectangle;
   @Input() zoom = 1;
   @Input() rotate = 0;
@@ -51,8 +55,8 @@ export class PopupToolbarComponent {
       const top = this.rectangle.y * this.zoom + this.rectangle.height / 2 * this.zoom + this.defaultWidth / 2;
       if (top >= this.height) {
         return this.height;
-      } else if (top < 351.5) {
-        return 351.5;
+      } else if (top < this.TOP_MAX_VALUE_90) {
+        return this.TOP_MAX_VALUE_90;
       } else {
         return top;
       }
@@ -65,8 +69,8 @@ export class PopupToolbarComponent {
       const top = (this.rectangle.y + (this.rectangle.height / 2)) * this.zoom - (this.defaultWidth / 2);
       if (top <= 0) {
         return 0;
-      } else if (top > 705) {
-        return 705;
+      } else if (top > this.TOP_MAX_VALUE_270) {
+        return this.TOP_MAX_VALUE_270;
       } else {
         return top;
       }
@@ -79,8 +83,8 @@ export class PopupToolbarComponent {
       const left = (this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.defaultWidth / 2);
       if (left <= 0) {
         return 0;
-      } else if (left > 464) {
-        return 464;
+      } else if (left > this.LEFT_MAX_VALUE) {
+        return this.LEFT_MAX_VALUE;
       } else {
         return left;
       }
