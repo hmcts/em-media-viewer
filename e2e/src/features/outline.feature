@@ -12,7 +12,7 @@ Feature: PDF Viewer outline and bookmark
   @EM-2090
   Scenario Outline: Navigate through outline and bookmark
     When I open document outline sidebar
-    When I choose to navigate to "<link>"
+    And I choose to navigate to "<link>"
     Then I expect the page navigation should take me to the expected "<page_number>"
 
     Examples:
