@@ -95,7 +95,7 @@ export class CommentComponent implements OnChanges {
   }
 
   public onSave() {
-    this._comment.content = this.fullComment;
+    this._comment.content = this.fullComment.length > 5000 ? this.fullComment.slice(0, 5000) : this.fullComment;
     this.updated.emit(this._comment);
     this.editable = false;
   }
