@@ -79,7 +79,7 @@ describe('PopupToolbarComponent', () => {
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.left).toEqual('30px');
-    expect(element.styles.top).toEqual('351.5px');
+    expect(element.styles.top).toEqual('350px');
   });
 
   it('rotate 180 should align to left and horizontally with highlight (accounting for highlight dimensions)', () => {
@@ -131,12 +131,12 @@ describe('PopupToolbarComponent', () => {
     expect(element.styles.top).toEqual('85px');
   });
 
-  it('rotate 270 should align top to 705px when annotation is at the far right of the page', () => {
+  it('rotate 270 should align top to 735px when annotation is at the far right of the page', () => {
     component.rotate = 270;
     component.rectangle.y = 900;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.top).toEqual('705px');
+    expect(element.styles.top).toEqual('735px');
   });
 
   it('left should default to 0px when annotation is at the far left of the page', () => {
@@ -147,12 +147,12 @@ describe('PopupToolbarComponent', () => {
     expect(element.styles.left).toEqual('0px');
   });
 
-  it('left should default to 464px when annotation is at the far right of the page', () => {
+  it('left should default to 475px when annotation is at the far right of the page', () => {
     component.rotate = 0;
     component.rectangle.x = 600;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.left).toEqual('464px');
+    expect(element.styles.left).toEqual('475px');
   });
 
   it('left should be set to calculated value when pop-up is not at the edge of the page', () => {
