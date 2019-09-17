@@ -21,7 +21,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   filename = 'filename';
   unsupportedType = 'txt';
 
-  selectedTab = 'pdf';
+  documentType = 'pdf';
   url;
   comments: Observable<Comment[]>;
 
@@ -38,11 +38,11 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   }
 
   ngAfterContentInit() {
-    this.selectTab(this.selectedTab);
+    this.setDocumentType(this.documentType);
   }
 
-  selectTab(newTab: string) {
-    this.selectedTab = newTab;
+  setDocumentType(newTab: string) {
+    this.documentType = newTab;
 
     if (newTab === 'pdf') {
       this.url = this.pdfUrl;
@@ -64,7 +64,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   }
 
   tabLinkStyle(currentTab: string) {
-    return `govuk-tabs__tab ${this.selectedTab === currentTab ? 'govuk-tabs__tab--selected' : ''}`;
+    return `govuk-tabs__tab ${this.documentType === currentTab ? 'govuk-tabs__tab--selected' : ''}`;
   }
 
   setDocumentUrl(newUrl: string) {
