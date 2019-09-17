@@ -18,4 +18,5 @@ Feature: PDF Viewer outline and bookmark
     Examples:
       |link|page_number|
       |Bundle>A. Section A - Chronology>Prepared Discharge Final Order|4|
+      |Bundle>E. Section D - Care Plans>Prepared Discharge Final Order|20|
 

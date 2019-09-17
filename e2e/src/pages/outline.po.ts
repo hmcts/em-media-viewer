@@ -5,7 +5,7 @@ import {String} from 'typescript-string-operations';
 export class OutlinePage extends AppPage {
 
   nodeToggleXpath: string = '//div[@class="outlineItem"]//a[text()="{0}"]/../div[contains(@class,"outlineItemToggler")]';
-  nodeLinkXpath: string = '//div[@class="outlineItem"]//a[text()="{0}"]';
+  nodeLinkXpath: string = '//div[@class="outlineItem"]//a[text()="{0}"]/../div[@class="outlineItems"]//a[text()="{1}"]';
 
   async expandOutlineNode(nodeText: string){
     nodeText = this.transformNodeText(nodeText);
@@ -31,19 +31,21 @@ export class OutlinePage extends AppPage {
     }
   }
 
-  async clickOnLink(nodeText: string){
+  async clickOnLink(parentNodeText: string, nodeText: string){
     nodeText = this.transformNodeText(nodeText);
-    let nodeLinkFullXpath = String.Format(this.nodeLinkXpath, nodeText);
+    parentNodeText = this.transformNodeText(parentNodeText);
+    let nodeLinkFullXpath = String.Format(this.nodeLinkXpath, parentNodeText, nodeText);
     await element(by.xpath(nodeLinkFullXpath)).click();
   }
 
   async navigateToLink(linkChain: string) {
     let splitLink = linkChain.split(`>`).reverse();
+    let node: string ='';
     for(let i = 0; i < splitLink.length; i++){
-      let node = splitLink.pop();
+      node = splitLink.pop();
       await this.expandOutlineNode(node);
     }
-    await this.clickOnLink(splitLink.pop());
+    await this.clickOnLink(node, splitLink.pop());
   }
 
   private transformNodeText(text:string): string{
