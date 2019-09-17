@@ -23,7 +23,7 @@
           </form>
         </details>
       </div>
-      <div *ngIf="selectedTab === 'unsupported'" class="govuk-grid-column-one-quarter">
+      <div *ngIf="documentType === 'unsupported'" class="govuk-grid-column-one-quarter">
         <details class="govuk-details">
           <summary class="govuk-details__summary">
             <span class="govuk-details__summary-text">Change document type</span>
@@ -39,7 +39,7 @@
             <span class="govuk-details__summary-text">Change download file</span>
           </summary>
           <div class="govuk-details__text">
-            <input *ngIf="selectedTab === 'pdf'" class="govuk-input" type="text" name="pdfFileName" [(ngModel)]="filename">
+            <input *ngIf="documentType === 'pdf'" class="govuk-input" type="text" name="pdfFileName" [(ngModel)]="filename">
           </div>
         </details>
       </div>
@@ -61,40 +61,30 @@
           </div>
         </div>
     </div>
-  </div>
-  <div class="govuk-tabs" data-module="tabs">
-    <div class="govuk-width-container">
-      <ul class="govuk-tabs__list">
-        <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('pdf')" id="pdf-tab" href="#pdf" (click)="selectTab('pdf')">
-            PDF Viewer
-          </a>
-        </li>
-        <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('image')" id="image-tab" href="#image" (click)="selectTab('image')">
-            Image Viewer
-          </a>
-        </li>
-        <li class="govuk-tabs__list-item">
-          <a [className]="tabLinkStyle('unsupported')" (click)="selectTab('unsupported')"
-             id="unsupported-tab" href="#unsupported">
-            Unsupported Documents Viewer
-          </a>
-        </li>
-      </ul>
+    <div class="govuk-grid-row govuk-!-width-two-thirds">
+        <button class="govuk-button govuk-!-margin-right-1 govuk-!-width-one-quarter" data-module="govuk-button"
+                [ngClass]="{ 'govuk-button--secondary': documentType !== 'pdf' }" id="pdf-button"
+                (click)="setDocumentType('pdf')">PDF
+        </button>
+      <button class="govuk-button govuk-!-margin-right-1 govuk-!-width-one-quarter"
+              [ngClass]="{ 'govuk-button--secondary': documentType !== 'image' }" id="image-button"
+              data-module="govuk-button" (click)="setDocumentType('image')">Image
+      </button>
+      <button class="govuk-button govuk-!-width-one-third" data-module="govuk-button" id="unsupported-button"
+              [ngClass]="{ 'govuk-button--secondary': documentType !== 'unsupported' }"
+              (click)="setDocumentType('unsupported')">Unsupported content
+      </button>
     </div>
-    <mv-comments-summary *ngIf="showCommentSummary | async"
-                         [title]="'Document Title'"
-                         [showCommentSummary]="showCommentSummary"
-                         [comments]="(comments | async) || []"></mv-comments-summary>
-    <section [id]="selectedTab">
-        <mv-media-viewer [url]="url"
-                         [downloadFileName]="filename"
-                         [contentType]="selectedTab"
-                         [showCommentSummary]="showCommentSummary"
-                         [enableAnnotations]="enableAnnotations"
-                         [showToolbar]="showToolbar"
-                         (mediaLoadStatus)="onMediaLoad($event)"></mv-media-viewer>
-    </section>
   </div>
+  <mv-comments-summary *ngIf="showCommentSummary | async"
+                       [title]="'Document Title'"
+                       [showCommentSummary]="showCommentSummary"
+                       [comments]="(comments | async) || []"></mv-comments-summary>
+  <mv-media-viewer [url]="url"
+                   [downloadFileName]="filename"
+                   [contentType]="documentType"
+                   [showCommentSummary]="showCommentSummary"
+                   [enableAnnotations]="enableAnnotations"
+                   [showToolbar]="showToolbar"
+                   (mediaLoadStatus)="onMediaLoad($event)"></mv-media-viewer>
 </div>
