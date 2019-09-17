@@ -48,32 +48,56 @@ export class PopupToolbarComponent {
       return top <= 0 ? this.defaultHeight : top;
 
     } else if (this.rotate === 90) {
-      const top = this.rectangle.y * this.zoom + this.rectangle.height/2 * this.zoom + this.defaultWidth/2;
-      return top >= this.height ? this.height : top;
+      const top = this.rectangle.y * this.zoom + this.rectangle.height / 2 * this.zoom + this.defaultWidth / 2;
+      if (top >= this.height) {
+        return this.height;
+      } else if (top < 351.5) {
+        return 351.5;
+      } else {
+        return top;
+      }
 
     } else if (this.rotate === 180) {
       const top = (this.rectangle.y + this.rectangle.height) * this.zoom + 10;
       return top >= this.height - this.defaultHeight ? this.height - this.defaultHeight : top;
 
     } else if (this.rotate === 270) {
-      const top = (this.rectangle.y + (this.rectangle.height/2)) * this.zoom - (this.defaultWidth/2);
-      return top <= 0 ? 0 : top;
+      const top = (this.rectangle.y + (this.rectangle.height / 2)) * this.zoom - (this.defaultWidth / 2);
+      if (top <= 0) {
+        return 0;
+      } else if (top > 705) {
+        return 705;
+      } else {
+        return top;
+      }
 
     }
   }
 
   get left() {
     if (this.rotate === 0) {
-      const left = (this.rectangle.x + (this.rectangle.width/2)) * this.zoom - (this.defaultWidth/2);
-      return left <= 0 ? 0 : left;
+      const left = (this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.defaultWidth / 2);
+      if (left <= 0) {
+        return 0;
+      } else if (left > 464) {
+        return 464;
+      } else {
+        return left;
+      }
 
     } else if (this.rotate === 90) {
       const left = (this.rectangle.x * this.zoom) - (this.defaultHeight);
       return left <= 0 ? this.defaultHeight : left;
 
     } else if (this.rotate === 180) {
-      const left = ((this.rectangle.x + (this.rectangle.width/2)) * this.zoom - (this.defaultWidth/2));
-      return left >= this.width - this.defaultWidth ? this.width - this.defaultWidth : left;
+      const left = ((this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.defaultWidth / 2));
+      if (left >= this.width - this.defaultWidth) {
+        return this.width - this.defaultWidth;
+      } else if (left <= 0) {
+        return 0;
+      } else {
+        return left;
+      }
 
     } else if (this.rotate === 270) {
       const left = (this.rectangle.x + (this.rectangle.width)) * this.zoom + this.defaultHeight;
