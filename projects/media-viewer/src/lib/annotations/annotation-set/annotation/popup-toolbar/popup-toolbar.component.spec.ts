@@ -106,6 +106,14 @@ describe('PopupToolbarComponent', () => {
     expect(element.styles.top).toEqual('70px');
   });
 
+  it('rotate 90 should set top to calculated value when pop-up is not at the edge of the page', () => {
+    component.rotate = 90;
+    component.rectangle.y = 200;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.top).toEqual('385px');
+  });
+
   it('rotate 90 should align top to the height of the page when annotation is at far left of page', () => {
     component.rotate = 90;
     component.rectangle.y = 600;
@@ -113,6 +121,14 @@ describe('PopupToolbarComponent', () => {
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.top).toEqual('750px');
+  });
+
+  it('rotate 270 should set top to calculated value when pop-up is not at the edge of the page', () => {
+    component.rotate = 270;
+    component.rectangle.y = 250;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.top).toEqual('85px');
   });
 
   it('rotate 270 should align top to 705px when annotation is at the far right of the page', () => {
@@ -139,6 +155,14 @@ describe('PopupToolbarComponent', () => {
     expect(element.styles.left).toEqual('464px');
   });
 
+  it('left should be set to calculated value when pop-up is not at the edge of the page', () => {
+    component.rotate = 0;
+    component.rectangle.x = 250;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('125px');
+  });
+
   it('rotate 180 should align left to width - defaultWidth when annotation is at the far left of the page', () => {
     component.rotate = 180;
     component.rectangle.x = 750;
@@ -146,5 +170,13 @@ describe('PopupToolbarComponent', () => {
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.left).toEqual('0px');
+  });
+
+  it('rotate 180 should set left to calculated value when pop-up is not at the edge of the page', () => {
+    component.rotate = 180;
+    component.rectangle.x = 250;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('125px');
   });
 });
