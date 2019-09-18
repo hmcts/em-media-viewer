@@ -10,6 +10,7 @@ import {SearchPage} from '../pages/search.po';
 import {RotatePage} from '../pages/rotate.po';
 import {CommentPage} from '../pages/comment.po';
 import {ZoomPage} from '../pages/zoom.po';
+import {OutlinePage} from "../pages/outline.po";
 
 
 const page = new AppPage();
@@ -21,6 +22,7 @@ const searchPage = new SearchPage();
 const rotatePage = new RotatePage();
 const commentsPage = new CommentPage();
 const zoomPage = new ZoomPage();
+const outlinePage = new OutlinePage();
 
 const comment_ellipsis = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
 const comment_1 = 'This is comment number 1';
@@ -405,4 +407,17 @@ Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOptio
       console.log('please select the correct input type...');
       break;
   }
+});
+
+When('I open document outline sidebar', async () => {
+  await toolBar.openOutLineSidebar();
+});
+
+Then('I should be able to see bundle node and expand', async () => {
+  await outlinePage.expandOutlineNode('Bundle');
+});
+
+
+When('I choose to navigate to {string}', async function (link:string) {
+  await outlinePage.navigateToLink(link);
 });
