@@ -75,11 +75,11 @@ export class PopupToolbarComponent {
   }
 
   get left() {
-    if (this.rotate === 0) {
+    if (this.rotate === 0 || this.rotate === 180) {
       const left = (this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.defaultWidth / 2);
       if (left <= 0) {
         return 0;
-      } else if (left > this.width - this.defaultWidth) {
+      } else if (left >= this.width - this.defaultWidth) {
         return this.width - this.defaultWidth;
       } else {
         return left;
@@ -88,16 +88,6 @@ export class PopupToolbarComponent {
     } else if (this.rotate === 90) {
       const left = (this.rectangle.x * this.zoom) - (this.defaultHeight);
       return left <= 0 ? this.defaultHeight : left;
-
-    } else if (this.rotate === 180) {
-      const left = ((this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.defaultWidth / 2));
-      if (left >= this.width - this.defaultWidth) {
-        return this.width - this.defaultWidth;
-      } else if (left <= 0) {
-        return 0;
-      } else {
-        return left;
-      }
 
     } else if (this.rotate === 270) {
       const left = (this.rectangle.x + (this.rectangle.width)) * this.zoom + this.defaultHeight;
