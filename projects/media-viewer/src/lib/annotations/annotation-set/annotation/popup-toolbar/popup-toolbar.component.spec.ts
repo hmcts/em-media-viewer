@@ -79,14 +79,14 @@ describe('PopupToolbarComponent', () => {
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.left).toEqual('30px');
-    expect(element.styles.top).toEqual('285px');
+    expect(element.styles.top).toEqual('350px');
   });
 
   it('rotate 180 should align to left and horizontally with highlight (accounting for highlight dimensions)', () => {
     component.rotate = 180;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.left).toEqual('-25px');
+    expect(element.styles.left).toEqual('0px');
     expect(element.styles.top).toEqual('130px');
   });
 
@@ -98,15 +98,85 @@ describe('PopupToolbarComponent', () => {
     expect(element.styles.top).toEqual('0px');
   });
 
-  it('top should default to 30px when annotation is at the top of the page', () => {
+  it('top should default to 70px when annotation is at the top of the page', () => {
+    component.rotate = 0;
     component.rectangle.y = 0;
+    fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.top).toEqual('30px');
+    expect(element.styles.top).toEqual('70px');
+  });
+
+  it('rotate 90 should set top to calculated value when pop-up is not at the edge of the page', () => {
+    component.rotate = 90;
+    component.rectangle.y = 200;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.top).toEqual('385px');
+  });
+
+  it('rotate 90 should align top to the height of the page when annotation is at far left of page', () => {
+    component.rotate = 90;
+    component.rectangle.y = 600;
+    component.height = 750;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.top).toEqual('750px');
+  });
+
+  it('rotate 270 should set top to calculated value when pop-up is not at the edge of the page', () => {
+    component.rotate = 270;
+    component.rectangle.y = 250;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.top).toEqual('85px');
+  });
+
+  it('rotate 270 should align top to 735px when annotation is at the far right of the page', () => {
+    component.rotate = 270;
+    component.rectangle.y = 900;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.top).toEqual('735px');
   });
 
   it('left should default to 0px when annotation is at the far left of the page', () => {
+    component.rotate = 0;
     component.rectangle.x = 0;
+    fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.left).toEqual('0px');
+  });
+
+  it('left should default to 475px when annotation is at the far right of the page', () => {
+    component.rotate = 0;
+    component.rectangle.x = 600;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('475px');
+  });
+
+  it('left should be set to calculated value when pop-up is not at the edge of the page', () => {
+    component.rotate = 0;
+    component.rectangle.x = 250;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('125px');
+  });
+
+  it('rotate 180 should align left to width - defaultWidth when annotation is at the far left of the page', () => {
+    component.rotate = 180;
+    component.rectangle.x = 750;
+    component.width = 350;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('0px');
+  });
+
+  it('rotate 180 should set left to calculated value when pop-up is not at the edge of the page', () => {
+    component.rotate = 180;
+    component.rectangle.x = 250;
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('div'));
+    expect(element.styles.left).toEqual('125px');
   });
 });

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
