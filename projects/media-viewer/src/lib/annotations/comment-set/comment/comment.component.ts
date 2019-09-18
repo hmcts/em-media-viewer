@@ -12,6 +12,7 @@ import { SelectionAnnotation } from '../../annotation.service';
 export class CommentComponent implements OnChanges {
 
   readonly MAX_COMMENT_LENGTH;
+  readonly COMMENT_CHAR_LIMIT;
 
   lastUpdate: string;
   originalComment: string;
@@ -37,6 +38,7 @@ export class CommentComponent implements OnChanges {
 
   constructor() {
     this.MAX_COMMENT_LENGTH = 48;
+    this.COMMENT_CHAR_LIMIT = 5000;
   }
 
   ngOnChanges(): void {
@@ -95,7 +97,7 @@ export class CommentComponent implements OnChanges {
   }
 
   public onSave() {
-    this._comment.content = this.fullComment.length > 5000 ? this.fullComment.slice(0, 5000) : this.fullComment;
+    this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
     this.updated.emit(this._comment);
     this.editable = false;
   }
