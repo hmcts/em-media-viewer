@@ -12,7 +12,7 @@
       {{ lastUpdate | date: 'd MMMM y h:mm a' }}
     </time>
   </div>
-  <textarea [hidden]="!selected" #textArea type="text" required name="content" maxlength="5000" (focusout)="onFocusOut()"
+  <textarea [hidden]="!selected" #textArea type="text" required name="content" [maxlength]="COMMENT_CHAR_LIMIT" (focusout)="onFocusOut()"
             [ngClass]="commentStyle()" [(ngModel)]="commentText" [readOnly]="!editable">
   </textarea>
   <div *ngIf="!selected" class="unselectedText">
