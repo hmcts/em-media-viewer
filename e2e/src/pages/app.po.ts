@@ -74,9 +74,13 @@ export class AppPage {
     }, 10000, 'failed to load search results');
   }
 
-  async getClassAttributeOfAnElement(selector: By): Promise<string[]> {
+  async getClassAttributeOfAnElementLocator(selector: By): Promise<string[]> {
+    return await this.getClassAttributeOfAnElement(element(selector));
+  }
+
+  async getClassAttributeOfAnElement(element: ElementFinder): Promise<string[]> {
     var splitClasses: string[] = [];
-    return await element(selector).getAttribute('class').then((classes) => {
+    return await element.getAttribute('class').then((classes) => {
       splitClasses = classes.split(' ');
       return splitClasses;
     }).catch(() => {
