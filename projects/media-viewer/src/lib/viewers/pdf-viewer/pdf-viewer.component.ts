@@ -109,6 +109,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       }
       this.loadDocument();
     }
+    if (changes.annotationSet && this.annotationSet) {
+      console.log('annoationSet changing', this.annotationSet);
+      this.loadDocument();
+    }
   }
 
   ngOnDestroy(): void {
@@ -118,7 +122,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private async loadDocument() {
     await this.pdfWrapper.loadDocument(this.url);
-    if (this.enableAnnotations) {
+    if (this.enableAnnotations && this.annotationSet) {
       this.annotationService.setupAnnotationSet(this.annotationSet);
     }
   }
