@@ -20,7 +20,7 @@
   <div *ngIf="!selected" class="unselectedText">
     {{fullComment}}
   </div>
-  <ng-container *ngIf="!selected && !this.editable">
+  <ng-container *ngIf="selected || this.editable">
     <div class="aui-comment__footer commentBtns">
       <button *ngIf="!editable; else Save"
               class="govuk-button" type="submit" role="button"
