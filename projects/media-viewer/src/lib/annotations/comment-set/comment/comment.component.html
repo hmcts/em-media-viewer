@@ -20,19 +20,21 @@
   <div *ngIf="!selected" class="unselectedText">
     {{fullComment}}
   </div>
-  <div [hidden]="!selected && !this.editable" class="aui-comment__footer commentBtns">
-    <button *ngIf="!editable; else Save"
-            class="govuk-button" type="submit" role="button"
-            (click)="onEdit()">
-      Edit
-    </button>
-    <button *ngIf="!editable; else Cancel"
-            (click)="onDelete()"
-            class="govuk-button govuk-button--secondary"
-            role="button">
-      Delete
-    </button>
-  </div>
+  <ng-container *ngIf="!selected && !this.editable">
+    <div class="aui-comment__footer commentBtns">
+      <button *ngIf="!editable; else Save"
+              class="govuk-button" type="submit" role="button"
+              (click)="onEdit()">
+        Edit
+      </button>
+      <button *ngIf="!editable; else Cancel"
+              (click)="onDelete()"
+              class="govuk-button govuk-button--secondary"
+              role="button">
+        Delete
+      </button>
+    </div>
+  </ng-container>
   <ng-template #Save>
     <button class="govuk-button" type="submit" role="button" (click)="onSave()">
       Save
