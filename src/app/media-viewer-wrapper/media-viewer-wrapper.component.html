@@ -71,8 +71,8 @@
               data-module="govuk-button" (click)="setDocumentType('image')">Image
       </button>
       <button class="govuk-button govuk-!-width-one-third" data-module="govuk-button" id="unsupported-button"
-              [ngClass]="{ 'govuk-button--secondary': documentType !== 'unsupported' }"
-              (click)="setDocumentType('unsupported')">Unsupported content
+              [ngClass]="{ 'govuk-button--secondary': documentType !== null }"
+              (click)="setDocumentType(null)">Unsupported content
       </button>
     </div>
   </div>
