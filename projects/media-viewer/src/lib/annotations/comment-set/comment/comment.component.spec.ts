@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommentComponent } from './comment.component';
 import { FormsModule } from '@angular/forms';
@@ -47,7 +47,7 @@ describe('CommentComponent', () => {
     },
   };
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
         CommentComponent,
@@ -60,7 +60,7 @@ describe('CommentComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentComponent);
@@ -120,34 +120,27 @@ describe('CommentComponent', () => {
     expect(component.editable).toBe(true);
   });
 
-  it('should set comments to non-editable', () => {
+  it('should set comments to non-editable', fakeAsync(() => {
     component.editable = true;
+    component.selected = true;
+
+    waitForChanges();
     component.onCancel();
+
     expect(component.editable).toBe(false);
-  });
+  }));
 
-  // it('should set focus on textArea when comment made editable', (done) => {
-  //   spyOn(component.textArea.nativeElement, 'focus');
-
-  //   component.editable = true;
-
-  //   expect(component.selected).toBe(true);
-
-  //   setTimeout(() => {
-  //     expect(component.textArea.nativeElement.focus).toHaveBeenCalledWith();
-  //     done();
-  //   }, 0);
-  // });
-
-  it('should not set focus on textArea when comment made non-editable', () => {
+  it('should not set focus on textArea when comment made non-editable', fakeAsync(() => {
     component.editable = true;
     component.selected = true;
     component.fullComment = 'test comment';
+
+    waitForChanges();
     component.onSave();
 
     expect(component.selected).toBe(true);
     expect(component.editable).toBe(false);
-  });
+  }));
 
   it('should set commentStyle to uneditable', () => {
     component.editable = false;
@@ -155,11 +148,15 @@ describe('CommentComponent', () => {
     expect(commentStyleValue).toContain('view-mode');
   });
 
-  it('should set commentStyle to editable', () => {
+  it('should set commentStyle to editable', fakeAsync(() => {
     component.editable = true;
+    component.selected = true;
+
+    waitForChanges();
+
     const commentStyleValue = component.commentStyle();
     expect(commentStyleValue).toContain('edit-mode');
-  });
+  }));
 
   it('should set commentStyle to unselected', () => {
     component.selected = false;
@@ -176,32 +173,27 @@ describe('CommentComponent', () => {
   it('should get selected short comment', () => {
     component.selected = true;
     component.fullComment = 'short comment';
-    const retrievedCommentText = component.commentText;
-    expect(retrievedCommentText).toBe('short comment');
+
+    fixture.detectChanges();
+
+    const expectedText = fixture.debugElement
+      .query(element => element.name === 'textarea').attributes['ng-reflect-model'];
+
+    expect(expectedText.trim()).toBe('short comment');
   });
 
   it('should get unselected short comment', () => {
     component.selected = false;
     component.fullComment = 'short comment';
-    const retrievedCommentText = component.commentText;
-    expect(retrievedCommentText).toBe('short comment');
+
+    fixture.detectChanges();
+
+    expect(nativeElement.querySelector('.unselectedText').textContent.trim()).toBe('short comment');
   });
 
-  it('should get unselected long comment', () => {
-    component.selected = false;
-    component.fullComment = 'This comment is longer than the maximum comment length, ' +
-      `which is ${component.MAX_COMMENT_LENGTH}. Therefore, the comment should be shortened.`;
-    const retrievedCommentText = component.commentText;
-    expect(retrievedCommentText).toBe('This comment is longer than the maximum comme...');
-  });
-
-  it('should get selected long comment', () => {
-    component.selected = true;
-    const longComment = `This comment is longer than the maximum comment length, which is ${component.MAX_COMMENT_LENGTH}. ` +
-      'Therefore, the comment should be shortened.';
-    component.fullComment = longComment;
-    const retrievedCommentText = component.commentText;
-    expect(retrievedCommentText).toBe(longComment);
-  });
-
+  const waitForChanges = () => {
+    fixture.detectChanges();
+    tick(10);
+    fixture.detectChanges();
+  }
 });

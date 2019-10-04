@@ -45,7 +45,6 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Clean up any subscriptions that we may have
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
