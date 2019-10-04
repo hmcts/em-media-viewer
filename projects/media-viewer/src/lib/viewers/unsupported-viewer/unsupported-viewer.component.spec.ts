@@ -18,11 +18,11 @@ describe('UnsupportedViewerComponent', () => {
     .compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     fixture = TestBed.createComponent(UnsupportedViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -30,7 +30,10 @@ describe('UnsupportedViewerComponent', () => {
 
   it('should click download button', () => {
     const clickSpy = spyOn(component.downloadLink.nativeElement, 'click');
+
     component.toolbarEvents.download.next();
+    fixture.detectChanges();
+
     expect(clickSpy).toHaveBeenCalledWith();
   });
 

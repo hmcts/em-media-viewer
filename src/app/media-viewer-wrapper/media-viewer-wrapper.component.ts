@@ -1,9 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/annotations/annotation-api.service';
 import {
-  defaultImageOptions,
-  defaultPdfOptions,
-  defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
 } from '../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
 import { AfterContentInit, Component } from '@angular/core';
@@ -19,7 +16,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   imageUrl = 'assets/example.jpg';
   unsupportedUrl = 'assets/unsupported.txt';
   filename = 'filename';
-  unsupportedType = 'txt';
+  unsupportedType = null;
 
   documentType = 'pdf';
   url;
@@ -61,10 +58,6 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   toggleAnnotations(showAnnotations: boolean) {
     this.enableAnnotations = showAnnotations;
     this.toolbarButtons.showHighlightButton = showAnnotations;
-  }
-
-  tabLinkStyle(currentTab: string) {
-    return `govuk-tabs__tab ${this.documentType === currentTab ? 'govuk-tabs__tab--selected' : ''}`;
   }
 
   setDocumentUrl(newUrl: string) {

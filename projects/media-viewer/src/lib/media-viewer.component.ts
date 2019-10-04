@@ -59,7 +59,7 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   }
 
   contentTypeUnsupported(): boolean {
-    return !Object.keys(SupportedContentTypes).includes(this.contentType.toUpperCase());
+    return this.contentType === null || !Object.keys(SupportedContentTypes).includes(this.contentType.toUpperCase());
   }
 
   ngOnChanges(changes: SimpleChanges) {

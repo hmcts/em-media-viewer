@@ -59,6 +59,11 @@ describe('MediaViewerComponent', () => {
     expect(component.contentTypeUnsupported()).toBeTruthy();
   });
 
+  it('should not support content when content type is null', () => {
+    component.contentType = null;
+    expect(component.contentTypeUnsupported()).toBeTruthy();
+  });
+
   it('should reset the event state when the url is changed', async () => {
     component.toolbarEvents.zoomValue.next(2);
     component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });

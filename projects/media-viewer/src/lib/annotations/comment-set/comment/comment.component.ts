@@ -115,16 +115,6 @@ export class CommentComponent implements OnChanges {
     }
   }
 
-  get commentText() {
-    return !this.selected && this.fullComment.length > this.MAX_COMMENT_LENGTH
-      ? this.fullComment.substring(0, this.MAX_COMMENT_LENGTH - 3) + '...'
-      : this.fullComment;
-  }
-
-  set commentText(text: string) {
-    this.fullComment = text;
-  }
-
   formNgStyle() {
     return {
       top: (this.commentTopPos * this.zoom) + 'px'
