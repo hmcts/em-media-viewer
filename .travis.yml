@@ -22,7 +22,7 @@ script:
 - npm install
 - npm run package
 - npm test
-# - npm run e2e:travis
+- npm run e2e:ci
 after_success:
 - npm run test:codecov-upload
 - npm run test:coveralls-upload
