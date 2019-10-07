@@ -13,7 +13,7 @@ Feature: Search
 
     Examples:
       | keyword_search | search_results_count |
-      | Trace Trees    | 1 of 19 matches      |
+      | family court    | 1 of 5 matches      |
 
   @EM-1246 @SingleWord_Search
   Scenario Outline: Enable Search within a document
@@ -23,7 +23,7 @@ Feature: Search
 
     Examples:
       | search_word  | search_results_count |
-      | Introduction | 1 of 1 matches       |
+      | children | 1 of 88 matches       |
 
   @EM-1246 @No_Search_Results
   Scenario Outline: Enable Search within a document
