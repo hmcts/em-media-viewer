@@ -23,7 +23,6 @@ script:
 - npm run package
 - npm test
 - npm run e2e:ci
-- find ./ -type f -name 'chromedriver_77.0.3865.40'
 after_success:
 - npm run test:codecov-upload
 - npm run test:coveralls-upload
