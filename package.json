@@ -31,7 +31,7 @@
     "clean": "rimraf reports",
     "stub:annotations": "node api/annotation-stubs.js &",
     "webdriver:update": "cd ./node_modules/protractor && npm i webdriver-manager@latest",
-    "e2e": "npm run webdriver:update && npm run stub:annotations && ng e2e --webdriverUpdate=false",
+    "e2e": "npm run webdriver:update && npm run stub:annotations && ng e2e",
     "e2e:cucumber": "npm run e2e -- --protractor-config e2e/cucumber.conf.js",
     "e2e:ci": "npm run e2e -- --protractor-config 'e2e/ci.protractor.conf.js'"
   },
