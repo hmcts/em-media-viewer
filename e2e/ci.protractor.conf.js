@@ -4,6 +4,7 @@ const reporter = require('cucumber-html-reporter');
 const path = require('path');
 
 exports.config = {
+  directConnect: true,
   SELENIUM_PROMISE_MANAGER: false,
   allScriptsTimeout: 120000,
   getPageTimeout: 120000,
