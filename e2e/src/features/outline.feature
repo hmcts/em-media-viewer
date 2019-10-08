@@ -4,7 +4,7 @@ Feature: PDF Viewer outline and bookmark
   Background:
     Given I am on Media Viewer Page
 
-  @EM-2090
+  @EM-2090 @ci
   Scenario: Navigate through outline and bookmark
     When I open document outline sidebar
     Then I should be able to see bundle node and expand
