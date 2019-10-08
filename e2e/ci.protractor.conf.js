@@ -4,7 +4,6 @@ const reporter = require('cucumber-html-reporter');
 const path = require('path');
 
 exports.config = {
-  directConnect: true,
   SELENIUM_PROMISE_MANAGER: false,
   allScriptsTimeout: 120000,
   getPageTimeout: 120000,
@@ -19,6 +18,7 @@ exports.config = {
       args: ['--headless']
     }
   },
+  chromeDriver: '../node_modules/protractor/node_modules/webdriver-manager/selenium/chromedriver_77.0.3865.40',
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   specs: [
