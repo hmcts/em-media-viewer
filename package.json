@@ -28,12 +28,12 @@
     "test:codacy-upload": "cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
     "test:coveralls-upload": "cat ./reports/tests/coverage/ng/lcov.info | coveralls",
     "test:codecov-upload": "codecov -f ./reports/tests/coverage/ng/lcov.info",
-    "e2e": "ng e2e",
     "clean": "rimraf reports",
-    "annotations:stub": "node api/annotation-stubs.js",
+    "stub:annotations": "node api/annotation-stubs.js &",
     "webdriver:update": "webdriver-manager update --versions.chrome 77.0.3865.40 --versions.gecko v0.25.0",
-    "e2e:cucumber": "npm run webdriver:update && ng e2e --webdriverUpdate=false --protractor-config e2e/cucumber.conf.js",
-    "e2e:travis": "webdriver-manager update && ng e2e --webdriverUpdate=false --protractor-config 'e2e/ci.protractor.conf.js'"
+    "e2e": "npm run stub:annotations && ng e2e --webdriverUpdate=false",
+    "e2e:cucumber": "npm run webdriver:update && npm run e2e -- --protractor-config e2e/cucumber.conf.js",
+    "e2e:ci": "npm run webdriver:update && npm run stub:annotations && ng e2e --webdriverUpdate=false --protractor-config 'e2e/ci.protractor.conf.js'"
   },
   "dependencies": {
     "@angular-devkit/build-ng-packagr": "^0.13.9",

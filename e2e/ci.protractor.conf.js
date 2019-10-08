@@ -1,34 +1,56 @@
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
-
-const { SpecReporter } = require('jasmine-spec-reporter');
+const reporter = require('cucumber-html-reporter');
 const path = require('path');
 
 exports.config = {
-  allScriptsTimeout: 11000,
-  specs: [
-    './src/**/*.e2e-spec.ts'
-  ],
-  exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
+  SELENIUM_PROMISE_MANAGER: false,
+  allScriptsTimeout: 120000,
+  getPageTimeout: 120000,
+  framework: 'custom',
+  frameworkPath: require.resolve('protractor-cucumber-framework'),
   capabilities: {
-    browserName: 'firefox',
+    browserName: 'chrome',
+    chromeOptions: {
+      args: ['--headless']
+    },
     'moz:firefoxOptions': {
-      args: ["-headless"],
+      args: ['--headless']
     }
   },
+  chromeDriver: '../node_modules/protractor/node_modules/webdriver-manager/selenium/chromedriver_77.0.3865.40',
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
-  framework: 'jasmine',
-  jasmineNodeOpts: {
-    showColors: true,
-    defaultTimeoutInterval: 30000,
-    print: function() {}
-  },
-  onPrepare() {
+  specs: [
+    './src/**/*.feature',
+  ],
+  onPrepare: function () {
     require('ts-node').register({
       project: path.join(__dirname, './tsconfig.e2e.json')
     });
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-  }
+  },
+  onComplete: () => {
+    const options = {
+      theme: 'bootstrap',
+      jsonFile: './cucumber.json',
+      output: './reports/cucumber/cucumber.html',
+      reportSuiteAsScenarios: true,
+      launchReport: false,
+      metadata: {
+        'App Name': 'Media Viewer'
+      }
+    };
+    reporter.generate(options);
+  },
+  cucumberOpts: {
+    compiler: 'ts:ts-node/register',
+    strict: true,
+    plugin: ['pretty'],
+    format: 'json:./cucumber.json',
+    require: ['../e2e/src/step_definitions/*.ts'],
+    tags: "@ci",
+  },
+  noGlobals: true
+
 };
 
