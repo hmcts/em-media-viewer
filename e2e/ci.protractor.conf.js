@@ -12,9 +12,6 @@ exports.config = {
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   capabilities: {
     browserName: 'chrome',
-    chromeOptions: {
-      args: ['--headless']
-    },
     'moz:firefoxOptions': {
       args: ['--headless']
     }
