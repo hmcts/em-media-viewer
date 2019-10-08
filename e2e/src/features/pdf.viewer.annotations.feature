@@ -7,13 +7,13 @@ Feature: PDF Viewer Annotations
     When I click Annotate button
     Then I expect Annotate button must be enabled
 
-  @EM-1711 @PDF_Text_Highlight @ci
+  @EM-1711 @PDF_Text_Highlight
   Scenario: Add a comment to PDF Text highlight
     When I highlight text on a PDF document
     Then I expect text highlight popup should appear
 
 
-  @EM-1717 @PDF_Add_Annotation @CreateAnnotation
+  @EM-1717 @PDF_Add_Annotation @CreateAnnotation @ci
   Scenario: Highlight text and add comment
     When I highlight text on a PDF document
     Then I should be able to add comment for the highlight
@@ -32,7 +32,7 @@ Feature: PDF Viewer Annotations
     When I update the existing comment
     Then I verify the amended text has been saved
 
-  @EM-1991 @PDF_Non_Textual_Add_Comment @ci
+  @EM-1991 @PDF_Non_Textual_Add_Comment
   Scenario: Add Non Textual Highlight and add comment in pdf viewer
     When I highlight a portion of pdf in a Draw mode
     Then I should be able to add comment for the highlight

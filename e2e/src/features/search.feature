@@ -5,7 +5,7 @@ Feature: Search
     Given I am on Media Viewer Page
     Then I expect the page header to be "Media Viewer Demo"
 
-  @EM-1246 @MultipleWords_Search @ci
+  @EM-1246 @MultipleWords_Search
   Scenario Outline: Enable Search within a document
     When the user populate the content search field with a '<keyword_search>'
     Then the "<search_results_count>" are displayed and highlighted to the user
