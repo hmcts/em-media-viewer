@@ -10,8 +10,8 @@ exports.config = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   capabilities: {
-    browserName: 'firefox',
-    firefoxOptions: {
+    browserName: 'chrome',
+    chromeOptions: {
       args: ['--headless']
     },
     'moz:firefoxOptions': {
@@ -19,6 +19,7 @@ exports.config = {
     }
   },
   chromeDriver: '../node_modules/webdriver-manager/selenium/chromedriver_77.0.3865.40',
+  geckoDriver: '../node_modules/webdriver-manager/selenium/geckodriver-v0.25.0',
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   specs: [
