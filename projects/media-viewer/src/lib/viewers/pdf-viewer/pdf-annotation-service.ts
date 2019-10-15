@@ -71,19 +71,17 @@ export class PdfAnnotationService {
   }
 
   onPageRendered(pageRenderEvent: PageEvent) {
-    const annotationSetComponent = this.annotationSetComponents
-      .find((annotation) => annotation.instance.page === pageRenderEvent.pageNumber);
-    if (annotationSetComponent) {
-      annotationSetComponent.instance.addToDOM(pageRenderEvent.source);
-    }
+    this.annotationSetComponents
+      .filter(annotation => annotation.instance.page === pageRenderEvent.pageNumber)
+      .forEach(annotationSetComponent => annotationSetComponent.instance.addToDOM(pageRenderEvent.source));
 
     let commentSetComponent = this.commentSetComponents
       .find((commentSet) => commentSet.instance.page === pageRenderEvent.pageNumber);
-    if (!commentSetComponent) {
+    if (commentSetComponent) {
+      commentSetComponent.instance.setCommentSetValues(pageRenderEvent.source);
+    } else {
       commentSetComponent = this.setupCommentSet(pageRenderEvent.pageNumber);
       commentSetComponent.instance.addToDOM(pageRenderEvent.source);
-    } else if (commentSetComponent) {
-      commentSetComponent.instance.setCommentSetValues(pageRenderEvent.source);
     }
   }
 
