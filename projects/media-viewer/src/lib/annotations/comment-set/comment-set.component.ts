@@ -54,7 +54,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     }
   }
 
-  initialise(eventSource: PageEvent['source']) {
+  addToDOM(eventSource: PageEvent['source']) {
     this.setCommentSetValues(eventSource);
     const element = eventSource.div;
 

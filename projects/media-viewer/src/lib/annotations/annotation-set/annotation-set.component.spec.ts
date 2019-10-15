@@ -159,28 +159,29 @@ describe('AnnotationSetComponent', () => {
   });
 
   it('starts drawing on mousedown', () => {
-    component.newRectangle = new ElementRef(document.createElement('div'));
+    component.shapeRectangle = new ElementRef(document.createElement('div'));
     component.toolbarEvents.drawMode.next(true);
-    const initialiseNewRectSpy = spyOn<any>(component, 'initialiseNewRect').and.callThrough();
+    const initialiseNewRectSpy = spyOn<any>(component, 'initShapeRectangle').and.callThrough();
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
 
     expect(initialiseNewRectSpy).toHaveBeenCalled();
-    expect(component.newRectangle.nativeElement.style.left).toEqual('10px');
-    expect(component.newRectangle.nativeElement.style.top).toEqual('10px');
+    expect(component.shapeRectangle.nativeElement.style.left).toEqual('10px');
+    expect(component.shapeRectangle.nativeElement.style.top).toEqual('10px');
   });
 
   it('does not mousedown if no annotationSet', () => {
     component.annotationSet = null;
-    const initialiseNewRectSpy = spyOn<any>(component, 'initialiseNewRect');
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
-    expect(initialiseNewRectSpy).toHaveBeenCalledTimes(0);
+
+    expect(component.drawStartX).toEqual(-1);
+    expect(component.drawStartY).toEqual(-1);
   });
 
   it('does not mousedown if not in draw mode', () => {
     spyOn<any>(component.toolbarEvents, 'drawMode').and.returnValue(false);
-    const initialiseNewRectSpy = spyOn<any>(component, 'initialiseNewRect');
-    component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
-    expect(initialiseNewRectSpy).toHaveBeenCalledTimes(0);
+
+    expect(component.drawStartX).toEqual(-1);
+    expect(component.drawStartY).toEqual(-1);
   });
 
   it('finishes drawing on mouseup', () => {
@@ -189,7 +190,7 @@ describe('AnnotationSetComponent', () => {
 
     const spy = spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
 
-    component.newRectangle = new ElementRef(document.createElement('div'));
+    component.shapeRectangle = new ElementRef(document.createElement('div'));
     component.toolbarEvents.drawMode.next(true);
     component.zoom = 1;
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
@@ -200,7 +201,7 @@ describe('AnnotationSetComponent', () => {
     expect(component.annotationSet.annotations[component.annotationSet.annotations.length - 1].id).toEqual('new');
   });
 
-  it('should use initialise method to set values', () => {
+  it('should use addToDOM method to set values', () => {
     const mockRealElement = document.createElement('div');
     const mockEventSource: PageEvent['source'] = {
       rotation: 0,
@@ -208,7 +209,7 @@ describe('AnnotationSetComponent', () => {
       div: mockRealElement
     };
 
-    component.initialise(mockEventSource);
+    component.addToDOM(mockEventSource);
     expect(component.zoom).toEqual(mockEventSource.scale);
     expect(component.rotate).toEqual(mockEventSource.rotation);
     expect(component.width).toEqual(mockEventSource.div.clientHeight);
@@ -218,10 +219,11 @@ describe('AnnotationSetComponent', () => {
 
   it('should create rectangles', async () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
-    const createRectangleSpy = spyOn<any>(component, 'createRectangle').and.returnValue(mockAnnotationRectangle);
-    const createAnnotationSpy = spyOn<any>(component, 'createAnnotation');
+    const createRectangleSpy = spyOn<any>(component, 'createTextRectangle').and.returnValue(mockAnnotationRectangle);
+    const createAnnotationSpy = spyOn<any>(component, 'createAnnotation').and.returnValue(fakeApi.returnedAnnotation);
+    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
     const removeRangesSpy = spyOn(mockSelection, 'removeAllRanges');
-    await component.createRectangles(mockHighlight);
+    await component.createTextHighlight(mockHighlight);
 
     expect(createRectangleSpy).toHaveBeenCalledTimes(2);
     expect(createRectangleSpy).toHaveBeenCalledWith(mockClientRect, mockTextLayerRect);
@@ -232,14 +234,14 @@ describe('AnnotationSetComponent', () => {
   it('should not create rectangles if not on right page', async () => {
     component.page = 2;
     const windowSpy = spyOn(window, 'getSelection');
-    await component.createRectangles(mockHighlight);
+    await component.createTextHighlight(mockHighlight);
     expect(windowSpy).toHaveBeenCalledTimes(0);
   });
 
   it('should not create rectangles if no window selection', async () => {
     spyOn(window, 'getSelection').and.returnValue(null);
-    const createRectangleSpy = spyOn<any>(component, 'createRectangle');
-    await component.createRectangles(mockHighlight);
+    const createRectangleSpy = spyOn<any>(component, 'createTextRectangle');
+    await component.createTextHighlight(mockHighlight);
 
     expect(createRectangleSpy).toHaveBeenCalledTimes(0);
     expect(createRectangleSpy).toHaveBeenCalledTimes(0);
@@ -248,14 +250,14 @@ describe('AnnotationSetComponent', () => {
   it('should not create rectangles if no selection range count', async () => {
     spyOn<any>(mockSelection, 'rangeCount').and.returnValue(null);
     const cloneRangeSpy = spyOn(mockSelection, 'getRangeAt');
-    await component.createRectangles(mockHighlight);
+    await component.createTextHighlight(mockHighlight);
     expect(cloneRangeSpy).toHaveBeenCalledTimes(0);
   });
 
   it('should not create rectangles if no selection range count', async () => {
     spyOn<any>(mockSelection, 'isCollapsed').and.returnValue(true);
     const cloneRangeSpy = spyOn(mockSelection, 'getRangeAt');
-    await component.createRectangles(mockHighlight);
+    await component.createTextHighlight(mockHighlight);
     expect(cloneRangeSpy).toHaveBeenCalledTimes(0);
   });
 
@@ -263,7 +265,7 @@ describe('AnnotationSetComponent', () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
     spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
 
-    await component.createRectangles(mockHighlight);
+    await component.createTextHighlight(mockHighlight);
 
     expect(component.selectedAnnotation).toEqual({ annotationId: fakeApi.returnedAnnotation.id, editable: false });
 
@@ -277,7 +279,7 @@ describe('AnnotationSetComponent', () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
     spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
 
-    await component.createRectangles(mockHighlight);
+    await component.createTextHighlight(mockHighlight);
 
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
@@ -292,7 +294,7 @@ describe('AnnotationSetComponent', () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
     spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
 
-    await component.createRectangles(mockHighlight);
+    await component.createTextHighlight(mockHighlight);
 
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
@@ -307,7 +309,7 @@ describe('AnnotationSetComponent', () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
     spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
 
-    await component.createRectangles(mockHighlight);
+    await component.createTextHighlight(mockHighlight);
 
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
@@ -322,7 +324,7 @@ describe('AnnotationSetComponent', () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
     spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
 
-    await component.createRectangles(mockHighlight);
+    await component.createTextHighlight(mockHighlight);
 
     const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
     const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
