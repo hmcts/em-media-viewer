@@ -115,7 +115,7 @@ describe('PdfAnnotationService', () => {
     expect(pdfService.pages).toEqual([]);
   });
 
-  // it('should initialise all the set components for the pdf viewer', () => {
+  // it('should addToDOM all the set components for the pdf viewer', () => {
   //   // setup
   //   spyOn<any>(pdfService, 'createAnnotationSetComponent');
   //   spyOn<any>(pdfService, 'createCommentSetComponent');
@@ -123,7 +123,7 @@ describe('PdfAnnotationService', () => {
   //   pdfService.setupCommentSet(1);
   //   const specificAnnotationSet = pdfService.annotationSetComponents.find((annotation) => annotation.instance.page === 1);
   //
-  //   spyOn(specificAnnotationSet.instance, 'initialise').and.callThrough();
+  //   spyOn(specificAnnotationSet.instance, 'addToDOM').and.callThrough();
   //   const mockRealElement = document.createElement('div');
   //   const mockEventSource: PageEvent = {
   //     pageNumber: 1,
@@ -136,7 +136,7 @@ describe('PdfAnnotationService', () => {
   //
   //   pdfService.onPageRendered(mockEventSource);
   //
-  //   expect(specificAnnotationSet.instance.initialise).toHaveBeenCalledWith(mockEventSource.source);
+  //   expect(specificAnnotationSet.instance.addToDOM).toHaveBeenCalledWith(mockEventSource.source);
   // });
 
   // it('should call on text selection with the mouse event', () => {
@@ -144,7 +144,7 @@ describe('PdfAnnotationService', () => {
   //   spyOn(toolbarEvent.highlightMode, 'getValue').and.returnValue(true);
   //   spyOn(mockWrapper, 'getPageNumber');
   //
-  //   pdfService.onHighlightSelected(mouseEvent);
+  //   pdfService.onTextHighlighted(mouseEvent);
   //
   //   expect(toolbarEvent.highlightMode.getValue).toHaveBeenCalled();
   //   setTimeout(() => {
@@ -155,10 +155,10 @@ describe('PdfAnnotationService', () => {
 
   // it('should highlight the text on selected page', () => {
   //   const mouseEvent = new MouseEvent('click');
-  //   spyOn(pdfService, 'onHighlightSelected').and.callThrough();
+  //   spyOn(pdfService, 'onTextHighlighted').and.callThrough();
   //   spyOn(toolbarEvent.highlightMode, 'getValue').and.returnValue(true);
-  //   pdfService.onHighlightSelected(mouseEvent);
+  //   pdfService.onTextHighlighted(mouseEvent);
   //
-  //   expect(pdfService.onHighlightSelected).toHaveBeenCalled();
+  //   expect(pdfService.onTextHighlighted).toHaveBeenCalled();
   // });
 });

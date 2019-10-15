@@ -103,7 +103,7 @@ export class AppPage {
       pageElement.dispatchEvent(mouseDownEvent);
       pageElement.dispatchEvent(mouseUpEvent);
 
-      let annotationElement = document.getElementsByClassName('newRectangle')[0];
+      let annotationElement = document.getElementsByClassName('shapeRectangle')[0];
 
       annotationElement.dispatchEvent(mouseDownEvent);
       annotationElement.dispatchEvent(mouseMoveEvent);

@@ -214,7 +214,7 @@ describe('CommentSetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should use initialise method to set the comment-set html', () => {
+  it('should use addToDOM method to set the comment-set html', () => {
     spyOn(component, 'setCommentSetValues');
     const mockRealElement = document.createElement('div');
     const mockEventSource: PageEvent['source'] = {
@@ -223,7 +223,7 @@ describe('CommentSetComponent', () => {
       div: mockRealElement
     };
 
-    component.initialise(mockEventSource);
+    component.addToDOM(mockEventSource);
     expect(component.setCommentSetValues).toHaveBeenCalledWith(mockEventSource);
     expect(mockEventSource.div.parentNode.parentNode).toEqual(component.pageContainer);
     expect(mockEventSource.div.parentNode).toEqual(component.pageWrapper);
