@@ -51,8 +51,8 @@ describe('PdfViewerComponent', () => {
   const mockAnnotationService = {
     init: () => {},
     setupAnnotationSet: () => {},
-    onPageSelected: () => {},
-    onHighlightSelected: () => {},
+    onShapeHighlighted: () => {},
+    onTextHighlighted: () => {},
     destroyComponents: () => {
       annotationsDestroyed = true;
     }
@@ -105,7 +105,7 @@ describe('PdfViewerComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('should initialise and load document', () => {
+  it('should addToDOM and load document', () => {
     component.url = 'a';
     spyOn(mockPrintService, 'printDocumentNatively');
     spyOn(mockAnnotationService, 'setupAnnotationSet');
@@ -181,20 +181,20 @@ describe('PdfViewerComponent', () => {
   it('should not highlight text when in view mode for selected page', () => {
     const mouseEvent = new MouseEvent('mouseup');
     spyOn(toolbarEvent.highlightMode, 'getValue').and.returnValue(false);
-    spyOn(mockAnnotationService, 'onHighlightSelected');
+    spyOn(mockAnnotationService, 'onTextHighlighted');
     spyOn(mockViewerEvent, 'onTextSelection');
 
     component.onMouseUp(mouseEvent);
 
-    expect(mockAnnotationService.onHighlightSelected).not.toHaveBeenCalled();
+    expect(mockAnnotationService.onTextHighlighted).not.toHaveBeenCalled();
     expect(mockViewerEvent.onTextSelection).not.toHaveBeenCalled();
   });
 
   it('should select the page', () => {
     const mouseEvent = new MouseEvent('mousedown');
-    spyOn(mockAnnotationService, 'onPageSelected');
+    spyOn(mockAnnotationService, 'onShapeHighlighted');
     component.onMouseDown(mouseEvent);
-    expect(mockAnnotationService.onPageSelected).not.toHaveBeenCalled();
+    expect(mockAnnotationService.onShapeHighlighted).not.toHaveBeenCalled();
   });
 
   it('should initialize loading of document', () => {
