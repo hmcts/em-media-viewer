@@ -71,41 +71,35 @@ export class PdfAnnotationService {
   }
 
   onPageRendered(pageRenderEvent: PageEvent) {
-    const annotationComponent = this.annotationSetComponents
-      .find((annotation) => annotation.instance.page === pageRenderEvent.pageNumber);
-    if (annotationComponent) {
-      annotationComponent.instance.initialise(pageRenderEvent.source);
-    }
+    this.annotationSetComponents
+      .filter(annotation => annotation.instance.page === pageRenderEvent.pageNumber)
+      .forEach(annotationSetComponent => annotationSetComponent.instance.addToDOM(pageRenderEvent.source));
 
     let commentSetComponent = this.commentSetComponents
       .find((commentSet) => commentSet.instance.page === pageRenderEvent.pageNumber);
-    if (!commentSetComponent) {
-      commentSetComponent = this.setupCommentSet(pageRenderEvent.pageNumber);
-      commentSetComponent.instance.initialise(pageRenderEvent.source);
-    } else if (commentSetComponent) {
+    if (commentSetComponent) {
       commentSetComponent.instance.setCommentSetValues(pageRenderEvent.source);
+    } else {
+      commentSetComponent = this.setupCommentSet(pageRenderEvent.pageNumber);
+      commentSetComponent.instance.addToDOM(pageRenderEvent.source);
     }
   }
 
-  onPageSelected(mouseEvent: MouseEvent) {
-    const pageEvent = {
-      pageNumber: this.pdfWrapper.getPageNumber(),
-      source: {
-        rotation: this.pdfWrapper.getNormalisedPagesRotation(),
-        scale: this.pdfWrapper.getCurrentPDFZoomValue(),
-        div: this.pdfViewer.nativeElement
-          .querySelector(`div.page[data-page-number="${this.pdfWrapper.getPageNumber()}"]`)
-      }
-    };
-
+  onShapeHighlighted(mouseEvent: MouseEvent) {
     if (this.toolbarEvents.highlightMode.getValue() || this.toolbarEvents.drawMode.getValue()) {
-      const currentPage = pageEvent.pageNumber;
+      const pageNumber = this.pdfWrapper.getPageNumber();
+      if (!this.pages.includes(pageNumber)) {
 
-      if (!this.pages.includes(currentPage)) {
-        this.pages.push(currentPage);
-        const annotationSetComponent = this.createAnnotationSetComponent(currentPage);
+        this.pages.push(pageNumber);
+        const annotationSetComponent = this.createAnnotationSetComponent(pageNumber);
         this.annotationSetComponents.push(annotationSetComponent);
-        annotationSetComponent.instance.initialise(pageEvent.source);
+
+        annotationSetComponent.instance.addToDOM({
+          rotation: this.pdfWrapper.getNormalisedPagesRotation(),
+          scale: this.pdfWrapper.getCurrentPDFZoomValue(),
+          div: this.pdfViewer.nativeElement
+            .querySelector(`div.page[data-page-number="${this.pdfWrapper.getPageNumber()}"]`)
+        });
       }
 
       if (this.toolbarEvents.drawMode.getValue()) {
@@ -119,7 +113,7 @@ export class PdfAnnotationService {
     }
   }
 
-  onHighlightSelected(mouseEvent: MouseEvent) {
+  onTextHighlighted(mouseEvent: MouseEvent) {
     if (this.toolbarEvents.highlightMode.getValue()) {
       setTimeout(() => {
         this.viewerEvents.onTextSelection({

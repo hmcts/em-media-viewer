@@ -161,10 +161,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onMouseDown(mouseEvent: MouseEvent) {
-    this.annotationService.onPageSelected(mouseEvent);
+    this.annotationService.onShapeHighlighted(mouseEvent);
   }
 
   onMouseUp(mouseEvent: MouseEvent) {
-    this.annotationService.onHighlightSelected(mouseEvent);
+    this.annotationService.onTextHighlighted(mouseEvent);
   }
 }
