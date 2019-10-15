@@ -67,7 +67,6 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
       this.api.annotationApiUrl = this.annotationApiUrl;
     }
     if (changes.url) {
-      this.setToolbarButtons();
       this.toolbarEvents.reset();
       if (this.enableAnnotations) {
         this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
@@ -76,6 +75,7 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
     if (changes.enableAnnotations && this.enableAnnotations) {
       this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
     }
+    this.setToolbarButtons();
   }
 
   onMediaLoad(status: ResponseType) {
