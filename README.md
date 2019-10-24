@@ -73,6 +73,20 @@ component entry point:
 
 The toolbar may be toggled off by setting `showToolbase` to false. The toolbar itself is available as a module that can be included into the DOM at a different location if necessary. 
 
+#### Toolbar Functionality
+
+The toolbar functionality is export so that the consuming service can set the default toolbar off and hook into the individual functions.
+
+```
+import { ToolbarEventService } from '@hmcts/media-viewer/lib/toolbar/toolbar-event.service';
+```
+```
+constructor(private readonly toolbarButtons: ToolbarEventService) {
+  }
+```
+```
+this.toolbarButtons.rotate.next(90);
+```
 ### Media Viewer Height and Width
 
 You can set height and width of the media viewer otherwise it will be set to default settings of 100%.
