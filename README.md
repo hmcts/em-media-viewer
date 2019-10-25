@@ -75,7 +75,7 @@ The toolbar may be toggled off by setting `showToolbase` to false. The toolbar i
 
 #### Toolbar Functionality
 
-The toolbar functionality is export so that the consuming service can set the default toolbar off and hook into the individual functions.
+The toolbar functionality is exported so that the consuming service can turn the default toolbar off and hook into the individual functions.
 
 ```
 import { ToolbarEventService } from '@hmcts/media-viewer/lib/toolbar/toolbar-event.service';
