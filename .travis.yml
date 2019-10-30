@@ -23,6 +23,8 @@ script:
 - npm run package
 - npm test
 - npm run e2e:ci
+- npm run start:ng
+- npm run test-pa11y
 after_success:
 - npm run test:codecov-upload
 - npm run test:coveralls-upload
