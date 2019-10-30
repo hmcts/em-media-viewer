@@ -1,0 +1,12 @@
+{
+  "defaults": {
+    "timeout": 10000,
+    "wait": 2000
+  },
+  "urls": [
+    {
+      "url": "http://localhost:3000",
+      "screenCapture": "reports/pa11y-screenshots/home.png"
+    }
+  ]
+}
