@@ -1,6 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 import { AfterContentInit, Component } from '@angular/core';
 import { Comment } from '../../../projects/media-viewer/src/lib/annotations/comment-set/comment/comment.model';
+import { ToolbarEventService } from '@hmcts/media-viewer/lib/toolbar/toolbar-event.service';
 
 @Component({
   selector: 'media-viewer-wrapper',
@@ -21,6 +22,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   mediaLoadStatus: string;
 
   showToolbar = true;
+  toolbarEvents;
   enableAnnotations = false;
   showCommentSummary = new Subject<boolean>();
   toolbarButtonOverrides: {};
@@ -61,5 +63,13 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   toggleToolbarBtns(toolbarButtonOverrides: any) {
     this.toolbarButtonOverrides = { ...toolbarButtonOverrides };
+  }
+
+  getToolbarFunctions(toolbarEvent: ToolbarEventService) {
+    this.mediaViewerComponent.r = toolbarEvent;
+  }
+
+  rotate() {
+    this.toolbarEvents.rotate.next(90);
   }
 }
