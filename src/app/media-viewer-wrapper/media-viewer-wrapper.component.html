@@ -90,5 +90,6 @@
                    [enableAnnotations]="enableAnnotations"
                    [showToolbar]="showToolbar"
                    [toolbarButtonOverrides]="toolbarButtonOverrides"
-                   (mediaLoadStatus)="onMediaLoad($event)"></mv-media-viewer>
+                   (mediaLoadStatus)="onMediaLoad($event)"
+                   (toolbarEventsOutput)="getToolbarFunctions($event)"></mv-media-viewer>
 </div>
