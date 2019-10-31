@@ -1,6 +1,5 @@
 {
   "defaults": {
-    "timeout": 10000,
     "wait": 2000
   },
   "urls": [
