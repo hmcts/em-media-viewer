@@ -1,10 +1,10 @@
 export interface Outline {
   bold: boolean;
-  color: [];
+  color: string[];
   count: number;
-  dest: [];
+  dest: {}[];
   italic: boolean;
-  items: [];
+  items: {}[];
   newWindow: any;
   title: string;
   unsafeUrl: any;
