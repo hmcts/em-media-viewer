@@ -4,12 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run build:node && ng build --prod && ng run media-viewer:serve",
-    "build:node": "cd api && npm run build",
+    "build": "ng build --prod && ng run media-viewer:serve",
     "start:ng": "ng serve --proxy-config proxy.config.js",
-    "start:node": "cd api && npm run start-dev-node",
-    "watch:node": "cd api && npm run watch-dev-node",
-    "postBuild": "ts-node ./scripts/css-bundle.ts",
     "copy-license": "cp ./README.md dist/media-viewer",
     "copy-readme": "cp ./LICENSE dist/media-viewer",
     "copy-docs": "npm run copy-readme && npm run copy-license",
