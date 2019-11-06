@@ -4,17 +4,11 @@
 
 This is an angular library that provides components to view and annotate PDF documents, as well as view images.
 
-### Building annotation library
+## Running demo app
 - npm run package
-- distributable will be created under dist/media-viewer
-
-### Running locally - dev mode
-- npm run package
-- npm run start:node
 - npm run start:ng
 
-### Add as a dependency in your angular app
-
+## Using in your Angular application
 add @hmcts/media-viewer as a dependency in package.json
 
 ```
@@ -63,55 +57,55 @@ component entry point:
 </mv-media-viewer>  
 ```
 
-#### backend setup
-- the media-viewer expects calls to the backend to be proxied by the consuming application. This includes the following APIs:
-  - '/documents', endpoint to be proxied to the 'document-store'
-  - '/em-anno', endpoint to be proxied to the 'annotations-api', if annotations are turned on
-
-
+##Customisations
 ### Toolbar
+The toolbar may be toggled off by setting `showToolbar` to false. The toolbar itself is available as a module that can be included into the DOM at a different location if necessary. 
 
-The toolbar may be toggled off by setting `showToolbase` to false. The toolbar itself is available as a module that can be included into the DOM at a different location if necessary. 
+### Toolbar buttons
+Toolbar buttons can be toggled on or off using the 'toolbarButtonOverrides' input.
+Each button can toggled on or off as follows:
+```
+toolbarButtons = { showRotate: true, showDownload: false }
+
+<mv-media-viewer ...
+                 [toolbarButtonOverrides]="toolbarButtons">
+</mv-media-viewer>  
+```
+The full list of buttons is as follows:
+```
+showPrint
+showDownload
+showNavigation
+showZoom
+showRotate
+showHighlightButton
+showDrawButton
+showSearchBar
+showSidebar
+```       
 
 ### Media Viewer Height and Width
-
 You can set height and width of the media viewer otherwise it will be set to default settings of 100%.
 
 ```
-<mv-media-viewer [url]="'assets/example.pdf'"
-                 [downloadFileName]="'example.pdf'"
-                 [showToolbar]="true"
-                 [contentType]="'pdf'"
+<mv-media-viewer ...
                  [height]="'500px'"
                  [width]="'500px'">
 </mv-media-viewer>  
 ```
 
-### Running development application (only for use with hmcts document store)
-- set environment variable to define if app connects to localhost or aat:
-  ```
-  export APP_ENV=local
-  ```
-- start app server
-  ```
-  yarn install; export S2S_SECRET={{insert secret here}}; export IDAM_SECRET={{insert secret here}}; export APP_ENV=local; yarn start-dev-proxy;
-  ```
-- start node server
-  ```
-  yarn install; export S2S_SECRET={{insert secret here}}; export IDAM_SECRET={{insert secret here}}; export APP_ENV=local; yarn watch-dev-node;
-  ``` 
-- go to http://localhost:3000 and the viewer should load the document.
-
-### Cucumber Tests
- ```
-  npm run package, npm run e2e:cucumber
-  ```
 ### Annotation API
-
 To override the default Annotation API path (or URL for cross domain calls) use "annotationApiUrl" parameter
+```
+<mv-media-viewer annotationApiUrl=""http://my-gateway.com/my-context-path""  ... >
+</mv-media-viewer>
+```
 
-<mv-media-viewer annotationApiUrl=""http://my-gateway.com/my-context-path""  ... ></mv-media-viewer>
-  
+## Backend setup
+- the media-viewer expects calls to the backend to be proxied by the consuming application. This includes the following APIs:
+  - '/documents', endpoint to be proxied to the 'document-store'
+  - '/em-anno', endpoint to be proxied to the 'annotations-api', if annotations are turned on
+
 ### Proxying the Annotation Api
 In order to use annotations on the media viewer, you need to proxy the calls.
 
@@ -133,7 +127,8 @@ How to use the proxy:
 ```
 this.app.use(proxy(annotation.endpoints, { target: annotation.target }));
 ```
-### Viewer Exceptions
+
+## Viewer Exceptions
 The Media Viewer will return load status and provide exceptions if thrown for the host application to consume.
 ```
     <mv-media-viewer [url]="'assets/example.pdf'"
@@ -162,3 +157,8 @@ The list of exceptions thrown by the Media Viewer are as follows:
 - UnexpectedResponseException
 - HttpErrorResponse
 - PasswordException
+
+## Cucumber Tests
+ ```
+  npm run package, npm run e2e:cucumber
+  ```
