@@ -1,35 +1,35 @@
 <div id="toolbarViewerLeft">
-  <button *ngIf="toolbarButtons.showSidebar" id="viewOutline" class="toolbarButton" title="Toggle Sidebar" tabindex="11"
+  <button *ngIf="toolbarButtons.showSidebar" id="viewOutline" class="toolbarButton" title="Toggle Sidebar" tabindex="0"
           data-l10n-id="toggle_sidebar" (click)="toggleSideBar()">
     <span data-l10n-id="toggle_sidebar_label">Toggle Sidebar</span>
   </button>
   <div class="toolbarButtonSpacer"></div>
   <button *ngIf="toolbarButtons.showSearchBar"
-          id="viewFind" class="toolbarButton" title="Find in Document" tabindex="12" data-l10n-id="findbar"
+          id="viewFind" class="toolbarButton" title="Find in Document" tabindex="0" data-l10n-id="findbar"
           (click)="toggleSearchBar()">
     <span data-l10n-id="findbar_label">Find</span>
   </button>
   <ng-container *ngIf="toolbarButtons.showNavigation">
     <div class="splitToolbarButton hiddenSmallView">
-      <button class="toolbarButton pageUp" title="Previous Page" id="previous" tabindex="13" (click)="decreasePageNumber()"
+      <button class="toolbarButton pageUp" title="Previous Page" id="previous" tabindex="0" (click)="decreasePageNumber()"
               data-l10n-id="previous">
         <span data-l10n-id="previous_label">Previous</span>
       </button>
       <div class="splitToolbarButtonSeparator"></div>
-      <button class="toolbarButton pageDown" title="Next Page" id="next" tabindex="14" data-l10n-id="next" (click)="increasePageNumber()">
+      <button class="toolbarButton pageDown" title="Next Page" id="next" tabindex="0" data-l10n-id="next" (click)="increasePageNumber()">
         <span data-l10n-id="next_label">Next</span>
       </button>
     </div>
     <input type="number" id="pageNumber" class="toolbarField pageNumber" title="Page" value="1" size="4" min="1"
            [value]="pageNumber"
-           tabindex="15" data-l10n-id="page" (change)="onPageNumberInputChange(pageNumberInput.value)" #pageNumberInput>
+           tabindex="0" data-l10n-id="page" (change)="onPageNumberInputChange(pageNumberInput.value)" #pageNumberInput>
     <span id="numPages" class="toolbarLabel"></span>
   </ng-container>
   <div class="toolbarButtonSpacer"></div>
-  <button *ngIf="toolbarButtons.showHighlightButton" (click)="onClickHighlightToggle()" [class.toggled]="toolbarEvents.highlightMode | async" class="toolbarButton highlightBtn" title="Highlight Text Mode" id="toggleHighlightButton" tabindex="16" data-l10n-id="toggleHighlightButton">
+  <button *ngIf="toolbarButtons.showHighlightButton" (click)="onClickHighlightToggle()" [class.toggled]="toolbarEvents.highlightMode | async" class="toolbarButton highlightBtn" title="Highlight Text Mode" id="toggleHighlightButton" tabindex="0" data-l10n-id="toggleHighlightButton">
     <span data-l10n-id="next_label">Highlight Text</span>
   </button>
-  <button (click)="onClickDrawToggle()" *ngIf="toolbarButtons.showDrawButton" [class.toggled]="toolbarEvents.drawMode | async" class="toolbarButton drawBtn" title="Draw Mode" id="toggleDrawButton" tabindex="17" data-l10n-id="toggleDrawButton">
+  <button (click)="onClickDrawToggle()" *ngIf="toolbarButtons.showDrawButton" [class.toggled]="toolbarEvents.drawMode | async" class="toolbarButton drawBtn" title="Draw Mode" id="toggleDrawButton" tabindex="" data-l10n-id="toggleDrawButton">
     <span data-l10n-id="next_label">Draw</span>
   </button>
 </div>
