@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 // Toolbar Custom-Event Types
 export type HighlightMode = boolean;
@@ -63,5 +63,49 @@ export class ToolbarEventService {
     } else {
       this.drawMode.next(false);
     }
+  }
+
+  public setRotation(value: number): void {
+    this.rotate.next(value);
+  }
+
+  public setSearch(search: SearchOperation): void {
+    this.search.next(search);
+  }
+
+  public getSearchResultsCount(): Observable<SearchResultsCount> {
+    return this.searchResultsCount.asObservable();
+  }
+
+  public setZoom(value: number): void {
+    this.zoom.next(value);
+  }
+
+  public setStepZoom(value: number): void {
+    this.stepZoom.next(value);
+  }
+
+  public getCurrentZoomValue(value: number): Observable<number> {
+    return this.zoomValue.asObservable();
+  }
+
+  public togglePrint(): void {
+    this.print.next();
+  }
+
+  public toggleDownload(): void {
+    this.download.next();
+  }
+
+  public setCurrentPageNumber(value: number): void {
+    this.setCurrentPage.next(value);
+  }
+
+  public togglePageIncrement(value: number): void {
+    this.changePageByDelta.next(value);
+  }
+
+  public getCurrentPageNumber(value: number): Observable<number> {
+    return this.setCurrentPageInputValue.asObservable();
   }
 }
