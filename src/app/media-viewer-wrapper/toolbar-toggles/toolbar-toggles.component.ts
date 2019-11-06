@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
@@ -7,7 +7,17 @@ import { BehaviorSubject, Subject } from 'rxjs';
   styleUrls: ['./toolbar-toggles.component.scss']
 })
 export class ToolbarTogglesComponent {
-  @Output() toggleToolbar = new BehaviorSubject(true);
-  @Output() toggleAnnotations = new BehaviorSubject(true);
+
   @Input() showCommentSummary: Subject<boolean>;
+
+  @Output() toggleToolbar = new BehaviorSubject(true);
+  @Output() toggleToolbarBtns = new EventEmitter();
+  @Output() toggleAnnotations = new BehaviorSubject(true);
+
+  toolbarButtonOverrides = {};
+
+  toggleButtonOverrides(key: string, value: boolean) {
+    this.toolbarButtonOverrides[key] = value;
+    this.toggleToolbarBtns.emit(this.toolbarButtonOverrides);
+  }
 }

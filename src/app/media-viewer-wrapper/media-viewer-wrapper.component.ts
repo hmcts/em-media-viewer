@@ -1,8 +1,4 @@
 import { Observable, Subject } from 'rxjs';
-import { AnnotationApiService } from '../../../projects/media-viewer/src/lib/annotations/annotation-api.service';
-import {
-  ToolbarButtonVisibilityService
-} from '../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
 import { AfterContentInit, Component } from '@angular/core';
 import { Comment } from '../../../projects/media-viewer/src/lib/annotations/comment-set/comment/comment.model';
 
@@ -27,12 +23,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   showToolbar = true;
   enableAnnotations = false;
   showCommentSummary = new Subject<boolean>();
-
-  constructor(
-    private readonly api: AnnotationApiService,
-    private readonly toolbarButtons: ToolbarButtonVisibilityService
-  ) {
-  }
+  toolbarButtonOverrides: {};
 
   ngAfterContentInit() {
     this.setDocumentType(this.documentType);
@@ -57,7 +48,6 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   toggleAnnotations(showAnnotations: boolean) {
     this.enableAnnotations = showAnnotations;
-    this.toolbarButtons.showHighlightButton = showAnnotations;
   }
 
   setDocumentUrl(newUrl: string) {
@@ -67,5 +57,9 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   onMediaLoad(loadStatus: ResponseType) {
     this.mediaLoadStatus = loadStatus;
     setTimeout(() => this.mediaLoadStatus = undefined, 2000);
+  }
+
+  toggleToolbarBtns(toolbarButtonOverrides: any) {
+    this.toolbarButtonOverrides = { ...toolbarButtonOverrides };
   }
 }

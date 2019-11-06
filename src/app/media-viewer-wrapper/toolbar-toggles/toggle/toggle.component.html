@@ -3,7 +3,9 @@
 </div>
   <div class="govuk-grid-column-full">
     <label [for]="label+'-btn-toggle'" class="switch govuk-!-margin-right-2">
-      <input type="checkbox" [id]="label+'-btn-toggle'" [(ngModel)]="toolbarButtons[subject]" [attr.aria-label]="label">
+      <input type="checkbox" [id]="label+'-btn-toggle'"
+             (change)="toggleButtonOverrides.emit($event.target.checked)"
+             [attr.aria-label]="label">
       <span class="slider round"></span>
     </label>
   </div>
