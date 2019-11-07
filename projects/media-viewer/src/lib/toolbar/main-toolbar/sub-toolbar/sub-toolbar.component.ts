@@ -25,22 +25,22 @@ export class SubToolbarComponent {
   }
 
   printFile() {
-    this.toolbarEvents.print.next(true);
+    this.toolbarEvents.print();
     this.closeMenu();
   }
 
   downloadFile() {
-    this.toolbarEvents.download.next(true);
+    this.toolbarEvents.download();
     this.closeMenu();
   }
 
   rotateCcw() {
-    this.toolbarEvents.rotate.next(270);
+    this.toolbarEvents.rotate(270);
     this.closeMenu();
   }
 
   rotateCw() {
-    this.toolbarEvents.rotate.next(90);
+    this.toolbarEvents.rotate(90);
     this.closeMenu();
   }
 

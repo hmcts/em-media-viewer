@@ -30,12 +30,13 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   selectedAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
   drawStartX = -1;
   drawStartY = -1;
+  drawMode: boolean;
 
   private subscriptions: Subscription[] = [];
 
   constructor(
     private readonly api: AnnotationApiService,
-    public readonly toolbarEvents: ToolbarEventService,
+    private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
     private readonly annotationService: AnnotationService
   ) {}
@@ -45,6 +46,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.viewerEvents.highlightedShape.subscribe((highlight) => this.initShapeRectangle(highlight.event)));
     this.subscriptions.push(this.annotationService.getSelectedAnnotation()
       .subscribe((selectedAnnotation) => this.selectedAnnotation = selectedAnnotation));
+    this.subscriptions.push(this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode));
   }
 
   ngOnDestroy(): void {
@@ -93,7 +95,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   private createShapeHighlight() {
-    if (this.annotationSet && this.toolbarEvents.drawMode.value) {
+    if (this.annotationSet && this.drawMode) {
       const rectangle = {
         id: uuid(),
         x: +this.shapeRectStyle().left.slice(0, -2) / this.zoom,
@@ -109,7 +111,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           .postAnnotation(annotation)
           .subscribe(annotation => this.annotationSet.annotations.push(annotation));
 
-        this.toolbarEvents.drawMode.next(false);
+        this.toolbarEvents.drawModeSubject.next(false);
         this.onAnnotationClick({ annotationId: annotation.id, editable: false });
       }
       this.resetShapeRectangle();
@@ -138,7 +140,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
             this.api.postAnnotation(annotation).subscribe(a => this.annotationSet.annotations.push(a));
             this.onAnnotationClick({ annotationId: annotation.id, editable: false });
             selection.removeAllRanges();
-            this.toolbarEvents.highlightMode.next(false);
+            this.toolbarEvents.highlightModeSubject.next(false);
           }
         }
       }
@@ -192,7 +194,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
 
   private initShapeRectangle(event: MouseEvent) {
-    if (this.annotationSet && this.toolbarEvents.drawMode.value) {
+    if (this.annotationSet && this.drawMode) {
 
       this.drawStartX = event.pageX - (window.pageXOffset + this.containerRectangle().left);
       this.drawStartY = event.pageY - (window.pageYOffset + this.containerRectangle().top);
@@ -220,7 +222,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   private updateShapeRectangle(event: MouseEvent) {
-    if (this.annotationSet && this.toolbarEvents.drawMode.value) {
+    if (this.annotationSet && this.drawMode) {
 
       const rectangle = {
         top: this.drawStartY,

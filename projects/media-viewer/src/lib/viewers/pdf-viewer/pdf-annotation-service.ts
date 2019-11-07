@@ -33,8 +33,8 @@ export class PdfAnnotationService {
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
   ) {
-    this.highlightMode = toolbarEvents.highlightMode;
-    this.drawMode = toolbarEvents.drawMode;
+    this.highlightMode = toolbarEvents.highlightModeSubject;
+    this.drawMode = toolbarEvents.drawModeSubject;
   }
 
   init(pdfWrapper: PdfJsWrapper, pdfViewer: ElementRef) {
@@ -86,7 +86,7 @@ export class PdfAnnotationService {
   }
 
   onShapeHighlighted(mouseEvent: MouseEvent) {
-    if (this.toolbarEvents.highlightMode.getValue() || this.toolbarEvents.drawMode.getValue()) {
+    if (this.toolbarEvents.highlightModeSubject.getValue() || this.toolbarEvents.drawModeSubject.getValue()) {
       const pageNumber = this.pdfWrapper.getPageNumber();
       if (!this.pages.includes(pageNumber)) {
 
@@ -102,7 +102,7 @@ export class PdfAnnotationService {
         });
       }
 
-      if (this.toolbarEvents.drawMode.getValue()) {
+      if (this.toolbarEvents.drawModeSubject.getValue()) {
         setTimeout(() => {
           this.viewerEvents.onShapeSelection({
             page: this.pdfWrapper.getPageNumber(),
@@ -114,7 +114,7 @@ export class PdfAnnotationService {
   }
 
   onTextHighlighted(mouseEvent: MouseEvent) {
-    if (this.toolbarEvents.highlightMode.getValue()) {
+    if (this.toolbarEvents.highlightModeSubject.getValue()) {
       setTimeout(() => {
         this.viewerEvents.onTextSelection({
           page: this.pdfWrapper.getPageNumber(),
