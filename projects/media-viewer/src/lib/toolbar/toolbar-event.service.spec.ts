@@ -4,8 +4,8 @@ describe('Toolbar Event Service', () => {
   let service: ToolbarEventService;
   beforeEach(() => {
     service = new ToolbarEventService();
-    service.drawMode.next(false);
-    service.highlightMode.next(false);
+    service.drawModeSubject.next(false);
+    service.highlightModeSubject.next(false);
   });
   afterEach(() => {
     service = null;
@@ -14,34 +14,34 @@ describe('Toolbar Event Service', () => {
       expect(service).toBeTruthy();
   });
   it('should turn off drawMode if HighlightMode is toggled on', () => {
-      service.highlightMode.next(false);
-      service.drawMode.next(true);
+      service.highlightModeSubject.next(false);
+      service.drawModeSubject.next(true);
       service.toggleHighlightMode();
-      expect(service.drawMode.getValue()).toBeFalsy();
+      expect(service.drawModeSubject.getValue()).toBeFalsy();
   });
   it('should turn off drawMode if drawMode is toggled off', () => {
-    service.drawMode.next(true);
+    service.drawModeSubject.next(true);
     service.toggleDrawMode();
-    expect(service.drawMode.getValue()).toBeFalsy();
+    expect(service.drawModeSubject.getValue()).toBeFalsy();
   });
   it('should turn off HighlightMode if HighlightMode is toggled off', () => {
-    service.highlightMode.next(true);
+    service.highlightModeSubject.next(true);
     service.toggleHighlightMode();
-    expect(service.highlightMode.getValue()).toBeFalsy();
+    expect(service.highlightModeSubject.getValue()).toBeFalsy();
   });
   it('should turn off highlightMode is drawModel is toggled on', () => {
-    service.highlightMode.next(true);
-    service.drawMode.next(false);
+    service.highlightModeSubject.next(true);
+    service.drawModeSubject.next(false);
     service.toggleDrawMode();
-    expect(service.highlightMode.getValue()).toBeFalsy();
+    expect(service.highlightModeSubject.getValue()).toBeFalsy();
   });
 
   it('should reset', () => {
-    service.zoomValue.next(2);
-    service.drawMode.next(true);
+    service.zoomValueSubject.next(2);
+    service.drawModeSubject.next(true);
     service.reset();
-    expect(service.zoomValue.getValue()).toBe(1);
-    expect(service.drawMode.getValue()).toBeFalsy();
+    expect(service.zoomValueSubject.getValue()).toBe(1);
+    expect(service.drawModeSubject.getValue()).toBeFalsy();
   });
 
 });

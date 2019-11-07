@@ -19,7 +19,7 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscriptions.push(
-      this.toolbarEvents.setCurrentPageInputValue.subscribe(pageNumber => this.pageNumber = pageNumber)
+      this.toolbarEvents.setCurrentPageInputValueSubject.subscribe(pageNumber => this.pageNumber = pageNumber)
     );
   }
 
@@ -49,14 +49,14 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   }
 
   increasePageNumber() {
-    this.toolbarEvents.changePageByDelta.next(1);
+    this.toolbarEvents.changePageByDeltaSubject.next(1);
   }
 
   decreasePageNumber() {
-    this.toolbarEvents.changePageByDelta.next(-1);
+    this.toolbarEvents.changePageByDeltaSubject.next(-1);
   }
 
   onPageNumberInputChange(pageNumber: string) {
-    this.toolbarEvents.setCurrentPage.next(Number.parseInt(pageNumber, 0));
+    this.toolbarEvents.setCurrentPageSubject.next(Number.parseInt(pageNumber, 0));
   }
 }

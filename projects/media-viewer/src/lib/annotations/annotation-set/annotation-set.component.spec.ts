@@ -160,7 +160,7 @@ describe('AnnotationSetComponent', () => {
 
   it('starts drawing on mousedown', () => {
     component.shapeRectangle = new ElementRef(document.createElement('div'));
-    component.toolbarEvents.drawMode.next(true);
+    component.drawMode = true;
     const initialiseNewRectSpy = spyOn<any>(component, 'initShapeRectangle').and.callThrough();
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
 
@@ -178,7 +178,7 @@ describe('AnnotationSetComponent', () => {
   });
 
   it('does not mousedown if not in draw mode', () => {
-    spyOn<any>(component.toolbarEvents, 'drawMode').and.returnValue(false);
+    component.drawMode = false;
 
     expect(component.drawStartX).toEqual(-1);
     expect(component.drawStartY).toEqual(-1);
@@ -191,7 +191,7 @@ describe('AnnotationSetComponent', () => {
     const spy = spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
 
     component.shapeRectangle = new ElementRef(document.createElement('div'));
-    component.toolbarEvents.drawMode.next(true);
+    component.drawMode = true;
     component.zoom = 1;
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
     component.onMouseMove({ pageY: 100, pageX: 100 } as MouseEvent);

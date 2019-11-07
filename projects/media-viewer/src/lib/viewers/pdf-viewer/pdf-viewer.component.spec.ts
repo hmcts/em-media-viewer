@@ -119,14 +119,14 @@ describe('PdfViewerComponent', () => {
     spyOn(mockWrapper, 'changePageNumber');
 
     component.ngAfterContentInit();
-    toolbarEvent.print.next();
-    toolbarEvent.download.next();
-    toolbarEvent.rotate.next();
-    toolbarEvent.zoom.next();
-    toolbarEvent.stepZoom.next();
-    toolbarEvent.search.next();
-    toolbarEvent.setCurrentPage.next();
-    toolbarEvent.changePageByDelta.next();
+    toolbarEvent.printSubject.next();
+    toolbarEvent.downloadSubject.next();
+    toolbarEvent.rotateSubject.next();
+    toolbarEvent.zoomSubject.next();
+    toolbarEvent.stepZoomSubject.next();
+    toolbarEvent.searchSubject.next();
+    toolbarEvent.setCurrentPageSubject.next();
+    toolbarEvent.changePageByDeltaSubject.next();
 
     expect(mockPrintService.printDocumentNatively).toHaveBeenCalled();
     expect(mockWrapper.downloadFile).toHaveBeenCalled();
@@ -168,7 +168,7 @@ describe('PdfViewerComponent', () => {
   it('should call the print operation', async () => {
     spyOn(mockPrintService, 'printDocumentNatively');
     component.url = 'derp';
-    toolbarEvent.print.next();
+    toolbarEvent.printSubject.next();
     expect(mockPrintService.printDocumentNatively).toHaveBeenCalledWith(component.url);
   });
 
@@ -180,7 +180,7 @@ describe('PdfViewerComponent', () => {
 
   it('should not highlight text when in view mode for selected page', () => {
     const mouseEvent = new MouseEvent('mouseup');
-    spyOn(toolbarEvent.highlightMode, 'getValue').and.returnValue(false);
+    spyOn(toolbarEvent.highlightModeSubject, 'getValue').and.returnValue(false);
     spyOn(mockAnnotationService, 'onTextHighlighted');
     spyOn(mockViewerEvent, 'onTextSelection');
 

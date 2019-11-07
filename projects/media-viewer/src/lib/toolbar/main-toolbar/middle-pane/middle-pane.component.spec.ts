@@ -30,7 +30,7 @@ describe('ToolbarMiddlePaneComponent', () => {
   });
 
   it('should emit rotate event with 90 degrees', () => {
-    const rotateSpy = spyOn(component.toolbarEvents.rotate, 'next');
+    const rotateSpy = spyOn(component.toolbarEvents.rotateSubject, 'next');
     const rotateClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCw]');
     rotateClkwiseBtn.click();
 
@@ -38,7 +38,7 @@ describe('ToolbarMiddlePaneComponent', () => {
   });
 
   it('should emit rotate event with 270 degrees', () => {
-    const rotateSpy = spyOn(component.toolbarEvents.rotate, 'next');
+    const rotateSpy = spyOn(component.toolbarEvents.rotateSubject, 'next');
     const rotateCtrClkwiseBtn = nativeElement.querySelector('button[id=pageRotateCcw]');
     rotateCtrClkwiseBtn.click();
 
@@ -46,7 +46,7 @@ describe('ToolbarMiddlePaneComponent', () => {
   });
 
   it('should emit zoom out event', () => {
-    const stepZoom = spyOn(component.toolbarEvents.stepZoom, 'next');
+    const stepZoom = spyOn(component.toolbarEvents.stepZoomSubject, 'next');
     const zoomOutButton = nativeElement.querySelector('button[id=zoomOut]');
     zoomOutButton.click();
 
@@ -54,7 +54,7 @@ describe('ToolbarMiddlePaneComponent', () => {
   });
 
   it('should emit zoom in event', () => {
-    const stepZoom = spyOn(component.toolbarEvents.stepZoom, 'next');
+    const stepZoom = spyOn(component.toolbarEvents.stepZoomSubject, 'next');
     const zoomInButton = nativeElement.querySelector('button[id=zoomIn]');
     zoomInButton.click();
 
@@ -62,7 +62,7 @@ describe('ToolbarMiddlePaneComponent', () => {
   });
 
   it('should emit zoom in event', () => {
-    const zoomSpy = spyOn(component.toolbarEvents.zoom, 'next');
+    const zoomSpy = spyOn(component.toolbarEvents.zoomSubject, 'next');
     component.zoom('25');
 
     expect(zoomSpy).toHaveBeenCalledWith(25);
