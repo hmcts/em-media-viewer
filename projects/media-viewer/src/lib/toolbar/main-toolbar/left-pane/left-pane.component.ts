@@ -49,14 +49,14 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   }
 
   increasePageNumber() {
-    this.toolbarEvents.changePageByDeltaSubject.next(1);
+    this.toolbarEvents.incrementPage(1);
   }
 
   decreasePageNumber() {
-    this.toolbarEvents.changePageByDeltaSubject.next(-1);
+    this.toolbarEvents.incrementPage(-1);
   }
 
   onPageNumberInputChange(pageNumber: string) {
-    this.toolbarEvents.setCurrentPageSubject.next(Number.parseInt(pageNumber, 0));
+    this.toolbarEvents.setPage(Number.parseInt(pageNumber, 0));
   }
 }

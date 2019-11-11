@@ -49,7 +49,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   public searchNext(): void {
-    this.toolbarEvents.searchSubject.next({
+    this.toolbarEvents.search({
       searchTerm: this.searchText,
       highlightAll: this.highlightAll,
       matchCase: this.matchCase,
@@ -60,7 +60,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   public searchPrev(): void {
-    this.toolbarEvents.searchSubject.next({
+    this.toolbarEvents.search({
       searchTerm: this.searchText,
       highlightAll: this.highlightAll,
       matchCase: this.matchCase,
@@ -71,7 +71,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   public search(): void {
-    this.toolbarEvents.searchSubject.next({
+    this.toolbarEvents.search({
       searchTerm: this.searchText,
       highlightAll: this.highlightAll,
       matchCase: this.matchCase,
