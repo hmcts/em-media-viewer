@@ -22,6 +22,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   mediaLoadStatus: string;
 
   showToolbar = true;
+  showCustomToolbar = false;
   toolbarEvents;
   enableAnnotations = false;
   showCommentSummary = new Subject<boolean>();
@@ -46,6 +47,16 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   toggleToolbar(showToolbar: boolean) {
     this.showToolbar = showToolbar;
+    if (showToolbar) {
+      this.showCustomToolbar = false;
+    }
+  }
+
+  toggleCustomToolbar(showCustomToolbar: boolean) {
+    this.showCustomToolbar = showCustomToolbar;
+    if (showCustomToolbar) {
+      this.showToolbar = false;
+    }
   }
 
   toggleAnnotations(showAnnotations: boolean) {
