@@ -1,7 +1,7 @@
 import {
   AfterContentInit,
   Component,
-  EventEmitter,
+  EventEmitter, HostListener,
   Input,
   OnChanges,
   Output,
@@ -18,6 +18,7 @@ import { AnnotationSet } from './annotations/annotation-set/annotation-set.model
 import { ToolbarEventService } from './toolbar/toolbar-event.service';
 import { AnnotationApiService } from './annotations/annotation-api.service';
 import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
+import {KeyListenerService} from './key-strokes/key-listener.service';
 
 @Component({
   selector: 'mv-media-viewer',
@@ -47,6 +48,7 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
+    public readonly keyListenerService: KeyListenerService,
     private readonly api: AnnotationApiService
   ) {
     if (this.annotationApiUrl) {
@@ -103,6 +105,11 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
   onLoadException(exception: ViewerException) {
     this.viewerException.emit(exception);
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  public onWindowKeyDown(e: KeyboardEvent): void {
+    this.keyListenerService.keyPressed(e);
   }
 }
 

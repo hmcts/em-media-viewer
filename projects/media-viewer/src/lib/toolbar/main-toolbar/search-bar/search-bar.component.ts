@@ -40,11 +40,14 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keydown', ['$event'])
   public onWindowKeyDown(e: KeyboardEvent): void {
+    console.log(e.code)
     if (e.code === 'F3' || (e.ctrlKey && e.code === 'KeyF')) {
       e.preventDefault();
 
       this.toolbarButtons.searchBarHidden.next(false);
       setTimeout(() => this.findInput.nativeElement.focus(), 200);
+    } else if (e.code === 'ArrowRight') {
+
     }
   }
 
