@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="govuk-form-group">
+    <input #searchInput
+           class="govuk-input page-input"
+           id="event-name"
+           name="event-name"
+           type="text"
+           [(ngModel)]="searchText"
+           (ngModelChange)="search()">
+  </div>
+  <button class="govuk-button" (click)="searchPrev()"><-</button>
+  <button class="govuk-button" (click)="searchNext()">-></button>
+  <div class="container govuk-checkboxes">
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input"
+             id="search"
+             name="search"
+             type="checkbox"
+             (change)="highlightAll = !highlightAll; search()"
+             [checked]="highlightAll">
+      <label class="govuk-label govuk-checkboxes__label" for="search">
+        Hightlight All
+      </label>
+    </div>
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input"
+             id="search-2"
+             name="search"
+             type="checkbox"
+             (change)="matchCase = !matchCase; search()"
+             [checked]="matchCase">
+      <label class="govuk-label govuk-checkboxes__label" for="search-2">
+        Match Case
+      </label>
+    </div>
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input"
+             id="search-3"
+             name="search"
+             type="checkbox"
+             (change)="wholeWord = !wholeWord; search()"
+             [checked]="wholeWord">
+      <label class="govuk-label govuk-checkboxes__label" for="search-3">
+        Whole Words
+      </label>
+    </div>
+</div>

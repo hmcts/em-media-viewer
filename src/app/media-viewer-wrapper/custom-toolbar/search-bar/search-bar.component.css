@@ -1,0 +1,12 @@
+.container {
+  margin: 5px;
+  display: flex;
+}
+
+.govuk-checkboxes {
+  margin: 0;
+}
+
+.govuk-button, .govuk-form-group, .govuk-checkboxes__item {
+  margin: 0;
+}
