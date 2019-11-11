@@ -30,7 +30,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   selectedAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
   drawStartX = -1;
   drawStartY = -1;
-  drawMode: boolean;
+  drawMode = false;
 
   private subscriptions: Subscription[] = [];
 

@@ -80,7 +80,7 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should update page number', () => {
-    component.toolbarEvents.setCurrentPageSubject.next(4);
+    component.toolbarEvents.setPage(4);
     expect(component.pageNumber).toEqual(4);
   });
 
