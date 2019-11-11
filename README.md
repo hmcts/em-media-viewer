@@ -8,7 +8,7 @@ This is an angular library that provides components to view and annotate PDF doc
 - npm run package
 - npm run start:ng
 
-## Using in your Angular application
+## Integrating into your own Angular application
 add @hmcts/media-viewer as a dependency in package.json
 
 ```
@@ -57,7 +57,7 @@ component entry point:
 </mv-media-viewer>  
 ```
 
-##Customisations
+## Customisations
 ### Toolbar
 The toolbar may be toggled off by setting `showToolbar` to false. The toolbar itself is available as a module that can be included into the DOM at a different location if necessary. 
 
