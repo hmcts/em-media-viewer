@@ -13,8 +13,8 @@
         <span class="govuk-!-font-weight-bold">Toolbar</span>
         </div>
         <div class="govuk-grid-column-full">
-          <label class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleToolbar" [checked]="toggleToolbar.getValue()" (change)="toggleToolbar.next($event.target.checked)">
+          <label for="toggleToolbar" class="switch govuk-!-margin-right-2">
+            <input type="checkbox" id="toggleToolbar" [checked]="toggleToolbar.getValue()" (change)="toggleToolbar.next($event.target.checked)" aria-label="toolbar">
             <span class="slider round"></span>
           </label>
         </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="govuk-grid-column-full">
           <label for="toggleAnnotations" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleAnnotations" [checked]="toggleAnnotations.getValue()" (change)="toggleAnnotations.next($event.target.checked)">
+            <input type="checkbox" id="toggleAnnotations" [checked]="toggleAnnotations.getValue()" (change)="toggleAnnotations.next($event.target.checked)" aria-label="annotate">
             <span class="slider round"></span>
           </label>
         </div>
@@ -40,7 +40,7 @@
         </div>
         <div class="govuk-grid-column-full">
           <label for="toggleCommentSummary" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleCommentSummary" [checked]="showCommentSummary | async" (change)="showCommentSummary.next($event.target.checked)">
+            <input type="checkbox" id="toggleCommentSummary" [checked]="showCommentSummary | async" (change)="showCommentSummary.next($event.target.checked)" aria-label="comments">
             <span class="slider round"></span>
           </label>
         </div>

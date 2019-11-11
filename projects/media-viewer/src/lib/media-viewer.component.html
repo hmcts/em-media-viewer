@@ -2,11 +2,11 @@
      [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async }"
      [ngStyle]="{ width: width }">
 
-  <mv-side-bar *ngIf="contentType === 'pdf' && toolbarButtons.sidebarOpen"
-               id="sidebarContainer"
-               [url]="url"></mv-side-bar>
   <div id="mainContainer">
     <mv-main-toolbar *ngIf="showToolbar"></mv-main-toolbar>
+    <mv-side-bar *ngIf="contentType === 'pdf' && toolbarButtons.sidebarOpen"
+                 id="sidebarContainer"
+                 [url]="url"></mv-side-bar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (pdfLoadStatus)="onMediaLoad($event)"
                    (pdfViewerException)="onLoadException($event)"

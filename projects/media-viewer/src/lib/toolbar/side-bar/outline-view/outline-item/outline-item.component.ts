@@ -19,7 +19,7 @@ export class OutlineItemComponent implements OnInit {
   constructor(private readonly pdfJsWrapperFactory: PdfJsWrapperFactory) { }
 
   ngOnInit() {
-    this.showOutlineItems = false;
+    this.showOutlineItems = true;
   }
 
   navigateLink() {
