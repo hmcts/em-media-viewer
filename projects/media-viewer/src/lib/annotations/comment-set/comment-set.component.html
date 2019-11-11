@@ -1,5 +1,5 @@
 <div #container class="split right comment-container" [style.height.px]="height" (click)="onContainerClick($event)">
-  <ng-container *ngFor="let annotation of getCommentsOnPage()">
+  <ng-container *ngFor="let annotation of getCommentsOnPage(); let i = index">
     <mv-anno-comment
       #commentComponent
       *ngIf="annotation.comments[0]"
@@ -10,6 +10,7 @@
       [editable]="annotation.comments[0].annotationId === selectAnnotation.annotationId ? selectAnnotation.editable : false"
       [zoom]="zoom"
       [rotate]="rotate"
+      [index]="i"
       [comment]="annotation.comments[0]"
       [rectangle]="topRectangle(annotation.comments[0].annotationId)"
       (commentRendered)="redrawCommentComponents()">

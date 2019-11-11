@@ -33,6 +33,7 @@ export class CommentComponent implements OnChanges {
   @Output() updated = new EventEmitter<Comment>();
   @Input() rotate = 0;
   @Input() zoom = 1;
+  @Input() index: number;
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
