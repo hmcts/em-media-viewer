@@ -9,11 +9,14 @@ export class CustomToolbarComponent implements OnInit {
 
   @Input() toolbarEvents;
   zoomValue: number;
+  search: boolean;
 
   @ViewChild('zoomSelect') zoomSelect: ElementRef;
 
   constructor() { }
+
   ngOnInit() {
+    this.search = false;
     this.toolbarEvents.getZoomValue().subscribe(zoom => this.zoomValue = zoom);
   }
 
