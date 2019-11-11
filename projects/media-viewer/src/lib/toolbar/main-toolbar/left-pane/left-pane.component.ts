@@ -19,6 +19,7 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscriptions.push(
+      this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pageNumber = pageNumber),
       this.toolbarEvents.setCurrentPageInputValueSubject.subscribe(pageNumber => this.pageNumber = pageNumber)
     );
   }
