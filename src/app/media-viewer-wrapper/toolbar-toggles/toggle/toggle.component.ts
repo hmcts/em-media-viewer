@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { ToolbarButtonVisibilityService } from '../../../../../projects/media-viewer/src/lib/toolbar/toolbar-button-visibility.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: '[app-toggle]',
@@ -7,10 +6,6 @@ import { ToolbarButtonVisibilityService } from '../../../../../projects/media-vi
   styleUrls: ['../toolbar-toggles.component.scss']
 })
 export class ToggleComponent {
-  @Input() subject: keyof ToolbarButtonVisibilityService;
   @Input() label: string;
-
-  constructor(
-    public readonly toolbarButtons: ToolbarButtonVisibilityService
-  ) {}
+  @Output() toggleButtonOverrides = new EventEmitter();
 }

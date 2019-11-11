@@ -7,7 +7,8 @@
       <div class="govuk-grid-column-two-thirds">
         <app-toolbar-toggles [showCommentSummary]="showCommentSummary"
                              (toggleAnnotations)="toggleAnnotations($event)"
-                             (toggleToolbar)="toggleToolbar($event)"></app-toolbar-toggles>
+                             (toggleToolbar)="toggleToolbar($event)"
+                             (toggleToolbarBtns)="toggleToolbarBtns($event)"></app-toolbar-toggles>
       </div>
     </div>
     <div class="govuk-grid-row">
@@ -88,5 +89,6 @@
                    [showCommentSummary]="showCommentSummary"
                    [enableAnnotations]="enableAnnotations"
                    [showToolbar]="showToolbar"
+                   [toolbarButtonOverrides]="toolbarButtonOverrides"
                    (mediaLoadStatus)="onMediaLoad($event)"></mv-media-viewer>
 </div>

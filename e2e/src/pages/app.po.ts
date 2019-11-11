@@ -34,12 +34,17 @@ export class AppPage {
         this.clickElement(by.css('label[for="download-btn-toggle"]')),
         this.clickElement(by.css('label[for="navigate-btn-toggle"]')),
         this.clickElement(by.css('label[for="print-btn-toggle"]')),
-        // this.clickElement(by.css('label[for="rotate-btn-toggle"]')),
+        this.clickElement(by.css('label[for="rotate-btn-toggle"]')),
         this.clickElement(by.css('label[for="search-btn-toggle"]')),
         this.clickElement(by.css('label[for="zoom-btn-toggle"]')),
-        this.clickElement(by.css('label[for="toggleAnnotations"]'))
       ]);
     }
+    const annotationsToggle = await element(by.id('toggleAnnotations'));
+    const annotationsON = await annotationsToggle.getAttribute('checked');
+    if (!annotationsON) {
+      await this.clickElement(by.css('label[for="toggleAnnotations"]'));
+    }
+
   }
 
   async getHeaderText() {
