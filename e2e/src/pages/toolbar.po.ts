@@ -1,21 +1,20 @@
-import {AppPage} from './app.po';
-import {browser, by, element, ElementFinder} from 'protractor';
+import { AppPage } from './app.po';
+import { browser, by, element, ElementFinder } from 'protractor';
 
 export class ToolBar extends AppPage {
 
-  private outLineButton:ElementFinder = element(by.id('viewOutline'));
+  private outLineButton: ElementFinder = element(by.id('viewOutline'));
 
   async openOutLineSidebar() {
-    if(!(await this.isOutLineSidePanelOpen())){
+    if (!(await this.isOutLineSidePanelOpen())) {
       await this.outLineButton.click();
       await browser.sleep(2000);
     }
   }
 
   private async isOutLineSidePanelOpen(): Promise<boolean> {
-    return await this.getClassAttributeOfAnElementLocator(by.id('outerContainer')).then((classes) => {
-      return classes.includes('sidebarOpen');
-    });
+    return (await this.getClassAttributeOfAnElementLocator(by.id('outerContainer')))
+      .includes('sidebarOpen');
   }
 
   async clickTextIcon() {
@@ -26,29 +25,26 @@ export class ToolBar extends AppPage {
     await this.clickElement(by.id('toggleHighlightButton'));
   }
 
-  async enableTextHighLightMode(){
-        if(!(await this.getClassAttributeOfAnElementLocator(by.id('toggleHighlightButton')).then( (classes) => classes.includes('toggled')))) {
-            await this.clickElement(by.id('toggleHighlightButton'));
-          }
-      }
+  async enableTextHighLightMode() {
+    await this.toggleButton('toggleHighlightButton', false);
+  }
 
-  async disableTextHighLightMode(){
-        if(await this.getClassAttributeOfAnElementLocator(by.id('toggleHighlightButton')).then( (classes) => classes.includes('toggled'))){
-            await this.clickElement(by.id('toggleHighlightButton'));
-          }else {
-          }
-      }
+  async disableTextHighLightMode() {
+    await this.toggleButton('toggleHighlightButton', true);
+  }
 
-  async enableDrawHighLightMode(){
-        if(!(await this.getClassAttributeOfAnElementLocator(by.id('toggleDrawButton')).then( (classes) => classes.includes('toggled')))) {
-            await this.clickElement(by.id('toggleDrawButton'));
-          }
-      }
+  async enableDrawHighLightMode() {
+    await this.toggleButton('toggleDrawButton', false);
+  }
 
-  async disableDrawHighLightMode(){
-        if(await this.getClassAttributeOfAnElementLocator(by.id('toggleDrawButton')).then( (classes) => classes.includes('toggled'))){
-            await this.clickElement(by.id('toggleDrawButton'));
-          }else {
-          }
-      }
+  async disableDrawHighLightMode() {
+    await this.toggleButton('toggleDrawButton', true);
+  }
+
+  async toggleButton(cssClass: string, toggle: boolean) {
+    const cssClasses = await this.getClassAttributeOfAnElementLocator(by.id(cssClass));
+    if (cssClasses.includes('toggled') === toggle) {
+      await this.clickElement(by.id(cssClass));
+    }
+  }
 }
