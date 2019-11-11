@@ -1,7 +1,7 @@
 <form #form (click)="onCommentClick()" class="aui-comment"
       [ngStyle]="formNgStyle()"
       [ngClass]="'rotation rot' + rotate">
-  <div id="detailsWrapper" class="aui-comment__header">
+  <div id="detailsWrapper {{index}}" class="aui-comment__header">
     <span *ngIf="author && !editor" class="aui-comment__author">
       {{ author.forename }} {{ author.surname }}
     </span>
@@ -14,7 +14,7 @@
   </div>
   <ng-container *ngIf="selected">
     <textarea #textArea type="text" required name="content" [maxlength]="COMMENT_CHAR_LIMIT" (focusout)="onFocusOut()"
-              [ngClass]="commentStyle()" [(ngModel)]="fullComment" [readOnly]="!editable">
+              [ngClass]="commentStyle()" [(ngModel)]="fullComment" [readOnly]="!editable" aria-label="comment">
     </textarea>
   </ng-container>
   <div *ngIf="!selected" class="unselectedText">
