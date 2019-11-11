@@ -17,7 +17,8 @@
             <span class="govuk-details__summary-text">Change document URL</span>
           </summary>
           <form #form="ngForm">
-            <input class="govuk-input govuk-!-width-two-thirds" id="documentUrl" name="documentUrl" type="text" ngModel [value]="url">
+            <input class="govuk-input govuk-!-width-two-thirds" id="documentUrl" name="documentUrl" type="text"
+                   aria-label="document url" ngModel [value]="url">
             <button class="govuk-button" type="button"
                     (click)="setDocumentUrl(form.value.documentUrl)">Load document</button>
           </form>
@@ -39,7 +40,8 @@
             <span class="govuk-details__summary-text">Change download file</span>
           </summary>
           <div class="govuk-details__text">
-            <input *ngIf="documentType === 'pdf'" class="govuk-input" type="text" name="pdfFileName" [(ngModel)]="filename">
+            <input *ngIf="documentType === 'pdf'" class="govuk-input" type="text" name="pdfFileName"
+                   aria-label="pdf file name" [(ngModel)]="filename">
           </div>
         </details>
       </div>

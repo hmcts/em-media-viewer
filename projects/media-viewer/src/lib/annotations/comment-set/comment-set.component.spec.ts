@@ -9,7 +9,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AnnotationService } from '../annotation.service';
 import { annotationSet } from '../../../assets/annotation-set';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
 
 describe('CommentSetComponent', () => {
