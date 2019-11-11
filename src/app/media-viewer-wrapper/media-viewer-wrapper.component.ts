@@ -68,8 +68,4 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   getToolbarFunctions(toolbarEvent: ToolbarEventService) {
     this.toolbarEvents = toolbarEvent;
   }
-
-  rotate() {
-    this.toolbarEvents.rotate.next(90);
-  }
 }
