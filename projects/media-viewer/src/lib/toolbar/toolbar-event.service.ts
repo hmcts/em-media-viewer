@@ -85,7 +85,7 @@ export class ToolbarEventService {
     this.stepZoomSubject.next(value);
   }
 
-  public getCurrentZoomValue(value: number): Observable<number> {
+  public getZoomValue(value: number): Observable<number> {
     return this.zoomValueSubject.asObservable();
   }
 
@@ -97,7 +97,7 @@ export class ToolbarEventService {
     this.downloadSubject.next();
   }
 
-  public setCurrentPageNumber(value: number): void {
+  public setPage(value: number): void {
     this.setCurrentPageSubject.next(value);
   }
 

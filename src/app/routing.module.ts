@@ -9,6 +9,7 @@ import { ToolbarModule } from '../../projects/media-viewer/src/lib/toolbar/toolb
 import { ToolbarTogglesComponent } from './media-viewer-wrapper/toolbar-toggles/toolbar-toggles.component';
 import { CommentsSummaryModule } from '../../projects/media-viewer/src/lib/comments-summary/comments-summary.module';
 import { ToggleComponent } from './media-viewer-wrapper/toolbar-toggles/toggle/toggle.component';
+import { CustomToolbarComponent } from './media-viewer-wrapper/custom-toolbar/custom-toolbar.component';
 
 const routes: Routes = [{
     path: '',
@@ -19,7 +20,8 @@ const routes: Routes = [{
   declarations: [
     MediaViewerWrapperComponent,
     ToolbarTogglesComponent,
-    ToggleComponent
+    ToggleComponent,
+    CustomToolbarComponent
   ],
   imports: [
     CommonModule,
