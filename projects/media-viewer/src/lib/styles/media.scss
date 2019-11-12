@@ -352,7 +352,7 @@
 }
 
 @media all and (max-width: 1000px) {
-  .hidden1000px, .hidden1000px * {
+  .hiddenIfLargerThan1000px, .hiddenIfLargerThan1000px * {
     display: none;
   }
 }
