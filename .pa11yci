@@ -6,16 +6,8 @@
     {
       "url": "http://localhost:3000",
       "screenCapture": "reports/pa11y-screenshots/home.png",
-      "ignore": [
-              "Section508.O.NoSuchID",
-              "WCAG2A.Principle2.Guideline2_4.2_4_1.G1,G123,G124.NoSuchId",
-              "WCAG2AA.Principle2.Guideline2_4.2_4_1.G1,G123,G124.NoSuchId",
-              "WCAG2AAA.Principle2.Guideline2_4.2_4_1.G1,G123,G124.NoSuchId",
-              "WCAG2AAA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent",
-              "WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent",
-              "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.A.NoContent",
-              "Section508.L.NoContentAnchor"
-          ]
+      "rootElement": "mv-media-viewer",
+      "hideElements": ".page"
     }
   ]
 }
