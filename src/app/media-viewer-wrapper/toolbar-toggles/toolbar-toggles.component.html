@@ -1,12 +1,12 @@
 <table style="float: right; margin-top: 15px;">
   <tr>
     <ng-container *ngIf="toggleToolbar.getValue()">
-      <td app-toggle [label]="'search'" [subject]="'showSearchBar'"></td>
-      <td app-toggle [label]="'navigate'" [subject]="'showNavigation'"></td>
-      <td app-toggle [label]="'rotate'" [subject]="'showRotate'"></td>
-      <td app-toggle [label]="'zoom'" [subject]="'showZoom'"></td>
-      <td app-toggle [label]="'print'" [subject]="'showPrint'"></td>
-      <td app-toggle [label]="'download'" [subject]="'showDownload'"></td>
+      <td app-toggle [label]="'search'" (toggleButtonOverrides)="toggleButtonOverrides('showSearchBar', $event)"></td>
+      <td app-toggle [label]="'navigate'" (toggleButtonOverrides)="toggleButtonOverrides('showNavigation', $event)"></td>
+      <td app-toggle [label]="'rotate'" (toggleButtonOverrides)="toggleButtonOverrides('showRotate', $event)"></td>
+      <td app-toggle [label]="'zoom'" (toggleButtonOverrides)="toggleButtonOverrides('showZoom', $event)"></td>
+      <td app-toggle [label]="'print'" (toggleButtonOverrides)="toggleButtonOverrides('showPrint', $event)"></td>
+      <td app-toggle [label]="'download'" (toggleButtonOverrides)="toggleButtonOverrides('showDownload', $event)"></td>
     </ng-container>
     <td>
       <div class="govuk-grid-row"><div class="govuk-grid-column-full">

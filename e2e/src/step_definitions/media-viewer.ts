@@ -126,7 +126,6 @@ const highLightTextInPdf = async () => {
 };
 
 const highLightOnImage = async () => {
-  // await page.waitForPdfToLoad();
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();
   await page.drawOnImagePage();
