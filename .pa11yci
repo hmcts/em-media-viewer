@@ -1,0 +1,13 @@
+{
+  "defaults": {
+    "wait": 2000
+  },
+  "urls": [
+    {
+      "url": "http://localhost:3000",
+      "screenCapture": "reports/pa11y-screenshots/home.png",
+      "rootElement": "mv-media-viewer",
+      "hideElements": ".page"
+    }
+  ]
+}
