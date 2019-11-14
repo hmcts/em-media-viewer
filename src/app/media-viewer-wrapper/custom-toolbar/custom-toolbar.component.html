@@ -1,20 +1,27 @@
 <div class="toolbar">
   <div class="toolbarContainer">
     <div class="column left-pane">
-      <button class="govuk-button" data-module="govuk-button" (click)="search = !search">
+      <button class="govuk-button" id="viewFind" data-module="govuk-button" (click)="search = !search">
         search
       </button>
-      <button class="govuk-button" data-module="govuk-button" (click)="prevPage()">
+      <button class="govuk-button" id="toggleHighlightButton" data-module="govuk-button" (click)="highlight()">
+        Highlight
+      </button>
+      <button class="govuk-button" id="toggleDrawButton" data-module="govuk-button" (click)="draw()">
+        Draw
+      </button>
+      <button class="govuk-button" id="previous" data-module="govuk-button" (click)="prevPage()">
         Prev Page
       </button>
-      <button class="govuk-button" data-module="govuk-button" (click)="nextPage()">
+      <button class="govuk-button" id="next" data-module="govuk-button" (click)="nextPage()">
         Next Page
       </button>
       <div class="govuk-form-group page-input-form">
         <input #pageInput
                class="govuk-input page-input"
-               id="event-name"
+               id="pageNumber"
                name="event-name"
+               [value]="currentPageNumber"
                type="number"
                (change)="enterPage(+pageInput.value)">
       </div>
@@ -22,16 +29,16 @@
                       [toolbarEvents]="toolbarEvents"></app-search-bar>
     </div>
     <div class="column middle-pane">
-      <button class="govuk-button" data-module="govuk-button" (click)="rotate(270)">
+      <button class="govuk-button" id="pageRotateCcw" data-module="govuk-button" (click)="rotate(270)">
         rot -90
       </button>
-      <button class="govuk-button" data-module="govuk-button" (click)="rotate(90)">
+      <button class="govuk-button" id="pageRotateCw" data-module="govuk-button" (click)="rotate(90)">
         rot 90
       </button>
-      <button class="govuk-button" data-module="govuk-button" (click)="stepZoom(-0.1)">
+      <button class="govuk-button" id="zoomOut" data-module="govuk-button" (click)="stepZoom(-0.1)">
         -
       </button>
-      <select class="govuk-select" data-module="govuk-select" (change)="zoom($event.target.value)">
+      <select class="govuk-select" id="scaleSelect" data-module="govuk-select" (change)="zoom($event.target.value)">
         <option #zoomSelect id="customScaleOption" title="" [value]="zoomValue">{{(zoomValue) * 100 | number: '1.0-0'}}%</option>
         <option title="" value="0.1" data-l10n-id="page_scale_percent"
                 data-l10n-args='{ "scale": 10 }'>10%</option>
@@ -54,15 +61,15 @@
         <option title="" value="5" data-l10n-id="page_scale_percent"
                 data-l10n-args='{ "scale": 500 }'>500%</option>
       </select>
-      <button class="govuk-button" data-module="govuk-button" (click)="stepZoom(0.1)">
+      <button class="govuk-button" id="zoomIn" data-module="govuk-button" (click)="stepZoom(0.1)">
         +
       </button>
     </div>
     <div class="column right-pane">
-      <button class="govuk-button" data-module="govuk-button" (click)="print()">
+      <button class="govuk-button" id="download" data-module="govuk-button" (click)="print()">
         Print
       </button>
-      <button class="govuk-button" data-module="govuk-button" (click)="download()">
+      <button class="govuk-button" id="print" data-module="govuk-button" (click)="download()">
         Download
       </button>
     </div>
