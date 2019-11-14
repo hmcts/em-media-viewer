@@ -10,6 +10,7 @@ export class CustomToolbarComponent implements OnInit {
   @Input() toolbarEvents;
   zoomValue: number;
   search: boolean;
+  currentPageNumber = 1;
 
   @ViewChild('zoomSelect') zoomSelect: ElementRef;
 
@@ -18,6 +19,7 @@ export class CustomToolbarComponent implements OnInit {
   ngOnInit() {
     this.search = false;
     this.toolbarEvents.getZoomValue().subscribe(zoom => this.zoomValue = zoom);
+    this.toolbarEvents.getCurrentPageNumber().subscribe(page => this.currentPageNumber = page);
   }
 
   nextPage(): void {
@@ -51,5 +53,13 @@ export class CustomToolbarComponent implements OnInit {
 
   enterPage(value: number) {
     this.toolbarEvents.setPage(value);
+  }
+
+  highlight() {
+    this.toolbarEvents.toggleHighlightMode();
+  }
+
+  draw() {
+    this.toolbarEvents.toggleDrawMode();
   }
 }

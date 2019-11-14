@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="govuk-form-group">
+  <div class="govuk-form-group" id="findbarInputContainer">
     <input #searchInput
            class="govuk-input page-input"
            id="event-name"
@@ -8,40 +8,43 @@
            [(ngModel)]="searchText"
            (ngModelChange)="search()">
   </div>
-  <button class="govuk-button" (click)="searchPrev()"><-</button>
-  <button class="govuk-button" (click)="searchNext()">-></button>
+  <button class="govuk-button" id="findPrevious" (click)="searchPrev()"><-</button>
+  <button class="govuk-button" id="findNext" (click)="searchNext()">-></button>
   <div class="container govuk-checkboxes">
     <div class="govuk-checkboxes__item">
       <input class="govuk-checkboxes__input"
-             id="search"
+             id="findHighlightAll"
              name="search"
              type="checkbox"
              (change)="highlightAll = !highlightAll; search()"
              [checked]="highlightAll">
-      <label class="govuk-label govuk-checkboxes__label" for="search">
+      <label class="govuk-label govuk-checkboxes__label" for="findHighlightAll">
         Hightlight All
       </label>
     </div>
     <div class="govuk-checkboxes__item">
       <input class="govuk-checkboxes__input"
-             id="search-2"
+             id="findMatchCase"
              name="search"
              type="checkbox"
              (change)="matchCase = !matchCase; search()"
              [checked]="matchCase">
-      <label class="govuk-label govuk-checkboxes__label" for="search-2">
+      <label class="govuk-label govuk-checkboxes__label" for="findMatchCase">
         Match Case
       </label>
     </div>
     <div class="govuk-checkboxes__item">
       <input class="govuk-checkboxes__input"
-             id="search-3"
+             id="findEntireWord"
              name="search"
              type="checkbox"
              (change)="wholeWord = !wholeWord; search()"
              [checked]="wholeWord">
-      <label class="govuk-label govuk-checkboxes__label" for="search-3">
+      <label class="govuk-label govuk-checkboxes__label" for="findEntireWord">
         Whole Words
       </label>
+    </div>
+    <div>
+      <span *ngIf="resultsText" id="findResultsCount" class="toolbarLabel">{{resultsText}}</span>
     </div>
 </div>

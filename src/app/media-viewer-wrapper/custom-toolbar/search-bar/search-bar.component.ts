@@ -1,4 +1,6 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SearchResultsCount } from '../../../../../projects/media-viewer/src/lib/toolbar/toolbar-event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
@@ -17,9 +19,14 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   searchText = '';
   haveResults = false;
 
+  private subscriptions: Subscription[] = [];
+
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
+    this.subscriptions.push(
+      this.toolbarEvents.searchResultsCountSubject.subscribe(results => this.setSearchResultsCount(results))
+    );
   }
 
   ngOnDestroy(): void {
@@ -31,6 +38,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       previous: false,
       reset: true
     });
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   public searchNext(): void {
@@ -64,5 +74,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       previous: false,
       reset: true
     });
+  }
+
+  private setSearchResultsCount(results: SearchResultsCount): void {
+    this.haveResults = results.total > 0;
+    this.resultsText = this.haveResults
+      ? `${results.current} of ${results.total} matches`
+      : 'Phrase not found';
   }
 }
