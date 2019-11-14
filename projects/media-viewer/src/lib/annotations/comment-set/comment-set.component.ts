@@ -7,11 +7,12 @@ import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { CommentComponent } from './comment/comment.component';
 import { AnnotationService, SelectionAnnotation } from '../annotation.service';
 import { Subscription } from 'rxjs';
+import { ViewerEventService } from '../../viewers/viewer-event.service';
 
 @Component({
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
-  styleUrls: ['./comment-set.component.scss']
+  styleUrls: ['./comment-set.component.scss', '../../styles/buttons.scss']
 })
 export class CommentSetComponent implements OnInit, OnDestroy {
 
@@ -23,28 +24,32 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   comments: Comment[];
   selectAnnotation: SelectionAnnotation;
-  subscription: Subscription;
+  private subscriptions: Subscription[] = [];
   pageContainer;
   pageWrapper;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
+  showCommentsPanel = true;
 
-
-  constructor(private readonly api: AnnotationApiService,
+  constructor(private readonly viewerEvents: ViewerEventService,
+              private readonly api: AnnotationApiService,
               private readonly annotationService: AnnotationService) {
     this.clearSelection();
   }
 
   ngOnInit() {
-    this.subscription = this.annotationService.getSelectedAnnotation()
-      .subscribe((selectedAnnotation) => this.selectAnnotation = selectedAnnotation);
+    this.subscriptions.push(
+      this.annotationService.getSelectedAnnotation()
+        .subscribe((selectedAnnotation) => this.selectAnnotation = selectedAnnotation),
+      this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle)
+    );
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.subscriptions.length > 0) {
+      this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
     if (this.pageContainer) {
       this.pageContainer.remove();
@@ -192,4 +197,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     this.selectAnnotation = { annotationId: '', editable: false };
   }
 
+  toggleCommentsPanel() {
+    this.viewerEvents.toggleCommentsPanel(!this.showCommentsPanel);
+  }
 }
