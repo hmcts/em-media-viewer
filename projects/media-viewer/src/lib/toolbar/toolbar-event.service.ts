@@ -85,7 +85,7 @@ export class ToolbarEventService {
     this.stepZoomSubject.next(value);
   }
 
-  public getZoomValue(value: number): Observable<number> {
+  public getZoomValue(): Observable<number> {
     return this.zoomValueSubject.asObservable();
   }
 
