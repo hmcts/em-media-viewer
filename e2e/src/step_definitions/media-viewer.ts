@@ -420,3 +420,12 @@ Then('I should be able to see bundle node and expand', async () => {
 When('I choose to navigate to {string}', async function (link:string) {
   await outlinePage.navigateToLink(link);
 });
+
+
+When('I enable custom toolbar', async () => {
+  await page.showCustomToolbarButtons();
+});
+
+Then('I expect custom toolbar button should be enabled', async () => {
+  await page.waitForElement(by.id('toggleCustomToolbar'));
+});
