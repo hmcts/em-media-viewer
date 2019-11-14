@@ -55,6 +55,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
   private viewerException: ViewerException;
+  showCommentsPanel = true;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
@@ -93,7 +94,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.pdfWrapper.stepZoom(zoom)),
       this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)),
       this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
-      this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber))
+      this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)),
+      this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle)
     );
     await this.loadDocument();
   }
