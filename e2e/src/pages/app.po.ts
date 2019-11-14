@@ -14,7 +14,7 @@ export class AppPage {
   saveButton: By = by.xpath('//button[text()=\' Save \']');
   editButton: By = by.xpath('//button[text()=\' Edit \']');
   commentDeleteButtonXpath: string = '//textarea[@ng-reflect-model=\'{0}\']/..//button[text()=\' Delete \']';
-  page:string = '.page[data-page-number="{0}"]';
+  page: string = '.page[data-page-number="{0}"]';
 
   async preparePage() {
     await browser.sleep(5000);
@@ -45,6 +45,14 @@ export class AppPage {
       await this.clickElement(by.css('label[for="toggleAnnotations"]'));
     }
 
+  }
+
+  async showCustomToolbarButtons() {
+    const customToolbarToggle = await element(by.id('toggleCustomToolbar'));
+    const customToolbarOn = await customToolbarToggle.getAttribute('checked');
+    if (!customToolbarOn) {
+      await this.clickElement(by.css('label[for="toggleCustomToolbar"]'));
+    }
   }
 
   async getHeaderText() {
