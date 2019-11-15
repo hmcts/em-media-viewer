@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+cucumber.json
 
 # dependencies
 node_modules/
