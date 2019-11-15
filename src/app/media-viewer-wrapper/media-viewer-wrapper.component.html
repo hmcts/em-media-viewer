@@ -87,7 +87,8 @@
                        [showCommentSummary]="showCommentSummary"
                        [comments]="(comments | async) || []"></mv-comments-summary>
   <app-custom-toolbar *ngIf="showCustomToolbar"
-                      [toolbarEvents]="toolbarEvents"></app-custom-toolbar>
+                      [toolbarEvents]="toolbarEvents"
+                      [contentType]="documentType"></app-custom-toolbar>
   <mv-media-viewer [url]="url"
                    [downloadFileName]="filename"
                    [contentType]="documentType"

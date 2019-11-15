@@ -8,6 +8,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 export class CustomToolbarComponent implements OnInit {
 
   @Input() toolbarEvents;
+  @Input() contentType;
   zoomValue: number;
   search: boolean;
   currentPageNumber = 1;

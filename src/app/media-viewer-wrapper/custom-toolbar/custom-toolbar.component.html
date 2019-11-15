@@ -1,14 +1,11 @@
-<div class="toolbar">
+<div class="customToolbar">
   <div class="toolbarContainer">
-    <div class="column left-pane">
+    <div *ngIf="contentType === 'pdf'" class="column left-pane">
       <button class="govuk-button" id="viewFind" data-module="govuk-button" (click)="search = !search">
         search
       </button>
       <button class="govuk-button" id="toggleHighlightButton" data-module="govuk-button" (click)="highlight()">
         Highlight
-      </button>
-      <button class="govuk-button" id="toggleDrawButton" data-module="govuk-button" (click)="draw()">
-        Draw
       </button>
       <button class="govuk-button" id="previous" data-module="govuk-button" (click)="prevPage()">
         Prev Page
@@ -28,7 +25,12 @@
       <app-search-bar *ngIf="search"
                       [toolbarEvents]="toolbarEvents"></app-search-bar>
     </div>
-    <div class="column middle-pane">
+    <div *ngIf="contentType === 'pdf' || contentType === 'image'" class="left-pane">
+      <button class="govuk-button" id="toggleDrawButton" data-module="govuk-button" (click)="draw()">
+        Draw
+      </button>
+    </div>
+    <div *ngIf="contentType === 'pdf' || contentType === 'image'" class="column middle-pane">
       <button class="govuk-button" id="pageRotateCcw" data-module="govuk-button" (click)="rotate(270)">
         rot -90
       </button>
@@ -66,7 +68,7 @@
       </button>
     </div>
     <div class="column right-pane">
-      <button class="govuk-button" id="download" data-module="govuk-button" (click)="print()">
+      <button *ngIf="contentType === 'pdf' || contentType === 'image'" class="govuk-button" id="download" data-module="govuk-button" (click)="print()">
         Print
       </button>
       <button class="govuk-button" id="print" data-module="govuk-button" (click)="download()">
