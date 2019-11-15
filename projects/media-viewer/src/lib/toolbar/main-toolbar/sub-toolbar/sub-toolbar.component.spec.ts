@@ -34,7 +34,7 @@ describe('SubToolbarComponent', () => {
     const printBtn = nativeElement.querySelector('button[id=secondaryPrint]');
     printBtn.click();
 
-    expect(printSpy).toHaveBeenCalledWith(true);
+    expect(printSpy).toHaveBeenCalled();
   });
 
   it('should emit download event', () => {
@@ -44,7 +44,7 @@ describe('SubToolbarComponent', () => {
     const downloadBtn = nativeElement.querySelector('button[id=secondaryDownload]');
     downloadBtn.click();
 
-    expect(downloadSpy).toHaveBeenCalledWith(true);
+    expect(downloadSpy).toHaveBeenCalled();
   });
 
   it('should emit highlight mode event', () => {
