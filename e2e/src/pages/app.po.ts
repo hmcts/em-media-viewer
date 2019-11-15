@@ -27,7 +27,7 @@ export class AppPage {
   }
 
   async showToolbarButtons() {
-    const searchButtonElement = await element(by.id('search-btn-toggle'));
+    const searchButtonElement = await element(by.css('label[for="search-btn-toggle"]'));
     const checked = await searchButtonElement.getAttribute('checked');
     if (!checked) {
       await Promise.all([

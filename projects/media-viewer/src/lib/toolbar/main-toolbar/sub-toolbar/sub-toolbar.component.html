@@ -1,9 +1,9 @@
 <div id="secondaryToolbar" class="secondaryToolbar doorHangerRight" [ngClass]="{ hidden: toolbarButtons.subToolbarHidden | async }">
   <div id="secondaryToolbarButtonContainer">
-      <button *ngIf="toolbarButtons.showHighlightButton" (click)="onClickHighlightToggle()" [class.toggled]="toolbarEvents.highlightMode | async" class="secondaryToolbarButton highlightBtn" title="Highlight Text Mode" id="secondaryHighlightToggle" tabindex="0" data-l10n-id="secondaryHighlightToggle">
+      <button *ngIf="toolbarButtons.showHighlightButton" (click)="onClickHighlightToggle()" [class.toggled]="toolbarEvents.highlightModeSubject | async" class="secondaryToolbarButton highlightBtn" title="Highlight Text Mode" id="secondaryHighlightToggle" tabindex="0" data-l10n-id="secondaryHighlightToggle">
         <span data-l10n-id="highlight_label">Highlight Text</span>
       </button>
-      <button *ngIf="toolbarButtons.showDrawButton" (click)="onClickDrawToggle()" [class.toggled]="toolbarEvents.drawMode | async" class="secondaryToolbarButton drawBtn" title="Draw Mode" id="secondaryToggleDrawButton" tabindex="1" data-l10n-id="secondaryToggleDrawButton"  >
+      <button *ngIf="toolbarButtons.showDrawButton" (click)="onClickDrawToggle()" [class.toggled]="toolbarEvents.drawModeSubject | async" class="secondaryToolbarButton drawBtn" title="Draw Mode" id="secondaryToggleDrawButton" tabindex="1" data-l10n-id="secondaryToggleDrawButton"  >
         <span data-l10n-id="draw_label">Draw</span>
       </button>
     <div class="horizontalToolbarSeparator"></div>
