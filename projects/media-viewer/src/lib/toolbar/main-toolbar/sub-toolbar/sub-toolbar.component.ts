@@ -15,14 +15,12 @@ export class SubToolbarComponent {
   ) {}
 
   onClickHighlightToggle() {
-    this.toolbarEvents.highlightMode.next(true);
-    this.toolbarEvents.drawMode.next(false);
+    this.toolbarEvents.toggleHighlightMode();
     this.closeMenu();
   }
 
   onClickDrawToggle() {
-    this.toolbarEvents.drawMode.next(true);
-    this.toolbarEvents.highlightMode.next(false);
+    this.toolbarEvents.toggleDrawMode();
     this.closeMenu();
   }
 
