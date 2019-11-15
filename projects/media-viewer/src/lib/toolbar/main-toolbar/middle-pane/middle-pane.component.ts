@@ -17,15 +17,15 @@ export class ToolbarMiddlePaneComponent {
   ) {}
 
   zoom(zoomFactor: string) {
-    this.toolbarEvents.zoom.next(+zoomFactor);
+    this.toolbarEvents.zoom(+zoomFactor);
   }
 
   stepZoom(zoomFactor: number) {
-    this.toolbarEvents.stepZoom.next(zoomFactor);
+    this.toolbarEvents.stepZoom(zoomFactor);
     this.zoomSelect.nativeElement.selected = 'selected';
   }
 
   rotate(rotation: number) {
-    this.toolbarEvents.rotate.next(rotation);
+    this.toolbarEvents.rotate(rotation);
   }
 }

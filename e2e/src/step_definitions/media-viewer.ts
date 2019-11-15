@@ -301,6 +301,25 @@ When(/^I use the "([^"]*)" viewer rotate feature$/, async (viewerType: string) =
   }
 });
 
+When(/^I use the custom toolbar "([^"]*)" viewer rotate feature$/, async (viewerType: string) => {
+  switch (viewerType) {
+
+    case 'pdf' :
+      await genericMethods.sleep(2000);
+      break;
+
+    case 'image' :
+      await rotatePage.selectImageViewer();
+      await genericMethods.sleep(2000);
+      await genericMethods.scrollDown();
+      break;
+
+    default:
+      console.log('media viewer input tab is not found');
+      break;
+  }
+});
+
 
 When('I highlight a portion of pdf in a Draw mode', async () => {
   await drawOnPdf(300, 300);
@@ -419,4 +438,17 @@ Then('I should be able to see bundle node and expand', async () => {
 
 When('I choose to navigate to {string}', async function (link:string) {
   await outlinePage.navigateToLink(link);
+});
+
+
+When('I enable custom toolbar', async () => {
+  await page.showCustomToolbarButtons();
+});
+
+Then('I expect custom toolbar button should be enabled', async () => {
+  await page.waitForElement(by.id('toggleCustomToolbar'));
+});
+
+Then('I expect custom toolbar should be enabled', async () => {
+  await page.waitForElement(by.className('customToolbar'));
 });

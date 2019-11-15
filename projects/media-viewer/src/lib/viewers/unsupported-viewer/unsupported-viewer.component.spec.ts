@@ -31,7 +31,7 @@ describe('UnsupportedViewerComponent', () => {
   it('should click download button', () => {
     const clickSpy = spyOn(component.downloadLink.nativeElement, 'click');
 
-    component.toolbarEvents.download.next();
+    component.toolbarEvents.downloadSubject.next();
     fixture.detectChanges();
 
     expect(clickSpy).toHaveBeenCalledWith();

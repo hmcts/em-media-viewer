@@ -52,11 +52,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.toolbarEvents.rotate.subscribe(rotation => this.setRotation(rotation)),
-      this.toolbarEvents.zoom.subscribe(zoom => this.setZoom(zoom)),
-      this.toolbarEvents.stepZoom.subscribe(zoom => this.stepZoom(zoom)),
-      this.toolbarEvents.print.subscribe(() => this.printService.printDocumentNatively(this.url)),
-      this.toolbarEvents.download.subscribe(() => this.download()),
+      this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
+      this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
+      this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
+      this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
+      this.toolbarEvents.downloadSubject.subscribe(() => this.download()),
     );
   }
 
@@ -107,7 +107,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   setZoomValue(zoomValue) {
     return new Promise((resolve) => {
       this.zoom = zoomValue;
-      this.toolbarEvents.zoomValue.next(zoomValue);
+      this.toolbarEvents.zoomValueSubject.next(zoomValue);
       resolve(true);
     });
   }

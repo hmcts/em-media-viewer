@@ -44,7 +44,7 @@ describe('ToolbarRightPaneComponent', () => {
   }));
 
   it('should emit print event', () => {
-    const printSpy = spyOn(component.toolbarEvents.print, 'next');
+    const printSpy = spyOn(component.toolbarEvents.printSubject, 'next');
     const printButton = nativeElement.querySelector('button[id=print]');
     printButton.click();
 
@@ -52,7 +52,7 @@ describe('ToolbarRightPaneComponent', () => {
   });
 
   it('should emit download event', () => {
-    const downloadSpy = spyOn(component.toolbarEvents.download, 'next');
+    const downloadSpy = spyOn(component.toolbarEvents.downloadSubject, 'next');
     const downloadButton = nativeElement.querySelector('button[id=download]');
     downloadButton.click();
 

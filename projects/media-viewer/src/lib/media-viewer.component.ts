@@ -37,6 +37,7 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
   @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
   @Output() viewerException = new EventEmitter<ViewerException>();
+  @Output() toolbarEventsOutput = new EventEmitter<ToolbarEventService>();
 
   @Input() enableAnnotations = false;
   @Input() showCommentSummary: Subject<boolean>;
@@ -56,6 +57,7 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
   ngAfterContentInit() {
     this.setToolbarButtons();
+    this.toolbarEventsOutput.emit(this.toolbarEvents);
   }
 
   contentTypeUnsupported(): boolean {

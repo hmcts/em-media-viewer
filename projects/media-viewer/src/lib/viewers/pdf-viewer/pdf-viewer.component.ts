@@ -64,8 +64,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     private readonly viewerEvents: ViewerEventService,
     private readonly annotationService: PdfAnnotationService
   ) {
-    this.highlightMode = toolbarEvents.highlightMode;
-    this.drawMode = toolbarEvents.drawMode;
+    this.highlightMode = toolbarEvents.highlightModeSubject;
+    this.drawMode = toolbarEvents.drawModeSubject;
   }
 
   async ngAfterContentInit(): Promise<void> {
@@ -82,18 +82,18 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     });
 
     this.subscriptions.push(
-      this.toolbarEvents.print.subscribe(() => this.printService.printDocumentNatively(this.url)),
-      this.toolbarEvents.download.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
-      this.toolbarEvents.rotate.subscribe(rotation => {
+      this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
+      this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
+      this.toolbarEvents.rotateSubject.subscribe(rotation => {
         const pageNumber = this.pdfWrapper.getPageNumber();
         this.pdfWrapper.rotate(rotation);
         this.pdfWrapper.setPageNumber(pageNumber);
       }),
-      this.toolbarEvents.zoom.subscribe(zoom => this.pdfWrapper.setZoom(zoom)),
-      this.toolbarEvents.stepZoom.subscribe(zoom => this.pdfWrapper.stepZoom(zoom)),
-      this.toolbarEvents.search.subscribe(search => this.pdfWrapper.search(search)),
-      this.toolbarEvents.setCurrentPage.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
-      this.toolbarEvents.changePageByDelta.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber))
+      this.toolbarEvents.zoomSubject.subscribe(zoom => this.pdfWrapper.setZoom(zoom)),
+      this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.pdfWrapper.stepZoom(zoom)),
+      this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)),
+      this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
+      this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber))
     );
     await this.loadDocument();
   }

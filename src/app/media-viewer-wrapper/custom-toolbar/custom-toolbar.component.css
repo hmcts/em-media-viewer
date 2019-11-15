@@ -1,0 +1,51 @@
+.customToolbar {
+  position: relative;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  cursor: default;
+}
+
+.toolbarContainer {
+  position: relative;
+  height: 32px;
+  width: 100%;
+}
+
+.govuk-button {
+  margin: 0;
+}
+
+.page-input {
+  width: 50px;
+}
+
+.left-pane {
+  float: left;
+}
+
+.middle-pane {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+@media all and (max-width: 900px) {
+  .middle-pane {
+    display: table;
+    margin: auto;
+    left: auto;
+    position: inherit;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.right-pane {
+  float: right;
+}
+
+.page-input-form {
+  display: inline;
+}

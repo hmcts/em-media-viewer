@@ -30,7 +30,7 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscriptions.push(
-      this.toolbarEvents.download.subscribe(() => this.downloadLink.nativeElement.click()),
+      this.toolbarEvents.downloadSubject.subscribe(() => this.downloadLink.nativeElement.click()),
       this.viewerUtilService.validateFile(this.url).subscribe(
         next => next,
         error => {

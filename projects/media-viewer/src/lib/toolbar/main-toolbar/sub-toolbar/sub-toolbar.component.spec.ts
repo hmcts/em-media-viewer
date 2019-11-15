@@ -30,27 +30,27 @@ describe('SubToolbarComponent', () => {
   it('should emit print event', () => {
     component.toolbarButtons.showPrint = true;
     fixture.detectChanges();
-    const printSpy = spyOn(component.toolbarEvents.print, 'next');
+    const printSpy = spyOn(component.toolbarEvents, 'print');
     const printBtn = nativeElement.querySelector('button[id=secondaryPrint]');
     printBtn.click();
 
-    expect(printSpy).toHaveBeenCalledWith(true);
+    expect(printSpy).toHaveBeenCalled();
   });
 
   it('should emit download event', () => {
     component.toolbarButtons.showDownload = true;
     fixture.detectChanges();
-    const downloadSpy = spyOn(component.toolbarEvents.download, 'next');
+    const downloadSpy = spyOn(component.toolbarEvents, 'download');
     const downloadBtn = nativeElement.querySelector('button[id=secondaryDownload]');
     downloadBtn.click();
 
-    expect(downloadSpy).toHaveBeenCalledWith(true);
+    expect(downloadSpy).toHaveBeenCalled();
   });
 
   it('should emit highlight mode event', () => {
     component.toolbarButtons.showHighlightButton = true;
     fixture.detectChanges();
-    const eventSpy = spyOn(component.toolbarEvents.highlightMode, 'next');
+    const eventSpy = spyOn(component.toolbarEvents.highlightModeSubject, 'next');
     const button = nativeElement.querySelector('button[id=secondaryHighlightToggle]');
     button.click();
 
@@ -60,7 +60,7 @@ describe('SubToolbarComponent', () => {
   it('should emit draw mode event', () => {
     component.toolbarButtons.showDrawButton = true;
     fixture.detectChanges();
-    const eventSpy = spyOn(component.toolbarEvents.drawMode, 'next');
+    const eventSpy = spyOn(component.toolbarEvents.drawModeSubject, 'next');
     const button = nativeElement.querySelector('button[id=secondaryToggleDrawButton]');
     button.click();
 
@@ -70,7 +70,7 @@ describe('SubToolbarComponent', () => {
   it('should emit rotate ccw mode event', () => {
     component.toolbarButtons.showRotate = true;
     fixture.detectChanges();
-    const eventSpy = spyOn(component.toolbarEvents.rotate, 'next');
+    const eventSpy = spyOn(component.toolbarEvents, 'rotate');
     const button = nativeElement.querySelector('button[id=secondaryRotateCcw]');
     button.click();
 
@@ -80,7 +80,7 @@ describe('SubToolbarComponent', () => {
   it('should emit rotate cw mode event', () => {
     component.toolbarButtons.showRotate = true;
     fixture.detectChanges();
-    const eventSpy = spyOn(component.toolbarEvents.rotate, 'next');
+    const eventSpy = spyOn(component.toolbarEvents, 'rotate');
     const button = nativeElement.querySelector('button[id=secondaryRotateCw]');
     button.click();
 

@@ -1,16 +1,16 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
-import { SearchResultsCount, ToolbarEventService } from '../../toolbar-event.service';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SearchResultsCount } from '../../../../../projects/media-viewer/src/lib/toolbar/toolbar-event.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'mv-search-bar',
+  selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
-  styleUrls: ['../../../styles/main.scss']
+  styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
 
-  @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
+  @ViewChild('searchInput') searchElement: ElementRef;
+  @Input() toolbarEvents;
 
   highlightAll = true;
   matchCase = false;
@@ -21,10 +21,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(
-    public readonly toolbarButtons: ToolbarButtonVisibilityService,
-    public readonly toolbarEvents: ToolbarEventService
-  ) {}
+  constructor() { }
 
   public ngOnInit(): void {
     this.subscriptions.push(
@@ -33,18 +30,16 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.toolbarEvents.search({
+      searchTerm: '',
+      highlightAll: this.highlightAll,
+      matchCase: this.matchCase,
+      wholeWord: this.wholeWord,
+      previous: false,
+      reset: true
+    });
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
-    }
-  }
-
-  @HostListener('window:keydown', ['$event'])
-  public onWindowKeyDown(e: KeyboardEvent): void {
-    if (e.code === 'F3' || (e.ctrlKey && e.code === 'KeyF')) {
-      e.preventDefault();
-
-      this.toolbarButtons.searchBarHidden.next(false);
-      setTimeout(() => this.findInput.nativeElement.focus(), 200);
     }
   }
 
@@ -86,11 +81,5 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.resultsText = this.haveResults
       ? `${results.current} of ${results.total} matches`
       : 'Phrase not found';
-  }
-
-  public onInputKeyPress(e: KeyboardEvent): void {
-    if (e.key === 'Escape') {
-      this.toolbarButtons.searchBarHidden.next(true);
-    }
   }
 }

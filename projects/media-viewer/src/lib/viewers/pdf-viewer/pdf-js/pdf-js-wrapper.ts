@@ -23,15 +23,15 @@ export class PdfJsWrapper {
 
     // bind to internal PDF.js event bus
     this.pdfViewer.eventBus.on('pagerendered', e => this.pageRendered.next(e));
-    this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPageInputValue.next(e.pageNumber));
+    this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPageInputValueSubject.next(e.pageNumber));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
     this.pdfViewer.eventBus.on('updatefindcontrolstate', event => {
       if (event.state !== FindState.PENDING) {
-        this.toolbarEvents.searchResultsCount.next(event.matchesCount);
+        this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
       }
     });
     this.pdfViewer.eventBus.on('updatefindmatchescount', event => {
-      this.toolbarEvents.searchResultsCount.next(event.matchesCount);
+      this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
     });
     this.zoomValue = 1;
   }
@@ -109,13 +109,13 @@ export class PdfJsWrapper {
   public setZoom(zoomValue: number): void {
     this.pdfViewer.currentScaleValue = this.getZoomValue(zoomValue);
     this.zoomValue = this.pdfViewer.currentScaleValue;
-    this.toolbarEvents.zoomValue.next(this.pdfViewer.currentScaleValue);
+    this.toolbarEvents.zoomValueSubject.next(this.pdfViewer.currentScaleValue);
   }
 
   public stepZoom(zoomValue: number): void {
     this.pdfViewer.currentScaleValue = Math.round(this.getZoomValue((+this.pdfViewer.currentScaleValue) + zoomValue) * 10) / 10;
     this.zoomValue = this.pdfViewer.currentScaleValue;
-    this.toolbarEvents.zoomValue.next(this.pdfViewer.currentScaleValue);
+    this.toolbarEvents.zoomValueSubject.next(this.pdfViewer.currentScaleValue);
   }
 
   private getZoomValue(zoomValue: number): number {

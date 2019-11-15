@@ -19,11 +19,11 @@ export class ToolbarRightPaneComponent {
   }
 
   printFile() {
-    this.toolbarEvents.print.next();
+    this.toolbarEvents.print();
   }
 
   downloadFile() {
-    this.toolbarEvents.download.next();
+    this.toolbarEvents.download();
   }
 
 }
