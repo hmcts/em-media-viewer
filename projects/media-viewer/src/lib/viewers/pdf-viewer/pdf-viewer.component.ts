@@ -49,8 +49,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   loadingDocumentProgress: number;
   errorMessage: string;
 
-  @ViewChild('viewerContainer') viewerContainer: ElementRef;
-  @ViewChild('pdfViewer') pdfViewer: ElementRef;
+  @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
+  @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
 
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
