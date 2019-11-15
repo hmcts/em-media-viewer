@@ -5,7 +5,7 @@ Feature: Custom Toolbar Feature
     Given I am on Media Viewer Page
     Then I expect the page header to be "Media Viewer Demo"
     When I enable custom toolbar
-    Then I expect toolbar buttons should be enabled
+    Then I expect custom toolbar should be enabled
 
   @Custom_Toolbar_Step_Navigation @ci
   Scenario Outline: Navigate to the next page using custom toolbar
@@ -31,7 +31,7 @@ Feature: Custom Toolbar Feature
 
   @Custom_Toolbar_Rotation @ci
   Scenario Outline: PDF Rotation
-    When I use the "<PDF_Or_Image>" viewer rotate feature
+    When I use the viewer rotate feature
     Then I must rotate the "<PDF/Image>" document
 
     Examples:
@@ -56,12 +56,6 @@ Feature: Custom Toolbar Feature
       | pdf_or_image | zoom_option |
       | pdf          | 150%        |
       | image        | 150%        |
-
-  @Custom_Toolbar_Print
-  Scenario: Enable user to print file
-    When the user selects the print option
-    Then I expect the print dialog should appear and the file is queued for printing
-
 
   @Custom_Toolbar_MultipleWords_Search @ci
   Scenario Outline: Enable Search within a document

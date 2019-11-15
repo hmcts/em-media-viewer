@@ -429,3 +429,7 @@ When('I enable custom toolbar', async () => {
 Then('I expect custom toolbar button should be enabled', async () => {
   await page.waitForElement(by.id('toggleCustomToolbar'));
 });
+
+Then('I expect custom toolbar should be enabled', async () => {
+  await page.waitForElement(by.className('customToolbar'));
+});
