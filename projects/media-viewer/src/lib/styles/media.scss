@@ -360,7 +360,7 @@
 }
 
 @media all and (max-width: 1000px) {
-  .hiddenIfLargerThan1000px, .hiddenIfLargerThan1000px * {
+  div.hiddenIfLargerThan1000px, div.hiddenIfLargerThan1000px * {
     display: none;
   }
 }
