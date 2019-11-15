@@ -23,4 +23,11 @@ export class ToolbarTogglesComponent {
     this.toolbarButtonOverrides[key] = value;
     this.toggleToolbarBtns.emit(this.toolbarButtonOverrides);
   }
+
+  setCustomToolbar(checked: boolean) {
+    this.toggleCustomToolbar.next(checked);
+    if (checked) {
+      this.toggleToolbar.next(!checked);
+    }
+  }
 }

@@ -1,6 +1,6 @@
 <table style="float: right; margin-top: 15px;">
   <tr>
-    <ng-container *ngIf="toggleToolbar.getValue()">
+    <ng-container *ngIf="toggleToolbar.getValue() || toolbar">
       <td app-toggle [label]="'search'" (toggleButtonOverrides)="toggleButtonOverrides('showSearchBar', $event)"></td>
       <td app-toggle [label]="'navigate'" (toggleButtonOverrides)="toggleButtonOverrides('showNavigation', $event)"></td>
       <td app-toggle [label]="'rotate'" (toggleButtonOverrides)="toggleButtonOverrides('showRotate', $event)"></td>
@@ -26,7 +26,7 @@
       </div>
         <div class="govuk-grid-column-full">
           <label for="toggleCustomToolbar" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleCustomToolbar" [checked]="showCustomToolbar" (change)="toggleCustomToolbar.next($event.target.checked)" aria-label="custom toolbar">
+            <input type="checkbox" id="toggleCustomToolbar" [checked]="showCustomToolbar" (change)="setCustomToolbar($event.target.checked)" aria-label="custom toolbar">
             <span class="slider round"></span>
           </label>
         </div>
