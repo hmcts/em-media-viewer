@@ -31,7 +31,7 @@ Feature: Custom Toolbar Feature
 
   @Custom_Toolbar_Rotation @ci
   Scenario Outline: PDF Rotation
-    When I use the viewer rotate feature
+    When I use the custom toolbar "<PDF_Or_Image>" viewer rotate feature
     Then I must rotate the "<PDF/Image>" document
 
     Examples:
@@ -40,7 +40,7 @@ Feature: Custom Toolbar Feature
 
   @Custom_Toolbar_Rotation_Image
   Scenario Outline: Image Rotation
-    When I use the "<PDF_Or_Image>" viewer rotate feature
+    When I use the custom toolbar "<PDF_Or_Image>" viewer rotate feature
     Then I must rotate the "<PDF/Image>" document
 
     Examples:

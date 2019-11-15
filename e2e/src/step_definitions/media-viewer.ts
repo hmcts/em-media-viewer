@@ -301,6 +301,25 @@ When(/^I use the "([^"]*)" viewer rotate feature$/, async (viewerType: string) =
   }
 });
 
+When(/^I use the custom toolbar "([^"]*)" viewer rotate feature$/, async (viewerType: string) => {
+  switch (viewerType) {
+
+    case 'pdf' :
+      await genericMethods.sleep(2000);
+      break;
+
+    case 'image' :
+      await rotatePage.selectImageViewer();
+      await genericMethods.sleep(2000);
+      await genericMethods.scrollDown();
+      break;
+
+    default:
+      console.log('media viewer input tab is not found');
+      break;
+  }
+});
+
 
 When('I highlight a portion of pdf in a Draw mode', async () => {
   await drawOnPdf(300, 300);
