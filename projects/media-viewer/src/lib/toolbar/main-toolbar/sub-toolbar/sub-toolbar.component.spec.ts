@@ -61,7 +61,7 @@ describe('SubToolbarComponent', () => {
     component.toolbarButtons.showDrawButton = true;
     fixture.detectChanges();
     const eventSpy = spyOn(component.toolbarEvents.drawMode, 'next');
-    const button = nativeElement.querySelector('button[id=toggleDrawButton]');
+    const button = nativeElement.querySelector('button[id=secondaryToggleDrawButton]');
     button.click();
 
     expect(eventSpy).toHaveBeenCalledWith(true);
