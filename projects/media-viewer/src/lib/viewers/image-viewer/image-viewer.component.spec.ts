@@ -6,6 +6,8 @@ import { By } from '@angular/platform-browser';
 import { SimpleChange } from '@angular/core';
 import { AnnotationsModule } from '../../annotations/annotations.module';
 import { annotationSet } from '../../../assets/annotation-set';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { ViewerEventService } from '../viewer-event.service';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -39,59 +41,65 @@ describe('ImageViewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should rotate image', () => {
-    component.toolbarEvents.rotateSubject.next(90);
+  it('should rotate image',
+    inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+      toolbarEvents.rotateSubject.next(90);
 
-    expect(component.rotation).toBe(90);
-  });
+      expect(component.rotation).toBe(90);
+  }));
 
   describe('zoom operation', () => {
 
-    it('should zoom image by factor of 0.5 ', () => {
-      component.toolbarEvents.zoomSubject.next(0.5);
-      expect(component.zoom).toBe(0.5);
-    });
+    it('should zoom image by factor of 0.5 ',
+      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+        toolbarEvents.zoomSubject.next(0.5);
+        expect(component.zoom).toBe(0.5);
+    }));
 
-    it('should zoom image by factor of 2', () => {
-      component.toolbarEvents.zoomSubject.next(2);
+    it('should zoom image by factor of 2',
+      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+        toolbarEvents.zoomSubject.next(2);
 
-      expect(component.zoom).toBe(2);
-    });
+        expect(component.zoom).toBe(2);
+    }));
 
-    it('should zoom image by maximum value 5', () => {
-      component.toolbarEvents.zoomSubject.next(5);
-      component.toolbarEvents.stepZoomSubject.next(0.1);
+    it('should zoom image by maximum value 5',
+      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+        toolbarEvents.zoomSubject.next(5);
+        toolbarEvents.stepZoomSubject.next(0.1);
 
-      expect(component.zoom).toBe(5);
+        expect(component.zoom).toBe(5);
+    }));
 
-    });
+    it('should zoom image by minimum value 0.1',
+      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+        toolbarEvents.zoomSubject.next(0.1);
+        toolbarEvents.stepZoomSubject.next(-0.1);
 
-    it('should zoom image by minimum value 0.1', () => {
-      component.toolbarEvents.zoomSubject.next(0.1);
-      component.toolbarEvents.stepZoomSubject.next(-0.1);
-
-      expect(component.zoom).toBe(0.1);
-    });
+        expect(component.zoom).toBe(0.1);
+    }));
   });
 
-  it('should trigger print', inject([PrintService], (printService: PrintService) => {
+  it('should trigger print', inject([PrintService, ToolbarEventService],
+    (printService: PrintService, toolbarEvents: ToolbarEventService) => {
     const printSpy = spyOn(printService, 'printDocumentNatively');
-    component.toolbarEvents.printSubject.next();
+    toolbarEvents.printSubject.next();
 
     expect(printSpy).toHaveBeenCalledWith(DOCUMENT_URL);
   }));
 
-  it('should trigger download', () => {
-    const anchor = document.createElement('a');
-    spyOn(document, 'createElement').and.returnValue(anchor);
-    component.downloadFileName = 'download-filename';
+  it('should trigger download',
+    inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+      const anchor = document.createElement('a');
+      spyOn(document, 'createElement').and.returnValue(anchor);
+      component.downloadFileName = 'download-filename';
 
-    component.toolbarEvents.downloadSubject.next();
+      toolbarEvents.downloadSubject.next();
 
-    expect(document.createElement).toHaveBeenCalledWith('a');
-    expect(anchor.href).toContain(DOCUMENT_URL);
-    expect(anchor.download).toBe('download-filename');
-  });
+      expect(document.createElement).toHaveBeenCalledWith('a');
+      expect(anchor.href).toContain(DOCUMENT_URL);
+      expect(anchor.download).toBe('download-filename');
+  }));
 
   it('when errorMessage available show error message', () => {
     expect(fixture.debugElement.query(By.css('.image-container')).nativeElement.className).not.toContain('hidden');
@@ -116,5 +124,29 @@ describe('ImageViewerComponent', () => {
     component.onLoadError(component.url);
     expect(component.errorMessage).toContain('Could not load the image');
   });
+
+  it('should show comments panel',
+    inject([ViewerEventService],(viewerEvents: ViewerEventService) => {
+      component.showCommentsPanel = false;
+      const imageContainer = fixture.debugElement.query(By.css('.image-container'));
+
+      viewerEvents.commentsPanelToggle.next(true);
+      fixture.detectChanges();
+
+      expect(component.showCommentsPanel).toBeTruthy();
+      expect(imageContainer.nativeElement.className).toContain('show-comments-panel');
+  }));
+
+  it('should hide comments panel',
+    inject([ViewerEventService],(viewerEvents: ViewerEventService) => {
+      component.showCommentsPanel = true;
+      const imageContainer = fixture.debugElement.query(By.css('.image-container'));
+
+      viewerEvents.commentsPanelToggle.next(false);
+      fixture.detectChanges();
+
+      expect(component.showCommentsPanel).toBeFalsy();
+      expect(imageContainer.nativeElement.className).not.toContain('show-comments-panel');
+  }));
 });
 
