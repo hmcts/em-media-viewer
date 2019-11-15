@@ -1,6 +1,6 @@
 <table style="float: right; margin-top: 15px;">
   <tr>
-    <ng-container *ngIf="toggleToolbar.getValue() || toolbar">
+    <ng-container *ngIf="toggleToolbar.getValue()">
       <td app-toggle [label]="'search'" (toggleButtonOverrides)="toggleButtonOverrides('showSearchBar', $event)"></td>
       <td app-toggle [label]="'navigate'" (toggleButtonOverrides)="toggleButtonOverrides('showNavigation', $event)"></td>
       <td app-toggle [label]="'rotate'" (toggleButtonOverrides)="toggleButtonOverrides('showRotate', $event)"></td>
