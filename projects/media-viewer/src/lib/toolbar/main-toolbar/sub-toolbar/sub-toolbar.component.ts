@@ -14,12 +14,38 @@ export class SubToolbarComponent {
     public readonly toolbarEvents: ToolbarEventService
   ) {}
 
+  onClickHighlightToggle() {
+    this.toolbarEvents.toggleHighlightMode();
+    this.closeMenu();
+  }
+
+  onClickDrawToggle() {
+    this.toolbarEvents.toggleDrawMode();
+    this.closeMenu();
+  }
+
   printFile() {
-    this.toolbarEvents.print.next();
+    this.toolbarEvents.print.next(true);
+    this.closeMenu();
   }
 
   downloadFile() {
-    this.toolbarEvents.download.next();
+    this.toolbarEvents.download.next(true);
+    this.closeMenu();
+  }
+
+  rotateCcw() {
+    this.toolbarEvents.rotate.next(270);
+    this.closeMenu();
+  }
+
+  rotateCw() {
+    this.toolbarEvents.rotate.next(90);
+    this.closeMenu();
+  }
+
+  closeMenu() {
+    this.toolbarButtons.subToolbarHidden.next(true);
   }
 
 }
