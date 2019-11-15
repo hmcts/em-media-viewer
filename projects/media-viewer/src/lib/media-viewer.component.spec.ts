@@ -65,10 +65,10 @@ describe('MediaViewerComponent', () => {
   });
 
   it('should reset the event state when the url is changed', async () => {
-    component.toolbarEvents.zoomValue.next(2);
+    component.toolbarEvents.zoomValueSubject.next(2);
     component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });
 
-    expect(component.toolbarEvents.zoomValue.value).toBe(1);
+    expect(component.toolbarEvents.zoomValueSubject.value).toBe(1);
   });
 
   it('should set annotationSet when annotations enabled', () => {

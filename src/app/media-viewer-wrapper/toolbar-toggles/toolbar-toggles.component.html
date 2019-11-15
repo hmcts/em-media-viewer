@@ -14,7 +14,19 @@
         </div>
         <div class="govuk-grid-column-full">
           <label for="toggleToolbar" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleToolbar" [checked]="toggleToolbar.getValue()" (change)="toggleToolbar.next($event.target.checked)" aria-label="toolbar">
+            <input type="checkbox" id="toggleToolbar" [checked]="showToolbar" (change)="toggleToolbar.next($event.target.checked)" aria-label="toolbar">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="govuk-grid-row"><div class="govuk-grid-column-full">
+        <span class="govuk-!-font-weight-bold">Custom Toolbar</span>
+      </div>
+        <div class="govuk-grid-column-full">
+          <label for="toggleCustomToolbar" class="switch govuk-!-margin-right-2">
+            <input type="checkbox" id="toggleCustomToolbar" [checked]="showCustomToolbar" (change)="setCustomToolbar($event.target.checked)" aria-label="custom toolbar">
             <span class="slider round"></span>
           </label>
         </div>

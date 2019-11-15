@@ -56,7 +56,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should run search event', () => {
-    const searchSpy = spyOn(component.toolbarEvents.search, 'next');
+    const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
     component.searchText = 'searchTerm';
     const mockSearchOperation = {
       searchTerm: 'searchTerm',
@@ -100,7 +100,7 @@ describe('SearchBarComponent', () => {
 
   it('should emit search next event', () => {
     component.toolbarButtons.searchBarHidden.next(false);
-    const searchSpy = spyOn(component.toolbarEvents.search, 'next');
+    const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
     component.searchText = 'searchTerm';
     const searchNextButton = nativeElement.querySelector('button[id=findNext]');
     searchNextButton.click();
@@ -119,7 +119,7 @@ describe('SearchBarComponent', () => {
 
   it('should emit search previous event', () => {
     component.toolbarButtons.searchBarHidden.next(false);
-    const searchSpy = spyOn(component.toolbarEvents.search, 'next');
+    const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
     component.searchText = 'searchTerm';
     const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');
     searchPrevButton.click();
@@ -137,13 +137,13 @@ describe('SearchBarComponent', () => {
   });
 
   it('should set search result count with results found', () => {
-    component.toolbarEvents.searchResultsCount.next({current: 1, total: 4});
+    component.toolbarEvents.searchResultsCountSubject.next({current: 1, total: 4});
     expect(component.haveResults).toBeTruthy();
     expect(component.resultsText).toEqual('1 of 4 matches');
   });
 
   it('should set search result count with no results found', () => {
-    component.toolbarEvents.searchResultsCount.next({current: null, total: null});
+    component.toolbarEvents.searchResultsCountSubject.next({current: null, total: null});
     expect(component.haveResults).toBeFalsy();
     expect(component.resultsText).toEqual('Phrase not found');
   });

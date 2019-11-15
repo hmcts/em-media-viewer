@@ -32,7 +32,7 @@ describe('ToolbarLeftPaneComponent', () => {
 
   it('should get the page number of the current page', () => {
     component.ngOnInit();
-    toolbarService.setCurrentPageInputValue.next(2);
+    toolbarService.setCurrentPageInputValueSubject.next(2);
 
     expect(component.pageNumber).toEqual(2);
   });
@@ -62,25 +62,25 @@ describe('ToolbarLeftPaneComponent', () => {
   }));
 
   it('should go to next page', () => {
-    const pageChangerSpy = spyOn(component.toolbarEvents.changePageByDelta, 'next');
+    const pageChangerSpy = spyOn(component.toolbarEvents.changePageByDeltaSubject, 'next');
     component.increasePageNumber();
     expect(pageChangerSpy).toHaveBeenCalledWith(1);
   });
 
   it('should go to previous page', () => {
-    const pageChangerSpy = spyOn(component.toolbarEvents.changePageByDelta, 'next');
+    const pageChangerSpy = spyOn(component.toolbarEvents.changePageByDeltaSubject, 'next');
     component.decreasePageNumber();
     expect(pageChangerSpy).toHaveBeenCalledWith(-1);
   });
 
   it('should go to selected page', () => {
-    const pageChangerSpy = spyOn(component.toolbarEvents.setCurrentPage, 'next');
+    const pageChangerSpy = spyOn(component.toolbarEvents.setCurrentPageSubject, 'next');
     component.onPageNumberInputChange('4');
     expect(pageChangerSpy).toHaveBeenCalledWith(4);
   });
 
   it('should update page number', () => {
-    component.toolbarEvents.setCurrentPage.next(4);
+    component.toolbarEvents.setPage(4);
     expect(component.pageNumber).toEqual(4);
   });
 

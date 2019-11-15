@@ -6,9 +6,12 @@
       </div>
       <div class="govuk-grid-column-two-thirds">
         <app-toolbar-toggles [showCommentSummary]="showCommentSummary"
+                             [showToolbar]="showToolbar"
+                             [showCustomToolbar]="showCustomToolbar"
                              (toggleAnnotations)="toggleAnnotations($event)"
                              (toggleToolbar)="toggleToolbar($event)"
-                             (toggleToolbarBtns)="toggleToolbarBtns($event)"></app-toolbar-toggles>
+                             (toggleToolbarBtns)="toggleToolbarBtns($event)"
+                             (toggleCustomToolbar)="toggleCustomToolbar($event)"></app-toolbar-toggles>
       </div>
     </div>
     <div class="govuk-grid-row">
@@ -83,6 +86,9 @@
                        [title]="'Document Title'"
                        [showCommentSummary]="showCommentSummary"
                        [comments]="(comments | async) || []"></mv-comments-summary>
+  <app-custom-toolbar *ngIf="showCustomToolbar"
+                      [toolbarEvents]="toolbarEvents"
+                      [contentType]="documentType"></app-custom-toolbar>
   <mv-media-viewer [url]="url"
                    [downloadFileName]="filename"
                    [contentType]="documentType"
@@ -90,5 +96,6 @@
                    [enableAnnotations]="enableAnnotations"
                    [showToolbar]="showToolbar"
                    [toolbarButtonOverrides]="toolbarButtonOverrides"
-                   (mediaLoadStatus)="onMediaLoad($event)"></mv-media-viewer>
+                   (mediaLoadStatus)="onMediaLoad($event)"
+                   (toolbarEventsOutput)="getToolbarFunctions($event)"></mv-media-viewer>
 </div>

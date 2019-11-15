@@ -40,7 +40,7 @@ describe('ImageViewerComponent', () => {
   });
 
   it('should rotate image', () => {
-    component.toolbarEvents.rotate.next(90);
+    component.toolbarEvents.rotateSubject.next(90);
 
     expect(component.rotation).toBe(90);
   });
@@ -48,27 +48,27 @@ describe('ImageViewerComponent', () => {
   describe('zoom operation', () => {
 
     it('should zoom image by factor of 0.5 ', () => {
-      component.toolbarEvents.zoom.next(0.5);
+      component.toolbarEvents.zoomSubject.next(0.5);
       expect(component.zoom).toBe(0.5);
     });
 
     it('should zoom image by factor of 2', () => {
-      component.toolbarEvents.zoom.next(2);
+      component.toolbarEvents.zoomSubject.next(2);
 
       expect(component.zoom).toBe(2);
     });
 
     it('should zoom image by maximum value 5', () => {
-      component.toolbarEvents.zoom.next(5);
-      component.toolbarEvents.stepZoom.next(0.1);
+      component.toolbarEvents.zoomSubject.next(5);
+      component.toolbarEvents.stepZoomSubject.next(0.1);
 
       expect(component.zoom).toBe(5);
 
     });
 
     it('should zoom image by minimum value 0.1', () => {
-      component.toolbarEvents.zoom.next(0.1);
-      component.toolbarEvents.stepZoom.next(-0.1);
+      component.toolbarEvents.zoomSubject.next(0.1);
+      component.toolbarEvents.stepZoomSubject.next(-0.1);
 
       expect(component.zoom).toBe(0.1);
     });
@@ -76,7 +76,7 @@ describe('ImageViewerComponent', () => {
 
   it('should trigger print', inject([PrintService], (printService: PrintService) => {
     const printSpy = spyOn(printService, 'printDocumentNatively');
-    component.toolbarEvents.print.next();
+    component.toolbarEvents.printSubject.next();
 
     expect(printSpy).toHaveBeenCalledWith(DOCUMENT_URL);
   }));
@@ -86,7 +86,7 @@ describe('ImageViewerComponent', () => {
     spyOn(document, 'createElement').and.returnValue(anchor);
     component.downloadFileName = 'download-filename';
 
-    component.toolbarEvents.download.next();
+    component.toolbarEvents.downloadSubject.next();
 
     expect(document.createElement).toHaveBeenCalledWith('a');
     expect(anchor.href).toContain(DOCUMENT_URL);

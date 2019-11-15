@@ -19,8 +19,8 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.subscriptions.push(
-      this.toolbarEvents.setCurrentPage.subscribe(pageNumber => this.setCurrentPage(pageNumber)),
-      this.toolbarEvents.setCurrentPageInputValue.subscribe(pageNumber => this.pageNumber = pageNumber)
+      this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pageNumber = pageNumber),
+      this.toolbarEvents.setCurrentPageInputValueSubject.subscribe(pageNumber => this.pageNumber = pageNumber)
     );
   }
 
@@ -50,18 +50,14 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   }
 
   increasePageNumber() {
-    this.toolbarEvents.changePageByDelta.next(1);
+    this.toolbarEvents.incrementPage(1);
   }
 
   decreasePageNumber() {
-    this.toolbarEvents.changePageByDelta.next(-1);
+    this.toolbarEvents.incrementPage(-1);
   }
 
   onPageNumberInputChange(pageNumber: string) {
-    this.toolbarEvents.setCurrentPage.next(Number.parseInt(pageNumber, 0));
-  }
-
-  private setCurrentPage(pageNumber: number) {
-    this.pageNumber = pageNumber;
+    this.toolbarEvents.setPage(Number.parseInt(pageNumber, 0));
   }
 }
