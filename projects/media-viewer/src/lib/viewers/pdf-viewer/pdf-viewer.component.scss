@@ -16,7 +16,11 @@
 }
 
 .pdfContainer.annotations .pageWrapper {
-  width: 72.5%;
+  width: 97%;
+}
+
+.pdfContainer.annotations.show-comments-panel .pageWrapper {
+  width: 75%;
 }
 
 .hidden {

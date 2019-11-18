@@ -46,6 +46,8 @@ describe('PdfViewerComponent', () => {
 
   const mockViewerEvent = {
     onTextSelection: () => {},
+    toggleCommentsPanel: () => {},
+    commentsPanelToggle: new Subject<boolean>()
   };
 
   const mockAnnotationService = {
@@ -117,6 +119,7 @@ describe('PdfViewerComponent', () => {
     spyOn(mockWrapper, 'search');
     spyOn(mockWrapper, 'setPageNumber');
     spyOn(mockWrapper, 'changePageNumber');
+    spyOn(mockViewerEvent, 'toggleCommentsPanel');
 
     component.ngAfterContentInit();
     toolbarEvent.printSubject.next();
@@ -249,5 +252,25 @@ describe('PdfViewerComponent', () => {
     expect(spyComponentLoadDocument).toHaveBeenCalled();
     expect(annotationsDestroyed).toBeTruthy();
     expect(component.annotationSet).toBeNull();
+  });
+
+  it('should show comments panel', () => {
+    component.showCommentsPanel = false;
+
+    mockViewerEvent.commentsPanelToggle.next(true);
+    fixture.detectChanges();
+
+    expect(component.showCommentsPanel).toBeTruthy();
+    expect(component.viewerContainer.nativeElement.classList).toContain('show-comments-panel');
+  });
+
+  it('should hide comments panel', () => {
+    component.showCommentsPanel = true;
+
+    mockViewerEvent.commentsPanelToggle.next(false);
+    fixture.detectChanges();
+
+    expect(component.showCommentsPanel).toBeFalsy();
+    expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');
   });
 });

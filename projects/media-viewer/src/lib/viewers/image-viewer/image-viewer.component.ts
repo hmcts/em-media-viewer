@@ -15,6 +15,7 @@ import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.m
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
 import { ViewerUtilService } from '../viewer-util.service';
+import { ViewerEventService } from '../viewer-event.service';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -44,10 +45,13 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   private viewerException: ViewerException;
   private response: Subscription;
 
+  showCommentsPanel = true;
+
   constructor(
     private readonly printService: PrintService,
     private readonly viewerUtilService: ViewerUtilService,
-    public readonly toolbarEvents: ToolbarEventService,
+    private readonly viewerEvents: ViewerEventService,
+    private readonly toolbarEvents: ToolbarEventService,
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +61,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.download()),
+      this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle)
     );
   }
 
