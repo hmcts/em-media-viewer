@@ -1,4 +1,11 @@
-<div #container class="split right comment-container" [style.height.px]="height" (click)="onContainerClick($event)">
+<div #container
+     [ngClass]="{ 'right comment-container': true, 'show-comments-panel': showCommentsPanel }"
+     [style.height.px]="height" (click)="onContainerClick($event)">
+  <button [ngClass]="{ 'toolbarButton': true, 'collapsed': showCommentsPanel, 'expanded': !showCommentsPanel }"
+          class="toolbarButton" title="Tools" tabindex="0" data-l10n-id="tools"
+          (click)="toggleCommentsPanel()">
+    <span data-l10n-id="tools_label">Tools</span>
+  </button>
   <ng-container *ngFor="let annotation of getCommentsOnPage(); let i = index">
     <mv-anno-comment
       #commentComponent

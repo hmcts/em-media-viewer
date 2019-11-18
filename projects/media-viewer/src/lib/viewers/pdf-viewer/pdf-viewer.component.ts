@@ -49,12 +49,13 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   loadingDocumentProgress: number;
   errorMessage: string;
 
-  @ViewChild('viewerContainer') viewerContainer: ElementRef;
-  @ViewChild('pdfViewer') pdfViewer: ElementRef;
+  @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
+  @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
 
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
   private viewerException: ViewerException;
+  showCommentsPanel = true;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
@@ -93,7 +94,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.pdfWrapper.stepZoom(zoom)),
       this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)),
       this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
-      this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber))
+      this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)),
+      this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle)
     );
     await this.loadDocument();
   }

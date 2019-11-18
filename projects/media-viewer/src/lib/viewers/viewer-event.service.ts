@@ -12,6 +12,7 @@ export class ViewerEventService {
   // Register Observable Subject Events relevant to the Viewers
   public readonly highlightedText = new Subject<Highlight>();
   public readonly highlightedShape = new Subject<Highlight>();
+  public readonly commentsPanelToggle = new Subject<boolean>();
 
   constructor() {}
 
@@ -23,5 +24,9 @@ export class ViewerEventService {
   // Function to inform Observers that shape has been selected in the viewer
   public onShapeSelection(selectionData: Highlight): void {
     this.highlightedShape.next(selectionData);
+  }
+
+  public toggleCommentsPanel(toggle: boolean) {
+    this.commentsPanelToggle.next(toggle);
   }
 }

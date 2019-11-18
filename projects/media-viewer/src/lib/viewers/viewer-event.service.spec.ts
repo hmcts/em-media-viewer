@@ -1,10 +1,7 @@
 import {ViewerEventService} from './viewer-event.service';
-import {Subscription} from 'rxjs';
-
 
 describe('Viewer Events Service', () => {
   let service: ViewerEventService;
-  let subscription: Subscription;
 
   const mockHighLight: any = {
     page : 2
@@ -12,14 +9,6 @@ describe('Viewer Events Service', () => {
 
   beforeEach(() => {
     service = new ViewerEventService();
-  });
-
-  afterEach(() => {
-    service = null;
-    if (subscription) {
-      subscription.unsubscribe();
-    }
-    subscription = null;
   });
 
   it('should create', () => {
@@ -38,6 +27,13 @@ describe('Viewer Events Service', () => {
     service.onShapeSelection(mockHighLight);
 
     expect(shapeSelectSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should toggle comments panel', () => {
+    const commentsToggleSpy = spyOn(service.commentsPanelToggle, 'next');
+    service.toggleCommentsPanel(false);
+
+    expect(commentsToggleSpy).toHaveBeenCalledWith(false);
   });
 
 });

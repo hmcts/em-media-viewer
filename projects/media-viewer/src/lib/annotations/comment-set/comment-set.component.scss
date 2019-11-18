@@ -1,7 +1,7 @@
 .right {
   position: relative;
   z-index: 1;
-  width: 25%;
+  width: 2%;
   float: right;
   background-color: white;
   border-block: #0B0C0C;
@@ -9,7 +9,25 @@
   border-color: #969494;
   border-width: thin;
   padding-top: -10px;
-  padding-left: 10px;
-  margin: 5px 5px 5px 5px;
   border-radius: 0.5rem;
+}
+
+.right.show-comments-panel {
+  width: 24%;
+}
+
+.toolbarButton.expanded::before {
+  content: url(/assets/images/toolbarButton-expandCommentsPanel.png);
+}
+
+html[dir='rtl'] .toolbarButton.expanded::before {
+  content: url(/assets/images/toolbarButton-expandCommentsPanel-rtl.png);
+}
+
+.toolbarButton.collapsed::before {
+  content: url(/assets/images/toolbarButton-collapseCommentsPanel.png);
+}
+
+html[dir='rtl'] .toolbarButton.collapsed::before {
+  content: url(/assets/images/toolbarButton-collapseCommentsPanel-rtl.png);
 }

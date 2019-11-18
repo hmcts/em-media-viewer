@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { CommentSetComponent } from './comment-set.component';
 import { CommentComponent } from './comment/comment.component';
@@ -11,6 +11,7 @@ import { annotationSet } from '../../../assets/annotation-set';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
+import { ViewerEventService } from '../../viewers/viewer-event.service';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -301,4 +302,13 @@ describe('CommentSetComponent', () => {
 
     expect(topRectangle).toEqual(mockRectangles[1]);
   });
+
+  it('should toggle comments panel',
+    inject([ViewerEventService], (viewerEvents: ViewerEventService) => {
+      spyOn(viewerEvents, 'toggleCommentsPanel');
+
+      component.toggleCommentsPanel();
+
+      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(false);
+  }));
 });
