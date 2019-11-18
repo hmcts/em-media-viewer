@@ -16,18 +16,18 @@
   width: 24%;
 }
 
-.toolbarButton#expandCommentsPanel::before {
+.toolbarButton.expanded::before {
   content: url(/assets/images/toolbarButton-expandCommentsPanel.png);
 }
 
-html[dir='rtl'] .toolbarButton#expandCommentsPanel::before {
+html[dir='rtl'] .toolbarButton.expanded::before {
   content: url(/assets/images/toolbarButton-expandCommentsPanel-rtl.png);
 }
 
-.toolbarButton#collapseCommentsPanel::before {
+.toolbarButton.collapsed::before {
   content: url(/assets/images/toolbarButton-collapseCommentsPanel.png);
 }
 
-html[dir='rtl'] .toolbarButton#collapseCommentsPanel::before {
+html[dir='rtl'] .toolbarButton.collapsed::before {
   content: url(/assets/images/toolbarButton-collapseCommentsPanel-rtl.png);
 }
