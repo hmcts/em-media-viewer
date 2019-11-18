@@ -1,7 +1,7 @@
 <div #container
      [ngClass]="{ 'right comment-container': true, 'show-comments-panel': showCommentsPanel }"
      [style.height.px]="height" (click)="onContainerClick($event)">
-  <button [id]="showCommentsPanel ? 'collapseCommentsPanel' : 'expandCommentsPanel'"
+  <button [ngClass]="{ 'toolbarButton': true, 'collapsed': showCommentsPanel, 'expanded': !showCommentsPanel }"
           class="toolbarButton" title="Tools" tabindex="0" data-l10n-id="tools"
           (click)="toggleCommentsPanel()">
     <span data-l10n-id="tools_label">Tools</span>
