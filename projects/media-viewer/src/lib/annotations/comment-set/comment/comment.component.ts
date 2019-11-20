@@ -43,7 +43,7 @@ export class CommentComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    this.commentRendered.emit(this._comment);
+    this.reRenderComments();
   }
 
   @Input()
@@ -108,6 +108,10 @@ export class CommentComponent implements OnChanges {
       this.selected = true;
       this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
     }
+  }
+
+  reRenderComments() {
+    this.commentRendered.emit(this._comment);
   }
 
   onFocusOut() {
