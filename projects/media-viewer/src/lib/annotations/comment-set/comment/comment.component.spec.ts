@@ -191,6 +191,12 @@ describe('CommentComponent', () => {
     expect(nativeElement.querySelector('.unselectedText').textContent.trim()).toBe('short comment');
   });
 
+  it('should emit a comment rendered', () => {
+    const commentRenderedEmitEventSpy = spyOn(component.renderComments, 'emit');
+    component.reRenderComments();
+    expect(commentRenderedEmitEventSpy).toHaveBeenCalledTimes(1);
+  });
+
   const waitForChanges = () => {
     fixture.detectChanges();
     tick(10);

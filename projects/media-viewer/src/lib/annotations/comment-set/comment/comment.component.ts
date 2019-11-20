@@ -28,7 +28,7 @@ export class CommentComponent implements OnChanges {
   commentLeftPos;
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
-  @Output() commentRendered = new EventEmitter<Comment>();
+  @Output() renderComments = new EventEmitter<Comment>();
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<Comment>();
   @Input() rotate = 0;
@@ -111,7 +111,7 @@ export class CommentComponent implements OnChanges {
   }
 
   reRenderComments() {
-    this.commentRendered.emit(this._comment);
+    this.renderComments.emit(this._comment);
   }
 
   onFocusOut() {
