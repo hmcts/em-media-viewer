@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 export interface Highlight {
   page: number;
@@ -12,7 +12,7 @@ export class ViewerEventService {
   // Register Observable Subject Events relevant to the Viewers
   public readonly highlightedText = new Subject<Highlight>();
   public readonly highlightedShape = new Subject<Highlight>();
-  public readonly commentsPanelToggle = new Subject<boolean>();
+  public readonly commentsPanelToggle = new BehaviorSubject(true);
 
   constructor() {}
 

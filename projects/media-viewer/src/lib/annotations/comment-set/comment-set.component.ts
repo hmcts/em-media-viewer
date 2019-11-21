@@ -31,7 +31,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
-  showCommentsPanel = true;
+  showCommentsPanel: boolean;
 
   constructor(private readonly viewerEvents: ViewerEventService,
               private readonly api: AnnotationApiService,
