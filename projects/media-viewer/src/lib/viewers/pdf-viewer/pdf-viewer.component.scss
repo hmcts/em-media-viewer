@@ -15,6 +15,10 @@
   float: left;
 }
 
+.textLayer {
+  z-index: 1!important;
+}
+
 .pdfContainer.annotations .pageWrapper {
   width: 97%;
 }

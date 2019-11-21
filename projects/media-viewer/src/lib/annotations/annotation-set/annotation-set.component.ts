@@ -32,6 +32,9 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   drawStartY = -1;
   drawMode = false;
 
+  annotationSetClassName = 'rotation rot' + this.rotate + (this.drawMode ? ' drawMode' : '');
+
+
   private subscriptions: Subscription[] = [];
 
   constructor(
