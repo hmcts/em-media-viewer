@@ -12,7 +12,7 @@ export class TextareaAutoGrowDirective implements AfterContentChecked {
     this.adjustHeight();
   }
 
-  @HostListener('input', ['$event']) onMouseDown() {
+  @HostListener('input') onMouseDown() {
     this.adjustHeight();
   }
 
