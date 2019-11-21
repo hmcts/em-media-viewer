@@ -25,7 +25,7 @@ import { ResponseType, ViewerException } from '../error-message/viewer-exception
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.scss'],
+  styleUrls: ['./pdf-viewer.component.scss', '../comments-toggle.scss'],
   providers: [PdfAnnotationService],
   encapsulation: ViewEncapsulation.None
 })
@@ -55,7 +55,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
   private viewerException: ViewerException;
-  showCommentsPanel = true;
+  showCommentsPanel: boolean;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
