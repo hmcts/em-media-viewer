@@ -169,4 +169,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   onMouseUp(mouseEvent: MouseEvent) {
     this.annotationService.onTextHighlighted(mouseEvent);
   }
+
+  toggleCommentsPanel() {
+    this.viewerEvents.commentsPanelToggle.next(!this.showCommentsPanel);
+  }
 }
