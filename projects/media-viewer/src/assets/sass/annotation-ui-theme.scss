@@ -98,6 +98,7 @@
 
   .annotationLayer section {
     position: absolute;
+    z-index: 1!important;
   }
 
   .annotationLayer .linkAnnotation > a {
