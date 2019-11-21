@@ -1,12 +1,6 @@
 <div #container
-     [ngClass]="{ 'right comment-container': true, 'show-comments-panel': showCommentsPanel }"
+     [ngClass]="{ 'comments-panel comment-container': true, 'expanded': showCommentsPanel }"
      [style.height.px]="height" (click)="onContainerClick($event)">
-  <button [ngClass]="{ 'toolbarButton': true, 'collapsed': showCommentsPanel, 'expanded': !showCommentsPanel }"
-          aria-label="Toggle Comments Panel"
-          class="toolbarButton" title="Tools" tabindex="0" data-l10n-id="tools"
-          (click)="toggleCommentsPanel()">
-    <span data-l10n-id="tools_label">Tools</span>
-  </button>
   <ng-container *ngFor="let annotation of getCommentsOnPage(); let i = index">
     <mv-anno-comment
       #commentComponent

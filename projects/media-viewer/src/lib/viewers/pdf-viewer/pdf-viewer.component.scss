@@ -46,3 +46,78 @@
 .linkAnnotation > a:hover {
   opacity: 0.0 !important;
 }
+
+.comments-toggle {
+  z-index: 10;
+  transform: rotate(-90deg);
+  position: absolute;
+  background: white;
+  top: 7.3em;
+  width: 10em;
+  height: 1.5em;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: #040404;
+  background-clip: padding-box;
+  border: 1px solid hsla(0,0%,0%,.35);
+  border-color: hsla(0,0%,0%,.32) hsla(0,0%,0%,.38) hsla(0,0%,0%,.42);
+  box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
+  0 0 1px hsla(0,0%,100%,.15) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+  font-size: 12px;
+  line-height: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Opera does not support user-select, use <... unselectable="on"> instead */
+  cursor: default;
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+
+}
+
+.comments-toggle.collapse {
+  left: calc(76% - 6.1em);
+}
+.comments-toggle.expand {
+  left: calc(100% - 6.5em);
+}
+
+html[dir='rtl'] .comments-toggle {
+  margin: 3px 0 4px 2px;
+}
+
+.comments-toggle:hover,
+.comments-toggle:focus {
+  background-color: hsla(0,0%,0%,.12);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  background-clip: padding-box;
+  border: 1px solid hsla(0,0%,0%,.35);
+  border-color: hsla(0,0%,0%,.32) hsla(0,0%,0%,.38) hsla(0,0%,0%,.42);
+  box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
+  0 0 1px hsla(0,0%,100%,.15) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+}
+
+.comments-toggle:hover:active {
+  background-color: hsla(0,0%,0%,.2);
+  background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+  border-color: hsla(0,0%,0%,.35) hsla(0,0%,0%,.4) hsla(0,0%,0%,.45);
+  box-shadow: 0 1px 1px hsla(0,0%,0%,.1) inset,
+  0 0 1px hsla(0,0%,0%,.2) inset,
+  0 1px 0 hsla(0,0%,100%,.05);
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 10ms;
+  transition-timing-function: linear;
+}
+
+.comments-toggle:first-child,
+html[dir='rtl'] .comments-toggle:last-child {
+  margin-left: 0px;
+}
+.comments-toggle:last-child,
+html[dir='rtl'] .comments-toggle:first-child {
+  margin-right: 0px;
+}

@@ -12,7 +12,7 @@ import { ViewerEventService } from '../../viewers/viewer-event.service';
 @Component({
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
-  styleUrls: ['./comment-set.component.scss', '../../styles/buttons.scss']
+  styleUrls: ['./comment-set.component.scss']
 })
 export class CommentSetComponent implements OnInit, OnDestroy {
 
