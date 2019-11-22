@@ -13,9 +13,18 @@
     </time>
   </div>
   <ng-container *ngIf="selected">
-    <textarea #textArea type="text" required name="content" [maxlength]="COMMENT_CHAR_LIMIT"
-              (focusout)="onFocusOut()" (ngModelChange)="onCommentChange($event)"
-              [ngClass]="commentStyle()" [(ngModel)]="fullComment" [readOnly]="!editable" aria-label="comment">
+    <textarea #textArea
+              textareaAutoGrow
+              type="text"
+              required
+              name="content"
+              [maxlength]="COMMENT_CHAR_LIMIT"
+              (focusout)="onFocusOut()"
+              [ngClass]="commentStyle()"
+              [(ngModel)]="fullComment"
+              [readOnly]="!editable"
+              (ngModelChange)="reRenderComments(); onCommentChange($event);"
+              aria-label="comment">
     </textarea>
   </ng-container>
   <div *ngIf="!selected" class="unselectedText">

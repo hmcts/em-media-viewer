@@ -17,7 +17,7 @@ export class AppPage {
   page: string = '.page[data-page-number="{0}"]';
 
   async preparePage() {
-    await browser.sleep(5000);
+    await browser.sleep(10000);
     await this.showToolbarButtons();
   }
 
