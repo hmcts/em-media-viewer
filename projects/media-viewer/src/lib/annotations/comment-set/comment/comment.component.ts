@@ -126,6 +126,14 @@ export class CommentComponent implements OnChanges {
     };
   }
 
+  get commentBottomPos(): number {
+    return this.commentTopPos + this.height;
+  }
+
+  get height() {
+    return this.form.nativeElement.getBoundingClientRect().height / this.zoom;
+  }
+
   commentStyle() {
     return [
       'aui-comment__content',

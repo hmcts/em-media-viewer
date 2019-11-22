@@ -125,10 +125,15 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   redrawCommentComponents() {
+    console.log('redraw components');
     setTimeout(() => {
       let previousComment: CommentComponent;
       this.sortCommentComponents().forEach((comment: CommentComponent) => {
-        previousComment = this.isOverlapping(comment, previousComment);
+        previousComment = this.stackSortedComments(comment, previousComment);
+      });
+      previousComment = null;
+      this.sortCommentComponents().reverse().forEach((comment: CommentComponent) => {
+        previousComment = this.makeSureWithinContainer(comment, previousComment);
       });
     });
   }
@@ -176,13 +181,28 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   difference(a: number, b: number): number { return Math.abs(a - b); }
 
-  isOverlapping(commentItem: CommentComponent, previousCommentItem: CommentComponent): CommentComponent {
+  stackSortedComments(commentItem: CommentComponent, previousCommentItem: CommentComponent): CommentComponent {
     if (previousCommentItem) {
-      const endOfPreviousCommentItem = (previousCommentItem.commentTopPos
-        + (previousCommentItem.form.nativeElement.getBoundingClientRect().height / this.zoom));
+      const endOfPreviousCommentItem = previousCommentItem.commentBottomPos;
       if (commentItem.commentTopPos <= endOfPreviousCommentItem) {
         commentItem.commentTopPos = endOfPreviousCommentItem;
       }
+    }
+    return commentItem;
+  }
+
+  makeSureWithinContainer(commentItem: CommentComponent, previousCommentItem: CommentComponent) {
+    const containerHeight = this.container.nativeElement.getBoundingClientRect().height - 10;
+    if (commentItem.commentBottomPos > containerHeight) {
+      commentItem.commentTopPos -= commentItem.commentBottomPos - containerHeight;
+    }
+    if (previousCommentItem) {
+      if (commentItem.commentBottomPos > previousCommentItem.commentTopPos) {
+        commentItem.commentTopPos -= commentItem.commentBottomPos - previousCommentItem.commentTopPos;
+      }
+    }
+    if (commentItem.commentTopPos < 0 ) {
+      commentItem.commentTopPos = 0;
     }
     return commentItem;
   }
