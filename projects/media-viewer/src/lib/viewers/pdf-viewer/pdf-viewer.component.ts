@@ -112,7 +112,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.loadDocument();
     }
     if (changes.annotationSet && this.annotationSet) {
-      console.log('annoationSet changing', this.annotationSet);
       this.loadDocument();
     }
   }
@@ -171,6 +170,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   toggleCommentsPanel() {
-    this.viewerEvents.commentsPanelToggle.next(!this.showCommentsPanel);
+    this.viewerEvents.toggleCommentsPanel(!this.showCommentsPanel);
   }
 }

@@ -1,3 +1,9 @@
+<button [ngClass]="{ 'comments-toggle': true, 'collapse': showCommentsPanel, 'expand': !showCommentsPanel }"
+        aria-label="Toggle Comments Panel"
+        title="Toggle Comments Panel" tabindex="0" data-l10n-id="toggle-comments-panel"
+        (click)="toggleCommentsPanel()">
+  {{ showCommentsPanel ? 'Hide comments' : 'Show comments' }}
+</button>
 <div id="viewer-wrapper"
      [ngStyle]="{ height: height }"
      *ngIf="url && !errorMessage">
