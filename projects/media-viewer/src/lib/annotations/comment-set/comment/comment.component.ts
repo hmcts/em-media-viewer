@@ -90,11 +90,9 @@ export class CommentComponent implements OnChanges {
   }
 
   onCommentChange(updatedComment) {
-    if (this.originalComment.substring(0, this.COMMENT_CHAR_LIMIT) !== updatedComment.substring(0, this.COMMENT_CHAR_LIMIT)) {
-      this.unsavedChanges.emit(true);
-    } else {
-      this.unsavedChanges.emit(false);
-    }
+    const hasUnsavedChanges = this.originalComment.substring(0, this.COMMENT_CHAR_LIMIT) !==
+      updatedComment.substring(0, this.COMMENT_CHAR_LIMIT);
+    this.unsavedChanges.emit(hasUnsavedChanges);
   }
 
   onCancel() {

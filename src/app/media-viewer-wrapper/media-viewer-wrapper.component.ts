@@ -74,7 +74,6 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   }
 
   onUnsavedChanges(changes: boolean) {
-    console.log(changes);
     this.unsavedChanges = changes;
   }
 
