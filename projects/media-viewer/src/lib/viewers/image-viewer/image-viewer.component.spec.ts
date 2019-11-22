@@ -148,14 +148,5 @@ describe('ImageViewerComponent', () => {
       expect(component.showCommentsPanel).toBeFalsy();
       expect(imageContainer.nativeElement.className).not.toContain('show-comments-panel');
   }));
-
-  it('should toggle comments panel',
-    inject([ViewerEventService], (viewerEvents: ViewerEventService) => {
-      spyOn(viewerEvents, 'toggleCommentsPanel');
-
-      component.toggleCommentsPanel();
-
-      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(false);
-    }));
 });
 

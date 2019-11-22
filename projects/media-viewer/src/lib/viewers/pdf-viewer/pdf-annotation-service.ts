@@ -71,6 +71,7 @@ export class PdfAnnotationService {
   }
 
   onPageRendered(pageRenderEvent: PageEvent) {
+    console.log('rendering page ', pageRenderEvent.pageNumber);
     this.annotationSetComponents
       .filter(annotation => annotation.instance.page === pageRenderEvent.pageNumber)
       .forEach(annotationSetComponent => annotationSetComponent.instance.addToDOM(pageRenderEvent.source));
