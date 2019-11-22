@@ -26,7 +26,8 @@
                   [page]="1"
                   [zoom]="zoom"
                   [rotate]="rotation"
-                  [height]="getImageHeight(img)">
+                  [height]="getImageHeight(img)"
+                  (unsavedChanges)="onCommentChange($event)">
   </mv-comment-set>
 </div>
 <mv-error-message *ngIf="errorMessage" [errorMessage]="errorMessage"></mv-error-message>

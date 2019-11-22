@@ -20,6 +20,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   comments: Observable<Comment[]>;
 
   mediaLoadStatus: string;
+  unsavedChanges: boolean;
 
   showToolbar = true;
   showCustomToolbar = false;
@@ -70,6 +71,11 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   onMediaLoad(loadStatus: ResponseType) {
     this.mediaLoadStatus = loadStatus;
     setTimeout(() => this.mediaLoadStatus = undefined, 2000);
+  }
+
+  onUnsavedChanges(changes: boolean) {
+    console.log(changes);
+    this.unsavedChanges = changes;
   }
 
   toggleToolbarBtns(toolbarButtonOverrides: any) {

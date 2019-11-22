@@ -13,7 +13,8 @@
     </time>
   </div>
   <ng-container *ngIf="selected">
-    <textarea #textArea type="text" required name="content" [maxlength]="COMMENT_CHAR_LIMIT" (focusout)="onFocusOut()"
+    <textarea #textArea type="text" required name="content" [maxlength]="COMMENT_CHAR_LIMIT"
+              (focusout)="onFocusOut()" (ngModelChange)="onCommentChange($event)"
               [ngClass]="commentStyle()" [(ngModel)]="fullComment" [readOnly]="!editable" aria-label="comment">
     </textarea>
   </ng-container>

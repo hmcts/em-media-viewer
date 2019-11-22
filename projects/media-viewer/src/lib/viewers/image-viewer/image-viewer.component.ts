@@ -34,6 +34,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Output() imageLoadStatus = new EventEmitter<ResponseType>();
   @Output() imageViewerException = new EventEmitter<ViewerException>();
+  @Output() unsavedChanges = new EventEmitter<boolean>();
 
   errorMessage: string;
 
@@ -144,5 +145,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   getImageHeight(img) {
     return this.rotation % 180 !== 0 ? img.offsetWidth + 15 : img.offsetHeight + 15;
+  }
+
+  onCommentChange(change: boolean) {
+    this.unsavedChanges.emit(change);
   }
 }

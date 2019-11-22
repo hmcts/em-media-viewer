@@ -38,6 +38,7 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
   @Output() viewerException = new EventEmitter<ViewerException>();
   @Output() toolbarEventsOutput = new EventEmitter<ToolbarEventService>();
+  @Output() unsavedChanges = new EventEmitter<boolean>();
 
   @Input() enableAnnotations = false;
   @Input() showCommentSummary: Subject<boolean>;
@@ -105,6 +106,10 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
 
   onLoadException(exception: ViewerException) {
     this.viewerException.emit(exception);
+  }
+
+  onCommentChange(changes: boolean) {
+    this.unsavedChanges.emit(changes);
   }
 }
 
