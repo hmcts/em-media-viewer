@@ -196,8 +196,4 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   clearSelection() {
     this.selectAnnotation = { annotationId: '', editable: false };
   }
-
-  toggleCommentsPanel() {
-    this.viewerEvents.toggleCommentsPanel(!this.showCommentsPanel);
-  }
 }
