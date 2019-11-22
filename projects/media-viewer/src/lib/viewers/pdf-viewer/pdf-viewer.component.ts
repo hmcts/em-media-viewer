@@ -80,7 +80,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {
         this.annotationService.onPageRendered(event);
-        this.annotationService.unsavedChangesSubject.subscribe(changes => this.onCommentChange(changes));
+        this.annotationService.unsavedChanges.subscribe(changes => this.onCommentChange(changes));
       }
     });
 
