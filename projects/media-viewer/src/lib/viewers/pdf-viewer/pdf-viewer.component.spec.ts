@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Subject } from 'rxjs';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
@@ -47,7 +47,7 @@ describe('PdfViewerComponent', () => {
   const mockViewerEvent = {
     onTextSelection: () => {},
     toggleCommentsPanel: () => {},
-    commentsPanelToggle: new Subject<boolean>()
+    commentsPanelToggle: new BehaviorSubject(true)
   };
 
   const mockAnnotationService = {
@@ -273,4 +273,14 @@ describe('PdfViewerComponent', () => {
     expect(component.showCommentsPanel).toBeFalsy();
     expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');
   });
+
+
+  it('should toggle comments panel',
+    inject([ViewerEventService], (viewerEvents: ViewerEventService) => {
+      spyOn(viewerEvents, 'toggleCommentsPanel');
+
+      component.toggleCommentsPanel();
+
+      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(false);
+    }));
 });
