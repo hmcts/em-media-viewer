@@ -20,7 +20,7 @@ import { ViewerEventService } from '../viewer-event.service';
 @Component({
     selector: 'mv-image-viewer',
     templateUrl: './image-viewer.component.html',
-    styleUrls: ['./image-viewer.component.scss', '../../media-viewer.component.scss', '../comments-toggle.scss'],
+    styleUrls: ['./image-viewer.component.scss', '../../media-viewer.component.scss'],
 })
 export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
@@ -140,10 +140,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   onLoad() {
     this.imageLoadStatus.emit(ResponseType.SUCCESS);
-  }
-
-  toggleCommentsPanel() {
-    this.viewerEvents.toggleCommentsPanel(!this.showCommentsPanel);
   }
 
   getImageHeight(img) {

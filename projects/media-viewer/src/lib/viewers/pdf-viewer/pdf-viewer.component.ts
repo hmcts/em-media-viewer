@@ -25,7 +25,7 @@ import { ResponseType, ViewerException } from '../error-message/viewer-exception
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.scss', '../comments-toggle.scss'],
+  styleUrls: ['./pdf-viewer.component.scss'],
   providers: [PdfAnnotationService],
   encapsulation: ViewEncapsulation.None
 })
@@ -167,9 +167,5 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   onMouseUp(mouseEvent: MouseEvent) {
     this.annotationService.onTextHighlighted(mouseEvent);
-  }
-
-  toggleCommentsPanel() {
-    this.viewerEvents.toggleCommentsPanel(!this.showCommentsPanel);
   }
 }

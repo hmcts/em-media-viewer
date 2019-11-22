@@ -273,14 +273,4 @@ describe('PdfViewerComponent', () => {
     expect(component.showCommentsPanel).toBeFalsy();
     expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');
   });
-
-
-  it('should toggle comments panel',
-    inject([ViewerEventService], (viewerEvents: ViewerEventService) => {
-      spyOn(viewerEvents, 'toggleCommentsPanel');
-
-      component.toggleCommentsPanel();
-
-      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(false);
-    }));
 });
