@@ -33,6 +33,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @Output() pdfLoadStatus = new EventEmitter<ResponseType>();
   @Output() pdfViewerException = new EventEmitter<ViewerException>();
+  @Output() unsavedChanges = new EventEmitter<boolean>();
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -79,6 +80,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {
         this.annotationService.onPageRendered(event);
+        this.annotationService.unsavedChangesSubject.subscribe(changes => this.onCommentChange(changes));
       }
     });
 
@@ -168,5 +170,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   onMouseUp(mouseEvent: MouseEvent) {
     this.annotationService.onTextHighlighted(mouseEvent);
+  }
+
+  onCommentChange(change: boolean) {
+    this.unsavedChanges.emit(change);
   }
 }

@@ -67,6 +67,17 @@
           </div>
         </div>
     </div>
+
+    <div *ngIf="unsavedChanges" class="hmcts-banner hmcts-banner--warning">
+      <svg class="hmcts-banner__icon" height="25" width="25">
+        <path d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z"></path>
+      </svg>
+      <div class="hmcts-banner__message">
+        <span class="hmcts-banner__assistive">Warning</span>
+        You have unsaved comments. Please save before closing the document.
+      </div>
+    </div>
+
     <div class="govuk-grid-row govuk-!-width-two-thirds">
         <button class="govuk-button govuk-!-margin-right-1 govuk-!-width-one-quarter" data-module="govuk-button"
                 [ngClass]="{ 'govuk-button--secondary': documentType !== 'pdf' }" id="pdf-button"
@@ -97,5 +108,6 @@
                    [showToolbar]="showToolbar"
                    [toolbarButtonOverrides]="toolbarButtonOverrides"
                    (mediaLoadStatus)="onMediaLoad($event)"
-                   (toolbarEventsOutput)="getToolbarFunctions($event)"></mv-media-viewer>
+                   (toolbarEventsOutput)="getToolbarFunctions($event)"
+                   (unsavedChanges)="onUnsavedChanges($event)"></mv-media-viewer>
 </div>

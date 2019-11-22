@@ -12,9 +12,12 @@ import { BehaviorSubject } from 'rxjs';
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 import { PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
+import { Subject } from 'rxjs/index';
 
 @Injectable()
 export class PdfAnnotationService {
+
+  public readonly unsavedChangesSubject = new Subject<boolean>();
 
   annotationSet: AnnotationSet;
   pdfWrapper: PdfJsWrapper;
@@ -83,6 +86,12 @@ export class PdfAnnotationService {
       commentSetComponent = this.setupCommentSet(pageRenderEvent.pageNumber);
       commentSetComponent.instance.addToDOM(pageRenderEvent.source);
     }
+    this.commentSetComponents
+      .map(component => {
+        component.instance.unsavedChanges.subscribe(data => {
+          this.unsavedChangesSubject.next(data);
+        });
+    });
   }
 
   onShapeHighlighted(mouseEvent: MouseEvent) {

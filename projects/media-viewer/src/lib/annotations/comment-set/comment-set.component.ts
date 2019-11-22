@@ -1,4 +1,7 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
@@ -21,6 +24,8 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() height: number;
+
+  @Output() unsavedChanges = new EventEmitter<boolean>();
 
   comments: Comment[];
   selectAnnotation: SelectionAnnotation;
@@ -106,6 +111,10 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     const annotation = this.annotationSet.annotations.find(anno => anno.id === comment.annotationId);
     annotation.comments[0] = comment;
     this.onAnnotationUpdate(annotation);
+  }
+
+  public onCommentChange(change: boolean) {
+    this.unsavedChanges.emit(change);
   }
 
   public onAnnotationUpdate(annotation: Annotation) {

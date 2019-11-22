@@ -146,4 +146,11 @@ describe('MediaViewerComponent', () => {
     component.onLoadException(viewerException);
     expect(emitSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('onUnsavedChanges should emit a boolean value', async () => {
+    const emitSpy = spyOn(component.unsavedChanges, 'emit');
+
+    component.onCommentChange(true);
+    expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
 });
