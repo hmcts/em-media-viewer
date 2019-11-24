@@ -12,7 +12,7 @@ export class ViewerEventService {
   // Register Observable Subject Events relevant to the Viewers
   public readonly highlightedText = new Subject<Highlight>();
   public readonly highlightedShape = new Subject<Highlight>();
-  public readonly commentsPanelToggle = new BehaviorSubject(true);
+  public readonly commentsPanelToggle = new BehaviorSubject(false);
 
   constructor() {}
 

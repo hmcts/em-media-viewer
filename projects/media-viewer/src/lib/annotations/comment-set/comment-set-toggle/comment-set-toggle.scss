@@ -2,14 +2,14 @@
   z-index: 10;
   transform: rotate(-90deg);
   position: absolute;
-  background: white;
-  top: 7.3em;
+  top: 40%;
   width: 10em;
   height: 1.5em;
+  color: #040404;
+  background: white;
+  background-clip: padding-box;
   border: 1px solid transparent;
   border-radius: 2px;
-  color: #040404;
-  background-clip: padding-box;
   border: 1px solid hsla(0,0%,0%,.35);
   border-color: hsla(0,0%,0%,.32) hsla(0,0%,0%,.38) hsla(0,0%,0%,.42);
   box-shadow: 0 1px 0 hsla(0,0%,100%,.05) inset,
@@ -30,10 +30,10 @@
 }
 
 .comments-toggle.collapse {
-  left: calc(76vw - 6.1em);
+  left: calc(76vw - 6.7em);
 }
 .comments-toggle.expand {
-  left: calc(100vw - 6.5em);
+  left: calc(100vw - 8em);
 }
 
 html[dir='rtl'] .comments-toggle {
