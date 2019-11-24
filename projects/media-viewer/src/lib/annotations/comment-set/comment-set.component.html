@@ -4,7 +4,7 @@
   <ng-container *ngFor="let annotation of getCommentsOnPage(); let i = index">
     <mv-anno-comment
       #commentComponent
-      *ngIf="annotation.comments[0]"
+      *ngIf="annotation.comments[0] && showCommentsPanel"
       (commentClick)="onSelect($event)"
       (delete)="onCommentDelete($event)"
       (updated)="onCommentUpdate($event)"
