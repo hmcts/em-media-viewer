@@ -12,6 +12,7 @@ import { defaultImageOptions, defaultPdfOptions, defaultUnsupportedOptions } fro
 import { AnnotationApiService } from './annotations/annotation-api.service';
 import { of } from 'rxjs';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
+import { CommentService } from './annotations/comment-set/comment/comment.service';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -25,7 +26,10 @@ describe('MediaViewerComponent', () => {
         PdfViewerComponent,
         ImageViewerComponent,
         UnsupportedViewerComponent,
-        ErrorMessageComponent
+        ErrorMessageComponent,
+      ],
+      providers: [
+        CommentService
       ],
       imports: [ToolbarModule, AnnotationsModule]
     })

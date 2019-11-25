@@ -1,8 +1,10 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges } from '@angular/core';
+import {
+  Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../../user/user.model';
 import { Rectangle } from '../../annotation-set/annotation/rectangle/rectangle.model';
 import { SelectionAnnotation } from '../../annotation.service';
+import { CommentService } from './comment.service';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -31,14 +33,15 @@ export class CommentComponent implements OnChanges {
   @Output() renderComments = new EventEmitter<Comment>();
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<Comment>();
-  @Output() unsavedChanges = new EventEmitter<boolean>();
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
-  constructor() {
+  constructor(
+    private readonly commentService: CommentService
+  ) {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
   }
@@ -92,12 +95,12 @@ export class CommentComponent implements OnChanges {
   onCommentChange(updatedComment) {
     const hasUnsavedChanges = this.originalComment.substring(0, this.COMMENT_CHAR_LIMIT) !==
       updatedComment.substring(0, this.COMMENT_CHAR_LIMIT);
-    this.unsavedChanges.emit(hasUnsavedChanges);
+    this.commentService.onCommentChange(hasUnsavedChanges);
   }
 
   onCancel() {
     this.editable = false;
-    this.unsavedChanges.emit(false);
+    this.commentService.onCommentChange(false);
     this.fullComment = this.originalComment;
   }
 
@@ -108,7 +111,7 @@ export class CommentComponent implements OnChanges {
   public onSave() {
     this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
     this.updated.emit(this._comment);
-    this.unsavedChanges.emit(false);
+    this.commentService.onCommentChange(false);
     this.editable = false;
   }
 

@@ -3,7 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
+  OnChanges, OnDestroy, OnInit,
   Output,
   SimpleChanges
 } from '@angular/core';
@@ -18,13 +18,15 @@ import { AnnotationSet } from './annotations/annotation-set/annotation-set.model
 import { ToolbarEventService } from './toolbar/toolbar-event.service';
 import { AnnotationApiService } from './annotations/annotation-api.service';
 import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
+import { CommentService } from './annotations/comment-set/comment/comment.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-media-viewer',
   templateUrl: './media-viewer.component.html',
   styleUrls: ['styles/main.scss', './media-viewer.component.scss']
 })
-export class MediaViewerComponent implements OnChanges, AfterContentInit {
+export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
 
   @Input() url;
   @Input() downloadFileName: string;
@@ -45,11 +47,13 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   @Input() annotationApiUrl;
 
   annotationSet: Observable<AnnotationSet>;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
-    private readonly api: AnnotationApiService
+    private readonly api: AnnotationApiService,
+    private readonly commentService: CommentService
   ) {
     if (this.annotationApiUrl) {
       api.annotationApiUrl = this.annotationApiUrl;
@@ -59,6 +63,8 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   ngAfterContentInit() {
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
+    this.subscriptions.push(this.commentService.getUnsavedChanges()
+      .subscribe(changes => this.onCommentChange(changes)));
   }
 
   contentTypeUnsupported(): boolean {
@@ -66,7 +72,7 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.annotationApiUrl) {
+    if (changes.annotationApiUrl) {
       this.api.annotationApiUrl = this.annotationApiUrl;
     }
     if (changes.url) {
@@ -79,6 +85,10 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
       this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
     }
     this.setToolbarButtons();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   onMediaLoad(status: ResponseType) {
@@ -109,6 +119,7 @@ export class MediaViewerComponent implements OnChanges, AfterContentInit {
   }
 
   onCommentChange(changes: boolean) {
+    console.log(changes);
     this.unsavedChanges.emit(changes);
   }
 }
