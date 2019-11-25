@@ -55,7 +55,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
   private viewerException: ViewerException;
-  showCommentsPanel = true;
+  showCommentsPanel: boolean;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
@@ -112,7 +112,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.loadDocument();
     }
     if (changes.annotationSet && this.annotationSet) {
-      console.log('annoationSet changing', this.annotationSet);
       this.loadDocument();
     }
   }

@@ -12,7 +12,7 @@ import { ViewerEventService } from '../../viewers/viewer-event.service';
 @Component({
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
-  styleUrls: ['./comment-set.component.scss', '../../styles/buttons.scss']
+  styleUrls: ['./comment-set.component.scss']
 })
 export class CommentSetComponent implements OnInit, OnDestroy {
 
@@ -31,7 +31,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
-  showCommentsPanel = true;
+  showCommentsPanel: boolean;
 
   constructor(private readonly viewerEvents: ViewerEventService,
               private readonly api: AnnotationApiService,
@@ -195,9 +195,5 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   clearSelection() {
     this.selectAnnotation = { annotationId: '', editable: false };
-  }
-
-  toggleCommentsPanel() {
-    this.viewerEvents.toggleCommentsPanel(!this.showCommentsPanel);
   }
 }

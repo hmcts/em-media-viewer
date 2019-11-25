@@ -302,13 +302,4 @@ describe('CommentSetComponent', () => {
 
     expect(topRectangle).toEqual(mockRectangles[1]);
   });
-
-  it('should toggle comments panel',
-    inject([ViewerEventService], (viewerEvents: ViewerEventService) => {
-      spyOn(viewerEvents, 'toggleCommentsPanel');
-
-      component.toggleCommentsPanel();
-
-      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(false);
-  }));
 });

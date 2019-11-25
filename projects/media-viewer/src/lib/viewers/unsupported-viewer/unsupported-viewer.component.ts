@@ -35,7 +35,7 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
         next => next,
         error => {
           this.viewerException = new ViewerException(error.name,
-            {httpResponseCode: error.status, message: error.message});
+            { httpResponseCode: error.status, message: error.message });
         }
       )
     );

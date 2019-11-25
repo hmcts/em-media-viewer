@@ -45,7 +45,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   private viewerException: ViewerException;
   private response: Subscription;
 
-  showCommentsPanel = true;
+  showCommentsPanel: boolean;
 
   constructor(
     private readonly printService: PrintService,
