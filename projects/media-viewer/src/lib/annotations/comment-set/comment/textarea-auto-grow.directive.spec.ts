@@ -30,10 +30,14 @@ describe('TextareaAutoGrowDirective', () => {
   });
 
   it('input into textarea', () => {
+    textareaEl.nativeElement.value = 'test';
     const initialHeight = textareaEl.nativeElement.style.height;
 
     textareaEl.nativeElement.value = 'testing the comment height when a large amount of text is enter' +
-      ' so the initial height will not be the same as the final height ';
+      ' so the initial height will not be the same as the final height. testing the comment height when a large amount of text is enter' +
+      ' so the initial height will not be the same as the final height, testing the comment height when a large amount of text is enter' +
+      ' so the initial height will not be the same as the final height, testing the comment height when a large amount of text is enter' +
+      ' so the initial height will not be the same as the final height';
     fixture.detectChanges();
 
     expect(textareaEl.nativeElement.style.height).not.toEqual(initialHeight);

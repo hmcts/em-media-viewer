@@ -36,5 +36,4 @@ describe('UnsupportedViewerComponent', () => {
 
     expect(clickSpy).toHaveBeenCalledWith();
   });
-
 });

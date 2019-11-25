@@ -3,6 +3,7 @@ import { PdfViewerComponent } from '../pdf-viewer.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ErrorMessageComponent } from '../../error-message/error.message.component';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
@@ -13,6 +14,9 @@ describe('PdfJsWrapperFactory', () => {
       declarations: [ PdfViewerComponent, ErrorMessageComponent ],
       providers: [
         ToolbarEventService
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
       ]
     })
     .compileComponents();
