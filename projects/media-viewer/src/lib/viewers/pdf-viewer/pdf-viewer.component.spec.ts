@@ -273,11 +273,4 @@ describe('PdfViewerComponent', () => {
     expect(component.showCommentsPanel).toBeFalsy();
     expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');
   });
-
-  it('onUnsavedChanges should emit a boolean value', async () => {
-    const emitSpy = spyOn(component.unsavedChanges, 'emit');
-
-    component.onCommentChange(true);
-    expect(emitSpy).toHaveBeenCalledTimes(1);
-  });
 });

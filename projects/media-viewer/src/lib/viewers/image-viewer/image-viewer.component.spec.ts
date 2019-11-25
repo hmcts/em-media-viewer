@@ -42,7 +42,7 @@ describe('ImageViewerComponent', () => {
   });
 
   it('should rotate image',
-    inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+    inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
       toolbarEvents.rotateSubject.next(90);
 
       expect(component.rotation).toBe(90);
@@ -51,20 +51,20 @@ describe('ImageViewerComponent', () => {
   describe('zoom operation', () => {
 
     it('should zoom image by factor of 0.5 ',
-      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+      inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
         toolbarEvents.zoomSubject.next(0.5);
         expect(component.zoom).toBe(0.5);
     }));
 
     it('should zoom image by factor of 2',
-      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+      inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
         toolbarEvents.zoomSubject.next(2);
 
         expect(component.zoom).toBe(2);
     }));
 
     it('should zoom image by maximum value 5',
-      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+      inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
         toolbarEvents.zoomSubject.next(5);
         toolbarEvents.stepZoomSubject.next(0.1);
 
@@ -72,7 +72,7 @@ describe('ImageViewerComponent', () => {
     }));
 
     it('should zoom image by minimum value 0.1',
-      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+      inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
         toolbarEvents.zoomSubject.next(0.1);
         toolbarEvents.stepZoomSubject.next(-0.1);
 
@@ -89,7 +89,7 @@ describe('ImageViewerComponent', () => {
   }));
 
   it('should trigger download',
-    inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+    inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
       const anchor = document.createElement('a');
       spyOn(document, 'createElement').and.returnValue(anchor);
       component.downloadFileName = 'download-filename';
@@ -126,7 +126,7 @@ describe('ImageViewerComponent', () => {
   });
 
   it('should show comments panel',
-    inject([ViewerEventService],(viewerEvents: ViewerEventService) => {
+    inject([ViewerEventService], (viewerEvents: ViewerEventService) => {
       component.showCommentsPanel = false;
       const imageContainer = fixture.debugElement.query(By.css('.image-container'));
 
@@ -138,7 +138,7 @@ describe('ImageViewerComponent', () => {
   }));
 
   it('should hide comments panel',
-    inject([ViewerEventService],(viewerEvents: ViewerEventService) => {
+    inject([ViewerEventService], (viewerEvents: ViewerEventService) => {
       component.showCommentsPanel = true;
       const imageContainer = fixture.debugElement.query(By.css('.image-container'));
 

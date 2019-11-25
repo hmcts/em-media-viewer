@@ -11,6 +11,7 @@ import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar
 import { CommentSetComponent } from './comment-set/comment-set.component';
 import { AnnotationService } from './annotation.service';
 import { TextareaAutoGrowDirective } from './comment-set/comment/textarea-auto-grow.directive';
+import { CommentService } from './comment-set/comment/comment.service';
 
 @NgModule({
   imports: [
@@ -34,7 +35,7 @@ import { TextareaAutoGrowDirective } from './comment-set/comment/textarea-auto-g
   ],
   providers: [
     AnnotationApiService,
-    AnnotationService
+    AnnotationService,
   ],
   exports: [
     AnnotationComponent,
