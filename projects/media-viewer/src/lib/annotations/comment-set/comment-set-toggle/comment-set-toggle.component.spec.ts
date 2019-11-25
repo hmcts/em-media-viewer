@@ -2,7 +2,7 @@ import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { CommentSetToggleComponent } from './comment-set-toggle.component';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
 
-describe('PdfViewerComponent', () => {
+describe('CommentSetToggleComponent', () => {
   let component: CommentSetToggleComponent;
   let fixture: ComponentFixture<CommentSetToggleComponent>;
   let viewerEvent: ViewerEventService;
@@ -29,6 +29,6 @@ describe('PdfViewerComponent', () => {
 
       component.toggleCommentsPanel();
 
-      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(false);
+      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
     }));
 });
