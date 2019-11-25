@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnInit }
 import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
+import { ViewerEventService } from '../../../viewers/viewer-event.service';
 
 @Component({
   selector: 'mv-annotation',
@@ -22,6 +23,8 @@ export class AnnotationComponent {
   @Output() annotationClick = new EventEmitter();
 
   @ViewChild('container') container: ElementRef;
+
+  constructor(private viewerEvents: ViewerEventService) {}
 
   public onSelect() {
     this.selected = true;
@@ -61,6 +64,7 @@ export class AnnotationComponent {
     }
     this.selected = true;
     this.annotationClick.emit({ annotationId: this.annotation.id, editable: true });
+    this.viewerEvents.toggleCommentsPanel(true);
   }
 
   topRectangle() {
