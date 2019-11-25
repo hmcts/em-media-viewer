@@ -10,7 +10,8 @@ form {
 }
 
 span, textarea {
-  font-size: 22px;
+  font-size: 19px;
+  font-family: nta,Arial,sans-serif;
   color: #000000;
 }
 
@@ -80,7 +81,8 @@ textarea.view-mode {
 }
 
 .unselectedText {
-  font-size: 22px;
+  font-size: 19px;
+  font-family: nta,Arial,sans-serif;
   color: #000000;
   overflow: hidden;
   text-overflow: ellipsis;
