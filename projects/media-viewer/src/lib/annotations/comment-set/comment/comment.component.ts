@@ -33,6 +33,7 @@ export class CommentComponent implements OnChanges {
   @Output() renderComments = new EventEmitter<Comment>();
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<Comment>();
+  @Output() changes = new EventEmitter<boolean>();
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;
@@ -100,8 +101,8 @@ export class CommentComponent implements OnChanges {
 
   onCancel() {
     this.editable = false;
-    this.commentService.onCommentChange(false);
     this.fullComment = this.originalComment;
+    this.changes.emit(false);
   }
 
   public onDelete() {
@@ -111,8 +112,8 @@ export class CommentComponent implements OnChanges {
   public onSave() {
     this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
     this.updated.emit(this._comment);
-    this.commentService.onCommentChange(false);
     this.editable = false;
+    this.changes.emit(false);
   }
 
   onCommentClick() {

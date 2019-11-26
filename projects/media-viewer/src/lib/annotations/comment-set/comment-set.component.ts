@@ -11,6 +11,7 @@ import { CommentComponent } from './comment/comment.component';
 import { AnnotationService, SelectionAnnotation } from '../annotation.service';
 import { Subscription } from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
+import { CommentService } from './comment/comment.service';
 
 @Component({
   selector: 'mv-comment-set',
@@ -38,7 +39,8 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   constructor(private readonly viewerEvents: ViewerEventService,
               private readonly api: AnnotationApiService,
-              private readonly annotationService: AnnotationService) {
+              private readonly annotationService: AnnotationService,
+              private readonly commentService: CommentService) {
     this.clearSelection();
   }
 
@@ -198,5 +200,9 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   clearSelection() {
     this.selectAnnotation = { annotationId: '', editable: false };
+  }
+
+  allCommentsSaved() {
+    this.commentService.onCommentChange(this.commentComponents.some(comment => comment.editable === true));
   }
 }

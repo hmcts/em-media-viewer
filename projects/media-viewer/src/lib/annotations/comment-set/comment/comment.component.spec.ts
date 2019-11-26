@@ -114,6 +114,18 @@ describe('CommentComponent', () => {
     expect(component.fullComment).toEqual(modifiedMockComment.content);
   });
 
+  it('should emit changes event when comment editing cancelled', () => {
+    const commentChangesEmitEventSpy = spyOn(component.changes, 'emit');
+    component.onCancel();
+    expect(commentChangesEmitEventSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should emit changes event when comment is saved', () => {
+    const commentChangesEmitEventSpy = spyOn(component.changes, 'emit');
+    component.onSave();
+    expect(commentChangesEmitEventSpy).toHaveBeenCalledTimes(1);
+  });
+
   it('should emit a click', () => {
     const clickEmitEventSpy = spyOn(component.commentClick, 'emit');
     component.onCommentClick();

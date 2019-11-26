@@ -304,4 +304,12 @@ describe('CommentSetComponent', () => {
 
     expect(topRectangle).toEqual(mockRectangles[1]);
   });
+
+  it('should call the comment service to update comments state value', () => {
+    inject([CommentService], (commentService: CommentService) => {
+      spyOn(commentService, 'onCommentChange');
+      component.allCommentsSaved();
+      expect(commentService.onCommentChange).toHaveBeenCalledWith(false);
+    });
+  });
 });
