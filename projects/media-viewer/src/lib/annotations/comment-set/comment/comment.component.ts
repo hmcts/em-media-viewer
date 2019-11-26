@@ -122,7 +122,8 @@ export class CommentComponent implements OnChanges {
 
   formNgStyle() {
     return {
-      top: (this.commentTopPos * this.zoom) + 'px'
+      top: (this.commentTopPos * this.zoom) + 'px',
+      'z-index': this.selected ? 100 : 0
     };
   }
 
