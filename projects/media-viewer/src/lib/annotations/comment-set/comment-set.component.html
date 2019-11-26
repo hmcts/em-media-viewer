@@ -9,6 +9,7 @@
           (commentClick)="onSelect($event)"
           (delete)="onCommentDelete($event)"
           (updated)="onCommentUpdate($event)"
+          (changes)="allCommentsSaved()"
           [selected]="annotation.comments[0].annotationId === selectAnnotation.annotationId"
           [editable]="annotation.comments[0].annotationId === selectAnnotation.annotationId ? selectAnnotation.editable : false"
           [zoom]="zoom"
