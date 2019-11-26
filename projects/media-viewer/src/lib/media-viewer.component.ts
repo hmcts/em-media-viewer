@@ -119,7 +119,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   onCommentChange(changes: boolean) {
-    console.log(changes);
     this.unsavedChanges.emit(changes);
   }
 }
