@@ -203,7 +203,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   allCommentsSaved() {
-    this.commentService.allCommentSetsSaved();
+    this.commentService.allCommentSetsSaved(this.commentComponents);
   }
 
   allCommentsSavedInSet(): boolean {
