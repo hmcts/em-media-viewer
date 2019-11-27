@@ -11,7 +11,7 @@ import { annotationSet } from '../../../assets/annotation-set';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
-import { ViewerEventService } from '../../viewers/viewer-event.service';
+import { CommentSetRenderService } from './comment-set-render.service';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -194,7 +194,7 @@ describe('CommentSetComponent', () => {
       providers: [
         { provide: AnnotationApiService, useValue: api },
         { provide: AnnotationService, useValue: mockAnnotationService },
-        ToolbarEventService
+        ToolbarEventService, CommentSetRenderService
       ]
     })
     .compileComponents();

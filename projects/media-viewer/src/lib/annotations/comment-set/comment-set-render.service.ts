@@ -4,55 +4,54 @@ import { CommentComponent } from './comment/comment.component';
 @Injectable()
 export class CommentSetRenderService {
 
-  redrawCommentComponents(commentComponents: CommentComponent[], height: number, rotate: number, zoom: number) {
-    setTimeout(() => {
-      let previousComment: CommentComponent;
-      this.sortCommentComponents(commentComponents, height, rotate).forEach((comment: CommentComponent) => {
-        previousComment = this.isOverlapping(comment, previousComment, zoom);
+  redrawComponents(commentComponents: CommentComponent[], height: number, rotate: number, zoom: number) {
+      let prevComment: CommentComponent;
+      this.sortComponents(commentComponents, height, rotate).forEach((comment: CommentComponent) => {
+        this.adjustIfOverlapping(comment, prevComment, zoom);
+        prevComment = comment;
       });
-    });
   }
 
-  sortCommentComponents(commentComponents: CommentComponent[], height: number, rotate: number) {
+  sortComponents(commentComponents: CommentComponent[], height: number, rotate: number) {
     return commentComponents.sort((a: CommentComponent, b: CommentComponent) => {
-      if (rotate === 90) {
-        a.commentTopPos = a._rectangle.x;
-        b.commentTopPos = b._rectangle.x;
-      } else if (rotate === 180) {
-        a.commentTopPos = height - (a._rectangle.y + a._rectangle.height);
-        b.commentTopPos = height - (b._rectangle.y + b._rectangle.height);
-      } else if (rotate === 270) {
-        a.commentTopPos = height - (a._rectangle.x + a._rectangle.width);
-        b.commentTopPos = height - (b._rectangle.x + b._rectangle.width);
-      } else {
-        a.commentTopPos = a._rectangle.y;
-        b.commentTopPos = b._rectangle.y;
-      }
+      a.rectTop = this.top(a._rectangle, rotate, height);
+      b.rectTop = this.top(b._rectangle, rotate, height);
       return this.processSort(a, b);
     });
   }
 
-  isOverlapping(commentItem: CommentComponent, previousCommentItem: CommentComponent, zoom: number): CommentComponent {
-    if (previousCommentItem) {
-      const endOfPreviousCommentItem = (previousCommentItem.commentTopPos
-        + (previousCommentItem.form.nativeElement.getBoundingClientRect().height / zoom));
-      if (commentItem.commentTopPos <= endOfPreviousCommentItem) {
-        commentItem.commentTopPos = endOfPreviousCommentItem;
+  adjustIfOverlapping(comment: CommentComponent, prevComment: CommentComponent, zoom): void {
+    if (prevComment) {
+      const endOfPrevComment = prevComment.rectTop + (this.height(prevComment)/zoom);
+      if (comment.rectTop <= endOfPrevComment) {
+        comment.rectTop = endOfPrevComment;
       }
     }
-    return commentItem;
   }
 
   processSort(a: CommentComponent, b: CommentComponent): number {
-    if (this.isAnnotationOnSameLine(a, b)) {
-      return a.commentLeftPos >= b.commentLeftPos ? 1 : -1;
+    if (this.overlapping(a, b)) {
+      return a.rectLeft >= b.rectLeft ? 1 : -1;
     }
-    return a.commentTopPos >= b.commentTopPos ? 1 : -1
+    return a.rectTop >= b.rectTop ? 1 : -1
   }
 
-  isAnnotationOnSameLine(a: CommentComponent, b: CommentComponent): boolean {
-    const delta = (a.form.nativeElement.height >= b.form.nativeElement.height) ? a.form.nativeElement.height : b.form.nativeElement.height;
-    return this.difference(a.commentTopPos, b.commentTopPos) <= delta;
+  overlapping(a: CommentComponent, b: CommentComponent): boolean {
+    const highest = (this.height(a) >= this.height(b)) ? this.height(a) : this.height(b);
+    return this.difference(a.rectTop, b.rectTop) <= highest;
+  }
+
+  top(rectangle: { x, y, height, width }, rotate: number, height: number) {
+    switch (rotate) {
+      case 90: return rectangle.x;
+      case 180: return  height - (rectangle.y + rectangle.height);
+      case 270: return height - (rectangle.x + rectangle.width);
+      default: return rectangle.y;
+    }
+  }
+
+  height(element:any) {
+    return element.form.nativeElement.getBoundingClientRect().height;
   }
 
   difference(a: number, b: number): number { return Math.abs(a - b); }
