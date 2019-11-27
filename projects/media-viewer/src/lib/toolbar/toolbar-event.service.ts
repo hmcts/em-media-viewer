@@ -32,6 +32,7 @@ export class ToolbarEventService {
   public readonly setCurrentPageSubject = new Subject<number>();
   public readonly setCurrentPageInputValueSubject = new Subject<number>();
   public readonly changePageByDeltaSubject = new Subject<number>();
+  public readonly showCommentSummary = new Subject<boolean>();
 
   /**
    * Reset the stateful behaviour subjects
