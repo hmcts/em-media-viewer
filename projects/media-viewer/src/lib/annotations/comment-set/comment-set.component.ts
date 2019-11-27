@@ -203,6 +203,10 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   allCommentsSaved() {
-    this.commentService.onCommentChange(this.commentComponents.some(comment => comment.editable === true));
+    this.commentService.allCommentSetsSaved();
+  }
+
+  allCommentsSavedInSet(): boolean {
+    return this.commentComponents.some(comment => comment.editable === true);
   }
 }
