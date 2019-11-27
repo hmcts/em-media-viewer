@@ -47,7 +47,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Input() annotationApiUrl;
 
   annotationSet: Observable<AnnotationSet>;
-  private subscriptions: Subscription[] = [];
+  private commentState: Subscription;
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
@@ -63,8 +63,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   ngAfterContentInit() {
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
-    this.subscriptions.push(this.commentService.getUnsavedChanges()
-      .subscribe(changes => this.onCommentChange(changes)));
+    this.commentState = this.commentService.getUnsavedChanges()
+      .subscribe(changes => this.onCommentChange(changes));
   }
 
   contentTypeUnsupported(): boolean {
@@ -88,7 +88,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.commentState.unsubscribe();
   }
 
   onMediaLoad(status: ResponseType) {
