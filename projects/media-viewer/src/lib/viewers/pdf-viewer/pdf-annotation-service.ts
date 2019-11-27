@@ -12,6 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 import { PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
+import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 
 @Injectable()
 export class PdfAnnotationService {
@@ -32,6 +33,7 @@ export class PdfAnnotationService {
     private readonly viewContainerRef: ViewContainerRef,
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
+    private readonly commentService: CommentService
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject;
     this.drawMode = toolbarEvents.drawModeSubject;
@@ -83,6 +85,7 @@ export class PdfAnnotationService {
       commentSetComponent = this.setupCommentSet(pageRenderEvent.pageNumber);
       commentSetComponent.instance.addToDOM(pageRenderEvent.source);
     }
+    this.commentService.updateCommentSets(pageRenderEvent.pageNumber, commentSetComponent.instance);
   }
 
   onShapeHighlighted(mouseEvent: MouseEvent) {

@@ -11,7 +11,6 @@ import { annotationSet } from '../../../assets/annotation-set';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
-import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { CommentService } from './comment/comment.service';
 
 describe('CommentSetComponent', () => {
@@ -309,7 +308,21 @@ describe('CommentSetComponent', () => {
     inject([CommentService], (commentService: CommentService) => {
       spyOn(commentService, 'onCommentChange');
       component.allCommentsSaved();
-      expect(commentService.onCommentChange).toHaveBeenCalledWith(false);
+      expect(commentService.onCommentChange).toHaveBeenCalled();
     });
+  });
+
+  it('all comments saved in set should return false', () => {
+    component.commentComponents.reset([]);
+    expect(component.allCommentsSavedInSet()).toEqual(false);
+  });
+
+  it('all comments saved in set should return true', () => {
+    const commentMock = {
+      editable: true
+    } as CommentComponent;
+
+    component.commentComponents.reset([commentMock]);
+    expect(component.allCommentsSavedInSet()).toEqual(true);
   });
 });
