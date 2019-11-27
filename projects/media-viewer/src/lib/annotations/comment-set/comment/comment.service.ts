@@ -30,13 +30,7 @@ export class CommentService {
   }
 
   allCommentSetsSaved(commentComponents: QueryList<CommentComponent>) {
-    console.log(this.commentSets.length);
-    if (this.commentSets.length === 0) {
-      this.onCommentChange(
-        commentComponents.some(comment => comment.editable === true));
-    } else {
-      this.onCommentChange(
-        this.commentSets.some(commentSet => commentSet.allCommentsSavedInSet()));
-    }
+    this.onCommentChange(commentComponents.some(comment => comment.editable === true) &&
+      this.commentSets.some(commentSet => commentSet.allCommentsSavedInSet()));
   }
 }
