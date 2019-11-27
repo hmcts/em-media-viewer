@@ -42,6 +42,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @Input() height: string;
 
+  documentTitle: string;
+
   highlightMode: BehaviorSubject<boolean>;
   drawMode: BehaviorSubject<boolean>;
 
@@ -126,6 +128,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (this.enableAnnotations && this.annotationSet) {
       this.annotationService.setupAnnotationSet(this.annotationSet);
     }
+    this.documentTitle = this.pdfWrapper.getCurrentPDFTitle();
   }
 
   private onDocumentLoadInit() {
