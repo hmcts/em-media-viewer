@@ -36,7 +36,7 @@ import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comm
   ],
   providers: [
     AnnotationApiService,
-    AnnotationService,
+    AnnotationService
   ],
   exports: [
     AnnotationComponent,
