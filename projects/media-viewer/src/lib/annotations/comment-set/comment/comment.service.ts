@@ -1,7 +1,6 @@
-import {Injectable, QueryList} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CommentSetComponent } from '../comment-set.component';
-import {CommentComponent} from "./comment.component";
 
 @Injectable()
 export class CommentService {
@@ -21,22 +20,12 @@ export class CommentService {
     return this.unsavedChanges.asObservable();
   }
 
-  resetCommentSet() {
-    this.commentSets = [];
-  }
-
   updateCommentSets(index: number, commentSetComponent: CommentSetComponent) {
     this.commentSets[index] = commentSetComponent;
   }
 
-  allCommentSetsSaved(commentComponents: QueryList<CommentComponent>) {
-    console.log(this.commentSets.length);
-    if (this.commentSets.length === 0) {
-      this.onCommentChange(
-        commentComponents.some(comment => comment.editable === true));
-    } else {
-      this.onCommentChange(
-        this.commentSets.some(commentSet => commentSet.allCommentsSavedInSet()));
-    }
+  allCommentSetsSaved() {
+    this.onCommentChange(
+      this.commentSets.some(commentSet => commentSet.allCommentsSavedInSet()));
   }
 }
