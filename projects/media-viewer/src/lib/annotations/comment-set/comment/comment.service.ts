@@ -20,6 +20,10 @@ export class CommentService {
     return this.unsavedChanges.asObservable();
   }
 
+  resetCommentSet() {
+    this.commentSets = [];
+  }
+
   updateCommentSets(index: number, commentSetComponent: CommentSetComponent) {
     this.commentSets[index] = commentSetComponent;
   }
