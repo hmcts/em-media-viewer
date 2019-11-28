@@ -77,6 +77,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
     if (changes.url) {
       this.toolbarEvents.reset();
+      this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
         this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
       }
