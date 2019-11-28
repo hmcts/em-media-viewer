@@ -26,7 +26,6 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   showCustomToolbar = false;
   toolbarEvents;
   enableAnnotations = false;
-  showCommentSummary = new Subject<boolean>();
   toolbarButtonOverrides: {};
 
   ngAfterContentInit() {

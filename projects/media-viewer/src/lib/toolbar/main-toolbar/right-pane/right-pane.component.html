@@ -1,9 +1,14 @@
 <div id="toolbarViewerRight">
-  <button *ngIf="toolbarButtons.showPresentationMode"
-          id="presentationMode" class="toolbarButton presentationMode hiddenLargeView"
-          title="Switch to Presentation Mode" tabindex="0" data-l10n-id="presentation_mode">
-    <span data-l10n-id="presentation_mode_label">Presentation Mode</span>
+  <button *ngIf="toolbarButtons.showCommentSummary"
+          id="presentationMode" class="toolbarButton bookmark hiddenSmallView"
+          title="Open comment summary" tabindex="0" data-l10n-id="comment_summary" (click)="showCommentSummary()">
+    <span data-l10n-id="comment_summary_label">Comment Summary</span>
   </button>
+  <!--<button *ngIf="toolbarButtons.showPresentationMode"-->
+          <!--id="presentationMode" class="toolbarButton presentationMode hiddenLargeView"-->
+          <!--title="Switch to Presentation Mode" tabindex="0" data-l10n-id="presentation_mode">-->
+    <!--<span data-l10n-id="presentation_mode_label">Presentation Mode</span>-->
+  <!--</button>-->
   <button *ngIf="toolbarButtons.showOpenFile"
           id="openFile" class="toolbarButton openFile hiddenLargeView" title="Open File" tabindex="0"
           data-l10n-id="open_file">

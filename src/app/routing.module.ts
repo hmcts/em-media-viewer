@@ -33,7 +33,6 @@ const routes: Routes = [{
     MediaViewerModule,
     ToolbarModule,
     FormsModule,
-    CommentsSummaryModule,
     CustomToolbarModule
   ],
   exports: [RouterModule]

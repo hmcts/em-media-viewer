@@ -32,7 +32,7 @@ export class ToolbarEventService {
   public readonly setCurrentPageSubject = new Subject<number>();
   public readonly setCurrentPageInputValueSubject = new Subject<number>();
   public readonly changePageByDeltaSubject = new Subject<number>();
-  public readonly showCommentSummary = new Subject<boolean>();
+  public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
 
   /**
    * Reset the stateful behaviour subjects
@@ -42,6 +42,7 @@ export class ToolbarEventService {
     this.zoomValueSubject.next(1);
     this.highlightModeSubject.next(false);
     this.drawModeSubject.next(false);
+    this.showCommentSummary.next(false);
   }
 
   // Function to inform Observers that highlightMode has been enabled
@@ -108,5 +109,13 @@ export class ToolbarEventService {
 
   public getCurrentPageNumber(): Observable<number> {
     return this.setCurrentPageInputValueSubject.asObservable();
+  }
+
+  public getCommentSummary(): Observable<boolean> {
+    return this.showCommentSummary.asObservable();
+  }
+
+  public displayCommentSummary(): void {
+    this.showCommentSummary.next(!this.showCommentSummary.getValue());
   }
 }

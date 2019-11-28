@@ -2,6 +2,10 @@
      [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async }"
      [ngStyle]="{ width: width }">
 
+  <mv-comments-summary *ngIf="showCommentSummary"
+                       [title]="documentTitle || 'Comment Summary'">
+  </mv-comments-summary>
+
   <div id="mainContainer">
     <mv-main-toolbar *ngIf="showToolbar"></mv-main-toolbar>
     <mv-side-bar *ngIf="contentType === 'pdf' && toolbarButtons.sidebarOpen"
@@ -10,6 +14,7 @@
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (pdfLoadStatus)="onMediaLoad($event)"
                    (pdfViewerException)="onLoadException($event)"
+                   (documentTitle)="onDocumentTitleChange($event)"
                    [url]="url"
                    [enableAnnotations]="enableAnnotations"
                    [annotationSet]="enableAnnotations ? (annotationSet | async) : null"

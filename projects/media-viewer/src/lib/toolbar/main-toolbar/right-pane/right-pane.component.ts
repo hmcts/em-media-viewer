@@ -26,4 +26,7 @@ export class ToolbarRightPaneComponent {
     this.toolbarEvents.download();
   }
 
+  showCommentSummary() {
+    this.toolbarEvents.displayCommentSummary();
+  }
 }

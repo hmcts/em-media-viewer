@@ -33,6 +33,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @Output() pdfLoadStatus = new EventEmitter<ResponseType>();
   @Output() pdfViewerException = new EventEmitter<ViewerException>();
+  @Output() documentTitle = new EventEmitter<string>();
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -41,8 +42,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Input() annotationSet: AnnotationSet | null;
 
   @Input() height: string;
-
-  documentTitle: string;
 
   highlightMode: BehaviorSubject<boolean>;
   drawMode: BehaviorSubject<boolean>;
@@ -116,6 +115,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (changes.annotationSet && this.annotationSet) {
       this.loadDocument();
     }
+    this.annotationSet.annotations.forEach(annotation => {
+      console.log(annotation.page);
+      console.log(annotation.comments);
+    });
   }
 
   ngOnDestroy(): void {
@@ -128,7 +131,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (this.enableAnnotations && this.annotationSet) {
       this.annotationService.setupAnnotationSet(this.annotationSet);
     }
-    this.documentTitle = this.pdfWrapper.getCurrentPDFTitle();
+    this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
   }
 
   private onDocumentLoadInit() {
