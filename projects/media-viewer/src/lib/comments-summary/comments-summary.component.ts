@@ -1,7 +1,8 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Comment } from '../annotations/comment-set/comment/comment.model';
 import { PrintService } from '../print.service';
+import { Observable } from 'rxjs/index';
+import { ToolbarEventService } from '../toolbar/toolbar-event.service';
+import { Annotation } from '../annotations/annotation-set/annotation/annotation.model';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -10,22 +11,26 @@ import { PrintService } from '../print.service';
 })
 export class CommentsSummaryComponent {
 
-  @Input() showCommentSummary: Subject<boolean>;
-  @Input() comments: Comment[];
   @Input() title: string;
+  comments: Observable<Annotation[]>;
 
   @ViewChild('commentContainer') commentsTable: ElementRef;
 
   constructor(
-    private readonly printService: PrintService
+    private readonly printService: PrintService,
+    private readonly toolbarEvents: ToolbarEventService
   ) {}
 
   public onClose(): void {
-    this.showCommentSummary.next(false);
+    this.toolbarEvents.displayCommentSummary();
   }
 
   public onPrint(): void {
     this.printService.printElementNatively(this.commentsTable.nativeElement, 1000, 900);
   }
 
+  navigateToPage(pageNumber: number) {
+    this.toolbarEvents.setPage(pageNumber);
+    this.toolbarEvents.displayCommentSummary();
+  }
 }

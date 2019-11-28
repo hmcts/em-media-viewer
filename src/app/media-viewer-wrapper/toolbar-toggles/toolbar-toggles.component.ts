@@ -8,7 +8,6 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class ToolbarTogglesComponent {
 
-  @Input() showCommentSummary: Subject<boolean>;
   @Input() showToolbar: boolean;
   @Input() showCustomToolbar: boolean;
 
@@ -16,6 +15,7 @@ export class ToolbarTogglesComponent {
   @Output() toggleToolbarBtns = new EventEmitter();
   @Output() toggleCustomToolbar = new BehaviorSubject(false);
   @Output() toggleAnnotations = new BehaviorSubject(true);
+  @Output() showCommentSummary = new BehaviorSubject(false);
 
   toolbarButtonOverrides = {};
 

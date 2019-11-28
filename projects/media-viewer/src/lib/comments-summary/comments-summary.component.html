@@ -1,11 +1,12 @@
 <div id="modal-background" class="modal" (click)="onClose()">
   <div id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
-    <h2>{{ title }}</h2>
     <div id="comment-container" class="comment-container" #commentContainer>
+      <h2>{{ title }}</h2>
       <table class="govuk-table">
         <thead>
           <tr class="govuk-table__header">
             <th>User</th>
+            <th>Page</th>
             <th>Date</th>
             <th>Comment</th>
           </tr>
@@ -13,6 +14,7 @@
         <tbody>
           <tr *ngFor='let comment of comments; let i = index' [id]="'comment-row-'+i" class="govuk-table__cell">
             <td><span title="{{comment.createdByDetails.email}}">{{comment.createdByDetails.forename}} {{comment.createdByDetails.surname}}</span></td>
+            <td (click)="navigateToPage(page)">Page Number to go here</td>
             <td>{{comment.createdDate | date : "hh:mm d MMMM yyyy" }}</td>
             <td title="{{comment.content}}">
               <span class="clipped">

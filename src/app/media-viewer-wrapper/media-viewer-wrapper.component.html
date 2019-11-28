@@ -5,13 +5,13 @@
         <h2 class="govuk-heading-m  govuk-!-margin-top-4">Media Viewer Demo</h2>
       </div>
       <div class="govuk-grid-column-two-thirds">
-        <app-toolbar-toggles [showCommentSummary]="showCommentSummary"
-                             [showToolbar]="showToolbar"
+        <app-toolbar-toggles [showToolbar]="showToolbar"
                              [showCustomToolbar]="showCustomToolbar"
                              (toggleAnnotations)="toggleAnnotations($event)"
                              (toggleToolbar)="toggleToolbar($event)"
                              (toggleToolbarBtns)="toggleToolbarBtns($event)"
-                             (toggleCustomToolbar)="toggleCustomToolbar($event)"></app-toolbar-toggles>
+                             (toggleCustomToolbar)="toggleCustomToolbar($event)"
+                             (showCommentSummary)="toggleCustomToolbar($event)"></app-toolbar-toggles>
       </div>
     </div>
     <div class="govuk-grid-row">
@@ -93,17 +93,12 @@
       </button>
     </div>
   </div>
-  <mv-comments-summary *ngIf="showCommentSummary | async"
-                       [title]="'Document Title'"
-                       [showCommentSummary]="showCommentSummary"
-                       [comments]="(comments | async) || []"></mv-comments-summary>
   <app-custom-toolbar *ngIf="showCustomToolbar"
                       [toolbarEvents]="toolbarEvents"
                       [contentType]="documentType"></app-custom-toolbar>
   <mv-media-viewer [url]="url"
                    [downloadFileName]="filename"
                    [contentType]="documentType"
-                   [showCommentSummary]="showCommentSummary"
                    [enableAnnotations]="enableAnnotations"
                    [showToolbar]="showToolbar"
                    [toolbarButtonOverrides]="toolbarButtonOverrides"
