@@ -12,6 +12,7 @@ import { Annotation } from '../annotations/annotation-set/annotation/annotation.
 export class CommentsSummaryComponent {
 
   @Input() title: string;
+  @Input() contentType: string;
   comments: Observable<Annotation[]>;
 
   @ViewChild('commentContainer') commentsTable: ElementRef;

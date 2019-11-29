@@ -117,7 +117,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     } else {
       this.toolbarButtons.setup({
         ...defaultUnsupportedOptions,
-        ...this.toolbarButtonOverrides
+        ...this.toolbarButtonOverrides, showCommentSummary: false
       });
     }
   }

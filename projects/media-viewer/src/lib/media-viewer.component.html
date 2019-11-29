@@ -3,7 +3,8 @@
      [ngStyle]="{ width: width }">
 
   <mv-comments-summary *ngIf="showCommentSummary"
-                       [title]="documentTitle || 'Comment Summary'">
+                       [title]="documentTitle || 'Comment Summary'"
+                       [contentType]="contentType">
   </mv-comments-summary>
 
   <div id="mainContainer">
