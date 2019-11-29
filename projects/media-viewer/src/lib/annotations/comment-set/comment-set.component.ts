@@ -26,8 +26,6 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   comments: Comment[];
   selectAnnotation: SelectionAnnotation;
   private subscriptions: Subscription[] = [];
-  pageContainer;
-  pageWrapper;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
@@ -53,32 +51,23 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     if (this.subscriptions.length > 0) {
       this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
-    if (this.pageContainer) {
-      this.pageContainer.remove();
-    }
-    if (this.pageWrapper) {
-      this.pageWrapper.remove();
-    }
   }
 
   addToDOM(eventSource: PageEvent['source']) {
     this.setCommentSetValues(eventSource);
     const element = eventSource.div;
 
-    if (!this.pageContainer) {
+    let pageContainer = element.closest('.pageContainer');
+    if (!pageContainer) {
       const pageWrapper =  document.createElement('div');
       pageWrapper.setAttribute('class', 'pageWrapper');
-
-      const pageContainer =  document.createElement('div');
+      pageContainer =  document.createElement('div');
       pageContainer.setAttribute('class', 'pageContainer');
       element.insertAdjacentElement('beforebegin', pageContainer);
       pageWrapper.appendChild(element);
       pageContainer.appendChild(pageWrapper);
-
-      this.pageContainer = pageContainer;
-      this.pageWrapper = pageWrapper;
     }
-    this.pageContainer.appendChild(this.container.nativeElement);
+    pageContainer.appendChild(this.container.nativeElement);
   }
 
   setCommentSetValues(eventSource: PageEvent['source']) {

@@ -20,7 +20,7 @@ export class CommentSetRenderService {
     });
   }
 
-  adjustIfOverlapping(comment: CommentComponent, prevComment: CommentComponent, zoom): void {
+  private adjustIfOverlapping(comment: CommentComponent, prevComment: CommentComponent, zoom): void {
     if (prevComment) {
       const endOfPrevComment = prevComment.rectTop + (this.height(prevComment)/zoom);
       if (comment.rectTop <= endOfPrevComment) {
@@ -29,19 +29,19 @@ export class CommentSetRenderService {
     }
   }
 
-  processSort(a: CommentComponent, b: CommentComponent): number {
+  private processSort(a: CommentComponent, b: CommentComponent): number {
     if (this.overlapping(a, b)) {
       return a.rectLeft >= b.rectLeft ? 1 : -1;
     }
     return a.rectTop >= b.rectTop ? 1 : -1
   }
 
-  overlapping(a: CommentComponent, b: CommentComponent): boolean {
+  private overlapping(a: CommentComponent, b: CommentComponent): boolean {
     const highest = (this.height(a) >= this.height(b)) ? this.height(a) : this.height(b);
     return this.difference(a.rectTop, b.rectTop) <= highest;
   }
 
-  top(rectangle: { x, y, height, width }, rotate: number, height: number) {
+  private top(rectangle: { x, y, height, width }, rotate: number, height: number) {
     switch (rotate) {
       case 90: return rectangle.x;
       case 180: return  height - (rectangle.y + rectangle.height);
@@ -50,9 +50,9 @@ export class CommentSetRenderService {
     }
   }
 
-  height(element:any) {
+  private height(element:any) {
     return element.form.nativeElement.getBoundingClientRect().height;
   }
 
-  difference(a: number, b: number): number { return Math.abs(a - b); }
+  private difference(a: number, b: number): number { return Math.abs(a - b); }
 }
