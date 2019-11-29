@@ -226,8 +226,8 @@ describe('CommentSetComponent', () => {
 
     component.addToDOM(mockEventSource);
     expect(component.setCommentSetValues).toHaveBeenCalledWith(mockEventSource);
-    expect(mockEventSource.div.parentNode.parentNode).toEqual(component.pageContainer);
-    expect(mockEventSource.div.parentNode).toEqual(component.pageWrapper);
+    expect(mockEventSource.div.closest('.pageContainer')).toBeTruthy();
+    expect(mockEventSource.div.closest('.pageWrapper')).toBeTruthy();
     expect(mockEventSource.div.parentNode.nextSibling).toEqual(component.container.nativeElement);
   });
 
