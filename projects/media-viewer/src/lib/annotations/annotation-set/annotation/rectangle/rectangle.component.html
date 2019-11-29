@@ -1,4 +1,8 @@
 <div #rectElement
+     draggable
+     resizable
+     [rotate]="rotate"
+     (stopped)="onUpdate()"
      [tabindex]="rectangle.id"
      class="rectangle"
      [ngClass]="{ 'selected': selected }"
