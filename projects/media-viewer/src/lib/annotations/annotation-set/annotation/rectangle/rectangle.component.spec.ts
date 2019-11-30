@@ -55,6 +55,7 @@ describe('RectangleComponent', () => {
     component = fixture.componentInstance;
     component.rectangle = mockRectangle;
     component.zoom = 1;
+    component.rotate = 0;
     component.selected = false;
     nativeElement = fixture.debugElement.nativeElement;
     rectangleEl = fixture.debugElement.query(By.css('.rectangle'));
