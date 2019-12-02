@@ -199,12 +199,75 @@ fdescribe('AnnotationSetComponent', () => {
   it('starts drawing on mousedown, no rotation', () => {
     component.shapeRectangle = new ElementRef(document.createElement('div'));
     component.drawMode = true;
-    component.rotate = 0;
     const initialiseNewRectSpy = spyOn<any>(component, 'initShapeRectangle').and.callThrough();
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
 
     expect(initialiseNewRectSpy).toHaveBeenCalled();
     expect(component.shapeRectangle.nativeElement.style.left).toEqual('10px');
+    expect(component.shapeRectangle.nativeElement.style.top).toEqual('10px');
+  });
+
+  it('updateShapeRectangle on mousemove, no rotation', () => {
+    component.shapeRectangle = new ElementRef(document.createElement('div'));
+    component.drawMode = true;
+    component.drawStartY = 10;
+    component.drawStartX = 10;
+    component.height = 100;
+    component.width = 200;
+    component.rotate = 0;
+    const updateShapeRectangleSpy = spyOn<any>(component, 'updateShapeRectangle').and.callThrough();
+    component.onMouseMove({ pageY: 10, pageX: 10 } as MouseEvent);
+
+    expect(updateShapeRectangleSpy).toHaveBeenCalled();
+    expect(component.shapeRectangle.nativeElement.style.left).toEqual('10px');
+    expect(component.shapeRectangle.nativeElement.style.top).toEqual('10px');
+  });
+
+  it('updateShapeRectangle on mousemove, 90deg rotation', () => {
+    component.shapeRectangle = new ElementRef(document.createElement('div'));
+    component.drawMode = true;
+    component.drawStartY = 10;
+    component.drawStartX = 10;
+    component.height = 100;
+    component.width = 200;
+    component.rotate = 90;
+    const updateShapeRectangleSpy = spyOn<any>(component, 'updateShapeRectangle').and.callThrough();
+    component.onMouseMove({ pageY: 10, pageX: 10 } as MouseEvent);
+
+    expect(updateShapeRectangleSpy).toHaveBeenCalled();
+    expect(component.shapeRectangle.nativeElement.style.left).toEqual('10px');
+    expect(component.shapeRectangle.nativeElement.style.top).toEqual('90px');
+  });
+
+  it('updateShapeRectangle on mousemove, 180deg rotation', () => {
+    component.shapeRectangle = new ElementRef(document.createElement('div'));
+    component.drawMode = true;
+    component.drawStartY = 10;
+    component.drawStartX = 10;
+    component.height = 100;
+    component.width = 200;
+    component.rotate = 180;
+    const updateShapeRectangleSpy = spyOn<any>(component, 'updateShapeRectangle').and.callThrough();
+    component.onMouseMove({ pageY: 10, pageX: 10 } as MouseEvent);
+
+    expect(updateShapeRectangleSpy).toHaveBeenCalled();
+    expect(component.shapeRectangle.nativeElement.style.left).toEqual('190px');
+    expect(component.shapeRectangle.nativeElement.style.top).toEqual('90px');
+  });
+
+  it('updateShapeRectangle on mousemove, 270deg rotation', () => {
+    component.shapeRectangle = new ElementRef(document.createElement('div'));
+    component.drawMode = true;
+    component.drawStartY = 10;
+    component.drawStartX = 10;
+    component.height = 100;
+    component.width = 200;
+    component.rotate = 270;
+    const updateShapeRectangleSpy = spyOn<any>(component, 'updateShapeRectangle').and.callThrough();
+    component.onMouseMove({ pageY: 10, pageX: 10 } as MouseEvent);
+
+    expect(updateShapeRectangleSpy).toHaveBeenCalled();
+    expect(component.shapeRectangle.nativeElement.style.left).toEqual('190px');
     expect(component.shapeRectangle.nativeElement.style.top).toEqual('10px');
   });
 
