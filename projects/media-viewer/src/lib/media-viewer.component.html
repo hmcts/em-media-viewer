@@ -4,7 +4,8 @@
 
   <mv-comments-summary *ngIf="showCommentSummary"
                        [title]="documentTitle || 'Comment Summary'"
-                       [contentType]="contentType">
+                       [contentType]="contentType"
+                       [annotationSet]="enableAnnotations ? (annotationSet | async) : null">
   </mv-comments-summary>
 
   <div id="mainContainer">
