@@ -11,7 +11,7 @@ import { annotationSet } from '../../../assets/annotation-set';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
-import { ViewerEventService } from '../../viewers/viewer-event.service';
+import { CommentSetRenderService } from './comment-set-render.service';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -194,7 +194,7 @@ describe('CommentSetComponent', () => {
       providers: [
         { provide: AnnotationApiService, useValue: api },
         { provide: AnnotationService, useValue: mockAnnotationService },
-        ToolbarEventService
+        ToolbarEventService, CommentSetRenderService
       ]
     })
     .compileComponents();
@@ -226,8 +226,8 @@ describe('CommentSetComponent', () => {
 
     component.addToDOM(mockEventSource);
     expect(component.setCommentSetValues).toHaveBeenCalledWith(mockEventSource);
-    expect(mockEventSource.div.parentNode.parentNode).toEqual(component.pageContainer);
-    expect(mockEventSource.div.parentNode).toEqual(component.pageWrapper);
+    expect(mockEventSource.div.closest('.pageContainer')).toBeTruthy();
+    expect(mockEventSource.div.closest('.pageWrapper')).toBeTruthy();
     expect(mockEventSource.div.parentNode.nextSibling).toEqual(component.container.nativeElement);
   });
 
