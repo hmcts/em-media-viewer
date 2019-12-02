@@ -15,7 +15,7 @@ import {CommentComponent} from '../comment-set/comment/comment.component';
 import { AnnotationService } from '../annotation.service';
 import { MutableDivModule } from 'mutable-div';
 
-fdescribe('AnnotationSetComponent', () => {
+describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
   let fixture: ComponentFixture<AnnotationSetComponent>;
 
