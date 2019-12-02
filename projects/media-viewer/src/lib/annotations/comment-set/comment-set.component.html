@@ -1,6 +1,7 @@
 <div #container
      [ngClass]="{ 'comments-panel comment-container': true, 'expanded': showCommentsPanel }"
      [style.height.px]="height" (click)="onContainerClick($event)">
+
   <ng-container *ngFor="let annotation of getCommentsOnPage(); let i = index;">
     <mv-anno-comment [ngStyle]="showCommentsPanel ? {} : {'display':'none'}"
         #commentComponent
@@ -8,6 +9,7 @@
         (commentClick)="onSelect($event)"
         (delete)="onCommentDelete($event)"
         (updated)="onCommentUpdate($event)"
+        (changes)="allCommentsSaved()"
         [selected]="annotation.comments[0].annotationId === selectAnnotation.annotationId"
         [editable]="annotation.comments[0].annotationId === selectAnnotation.annotationId ? selectAnnotation.editable : false"
         [zoom]="zoom"

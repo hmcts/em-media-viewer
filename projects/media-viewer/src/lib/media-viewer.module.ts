@@ -10,6 +10,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { PdfJsWrapperFactory } from './viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
+import { CommentService } from './annotations/comment-set/comment/comment.service';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { ErrorMessageComponent } from './viewers/error-message/error.message.com
     ErrorMessageComponent
 ],
   providers: [
-    PdfJsWrapperFactory
+    PdfJsWrapperFactory,
+    CommentService
   ],
   exports: [
     MediaViewerComponent

@@ -1,4 +1,7 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
@@ -8,6 +11,8 @@ import { CommentComponent } from './comment/comment.component';
 import { AnnotationService, SelectionAnnotation } from '../annotation.service';
 import { Subscription } from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
+
+import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
 
 @Component({
@@ -35,6 +40,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   constructor(private readonly viewerEvents: ViewerEventService,
               private readonly api: AnnotationApiService,
               private readonly annotationService: AnnotationService,
+              private readonly commentService: CommentService,
               private readonly commentSetService: CommentSetRenderService) {
     this.clearSelection();
   }
@@ -45,6 +51,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
         .subscribe((selectedAnnotation) => this.selectAnnotation = selectedAnnotation),
       this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle)
     );
+    this.commentService.updateCommentSets(this.page, this);
   }
 
   ngOnDestroy() {
@@ -130,5 +137,13 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   clearSelection() {
     this.selectAnnotation = { annotationId: '', editable: false };
+  }
+
+  allCommentsSaved() {
+    this.commentService.allCommentSetsSaved();
+  }
+
+  allCommentsSavedInSet(): boolean {
+    return this.commentComponents.some(comment => comment.editable === true);
   }
 }
