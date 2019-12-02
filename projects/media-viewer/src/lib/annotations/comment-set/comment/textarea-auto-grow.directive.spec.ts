@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { CommentService } from './comment.service';
 
 describe('TextareaAutoGrowDirective', () => {
   let component: CommentComponent;
@@ -13,6 +14,7 @@ describe('TextareaAutoGrowDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [TextareaAutoGrowDirective, CommentComponent],
+      providers: [CommentService],
       imports: [FormsModule]
     });
     fixture = TestBed.createComponent(CommentComponent);

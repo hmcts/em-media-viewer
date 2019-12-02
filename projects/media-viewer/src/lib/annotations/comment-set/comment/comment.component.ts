@@ -1,8 +1,10 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges } from '@angular/core';
+import {
+  Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../../user/user.model';
 import { Rectangle } from '../../annotation-set/annotation/rectangle/rectangle.model';
 import { SelectionAnnotation } from '../../annotation.service';
+import { CommentService } from './comment.service';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -31,13 +33,16 @@ export class CommentComponent implements OnChanges {
   @Output() renderComments = new EventEmitter<Comment>();
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<Comment>();
+  @Output() changes = new EventEmitter<boolean>();
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
-  constructor() {
+  constructor(
+    private readonly commentService: CommentService
+  ) {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
   }
@@ -88,9 +93,16 @@ export class CommentComponent implements OnChanges {
     this.editable = true;
   }
 
+  onCommentChange(updatedComment) {
+    const hasUnsavedChanges = this.originalComment.substring(0, this.COMMENT_CHAR_LIMIT) !==
+      updatedComment.substring(0, this.COMMENT_CHAR_LIMIT);
+    this.commentService.onCommentChange(hasUnsavedChanges);
+  }
+
   onCancel() {
     this.editable = false;
     this.fullComment = this.originalComment;
+    this.changes.emit(false);
   }
 
   public onDelete() {
@@ -101,6 +113,7 @@ export class CommentComponent implements OnChanges {
     this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
     this.updated.emit(this._comment);
     this.editable = false;
+    this.changes.emit(false);
   }
 
   onCommentClick() {

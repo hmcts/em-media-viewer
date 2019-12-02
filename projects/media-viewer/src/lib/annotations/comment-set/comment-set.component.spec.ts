@@ -11,6 +11,7 @@ import { annotationSet } from '../../../assets/annotation-set';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation/annotation.model';
+import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
 
 describe('CommentSetComponent', () => {
@@ -194,7 +195,9 @@ describe('CommentSetComponent', () => {
       providers: [
         { provide: AnnotationApiService, useValue: api },
         { provide: AnnotationService, useValue: mockAnnotationService },
-        ToolbarEventService, CommentSetRenderService
+        ToolbarEventService,
+        CommentService,
+        CommentSetRenderService
       ]
     })
     .compileComponents();
@@ -301,5 +304,27 @@ describe('CommentSetComponent', () => {
     const topRectangle = component.topRectangle(component.annotationSet.annotations[0].id);
 
     expect(topRectangle).toEqual(mockRectangles[1]);
+  });
+
+  it('should call the comment service to update comments state value', () => {
+    inject([CommentService], (commentService: CommentService) => {
+      spyOn(commentService, 'onCommentChange');
+      component.allCommentsSaved();
+      expect(commentService.onCommentChange).toHaveBeenCalled();
+    });
+  });
+
+  it('all comments saved in set should return false', () => {
+    component.commentComponents.reset([]);
+    expect(component.allCommentsSavedInSet()).toEqual(false);
+  });
+
+  it('all comments saved in set should return true', () => {
+    const commentMock = {
+      editable: true
+    } as CommentComponent;
+
+    component.commentComponents.reset([commentMock]);
+    expect(component.allCommentsSavedInSet()).toEqual(true);
   });
 });

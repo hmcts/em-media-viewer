@@ -8,6 +8,7 @@ import { annotationSet } from '../../../assets/annotation-set';
 import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
+import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 
 export class MockElementRef extends ElementRef {
   constructor() {
@@ -57,6 +58,7 @@ describe('PdfAnnotationService', () => {
         ToolbarEventService,
         ViewerEventService,
         ComponentFactoryResolver,
+        CommentService,
         { provide: PdfJsWrapperFactory, useValue: mockFactory },
         { provide: PdfJsWrapper, useValue: mockWrapper },
         { provide: ElementRef, useValue: MockElementRef },
