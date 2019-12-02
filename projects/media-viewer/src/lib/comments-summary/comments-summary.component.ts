@@ -3,6 +3,7 @@ import { PrintService } from '../print.service';
 import { Observable } from 'rxjs/index';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { Annotation } from '../annotations/annotation-set/annotation/annotation.model';
+import {AnnotationSet} from '../annotations/annotation-set/annotation-set.model';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -13,6 +14,8 @@ export class CommentsSummaryComponent {
 
   @Input() title: string;
   @Input() contentType: string;
+  @Input() annotationSet: AnnotationSet | null;
+
   comments: Observable<Annotation[]>;
 
   @ViewChild('commentContainer') commentsTable: ElementRef;
