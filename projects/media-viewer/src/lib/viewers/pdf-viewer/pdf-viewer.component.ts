@@ -101,17 +101,21 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngOnChanges(changes: SimpleChanges) {
+    let reloadDocument = false;
     if (changes.url && this.pdfWrapper) {
-      await this.loadDocument();
+      reloadDocument = true;
     }
     if (changes.enableAnnotations && this.pdfWrapper) {
       if (!this.enableAnnotations) {
         this.annotationService.destroyComponents();
         this.annotationSet = null;
       }
-      this.loadDocument();
+      reloadDocument = true;
     }
     if (changes.annotationSet && this.annotationSet) {
+      reloadDocument = true;
+    }
+    if (reloadDocument) {
       this.loadDocument();
     }
   }

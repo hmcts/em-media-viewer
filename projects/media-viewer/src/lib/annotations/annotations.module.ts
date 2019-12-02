@@ -12,6 +12,7 @@ import { CommentSetComponent } from './comment-set/comment-set.component';
 import { AnnotationService } from './annotation.service';
 import { TextareaAutoGrowDirective } from './comment-set/comment/textarea-auto-grow.directive';
 import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comment-set-toggle.component';
+import { CommentSetRenderService } from './comment-set/comment-set-render.service';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comm
   providers: [
     AnnotationApiService,
     AnnotationService,
+    CommentSetRenderService
   ],
   exports: [
     AnnotationComponent,

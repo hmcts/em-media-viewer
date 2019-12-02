@@ -26,8 +26,8 @@ export class CommentComponent implements OnChanges {
   _selected: boolean;
 
   _rectangle;
-  commentTopPos;
-  commentLeftPos;
+  rectTop;
+  rectLeft;
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() renderComments = new EventEmitter<Comment>();
@@ -64,8 +64,8 @@ export class CommentComponent implements OnChanges {
   @Input()
   set rectangle(rectangle: Rectangle) {
     this._rectangle = rectangle;
-    this.commentTopPos = this._rectangle.y;
-    this.commentLeftPos = this._rectangle.x;
+    this.rectTop = this._rectangle.y;
+    this.rectLeft = this._rectangle.x;
   }
 
   @Input()
@@ -135,7 +135,7 @@ export class CommentComponent implements OnChanges {
 
   formNgStyle() {
     return {
-      top: (this.commentTopPos * this.zoom) + 'px'
+      top: (this.rectTop * this.zoom) + 'px'
     };
   }
 
