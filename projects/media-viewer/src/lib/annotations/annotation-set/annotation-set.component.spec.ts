@@ -15,7 +15,7 @@ import {CommentComponent} from '../comment-set/comment/comment.component';
 import { AnnotationService } from '../annotation.service';
 import { MutableDivModule } from 'mutable-div';
 
-describe('AnnotationSetComponent', () => {
+fdescribe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
   let fixture: ComponentFixture<AnnotationSetComponent>;
 
@@ -160,9 +160,46 @@ describe('AnnotationSetComponent', () => {
     expect(annotations).not.toEqual(component.annotationSet.annotations);
   });
 
-  it('starts drawing on mousedown', () => {
+  it('starts drawing on mousedown, 90 degree rotation', () => {
     component.shapeRectangle = new ElementRef(document.createElement('div'));
     component.drawMode = true;
+    component.rotate = 90;
+    const initialiseNewRectSpy = spyOn<any>(component, 'initShapeRectangle').and.callThrough();
+    component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
+
+    expect(initialiseNewRectSpy).toHaveBeenCalled();
+    expect(component.shapeRectangle.nativeElement.style.left).toEqual('10px');
+    expect(component.shapeRectangle.nativeElement.style.top).toEqual('390px');
+  });
+
+  it('starts drawing on mousedown, 180 degree rotation', () => {
+    component.shapeRectangle = new ElementRef(document.createElement('div'));
+    component.drawMode = true;
+    component.rotate = 180;
+    const initialiseNewRectSpy = spyOn<any>(component, 'initShapeRectangle').and.callThrough();
+    component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
+
+    expect(initialiseNewRectSpy).toHaveBeenCalled();
+    expect(component.shapeRectangle.nativeElement.style.left).toEqual('190px');
+    expect(component.shapeRectangle.nativeElement.style.top).toEqual('390px');
+  });
+
+  it('starts drawing on mousedown, 270 degree rotation', () => {
+    component.shapeRectangle = new ElementRef(document.createElement('div'));
+    component.drawMode = true;
+    component.rotate = 270;
+    const initialiseNewRectSpy = spyOn<any>(component, 'initShapeRectangle').and.callThrough();
+    component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
+
+    expect(initialiseNewRectSpy).toHaveBeenCalled();
+    expect(component.shapeRectangle.nativeElement.style.left).toEqual('190px');
+    expect(component.shapeRectangle.nativeElement.style.top).toEqual('10px');
+  });
+
+  it('starts drawing on mousedown, no rotation', () => {
+    component.shapeRectangle = new ElementRef(document.createElement('div'));
+    component.drawMode = true;
+    component.rotate = 0;
     const initialiseNewRectSpy = spyOn<any>(component, 'initShapeRectangle').and.callThrough();
     component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
 
