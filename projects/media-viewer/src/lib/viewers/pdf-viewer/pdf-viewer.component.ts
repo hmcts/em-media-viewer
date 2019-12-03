@@ -115,10 +115,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (changes.annotationSet && this.annotationSet) {
       this.loadDocument();
     }
-    this.annotationSet.annotations.forEach(annotation => {
-      console.log(annotation.page);
-      console.log(annotation.comments);
-    });
   }
 
   ngOnDestroy(): void {
