@@ -105,23 +105,23 @@ describe('RectangleComponent', () => {
     const oldWidth = rectangleEl.nativeElement.offsetWidth;
     const oldHeight = rectangleEl.nativeElement.offsetHeight;
 
+    const mouseDownEvent = document.createEvent('MouseEvents');
     const mouseMoveEvent = document.createEvent('MouseEvents');
     const mouseUpEvent = document.createEvent('MouseEvents');
 
+    mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
     mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 750, 750, 900, 900, false, false, false, false, 0, null);
     mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false, false, 0, null);
 
     rectangleEl.nativeElement.dispatchEvent(new Event('mousedown'));
-    setTimeout(() => {
-      fixture.detectChanges();
-      const bottomRightHandle = document.querySelector('.BOTTOM-RIGHT');
-      bottomRightHandle.dispatchEvent(new Event('mousedown'));
-      bottomRightHandle.dispatchEvent(mouseMoveEvent);
-      bottomRightHandle.dispatchEvent(mouseUpEvent);
+    fixture.detectChanges();
+    const bottomRightHandle = document.querySelector('.BOTTOM-RIGHT');
+    bottomRightHandle.dispatchEvent(mouseDownEvent);
+    bottomRightHandle.dispatchEvent(mouseMoveEvent);
+    bottomRightHandle.dispatchEvent(mouseUpEvent);
 
-      fixture.detectChanges();
-      expect(rectangleEl.nativeElement.offsetWidth).not.toEqual(oldWidth);
-      expect(rectangleEl.nativeElement.offsetHeight).not.toEqual(oldHeight);
-    }, 0);
+    fixture.detectChanges();
+    expect(rectangleEl.nativeElement.offsetWidth).not.toEqual(oldWidth);
+    expect(rectangleEl.nativeElement.offsetHeight).not.toEqual(oldHeight);
   });
 });
