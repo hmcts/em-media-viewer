@@ -43,17 +43,10 @@ export class RectangleComponent implements AfterViewInit {
   }
 
   onUpdate() {
-    const newX = this.rectElement.nativeElement.offsetLeft / this.zoom;
-    const newY = this.rectElement.nativeElement.offsetTop / this.zoom;
-    const newWidth = this.rectElement.nativeElement.offsetWidth / this.zoom;
-    const newHeight = this.rectElement.nativeElement.offsetHeight / this.zoom;
-
-    if (Math.abs(newX - this.rectangle.x) > 2 || Math.abs(newY - this.rectangle.y)) {
-      this.rectangle.x = newX;
-      this.rectangle.y = newY;
-      this.rectangle.width = newWidth;
-      this.rectangle.height = newHeight;
-      this.update.emit(this.rectangle);
-    }
+    this.rectangle.x = this.rectElement.nativeElement.offsetLeft / this.zoom;
+    this.rectangle.y = this.rectElement.nativeElement.offsetTop / this.zoom;
+    this.rectangle.width = this.rectElement.nativeElement.offsetWidth / this.zoom;
+    this.rectangle.height = this.rectElement.nativeElement.offsetHeight / this.zoom;
+    this.update.emit(this.rectangle);
   }
 }
