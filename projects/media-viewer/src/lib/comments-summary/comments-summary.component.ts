@@ -1,22 +1,21 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { PrintService } from '../print.service';
-import { Observable } from 'rxjs/index';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
-import { Annotation } from '../annotations/annotation-set/annotation/annotation.model';
-import {AnnotationSet} from '../annotations/annotation-set/annotation-set.model';
+import { AnnotationSet } from '../annotations/annotation-set/annotation-set.model';
+import { Comment } from '../annotations/comment-set/comment/comment.model';
 
 @Component({
   selector: 'mv-comments-summary',
   templateUrl: './comments-summary.component.html',
   styleUrls: ['./comments-summary.component.scss']
 })
-export class CommentsSummaryComponent {
+export class CommentsSummaryComponent implements OnChanges {
 
   @Input() title: string;
   @Input() contentType: string;
   @Input() annotationSet: AnnotationSet | null;
 
-  comments: Observable<Annotation[]>;
+  comments: Comment[] = [];
 
   @ViewChild('commentContainer') commentsTable: ElementRef;
 
@@ -24,6 +23,12 @@ export class CommentsSummaryComponent {
     private readonly printService: PrintService,
     private readonly toolbarEvents: ToolbarEventService
   ) {}
+
+  ngOnChanges() {
+    if (this.annotationSet) {
+      this.annotationSet.annotations.forEach(c => this.comments.push(c.comments[0]));
+    }
+  }
 
   public onClose(): void {
     this.toolbarEvents.displayCommentSummary();
