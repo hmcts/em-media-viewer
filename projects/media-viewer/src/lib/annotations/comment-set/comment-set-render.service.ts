@@ -10,6 +10,10 @@ export class CommentSetRenderService {
         this.adjustIfOverlapping(comment, prevComment, zoom);
         prevComment = comment;
       });
+      prevComment = null;
+      commentComponents.reverse().forEach((comment: CommentComponent) => {
+        prevComment = this.makeSureWithinContainer(comment, prevComment, height);
+      });
   }
 
   sortComponents(commentComponents: CommentComponent[], height: number, rotate: number) {
@@ -20,9 +24,9 @@ export class CommentSetRenderService {
     });
   }
 
-  private adjustIfOverlapping(comment: CommentComponent, prevComment: CommentComponent, zoom): void {
+  private adjustIfOverlapping(comment: CommentComponent, prevComment: CommentComponent, zoom: number): void {
     if (prevComment) {
-      const endOfPrevComment = prevComment.rectTop + (this.height(prevComment)/zoom);
+      const endOfPrevComment = prevComment.rectTop + (this.height(prevComment) / zoom);
       if (comment.rectTop <= endOfPrevComment) {
         comment.rectTop = endOfPrevComment;
       }
@@ -33,7 +37,7 @@ export class CommentSetRenderService {
     if (this.overlapping(a, b)) {
       return a.rectLeft >= b.rectLeft ? 1 : -1;
     }
-    return a.rectTop >= b.rectTop ? 1 : -1
+    return a.rectTop >= b.rectTop ? 1 : -1;
   }
 
   private overlapping(a: CommentComponent, b: CommentComponent): boolean {
@@ -50,9 +54,24 @@ export class CommentSetRenderService {
     }
   }
 
-  private height(element:any) {
+  private height(element: any) {
     return element.form.nativeElement.getBoundingClientRect().height;
   }
 
   private difference(a: number, b: number): number { return Math.abs(a - b); }
+
+  private makeSureWithinContainer(commentItem: CommentComponent, previousCommentItem: CommentComponent, containerHeight: number) {
+    containerHeight -= 10;
+    if (commentItem.commentBottomPos > containerHeight) {
+      commentItem.rectTop -= commentItem.commentBottomPos - containerHeight;
+    } else if (previousCommentItem) {
+      if (commentItem.commentBottomPos > previousCommentItem.rectTop) {
+        commentItem.rectTop -= commentItem.commentBottomPos - previousCommentItem.rectTop;
+      }
+    }
+    if (commentItem.rectTop < 0 ) {
+      commentItem.rectTop = 0;
+    }
+    return commentItem;
+  }
 }
