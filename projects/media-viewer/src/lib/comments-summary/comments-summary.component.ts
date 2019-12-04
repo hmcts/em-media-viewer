@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, ElementRef, OnChanges } from '@angular/cor
 import { PrintService } from '../print.service';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { AnnotationSet } from '../annotations/annotation-set/annotation-set.model';
-import { Comment } from '../annotations/comment-set/comment/comment.model';
+import { CommentSummary } from './comment-summary.model';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -15,7 +15,7 @@ export class CommentsSummaryComponent implements OnChanges {
   @Input() contentType: string;
   @Input() annotationSet: AnnotationSet | null;
 
-  comments: Comment[] = [];
+  comments: CommentSummary[] = [];
 
   @ViewChild('commentContainer') commentsTable: ElementRef;
 
@@ -26,7 +26,10 @@ export class CommentsSummaryComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.annotationSet) {
-      this.annotationSet.annotations.forEach(c => this.comments.push(c.comments[0]));
+      this.annotationSet.annotations
+        .forEach(c => {
+          this.comments.push({page: c.page, comment: c.comments[0]});
+        });
     }
   }
 
