@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 
 import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../print.service';
-import { Subject } from 'rxjs';
+import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 
 describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
@@ -30,12 +30,11 @@ describe('CommentsSummaryComponent', () => {
   });
 
   it('close', async(() => {
-    component.showCommentSummary = new Subject<boolean>();
-    component.showCommentSummary.subscribe(value => {
-      expect(value).toEqual(false);
+    inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
+      spyOn(toolbarEvents, 'displayCommentSummary');
+      component.onClose();
+      expect(toolbarEvents.displayCommentSummary).toHaveBeenCalled();
     });
-
-    component.onClose();
   }));
 
   it('print', () => {

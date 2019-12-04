@@ -142,7 +142,7 @@ export class PdfJsWrapper {
     return this.pdfViewer.currentScaleValue;
   }
 
-  private setCurrentPDFTitle(title: string) {
+  public setCurrentPDFTitle(title: string) {
     this.documentTitle = title;
   }
 

@@ -1,6 +1,8 @@
 import { Comment } from '../annotations/comment-set/comment/comment.model';
 
-export interface CommentSummary {
+export interface CommentsSummary {
   page: number;
   comment: Comment;
+  x: number;
+  y: number;
 }

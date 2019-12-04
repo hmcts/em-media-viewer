@@ -1,4 +1,4 @@
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
@@ -17,7 +17,7 @@ import { PdfAnnotationService } from './pdf-annotation-service';
 import { ViewerException } from '../error-message/viewer-exception.model';
 import { AnnotationService } from '../../annotations/annotation.service';
 
-describe('PdfViewerComponent', () => {
+fdescribe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
   let fixture: ComponentFixture<PdfViewerComponent>;
   let toolbarEvent: ToolbarEventService;
@@ -37,6 +37,7 @@ describe('PdfViewerComponent', () => {
     getPageNumber: () => {},
     getCurrentPDFZoomValue: () => {},
     getNormalisedPagesRotation: () => 0,
+    getCurrentPDFTitle: () => {},
     documentLoadInit: new Subject<any>(),
     documentLoadProgress: new Subject<DocumentLoadProgress>(),
     documentLoaded: new Subject<any>(),
@@ -223,6 +224,16 @@ describe('PdfViewerComponent', () => {
     });
 
     expect(spyComponentLoadDocument).toHaveBeenCalled();
+  });
+
+  it('should emit documentTitle when document is loaded', async () => {
+    const documentTitleSpy = spyOn(component.documentTitle, 'emit');
+    component.url = 'b';
+    await component.ngOnChanges({
+      url: new SimpleChange('a', component.url, true)
+    });
+
+    expect(documentTitleSpy).toHaveBeenCalled();
   });
 
   it('should load new document when annotations enabled', async () => {

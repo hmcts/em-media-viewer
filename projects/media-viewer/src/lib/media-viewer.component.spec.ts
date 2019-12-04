@@ -13,6 +13,7 @@ import { AnnotationApiService } from './annotations/annotation-api.service';
 import { of } from 'rxjs';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
+import { CommentsSummaryModule } from './comments-summary/comments-summary.module';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -31,7 +32,7 @@ describe('MediaViewerComponent', () => {
       providers: [
         CommentService
       ],
-      imports: [ToolbarModule, AnnotationsModule]
+      imports: [ToolbarModule, AnnotationsModule, CommentsSummaryModule]
     })
       .compileComponents();
   }));
@@ -73,6 +74,14 @@ describe('MediaViewerComponent', () => {
     component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });
 
     expect(component.toolbarEvents.zoomValueSubject.value).toBe(1);
+  });
+
+  it('should set documentTitle to null if the content type is image', async () => {
+    component.documentTitle = 'Document Title';
+    component.contentType = 'image';
+    component.ngOnChanges({ url: new SimpleChange('file.jpg', 'text.jpg', false) });
+
+    expect(component.documentTitle).toBeNull();
   });
 
   it('should set annotationSet when annotations enabled', () => {
@@ -140,7 +149,7 @@ describe('MediaViewerComponent', () => {
     component.contentType = 'xxxxxx';
 
     component.setToolbarButtons();
-    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions });
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions, showCommentSummary: false });
   });
 
   it('onLoadException should emit a ViewerException', async () => {
@@ -156,5 +165,13 @@ describe('MediaViewerComponent', () => {
 
     component.onCommentChange(true);
     expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('onDocumentTitleChange should update the document title value', async () => {
+    const newTitle = 'New Bundle';
+    component.documentTitle = 'Document Title for Evidence';
+
+    component.onDocumentTitleChange(newTitle);
+    expect(component.documentTitle).toEqual(newTitle);
   });
 });

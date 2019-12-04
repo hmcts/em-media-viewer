@@ -1,7 +1,7 @@
 <div id="modal-background" class="modal" (click)="onClose()">
   <div id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
     <div id="comment-container" class="comment-container" #commentContainer>
-      <h2>{{ title }}</h2>
+      <h2 class="govuk-heading-m">{{ title }}</h2>
       <table class="govuk-table">
         <thead>
           <tr class="govuk-table__header">
@@ -16,7 +16,7 @@
           <tr *ngFor='let comment of comments; let i = index' [id]="'comment-row-'+i" class="govuk-table__cell">
             <td><span title="{{comment.comment.createdByDetails.forename}} {{comment.comment.createdByDetails.surname}}">{{comment.comment.createdByDetails.forename}} {{comment.comment.createdByDetails.surname}}</span></td>
             <td *ngIf="contentType === 'pdf'" (click)="navigateToPage(comment.page)"><a>{{comment.page}}</a></td>
-            <td>{{comment.comment.createdDate | date : "hh:mm d MMMM yyyy" }}</td>
+            <td>{{comment.comment.createdDate | date : "d MMM yyyy hh:mm" }}</td>
             <td title="{{comment.comment.content}}">
               <span class="clipped">
                 {{comment.comment.content}}
