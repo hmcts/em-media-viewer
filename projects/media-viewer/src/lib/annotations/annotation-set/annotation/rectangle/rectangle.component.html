@@ -1,11 +1,16 @@
 <div #rectElement
-     [tabindex]="rectangle.id"
      class="rectangle"
+     draggable
+     resizable
+     [tabindex]="rectangle.id"
      [ngClass]="{ 'selected': selected }"
      [style.backgroundColor]="'#' + color"
      [style.width]="rectangle.width * zoom + 'px'"
      [style.height]="rectangle.height * zoom + 'px'"
      [style.left]="rectangle.x * zoom + 'px'"
      [style.top]="rectangle.y * zoom + 'px'"
-     (click)="onClick()">
+     [rotate]="rotate"
+     [selected]="selected"
+     (click)="onClick()"
+     (stopped)="onUpdate()">
 </div>

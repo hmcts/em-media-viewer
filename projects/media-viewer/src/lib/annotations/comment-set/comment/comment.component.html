@@ -23,7 +23,7 @@
               [ngClass]="commentStyle()"
               [(ngModel)]="fullComment"
               [readOnly]="!editable"
-              (ngModelChange)="reRenderComments()"
+              (ngModelChange)="reRenderComments(); onCommentChange($event);"
               aria-label="comment">
     </textarea>
   </ng-container>

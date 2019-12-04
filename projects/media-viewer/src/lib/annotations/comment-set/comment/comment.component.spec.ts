@@ -1,7 +1,8 @@
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommentComponent } from './comment.component';
 import { FormsModule } from '@angular/forms';
+import { CommentService } from './comment.service';
 
 describe('CommentComponent', () => {
   let component: CommentComponent;
@@ -50,13 +51,16 @@ describe('CommentComponent', () => {
   beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
-        CommentComponent,
+        CommentComponent
       ],
       imports: [
         FormsModule
       ],
+      providers: [
+        CommentService
+      ],
       schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     })
     .compileComponents();
@@ -87,6 +91,14 @@ describe('CommentComponent', () => {
     expect(component.fullComment).toEqual(mockComment.content);
   });
 
+  it('should set the unsavedChanges value', () => {
+    inject([CommentService], (commentService: CommentService) => {
+      spyOn(commentService, 'onCommentChange');
+      component.onCommentChange('new comment');
+      expect(commentService.onCommentChange).toHaveBeenCalledWith(true);
+    });
+  });
+
   it('should set comment with lastUpdate set to createdDate if there has been no update', () => {
     const modifiedMockComment = {...mockComment};
     modifiedMockComment.lastModifiedDate = null;
@@ -100,6 +112,18 @@ describe('CommentComponent', () => {
     expect(component.author).toEqual(modifiedMockComment.createdByDetails);
     expect(component.editor).toEqual(modifiedMockComment.lastModifiedByDetails);
     expect(component.fullComment).toEqual(modifiedMockComment.content);
+  });
+
+  it('should emit changes event when comment editing cancelled', () => {
+    const commentChangesEmitEventSpy = spyOn(component.changes, 'emit');
+    component.onCancel();
+    expect(commentChangesEmitEventSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should emit changes event when comment is saved', () => {
+    const commentChangesEmitEventSpy = spyOn(component.changes, 'emit');
+    component.onSave();
+    expect(commentChangesEmitEventSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should emit a click', () => {
@@ -201,5 +225,5 @@ describe('CommentComponent', () => {
     fixture.detectChanges();
     tick(10);
     fixture.detectChanges();
-  }
+  };
 });
