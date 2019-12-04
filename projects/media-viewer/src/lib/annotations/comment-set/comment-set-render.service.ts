@@ -64,8 +64,7 @@ export class CommentSetRenderService {
     containerHeight -= 10;
     if (commentItem.commentBottomPos > containerHeight) {
       commentItem.rectTop -= commentItem.commentBottomPos - containerHeight;
-    }
-    if (previousCommentItem) {
+    } else if (previousCommentItem) {
       if (commentItem.commentBottomPos > previousCommentItem.rectTop) {
         commentItem.rectTop -= commentItem.commentBottomPos - previousCommentItem.rectTop;
       }
