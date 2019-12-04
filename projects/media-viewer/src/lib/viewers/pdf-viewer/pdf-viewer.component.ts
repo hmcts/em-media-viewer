@@ -55,7 +55,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
   private viewerException: ViewerException;
-  showCommentsPanel = true;
+  showCommentsPanel: boolean;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
@@ -101,18 +101,21 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngOnChanges(changes: SimpleChanges) {
+    let reloadDocument = false;
     if (changes.url && this.pdfWrapper) {
-      await this.loadDocument();
+      reloadDocument = true;
     }
     if (changes.enableAnnotations && this.pdfWrapper) {
       if (!this.enableAnnotations) {
         this.annotationService.destroyComponents();
         this.annotationSet = null;
       }
-      this.loadDocument();
+      reloadDocument = true;
     }
     if (changes.annotationSet && this.annotationSet) {
-      console.log('annoationSet changing', this.annotationSet);
+      reloadDocument = true;
+    }
+    if (reloadDocument) {
       this.loadDocument();
     }
   }

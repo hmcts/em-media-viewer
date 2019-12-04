@@ -46,3 +46,7 @@
 .linkAnnotation > a:hover {
   opacity: 0.0 !important;
 }
+
+.annotationLayer section {
+  z-index: 2!important;
+}

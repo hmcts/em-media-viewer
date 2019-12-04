@@ -11,12 +11,16 @@ import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar
 import { CommentSetComponent } from './comment-set/comment-set.component';
 import { AnnotationService } from './annotation.service';
 import { TextareaAutoGrowDirective } from './comment-set/comment/textarea-auto-grow.directive';
+import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comment-set-toggle.component';
+import { CommentSetRenderService } from './comment-set/comment-set-render.service';
+import { MutableDivModule } from 'mutable-div';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MutableDivModule
   ],
   declarations: [
     AnnotationComponent,
@@ -25,7 +29,8 @@ import { TextareaAutoGrowDirective } from './comment-set/comment/textarea-auto-g
     CommentComponent,
     PopupToolbarComponent,
     CommentSetComponent,
-    TextareaAutoGrowDirective
+    TextareaAutoGrowDirective,
+    CommentSetToggleComponent
   ],
   entryComponents: [
     AnnotationComponent,
@@ -34,12 +39,14 @@ import { TextareaAutoGrowDirective } from './comment-set/comment/textarea-auto-g
   ],
   providers: [
     AnnotationApiService,
-    AnnotationService
+    AnnotationService,
+    CommentSetRenderService
   ],
   exports: [
     AnnotationComponent,
     AnnotationSetComponent,
-    CommentSetComponent
+    CommentSetComponent,
+    CommentSetToggleComponent
   ]
 })
 export class AnnotationsModule { }
