@@ -17,7 +17,7 @@ import { PdfAnnotationService } from './pdf-annotation-service';
 import { ViewerException } from '../error-message/viewer-exception.model';
 import { AnnotationService } from '../../annotations/annotation.service';
 
-fdescribe('PdfViewerComponent', () => {
+describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
   let fixture: ComponentFixture<PdfViewerComponent>;
   let toolbarEvent: ToolbarEventService;
