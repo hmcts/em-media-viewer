@@ -1,6 +1,6 @@
 import {ToolbarEventService} from './toolbar-event.service';
 
-fdescribe('Toolbar Event Service', () => {
+describe('Toolbar Event Service', () => {
   let service: ToolbarEventService;
   beforeEach(() => {
     service = new ToolbarEventService();

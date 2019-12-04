@@ -3,21 +3,28 @@
     <div id="comment-container" class="comment-container" #commentContainer>
       <h2 class="govuk-heading-m">{{ title }}</h2>
       <table class="govuk-table">
-        <thead>
-          <tr class="govuk-table__header">
-            <th>User</th>
-            <th *ngIf="contentType === 'pdf'">Page</th>
-            <th>Date</th>
-            <th>Comment</th>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">User</th>
+            <th *ngIf="contentType === 'pdf'" scope="col" class="govuk-table__header">Page</th>
+            <th scope="col" class="govuk-table__header">Date</th>
+            <th scope="col" class="govuk-table__header">Comment</th>
           </tr>
         </thead>
-        <tbody>
-        {{comments}}
-          <tr *ngFor='let comment of comments; let i = index' [id]="'comment-row-'+i" class="govuk-table__cell">
-            <td><span title="{{comment.comment.createdByDetails.forename}} {{comment.comment.createdByDetails.surname}}">{{comment.comment.createdByDetails.forename}} {{comment.comment.createdByDetails.surname}}</span></td>
-            <td *ngIf="contentType === 'pdf'" (click)="navigateToPage(comment.page)"><a>{{comment.page}}</a></td>
-            <td>{{comment.comment.createdDate | date : "d MMM yyyy hh:mm" }}</td>
-            <td title="{{comment.comment.content}}">
+        <tbody class="govuk-table__body">
+          <tr *ngFor='let comment of comments; let i = index' [id]="'comment-row-'+i" class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <span title="{{comment.comment.createdByDetails.forename}} {{comment.comment.createdByDetails.surname}}">
+                {{comment.comment.createdByDetails.forename}} {{comment.comment.createdByDetails.surname}}
+              </span>
+            </td>
+            <td *ngIf="contentType === 'pdf'" (click)="navigateToPage(comment.page)" class="govuk-table__cell">
+              <a>{{comment.page}}</a>
+            </td>
+            <td class="govuk-table__cell">
+              {{comment.comment.createdDate | date : "d MMM yyyy hh:mm" }}
+            </td>
+            <td title="{{comment.comment.content}}" class="govuk-table__cell">
               <span class="clipped">
                 {{comment.comment.content}}
               </span>

@@ -4,7 +4,7 @@ import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
-fdescribe('PdfJsWrapper', () => {
+describe('PdfJsWrapper', () => {
 
   let downloadManager;
   let mockViewer;
