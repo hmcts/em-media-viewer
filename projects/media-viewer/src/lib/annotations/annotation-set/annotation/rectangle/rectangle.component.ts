@@ -20,10 +20,6 @@ export class RectangleComponent implements AfterViewInit {
 
   _selected: boolean;
 
-  onClick() {
-    this.select.emit(this.rectangle);
-  }
-
   ngAfterViewInit() {
     if (this.selected) {
       this.rectElement.nativeElement.focus();
@@ -40,5 +36,17 @@ export class RectangleComponent implements AfterViewInit {
 
   get selected() {
     return this._selected;
+  }
+
+  onClick() {
+    this.select.emit(this.rectangle);
+  }
+
+  onUpdate() {
+    this.rectangle.x = this.rectElement.nativeElement.offsetLeft / this.zoom;
+    this.rectangle.y = this.rectElement.nativeElement.offsetTop / this.zoom;
+    this.rectangle.width = this.rectElement.nativeElement.offsetWidth / this.zoom;
+    this.rectangle.height = this.rectElement.nativeElement.offsetHeight / this.zoom;
+    this.update.emit(this.rectangle);
   }
 }
