@@ -4,7 +4,7 @@ import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
-describe('PdfJsWrapper', () => {
+fdescribe('PdfJsWrapper', () => {
 
   let downloadManager;
   let mockViewer;
@@ -205,4 +205,15 @@ describe('PdfJsWrapper', () => {
     expect(mockViewer.currentPageNumber).toEqual(-1);
   });
 
+  it('should set the current pdf document title', () => {
+    wrapper.documentTitle = 'Document Title';
+    wrapper.setCurrentPDFTitle('New Bundle');
+
+    expect(wrapper.documentTitle).toEqual('New Bundle');
+  });
+
+  it('should get the current pdf document title', () => {
+    wrapper.documentTitle = 'Document Title';
+    expect(wrapper.getCurrentPDFTitle()).toEqual('Document Title');
+  });
 });

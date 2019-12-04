@@ -1,6 +1,6 @@
 import {ToolbarEventService} from './toolbar-event.service';
 
-describe('Toolbar Event Service', () => {
+fdescribe('Toolbar Event Service', () => {
   let service: ToolbarEventService;
   beforeEach(() => {
     service = new ToolbarEventService();
@@ -29,11 +29,23 @@ describe('Toolbar Event Service', () => {
     service.toggleHighlightMode();
     expect(service.highlightModeSubject.getValue()).toBeFalsy();
   });
-  it('should turn off highlightMode is drawModel is toggled on', () => {
+  it('should turn off highlightMode if drawModel is toggled on', () => {
     service.highlightModeSubject.next(true);
     service.drawModeSubject.next(false);
     service.toggleDrawMode();
     expect(service.highlightModeSubject.getValue()).toBeFalsy();
+  });
+
+  it('should set showCommentSummary to true if comment summary is toggled off', () => {
+    service.showCommentSummary.next(false);
+    service.displayCommentSummary();
+    expect(service.showCommentSummary.getValue()).toBeTruthy();
+  });
+
+  it('should set showCommentSummary to false if comment summary is toggled on', () => {
+    service.showCommentSummary.next(true);
+    service.displayCommentSummary();
+    expect(service.showCommentSummary.getValue()).toBeFalsy();
   });
 
   it('should reset', () => {

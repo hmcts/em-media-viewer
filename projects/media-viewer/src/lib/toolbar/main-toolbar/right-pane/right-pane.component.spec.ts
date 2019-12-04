@@ -22,6 +22,8 @@ describe('ToolbarRightPaneComponent', () => {
     nativeElement = fixture.debugElement.nativeElement;
     component.toolbarButtons.showPrint = true;
     component.toolbarButtons.showDownload = true;
+    component.toolbarButtons.showDrawButton = true;
+    component.toolbarButtons.showCommentSummary = true;
 
     fixture.detectChanges();
   });
@@ -57,5 +59,13 @@ describe('ToolbarRightPaneComponent', () => {
     downloadButton.click();
 
     expect(downloadSpy).toHaveBeenCalledWith();
+  });
+
+  it('should emit showCommentSummary event', () => {
+    const commentSummarySpy = spyOn(component.toolbarEvents.showCommentSummary, 'next');
+    const commentSummaryButton = nativeElement.querySelector('button[id=commentSummary]');
+    commentSummaryButton.click();
+
+    expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
 });
