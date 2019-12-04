@@ -9,6 +9,7 @@
     "@hmcts/frontend",
     "govuk-frontend",
     "pdfjs-dist",
-    "uuid"
+    "uuid",
+    "mutable-div"
   ]
 }
