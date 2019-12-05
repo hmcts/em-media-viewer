@@ -59,7 +59,9 @@ export class CommentsSummaryComponent implements OnChanges {
   }
 
   navigateToPage(pageNumber: number) {
-    this.toolbarEvents.setPage(pageNumber);
+    if (this.contentType === 'pdf') {
+      this.toolbarEvents.setPage(pageNumber);
+    }
     this.toolbarEvents.displayCommentSummary();
   }
 }

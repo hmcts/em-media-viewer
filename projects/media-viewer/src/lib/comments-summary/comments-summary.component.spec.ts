@@ -173,11 +173,25 @@ describe('CommentsSummaryComponent', () => {
     expect(printSpy).toHaveBeenCalled();
   });
 
-  it('should set the page', () => {
+  it('should set the page if the content type is pdf', () => {
     inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
       spyOn(toolbarEvents, 'setPage');
+
+      component.contentType = 'pdf';
       component.navigateToPage(4);
+
       expect(toolbarEvents.setPage).toHaveBeenCalledWith(4);
+    });
+  });
+
+  it('should not set the page if the content type is not pdf', () => {
+    inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
+      spyOn(toolbarEvents, 'setPage');
+
+      component.contentType = 'image';
+      component.navigateToPage(1);
+
+      expect(toolbarEvents.setPage).toHaveBeenCalledTimes(0);
     });
   });
 
