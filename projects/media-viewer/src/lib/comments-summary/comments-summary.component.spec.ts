@@ -6,7 +6,7 @@ import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { Comment } from '../annotations/comment-set/comment/comment.model';
 import { User } from '../annotations/user/user.model';
 
-fdescribe('CommentsSummaryComponent', () => {
+describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
   let fixture: ComponentFixture<CommentsSummaryComponent>;
   let printService: PrintService;
