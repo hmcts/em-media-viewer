@@ -26,19 +26,28 @@ export class CommentsSummaryComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.annotationSet) {
-      this.annotationSet.annotations
-        .forEach(c => {
-          this.comments.push({
-            page: c.page,
-            comment: c.comments[0],
-            x: c.rectangles[0].x,
-            y: c.rectangles[0].y
-          });
-        });
-      this.comments
-        .sort((a, b) => (a.y >= b.y || a.x >= b.x) ? 1 : -1)
-        .sort((a, b) => a.page - b.page);
+      this.generateCommentsSummary();
+      this.orderCommentsSummary();
     }
+  }
+
+  generateCommentsSummary() {
+    this.annotationSet.annotations
+      .forEach(c => {
+        this.comments.push({
+          page: c.page,
+          comment: c.comments[0],
+          x: c.rectangles[0].x,
+          y: c.rectangles[0].y
+        });
+      });
+  }
+
+  orderCommentsSummary() {
+    this.comments
+      .sort((a, b) => a.x >= b.x ? 1 : -1)
+      .sort((a, b) => a.y >= b.y ? 1 : -1)
+      .sort((a, b) => a.page - b.page);
   }
 
   public onClose(): void {
