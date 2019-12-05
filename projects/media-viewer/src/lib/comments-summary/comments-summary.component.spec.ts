@@ -100,6 +100,16 @@ describe('CommentsSummaryComponent', () => {
     expect(component.orderCommentsSummary).toHaveBeenCalled();
   });
 
+  it('should not set up comment summary if annotationSet is not set', () => {
+    component.annotationSet = null;
+    spyOn(component, 'generateCommentsSummary');
+    spyOn(component, 'orderCommentsSummary');
+    component.ngOnChanges();
+
+    expect(component.generateCommentsSummary).toHaveBeenCalledTimes(0);
+    expect(component.orderCommentsSummary).toHaveBeenCalledTimes(0);
+  });
+
   it('should generate comment summary collection', () => {
     component.annotationSet = annotationSet;
     component.generateCommentsSummary();
