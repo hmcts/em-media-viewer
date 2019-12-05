@@ -3,6 +3,7 @@ import { PrintService } from '../print.service';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { AnnotationSet } from '../annotations/annotation-set/annotation-set.model';
 import { CommentsSummary } from './comments-summary.model';
+import {ViewerEventService} from '../viewers/viewer-event.service';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -21,7 +22,8 @@ export class CommentsSummaryComponent implements OnChanges {
 
   constructor(
     private readonly printService: PrintService,
-    private readonly toolbarEvents: ToolbarEventService
+    private readonly toolbarEvents: ToolbarEventService,
+    private readonly viewerEvents: ViewerEventService
   ) {}
 
   ngOnChanges() {
@@ -63,5 +65,6 @@ export class CommentsSummaryComponent implements OnChanges {
       this.toolbarEvents.setPage(pageNumber);
     }
     this.toolbarEvents.displayCommentSummary();
+    this.viewerEvents.toggleCommentsPanel(true);
   }
 }

@@ -5,8 +5,9 @@ import { PrintService } from '../print.service';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { Comment } from '../annotations/comment-set/comment/comment.model';
 import { User } from '../annotations/user/user.model';
+import {ViewerEventService} from '../viewers/viewer-event.service';
 
-describe('CommentsSummaryComponent', () => {
+fdescribe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
   let fixture: ComponentFixture<CommentsSummaryComponent>;
   let printService: PrintService;
@@ -73,7 +74,7 @@ describe('CommentsSummaryComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CommentsSummaryComponent ],
-      providers: [PrintService]
+      providers: [ PrintService ]
     })
     .compileComponents();
   }));
@@ -196,10 +197,16 @@ describe('CommentsSummaryComponent', () => {
   });
 
   it('should toggle the display comment summary state', () => {
-    inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
+    inject([ToolbarEventService, ViewerEventService], (toolbarEvents: ToolbarEventService, viewerEvents: ViewerEventService) => {
+      spyOn(toolbarEvents, 'setPage');
       spyOn(toolbarEvents, 'displayCommentSummary');
+      spyOn(viewerEvents, 'toggleCommentsPanel');
+
       component.navigateToPage(4);
+
+      expect(toolbarEvents.setPage).toHaveBeenCalled();
       expect(toolbarEvents.displayCommentSummary).toHaveBeenCalled();
+      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
     });
   });
 });
