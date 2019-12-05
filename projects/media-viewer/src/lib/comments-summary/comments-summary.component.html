@@ -6,7 +6,7 @@
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">User</th>
-            <th *ngIf="contentType === 'pdf'" scope="col" class="govuk-table__header">Page</th>
+            <th scope="col" class="govuk-table__header">Page</th>
             <th scope="col" class="govuk-table__header">Date</th>
             <th scope="col" class="govuk-table__header">Comment</th>
           </tr>
@@ -18,7 +18,7 @@
                 {{comment.comment.createdByDetails.forename}} {{comment.comment.createdByDetails.surname}}
               </span>
             </td>
-            <td *ngIf="contentType === 'pdf'" (click)="navigateToPage(comment.page)" class="govuk-table__cell">
+            <td (click)="navigateToPage(comment.page)" class="govuk-table__cell">
               <a>{{comment.page}}</a>
             </td>
             <td class="govuk-table__cell">
