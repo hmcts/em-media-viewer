@@ -1,10 +1,4 @@
-import {
-  ComponentFactoryResolver,
-  ComponentRef,
-  ElementRef,
-  Injectable,
-  ViewContainerRef
-} from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, ElementRef, Injectable, ViewContainerRef } from '@angular/core';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
@@ -19,9 +13,9 @@ export class PdfAnnotationService {
 
   annotationSet: AnnotationSet;
   pdfWrapper: PdfJsWrapper;
-  pdfViewer: ElementRef;
+  pdfViewer: ElementRef<HTMLDivElement>;
 
-  pages = [];
+  pages: number[] = [];
   annotationSetComponents: ComponentRef<AnnotationSetComponent>[] = [];
   commentSetComponents: ComponentRef<CommentSetComponent>[] = [];
 
@@ -42,34 +36,6 @@ export class PdfAnnotationService {
   init(pdfWrapper: PdfJsWrapper, pdfViewer: ElementRef) {
     this.pdfWrapper = pdfWrapper;
     this.pdfViewer = pdfViewer;
-  }
-
-  setupAnnotationSet(annotationSet: AnnotationSet) {
-    this.destroyComponents();
-    if (annotationSet) {
-      this.annotationSet = annotationSet;
-      this.annotationSet.annotations.forEach(annotation => {
-        if (!this.pages.includes(annotation.page)) {
-          const component = this.createAnnotationSetComponent(annotation.page);
-          this.pages.push(annotation.page);
-          this.annotationSetComponents.push(component);
-        }
-      });
-    }
-  }
-
-  setupCommentSet(page: number): ComponentRef<CommentSetComponent> {
-    const component = this.createCommentSetComponent(page);
-    this.commentSetComponents.push(component);
-    return component;
-  }
-
-  destroyComponents() {
-    this.annotationSetComponents.forEach(component => component.destroy());
-    this.commentSetComponents.forEach(component => component.destroy());
-    this.annotationSetComponents = [];
-    this.commentSetComponents = [];
-    this.pages = [];
   }
 
   onPageRendered(pageRenderEvent: PageEvent) {
@@ -127,6 +93,44 @@ export class PdfAnnotationService {
     }
   }
 
+
+  setupAnnotationSet(annotationSet: AnnotationSet) {
+    this.destroyComponents();
+    if (annotationSet) {
+      this.annotationSet = annotationSet;
+      this.annotationSet.annotations.forEach(annotation => {
+        if (!this.pages.includes(annotation.page)) {
+          const component = this.createAnnotationSetComponent(annotation.page);
+          this.pages.push(annotation.page);
+          this.annotationSetComponents.push(component);
+        }
+      });
+    }
+  }
+
+  setupAllCommentSets() {
+    this.destroyCommentSetsHTML();
+    if (this.pdfViewer) {
+      this.pdfViewer.nativeElement.querySelectorAll('div.page')
+        .forEach(page => {
+          const canvasElements = page.getElementsByClassName('canvasWrapper');
+          const container = page.closest('div.pageContainer');
+          if (canvasElements.length > 0 && !container) {
+            const pageNumber = parseInt(page.getAttribute('data-page-number'));
+            const commentSetComp = this.setupCommentSet(pageNumber);
+            const eventSrc = { div: page as HTMLDivElement, scale: 1, rotation: 0 };
+            commentSetComp.instance.addToDOM(eventSrc);
+          }
+        });
+    }
+  }
+
+  setupCommentSet(page: number): ComponentRef<CommentSetComponent> {
+    const component = this.createCommentSetComponent(page);
+    this.commentSetComponents.push(component);
+    return component;
+  }
+
   private createAnnotationSetComponent(page: number): ComponentRef<AnnotationSetComponent> {
     const factory = this.componentFactoryResolver.resolveComponentFactory(AnnotationSetComponent);
     const component = this.viewContainerRef.createComponent(factory);
@@ -141,5 +145,26 @@ export class PdfAnnotationService {
     component.instance.annotationSet = this.annotationSet;
     component.instance.page = page;
     return component;
+  }
+
+  destroyComponents() {
+    this.annotationSetComponents.forEach(component => component.destroy());
+    this.commentSetComponents.forEach(component => component.destroy());
+    this.annotationSetComponents = [];
+    this.commentSetComponents = [];
+    this.pages = [];
+  }
+
+  destroyCommentSetsHTML() {
+    if (this.pdfViewer) {
+      this.pdfViewer.nativeElement.querySelectorAll('div.page')
+        .forEach(page => {
+          const container = page.closest('.pageContainer');
+          if (container) {
+            container.insertAdjacentElement('beforebegin', page);
+            container.remove();
+          }
+        })
+    }
   }
 }

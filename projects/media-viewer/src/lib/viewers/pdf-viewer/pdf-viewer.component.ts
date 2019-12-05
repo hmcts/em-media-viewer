@@ -71,7 +71,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
@@ -98,26 +97,31 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)),
       this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle)
     );
-    await this.loadDocument();
   }
 
   async ngOnChanges(changes: SimpleChanges) {
-    let reloadDocument = false;
-    if (changes.url && this.pdfWrapper) {
-      reloadDocument = true;
+    if(!this.pdfWrapper) {
+      this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
+    if (changes.url && this.pdfWrapper) {
+      this.loadDocument();
+    }
+    let reloadAnnotations = false;
     if (changes.enableAnnotations && this.pdfWrapper) {
-      if (!this.enableAnnotations) {
-        this.annotationService.destroyComponents();
+      if (this.enableAnnotations) {
+        reloadAnnotations = true;
+      } else {
         this.annotationSet = null;
+        this.annotationService.destroyComponents();
+        this.annotationService.destroyCommentSetsHTML();
       }
-      reloadDocument = true;
     }
     if (changes.annotationSet && this.annotationSet) {
-      reloadDocument = true;
+      reloadAnnotations = true;
     }
-    if (reloadDocument) {
-      this.loadDocument();
+    if (reloadAnnotations) {
+      this.annotationService.setupAnnotationSet(this.annotationSet);
+      this.annotationService.setupAllCommentSets();
     }
   }
 

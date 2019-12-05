@@ -1,4 +1,4 @@
-<mv-comment-set-toggle></mv-comment-set-toggle>
+<mv-comment-set-toggle *ngIf="enableAnnotations"></mv-comment-set-toggle>
 <div #viewerContainer
      class="pdfContainer"
      [ngStyle]="{ height: height }"
