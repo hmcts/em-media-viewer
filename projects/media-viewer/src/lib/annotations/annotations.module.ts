@@ -12,6 +12,7 @@ import { CommentSetComponent } from './comment-set/comment-set.component';
 import { AnnotationService } from './annotation.service';
 import { TextareaAutoGrowDirective } from './comment-set/comment/textarea-auto-grow.directive';
 import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comment-set-toggle.component';
+import { CommentsSummaryComponent } from './comments-summary/comments-summary.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comm
     PopupToolbarComponent,
     CommentSetComponent,
     TextareaAutoGrowDirective,
-    CommentSetToggleComponent
+    CommentSetToggleComponent,
+    CommentsSummaryComponent
   ],
   entryComponents: [
     AnnotationComponent,
@@ -42,7 +44,8 @@ import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comm
     AnnotationComponent,
     AnnotationSetComponent,
     CommentSetComponent,
-    CommentSetToggleComponent
+    CommentSetToggleComponent,
+    CommentsSummaryComponent
   ]
 })
 export class AnnotationsModule { }

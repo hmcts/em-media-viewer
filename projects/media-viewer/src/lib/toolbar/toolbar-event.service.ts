@@ -115,7 +115,7 @@ export class ToolbarEventService {
     return this.showCommentSummary.asObservable();
   }
 
-  public displayCommentSummary(): void {
-    this.showCommentSummary.next(!this.showCommentSummary.getValue());
+  public toggleCommentsSummary(value: boolean): void {
+    this.showCommentSummary.next(value);
   }
 }

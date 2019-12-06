@@ -13,9 +13,8 @@ import { AnnotationApiService } from './annotations/annotation-api.service';
 import { of } from 'rxjs';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
-import { CommentsSummaryModule } from './comments-summary/comments-summary.module';
 
-describe('MediaViewerComponent', () => {
+fdescribe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
   let fixture: ComponentFixture<MediaViewerComponent>;
   let api: AnnotationApiService;
@@ -32,7 +31,7 @@ describe('MediaViewerComponent', () => {
       providers: [
         CommentService
       ],
-      imports: [ToolbarModule, AnnotationsModule, CommentsSummaryModule]
+      imports: [ToolbarModule, AnnotationsModule]
     })
       .compileComponents();
   }));

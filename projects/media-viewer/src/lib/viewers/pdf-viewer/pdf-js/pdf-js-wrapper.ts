@@ -58,10 +58,8 @@ export class PdfJsWrapper {
 
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
-      await pdfDocument.getMetadata()
-        .then(metadata => {
-          this.setCurrentPDFTitle(metadata.info.Title);
-        });
+      const pdfMetaData = await pdfDocument.getMetadata();
+      this.setCurrentPDFTitle(pdfMetaData.info.Title);
     } catch (e) {
       this.documentLoadFailed.next(e);
     }
