@@ -1,4 +1,4 @@
-import { Comment } from '../annotations/comment-set/comment/comment.model';
+import { Comment } from '../comment-set/comment/comment.model';
 
 export interface CommentsSummary {
   page: number;

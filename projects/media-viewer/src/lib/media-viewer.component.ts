@@ -97,6 +97,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   ngOnDestroy() {
     this.commentState.unsubscribe();
+    this.showCommentSummaryState.unsubscribe();
   }
 
   onMediaLoad(status: ResponseType) {

@@ -1,11 +1,11 @@
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { CommentsSummaryComponent } from './comments-summary.component';
-import { PrintService } from '../print.service';
-import { ToolbarEventService } from '../toolbar/toolbar-event.service';
-import { Comment } from '../annotations/comment-set/comment/comment.model';
-import { User } from '../annotations/user/user.model';
-import {ViewerEventService} from '../viewers/viewer-event.service';
+import { PrintService } from '../../print.service';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { Comment } from '../comment-set/comment/comment.model';
+import { User } from '../user/user.model';
+import {ViewerEventService} from '../../viewers/viewer-event.service';
 
 describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
@@ -161,9 +161,9 @@ describe('CommentsSummaryComponent', () => {
 
   it('close', async(() => {
     inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
-      spyOn(toolbarEvents, 'displayCommentSummary');
+      spyOn(toolbarEvents, 'toggleCommentsSummary');
       component.onClose();
-      expect(toolbarEvents.displayCommentSummary).toHaveBeenCalled();
+      expect(toolbarEvents.toggleCommentsSummary).toHaveBeenCalledWith(false);
     });
   }));
 
@@ -199,13 +199,13 @@ describe('CommentsSummaryComponent', () => {
   it('should toggle the display comment summary state', () => {
     inject([ToolbarEventService, ViewerEventService], (toolbarEvents: ToolbarEventService, viewerEvents: ViewerEventService) => {
       spyOn(toolbarEvents, 'setPage');
-      spyOn(toolbarEvents, 'displayCommentSummary');
+      spyOn(toolbarEvents, 'toggleCommentsSummary');
       spyOn(viewerEvents, 'toggleCommentsPanel');
 
       component.navigateToPage(4);
 
       expect(toolbarEvents.setPage).toHaveBeenCalled();
-      expect(toolbarEvents.displayCommentSummary).toHaveBeenCalled();
+      expect(toolbarEvents.toggleCommentsSummary).toHaveBeenCalledWith(false);
       expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
     });
   });

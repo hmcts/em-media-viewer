@@ -12,21 +12,21 @@
           </tr>
         </thead>
         <tbody class="govuk-table__body">
-          <tr *ngFor='let comment of comments; let i = index' [id]="'comment-row-'+i" class="govuk-table__row">
+          <tr *ngFor='let commentSummary of comments; let i = index' [id]="'comment-row-'+i" class="govuk-table__row">
             <td class="govuk-table__cell">
-              <span title="{{comment.comment.createdByDetails.forename}} {{comment.comment.createdByDetails.surname}}">
-                {{comment.comment.createdByDetails.forename}} {{comment.comment.createdByDetails.surname}}
+              <span title="{{commentSummary.comment.createdByDetails.forename}} {{commentSummary.comment.createdByDetails.surname}}">
+                {{commentSummary.comment.createdByDetails.forename}} {{commentSummary.comment.createdByDetails.surname}}
               </span>
             </td>
-            <td (click)="navigateToPage(comment.page)" class="govuk-table__cell">
-              <a>{{comment.page}}</a>
+            <td (click)="navigateToPage(commentSummary.page)" class="govuk-table__cell">
+              <a>{{commentSummary.page}}</a>
             </td>
             <td class="govuk-table__cell">
-              {{comment.comment.createdDate | date : "d MMM yyyy hh:mm" }}
+              {{commentSummary.comment.createdDate | date : "d MMM yyyy hh:mm" }}
             </td>
-            <td title="{{comment.comment.content}}" class="govuk-table__cell">
+            <td title="{{commentSummary.comment.content}}" class="govuk-table__cell">
               <span class="clipped">
-                {{comment.comment.content}}
+                {{commentSummary.comment.content}}
               </span>
             </td>
           </tr>

@@ -1,9 +1,9 @@
 import { Component, Input, ViewChild, ElementRef, OnChanges } from '@angular/core';
-import { PrintService } from '../print.service';
-import { ToolbarEventService } from '../toolbar/toolbar-event.service';
-import { AnnotationSet } from '../annotations/annotation-set/annotation-set.model';
+import { PrintService } from '../../print.service';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { CommentsSummary } from './comments-summary.model';
-import {ViewerEventService} from '../viewers/viewer-event.service';
+import {ViewerEventService} from '../../viewers/viewer-event.service';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -35,12 +35,12 @@ export class CommentsSummaryComponent implements OnChanges {
 
   generateCommentsSummary() {
     this.annotationSet.annotations
-      .forEach(c => {
+      .forEach(annotation => {
         this.comments.push({
-          page: c.page,
-          comment: c.comments[0],
-          x: c.rectangles[0].x,
-          y: c.rectangles[0].y
+          page: annotation.page,
+          comment: annotation.comments[0],
+          x: annotation.rectangles[0].x,
+          y: annotation.rectangles[0].y
         });
       });
   }
@@ -53,7 +53,7 @@ export class CommentsSummaryComponent implements OnChanges {
   }
 
   public onClose(): void {
-    this.toolbarEvents.displayCommentSummary();
+    this.toolbarEvents.toggleCommentsSummary(false);
   }
 
   public onPrint(): void {
@@ -64,7 +64,7 @@ export class CommentsSummaryComponent implements OnChanges {
     if (this.contentType === 'pdf') {
       this.toolbarEvents.setPage(pageNumber);
     }
-    this.toolbarEvents.displayCommentSummary();
+    this.toolbarEvents.toggleCommentsSummary(false);
     this.viewerEvents.toggleCommentsPanel(true);
   }
 }
