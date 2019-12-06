@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../../assets/annotation-set';
 import { PopupToolbarComponent } from './popup-toolbar/popup-toolbar.component';
 import { Annotation } from './annotation.model';
+import { MutableDivModule } from 'mutable-div';
 
 describe('AnnotationComponent', () => {
   let component: AnnotationComponent;
@@ -44,7 +45,8 @@ describe('AnnotationComponent', () => {
         PopupToolbarComponent
       ],
       imports: [
-        FormsModule
+        FormsModule,
+        MutableDivModule
       ]
     })
     .compileComponents();

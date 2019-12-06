@@ -13,12 +13,15 @@ import { AnnotationService } from './annotation.service';
 import { TextareaAutoGrowDirective } from './comment-set/comment/textarea-auto-grow.directive';
 import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comment-set-toggle.component';
 import { CommentsSummaryComponent } from './comments-summary/comments-summary.component';
+import { CommentSetRenderService } from './comment-set/comment-set-render.service';
+import { MutableDivModule } from 'mutable-div';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MutableDivModule
   ],
   declarations: [
     AnnotationComponent,
@@ -38,7 +41,8 @@ import { CommentsSummaryComponent } from './comments-summary/comments-summary.co
   ],
   providers: [
     AnnotationApiService,
-    AnnotationService
+    AnnotationService,
+    CommentSetRenderService
   ],
   exports: [
     AnnotationComponent,

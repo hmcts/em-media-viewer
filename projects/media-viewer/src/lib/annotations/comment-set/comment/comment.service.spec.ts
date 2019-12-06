@@ -42,4 +42,11 @@ describe('CommentService', () => {
     commentService.updateCommentSets(1, commentSetMock);
     expect(commentService.commentSets[1]).toEqual(commentSetMock);
   });
+
+  it('should reset the commentSets list', () => {
+    commentService.commentSets[1] = {} as CommentSetComponent;
+
+    commentService.resetCommentSet();
+    expect(commentService.commentSets).toEqual([]);
+  });
 });

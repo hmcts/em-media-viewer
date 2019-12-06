@@ -13,6 +13,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import {CommentComponent} from '../comment-set/comment/comment.component';
 import { AnnotationService } from '../annotation.service';
+import { MutableDivModule } from 'mutable-div';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -110,7 +111,8 @@ describe('AnnotationSetComponent', () => {
       ],
       imports: [
         FormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MutableDivModule
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
