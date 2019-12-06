@@ -61,7 +61,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.download()),
-      this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle)
+      this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
   }
 

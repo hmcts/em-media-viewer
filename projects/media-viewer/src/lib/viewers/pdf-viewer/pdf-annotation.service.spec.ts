@@ -1,5 +1,5 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { PdfAnnotationService } from './pdf-annotation-service';
+import { PdfAnnotationService } from './pdf-annotation.service';
 import { ComponentFactoryResolver, ElementRef, ViewContainerRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
@@ -95,16 +95,15 @@ describe('PdfAnnotationService', () => {
 
   it('should create the annotation set for the pages with annotations', () => {
     spyOn<any>(pdfService, 'createAnnotationSetComponent');
-    pdfService.setupAnnotationSet({ ...annotationSet });
+    pdfService.buildAnnoSetComponents({ ...annotationSet });
 
-    expect(pdfService.pages.length).toEqual(2);
     expect(pdfService.annotationSetComponents.length).toEqual(2);
   });
 
   it('should create the comment set for the given page', () => {
     spyOn<any>(pdfService, 'createCommentSetComponent');
 
-    const commentSetComponent = pdfService.setupCommentSet(1);
+    // const commentSetComponent = pdfService.addCommentSetToPage(1);
 
     expect(pdfService.commentSetComponents.length).toEqual(1);
   });
@@ -114,15 +113,14 @@ describe('PdfAnnotationService', () => {
 
     expect(pdfService.commentSetComponents.length).toEqual(0);
     expect(pdfService.annotationSetComponents.length).toEqual(0);
-    expect(pdfService.pages).toEqual([]);
   });
 
   // it('should addToDOM all the set components for the pdf viewer', () => {
   //   // setup
   //   spyOn<any>(pdfService, 'createAnnotationSetComponent');
   //   spyOn<any>(pdfService, 'createCommentSetComponent');
-  //   pdfService.setupAnnotationSet({ ...annotationSet });
-  //   pdfService.setupCommentSet(1);
+  //   pdfService.buildAnnoSetComponents({ ...annotationSet });
+  //   pdfService.addCommentSetToPage(1);
   //   const specificAnnotationSet = pdfService.annotationSetComponents.find((annotation) => annotation.instance.page === 1);
   //
   //   spyOn(specificAnnotationSet.instance, 'addToDOM').and.callThrough();
@@ -136,7 +134,7 @@ describe('PdfAnnotationService', () => {
   //     }
   //   };
   //
-  //   pdfService.onPageRendered(mockEventSource);
+  //   pdfService.addAnnotationsAndComments(mockEventSource);
   //
   //   expect(specificAnnotationSet.instance.addToDOM).toHaveBeenCalledWith(mockEventSource.source);
   // });
@@ -150,8 +148,8 @@ describe('PdfAnnotationService', () => {
   //
   //   expect(toolbarEvent.highlightMode.getValue).toHaveBeenCalled();
   //   setTimeout(() => {
-  //     spyOn(viewerEventService, 'onTextSelection').and.callThrough();
-  //     expect(viewerEventService.onTextSelection).toHaveBeenCalledWith({ page: 1, event: mouseEvent});
+  //     spyOn(viewerEventService, 'textSelected').and.callThrough();
+  //     expect(viewerEventService.textSelected).toHaveBeenCalledWith({ page: 1, event: mouseEvent});
   //   }, 1);
   // });
 

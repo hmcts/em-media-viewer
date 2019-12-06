@@ -42,8 +42,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscriptions.push(this.viewerEvents.highlightedText.subscribe((highlight) => this.createTextHighlight(highlight)));
-    this.subscriptions.push(this.viewerEvents.highlightedShape.subscribe((highlight) => this.initShapeRectangle(highlight.event)));
+    this.subscriptions.push(this.viewerEvents.textHighlight.subscribe((highlight) => this.createTextHighlight(highlight)));
+    this.subscriptions.push(this.viewerEvents.shapeHighlight.subscribe((highlight) => this.initShapeRectangle(highlight.event)));
     this.subscriptions.push(this.annotationService.getSelectedAnnotation()
       .subscribe((selectedAnnotation) => this.selectedAnnotation = selectedAnnotation));
     this.subscriptions.push(this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode));
