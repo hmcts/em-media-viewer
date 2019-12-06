@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "1.1.12",
+  "version": "1.1.12-showcase-1.0",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
@@ -17,6 +17,7 @@
     "@hmcts/frontend": "^0.0.34-alpha",
     "govuk-frontend": "^2.11.0",
     "pdfjs-dist": "2.0.943",
+    "mutable-div": "0.0.8",
     "uuid": "^3.3.2"
   },
   "peerDependencies": {

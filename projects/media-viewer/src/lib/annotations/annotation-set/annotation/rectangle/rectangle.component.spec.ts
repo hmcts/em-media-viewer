@@ -1,12 +1,16 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RectangleComponent } from './rectangle.component';
 import { FormsModule } from '@angular/forms';
+import { MutableDivModule } from 'mutable-div';
+import { By } from '@angular/platform-browser';
 
 describe('RectangleComponent', () => {
   let component: RectangleComponent;
   let fixture: ComponentFixture<RectangleComponent>;
+  let rectangleEl: DebugElement;
   let nativeElement;
+
   const mockRectangle = {
       id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
       createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
@@ -30,32 +34,14 @@ describe('RectangleComponent', () => {
       y: 10,
   };
 
-  const mockHtmlElement : any = {
-      style : {
-        top : '0px',
-        left : '300px',
-        transform: {
-          match(regex: any) :string {
-            return '300,0';
-          }
-        }
-      }
-  };
-
-  const mockIResizeEvent : any = {
-      size : {
-        width : 50,
-        height : 50
-      }
-  };
-
   beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [
         RectangleComponent,
       ],
       imports: [
-        FormsModule
+        FormsModule,
+        MutableDivModule
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -69,8 +55,10 @@ describe('RectangleComponent', () => {
     component = fixture.componentInstance;
     component.rectangle = mockRectangle;
     component.zoom = 1;
+    component.rotate = 0;
     component.selected = false;
     nativeElement = fixture.debugElement.nativeElement;
+    rectangleEl = fixture.debugElement.query(By.css('.rectangle'));
     fixture.detectChanges();
   });
 
@@ -92,4 +80,48 @@ describe('RectangleComponent', () => {
     expect(component.rectElement.nativeElement.focus).toHaveBeenCalledTimes(1);
   });
 
+  it('should update the rectangle if moved', () => {
+    const oldLeft = rectangleEl.nativeElement.offsetLeft;
+    const oldTop = rectangleEl.nativeElement.offsetTop;
+
+    const mouseDownEvent = document.createEvent('MouseEvents');
+    const mouseMoveEvent = document.createEvent('MouseEvents');
+    const mouseUpEvent = document.createEvent('MouseEvents');
+
+    mouseDownEvent.initEvent('mousedown', true, true);
+    mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 750, 750, 900, 900, false, false, false, false, 0, null);
+    mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false, false, 0, null);
+
+    rectangleEl.nativeElement.dispatchEvent(mouseDownEvent);
+    rectangleEl.nativeElement.dispatchEvent(mouseMoveEvent);
+    rectangleEl.nativeElement.dispatchEvent(mouseUpEvent);
+
+    fixture.detectChanges();
+    expect(rectangleEl.nativeElement.offsetLeft).not.toEqual(oldLeft);
+    expect(rectangleEl.nativeElement.offsetTop).not.toEqual(oldTop);
+  });
+
+  it('should update the rectangle if resized', function () {
+    const oldWidth = rectangleEl.nativeElement.offsetWidth;
+    const oldHeight = rectangleEl.nativeElement.offsetHeight;
+
+    const mouseDownEvent = document.createEvent('MouseEvents');
+    const mouseMoveEvent = document.createEvent('MouseEvents');
+    const mouseUpEvent = document.createEvent('MouseEvents');
+
+    mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
+    mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 750, 750, 900, 900, false, false, false, false, 0, null);
+    mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false, false, 0, null);
+
+    rectangleEl.nativeElement.dispatchEvent(new Event('mousedown'));
+    fixture.detectChanges();
+    const bottomRightHandle = document.querySelector('.BOTTOM-RIGHT');
+    bottomRightHandle.dispatchEvent(mouseDownEvent);
+    bottomRightHandle.dispatchEvent(mouseMoveEvent);
+    bottomRightHandle.dispatchEvent(mouseUpEvent);
+
+    fixture.detectChanges();
+    expect(rectangleEl.nativeElement.offsetWidth).not.toEqual(oldWidth);
+    expect(rectangleEl.nativeElement.offsetHeight).not.toEqual(oldHeight);
+  });
 });
