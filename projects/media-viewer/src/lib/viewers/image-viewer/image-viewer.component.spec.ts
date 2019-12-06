@@ -130,7 +130,7 @@ describe('ImageViewerComponent', () => {
       component.showCommentsPanel = false;
       const imageContainer = fixture.debugElement.query(By.css('.image-container'));
 
-      viewerEvents.commentsPanelToggle.next(true);
+      viewerEvents.commentsPanelVisible.next(true);
       fixture.detectChanges();
 
       expect(component.showCommentsPanel).toBeTruthy();
@@ -142,7 +142,7 @@ describe('ImageViewerComponent', () => {
       component.showCommentsPanel = true;
       const imageContainer = fixture.debugElement.query(By.css('.image-container'));
 
-      viewerEvents.commentsPanelToggle.next(false);
+      viewerEvents.commentsPanelVisible.next(false);
       fixture.detectChanges();
 
       expect(component.showCommentsPanel).toBeFalsy();

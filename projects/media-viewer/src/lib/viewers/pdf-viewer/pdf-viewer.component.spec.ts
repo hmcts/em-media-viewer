@@ -13,7 +13,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
-import { PdfAnnotationService } from './pdf-annotation-service';
+import { PdfAnnotationService } from './pdf-annotation.service';
 import { ViewerException } from '../error-message/viewer-exception.model';
 import { AnnotationService } from '../../annotations/annotation.service';
 

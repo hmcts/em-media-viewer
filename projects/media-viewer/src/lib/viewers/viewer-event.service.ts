@@ -10,23 +10,23 @@ export interface Highlight {
 export class ViewerEventService {
 
   // Register Observable Subject Events relevant to the Viewers
-  public readonly highlightedText = new Subject<Highlight>();
-  public readonly highlightedShape = new Subject<Highlight>();
-  public readonly commentsPanelToggle = new BehaviorSubject(false);
+  public readonly textHighlight = new Subject<Highlight>();
+  public readonly shapeHighlight = new Subject<Highlight>();
+  public readonly commentsPanelVisible = new BehaviorSubject(false);
 
   constructor() {}
 
   // Function to inform Observers that text has been selected in the viewer
-  public onTextSelection(selectionData: Highlight): void {
-    this.highlightedText.next(selectionData);
+  public textSelected(selectionData: Highlight): void {
+    this.textHighlight.next(selectionData);
   }
 
   // Function to inform Observers that shape has been selected in the viewer
-  public onShapeSelection(selectionData: Highlight): void {
-    this.highlightedShape.next(selectionData);
+  public shapeSelected(selectionData: Highlight): void {
+    this.shapeHighlight.next(selectionData);
   }
 
   public toggleCommentsPanel(toggle: boolean) {
-    this.commentsPanelToggle.next(toggle);
+    this.commentsPanelVisible.next(toggle);
   }
 }
