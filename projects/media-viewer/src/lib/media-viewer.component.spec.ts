@@ -14,7 +14,7 @@ import { of } from 'rxjs';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 
-fdescribe('MediaViewerComponent', () => {
+describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
   let fixture: ComponentFixture<MediaViewerComponent>;
   let api: AnnotationApiService;
