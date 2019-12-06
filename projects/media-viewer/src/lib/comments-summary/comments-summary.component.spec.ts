@@ -7,7 +7,7 @@ import { Comment } from '../annotations/comment-set/comment/comment.model';
 import { User } from '../annotations/user/user.model';
 import {ViewerEventService} from '../viewers/viewer-event.service';
 
-fdescribe('CommentsSummaryComponent', () => {
+describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
   let fixture: ComponentFixture<CommentsSummaryComponent>;
   let printService: PrintService;
