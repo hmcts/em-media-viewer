@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../../toolbar-event.service';
 
@@ -8,6 +8,7 @@ import { ToolbarEventService } from '../../toolbar-event.service';
   styleUrls: ['../../../styles/main.scss']
 })
 export class ToolbarRightPaneComponent {
+  @Input() enableAnnotations = false;
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
