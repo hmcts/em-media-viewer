@@ -111,7 +111,7 @@ export class ToolbarEventService {
     return this.setCurrentPageInputValueSubject.asObservable();
   }
 
-  public getCommentSummary(): Observable<boolean> {
+  public getShowCommentSummary(): Observable<boolean> {
     return this.showCommentSummary.asObservable();
   }
 

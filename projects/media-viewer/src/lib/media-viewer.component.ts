@@ -48,9 +48,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet: Observable<AnnotationSet>;
-  private commentState: Subscription;
-  private showCommentSummaryState: Subscription;
 
+  private subscriptions: Subscription[] = [];
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
@@ -66,10 +65,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   ngAfterContentInit() {
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
-    this.commentState = this.commentService.getUnsavedChanges()
-      .subscribe(changes => this.onCommentChange(changes));
-    this.showCommentSummaryState = this.toolbarEvents.getCommentSummary()
-      .subscribe(changes => this.showCommentSummary = changes);
+    this.subscriptions.push(this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)));
+    this.subscriptions.push(this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes));
   }
 
   contentTypeUnsupported(): boolean {
@@ -97,8 +94,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngOnDestroy() {
-    this.commentState.unsubscribe();
-    this.showCommentSummaryState.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   onMediaLoad(status: ResponseType) {
@@ -119,7 +115,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     } else {
       this.toolbarButtons.setup({
         ...defaultUnsupportedOptions,
-        ...this.toolbarButtonOverrides, showCommentSummary: false
+        ...this.toolbarButtonOverrides
       });
     }
   }

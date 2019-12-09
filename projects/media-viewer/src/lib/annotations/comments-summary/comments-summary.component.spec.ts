@@ -107,7 +107,7 @@ describe('CommentsSummaryComponent', () => {
     spyOn(component, 'orderCommentsSummary');
     component.ngOnChanges();
 
-    expect(component.generateCommentsSummary).toHaveBeenCalledTimes(0);
+    expect(component.generateCommentsSummary).not.toHaveBeenCalled();
     expect(component.orderCommentsSummary).toHaveBeenCalledTimes(0);
   });
 

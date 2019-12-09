@@ -75,5 +75,6 @@ export const defaultImageOptions = {
  * Default toolbar state for unsupported media
  */
 export const defaultUnsupportedOptions = {
-  showDownload: true
+  showDownload: true,
+  showCommentSummary: false
 };

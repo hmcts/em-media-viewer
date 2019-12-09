@@ -36,13 +36,13 @@ describe('Toolbar Event Service', () => {
     expect(service.highlightModeSubject.getValue()).toBeFalsy();
   });
 
-  it('should set showCommentSummary to true if comment summary is toggled off', () => {
+  it('should set toggleCommentsSummary to true if comment summary is toggled off', () => {
     service.showCommentSummary.next(false);
     service.toggleCommentsSummary(true);
     expect(service.showCommentSummary.getValue()).toBeTruthy();
   });
 
-  it('should set showCommentSummary to false if comment summary is toggled on', () => {
+  it('should set toggleCommentsSummary to false if comment summary is toggled on', () => {
     service.showCommentSummary.next(true);
     service.toggleCommentsSummary(false);
     expect(service.showCommentSummary.getValue()).toBeFalsy();
