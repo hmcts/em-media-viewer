@@ -9,7 +9,9 @@
   </mv-comments-summary>
 
   <div id="mainContainer">
-    <mv-main-toolbar *ngIf="showToolbar"></mv-main-toolbar>
+    <mv-main-toolbar *ngIf="showToolbar"
+                     [enableAnnotations]="enableAnnotations">
+    </mv-main-toolbar>
     <mv-side-bar *ngIf="contentType === 'pdf' && toolbarButtons.sidebarOpen"
                  id="sidebarContainer"
                  [url]="url"></mv-side-bar>

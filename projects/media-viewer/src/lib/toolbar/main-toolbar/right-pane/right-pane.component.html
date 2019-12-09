@@ -1,5 +1,5 @@
 <div id="toolbarViewerRight">
-  <button *ngIf="toolbarButtons.showCommentSummary && toolbarButtons.showDrawButton"
+  <button *ngIf="toolbarButtons.showCommentSummary && enableAnnotations"
           id="commentSummary" class="toolbarButton commentSummary hiddenSmallView"
           title="Open comment summary" tabindex="0" data-l10n-id="commentSummary" (click)="showCommentSummary()">
     <span data-l10n-id="comment_summary_label">Comment Summary</span>
