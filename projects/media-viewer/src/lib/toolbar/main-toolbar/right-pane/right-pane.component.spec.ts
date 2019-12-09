@@ -61,7 +61,7 @@ describe('ToolbarRightPaneComponent', () => {
     expect(downloadSpy).toHaveBeenCalledWith();
   });
 
-  it('should emit showCommentSummary event', () => {
+  it('should emit toggleCommentsSummary event', () => {
     const commentSummarySpy = spyOn(component.toolbarEvents.showCommentSummary, 'next');
     const commentSummaryButton = nativeElement.querySelector('button[id=commentSummary]');
     commentSummaryButton.click();

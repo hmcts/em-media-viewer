@@ -18,7 +18,7 @@ import { CommentService } from './annotations/comment-set/comment/comment.servic
     FormsModule,
     HttpClientModule,
     ToolbarModule,
-    AnnotationsModule,
+    AnnotationsModule
   ],
   declarations: [
     PdfViewerComponent,

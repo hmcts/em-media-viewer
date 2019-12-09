@@ -27,7 +27,7 @@ export class ToolbarRightPaneComponent {
     this.toolbarEvents.download();
   }
 
-  showCommentSummary() {
+  toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
 }
