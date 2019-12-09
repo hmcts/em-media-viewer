@@ -22,8 +22,8 @@ describe('ToolbarRightPaneComponent', () => {
     nativeElement = fixture.debugElement.nativeElement;
     component.toolbarButtons.showPrint = true;
     component.toolbarButtons.showDownload = true;
-    component.toolbarButtons.showDrawButton = true;
     component.toolbarButtons.showCommentSummary = true;
+    component.enableAnnotations = true;
 
     fixture.detectChanges();
   });
