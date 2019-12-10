@@ -48,9 +48,10 @@
 }
 
 .textLayer {
-  z-index: 1 !important;
+  position: absolute;
+  z-index: 1;
 }
 
 .annotationLayer * {
-  z-index: 2 !important;
+  z-index: 2;
 }
