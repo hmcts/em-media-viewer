@@ -82,7 +82,7 @@ export class CommentComponent implements OnChanges {
   @Input()
   set editable(editable: boolean) {
     this._editable = editable || this.hasUnsavedChanges;
-    if (editable) {
+    if (this._editable) {
       setTimeout(() => this.textArea.nativeElement.focus(), 10);
     }
   }
