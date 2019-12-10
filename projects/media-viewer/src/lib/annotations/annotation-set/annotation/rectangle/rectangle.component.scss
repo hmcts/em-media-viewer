@@ -1,6 +1,6 @@
 .rectangle {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   opacity: 0.3;
   cursor: move; /* fallback if grab cursor is unsupported */
   cursor: grab;
