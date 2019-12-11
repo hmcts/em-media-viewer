@@ -47,6 +47,10 @@
   opacity: 0.0 !important;
 }
 
-.annotationLayer section {
-  z-index: 2!important;
+.textLayer {
+  z-index: 1;
+}
+
+.annotationLayer * {
+  z-index: 2;
 }
