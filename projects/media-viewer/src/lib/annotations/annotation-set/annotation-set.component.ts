@@ -9,6 +9,7 @@ import { Highlight, ViewerEventService } from '../../viewers/viewer-event.servic
 import { Subscription } from 'rxjs';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { AnnotationService, SelectionAnnotation } from '../annotation.service';
+import {CommentService} from '../comment-set/comment/comment.service';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -38,7 +39,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly api: AnnotationApiService,
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
-    private readonly annotationService: AnnotationService
+    private readonly annotationService: AnnotationService,
+    private readonly commentService: CommentService
   ) {}
 
   ngOnInit(): void {
@@ -66,10 +68,11 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.api
       .postAnnotation(annotation)
       .subscribe(newAnnotation => {
+        const unsavedComment = this.commentService.getUnsavedCommentStatus(annotation);
         const index = this.annotationSet.annotations.findIndex(a => a.id === newAnnotation.id);
 
-        this.annotationSet.annotations[index] = newAnnotation;
-        this.onAnnotationClick({ annotationId: annotation.id, editable: false });
+        this.annotationSet.annotations[index] = unsavedComment ? annotation : newAnnotation;
+        this.onAnnotationClick({ annotationId: annotation.id, editable: unsavedComment });
       });
   }
 
@@ -78,6 +81,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       .deleteAnnotation(annotation.id)
       .subscribe(() => {
         this.annotationSet.annotations = this.annotationSet.annotations.filter(a => a.id !== annotation.id);
+        this.commentService.updateUnsavedCommentStatus(annotation, false);
         this.onAnnotationClick({ annotationId: '', editable: false });
       });
   }

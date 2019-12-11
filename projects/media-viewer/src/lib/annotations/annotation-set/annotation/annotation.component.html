@@ -6,8 +6,8 @@
                     [height]="height"
                     [width]="width"
                     (deleteHighlight)="deleteHighlight()"
-                    (addOrEditComment)="addOrEditComment()"
-  ></mv-popup-toolbar>
+                    (addOrEditComment)="addOrEditComment()">
+  </mv-popup-toolbar>
   <ng-container *ngFor="let rectangle of annotation.rectangles">
     <mv-anno-rectangle
       (select)="onSelect()"
