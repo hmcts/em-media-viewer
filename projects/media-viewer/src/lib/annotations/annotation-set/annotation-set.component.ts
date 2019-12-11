@@ -312,7 +312,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   annotationSetClass() {
     return [
       'rotation rot' + this.rotate,
-      this.drawMode ? ' drawMode' : ''
+      this.drawMode ? 'drawMode' : ''
     ];
   }
 }
