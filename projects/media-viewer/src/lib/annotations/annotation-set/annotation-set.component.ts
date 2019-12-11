@@ -308,4 +308,11 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       width: width
     };
   }
+
+  annotationSetClass() {
+    return [
+      'rotation rot' + this.rotate,
+      this.drawMode ? 'drawMode' : ''
+    ];
+  }
 }

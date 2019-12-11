@@ -343,4 +343,18 @@ describe('AnnotationSetComponent', () => {
 
     expect(newRectPos).toEqual({ top: 90, left: 90, height: 10, width: 10 });
   });
+
+  it('should return the correct class values', async () => {
+    component.drawMode = false;
+    component.rotate = 0;
+
+    let className = component.annotationSetClass();
+    expect(className).toEqual(['rotation rot0', '']);
+
+    component.drawMode = true;
+    component.rotate = 90;
+
+    className = component.annotationSetClass();
+    expect(className).toEqual(['rotation rot90', 'drawMode']);
+  });
 });
