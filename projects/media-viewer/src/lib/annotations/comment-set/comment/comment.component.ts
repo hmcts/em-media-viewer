@@ -63,6 +63,10 @@ export class CommentComponent implements OnChanges {
     this.fullComment = this.originalComment;
   }
 
+  get comment() {
+    return this._comment;
+  }
+
   @Input()
   set rectangle(rectangle: Rectangle) {
     this._rectangle = rectangle;
@@ -102,9 +106,9 @@ export class CommentComponent implements OnChanges {
   }
 
   onCancel() {
+    this.hasUnsavedChanges = false;
     this.editable = false;
     this.fullComment = this.originalComment;
-    this.hasUnsavedChanges = false;
     this.changes.emit(false);
   }
 
