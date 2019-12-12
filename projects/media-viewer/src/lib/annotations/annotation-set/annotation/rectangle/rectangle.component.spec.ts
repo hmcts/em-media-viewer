@@ -124,4 +124,31 @@ describe('RectangleComponent', () => {
     expect(rectangleEl.nativeElement.offsetWidth).not.toEqual(oldWidth);
     expect(rectangleEl.nativeElement.offsetHeight).not.toEqual(oldHeight);
   });
+
+  it('should not update the rectangle if the rectangle did not change', function () {
+    spyOn(component.update, 'emit');
+    const oldLeft = rectangleEl.nativeElement.offsetLeft;
+    const oldTop = rectangleEl.nativeElement.offsetTop;
+    const oldWidth = rectangleEl.nativeElement.offsetWidth;
+    const oldHeight = rectangleEl.nativeElement.offsetHeight;
+
+    const mouseDownEvent = document.createEvent('MouseEvents');
+    const mouseMoveEvent = document.createEvent('MouseEvents');
+    const mouseUpEvent = document.createEvent('MouseEvents');
+
+    mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
+    mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
+    mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
+
+    rectangleEl.nativeElement.dispatchEvent(mouseDownEvent);
+    rectangleEl.nativeElement.dispatchEvent(mouseMoveEvent);
+    rectangleEl.nativeElement.dispatchEvent(mouseUpEvent);
+
+    fixture.detectChanges();
+    expect(rectangleEl.nativeElement.offsetLeft).toEqual(oldLeft);
+    expect(rectangleEl.nativeElement.offsetTop).toEqual(oldTop);
+    expect(rectangleEl.nativeElement.offsetWidth).toEqual(oldWidth);
+    expect(rectangleEl.nativeElement.offsetHeight).toEqual(oldHeight);
+    expect(component.update.emit).not.toHaveBeenCalled();
+  });
 });
