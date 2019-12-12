@@ -162,14 +162,14 @@ describe('AnnotationSetComponent', () => {
     expect(annotations).not.toEqual(component.annotationSet.annotations);
   });
 
-  it('delete annotation should call updateUnsavedCommentStatus', () => {
+  it('delete annotation should call updateUnsavedCommentsStatus', () => {
     inject([CommentService], (commentService: CommentService) => {
       const annotations = { ...annotationSet.annotations };
       const annotation = { ...annotations[0] };
 
       component.onAnnotationDelete(annotation);
 
-      expect(commentService.updateUnsavedCommentStatus).toHaveBeenCalledWith(annotation, false);
+      expect(commentService.updateUnsavedCommentsStatus).toHaveBeenCalledWith(annotation, false);
     });
   });
 

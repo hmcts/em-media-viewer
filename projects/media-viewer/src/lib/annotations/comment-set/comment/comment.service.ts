@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CommentSetComponent } from '../comment-set.component';
 import { Annotation } from '../../annotation-set/annotation/annotation.model';
+import { CommentComponent } from './comment.component';
 
 @Injectable()
 export class CommentService {
@@ -21,20 +22,23 @@ export class CommentService {
     return this.unsavedChanges.asObservable();
   }
 
-  getUnsavedCommentStatus(annotation: Annotation): boolean {
+  hasUnsavedComments(annotation: Annotation): boolean {
     if (annotation.comments.length > 0) {
-      const comment = this.commentSets[annotation.page].commentComponents
-        .find(c => c.comment.annotationId === annotation.comments[0].annotationId);
+      const comment = this.getComment(annotation);
       return comment.hasUnsavedChanges;
     }
     return false;
   }
 
-  updateUnsavedCommentStatus(annotation: Annotation, editable: boolean): void {
-    const comment = this.commentSets[annotation.page].commentComponents
-      .find(c => c.comment.annotationId === annotation.comments[0].annotationId);
+  updateUnsavedCommentsStatus(annotation: Annotation, editable: boolean): void {
+    const comment = this.getComment(annotation);
     comment.hasUnsavedChanges = editable;
     this.allCommentSetsSaved();
+  }
+
+  getComment(annotation: Annotation): CommentComponent {
+    return this.commentSets[annotation.page].commentComponents
+      .find(c => c.comment.annotationId === annotation.comments[0].annotationId);
   }
 
   resetCommentSet(): void {
