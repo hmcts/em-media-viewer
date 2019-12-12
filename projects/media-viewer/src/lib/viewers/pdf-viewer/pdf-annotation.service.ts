@@ -29,13 +29,13 @@ export class PdfAnnotationService {
     private readonly commentSetService: CommentSetService
   ) {}
 
-  init(pdfWrapper: PdfJsWrapper, pdfViewer: ElementRef) {
+  init(pdfWrapper: PdfJsWrapper, pdfViewer: ElementRef): void {
     this.annotationSetService.init(pdfWrapper,pdfViewer);
     this.commentSetService.init(pdfViewer);
     this.pdfWrapper = pdfWrapper;
   }
 
-  addAnnotationsAndComments(pageRenderEvent: PageEvent) {
+  addAnnotationsAndComments(pageRenderEvent: PageEvent): void {
     this.annotationSetService.addAnnotationsToPage(pageRenderEvent);
     this.commentSetService.renderCommentsOnPage(pageRenderEvent);
   }
@@ -44,13 +44,13 @@ export class PdfAnnotationService {
     this.annotationSetService.addAnnoSetToPage();
   }
 
-  buildAnnoSetComponents(annotationSet: AnnotationSet) {
+  buildAnnoSetComponents(annotationSet: AnnotationSet): void {
     this.destroyComponents();
     this.setAnnotationSet(annotationSet);
     this.annotationSetService.buildAnnoSetComponents();
   }
 
-  setAnnotationSet(annotationSet: AnnotationSet) {
+  private setAnnotationSet(annotationSet: AnnotationSet): void {
     this.annotationSet = annotationSet;
     this.annotationSetService.setAnnotationSet(annotationSet);
     this.commentSetService.setAnnotationSet(annotationSet);

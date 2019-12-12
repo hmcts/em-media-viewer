@@ -33,7 +33,7 @@ export class CommentSetService {
 
   renderCommentsOnPage(pageRenderEvent: PageEvent) {
     let commentSetComponent = this.commentSetComponents
-      .find((commentSet) => commentSet.instance.page === pageRenderEvent.pageNumber);
+      .find((commentSetComp) => commentSetComp.instance.page === pageRenderEvent.pageNumber);
     if (commentSetComponent) {
       commentSetComponent.instance.updateView(pageRenderEvent);
     } else {
@@ -58,7 +58,7 @@ export class CommentSetService {
     }
   }
 
-  addCommentSetToPage(pageRenderEvent: PageEvent): void {
+  private addCommentSetToPage(pageRenderEvent: PageEvent): void {
     const component = this.createCommentSetComponent(pageRenderEvent.pageNumber);
     component.instance.addToDOM(pageRenderEvent);
     this.commentSetComponents.push(component);

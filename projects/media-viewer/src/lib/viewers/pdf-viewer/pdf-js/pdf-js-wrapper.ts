@@ -18,7 +18,7 @@ export class PdfJsWrapper {
     public readonly documentLoadInit: Subject<string>,
     public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
     public readonly documentLoaded: Subject<any>,
-    public readonly documentLoadFailed: Subject<undefined>,
+    public readonly documentLoadFailed: Subject<Error>,
     public readonly pageRendered: Subject<PageEvent>
   ) {
 

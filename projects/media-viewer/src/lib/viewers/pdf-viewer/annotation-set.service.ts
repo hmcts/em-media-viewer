@@ -29,7 +29,7 @@ export class AnnotationSetService {
 
   addAnnotationsToPage(pageRenderEvent: PageEvent) {
     this.annotationSetComponents
-      .filter(annotation => annotation.instance.page === pageRenderEvent.pageNumber)
+      .filter(annotationComp => annotationComp.instance.page === pageRenderEvent.pageNumber)
       .forEach(annotationSetComponent => annotationSetComponent.instance.addToDOM(pageRenderEvent.source));
   }
 
@@ -39,7 +39,6 @@ export class AnnotationSetService {
       this.pages.push(pageNumber);
       const annotationSetComponent = this.createAnnotationSetComponent(pageNumber);
       this.annotationSetComponents.push(annotationSetComponent);
-
       annotationSetComponent.instance.addToDOM({
         rotation: this.pdfWrapper.getNormalisedPagesRotation(),
         scale: this.pdfWrapper.getCurrentPDFZoomValue(),
