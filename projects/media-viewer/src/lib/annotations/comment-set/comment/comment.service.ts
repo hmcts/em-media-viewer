@@ -30,9 +30,9 @@ export class CommentService {
     return false;
   }
 
-  updateUnsavedCommentsStatus(annotation: Annotation, editable: boolean): void {
+  updateUnsavedCommentsStatus(annotation: Annotation, hasUnsavedChanges: boolean): void {
     const comment = this.getComment(annotation);
-    comment.hasUnsavedChanges = editable;
+    comment.hasUnsavedChanges = hasUnsavedChanges;
     this.allCommentSetsSaved();
   }
 
