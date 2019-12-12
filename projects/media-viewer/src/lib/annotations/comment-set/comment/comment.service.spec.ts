@@ -1,6 +1,6 @@
 import { CommentService } from './comment.service';
 import { CommentSetComponent } from '../comment-set.component';
-import { Annotation } from '../../annotation-set/annotation/annotation.model';=
+import { Annotation } from '../../annotation-set/annotation/annotation.model';
 
 describe('CommentService', () => {
 
