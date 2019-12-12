@@ -83,7 +83,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         this.annotationService.addAnnotationsAndComments(event);
       }
     });
-
     this.subscriptions.push(
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),

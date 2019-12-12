@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OutlineItemComponent } from './outline-item.component';
 import { Outline } from '../outline.model';
 import { PdfJsWrapperFactory } from '../../../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
@@ -25,7 +25,7 @@ describe('OutlineItemComponent', () => {
     url: '',
   };
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ OutlineItemComponent ],
       providers: [
@@ -35,9 +35,6 @@ describe('OutlineItemComponent', () => {
     })
     .compileComponents();
     pdfJsWrapper = TestBed.get(PdfJsWrapperFactory);
-  }));
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(OutlineItemComponent);
     component = fixture.componentInstance;
     component.outline = outline;
