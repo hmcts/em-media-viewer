@@ -43,22 +43,17 @@ export class RectangleComponent implements AfterViewInit {
   }
 
   onUpdate() {
-    const currentRectElement = {
-      _x: this.rectElement.nativeElement.offsetLeft,
-      _y: this.rectElement.nativeElement.offsetTop,
-      _width: this.rectElement.nativeElement.offsetWidth,
-      _height: this.rectElement.nativeElement.offsetHeight
-    };
-    if (this.hasRectangleChanged(this.rectangle, currentRectElement)) {
-      this.rectangle.x = currentRectElement._x / this.zoom;
-      this.rectangle.y = currentRectElement._y / this.zoom;
-      this.rectangle.width = currentRectElement._width / this.zoom;
-      this.rectangle.height = currentRectElement._height / this.zoom;
+    if (this.hasRectangleChanged(this.rectangle, this.rectElement.nativeElement)) {
+      this.rectangle.x = this.rectElement.nativeElement.offsetLeft / this.zoom;
+      this.rectangle.y = this.rectElement.nativeElement.offsetTop / this.zoom;
+      this.rectangle.width = this.rectElement.nativeElement.offsetWidth / this.zoom;
+      this.rectangle.height = this.rectElement.nativeElement.offsetHeight / this.zoom;
       this.update.emit(this.rectangle);
     }
   }
 
-  hasRectangleChanged({ x, y, width, height }, { _x, _y, _width, _height }): boolean {
-    return x !== _x || y !== _y || width !== _width || height !== _height;
+  hasRectangleChanged({ x, y, width, height }, { offsetLeft, offsetTop, offsetWidth, offsetHeight }): boolean {
+    return x !== (offsetLeft / this.zoom) || y !== (offsetTop / this.zoom) ||
+      width !== (offsetWidth / this.zoom) || height !== (offsetHeight / this.zoom);
   }
 }

@@ -154,10 +154,10 @@ describe('RectangleComponent', () => {
 
   it('should compare 2 rectangles values and see if its the same', function () {
     const rect = {
-      _x: 100,
-      _y: 100,
-      _width: 100,
-      _height: 100
+      offsetLeft: 100,
+      offsetTop: 100,
+      offsetWidth: 100,
+      offsetHeight: 100
     };
     let hasRectChanged = component.hasRectangleChanged(mockRectangle, rect);
     expect(hasRectChanged).toEqual(true);
