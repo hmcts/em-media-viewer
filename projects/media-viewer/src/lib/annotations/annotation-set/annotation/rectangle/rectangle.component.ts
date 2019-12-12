@@ -44,22 +44,21 @@ export class RectangleComponent implements AfterViewInit {
 
   onUpdate() {
     const currentRectElement = {
-      x: this.rectElement.nativeElement.offsetLeft,
-      y: this.rectElement.nativeElement.offsetTop,
-      width: this.rectElement.nativeElement.offsetWidth,
-      height: this.rectElement.nativeElement.offsetHeight
+      _x: this.rectElement.nativeElement.offsetLeft,
+      _y: this.rectElement.nativeElement.offsetTop,
+      _width: this.rectElement.nativeElement.offsetWidth,
+      _height: this.rectElement.nativeElement.offsetHeight
     };
-    if (this.hasRectangleChanged(currentRectElement)) {
-      this.rectangle.x = currentRectElement.x / this.zoom;
-      this.rectangle.y = currentRectElement.y / this.zoom;
-      this.rectangle.width = currentRectElement.width / this.zoom;
-      this.rectangle.height = currentRectElement.height / this.zoom;
+    if (this.hasRectangleChanged(this.rectangle, currentRectElement)) {
+      this.rectangle.x = currentRectElement._x / this.zoom;
+      this.rectangle.y = currentRectElement._y / this.zoom;
+      this.rectangle.width = currentRectElement._width / this.zoom;
+      this.rectangle.height = currentRectElement._height / this.zoom;
       this.update.emit(this.rectangle);
     }
   }
 
-  hasRectangleChanged(currentRectElement): boolean {
-    return this.rectangle.x !== currentRectElement.x || this.rectangle.y !== currentRectElement.y
-      || this.rectangle.width !== currentRectElement.width || this.rectangle.height !== currentRectElement.height;
+  hasRectangleChanged({ x, y, width, height }, { _x, _y, _width, _height }): boolean {
+    return x !== _x || y !== _y || width !== _width || height !== _height;
   }
 }

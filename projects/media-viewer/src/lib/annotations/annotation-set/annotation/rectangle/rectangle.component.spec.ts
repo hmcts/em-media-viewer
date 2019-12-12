@@ -151,4 +151,18 @@ describe('RectangleComponent', () => {
     expect(rectangleEl.nativeElement.offsetHeight).toEqual(oldHeight);
     expect(component.update.emit).not.toHaveBeenCalled();
   });
+
+  it('should compare 2 rectangles values and see if its the same', function () {
+    const rect = {
+      _x: 100,
+      _y: 100,
+      _width: 100,
+      _height: 100
+    };
+    let hasRectChanged = component.hasRectangleChanged(mockRectangle, rect);
+    expect(hasRectChanged).toEqual(true);
+
+    hasRectChanged = component.hasRectangleChanged({x: 100, y: 100, width: 100, height: 100 }, rect);
+    expect(hasRectChanged).toEqual(false);
+  });
 });
