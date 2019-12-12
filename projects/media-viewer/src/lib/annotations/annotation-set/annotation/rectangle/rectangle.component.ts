@@ -49,13 +49,17 @@ export class RectangleComponent implements AfterViewInit {
       width: this.rectElement.nativeElement.offsetWidth,
       height: this.rectElement.nativeElement.offsetHeight
     };
-    if (this.rectangle.x !== currentRectElement.x || this.rectangle.y !== currentRectElement.y
-      || this.rectangle.width !== currentRectElement.width || this.rectangle.height !== currentRectElement.height) {
+    if (this.hasRectangleChanged(currentRectElement)) {
       this.rectangle.x = currentRectElement.x / this.zoom;
       this.rectangle.y = currentRectElement.y / this.zoom;
       this.rectangle.width = currentRectElement.width / this.zoom;
       this.rectangle.height = currentRectElement.height / this.zoom;
       this.update.emit(this.rectangle);
     }
+  }
+
+  hasRectangleChanged(currentRectElement): boolean {
+    return this.rectangle.x !== currentRectElement.x || this.rectangle.y !== currentRectElement.y
+      || this.rectangle.width !== currentRectElement.width || this.rectangle.height !== currentRectElement.height;
   }
 }
