@@ -68,11 +68,11 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.api
       .postAnnotation(annotation)
       .subscribe(newAnnotation => {
-        const unsavedComment = this.commentService.getUnsavedCommentStatus(annotation);
+        const unsavedComment = this.commentService.hasUnsavedComments(annotation);
         const index = this.annotationSet.annotations.findIndex(a => a.id === newAnnotation.id);
 
         this.annotationSet.annotations[index] = unsavedComment ? annotation : newAnnotation;
-        this.onAnnotationClick({ annotationId: annotation.id, editable: unsavedComment });
+        this.onAnnotationClick({ annotationId: annotation.id, editable: false });
       });
   }
 
@@ -81,7 +81,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       .deleteAnnotation(annotation.id)
       .subscribe(() => {
         this.annotationSet.annotations = this.annotationSet.annotations.filter(a => a.id !== annotation.id);
-        this.commentService.updateUnsavedCommentStatus(annotation, false);
+        this.commentService.updateUnsavedCommentsStatus(annotation, false);
         this.onAnnotationClick({ annotationId: '', editable: false });
       });
   }
