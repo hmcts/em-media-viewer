@@ -9,6 +9,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 export class PdfJsWrapper {
 
   private zoomValue: number;
+  private documentTitle: string;
 
   constructor(
     private readonly pdfViewer: PDFViewer,
@@ -57,7 +58,8 @@ export class PdfJsWrapper {
 
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
-
+      const pdfMetaData = await pdfDocument.getMetadata();
+      this.setCurrentPDFTitle(pdfMetaData.info.Title);
     } catch (e) {
       this.documentLoadFailed.next(e);
     }
@@ -136,6 +138,14 @@ export class PdfJsWrapper {
 
   public getCurrentPDFZoomValue(): number {
     return this.pdfViewer.currentScaleValue;
+  }
+
+  public setCurrentPDFTitle(title: string) {
+    this.documentTitle = title;
+  }
+
+  public getCurrentPDFTitle(): string {
+    return this.documentTitle;
   }
 }
 

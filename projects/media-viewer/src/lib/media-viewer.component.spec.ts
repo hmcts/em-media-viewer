@@ -75,6 +75,14 @@ describe('MediaViewerComponent', () => {
     expect(component.toolbarEvents.zoomValueSubject.value).toBe(1);
   });
 
+  it('should set documentTitle to null if the content type is image', async () => {
+    component.documentTitle = 'Document Title';
+    component.contentType = 'image';
+    component.ngOnChanges({ url: new SimpleChange('file.jpg', 'text.jpg', false) });
+
+    expect(component.documentTitle).toBeNull();
+  });
+
   it('should set annotationSet when annotations enabled', () => {
     const annotationSet = of({} as AnnotationSet);
     spyOn(api, 'getOrCreateAnnotationSet').and.returnValue(annotationSet);
@@ -140,7 +148,7 @@ describe('MediaViewerComponent', () => {
     component.contentType = 'xxxxxx';
 
     component.setToolbarButtons();
-    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions });
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions, showCommentSummary: false });
   });
 
   it('onLoadException should emit a ViewerException', async () => {
@@ -156,5 +164,13 @@ describe('MediaViewerComponent', () => {
 
     component.onCommentChange(true);
     expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('onDocumentTitleChange should update the document title value', async () => {
+    const newTitle = 'New Bundle';
+    component.documentTitle = 'Document Title for Evidence';
+
+    component.onDocumentTitleChange(newTitle);
+    expect(component.documentTitle).toEqual(newTitle);
   });
 });

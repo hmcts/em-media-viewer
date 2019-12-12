@@ -20,6 +20,7 @@ export class ToolbarButtonVisibilityService {
   public showSearchBar = false;
   public showSubToolbar = false;
   public showSidebar = false;
+  public showCommentSummary = false;
 
   /**
    * Reset the visibility of all buttons to false then set the value from the options
@@ -41,6 +42,7 @@ export class ToolbarButtonVisibilityService {
     this.showSearchBar = false;
     this.showSubToolbar = false;
     this.showSidebar = false;
+    this.showCommentSummary = false;
 
     for (const key in options) {
       this[key] = options[key];
@@ -73,5 +75,6 @@ export const defaultImageOptions = {
  * Default toolbar state for unsupported media
  */
 export const defaultUnsupportedOptions = {
-  showDownload: true
+  showDownload: true,
+  showCommentSummary: false
 };

@@ -33,6 +33,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @Output() pdfLoadStatus = new EventEmitter<ResponseType>();
   @Output() pdfViewerException = new EventEmitter<ViewerException>();
+  @Output() documentTitle = new EventEmitter<string>();
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -130,6 +131,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (this.enableAnnotations && this.annotationSet) {
       this.annotationService.setupAnnotationSet(this.annotationSet);
     }
+    this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
   }
 
   private onDocumentLoadInit() {

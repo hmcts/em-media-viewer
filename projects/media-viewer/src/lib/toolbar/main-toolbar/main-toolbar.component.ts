@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'mv-main-toolbar',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['../../styles/main.scss']
 })
 export class MainToolbarComponent {
-
+  @Input() enableAnnotations = false;
 }

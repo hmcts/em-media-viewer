@@ -7,7 +7,6 @@ import { MediaViewerWrapperComponent } from './media-viewer-wrapper/media-viewer
 import { MediaViewerModule } from '../../projects/media-viewer/src/lib/media-viewer.module';
 import { ToolbarModule } from '../../projects/media-viewer/src/lib/toolbar/toolbar.module';
 import { ToolbarTogglesComponent } from './media-viewer-wrapper/toolbar-toggles/toolbar-toggles.component';
-import { CommentsSummaryModule } from '../../projects/media-viewer/src/lib/comments-summary/comments-summary.module';
 import { ToggleComponent } from './media-viewer-wrapper/toolbar-toggles/toggle/toggle.component';
 import { CustomToolbarModule } from './media-viewer-wrapper/custom-toolbar/custom-toolbar.module';
 
@@ -33,7 +32,6 @@ const routes: Routes = [{
     MediaViewerModule,
     ToolbarModule,
     FormsModule,
-    CommentsSummaryModule,
     CustomToolbarModule
   ],
   exports: [RouterModule]

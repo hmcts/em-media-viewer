@@ -43,11 +43,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Output() unsavedChanges = new EventEmitter<boolean>();
 
   @Input() enableAnnotations = false;
-  @Input() showCommentSummary: Subject<boolean>;
   @Input() annotationApiUrl;
 
+  documentTitle: string;
+  showCommentSummary: boolean;
   annotationSet: Observable<AnnotationSet>;
-  private commentState: Subscription;
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
@@ -63,8 +65,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   ngAfterContentInit() {
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
-    this.commentState = this.commentService.getUnsavedChanges()
-      .subscribe(changes => this.onCommentChange(changes));
+    this.subscriptions.push(this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)));
+    this.subscriptions.push(this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes));
   }
 
   contentTypeUnsupported(): boolean {
@@ -81,6 +83,9 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       if (this.enableAnnotations) {
         this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
       }
+      if (this.contentType === 'image') {
+        this.documentTitle = null;
+      }
     }
     if (changes.enableAnnotations && this.enableAnnotations) {
       this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
@@ -89,7 +94,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngOnDestroy() {
-    this.commentState.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   onMediaLoad(status: ResponseType) {
@@ -121,6 +126,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   onCommentChange(changes: boolean) {
     this.unsavedChanges.emit(changes);
+  }
+
+  onDocumentTitleChange(title: string) {
+    this.documentTitle = title;
   }
 }
 
