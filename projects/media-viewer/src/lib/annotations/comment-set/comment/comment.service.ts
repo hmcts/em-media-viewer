@@ -32,7 +32,7 @@ export class CommentService {
 
   updateUnsavedCommentStatus(annotation: Annotation, editable: boolean): void {
     const comment = this.commentSets[annotation.page].commentComponents
-      .find(c => c._comment.annotationId === annotation.comments[0].annotationId);
+      .find(c => c.comment.annotationId === annotation.comments[0].annotationId);
     comment.hasUnsavedChanges = editable;
     this.allCommentSetsSaved();
   }

@@ -1,5 +1,6 @@
 import { CommentService } from './comment.service';
 import { CommentSetComponent } from '../comment-set.component';
+import { Annotation } from '../../annotation-set/annotation/annotation.model';=
 
 describe('CommentService', () => {
 
@@ -48,5 +49,13 @@ describe('CommentService', () => {
 
     commentService.resetCommentSet();
     expect(commentService.commentSets).toEqual([]);
+  });
+
+  it('getUnsavedCommentStatus should return false when annotation comments are empty', () => {
+    const annotation = {
+      comments: []
+    } as Annotation;
+
+    expect(commentService.getUnsavedCommentStatus(annotation)).toBeFalsy();
   });
 });
