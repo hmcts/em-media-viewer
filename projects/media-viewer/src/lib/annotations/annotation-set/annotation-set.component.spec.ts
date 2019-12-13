@@ -22,6 +22,7 @@ describe('AnnotationSetComponent', () => {
 
   const api = new AnnotationApiService({}  as any);
   const mockAnnotationService = new AnnotationService();
+  const mockCommentService = new CommentService();
 
   const mockElement: any = {
     parentElement: {
@@ -118,8 +119,8 @@ describe('AnnotationSetComponent', () => {
       providers: [
         { provide: AnnotationApiService, useValue: api },
         { provide: AnnotationService, useValue: mockAnnotationService },
-        ToolbarEventService,
-        CommentService
+        { provide: CommentService, useValue: mockCommentService },
+        ToolbarEventService
       ]
     }).compileComponents();
 
@@ -149,6 +150,17 @@ describe('AnnotationSetComponent', () => {
     component.onAnnotationUpdate(annotation);
 
     expect(spy).toHaveBeenCalledWith(annotation);
+  });
+
+  it('expect annotation to be assigned to annotation set when updated', () => {
+    const annotation = { ...annotationSet.annotations[0] };
+    spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
+    spyOn(mockCommentService, 'hasUnsavedComments').and.returnValues(true);
+
+    annotation.color = 'red';
+    component.onAnnotationUpdate(annotation);
+
+    expect(component.annotationSet.annotations[0]).toEqual(annotation);
   });
 
   it('delete annotation', () => {

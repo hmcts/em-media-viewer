@@ -91,6 +91,13 @@ describe('CommentComponent', () => {
     expect(component.fullComment).toEqual(mockComment.content);
   });
 
+  it('should get comment', () => {
+    component.comment = {...mockComment};
+
+    expect(component._comment).toEqual({...mockComment});
+    expect(component.comment).toEqual({...mockComment});
+  });
+
   it('should set the unsavedChanges value', () => {
     inject([CommentService], (commentService: CommentService) => {
       spyOn(commentService, 'onCommentChange');
