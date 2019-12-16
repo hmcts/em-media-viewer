@@ -1,9 +1,9 @@
 import { AfterContentChecked, Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[textareaAutoGrow]'
+  selector: '[mvTextAreaAutoExpand]'
 })
-export class TextareaAutoGrowDirective implements AfterContentChecked {
+export class TextareaAutoExpandDirective implements AfterContentChecked {
 
   constructor(private el: ElementRef) {
   }

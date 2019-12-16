@@ -32,11 +32,11 @@ describe('PdfAnnotationService', () => {
     commentSetService = TestBed.get(CommentSetService);
   });
 
-  it('should be created',() => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should init services',() => {
+  it('should init services', () => {
     const mockWrapper = {} as PdfJsWrapper;
     const mockViewer = {} as ElementRef;
     spyOn(annoSetService, 'init');
@@ -48,7 +48,7 @@ describe('PdfAnnotationService', () => {
     expect(commentSetService.init).toHaveBeenCalled();
   });
 
-  it('should add annotations and comments',() => {
+  it('should add annotations and comments', () => {
     const pageRenderEvent = {} as PageEvent;
     spyOn(annoSetService, 'addAnnotationsToPage');
     spyOn(commentSetService, 'renderCommentsOnPage');
@@ -59,7 +59,7 @@ describe('PdfAnnotationService', () => {
     expect(commentSetService.renderCommentsOnPage).toHaveBeenCalled();
   });
 
-  it('should add annotationSet to page',() => {
+  it('should add annotationSet to page', () => {
     spyOn(annoSetService, 'addAnnoSetToPage');
 
     service.addAnnoSetToPage();
@@ -67,7 +67,7 @@ describe('PdfAnnotationService', () => {
     expect(annoSetService.addAnnoSetToPage).toHaveBeenCalled();
   });
 
-  it('should build annotationSet components',() => {
+  it('should build annotationSet components', () => {
     const annotationSet = {} as AnnotationSet;
     spyOn(annoSetService, 'destroyComponents');
     spyOn(commentSetService, 'destroyComponents');

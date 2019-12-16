@@ -126,7 +126,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   topRectangle(annotationId: string) {
-    const annotation = this.annotationSet.annotations.find((annotation) => annotation.id === annotationId);
+    const annotation = this.annotationSet.annotations.find((anno) => anno.id === annotationId);
     return annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
   }
 

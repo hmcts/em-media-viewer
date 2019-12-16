@@ -287,7 +287,7 @@ describe('CommentSetComponent', () => {
 
   it('should post the updated the comment for the annotation', () => {
     mockComment.content = 'Updating the comment 2';
-    const annotationForComment = component.annotationSet.annotations.find(annotation => annotation.id === mockComment.annotationId);
+    const annotationForComment = component.annotationSet.annotations.find(anno => anno.id === mockComment.annotationId);
     spyOn(api, 'postAnnotation').and.returnValue(of(annotationForComment));
     spyOn(mockAnnotationService, 'onAnnotationSelection');
 

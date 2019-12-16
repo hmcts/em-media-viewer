@@ -14,7 +14,7 @@ describe('AnnotationSetService', () => {
     service = new AnnotationSetService(mockFactoryResolver, mockContainerRef);
   });
 
-  it('should init viewer and wrapper',() => {
+  it('should init viewer and wrapper', () => {
     const mockWrapper = {} as PdfJsWrapper;
     const mockViewer = {} as ElementRef;
 
@@ -24,7 +24,7 @@ describe('AnnotationSetService', () => {
     expect(service.pdfViewer).toBe(mockViewer);
   });
 
-  it('should set annotationSet',() => {
+  it('should set annotationSet', () => {
     const annotationSet = {} as AnnotationSet;
 
     service.setAnnotationSet(annotationSet);
@@ -32,7 +32,7 @@ describe('AnnotationSetService', () => {
     expect(service.annotationSet).toBe(annotationSet);
   });
 
-  it('should add annotations to page',() => {
+  it('should add annotations to page', () => {
     const annoSetComp1 = { instance: { page: 1, addToDOM: () => {} }} as any;
     const annoSetComp2 = { instance: { page: 2, addToDOM: () => {}  }} as any;
     service.annotationSetComponents = [annoSetComp1, annoSetComp2];
@@ -44,7 +44,7 @@ describe('AnnotationSetService', () => {
     expect(annoSetComp1.instance.addToDOM).toHaveBeenCalled();
   });
 
-  it('should add annotationSet to page',() => {
+  it('should add annotationSet to page', () => {
     service.pdfViewer = { nativeElement: { querySelector: () => null }} as any;
     const mockAnnoSetComp = mockAnnotationSetCreation();
     spyOn(mockAnnoSetComp.instance, 'addToDOM');
@@ -56,7 +56,7 @@ describe('AnnotationSetService', () => {
     expect(mockAnnoSetComp.instance.addToDOM).toHaveBeenCalledWith({ rotation: 90, scale: 0.2, div: null });
   });
 
-  it('should build annotationSet components',() => {
+  it('should build annotationSet components', () => {
     const mockAnnoSetComp = mockAnnotationSetCreation();
     spyOn(mockAnnoSetComp.instance, 'addToDOM');
 
@@ -64,14 +64,14 @@ describe('AnnotationSetService', () => {
 
     expect(mockFactoryResolver.resolveComponentFactory).toHaveBeenCalled();
     expect(mockContainerRef.createComponent).toHaveBeenCalled();
-    expect(service.pages).toContain(1,2);
+    expect(service.pages).toContain(1, 2);
     expect(service.annotationSetComponents).toContain(mockAnnoSetComp);
   });
 
   it('should destroy commentSets HTML', () => {
     const annoSetComp = { destroy: () => {} } as any;
     service.annotationSetComponents = [annoSetComp];
-    service.pages = [1,2,4];
+    service.pages = [1, 2, 4];
     spyOn(annoSetComp, 'destroy');
 
     service.destroyComponents();

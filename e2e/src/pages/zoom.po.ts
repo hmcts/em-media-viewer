@@ -1,7 +1,7 @@
 import { by, element } from 'protractor';
 import { AppPage } from './app.po';
 
-export class ZoomPage extends AppPage{
+export class ZoomPage extends AppPage {
 
   async zoomIn() {
     await this.clickElement(by.id('zoomIn'));

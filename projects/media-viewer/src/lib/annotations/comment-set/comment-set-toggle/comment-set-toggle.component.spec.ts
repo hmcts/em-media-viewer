@@ -5,7 +5,6 @@ import { ViewerEventService } from '../../../viewers/viewer-event.service';
 describe('CommentSetToggleComponent', () => {
   let component: CommentSetToggleComponent;
   let fixture: ComponentFixture<CommentSetToggleComponent>;
-  let viewerEvent: ViewerEventService;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
