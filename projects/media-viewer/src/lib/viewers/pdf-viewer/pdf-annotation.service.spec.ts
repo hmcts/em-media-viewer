@@ -1,166 +1,101 @@
-import { inject, TestBed } from '@angular/core/testing';
-import { PdfAnnotationService } from './pdf-annotation-service';
-import { ComponentFactoryResolver, ElementRef, ViewContainerRef } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { PdfAnnotationService } from './pdf-annotation.service';
+import { ElementRef, ViewContainerRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
-import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
-import { annotationSet } from '../../../assets/annotation-set';
-import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
-import { Subject } from 'rxjs';
-import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
+import { PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
-
-export class MockElementRef extends ElementRef {
-  constructor() {
-    super(undefined);
-  }
-}
+import { AnnotationSetService } from './annotation-set.service';
+import { CommentSetService } from './comment-set.service';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 
 describe('PdfAnnotationService', () => {
-  let pdfService: PdfAnnotationService;
-  let factory: ComponentFactoryResolver;
-  let toolbarEvent: ToolbarEventService;
-  let viewerEventService: ViewerEventService;
 
-  const mockWrapper = {
-    loadDocument: () => {},
-    search: () => {},
-    clearSearch: () => {},
-    rotate: () => {},
-    setZoom: () => {},
-    stepZoom: () => {},
-    getZoomValue: () => {},
-    downloadFile: () => {},
-    setPageNumber: () => {},
-    changePageNumber: () => {},
-    getPageNumber: () => 1,
-    getCurrentPDFZoomValue: () => {},
-    getNormalisedPagesRotation: () => 0,
-    toolbarEvents: ToolbarEventService,
-    pdfViewer: PDFViewer,
-    downloadManager: DownloadManager,
-    documentLoadInit: new Subject<any>(),
-    documentLoadProgress: new Subject<DocumentLoadProgress>(),
-    documentLoaded: new Subject<any>(),
-    documentLoadFailed: new Subject(),
-    pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>()
-  };
-
-  const mockFactory = {
-    create: () => mockWrapper
-  };
+  let service: PdfAnnotationService;
+  let annoSetService: AnnotationSetService;
+  let commentSetService: CommentSetService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         PdfAnnotationService,
-        ViewContainerRef,
         ToolbarEventService,
         ViewerEventService,
-        ComponentFactoryResolver,
-        CommentService,
-        { provide: PdfJsWrapperFactory, useValue: mockFactory },
-        { provide: PdfJsWrapper, useValue: mockWrapper },
-        { provide: ElementRef, useValue: MockElementRef },
-        // { provide: ComponentFactoryResolver, useValue: mockFactoryResolver },
-        // { provide: ViewContainerRef, useValue: mockContainerRef },
-        // { provide: ToolbarEventService, useValue: toolbarEvent },
-        // { provide: ViewerEventService, useValue: viewerEventService }
-
+        AnnotationSetService,
+        ViewContainerRef,
+        CommentSetService,
+        CommentService
       ]
     });
+    service = TestBed.get(PdfAnnotationService);
+    annoSetService = TestBed.get(AnnotationSetService);
+    commentSetService = TestBed.get(CommentSetService);
   });
 
-  beforeEach(() => {
-    pdfService = TestBed.get(PdfAnnotationService);
-    factory = TestBed.get(ComponentFactoryResolver);
-    toolbarEvent = TestBed.get(ToolbarEventService);
-    viewerEventService = TestBed.get(ViewerEventService);
-
-    pdfService.annotationSet = { ...annotationSet };
-  });
-
-  it('should be created', inject([PdfAnnotationService], (service: PdfAnnotationService) => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
-  }));
-
-  // it('should set the pdf wrapper and pdf viewer', () => {
-  //   spyOn(pdfjsWrapperFactory, 'create').and.callThrough();
-  //   const pdfjsWrapper = pdfjsWrapperFactory.create(new MockElementRef());
-  //   pdfService.init(pdfjsWrapper, new MockElementRef());
-  //
-  //   expect(pdfService.pdfWrapper).not.toBe(undefined);
-  //   expect(pdfService.pdfViewer).not.toBe(undefined);
-  // });
-
-  it('should create the annotation set for the pages with annotations', () => {
-    spyOn<any>(pdfService, 'createAnnotationSetComponent');
-    pdfService.setupAnnotationSet({ ...annotationSet });
-
-    expect(pdfService.pages.length).toEqual(2);
-    expect(pdfService.annotationSetComponents.length).toEqual(2);
   });
 
-  it('should create the comment set for the given page', () => {
-    spyOn<any>(pdfService, 'createCommentSetComponent');
+  it('should init services', () => {
+    const mockWrapper = {} as PdfJsWrapper;
+    const mockViewer = {} as ElementRef;
+    spyOn(annoSetService, 'init');
+    spyOn(commentSetService, 'init');
 
-    const commentSetComponent = pdfService.setupCommentSet(1);
+    service.init(mockWrapper, mockViewer);
 
-    expect(pdfService.commentSetComponents.length).toEqual(1);
+    expect(annoSetService.init).toHaveBeenCalled();
+    expect(commentSetService.init).toHaveBeenCalled();
   });
 
-  it('should destroy all references to any sets and pages', () => {
-    pdfService.destroyComponents();
+  it('should add annotations and comments', () => {
+    const pageRenderEvent = {} as PageEvent;
+    spyOn(annoSetService, 'addAnnotationsToPage');
+    spyOn(commentSetService, 'renderCommentsOnPage');
 
-    expect(pdfService.commentSetComponents.length).toEqual(0);
-    expect(pdfService.annotationSetComponents.length).toEqual(0);
-    expect(pdfService.pages).toEqual([]);
+    service.addAnnotationsAndComments(pageRenderEvent);
+
+    expect(annoSetService.addAnnotationsToPage).toHaveBeenCalled();
+    expect(commentSetService.renderCommentsOnPage).toHaveBeenCalled();
   });
 
-  // it('should addToDOM all the set components for the pdf viewer', () => {
-  //   // setup
-  //   spyOn<any>(pdfService, 'createAnnotationSetComponent');
-  //   spyOn<any>(pdfService, 'createCommentSetComponent');
-  //   pdfService.setupAnnotationSet({ ...annotationSet });
-  //   pdfService.setupCommentSet(1);
-  //   const specificAnnotationSet = pdfService.annotationSetComponents.find((annotation) => annotation.instance.page === 1);
-  //
-  //   spyOn(specificAnnotationSet.instance, 'addToDOM').and.callThrough();
-  //   const mockRealElement = document.createElement('div');
-  //   const mockEventSource: PageEvent = {
-  //     pageNumber: 1,
-  //     source: {
-  //       rotation: 0,
-  //       scale: 1,
-  //       div: mockRealElement
-  //     }
-  //   };
-  //
-  //   pdfService.onPageRendered(mockEventSource);
-  //
-  //   expect(specificAnnotationSet.instance.addToDOM).toHaveBeenCalledWith(mockEventSource.source);
-  // });
+  it('should add annotationSet to page', () => {
+    spyOn(annoSetService, 'addAnnoSetToPage');
 
-  // it('should call on text selection with the mouse event', () => {
-  //   const mouseEvent = new MouseEvent('click');
-  //   spyOn(toolbarEvent.highlightMode, 'getValue').and.returnValue(true);
-  //   spyOn(mockWrapper, 'getPageNumber');
-  //
-  //   pdfService.onTextHighlighted(mouseEvent);
-  //
-  //   expect(toolbarEvent.highlightMode.getValue).toHaveBeenCalled();
-  //   setTimeout(() => {
-  //     spyOn(viewerEventService, 'onTextSelection').and.callThrough();
-  //     expect(viewerEventService.onTextSelection).toHaveBeenCalledWith({ page: 1, event: mouseEvent});
-  //   }, 1);
-  // });
+    service.addAnnoSetToPage();
 
-  // it('should highlight the text on selected page', () => {
-  //   const mouseEvent = new MouseEvent('click');
-  //   spyOn(pdfService, 'onTextHighlighted').and.callThrough();
-  //   spyOn(toolbarEvent.highlightMode, 'getValue').and.returnValue(true);
-  //   pdfService.onTextHighlighted(mouseEvent);
-  //
-  //   expect(pdfService.onTextHighlighted).toHaveBeenCalled();
-  // });
+    expect(annoSetService.addAnnoSetToPage).toHaveBeenCalled();
+  });
+
+  it('should build annotationSet components', () => {
+    const annotationSet = {} as AnnotationSet;
+    spyOn(annoSetService, 'destroyComponents');
+    spyOn(commentSetService, 'destroyComponents');
+    spyOn(annoSetService, 'setAnnotationSet');
+    spyOn(commentSetService, 'setAnnotationSet');
+
+    service.buildAnnoSetComponents(annotationSet);
+
+    expect(service.annotationSet).toBe(annotationSet);
+    expect(annoSetService.destroyComponents).toHaveBeenCalled();
+    expect(commentSetService.destroyComponents).toHaveBeenCalled();
+    expect(annoSetService.setAnnotationSet).toHaveBeenCalledWith(annotationSet);
+    expect(commentSetService.setAnnotationSet).toHaveBeenCalledWith(annotationSet);
+  });
+
+  it('should add comments to rendered pages', function () {
+    spyOn(commentSetService, 'addCommentsToRenderedPages');
+
+    service.addCommentsToRenderedPages();
+
+    expect(commentSetService.addCommentsToRenderedPages).toHaveBeenCalled();
+  });
+
+  it('should destroy commentSets HTML', function () {
+    spyOn(commentSetService, 'destroyCommentSetsHTML');
+
+    service.destroyCommentSetsHTML();
+
+    expect(commentSetService.destroyCommentSetsHTML).toHaveBeenCalled();
+  });
 });

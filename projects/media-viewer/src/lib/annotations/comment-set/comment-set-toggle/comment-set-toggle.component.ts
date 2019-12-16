@@ -19,7 +19,7 @@ export class CommentSetToggleComponent implements AfterContentInit, OnDestroy {
   }
 
   async ngAfterContentInit(): Promise<void> {
-    this.subscription = this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle);
+    this.subscription = this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle);
   }
 
   ngOnDestroy(): void {

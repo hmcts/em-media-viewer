@@ -1,4 +1,4 @@
-import { TextareaAutoGrowDirective } from './textarea-auto-grow.directive';
+import { TextareaAutoExpandDirective } from './textarea-auto-expand.directive';
 import { CommentComponent } from './comment.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
@@ -6,14 +6,14 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommentService } from './comment.service';
 
-describe('TextareaAutoGrowDirective', () => {
+describe('TextareaAutoExpandDirective', () => {
   let component: CommentComponent;
   let fixture: ComponentFixture<CommentComponent>;
   let textareaEl: DebugElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TextareaAutoGrowDirective, CommentComponent],
+      declarations: [TextareaAutoExpandDirective, CommentComponent],
       providers: [CommentService],
       imports: [FormsModule]
     });
@@ -25,7 +25,7 @@ describe('TextareaAutoGrowDirective', () => {
   });
 
   it('should create an instance', () => {
-    const directive = new TextareaAutoGrowDirective(textareaEl);
+    const directive = new TextareaAutoExpandDirective(textareaEl);
     expect(directive).toBeTruthy();
   });
 

@@ -16,21 +16,21 @@ describe('Viewer Events Service', () => {
   });
 
   it('should select the text', () => {
-    const textSelectSpy = spyOn(service.highlightedText, 'next');
-    service.onTextSelection(mockHighLight);
+    const textSelectSpy = spyOn(service.textHighlight, 'next');
+    service.textSelected(mockHighLight);
 
     expect(textSelectSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should select the Shape', () => {
-    const shapeSelectSpy = spyOn(service.highlightedShape, 'next');
-    service.onShapeSelection(mockHighLight);
+    const shapeSelectSpy = spyOn(service.shapeHighlight, 'next');
+    service.shapeSelected(mockHighLight);
 
     expect(shapeSelectSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should toggle comments panel', () => {
-    const commentsToggleSpy = spyOn(service.commentsPanelToggle, 'next');
+    const commentsToggleSpy = spyOn(service.commentsPanelVisible, 'next');
     service.toggleCommentsPanel(false);
 
     expect(commentsToggleSpy).toHaveBeenCalledWith(false);

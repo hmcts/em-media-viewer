@@ -49,7 +49,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.annotationService.getSelectedAnnotation()
         .subscribe((selectedAnnotation) => this.selectAnnotation = selectedAnnotation),
-      this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle)
+      this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
     this.commentService.updateCommentSets(this.page, this);
   }
@@ -60,9 +60,9 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     }
   }
 
-  addToDOM(eventSource: PageEvent['source']) {
-    this.setCommentSetValues(eventSource);
-    const element = eventSource.div;
+  addToDOM(pageEvent: PageEvent) {
+    this.updateView(pageEvent);
+    const element = pageEvent.source.div;
 
     let pageContainer = element.closest('.pageContainer');
     if (!pageContainer) {
@@ -77,10 +77,11 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     pageContainer.appendChild(this.container.nativeElement);
   }
 
-  setCommentSetValues(eventSource: PageEvent['source']) {
-    this.height = eventSource.div.clientHeight;
-    this.zoom = eventSource.scale;
-    this.rotate = eventSource.rotation;
+  updateView(pageRenderEvent: PageEvent) {
+    this.height = pageRenderEvent.source.div.clientHeight;
+    this.zoom = pageRenderEvent.source.scale;
+    this.rotate = pageRenderEvent.source.rotation;
+    this.commentService.updateCommentSets(pageRenderEvent.pageNumber, this);
   }
 
   public getCommentsOnPage(): Annotation[] {
@@ -125,7 +126,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   topRectangle(annotationId: string) {
-    const annotation = this.annotationSet.annotations.find((annotation) => annotation.id === annotationId);
+    const annotation = this.annotationSet.annotations.find((anno) => anno.id === annotationId);
     return annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
   }
 

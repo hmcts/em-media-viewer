@@ -19,14 +19,16 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
-import { PdfAnnotationService } from './pdf-annotation-service';
+import { PdfAnnotationService } from './pdf-annotation.service';
 import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
+import { AnnotationSetService } from './annotation-set.service';
+import { CommentSetService } from './comment-set.service';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.scss'],
-  providers: [PdfAnnotationService],
+  providers: [PdfAnnotationService, AnnotationSetService, CommentSetService],
   encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
@@ -71,7 +73,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
@@ -79,10 +80,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
     this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {
-        this.annotationService.onPageRendered(event);
+        this.annotationService.addAnnotationsAndComments(event);
       }
     });
-
     this.subscriptions.push(
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
@@ -96,28 +96,33 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)),
       this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
       this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)),
-      this.viewerEvents.commentsPanelToggle.subscribe(toggle => this.showCommentsPanel = toggle)
+      this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
-    await this.loadDocument();
   }
 
   async ngOnChanges(changes: SimpleChanges) {
-    let reloadDocument = false;
-    if (changes.url && this.pdfWrapper) {
-      reloadDocument = true;
+    if (!this.pdfWrapper) {
+      this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
+    if (changes.url && this.pdfWrapper) {
+      this.loadDocument();
+    }
+    let reloadAnnotations = false;
     if (changes.enableAnnotations && this.pdfWrapper) {
-      if (!this.enableAnnotations) {
-        this.annotationService.destroyComponents();
+      if (this.enableAnnotations) {
+        reloadAnnotations = true;
+      } else {
         this.annotationSet = null;
+        this.annotationService.destroyComponents();
+        this.annotationService.destroyCommentSetsHTML();
       }
-      reloadDocument = true;
     }
     if (changes.annotationSet && this.annotationSet) {
-      reloadDocument = true;
+      reloadAnnotations = true;
     }
-    if (reloadDocument) {
-      this.loadDocument();
+    if (reloadAnnotations) {
+      this.annotationService.buildAnnoSetComponents(this.annotationSet);
+      this.annotationService.addCommentsToRenderedPages();
     }
   }
 
@@ -129,7 +134,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private async loadDocument() {
     await this.pdfWrapper.loadDocument(this.url);
     if (this.enableAnnotations && this.annotationSet) {
-      this.annotationService.setupAnnotationSet(this.annotationSet);
+      this.annotationService.buildAnnoSetComponents(this.annotationSet);
     }
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
   }
@@ -168,10 +173,23 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onMouseDown(mouseEvent: MouseEvent) {
-    this.annotationService.onShapeHighlighted(mouseEvent);
+    if (this.toolbarEvents.highlightModeSubject.getValue()) {
+      this.annotationService.addAnnoSetToPage();
+    }
+    if (this.toolbarEvents.drawModeSubject.getValue()) {
+      this.annotationService.addAnnoSetToPage();
+      setTimeout(() => this.viewerEvents.shapeSelected({
+        page: this.pdfWrapper.getPageNumber(),
+        event: mouseEvent
+      }), 0);
+    }
   }
 
   onMouseUp(mouseEvent: MouseEvent) {
-    this.annotationService.onTextHighlighted(mouseEvent);
+    if (this.toolbarEvents.highlightModeSubject.getValue()) {
+      setTimeout(() => this.viewerEvents.textSelected({
+            page: this.pdfWrapper.getPageNumber(), event: mouseEvent
+      }), 0);
+    }
   }
 }
