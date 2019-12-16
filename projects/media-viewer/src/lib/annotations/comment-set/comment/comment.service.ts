@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CommentSetComponent } from '../comment-set.component';
+import { Annotation } from '../../annotation-set/annotation/annotation.model';
+import { CommentComponent } from './comment.component';
 
 @Injectable()
 export class CommentService {
@@ -20,15 +22,34 @@ export class CommentService {
     return this.unsavedChanges.asObservable();
   }
 
-  resetCommentSet() {
+  hasUnsavedComments(annotation: Annotation): boolean {
+    if (annotation.comments.length > 0) {
+      const comment = this.getComment(annotation);
+      return comment.hasUnsavedChanges;
+    }
+    return false;
+  }
+
+  updateUnsavedCommentsStatus(annotation: Annotation, hasUnsavedChanges: boolean): void {
+    const comment = this.getComment(annotation);
+    comment.hasUnsavedChanges = hasUnsavedChanges;
+    this.allCommentSetsSaved();
+  }
+
+  getComment(annotation: Annotation): CommentComponent {
+    return this.commentSets[annotation.page].commentComponents
+      .find(c => c.comment.annotationId === annotation.comments[0].annotationId);
+  }
+
+  resetCommentSet(): void {
     this.commentSets = [];
   }
 
-  updateCommentSets(index: number, commentSetComponent: CommentSetComponent) {
+  updateCommentSets(index: number, commentSetComponent: CommentSetComponent): void {
     this.commentSets[index] = commentSetComponent;
   }
 
-  allCommentSetsSaved() {
+  allCommentSetsSaved(): void {
     this.onCommentChange(
       this.commentSets.some(commentSet => commentSet.allCommentsSavedInSet()));
   }

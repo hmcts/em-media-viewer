@@ -1,5 +1,5 @@
 import { AnnotationSetComponent } from './annotation-set.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import { RectangleComponent } from './annotation/rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../assets/annotation-set';
@@ -13,6 +13,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import {CommentComponent} from '../comment-set/comment/comment.component';
 import { AnnotationService } from '../annotation.service';
+import { CommentService } from '../comment-set/comment/comment.service';
 import { MutableDivModule } from 'mutable-div';
 
 describe('AnnotationSetComponent', () => {
@@ -21,6 +22,7 @@ describe('AnnotationSetComponent', () => {
 
   const api = new AnnotationApiService({}  as any);
   const mockAnnotationService = new AnnotationService();
+  const mockCommentService = new CommentService();
 
   const mockElement: any = {
     parentElement: {
@@ -117,6 +119,7 @@ describe('AnnotationSetComponent', () => {
       providers: [
         { provide: AnnotationApiService, useValue: api },
         { provide: AnnotationService, useValue: mockAnnotationService },
+        { provide: CommentService, useValue: mockCommentService },
         ToolbarEventService
       ]
     }).compileComponents();
@@ -149,6 +152,17 @@ describe('AnnotationSetComponent', () => {
     expect(spy).toHaveBeenCalledWith(annotation);
   });
 
+  it('expect annotation to be assigned to annotation set when updated', () => {
+    const annotation = { ...annotationSet.annotations[0] };
+    spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
+    spyOn(mockCommentService, 'hasUnsavedComments').and.returnValues(true);
+
+    annotation.color = 'red';
+    component.onAnnotationUpdate(annotation);
+
+    expect(component.annotationSet.annotations[0]).toEqual(annotation);
+  });
+
   it('delete annotation', () => {
     spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
     const annotations = { ...annotationSet.annotations };
@@ -158,6 +172,17 @@ describe('AnnotationSetComponent', () => {
 
     expect(api.deleteAnnotation).toHaveBeenCalledWith(annotation.id);
     expect(annotations).not.toEqual(component.annotationSet.annotations);
+  });
+
+  it('delete annotation should call updateUnsavedCommentsStatus', () => {
+    inject([CommentService], (commentService: CommentService) => {
+      const annotations = { ...annotationSet.annotations };
+      const annotation = { ...annotations[0] };
+
+      component.onAnnotationDelete(annotation);
+
+      expect(commentService.updateUnsavedCommentsStatus).toHaveBeenCalledWith(annotation, false);
+    });
   });
 
   it('starts drawing on mousedown', () => {
