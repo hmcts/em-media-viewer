@@ -101,7 +101,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngOnChanges(changes: SimpleChanges) {
-    if(!this.pdfWrapper) {
+    if (!this.pdfWrapper) {
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
     if (changes.url && this.pdfWrapper) {
@@ -189,7 +189,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
       setTimeout(() => this.viewerEvents.textSelected({
             page: this.pdfWrapper.getPageNumber(), event: mouseEvent
-      }),0);
+      }), 0);
     }
   }
 }

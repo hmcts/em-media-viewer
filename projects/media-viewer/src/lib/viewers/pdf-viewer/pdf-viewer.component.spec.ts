@@ -96,11 +96,11 @@ describe('PdfViewerComponent', () => {
     component.ngOnDestroy();
   });
 
-  it('should create',() => {
+  it('should create', () => {
     expect(component).toBeDefined();
   });
 
-  it('should setup subscriptions',() => {
+  it('should setup subscriptions', () => {
     spyOn(printService, 'printDocumentNatively');
     spyOn(annotationService, 'buildAnnoSetComponents');
     spyOn(viewerEvents, 'toggleCommentsPanel');
@@ -149,14 +149,14 @@ describe('PdfViewerComponent', () => {
     expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeTruthy();
   });
 
-  it('should show error message on document load failed',() => {
+  it('should show error message on document load failed', () => {
     mockWrapper.documentLoadFailed.next({ name: 'error', message: 'Could not load the document' });
 
     expect(component.errorMessage).toContain('Could not load the document');
     expect(component.loadingDocument).toBe(false);
   });
 
-  it('clear the search when the search bar is closed',() => {
+  it('clear the search when the search bar is closed', () => {
     spyOn(mockWrapper, 'clearSearch');
 
     component.searchBarHidden = true;
@@ -164,7 +164,7 @@ describe('PdfViewerComponent', () => {
     expect(mockWrapper.clearSearch).toHaveBeenCalled();
   });
 
-  it('should not highlight text when in view mode for selected page',() => {
+  it('should not highlight text when in view mode for selected page', () => {
     const mouseEvent = new MouseEvent('mouseup');
     spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(false);
     spyOn(viewerEvents, 'textSelected');
@@ -185,7 +185,7 @@ describe('PdfViewerComponent', () => {
     expect(annotationService.addAnnoSetToPage).toHaveBeenCalled();
   });
 
-  it('should initialize loading of document',() => {
+  it('should initialize loading of document', () => {
     mockWrapper.documentLoadInit.next();
 
     expect(component.loadingDocument).toBe(true);
@@ -193,7 +193,7 @@ describe('PdfViewerComponent', () => {
     expect(component.errorMessage).toBe(null);
   });
 
-  it('should set document loading status to false after document has been loaded',() => {
+  it('should set document loading status to false after document has been loaded', () => {
     component.loadingDocument = true;
 
     mockWrapper.documentLoaded.next();
@@ -255,7 +255,7 @@ describe('PdfViewerComponent', () => {
     expect(annotationService.destroyCommentSetsHTML).toHaveBeenCalled();
   });
 
-  it('should show comments panel',() => {
+  it('should show comments panel', () => {
     component.showCommentsPanel = false;
 
     viewerEvents.commentsPanelVisible.next(true);
@@ -265,7 +265,7 @@ describe('PdfViewerComponent', () => {
     expect(component.viewerContainer.nativeElement.classList).toContain('show-comments-panel');
   });
 
-  it('should hide comments panel',() => {
+  it('should hide comments panel', () => {
     component.showCommentsPanel = true;
 
     viewerEvents.commentsPanelVisible.next(false);

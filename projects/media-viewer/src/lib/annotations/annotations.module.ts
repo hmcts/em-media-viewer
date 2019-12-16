@@ -10,7 +10,7 @@ import { CommentComponent } from './comment-set/comment/comment.component';
 import { PopupToolbarComponent } from './annotation-set/annotation/popup-toolbar/popup-toolbar.component';
 import { CommentSetComponent } from './comment-set/comment-set.component';
 import { AnnotationService } from './annotation.service';
-import { TextareaAutoGrowDirective } from './comment-set/comment/textarea-auto-grow.directive';
+import { TextareaAutoExpandDirective } from './comment-set/comment/textarea-auto-expand.directive';
 import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comment-set-toggle.component';
 import { CommentsSummaryComponent } from './comments-summary/comments-summary.component';
 import { CommentSetRenderService } from './comment-set/comment-set-render.service';
@@ -30,7 +30,7 @@ import { MutableDivModule } from 'mutable-div';
     CommentComponent,
     PopupToolbarComponent,
     CommentSetComponent,
-    TextareaAutoGrowDirective,
+    TextareaAutoExpandDirective,
     CommentSetToggleComponent,
     CommentsSummaryComponent
   ],

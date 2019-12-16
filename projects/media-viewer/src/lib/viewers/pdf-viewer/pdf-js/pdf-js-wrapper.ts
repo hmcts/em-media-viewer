@@ -6,6 +6,16 @@ import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-e
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
+/**
+ * Values of the state field returned by the find events
+ */
+enum FindState {
+  FOUND = 0,
+  NOT_FOUND = 1,
+  WRAPPED = 2,
+  PENDING = 3,
+}
+
 export class PdfJsWrapper {
 
   private zoomValue: number;
@@ -147,16 +157,6 @@ export class PdfJsWrapper {
   public getCurrentPDFTitle(): string {
     return this.documentTitle;
   }
-}
-
-/**
- * Values of the state field returned by the find events
- */
-enum FindState {
-  FOUND = 0,
-  NOT_FOUND = 1,
-  WRAPPED = 2,
-  PENDING = 3,
 }
 
 export interface DocumentLoadProgress {

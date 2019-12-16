@@ -30,7 +30,7 @@ export class PdfAnnotationService {
   ) {}
 
   init(pdfWrapper: PdfJsWrapper, pdfViewer: ElementRef): void {
-    this.annotationSetService.init(pdfWrapper,pdfViewer);
+    this.annotationSetService.init(pdfWrapper, pdfViewer);
     this.commentSetService.init(pdfViewer);
     this.pdfWrapper = pdfWrapper;
   }

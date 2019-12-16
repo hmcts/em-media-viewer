@@ -9,13 +9,13 @@ describe('AnnotationService', () => {
     {
       _rectangle: { x: 70, y: 30, height: 150, width: 200 },
       form: { nativeElement: {
-          getBoundingClientRect: () => { return { height: 45 };}
+          getBoundingClientRect: () =>  ({ height: 45 })
       }}
     },
     {
       _rectangle: { x: 40, y: 60, height: 100, width: 250 },
       form: { nativeElement: {
-        getBoundingClientRect: () => { return { height: 55 }; }
+        getBoundingClientRect: () => ({ height: 55 })
       }}
     }
   ] as CommentComponent[];
@@ -28,7 +28,7 @@ describe('AnnotationService', () => {
   }));
 
   it('should sort comment components, rotation 90',
-    inject([CommentSetRenderService],(service: CommentSetRenderService) => {
+    inject([CommentSetRenderService], (service: CommentSetRenderService) => {
       const commentList = [...componentList];
       service.sortComponents(commentList, 100, 90);
 
@@ -36,7 +36,7 @@ describe('AnnotationService', () => {
   }));
 
   it('should sort comment components, rotation 180',
-    inject([CommentSetRenderService],(service: CommentSetRenderService) => {
+    inject([CommentSetRenderService], (service: CommentSetRenderService) => {
       const commentList = [...componentList];
 
       service.sortComponents(commentList, 100, 180);
@@ -45,7 +45,7 @@ describe('AnnotationService', () => {
   }));
 
   it('should sort comment components, rotation 270',
-    inject([CommentSetRenderService],(service: CommentSetRenderService) => {
+    inject([CommentSetRenderService], (service: CommentSetRenderService) => {
       const commentList = [...componentList];
 
       service.sortComponents(commentList, 100, 270);
@@ -54,7 +54,7 @@ describe('AnnotationService', () => {
   }));
 
   it('should sort comment components, rotation 0',
-    inject([CommentSetRenderService],(service: CommentSetRenderService) => {
+    inject([CommentSetRenderService], (service: CommentSetRenderService) => {
       const commentList = [...componentList];
 
       service.sortComponents(commentList, 100, 0);

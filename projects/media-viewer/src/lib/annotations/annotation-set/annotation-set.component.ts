@@ -109,7 +109,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       if (rectangle.height > 5 || rectangle.width > 5) {
         this.api
           .postAnnotation(annotation)
-          .subscribe(annotation => this.annotationSet.annotations.push(annotation));
+          .subscribe(savedAnnotation => this.annotationSet.annotations.push(savedAnnotation));
 
         this.toolbarEvents.drawModeSubject.next(false);
         this.onAnnotationClick({ annotationId: annotation.id, editable: false });

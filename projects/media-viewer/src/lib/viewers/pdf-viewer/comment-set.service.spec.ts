@@ -68,9 +68,9 @@ describe('PdfAnnotationService', () => {
   });
 
   it('should add comments to rendered pages', () => {
-    let [, page] = mockDestroyCommentSetsHtml();
+    const [, page] = mockDestroyCommentSetsHtml();
     spyOn(page, 'closest').and.returnValue(undefined);
-    page.getElementsByClassName = () => { return { length: 1 }};
+    page.getElementsByClassName = () => ({ length: 1 });
     page.getAttribute = () => {};
     const mockCommentSet = mockCommentSetCreation();
     spyOn(mockCommentSet.instance, 'addToDOM');

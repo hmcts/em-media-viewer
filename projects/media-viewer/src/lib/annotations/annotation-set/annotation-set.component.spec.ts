@@ -7,7 +7,7 @@ import { PopupToolbarComponent } from './annotation/popup-toolbar/popup-toolbar.
 import { AnnotationComponent } from './annotation/annotation.component';
 import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ElementRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
@@ -21,6 +21,11 @@ describe('AnnotationSetComponent', () => {
 
   const api = new AnnotationApiService({}  as any);
   const mockAnnotationService = new AnnotationService();
+
+  const mockTextLayerRect: any = {
+    top: 0,
+    left: 0,
+  };
 
   const mockElement: any = {
     parentElement: {
@@ -40,6 +45,23 @@ describe('AnnotationSetComponent', () => {
     } as any,
   };
 
+  const mockClientRect: any = {
+    top: 10,
+    bottom: 100,
+    left: 25,
+    right: 100,
+  };
+
+  const mockClientRects: any = [mockClientRect, mockClientRect];
+  const mockRange: any = {
+    cloneRange(): any {
+      return mockRange;
+    },
+    getClientRects(): any {
+      return mockClientRects;
+    }
+  };
+
   const mockSelection: any = {
     rangeCount: 2,
     isCollapsed: false,
@@ -50,35 +72,12 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  const mockTextLayerRect: any = {
-    top: 0,
-    left: 0,
-  };
-
-  const mockClientRect: any = {
-    top: 10,
-    bottom: 100,
-    left: 25,
-    right: 100,
-  };
-
-  const mockClientRects: any = [mockClientRect, mockClientRect];
-
   const mockAnnotationRectangle: any = {
     annotationId: 'id',
     height: 12,
     width: 5,
     x: 2,
     y: 3
-  };
-
-  const mockRange: any = {
-    cloneRange(): any {
-      return mockRange;
-    },
-    getClientRects(): any {
-      return mockClientRects;
-    }
   };
 
   const fakeApi: any = {

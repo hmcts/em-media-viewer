@@ -32,7 +32,7 @@ export class CommentSetService {
   }
 
   renderCommentsOnPage(pageRenderEvent: PageEvent) {
-    let commentSetComponent = this.commentSetComponents
+    const commentSetComponent = this.commentSetComponents
       .find((commentSetComp) => commentSetComp.instance.page === pageRenderEvent.pageNumber);
     if (commentSetComponent) {
       commentSetComponent.instance.updateView(pageRenderEvent);
@@ -50,7 +50,7 @@ export class CommentSetService {
           const container = page.closest('div.pageContainer');
           if (canvasElements.length > 0 && !container) {
             this.addCommentSetToPage({
-              pageNumber: parseInt(page.getAttribute('data-page-number')),
+              pageNumber: parseInt(page.getAttribute('data-page-number'), 10),
               source: { div: page as HTMLDivElement, scale: 1, rotation: 0 }
             });
           }
@@ -87,7 +87,7 @@ export class CommentSetService {
             container.insertAdjacentElement('beforebegin', page);
             container.remove();
           }
-        })
+        });
     }
   }
 }
