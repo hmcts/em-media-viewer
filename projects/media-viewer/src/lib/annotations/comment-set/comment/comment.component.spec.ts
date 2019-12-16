@@ -93,9 +93,7 @@ describe('CommentComponent', () => {
 
   it('should get comment', () => {
     component.comment = {...mockComment};
-
     expect(component._comment).toEqual({...mockComment});
-    expect(component.comment).toEqual({...mockComment});
   });
 
   it('should set the unsavedChanges value', () => {
