@@ -1,5 +1,6 @@
 import { CommentService } from './comment.service';
 import { CommentSetComponent } from '../comment-set.component';
+import { Annotation } from '../../annotation-set/annotation/annotation.model';
 
 describe('CommentService', () => {
 
@@ -48,5 +49,22 @@ describe('CommentService', () => {
 
     commentService.resetCommentSet();
     expect(commentService.commentSets).toEqual([]);
+  });
+
+  it('hasUnsavedComments should return false when annotation comments are empty', () => {
+    const annotation = {
+      comments: []
+    } as Annotation;
+
+    expect(commentService.hasUnsavedComments(annotation)).toBeFalsy();
+  });
+
+  it('onCommentChange should be called with false when commentSets is empty', () => {
+    spyOn(commentService.unsavedChanges, 'next');
+
+    commentService.allCommentSetsSaved();
+
+    expect(commentService.unsavedChanges.next).toHaveBeenCalledTimes(1);
+    expect(commentService.unsavedChanges.next).toHaveBeenCalledWith(false);
   });
 });

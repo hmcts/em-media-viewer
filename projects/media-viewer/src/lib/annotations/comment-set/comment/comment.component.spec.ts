@@ -91,12 +91,29 @@ describe('CommentComponent', () => {
     expect(component.fullComment).toEqual(mockComment.content);
   });
 
+  it('should get comment', () => {
+    component.comment = {...mockComment};
+    expect(component._comment).toEqual({...mockComment});
+  });
+
   it('should set the unsavedChanges value', () => {
     inject([CommentService], (commentService: CommentService) => {
       spyOn(commentService, 'onCommentChange');
       component.onCommentChange('new comment');
       expect(commentService.onCommentChange).toHaveBeenCalledWith(true);
     });
+  });
+
+  it('should set the unsavedChanges value to true', () => {
+    component.originalComment = 'old comment';
+    component.onCommentChange('new comment');
+    expect(component.hasUnsavedChanges).toBeTruthy();
+  });
+
+  it('should set the unsavedChanges value to false', () => {
+    component.originalComment = 'old comment';
+    component.onCommentChange('old comment');
+    expect(component.hasUnsavedChanges).toBeFalsy();
   });
 
   it('should set comment with lastUpdate set to createdDate if there has been no update', () => {
@@ -154,6 +171,15 @@ describe('CommentComponent', () => {
     expect(component.editable).toBe(false);
   }));
 
+  it('should set hasUnsavedChanges to false when changes cancelled', fakeAsync(() => {
+    component.hasUnsavedChanges = true;
+
+    waitForChanges();
+    component.onCancel();
+
+    expect(component.hasUnsavedChanges).toBe(false);
+  }));
+
   it('should not set focus on textArea when comment made non-editable', fakeAsync(() => {
     component.editable = true;
     component.selected = true;
@@ -164,6 +190,7 @@ describe('CommentComponent', () => {
 
     expect(component.selected).toBe(true);
     expect(component.editable).toBe(false);
+    expect(component.hasUnsavedChanges).toBe(false);
   }));
 
   it('should set commentStyle to uneditable', () => {

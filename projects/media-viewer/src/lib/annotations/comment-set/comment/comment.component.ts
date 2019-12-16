@@ -29,6 +29,8 @@ export class CommentComponent implements OnChanges {
   rectTop;
   rectLeft;
 
+  hasUnsavedChanges = false;
+
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() renderComments = new EventEmitter<Comment>();
   @Output() delete = new EventEmitter<Comment>();
@@ -61,6 +63,10 @@ export class CommentComponent implements OnChanges {
     this.fullComment = this.originalComment;
   }
 
+  get comment() {
+    return this._comment;
+  }
+
   @Input()
   set rectangle(rectangle: Rectangle) {
     this._rectangle = rectangle;
@@ -79,8 +85,8 @@ export class CommentComponent implements OnChanges {
 
   @Input()
   set editable(editable: boolean) {
-    this._editable = editable;
-    if (editable) {
+    this._editable = editable || this.hasUnsavedChanges;
+    if (this._editable) {
       setTimeout(() => this.textArea.nativeElement.focus(), 10);
     }
   }
@@ -94,12 +100,13 @@ export class CommentComponent implements OnChanges {
   }
 
   onCommentChange(updatedComment) {
-    const hasUnsavedChanges = this.originalComment.substring(0, this.COMMENT_CHAR_LIMIT) !==
+    this.hasUnsavedChanges = this.originalComment.substring(0, this.COMMENT_CHAR_LIMIT) !==
       updatedComment.substring(0, this.COMMENT_CHAR_LIMIT);
-    this.commentService.onCommentChange(hasUnsavedChanges);
+    this.commentService.onCommentChange(this.hasUnsavedChanges);
   }
 
   onCancel() {
+    this.hasUnsavedChanges = false;
     this.editable = false;
     this.fullComment = this.originalComment;
     this.changes.emit(false);
@@ -113,6 +120,7 @@ export class CommentComponent implements OnChanges {
     this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
     this.updated.emit(this._comment);
     this.editable = false;
+    this.hasUnsavedChanges = false;
     this.changes.emit(false);
   }
 

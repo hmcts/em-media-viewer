@@ -321,7 +321,7 @@ describe('CommentSetComponent', () => {
 
   it('all comments saved in set should return true', () => {
     const commentMock = {
-      editable: true
+      hasUnsavedChanges: true
     } as CommentComponent;
 
     component.commentComponents.reset([commentMock]);
