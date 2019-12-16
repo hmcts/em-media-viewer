@@ -21,6 +21,11 @@ import { ResponseType, ViewerException } from './viewers/error-message/viewer-ex
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { Subscription } from 'rxjs';
 
+enum SupportedContentTypes {
+  PDF = 'pdf',
+  IMAGE = 'image'
+}
+
 @Component({
   selector: 'mv-media-viewer',
   templateUrl: './media-viewer.component.html',
@@ -131,9 +136,4 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   onDocumentTitleChange(title: string) {
     this.documentTitle = title;
   }
-}
-
-enum SupportedContentTypes {
-  PDF = 'pdf',
-  IMAGE = 'image'
 }

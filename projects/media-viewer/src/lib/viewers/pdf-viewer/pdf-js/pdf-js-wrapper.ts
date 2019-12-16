@@ -6,6 +6,16 @@ import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-e
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
+/**
+ * Values of the state field returned by the find events
+ */
+enum FindState {
+  FOUND = 0,
+  NOT_FOUND = 1,
+  WRAPPED = 2,
+  PENDING = 3,
+}
+
 export class PdfJsWrapper {
 
   private zoomValue: number;
@@ -18,7 +28,7 @@ export class PdfJsWrapper {
     public readonly documentLoadInit: Subject<string>,
     public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
     public readonly documentLoaded: Subject<any>,
-    public readonly documentLoadFailed: Subject<undefined>,
+    public readonly documentLoadFailed: Subject<Error>,
     public readonly pageRendered: Subject<PageEvent>
   ) {
 
@@ -149,16 +159,6 @@ export class PdfJsWrapper {
   }
 }
 
-/**
- * Values of the state field returned by the find events
- */
-enum FindState {
-  FOUND = 0,
-  NOT_FOUND = 1,
-  WRAPPED = 2,
-  PENDING = 3,
-}
-
 export interface DocumentLoadProgress {
   loaded: number;
   total: number;
@@ -169,7 +169,7 @@ export interface PageEvent {
   source: {
     rotation: number,
     scale: number,
-    div: HTMLElement
+    div: HTMLDivElement
   };
 }
 

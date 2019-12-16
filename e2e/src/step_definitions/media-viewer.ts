@@ -10,7 +10,7 @@ import {SearchPage} from '../pages/search.po';
 import {RotatePage} from '../pages/rotate.po';
 import {CommentPage} from '../pages/comment.po';
 import {ZoomPage} from '../pages/zoom.po';
-import {OutlinePage} from "../pages/outline.po";
+import {OutlinePage} from '../pages/outline.po';
 
 
 const page = new AppPage();
@@ -75,7 +75,7 @@ Then('I should see next page number should be {string}', async (expected: string
 Then(/^I expect the page navigation should take me to the expected "([^"]*)"$/, async function (expected: string) {
   const value = await navigatePage.pageNumber.getAttribute('value');
   expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
-  expect(await page.isPageDataLoaded(parseInt(value))).to.equal(true);
+  expect(await page.isPageDataLoaded(parseInt(value, 10))).to.equal(true);
   const screenshot = await browser.takeScreenshot();
   this.attach(screenshot, 'image/png');
 });
@@ -436,7 +436,7 @@ Then('I should be able to see bundle node and expand', async () => {
 });
 
 
-When('I choose to navigate to {string}', async function (link:string) {
+When('I choose to navigate to {string}', async function (link: string) {
   await outlinePage.navigateToLink(link);
 });
 

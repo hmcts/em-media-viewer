@@ -1,5 +1,5 @@
-import {browser, by, element, ElementFinder, Key, protractor} from 'protractor';
-import {AppPage} from './app.po';
+import { browser, by, element, ElementFinder } from 'protractor';
+import { AppPage } from './app.po';
 
 export class NavigatePage extends AppPage {
   public pageNumber: ElementFinder;
@@ -27,11 +27,11 @@ export class NavigatePage extends AppPage {
   }
 
   async setPageNumber(num: number) {
-    await browser.executeScript((pageNum:string) => {
-      let input:HTMLInputElement = <HTMLInputElement>document.getElementById('pageNumber');
+    await browser.executeScript((pageNum: string) => {
+      const input: HTMLInputElement = <HTMLInputElement>document.getElementById('pageNumber');
       input.value = pageNum;
-      let evt = document.createEvent("HTMLEvents");
-       evt.initEvent("change", false, true);
+      const evt = document.createEvent('HTMLEvents');
+       evt.initEvent('change', false, true);
        input.dispatchEvent(evt);
     }, num.toString());
     await browser.sleep(3000);

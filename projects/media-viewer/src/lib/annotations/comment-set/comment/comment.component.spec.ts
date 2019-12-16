@@ -48,6 +48,12 @@ describe('CommentComponent', () => {
     },
   };
 
+  const waitForChanges = () => {
+    fixture.detectChanges();
+    tick(10);
+    fixture.detectChanges();
+  };
+
   beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
@@ -247,10 +253,4 @@ describe('CommentComponent', () => {
     component.reRenderComments();
     expect(commentRenderedEmitEventSpy).toHaveBeenCalledTimes(1);
   });
-
-  const waitForChanges = () => {
-    fixture.detectChanges();
-    tick(10);
-    fixture.detectChanges();
-  };
 });

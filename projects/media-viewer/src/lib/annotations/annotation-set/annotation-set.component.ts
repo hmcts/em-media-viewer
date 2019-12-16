@@ -44,8 +44,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscriptions.push(this.viewerEvents.highlightedText.subscribe((highlight) => this.createTextHighlight(highlight)));
-    this.subscriptions.push(this.viewerEvents.highlightedShape.subscribe((highlight) => this.initShapeRectangle(highlight.event)));
+    this.subscriptions.push(this.viewerEvents.textHighlight.subscribe((highlight) => this.createTextHighlight(highlight)));
+    this.subscriptions.push(this.viewerEvents.shapeHighlight.subscribe((highlight) => this.initShapeRectangle(highlight.event)));
     this.subscriptions.push(this.annotationService.getSelectedAnnotation()
       .subscribe((selectedAnnotation) => this.selectedAnnotation = selectedAnnotation));
     this.subscriptions.push(this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode));
@@ -113,7 +113,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       if (rectangle.height > 5 || rectangle.width > 5) {
         this.api
           .postAnnotation(annotation)
-          .subscribe(annotation => this.annotationSet.annotations.push(annotation));
+          .subscribe(savedAnnotation => this.annotationSet.annotations.push(savedAnnotation));
 
         this.toolbarEvents.drawModeSubject.next(false);
         this.onAnnotationClick({ annotationId: annotation.id, editable: false });

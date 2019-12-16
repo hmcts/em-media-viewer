@@ -219,19 +219,18 @@ describe('CommentSetComponent', () => {
   });
 
   it('should use addToDOM method to set the comment-set html', () => {
-    spyOn(component, 'setCommentSetValues');
+    spyOn(component, 'updateView');
     const mockRealElement = document.createElement('div');
-    const mockEventSource: PageEvent['source'] = {
-      rotation: 0,
-      scale: 1,
-      div: mockRealElement
+    const mockPageEvent: PageEvent = {
+      pageNumber: 1,
+      source: { rotation: 0, scale: 1, div: mockRealElement }
     };
 
-    component.addToDOM(mockEventSource);
-    expect(component.setCommentSetValues).toHaveBeenCalledWith(mockEventSource);
-    expect(mockEventSource.div.closest('.pageContainer')).toBeTruthy();
-    expect(mockEventSource.div.closest('.pageWrapper')).toBeTruthy();
-    expect(mockEventSource.div.parentNode.nextSibling).toEqual(component.container.nativeElement);
+    component.addToDOM(mockPageEvent);
+    expect(component.updateView).toHaveBeenCalledWith(mockPageEvent);
+    expect(mockPageEvent.source.div.closest('.pageContainer')).toBeTruthy();
+    expect(mockPageEvent.source.div.closest('.pageWrapper')).toBeTruthy();
+    expect(mockPageEvent.source.div.parentNode.nextSibling).toEqual(component.container.nativeElement);
   });
 
   it('should set values for the comment set', () => {
@@ -243,7 +242,7 @@ describe('CommentSetComponent', () => {
       div: mockRealElement
     };
 
-    component.setCommentSetValues(mockEventSource);
+    component.updateView({ pageNumber: 1, source: mockEventSource});
 
     expect(component.zoom).toEqual(mockEventSource.scale);
     expect(component.rotate).toEqual(mockEventSource.rotation);
@@ -288,7 +287,7 @@ describe('CommentSetComponent', () => {
 
   it('should post the updated the comment for the annotation', () => {
     mockComment.content = 'Updating the comment 2';
-    const annotationForComment = component.annotationSet.annotations.find(annotation => annotation.id === mockComment.annotationId);
+    const annotationForComment = component.annotationSet.annotations.find(anno => anno.id === mockComment.annotationId);
     spyOn(api, 'postAnnotation').and.returnValue(of(annotationForComment));
     spyOn(mockAnnotationService, 'onAnnotationSelection');
 
