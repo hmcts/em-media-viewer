@@ -12,6 +12,7 @@ export class RectangleComponent implements AfterViewInit {
   @Input() color: String;
   @Input() zoom: number;
   @Input() rotate: number;
+  @Input() editable: boolean;
 
   @Output() select = new EventEmitter<Rectangle>();
   @Output() update = new EventEmitter<Rectangle>();

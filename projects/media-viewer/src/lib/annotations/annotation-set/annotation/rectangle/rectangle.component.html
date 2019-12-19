@@ -1,16 +1,31 @@
-<div #rectElement
-     class="rectangle"
-     draggable
-     resizable
-     [tabindex]="rectangle.id"
-     [ngClass]="{ 'selected': selected }"
-     [style.backgroundColor]="'#' + color"
-     [style.width]="rectangle.width * zoom + 'px'"
-     [style.height]="rectangle.height * zoom + 'px'"
-     [style.left]="rectangle.x * zoom + 'px'"
-     [style.top]="rectangle.y * zoom + 'px'"
-     [rotate]="rotate"
-     [selected]="selected"
-     (click)="onClick()"
-     (stopped)="onUpdate()">
+<div *ngIf="editable; else nonEditable">
+  <div #rectElement
+       class="rectangle"
+       draggable
+       resizable
+       [tabindex]="rectangle.id"
+       [ngClass]="{ 'selected': selected }"
+       [style.backgroundColor]="'#' + color"
+       [style.width]="rectangle.width * zoom + 'px'"
+       [style.height]="rectangle.height * zoom + 'px'"
+       [style.left]="rectangle.x * zoom + 'px'"
+       [style.top]="rectangle.y * zoom + 'px'"
+       [rotate]="rotate"
+       [selected]="selected"
+       (click)="onClick()"
+       (stopped)="onUpdate()">
+  </div>
 </div>
+<ng-template #nonEditable>
+  <div #rectElement
+       class="rectangle"
+       [tabindex]="rectangle.id"
+       [ngClass]="{ 'selected': selected }"
+       [style.backgroundColor]="'#' + color"
+       [style.width]="rectangle.width * zoom + 'px'"
+       [style.height]="rectangle.height * zoom + 'px'"
+       [style.left]="rectangle.x * zoom + 'px'"
+       [style.top]="rectangle.y * zoom + 'px'"
+       (click)="onClick()">
+  </div>
+</ng-template>
