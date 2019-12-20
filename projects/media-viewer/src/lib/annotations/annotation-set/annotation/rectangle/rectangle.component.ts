@@ -13,17 +13,30 @@ export class RectangleComponent implements AfterViewInit {
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() editable: boolean;
-  @Input() selected: boolean;
 
   @Output() select = new EventEmitter<Rectangle>();
   @Output() update = new EventEmitter<Rectangle>();
 
   @ViewChild('rectElement') rectElement: ElementRef;
 
+  _selected: boolean;
+
   ngAfterViewInit() {
     if (this.selected) {
       this.rectElement.nativeElement.focus();
     }
+  }
+
+  @Input()
+  set selected(selected: boolean) {
+    this._selected = selected;
+    if (this._selected && this.rectElement) {
+      this.rectElement.nativeElement.focus();
+    }
+  }
+
+  get selected() {
+    return this._selected;
   }
 
   onClick() {
