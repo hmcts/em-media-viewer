@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarMiddlePaneComponent } from './middle-pane.component';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../../toolbar-event.service';
@@ -8,13 +8,13 @@ describe('ToolbarMiddlePaneComponent', () => {
   let fixture: ComponentFixture<ToolbarMiddlePaneComponent>;
   let nativeElement;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [ ToolbarMiddlePaneComponent ],
       providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
     })
     .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarMiddlePaneComponent);

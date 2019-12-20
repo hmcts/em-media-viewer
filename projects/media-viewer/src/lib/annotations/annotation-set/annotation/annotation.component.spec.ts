@@ -1,5 +1,5 @@
 import { AnnotationComponent } from './annotation.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentComponent } from '../../comment-set/comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
@@ -35,7 +35,7 @@ describe('AnnotationComponent', () => {
     type: 'highlight'
   };
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [
         AnnotationComponent,
@@ -49,7 +49,7 @@ describe('AnnotationComponent', () => {
       ]
     })
     .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnnotationComponent);

@@ -8,13 +8,13 @@ describe('ToolbarRightPaneComponent', () => {
   let fixture: ComponentFixture<ToolbarRightPaneComponent>;
   let nativeElement;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [ ToolbarRightPaneComponent ],
       providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
     })
     .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarRightPaneComponent);

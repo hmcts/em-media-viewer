@@ -71,13 +71,13 @@ describe('CommentsSummaryComponent', () => {
     }]
   };
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CommentsSummaryComponent ],
       providers: [ PrintService ]
     })
     .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentsSummaryComponent);

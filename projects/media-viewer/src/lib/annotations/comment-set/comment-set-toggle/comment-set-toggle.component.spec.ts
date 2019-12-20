@@ -6,7 +6,7 @@ describe('CommentSetToggleComponent', () => {
   let component: CommentSetToggleComponent;
   let fixture: ComponentFixture<CommentSetToggleComponent>;
 
-  beforeEach( () => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [CommentSetToggleComponent],
     }).compileComponents();

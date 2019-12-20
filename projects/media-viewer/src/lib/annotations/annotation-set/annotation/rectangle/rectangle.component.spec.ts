@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RectangleComponent } from './rectangle.component';
 import { FormsModule } from '@angular/forms';
@@ -34,7 +34,7 @@ describe('RectangleComponent', () => {
       y: 10,
   };
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [
         RectangleComponent,
@@ -48,7 +48,7 @@ describe('RectangleComponent', () => {
       ]
     })
     .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RectangleComponent);
