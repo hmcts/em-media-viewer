@@ -9,13 +9,13 @@ describe('ToolbarLeftPaneComponent', () => {
   let fixture: ComponentFixture<ToolbarLeftPaneComponent>;
   let toolbarService: ToolbarEventService;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [ ToolbarLeftPaneComponent ],
       providers: [ ToolbarEventService, ToolbarButtonVisibilityService ]
     })
       .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarLeftPaneComponent);

@@ -1,4 +1,4 @@
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
 import { PrintService } from '../../print.service';
 import { ErrorMessageComponent } from '../error-message/error.message.component';
@@ -15,7 +15,7 @@ describe('ImageViewerComponent', () => {
   let nativeElement;
   const DOCUMENT_URL = 'document-url';
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [
         ErrorMessageComponent,
@@ -26,7 +26,7 @@ describe('ImageViewerComponent', () => {
       ]
     })
       .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ImageViewerComponent);

@@ -3,7 +3,7 @@ import { DownloadPage } from '../pages/download.po';
 describe('download', () => {
   let page: DownloadPage;
 
-  beforeEach( async () => {
+  beforeEach(async () => {
     page = new DownloadPage();
     await page.preparePage();
   });

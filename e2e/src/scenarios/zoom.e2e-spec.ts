@@ -3,7 +3,7 @@ import { ZoomPage } from '../pages/zoom.po';
 describe('zoom', () => {
   let page: ZoomPage;
 
-  beforeEach( async () => {
+  beforeEach(async () => {
     page = new ZoomPage();
     await page.preparePage();
   });

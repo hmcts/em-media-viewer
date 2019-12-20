@@ -67,7 +67,7 @@ describe('AnnotationSetComponent', () => {
   const mockSelection: any = {
     rangeCount: 2,
     isCollapsed: false,
-    getRangeAt(n: Number): any {
+    getRangeAt(): any {
       return mockRange;
     },
     removeAllRanges(): any {
@@ -101,7 +101,7 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  beforeEach( async () => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
         AnnotationSetComponent,

@@ -1,12 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ErrorMessageComponent } from './error.message.component';
-import { By } from '@angular/platform-browser';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ErrorMessageComponent} from './error.message.component';
+import {By} from '@angular/platform-browser';
 
 describe('ErrorMessageComponent', () => {
   let component: ErrorMessageComponent;
   let fixture: ComponentFixture<ErrorMessageComponent>;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     return TestBed.configureTestingModule({
       declarations: [
         ErrorMessageComponent,
@@ -14,7 +14,7 @@ describe('ErrorMessageComponent', () => {
       imports: []
     })
       .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ErrorMessageComponent);

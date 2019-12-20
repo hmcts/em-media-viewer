@@ -50,7 +50,7 @@ describe('PdfViewerComponent', () => {
     pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>()
   } as any;
 
-  beforeEach( async () => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [PdfViewerComponent, ErrorMessageComponent, AnnotationSetComponent],
       imports: [HttpClientTestingModule],

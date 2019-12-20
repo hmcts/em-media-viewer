@@ -5,7 +5,7 @@ import { TransferState } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
@@ -15,7 +15,7 @@ describe('AppComponent', () => {
       ],
       providers: [TransferState]
     }).compileComponents();
-  });
+  }));
 
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);

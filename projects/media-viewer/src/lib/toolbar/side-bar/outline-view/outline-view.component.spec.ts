@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OutlineViewComponent } from './outline-view.component';
 import { SimpleChange } from '@angular/core';
@@ -9,14 +9,12 @@ describe('OutlineViewComponent', () => {
   let component: OutlineViewComponent;
   let fixture: ComponentFixture<OutlineViewComponent>;
 
-  const pdfOutline = { lastToggleIsShow: false };
-
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OutlineViewComponent, OutlineItemComponent ],
     })
     .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OutlineViewComponent);
