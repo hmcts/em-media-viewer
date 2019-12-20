@@ -56,8 +56,10 @@ describe('RectangleComponent', () => {
     component.rectangle = mockRectangle;
     component.zoom = 1;
     component.rotate = 0;
+    component.editable = true;
     component.selected = false;
     nativeElement = fixture.debugElement.nativeElement;
+    fixture.detectChanges();
     rectangleEl = fixture.debugElement.query(By.css('.rectangle'));
     fixture.detectChanges();
   });
@@ -84,13 +86,9 @@ describe('RectangleComponent', () => {
     const oldLeft = rectangleEl.nativeElement.offsetLeft;
     const oldTop = rectangleEl.nativeElement.offsetTop;
 
-    const mouseDownEvent = document.createEvent('MouseEvents');
-    const mouseMoveEvent = document.createEvent('MouseEvents');
-    const mouseUpEvent = document.createEvent('MouseEvents');
-
-    mouseDownEvent.initEvent('mousedown', true, true);
-    mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 750, 750, 900, 900, false, false, false, false, 0, null);
-    mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false, false, 0, null);
+    const mouseDownEvent = createMouseEvent('mousedown', 500, 500, 500, 500);
+    const mouseMoveEvent = createMouseEvent('mousemove', 750, 750, 900, 900);
+    const mouseUpEvent = createMouseEvent('mouseup', 750, 800, 750, 800);
 
     rectangleEl.nativeElement.dispatchEvent(mouseDownEvent);
     rectangleEl.nativeElement.dispatchEvent(mouseMoveEvent);
@@ -105,13 +103,9 @@ describe('RectangleComponent', () => {
     const oldWidth = rectangleEl.nativeElement.offsetWidth;
     const oldHeight = rectangleEl.nativeElement.offsetHeight;
 
-    const mouseDownEvent = document.createEvent('MouseEvents');
-    const mouseMoveEvent = document.createEvent('MouseEvents');
-    const mouseUpEvent = document.createEvent('MouseEvents');
-
-    mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
-    mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 750, 750, 900, 900, false, false, false, false, 0, null);
-    mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 750, 800, 750, 800, false, false, false, false, 0, null);
+    const mouseDownEvent = createMouseEvent('mousedown', 500, 500, 500, 500);
+    const mouseMoveEvent = createMouseEvent('mousemove', 750, 750, 900, 900);
+    const mouseUpEvent = createMouseEvent('mouseup', 750, 800, 750, 800);
 
     rectangleEl.nativeElement.dispatchEvent(new Event('mousedown'));
     fixture.detectChanges();
@@ -132,13 +126,9 @@ describe('RectangleComponent', () => {
     const oldWidth = rectangleEl.nativeElement.offsetWidth;
     const oldHeight = rectangleEl.nativeElement.offsetHeight;
 
-    const mouseDownEvent = document.createEvent('MouseEvents');
-    const mouseMoveEvent = document.createEvent('MouseEvents');
-    const mouseUpEvent = document.createEvent('MouseEvents');
-
-    mouseDownEvent.initMouseEvent('mousedown', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
-    mouseMoveEvent.initMouseEvent('mousemove', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
-    mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 500, 500, 500, 500, false, false, false, false, 0, null);
+    const mouseDownEvent = createMouseEvent('mousedown', 500, 500, 500, 500);
+    const mouseMoveEvent = createMouseEvent('mousemove', 500, 500, 500, 500);
+    const mouseUpEvent = createMouseEvent('mouseup', 500, 500, 500, 500);
 
     rectangleEl.nativeElement.dispatchEvent(mouseDownEvent);
     rectangleEl.nativeElement.dispatchEvent(mouseMoveEvent);
@@ -165,4 +155,26 @@ describe('RectangleComponent', () => {
     hasRectChanged = component.hasRectangleChanged({x: 100, y: 100, width: 100, height: 100 }, rect);
     expect(hasRectChanged).toEqual(false);
   });
+
+  function createMouseEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
+    const mouseEvent = document.createEvent('MouseEvents');
+    mouseEvent.initMouseEvent(
+      typeArg,
+      true,
+      true,
+      window,
+      1,
+      screenX,
+      screenY,
+      clientX,
+      clientY,
+      false,
+      false,
+      false,
+      false,
+      0,
+      null
+    );
+    return mouseEvent;
+  }
 });

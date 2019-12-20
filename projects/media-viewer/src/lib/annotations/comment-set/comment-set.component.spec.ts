@@ -250,8 +250,7 @@ describe('CommentSetComponent', () => {
   });
 
   it('should return all the comments for the page', () => {
-    const annotations = [annotation, annotation2, annotation3];
-    component.annotationSet.annotations = annotations;
+    component.annotationSet.annotations = [annotation, annotation2, annotation3];
 
     const commentsForPage = component.getCommentsOnPage();
 
