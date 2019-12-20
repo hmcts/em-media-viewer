@@ -9,8 +9,6 @@ describe('OutlineViewComponent', () => {
   let component: OutlineViewComponent;
   let fixture: ComponentFixture<OutlineViewComponent>;
 
-  const pdfOutline = { lastToggleIsShow: false };
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OutlineViewComponent, OutlineItemComponent ],

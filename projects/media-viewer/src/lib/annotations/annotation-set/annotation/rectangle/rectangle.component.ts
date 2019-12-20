@@ -12,6 +12,7 @@ export class RectangleComponent implements AfterViewInit {
   @Input() color: String;
   @Input() zoom: number;
   @Input() rotate: number;
+  @Input() editable: boolean;
 
   @Output() select = new EventEmitter<Rectangle>();
   @Output() update = new EventEmitter<Rectangle>();
@@ -29,7 +30,7 @@ export class RectangleComponent implements AfterViewInit {
   @Input()
   set selected(selected: boolean) {
     this._selected = selected;
-    if (this._selected) {
+    if (this._selected && this.rectElement) {
       this.rectElement.nativeElement.focus();
     }
   }

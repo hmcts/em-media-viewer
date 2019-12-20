@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentComponent } from '../../comment-set/comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
-import { annotationSet } from '../../../../assets/annotation-set';
 import { PopupToolbarComponent } from './popup-toolbar/popup-toolbar.component';
 import { Annotation } from './annotation.model';
 import { MutableDivModule } from 'mutable-div';
