@@ -201,9 +201,7 @@ describe('CommentSetComponent', () => {
       ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(CommentSetComponent);
     component = fixture.componentInstance;
     component.annotationSet = { ...annotationSet };
@@ -212,6 +210,7 @@ describe('CommentSetComponent', () => {
     component.height = 100;
     component.zoom = 1;
     fixture.detectChanges();
+
   });
 
   it('should create', () => {
