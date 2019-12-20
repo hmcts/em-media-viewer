@@ -3,7 +3,7 @@ import { NavigatePage } from '../pages/navigate.po';
 describe('navigate', () => {
   let page: NavigatePage;
 
-  beforeEach(async () => {
+  beforeEach( async () => {
     page = new NavigatePage();
     await page.preparePage();
   });

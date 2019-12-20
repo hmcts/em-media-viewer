@@ -101,7 +101,7 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  beforeEach(async () => {
+  beforeEach( async () => {
     await TestBed.configureTestingModule({
       declarations: [
         AnnotationSetComponent,

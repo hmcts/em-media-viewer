@@ -1,9 +1,9 @@
 import { RotatePage } from '../pages/rotate.po';
 
-describe('rotate', () => {
+describe('rotate', async () => {
   let page: RotatePage;
 
-  beforeEach(async () => {
+  beforeEach( async () => {
     page = new RotatePage();
     await page.preparePage();
   });
