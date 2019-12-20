@@ -59,6 +59,7 @@ describe('RectangleComponent', () => {
     component.editable = true;
     component.selected = false;
     nativeElement = fixture.debugElement.nativeElement;
+    fixture.detectChanges();
     rectangleEl = fixture.debugElement.query(By.css('.rectangle'));
     fixture.detectChanges();
   });
@@ -76,7 +77,7 @@ describe('RectangleComponent', () => {
 
   it('should select the rectangle if select is true.', () => {
     spyOn(component.rectElement.nativeElement, 'focus');
-    component._selected = true;
+    component.selected = true;
     component.ngAfterViewInit();
     expect(component.rectElement.nativeElement.focus).toHaveBeenCalledTimes(1);
   });
