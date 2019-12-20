@@ -1,9 +1,8 @@
 import { AnnotationComponent } from './annotation.component';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentComponent } from '../../comment-set/comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
-import { annotationSet } from '../../../../assets/annotation-set';
 import { PopupToolbarComponent } from './popup-toolbar/popup-toolbar.component';
 import { Annotation } from './annotation.model';
 import { MutableDivModule } from 'mutable-div';
@@ -36,7 +35,7 @@ describe('AnnotationComponent', () => {
     type: 'highlight'
   };
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
         AnnotationComponent,
@@ -50,7 +49,7 @@ describe('AnnotationComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnnotationComponent);

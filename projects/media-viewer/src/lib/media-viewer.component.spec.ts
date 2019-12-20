@@ -1,4 +1,4 @@
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MediaViewerComponent } from './media-viewer.component';
 import { PdfViewerComponent } from './viewers/pdf-viewer/pdf-viewer.component';
 import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.component';
@@ -8,7 +8,11 @@ import { ErrorMessageComponent } from './viewers/error-message/error.message.com
 import { AnnotationsModule } from './annotations/annotations.module';
 import { SimpleChange } from '@angular/core';
 import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
-import { defaultImageOptions, defaultPdfOptions, defaultUnsupportedOptions } from './toolbar/toolbar-button-visibility.service';
+import {
+  defaultImageOptions,
+  defaultPdfOptions,
+  defaultUnsupportedOptions
+} from './toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from './annotations/annotation-api.service';
 import { of } from 'rxjs';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
@@ -19,7 +23,7 @@ describe('MediaViewerComponent', () => {
   let fixture: ComponentFixture<MediaViewerComponent>;
   let api: AnnotationApiService;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
         MediaViewerComponent,
@@ -34,7 +38,7 @@ describe('MediaViewerComponent', () => {
       imports: [ToolbarModule, AnnotationsModule]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MediaViewerComponent);

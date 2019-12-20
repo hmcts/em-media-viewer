@@ -1,10 +1,9 @@
 import { AppPage } from './pages/app.po';
-import { browser } from 'protractor';
 
 describe('media viewer app', () => {
   let page: AppPage;
 
-  beforeEach(async () => {
+  beforeEach( async () => {
     page = new AppPage();
     await page.preparePage();
   });

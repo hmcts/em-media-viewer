@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
@@ -9,14 +9,14 @@ describe('SearchBarComponent', () => {
   let fixture: ComponentFixture<SearchBarComponent>;
   let nativeElement, searchInput;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [ SearchBarComponent ],
       imports: [FormsModule],
       providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchBarComponent);
