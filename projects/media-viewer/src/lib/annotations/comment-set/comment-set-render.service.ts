@@ -48,14 +48,14 @@ export class CommentSetRenderService {
   private top(rectangle: { x, y, height, width }, rotate: number, height: number) {
     switch (rotate) {
       case 90: return rectangle.x;
-      case 180: return  height - (rectangle.y + rectangle.height);
+      case 180: return height - (rectangle.y + rectangle.height);
       case 270: return height - (rectangle.x + rectangle.width);
       default: return rectangle.y;
     }
   }
 
   private height(element: any) {
-    return element.form.nativeElement.getBoundingClientRect().height;
+    return element.form.nativeElement.height;
   }
 
   private difference(a: number, b: number): number { return Math.abs(a - b); }
