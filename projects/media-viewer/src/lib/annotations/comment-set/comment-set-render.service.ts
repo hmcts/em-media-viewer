@@ -6,7 +6,7 @@ export class CommentSetRenderService {
 
   redrawComponents(commentComponents: CommentComponent[], height: number, rotate: number, zoom: number) {
       let prevComment: CommentComponent;
-      this.sortComponents(commentComponents, height, rotate).forEach((comment: CommentComponent) => {
+      this.sortComponents(commentComponents, height / zoom, rotate).forEach((comment: CommentComponent) => {
         this.adjustIfOverlapping(comment, prevComment, zoom);
         prevComment = comment;
       });

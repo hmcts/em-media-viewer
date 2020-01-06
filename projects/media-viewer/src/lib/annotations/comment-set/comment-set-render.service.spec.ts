@@ -4,7 +4,7 @@ import { CommentComponent } from './comment/comment.component';
 import { AnnotationService } from '../annotation.service';
 
 
-describe('AnnotationService', () => {
+describe('CommentSetRenderService', () => {
   const componentList = [
     {
       _rectangle: { x: 70, y: 30, height: 150, width: 200 },
@@ -41,7 +41,7 @@ describe('AnnotationService', () => {
 
       service.sortComponents(commentList, 100, 180);
 
-      expect(commentList[0].rectTop).toBe(-60);
+      expect(commentList[0].rectTop).toBe(-80);
   }));
 
   it('should sort comment components, rotation 270',
@@ -59,7 +59,7 @@ describe('AnnotationService', () => {
 
       service.sortComponents(commentList, 100, 0);
 
-      expect(commentList[0].rectTop).toBe(60);
+      expect(commentList[0].rectTop).toBe(30);
   }));
 
 });
