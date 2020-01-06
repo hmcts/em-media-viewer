@@ -11,7 +11,7 @@ import { CommentService } from './comment.service';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent {
+export class CommentComponent implements OnChanges {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
@@ -23,7 +23,6 @@ export class CommentComponent {
   editor: User;
   _comment: Comment;
   _editable: boolean;
-  _selected: boolean;
 
   _rectangle;
   rectTop;
@@ -36,6 +35,7 @@ export class CommentComponent {
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<Comment>();
   @Output() changes = new EventEmitter<boolean>();
+  @Input() selected = false;
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;
@@ -47,6 +47,10 @@ export class CommentComponent {
   ) {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
+  }
+
+  ngOnChanges(): void {
+    this.reRenderComments();
   }
 
   @Input()
@@ -68,16 +72,6 @@ export class CommentComponent {
     this._rectangle = rectangle;
     this.rectTop = this._rectangle.y;
     this.rectLeft = this._rectangle.x;
-  }
-
-  @Input()
-  set selected(selected: boolean) {
-    this.reRenderComments();
-    this._selected = selected;
-  }
-
-  get selected() {
-    return this._selected;
   }
 
   @Input()
@@ -122,7 +116,7 @@ export class CommentComponent {
   }
 
   onCommentClick() {
-    if (!this._selected) {
+    if (!this.selected) {
       this.selected = true;
       this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
     }
