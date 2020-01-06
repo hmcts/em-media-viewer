@@ -11,7 +11,7 @@ import { CommentService } from './comment.service';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent implements OnChanges {
+export class CommentComponent {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
@@ -49,10 +49,6 @@ export class CommentComponent implements OnChanges {
     this.COMMENT_CHAR_LIMIT = 5000;
   }
 
-  ngOnChanges(): void {
-    this.reRenderComments();
-  }
-
   @Input()
   set comment(comment: Comment) {
     this._comment = comment;
@@ -76,6 +72,7 @@ export class CommentComponent implements OnChanges {
 
   @Input()
   set selected(selected: boolean) {
+    this.reRenderComments();
     this._selected = selected;
   }
 
