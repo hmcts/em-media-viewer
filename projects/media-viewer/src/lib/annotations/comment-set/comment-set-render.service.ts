@@ -34,15 +34,14 @@ export class CommentSetRenderService {
   }
 
   private processSort(a: CommentComponent, b: CommentComponent): number {
-    if (this.overlapping(a, b)) {
+    if (this.onSameLine(a, b)) {
       return a.rectLeft >= b.rectLeft ? 1 : -1;
     }
     return a.rectTop >= b.rectTop ? 1 : -1;
   }
 
-  private overlapping(a: CommentComponent, b: CommentComponent): boolean {
-    const highest = (this.height(a) >= this.height(b)) ? this.height(a) : this.height(b);
-    return this.difference(a.rectTop, b.rectTop) <= highest;
+  private onSameLine(a: CommentComponent, b: CommentComponent): boolean {
+    return this.difference(a.rectTop, b.rectTop) === 0;
   }
 
   private top(rectangle: { x, y, height, width }, rotate: number, height: number) {
@@ -55,7 +54,7 @@ export class CommentSetRenderService {
   }
 
   private height(element: any) {
-    return element.form.nativeElement.height;
+    return element.form.nativeElement.getBoundingClientRect().height;
   }
 
   private difference(a: number, b: number): number { return Math.abs(a - b); }
