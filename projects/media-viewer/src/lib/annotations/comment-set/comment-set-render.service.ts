@@ -6,7 +6,7 @@ export class CommentSetRenderService {
 
   redrawComponents(commentComponents: CommentComponent[], height: number, rotate: number, zoom: number) {
       let prevComment: CommentComponent;
-      this.sortComponents(commentComponents, height / zoom, rotate).forEach((comment: CommentComponent) => {
+      this.sortComponents(commentComponents, height, rotate, zoom).forEach((comment: CommentComponent) => {
         this.adjustIfOverlapping(comment, prevComment, zoom);
         prevComment = comment;
       });
@@ -16,10 +16,10 @@ export class CommentSetRenderService {
       });
   }
 
-  sortComponents(commentComponents: CommentComponent[], height: number, rotate: number) {
+  sortComponents(commentComponents: CommentComponent[], height: number, rotate: number, zoom: number) {
     return commentComponents.sort((a: CommentComponent, b: CommentComponent) => {
-      a.rectTop = this.top(a._rectangle, rotate, height);
-      b.rectTop = this.top(b._rectangle, rotate, height);
+      a.rectTop = this.top(a._rectangle, height, rotate, zoom);
+      b.rectTop = this.top(b._rectangle, height, rotate, zoom);
       return this.processSort(a, b);
     });
   }
@@ -44,11 +44,12 @@ export class CommentSetRenderService {
     return this.difference(a.rectTop, b.rectTop) === 0;
   }
 
-  private top(rectangle: { x, y, height, width }, rotate: number, height: number) {
+  private top(rectangle: { x, y, height, width }, height: number, rotate: number, zoom: number) {
+    const actualHeight = height / zoom;
     switch (rotate) {
       case 90: return rectangle.x;
-      case 180: return height - (rectangle.y + rectangle.height);
-      case 270: return height - (rectangle.x + rectangle.width);
+      case 180: return actualHeight - (rectangle.y + rectangle.height);
+      case 270: return actualHeight - (rectangle.x + rectangle.width);
       default: return rectangle.y;
     }
   }
