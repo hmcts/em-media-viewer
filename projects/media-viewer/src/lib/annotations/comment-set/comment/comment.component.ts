@@ -23,7 +23,6 @@ export class CommentComponent implements OnChanges {
   editor: User;
   _comment: Comment;
   _editable: boolean;
-  _selected: boolean;
 
   _rectangle;
   rectTop;
@@ -36,6 +35,7 @@ export class CommentComponent implements OnChanges {
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<Comment>();
   @Output() changes = new EventEmitter<boolean>();
+  @Input() selected = false;
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;
@@ -72,15 +72,6 @@ export class CommentComponent implements OnChanges {
     this._rectangle = rectangle;
     this.rectTop = this._rectangle.y;
     this.rectLeft = this._rectangle.x;
-  }
-
-  @Input()
-  set selected(selected: boolean) {
-    this._selected = selected;
-  }
-
-  get selected() {
-    return this._selected;
   }
 
   @Input()
@@ -125,7 +116,7 @@ export class CommentComponent implements OnChanges {
   }
 
   onCommentClick() {
-    if (!this._selected) {
+    if (!this.selected) {
       this.selected = true;
       this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
     }
