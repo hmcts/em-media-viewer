@@ -48,8 +48,11 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(
       this.annotationService.getSelectedAnnotation()
-        .subscribe((selectedAnnotation) => this.selectAnnotation = selectedAnnotation),
-      this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
+        .subscribe(selectedAnnotation => this.selectAnnotation = selectedAnnotation),
+      this.viewerEvents.commentsPanelVisible.subscribe(toggle => {
+        this.redrawComments();
+        this.showCommentsPanel = toggle;
+      })
     );
     this.commentService.updateCommentSets(this.page, this);
   }
