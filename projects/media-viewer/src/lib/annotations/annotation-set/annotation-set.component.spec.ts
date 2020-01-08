@@ -164,6 +164,7 @@ describe('AnnotationSetComponent', () => {
 
   it('delete annotation', () => {
     spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
+    spyOn(mockCommentService, 'updateUnsavedCommentsStatus');
     const annotations = { ...annotationSet.annotations };
     const annotation = { ...annotations[0] };
 
