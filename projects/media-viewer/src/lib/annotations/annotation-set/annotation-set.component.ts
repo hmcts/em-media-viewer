@@ -77,11 +77,13 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   public onAnnotationDelete(annotation: Annotation) {
+    if (annotation.comments.length > 0) {
+      this.commentService.updateUnsavedCommentsStatus(annotation, false);
+    }
     this.api
       .deleteAnnotation(annotation.id)
       .subscribe(() => {
         this.annotationSet.annotations = this.annotationSet.annotations.filter(a => a.id !== annotation.id);
-        this.commentService.updateUnsavedCommentsStatus(annotation, false);
         this.onAnnotationClick({ annotationId: '', editable: false });
       });
   }
