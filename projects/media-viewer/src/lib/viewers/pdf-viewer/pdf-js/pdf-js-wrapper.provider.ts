@@ -28,7 +28,8 @@ export class PdfJsWrapperFactory {
       linkService: this.linkService,
       findController: pdfFindController,
       eventBus: this.eventBus,
-      imageResourcesPath: '/assets/images/'
+      imageResourcesPath: '/assets/images/',
+      textLayerMode: 2
     });
 
     this.linkService.setViewer(pdfViewer);
