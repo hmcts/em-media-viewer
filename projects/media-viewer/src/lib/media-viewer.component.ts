@@ -3,11 +3,11 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges, OnDestroy, OnInit,
+  OnChanges, OnDestroy,
   Output,
   SimpleChanges
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   defaultImageOptions,
   defaultPdfOptions,
