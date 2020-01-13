@@ -16,8 +16,8 @@
   "dependencies": {
     "@hmcts/frontend": "^0.0.34-alpha",
     "govuk-frontend": "^2.11.0",
+    "ng-mutable-div": "0.0.10",
     "pdfjs-dist": "2.0.943",
-    "mutable-div": "0.0.10",
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
