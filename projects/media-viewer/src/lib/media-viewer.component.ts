@@ -20,6 +20,7 @@ import { AnnotationApiService } from './annotations/annotation-api.service';
 import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { Subscription } from 'rxjs';
+import 'hammerjs';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
