@@ -14,7 +14,7 @@ import { TextareaAutoExpandDirective } from './comment-set/comment/textarea-auto
 import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comment-set-toggle.component';
 import { CommentsSummaryComponent } from './comments-summary/comments-summary.component';
 import { CommentSetRenderService } from './comment-set/comment-set-render.service';
-import { MutableDivModule } from 'ng-mutable-div';
+import { MutableDivModule } from 'mutable-div';
 
 @NgModule({
   imports: [
