@@ -3,11 +3,11 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges, OnDestroy, OnInit,
+  OnChanges, OnDestroy,
   Output,
   SimpleChanges
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   defaultImageOptions,
   defaultPdfOptions,
@@ -20,6 +20,7 @@ import { AnnotationApiService } from './annotations/annotation-api.service';
 import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { Subscription } from 'rxjs';
+import 'hammerjs';
 
 enum SupportedContentTypes {
   PDF = 'pdf',

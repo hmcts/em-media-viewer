@@ -206,6 +206,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       this.drawStartY = event.pageY - (window.pageYOffset + this.containerRectangle().top);
 
       this.shapeRectStyle().display = 'block';
+      this.shapeRectStyle().height = '50px';
+      this.shapeRectStyle().width = '50px';
 
       switch (this.rotate) {
         case 90:
