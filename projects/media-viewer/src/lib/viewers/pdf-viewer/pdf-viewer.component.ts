@@ -46,6 +46,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Input() height: string;
 
   highlightMode: BehaviorSubject<boolean>;
+  highlighting = false;
   drawMode: BehaviorSubject<boolean>;
 
   loadingDocument = false;
@@ -187,9 +188,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   onMouseUp(mouseEvent: MouseEvent) {
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
-      setTimeout(() => this.viewerEvents.textSelected({
-            page: this.pdfWrapper.getPageNumber(), event: mouseEvent
-      }), 0);
+      this.highlighting = true;
+      setTimeout(() => {
+        this.viewerEvents.textSelected({
+          page: this.pdfWrapper.getPageNumber(),
+          event: mouseEvent
+        });
+        this.highlighting = false;
+      }, 0);
     }
   }
 }

@@ -35,7 +35,7 @@
   z-index: 1000;
 }
 
-.highlightMode > .pageContainer > .pageWrapper > .page >.textLayer {
+.highlightMode > .pageContainer > .pageWrapper > .page > .textLayer {
   z-index: 1000;
 }
 
@@ -49,6 +49,11 @@
 
 .textLayer {
   z-index: 1;
+}
+
+.highlighting > .pageContainer > .pageWrapper > .page > .textLayer * {
+  padding: 0 !important;
+  transform: none !important;
 }
 
 .annotationLayer * {

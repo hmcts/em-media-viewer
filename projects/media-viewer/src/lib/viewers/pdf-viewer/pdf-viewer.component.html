@@ -4,7 +4,7 @@
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage, 'show-comments-panel': showCommentsPanel }">
   <div #pdfViewer (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" class="pdfViewer"
-       [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
+       [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async, highlighting: highlighting }">
   </div>
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
