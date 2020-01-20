@@ -86,13 +86,13 @@ describe('RectangleComponent', () => {
     const oldLeft = rectangleEl.nativeElement.offsetLeft;
     const oldTop = rectangleEl.nativeElement.offsetTop;
 
-    const mouseDownEvent = createMouseEvent('mousedown', 500, 500, 500, 500);
-    const mouseMoveEvent = createMouseEvent('mousemove', 750, 750, 900, 900);
-    const mouseUpEvent = createMouseEvent('mouseup', 750, 800, 750, 800);
+    const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
+    const pointerMoveEvent = createPointerEvent('pointermove', 750, 750, 900, 900);
+    const pointerUpEvent = createPointerEvent('pointerup', 750, 800, 750, 800);
 
-    rectangleEl.nativeElement.dispatchEvent(mouseDownEvent);
-    rectangleEl.nativeElement.dispatchEvent(mouseMoveEvent);
-    rectangleEl.nativeElement.dispatchEvent(mouseUpEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerDownEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerMoveEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerUpEvent);
 
     fixture.detectChanges();
     expect(rectangleEl.nativeElement.offsetLeft).not.toEqual(oldLeft);
@@ -103,16 +103,16 @@ describe('RectangleComponent', () => {
     const oldWidth = rectangleEl.nativeElement.offsetWidth;
     const oldHeight = rectangleEl.nativeElement.offsetHeight;
 
-    const mouseDownEvent = createMouseEvent('mousedown', 500, 500, 500, 500);
-    const mouseMoveEvent = createMouseEvent('mousemove', 750, 750, 900, 900);
-    const mouseUpEvent = createMouseEvent('mouseup', 750, 800, 750, 800);
+    const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
+    const pointerMoveEvent = createPointerEvent('pointermove', 750, 750, 900, 900);
+    const pointerUpEvent = createPointerEvent('pointerup', 750, 800, 750, 800);
 
-    rectangleEl.nativeElement.dispatchEvent(new Event('mousedown'));
+    rectangleEl.nativeElement.dispatchEvent(new Event('pointerdown'));
     fixture.detectChanges();
     const bottomRightHandle = document.querySelector('.BOTTOM-RIGHT');
-    bottomRightHandle.dispatchEvent(mouseDownEvent);
-    bottomRightHandle.dispatchEvent(mouseMoveEvent);
-    bottomRightHandle.dispatchEvent(mouseUpEvent);
+    bottomRightHandle.dispatchEvent(pointerDownEvent);
+    bottomRightHandle.dispatchEvent(pointerMoveEvent);
+    bottomRightHandle.dispatchEvent(pointerUpEvent);
 
     fixture.detectChanges();
     expect(rectangleEl.nativeElement.offsetWidth).not.toEqual(oldWidth);
@@ -126,13 +126,13 @@ describe('RectangleComponent', () => {
     const oldWidth = rectangleEl.nativeElement.offsetWidth;
     const oldHeight = rectangleEl.nativeElement.offsetHeight;
 
-    const mouseDownEvent = createMouseEvent('mousedown', 500, 500, 500, 500);
-    const mouseMoveEvent = createMouseEvent('mousemove', 500, 500, 500, 500);
-    const mouseUpEvent = createMouseEvent('mouseup', 500, 500, 500, 500);
+    const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
+    const pointerMoveEvent = createPointerEvent('pointermove', 500, 500, 500, 500);
+    const pointerUpEvent = createPointerEvent('pointerup', 500, 500, 500, 500);
 
-    rectangleEl.nativeElement.dispatchEvent(mouseDownEvent);
-    rectangleEl.nativeElement.dispatchEvent(mouseMoveEvent);
-    rectangleEl.nativeElement.dispatchEvent(mouseUpEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerDownEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerMoveEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerUpEvent);
 
     fixture.detectChanges();
     expect(rectangleEl.nativeElement.offsetLeft).toEqual(oldLeft);
@@ -156,9 +156,9 @@ describe('RectangleComponent', () => {
     expect(hasRectChanged).toEqual(false);
   });
 
-  function createMouseEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
-    const mouseEvent = document.createEvent('MouseEvents');
-    mouseEvent.initMouseEvent(
+  function createPointerEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
+    const pointerEvent = document.createEvent('MouseEvents');
+    pointerEvent.initMouseEvent(
       typeArg,
       true,
       true,
@@ -175,6 +175,6 @@ describe('RectangleComponent', () => {
       0,
       null
     );
-    return mouseEvent;
+    return pointerEvent as PointerEvent;
   }
 });
