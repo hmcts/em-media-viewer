@@ -127,6 +127,14 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   async createTextHighlight(highlight: Highlight) {
     if (highlight.page === this.page) {
       if (window.getSelection()) {
+        const localElement = (<HTMLElement>highlight.event.target) || (<HTMLElement>highlight.event.srcElement);
+
+        // getting rid of padding/transform which is added with enhanced textLayer mode
+        const childElements = localElement.parentElement.children;
+        for (let i = 0; i < childElements.length; i++) {
+          childElements[i]['style'].padding = '0';
+          childElements[i]['style'].transform = 'none';
+        }
         const selection = window.getSelection();
 
         if (selection.rangeCount && !selection.isCollapsed) {
@@ -134,7 +142,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           const clientRects = range.getClientRects();
 
           if (clientRects) {
-            const localElement = (<Element>highlight.event.target) || (<Element>highlight.event.srcElement);
             const textLayerRect = localElement.parentElement.getBoundingClientRect();
 
             const selectionRectangles: Rectangle[] = [];
