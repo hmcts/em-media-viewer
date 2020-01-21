@@ -172,6 +172,10 @@ describe('PdfViewerComponent', () => {
     component.onMouseUp(mouseEvent);
 
     expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+    expect(component.highlighting).toEqual(false);
+    setTimeout(() => {
+      expect(viewerEvents.textSelected).toHaveBeenCalled();
+    }, 0);
   });
 
   it('should select the page', () => {
