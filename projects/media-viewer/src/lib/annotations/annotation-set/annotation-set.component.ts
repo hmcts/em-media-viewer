@@ -133,7 +133,9 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         const childElements = localElement.parentElement.children;
         for (let i = 0; i < childElements.length; i++) {
           childElements[i]['style'].padding = '0';
-          childElements[i]['style'].transform = 'none';
+          const cssTransform = (childElements[i]['style'].transform).split(' ');
+          // only including the scaleX value for transform
+          childElements[i]['style'].transform = cssTransform[0];
         }
         const selection = window.getSelection();
 
