@@ -129,14 +129,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       if (window.getSelection()) {
         const localElement = (<HTMLElement>highlight.event.target) || (<HTMLElement>highlight.event.srcElement);
 
-        // getting rid of padding/transform which is added with enhanced textLayer mode
-        const childElements = localElement.parentElement.children;
-        for (let i = 0; i < childElements.length; i++) {
-          childElements[i]['style'].padding = '0';
-          const cssTransform = (childElements[i]['style'].transform).split(' ');
-          // only including the scaleX value for transform
-          childElements[i]['style'].transform = cssTransform[0];
-        }
+        localElement.parentElement.childNodes.forEach(child => {
+          child['style']['padding'] = 0;
+          child['style']['transform'] = child['style']['transform'].replace(/translate[A-Z]\(-?\d*(\.\d+)?(px)?\)/g, '');
+        });
         const selection = window.getSelection();
 
         if (selection.rangeCount && !selection.isCollapsed) {
