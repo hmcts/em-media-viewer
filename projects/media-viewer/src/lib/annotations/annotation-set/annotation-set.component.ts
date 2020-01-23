@@ -129,10 +129,13 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       if (window.getSelection()) {
         const localElement = (<HTMLElement>highlight.event.target) || (<HTMLElement>highlight.event.srcElement);
 
-        localElement.parentElement.childNodes.forEach(child => {
-          child['style']['padding'] = 0;
-          child['style']['transform'] = child['style']['transform'].replace(/translate[A-Z]\(-?\d*(\.\d+)?(px)?\)/g, '');
-        });
+        if (localElement.parentElement.childNodes) {
+          localElement.parentElement.childNodes.forEach(child => {
+            child['style']['padding'] = 0;
+            const translateCSSRegex = /translate[A-Z]\(-?\d*(\.\d+)?(px)?\)/g;
+            child['style']['transform'] = child['style']['transform'].replace(translateCSSRegex, '');
+          });
+        }
         const selection = window.getSelection();
 
         if (selection.rangeCount && !selection.isCollapsed) {
