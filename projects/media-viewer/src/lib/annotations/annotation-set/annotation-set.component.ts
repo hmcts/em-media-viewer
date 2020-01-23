@@ -132,7 +132,9 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         if (localElement.parentElement.childNodes) {
           localElement.parentElement.childNodes.forEach(child => {
             child['style']['padding'] = 0;
-            const translateCSSRegex = /translate[A-Z]\(-?\d*(\.\d+)?(px)?\)/g;
+            // regex will be targeting the translate style in string
+            // e.g. scaleX(0.969918) translateX(-110.684px) translateY(-105.274px) will become scaleX(0.969918)
+            const translateCSSRegex = /translate[XYZ]\(-?\d*(\.\d+)?(px)?\)/g;
             child['style']['transform'] = child['style']['transform'].replace(translateCSSRegex, '');
           });
         }
