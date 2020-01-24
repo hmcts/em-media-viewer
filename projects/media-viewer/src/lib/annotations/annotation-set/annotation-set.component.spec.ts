@@ -33,7 +33,19 @@ describe('AnnotationSetComponent', () => {
     parentElement: {
       getBoundingClientRect(): unknown {
         return mockTextLayerRect;
-      }
+      },
+      childNodes: [{
+        style: {
+          padding: '100px 100px 100px 100px',
+          transform: 'scaleX(0.01) translateX(100px) translateY(-0.1)'
+        }
+      },
+      {
+        style: {
+          padding: '100px 100px 100px 100px',
+          transform: 'scaleX(0.01) translateX(100) translateY(-0.1px)'
+        }
+      }]
     }
   };
 
@@ -359,6 +371,20 @@ describe('AnnotationSetComponent', () => {
     expect(finalRectangle.y).toEqual(25);
     expect(finalRectangle.height).toEqual(75);
     expect(finalRectangle.width).toEqual(90);
+  });
+
+  it('should remove padding and translateX/Y from the srcElement', async () => {
+    component.rotate = 0;
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
+
+    await component.createTextHighlight(mockHighlight);
+
+    const childNode = mockHighlight.event.target.parentElement.childNodes;
+    expect(childNode[0].style.padding).toEqual(0);
+    expect(childNode[0].style.transform).toEqual('scaleX(0.01)  ');
+    expect(childNode[1].style.padding).toEqual(0);
+    expect(childNode[1].style.transform).toEqual('scaleX(0.01)  ');
   });
 
   it('should calculate the new rectangle position', async () => {
