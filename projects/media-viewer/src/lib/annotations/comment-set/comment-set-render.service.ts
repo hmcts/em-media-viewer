@@ -1,8 +1,25 @@
 import { Injectable } from '@angular/core';
 import { CommentComponent } from './comment/comment.component';
+import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 @Injectable()
 export class CommentSetRenderService {
+
+  createPageContainer(pageEvent: PageEvent) {
+    const element = pageEvent.source.div;
+
+    let pageContainer = element.closest('.pageContainer');
+    if (!pageContainer) {
+      const pageWrapper =  document.createElement('div');
+      pageWrapper.setAttribute('class', 'pageWrapper');
+      pageContainer =  document.createElement('div');
+      pageContainer.setAttribute('class', 'pageContainer');
+      element.insertAdjacentElement('beforebegin', pageContainer);
+      pageWrapper.appendChild(element);
+      pageContainer.appendChild(pageWrapper);
+    }
+    return pageContainer;
+  }
 
   redrawComponents(commentComponents: CommentComponent[], height: number, rotate: number, zoom: number) {
       let prevComment: CommentComponent;
@@ -60,18 +77,18 @@ export class CommentSetRenderService {
 
   private difference(a: number, b: number): number { return Math.abs(a - b); }
 
-  private makeSureWithinContainer(commentItem: CommentComponent, previousCommentItem: CommentComponent, containerHeight: number) {
+  private makeSureWithinContainer(comment: CommentComponent, prevComment: CommentComponent, containerHeight: number) {
     containerHeight -= 10;
-    if (commentItem.commentBottomPos > containerHeight) {
-      commentItem.rectTop -= commentItem.commentBottomPos - containerHeight;
-    } else if (previousCommentItem) {
-      if (commentItem.commentBottomPos > previousCommentItem.rectTop) {
-        commentItem.rectTop -= commentItem.commentBottomPos - previousCommentItem.rectTop;
+    if (comment.commentBottomPos > containerHeight) {
+      comment.rectTop -= comment.commentBottomPos - containerHeight;
+    } else if (prevComment) {
+      if (comment.commentBottomPos > prevComment.rectTop) {
+        comment.rectTop -= comment.commentBottomPos - prevComment.rectTop;
       }
     }
-    if (commentItem.rectTop < 0 ) {
-      commentItem.rectTop = 0;
+    if (comment.rectTop < 0 ) {
+      comment.rectTop = 0;
     }
-    return commentItem;
+    return comment;
   }
 }
