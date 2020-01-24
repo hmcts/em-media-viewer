@@ -41,7 +41,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
               private readonly api: AnnotationApiService,
               private readonly annotationService: AnnotationService,
               private readonly commentService: CommentService,
-              private readonly commentSetService: CommentSetRenderService) {
+              private readonly renderService: CommentSetRenderService) {
     this.clearSelection();
   }
 
@@ -65,18 +65,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   addToDOM(pageEvent: PageEvent) {
     this.updateView(pageEvent);
-    const element = pageEvent.source.div;
-
-    let pageContainer = element.closest('.pageContainer');
-    if (!pageContainer) {
-      const pageWrapper =  document.createElement('div');
-      pageWrapper.setAttribute('class', 'pageWrapper');
-      pageContainer =  document.createElement('div');
-      pageContainer.setAttribute('class', 'pageContainer');
-      element.insertAdjacentElement('beforebegin', pageContainer);
-      pageWrapper.appendChild(element);
-      pageContainer.appendChild(pageWrapper);
-    }
+    const pageContainer = this.renderService.createPageContainer(pageEvent);
     pageContainer.appendChild(this.container.nativeElement);
   }
 
@@ -107,7 +96,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   redrawComments() {
     setTimeout(() => {
       const componentList: CommentComponent[] = this.commentComponents.map(comment => comment);
-      this.commentSetService.redrawComponents(componentList, this.height, this.rotate, this.zoom);
+      this.renderService.redrawComponents(componentList, this.height, this.rotate, this.zoom);
     });
   }
 
