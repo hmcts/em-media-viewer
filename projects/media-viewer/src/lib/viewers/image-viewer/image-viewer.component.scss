@@ -60,3 +60,16 @@ img {
   -o-transform-origin: left top;
   transform-origin: left top;
 }
+
+.dragScroll {
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.dragScroll:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}

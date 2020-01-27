@@ -16,6 +16,11 @@
               data-l10n-id="page_rotate_cw" (click)="rotateCw()">
         <span data-l10n-id="page_rotate_cw_label">Rotate Clockwise</span>
       </button>
+      <button *ngIf="toolbarButtons.showRotate" class="secondaryToolbarButton dragScroll" title="Drag Scroll" tabindex="6"
+              id="dragScroll"
+              data-l10n-id="page_drag_scroll" (click)="dragScroll()">
+        <span data-l10n-id="page_drag_scrol_label">Drag Scroll</span>
+      </button>
     <div class="horizontalToolbarSeparator"></div>
       <button id="secondaryPrint" *ngIf="toolbarButtons.showPrint" class="secondaryToolbarButton print" title="Print" tabindex="2" data-l10n-id="print" (click)="printFile()">
       <span data-l10n-id="print_label">Print</span>

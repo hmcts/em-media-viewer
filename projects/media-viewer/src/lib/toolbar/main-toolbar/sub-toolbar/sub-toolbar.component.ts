@@ -44,6 +44,11 @@ export class SubToolbarComponent {
     this.closeMenu();
   }
 
+  dragScroll() {
+    this.toolbarEvents.toggleDragScroll();
+    this.closeMenu();
+  }
+
   closeMenu() {
     this.toolbarButtons.subToolbarHidden.next(true);
   }
