@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { Position } from './model/position.model';
 import { Scroll } from './model/scroll.model';
 
@@ -8,29 +8,38 @@ import { Scroll } from './model/scroll.model';
 export class DragScrollDirective {
 
   originalScroll: Scroll;
-  private pointerDown: boolean = false;
+  private pointerDown = false;
+
+  @Input() enableScroll = true;
+  @Input() scrollAxis = '';
 
   constructor(private el: ElementRef) {
   }
 
   @HostListener('pointerdown', ['$event']) onPointerDown(event: PointerEvent) {
-    event.preventDefault();
-    this.pointerDown = true;
-    this.originalScroll = {
-      left: event.clientX + this.el.nativeElement.scrollLeft,
-      top: event.clientY + this.el.nativeElement.scrollTop,
-    };
+    if (this.enableScroll) {
+      event.preventDefault();
+      this.pointerDown = true;
+      this.originalScroll = {
+        left: event.clientX + this.el.nativeElement.scrollLeft,
+        top: event.clientY + this.el.nativeElement.scrollTop,
+      };
+    }
   }
 
   @HostListener('window:pointermove', ['$event']) onPointerMove(event: PointerEvent) {
-    if (this.pointerDown) {
+    if (this.pointerDown && this.enableScroll) {
       event.preventDefault();
       const scrollDiff = {
         left: this.originalScroll.left - (event.clientX + this.el.nativeElement.scrollLeft),
         top: this.originalScroll.top - (event.clientY + this.el.nativeElement.scrollTop)
       };
-      this.el.nativeElement.scrollLeft += scrollDiff.left;
-      this.el.nativeElement.scrollTop += scrollDiff.top;
+      if (this.scrollAxis.includes('vertical')) {
+        this.el.nativeElement.scrollLeft += scrollDiff.left;
+      }
+      if (this.scrollAxis.includes('horizontal')) {
+        this.el.nativeElement.scrollTop += scrollDiff.top;
+      }
     }
   }
 
