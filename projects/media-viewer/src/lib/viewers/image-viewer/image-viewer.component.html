@@ -1,10 +1,10 @@
 <mv-comment-set-toggle *ngIf="enableAnnotations"></mv-comment-set-toggle>
-<div dragScroll
+<div dragScroll [scrollAxis]="'horizontal'"
      id="viewer-wrapper"
      [ngStyle]="{ height: height }"
      *ngIf="url && !errorMessage">
   <div class="split left">
-    <div dragScroll
+    <div dragScroll [scrollAxis]="'vertical'"
          id="image-container"
          [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations, 'show-comments-panel': showCommentsPanel }"
          [style.height.px]="getImageHeight(img)">
