@@ -1,12 +1,14 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { Rectangle } from './rectangle.model';
+import { Subscription } from 'rxjs';
+import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-anno-rectangle',
   templateUrl: './rectangle.component.html',
   styleUrls: ['./rectangle.component.scss']
 })
-export class RectangleComponent implements AfterViewInit {
+export class RectangleComponent implements AfterViewInit, OnDestroy {
 
   @Input() rectangle: Rectangle;
   @Input() color: String;
@@ -19,12 +21,25 @@ export class RectangleComponent implements AfterViewInit {
 
   @ViewChild('rectElement') rectElement: ElementRef;
 
+  private subscriptions: Subscription[] = [];
   _selected: boolean;
+  enableDragScroll = false;
+
+  constructor(private readonly toolbarEvents: ToolbarEventService) {
+  }
 
   ngAfterViewInit() {
     if (this.selected) {
       this.rectElement.nativeElement.focus();
     }
+    this.subscriptions.push(
+      this.toolbarEvents.dragScroll.subscribe(dragScroll => this.enableDragScroll = dragScroll)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.filter(subscription => !subscription.closed)
+      .forEach(subscription => subscription.unsubscribe());
   }
 
   @Input()

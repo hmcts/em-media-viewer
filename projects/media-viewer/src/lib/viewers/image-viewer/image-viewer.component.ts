@@ -46,6 +46,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   private response: Subscription;
 
   showCommentsPanel: boolean;
+  enableDragScroll = false;
 
   constructor(
     private readonly printService: PrintService,
@@ -61,6 +62,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.download()),
+      this.toolbarEvents.dragScroll.subscribe(dragScroll => this.enableDragScroll = dragScroll),
       this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
   }
