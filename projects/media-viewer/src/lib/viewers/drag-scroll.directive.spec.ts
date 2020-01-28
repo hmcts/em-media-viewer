@@ -36,7 +36,6 @@ describe('DragScrollDirective', () => {
 
   it('being able to drag the image around', () => {
     component.zoom = 5;
-    console.log(fixture.debugElement.nativeElement);
     imageElement.nativeElement.scrollLeft = 50;
     imageElement.nativeElement.scrollTop = 50;
 
