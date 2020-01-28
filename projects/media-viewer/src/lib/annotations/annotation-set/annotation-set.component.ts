@@ -127,6 +127,17 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   async createTextHighlight(highlight: Highlight) {
     if (highlight.page === this.page) {
       if (window.getSelection()) {
+        const localElement = (<HTMLElement>highlight.event.target) || (<HTMLElement>highlight.event.srcElement);
+
+        if (localElement.parentElement.childNodes) {
+          localElement.parentElement.childNodes.forEach(child => {
+            child['style']['padding'] = 0;
+            // regex will be targeting the translate style in string
+            // e.g. scaleX(0.969918) translateX(-110.684px) translateY(-105.274px) will become scaleX(0.969918)
+            const translateCSSRegex = /translate[XYZ]\(-?\d*(\.\d+)?(px)?\)/g;
+            child['style']['transform'] = child['style']['transform'].replace(translateCSSRegex, '');
+          });
+        }
         const selection = window.getSelection();
 
         if (selection.rangeCount && !selection.isCollapsed) {
@@ -134,7 +145,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           const clientRects = range.getClientRects();
 
           if (clientRects) {
-            const localElement = (<Element>highlight.event.target) || (<Element>highlight.event.srcElement);
             const textLayerRect = localElement.parentElement.getBoundingClientRect();
 
             const selectionRectangles: Rectangle[] = [];
