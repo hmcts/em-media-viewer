@@ -11,7 +11,7 @@ import { PdfJsWrapperFactory } from './viewers/pdf-viewer/pdf-js/pdf-js-wrapper.
 import { AnnotationsModule } from './annotations/annotations.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
-import { DragScrollDirective } from './directives/drag-scroll.directive';
+import { DragDirective } from './viewers/drag.directive';
 
 @NgModule({
   imports: [
@@ -27,7 +27,7 @@ import { DragScrollDirective } from './directives/drag-scroll.directive';
     UnsupportedViewerComponent,
     MediaViewerComponent,
     ErrorMessageComponent,
-    DragScrollDirective
+    DragDirective
   ],
   entryComponents: [
     PdfViewerComponent,
