@@ -120,12 +120,7 @@ export class ToolbarEventService {
     this.showCommentSummary.next(value);
   }
 
-  // Function to toggle dragScroll
   public toggleDragScroll(): void {
-    if (this.dragScroll.getValue() === false) {
-      this.dragScroll.next(true);
-    } else {
-      this.dragScroll.next(false);
-    }
+    this.dragScroll.next(!this.dragScroll.getValue());
   }
 }
