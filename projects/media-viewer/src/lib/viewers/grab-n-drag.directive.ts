@@ -2,9 +2,9 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 
 @Directive({
-  selector: '[drag]'
+  selector: '[grabNDrag]'
 })
-export class DragDirective {
+export class GrabNDragDirective {
 
   originalPosition: { left: number; top: number };
   private pointerDown = false;

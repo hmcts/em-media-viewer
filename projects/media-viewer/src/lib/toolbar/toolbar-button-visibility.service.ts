@@ -21,7 +21,7 @@ export class ToolbarButtonVisibilityService {
   public showSubToolbar = false;
   public showSidebar = false;
   public showCommentSummary = false;
-  public showDragScrollButton = false;
+  public showGrabNDragButton = false;
 
   /**
    * Reset the visibility of all buttons to false then set the value from the options
@@ -44,7 +44,7 @@ export class ToolbarButtonVisibilityService {
     this.showSubToolbar = false;
     this.showSidebar = false;
     this.showCommentSummary = false;
-    this.showDragScrollButton = false;
+    this.showGrabNDragButton = false;
 
     for (const key in options) {
       this[key] = options[key];
@@ -62,7 +62,7 @@ export const defaultPdfOptions = {
   showRotate: true,
   showSearchBar: true,
   showSidebar: true,
-  showDragScrollButton: true
+  showGrabNDragButton: true
 };
 
 /**
@@ -72,7 +72,7 @@ export const defaultImageOptions = {
   showDownload: true,
   showZoom: true,
   showRotate: true,
-  showDragScrollButton: true
+  showGrabNDragButton: true
 };
 
 /**

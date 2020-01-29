@@ -4,7 +4,7 @@
        draggable
        resizable
        [tabindex]="rectangle.id"
-       [ngClass]="{ 'selected': selected, 'dragScroll': enableDragScroll }"
+       [ngClass]="{ 'selected': selected, 'grabNDrag': enableGrabNDrag }"
        [style.backgroundColor]="'#' + color"
        [style.width]="rectangle.width * zoom + 'px'"
        [style.height]="rectangle.height * zoom + 'px'"

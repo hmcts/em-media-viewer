@@ -44,8 +44,8 @@ export class SubToolbarComponent {
     this.closeMenu();
   }
 
-  dragScroll() {
-    this.toolbarEvents.toggleDragScroll();
+  grabNDrag() {
+    this.toolbarEvents.toggleGrabNDrag();
     this.closeMenu();
   }
 
