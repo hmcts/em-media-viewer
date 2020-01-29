@@ -102,13 +102,13 @@ describe('CommentComponent', () => {
     expect(component._comment).toEqual({...mockComment});
   });
 
-  it('should set the unsavedChanges value', () => {
+  it('should set the unsavedChanges value',
     inject([CommentService], (commentService: CommentService) => {
       spyOn(commentService, 'onCommentChange');
       component.onCommentChange('new comment');
       expect(commentService.onCommentChange).toHaveBeenCalledWith(true);
-    });
-  });
+    })
+  );
 
   it('should set the unsavedChanges value to true', () => {
     component.originalComment = 'old comment';

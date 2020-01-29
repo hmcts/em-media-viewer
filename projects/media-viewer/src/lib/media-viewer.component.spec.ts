@@ -20,7 +20,7 @@ describe('MediaViewerComponent', () => {
   let fixture: ComponentFixture<MediaViewerComponent>;
   let api: AnnotationApiService;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
         MediaViewerComponent,
@@ -36,7 +36,7 @@ describe('MediaViewerComponent', () => {
       imports: [ToolbarModule, AnnotationsModule]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MediaViewerComponent);

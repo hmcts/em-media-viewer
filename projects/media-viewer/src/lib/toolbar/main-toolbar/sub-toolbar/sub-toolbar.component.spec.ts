@@ -8,13 +8,13 @@ describe('SubToolbarComponent', () => {
   let fixture: ComponentFixture<SubToolbarComponent>;
   let nativeElement;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [ SubToolbarComponent ],
       providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SubToolbarComponent);

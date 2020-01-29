@@ -5,7 +5,10 @@
      (mousedown)="onMouseDown($event)"
      (mousemove)="onMouseMove($event)"
      (mouseup)="onMouseUp()">
-  <div *ngIf="drawMode" #shapeRectangle class="shapeRectangle" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp()"></div>
+  <mv-box-highlight-create *ngIf="drawMode"
+                           [container]="containerRectangle()"
+                           [pageHeight]="height" [pageWidth]="width" [rotate]="rotate" [zoom]="zoom"
+                           (highlightCreated)="saveBoxHighlight($event)"></mv-box-highlight-create>
   <ng-container *ngFor="let annotation of getAnnotationsOnPage()">
     <mv-annotation [annotation]="annotation"
                    [zoom]="zoom"
@@ -15,7 +18,7 @@
                    [width]="width"
                    (update)="onAnnotationUpdate($event)"
                    (delete)="onAnnotationDelete($event)"
-                   (annotationClick)="onAnnotationClick($event)">
+                   (annotationClick)="selectAnnotation($event)">
     </mv-annotation>
   </ng-container>
 </div>

@@ -9,20 +9,20 @@ describe('UnsupportedViewerComponent', () => {
   let component: UnsupportedViewerComponent;
   let fixture: ComponentFixture<UnsupportedViewerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ UnsupportedViewerComponent, ErrorMessageComponent ],
       providers: [ ToolbarEventService, ViewerUtilService ],
       imports: [ HttpClientTestingModule ]
     })
     .compileComponents();
-  }));
+  });
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(UnsupportedViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  }));
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -10,7 +10,7 @@ describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
   let fixture: ComponentFixture<PdfViewerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [ PdfViewerComponent, ErrorMessageComponent ],
       providers: [
@@ -22,7 +22,7 @@ describe('PdfJsWrapperFactory', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PdfViewerComponent);

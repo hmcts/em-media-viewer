@@ -9,12 +9,12 @@ describe('OutlineViewComponent', () => {
   let component: OutlineViewComponent;
   let fixture: ComponentFixture<OutlineViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ OutlineViewComponent, OutlineItemComponent ],
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OutlineViewComponent);

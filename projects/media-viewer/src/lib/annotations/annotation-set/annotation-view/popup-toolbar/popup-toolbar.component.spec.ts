@@ -26,7 +26,7 @@ describe('PopupToolbarComponent', () => {
     },
   };
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ PopupToolbarComponent ]
     })
@@ -37,7 +37,7 @@ describe('PopupToolbarComponent', () => {
     component.rectangle = mockRectangle;
 
     fixture.detectChanges();
-  }));
+  });
 
   afterEach(() => {
     component.rectangle.x = 100;

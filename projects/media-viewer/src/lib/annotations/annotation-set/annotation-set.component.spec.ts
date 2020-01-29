@@ -1,27 +1,30 @@
 import { AnnotationSetComponent } from './annotation-set.component';
-import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
-import { RectangleComponent } from './annotation/rectangle/rectangle.component';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { RectangleComponent } from './annotation-view/rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../assets/annotation-set';
-import { PopupToolbarComponent } from './annotation/popup-toolbar/popup-toolbar.component';
-import { AnnotationComponent } from './annotation/annotation.component';
+import { PopupToolbarComponent } from './annotation-view/popup-toolbar/popup-toolbar.component';
+import { AnnotationViewComponent } from './annotation-view/annotation-view.component';
 import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable, of } from 'rxjs';
-import { ElementRef } from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
-import {CommentComponent} from '../comment-set/comment/comment.component';
-import { AnnotationService } from '../annotation.service';
+import { CommentComponent } from '../comment-set/comment/comment.component';
+import { AnnotationEventService } from '../annotation-event.service';
 import { CommentService } from '../comment-set/comment/comment.service';
 import { MutableDivModule } from 'mutable-div';
+import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';
+import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
+import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
+import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
   let fixture: ComponentFixture<AnnotationSetComponent>;
 
   const api = new AnnotationApiService({}  as any);
-  const mockAnnotationService = new AnnotationService();
+  const mockAnnotationService = new AnnotationEventService();
   const mockCommentService = new CommentService();
 
   const mockTextLayerRect: any = {
@@ -76,24 +79,6 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  const mockSelection: any = {
-    rangeCount: 2,
-    isCollapsed: false,
-    getRangeAt(): any {
-      return mockRange;
-    },
-    removeAllRanges(): any {
-    }
-  };
-
-  const mockAnnotationRectangle: any = {
-    annotationId: 'id',
-    height: 12,
-    width: 5,
-    x: 2,
-    y: 3
-  };
-
   const fakeApi: any = {
     returnedAnnotation: {
       id: 'testId',
@@ -113,11 +98,12 @@ describe('AnnotationSetComponent', () => {
     }
   };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [
         AnnotationSetComponent,
-        AnnotationComponent,
+        AnnotationViewComponent,
+        BoxHighlightCreateComponent,
         CommentComponent,
         RectangleComponent,
         PopupToolbarComponent
@@ -129,9 +115,11 @@ describe('AnnotationSetComponent', () => {
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
-        { provide: AnnotationService, useValue: mockAnnotationService },
+        { provide: AnnotationEventService, useValue: mockAnnotationService },
         { provide: CommentService, useValue: mockCommentService },
-        ToolbarEventService
+        ToolbarEventService,
+        TextHighlightCreateService,
+        BoxHighlightCreateService
       ]
     }).compileComponents();
 
@@ -163,7 +151,7 @@ describe('AnnotationSetComponent', () => {
     expect(spy).toHaveBeenCalledWith(annotation);
   });
 
-  it('expect annotation to be assigned to annotation set when updated', () => {
+  it('should assign annotation to annotation-set when updated', () => {
     const annotation = { ...annotationSet.annotations[0] };
     spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
     spyOn(mockCommentService, 'hasUnsavedComments').and.returnValues(true);
@@ -174,7 +162,7 @@ describe('AnnotationSetComponent', () => {
     expect(component.annotationSet.annotations[0]).toEqual(annotation);
   });
 
-  it('delete annotation', () => {
+  it('should delete annotation', () => {
     spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
     spyOn(mockCommentService, 'updateUnsavedCommentsStatus');
     const annotations = { ...annotationSet.annotations };
@@ -186,59 +174,143 @@ describe('AnnotationSetComponent', () => {
     expect(annotations).not.toEqual(component.annotationSet.annotations);
   });
 
-  it('delete annotation should call updateUnsavedCommentsStatus', () => {
+  it('should call updateUnsavedCommentsStatus',
     inject([CommentService], (commentService: CommentService) => {
+      spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
+      spyOn(commentService, 'updateUnsavedCommentsStatus');
       const annotations = { ...annotationSet.annotations };
       const annotation = { ...annotations[0] };
 
       component.onAnnotationDelete(annotation);
 
       expect(commentService.updateUnsavedCommentsStatus).toHaveBeenCalledWith(annotation, false);
-    });
-  });
+    })
+  );
 
-  it('starts drawing on mousedown', () => {
-    component.shapeRectangle = new ElementRef(document.createElement('div'));
+  it('should initialise box-highlight on mousedown', inject([BoxHighlightCreateService], (highlightService) => {
+    spyOn(highlightService, 'initBoxHighlight');
     component.drawMode = true;
-    const initialiseNewRectSpy = spyOn<any>(component, 'initShapeRectangle').and.callThrough();
-    component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
 
-    expect(initialiseNewRectSpy).toHaveBeenCalled();
-    expect(component.shapeRectangle.nativeElement.style.left).toEqual('10px');
-    expect(component.shapeRectangle.nativeElement.style.top).toEqual('10px');
-  });
+    component.onMouseDown({} as MouseEvent);
 
-  it('does not mousedown if no annotationSet', () => {
-    component.annotationSet = null;
-    component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
+    expect(highlightService.initBoxHighlight).toHaveBeenCalled();
+  }));
 
-    expect(component.drawStartX).toEqual(-1);
-    expect(component.drawStartY).toEqual(-1);
-  });
+  it('should not initialise box-highlight on mousedown if no annotationSet exists',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'initBoxHighlight');
+      component.drawMode = true;
+      component.annotationSet = undefined;
 
-  it('does not mousedown if not in draw mode', () => {
-    component.drawMode = false;
+      component.onMouseDown({} as MouseEvent);
 
-    expect(component.drawStartX).toEqual(-1);
-    expect(component.drawStartY).toEqual(-1);
-  });
+      expect(highlightService.initBoxHighlight).not.toHaveBeenCalled();
+    })
+  );
 
-  it('finishes drawing on mouseup', () => {
-    const annotation = Object.assign({}, annotationSet.annotations[0]);
-    annotation.id = 'new';
+  it('should not initialise box-highlight on mousedown if drawMode is off',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'initBoxHighlight');
+      component.drawMode = true;
 
-    const spy = spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
+      component.onMouseDown({} as MouseEvent);
 
-    component.shapeRectangle = new ElementRef(document.createElement('div'));
-    component.drawMode = true;
-    component.zoom = 1;
-    component.onMouseDown({ pageY: 10, pageX: 10 } as MouseEvent);
-    component.onMouseMove({ pageY: 100, pageX: 100 } as MouseEvent);
-    component.onMouseUp();
+      expect(highlightService.initBoxHighlight).toHaveBeenCalled();
+    })
+  );
 
-    expect(spy).toHaveBeenCalled();
-    expect(component.annotationSet.annotations[component.annotationSet.annotations.length - 1].id).toEqual('new');
-  });
+  it('should update box-highlight on mousemove',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'updateBoxHighlight');
+      component.drawMode = true;
+
+      component.onMouseMove({} as MouseEvent);
+
+      expect(highlightService.updateBoxHighlight).toHaveBeenCalled();
+    })
+  );
+
+  it('should not update box-highlight on mousemove if drawMode is off',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'updateBoxHighlight');
+
+      component.onMouseMove({} as MouseEvent);
+
+      expect(highlightService.updateBoxHighlight).not.toHaveBeenCalled();
+    })
+  );
+
+  it('should not update box-highlight on mousemove if no annotationSet exists',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'updateBoxHighlight');
+      component.annotationSet = undefined;
+
+      component.onMouseMove({} as MouseEvent);
+
+      expect(highlightService.updateBoxHighlight).not.toHaveBeenCalled();
+    })
+  );
+
+  it('should create box-highlight on mouseup',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'createBoxHighlight');
+      component.drawMode = true;
+
+      component.onMouseUp();
+
+      expect(highlightService.createBoxHighlight).toHaveBeenCalled();
+    })
+  );
+
+  it('should not create box-highlight on mouseup if drawMode is off',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'createBoxHighlight');
+
+      component.onMouseUp();
+
+      expect(highlightService.createBoxHighlight).not.toHaveBeenCalled();
+    })
+  );
+
+  it('should not create box-highlight on mouseup if no annotationSet exists',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'createBoxHighlight');
+      component.annotationSet = undefined;
+
+      component.onMouseUp();
+
+      expect(highlightService.createBoxHighlight).not.toHaveBeenCalled();
+    })
+  );
+
+  it('should save box-highlight on mouseup if no annotationSet exists',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'saveBoxHighlight');
+
+      component.saveBoxHighlight({});
+
+      expect(highlightService.saveBoxHighlight)
+        .toHaveBeenCalledWith({}, component.annotationSet, component.page);
+    })
+  );
+
+  it('should create text highlight',
+    inject([TextHighlightCreateService, ViewerEventService], (highlightService, viewerEvents) => {
+      spyOn(highlightService, 'createTextHighlight');
+      component.ngOnInit();
+
+      viewerEvents.textSelected(undefined);
+
+      expect(highlightService.createTextHighlight)
+        .toHaveBeenCalledWith(undefined, component.annotationSet,
+        { zoom: component.zoom,
+          rotate: component.rotate,
+          height: component.height,
+          width: component.width,
+          number: component.page
+        });
+    })
+  );
 
   it('should use addToDOM method to set values', () => {
     const mockRealElement = document.createElement('div');
@@ -253,149 +325,18 @@ describe('AnnotationSetComponent', () => {
     expect(component.rotate).toEqual(mockEventSource.rotation);
     expect(component.width).toEqual(mockEventSource.div.clientHeight);
     expect(component.height).toEqual(mockEventSource.div.clientWidth);
-    expect(mockEventSource.div.childNodes).toContain(component.container.nativeElement  );
+    expect(mockEventSource.div.childNodes).toContain(component.container.nativeElement);
   });
 
-  it('should create rectangles', async () => {
-    spyOn(window, 'getSelection').and.returnValue(mockSelection);
-    const createRectangleSpy = spyOn<any>(component, 'createTextRectangle').and.returnValue(mockAnnotationRectangle);
-    const createAnnotationSpy = spyOn<any>(component, 'createAnnotation').and.returnValue(fakeApi.returnedAnnotation);
-    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
-    const removeRangesSpy = spyOn(mockSelection, 'removeAllRanges');
-    await component.createTextHighlight(mockHighlight);
-
-    expect(createRectangleSpy).toHaveBeenCalledTimes(2);
-    expect(createRectangleSpy).toHaveBeenCalledWith(mockClientRect, mockTextLayerRect);
-    expect(createAnnotationSpy).toHaveBeenCalledWith([mockAnnotationRectangle, mockAnnotationRectangle]);
-    expect(removeRangesSpy).toHaveBeenCalled();
-  });
-
-  it('should not create rectangles if not on right page', async () => {
-    component.page = 2;
-    const windowSpy = spyOn(window, 'getSelection');
-    await component.createTextHighlight(mockHighlight);
-    expect(windowSpy).toHaveBeenCalledTimes(0);
-  });
-
-  it('should not create rectangles if no window selection', async () => {
-    spyOn(window, 'getSelection').and.returnValue(null);
-    const createRectangleSpy = spyOn<any>(component, 'createTextRectangle');
-    await component.createTextHighlight(mockHighlight);
-
-    expect(createRectangleSpy).toHaveBeenCalledTimes(0);
-    expect(createRectangleSpy).toHaveBeenCalledTimes(0);
-  });
-
-  it('should not create rectangles if no selection range count', async () => {
-    spyOn<any>(mockSelection, 'rangeCount').and.returnValue(null);
-    const cloneRangeSpy = spyOn(mockSelection, 'getRangeAt');
-    await component.createTextHighlight(mockHighlight);
-    expect(cloneRangeSpy).toHaveBeenCalledTimes(0);
-  });
-
-  it('should not create rectangles if no selection range count', async () => {
-    spyOn<any>(mockSelection, 'isCollapsed').and.returnValue(true);
-    const cloneRangeSpy = spyOn(mockSelection, 'getRangeAt');
-    await component.createTextHighlight(mockHighlight);
-    expect(cloneRangeSpy).toHaveBeenCalledTimes(0);
-  });
-
-  it('should add annotation to annotationset', async () => {
-    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+  it('should add annotation to annotationset', () => {
     spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
 
-    await component.createTextHighlight(mockHighlight);
+    component.onAnnotationUpdate(fakeApi.returnedAnnotation);
 
     expect(component.selectedAnnotation).toEqual({ annotationId: fakeApi.returnedAnnotation.id, editable: false });
-
-    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
-    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
-    const expectedRectangle = fakeApi.returnedAnnotation.rectangles[1];
-    expect(finalRectangle).toEqual(expectedRectangle);
   });
 
-  it('should create unrotated rectangle', async () => {
-    spyOn(window, 'getSelection').and.returnValue(mockSelection);
-    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
-
-    await component.createTextHighlight(mockHighlight);
-
-    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
-    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
-    expect(finalRectangle.x).toEqual(25);
-    expect(finalRectangle.y).toEqual(10);
-    expect(finalRectangle.height).toEqual(90);
-    expect(finalRectangle.width).toEqual(75);
-  });
-
-  it('should create 90 degree rotated rectangle', async () => {
-    component.rotate = 90;
-    spyOn(window, 'getSelection').and.returnValue(mockSelection);
-    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
-
-    await component.createTextHighlight(mockHighlight);
-
-    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
-    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
-    expect(finalRectangle.x).toEqual(10);
-    expect(finalRectangle.y).toEqual(300);
-    expect(finalRectangle.height).toEqual(75);
-    expect(finalRectangle.width).toEqual(90);
-  });
-
-  it('should create 180 degree rotated rectangle', async () => {
-    component.rotate = 180;
-    spyOn(window, 'getSelection').and.returnValue(mockSelection);
-    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
-
-    await component.createTextHighlight(mockHighlight);
-
-    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
-    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
-    expect(finalRectangle.x).toEqual(100);
-    expect(finalRectangle.y).toEqual(300);
-    expect(finalRectangle.height).toEqual(90);
-    expect(finalRectangle.width).toEqual(75);
-  });
-
-  it('should create 270 degree rotated rectangle', async () => {
-    component.rotate = 270;
-    spyOn(window, 'getSelection').and.returnValue(mockSelection);
-    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
-
-    await component.createTextHighlight(mockHighlight);
-
-    const finalAnnotation = component.annotationSet.annotations[component.annotationSet.annotations.length - 1];
-    const finalRectangle = finalAnnotation.rectangles[finalAnnotation.rectangles.length - 1];
-    expect(finalRectangle.x).toEqual(100);
-    expect(finalRectangle.y).toEqual(25);
-    expect(finalRectangle.height).toEqual(75);
-    expect(finalRectangle.width).toEqual(90);
-  });
-
-  it('should remove padding and translateX/Y from the srcElement', async () => {
-    component.rotate = 0;
-    spyOn(window, 'getSelection').and.returnValue(mockSelection);
-    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
-
-    await component.createTextHighlight(mockHighlight);
-
-    const childNode = mockHighlight.event.target.parentElement.childNodes;
-    expect(childNode[0].style.padding).toEqual(0);
-    expect(childNode[0].style.transform).toEqual('scaleX(0.01)  ');
-    expect(childNode[1].style.padding).toEqual(0);
-    expect(childNode[1].style.transform).toEqual('scaleX(0.01)  ');
-  });
-
-  it('should calculate the new rectangle position', async () => {
-    const rectangle = { top: 100, left: 100, height: -10, width: -10 };
-
-    const newRectPos = component.calculateRectPos(rectangle.top, rectangle.left, rectangle.height, rectangle.width);
-
-    expect(newRectPos).toEqual({ top: 90, left: 90, height: 10, width: 10 });
-  });
-
-  it('should return the correct class values', async () => {
+  it('should return the correct class values', () => {
     component.drawMode = false;
     component.rotate = 0;
 

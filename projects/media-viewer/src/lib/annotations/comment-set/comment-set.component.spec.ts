@@ -6,11 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { AnnotationApiService } from '../annotation-api.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AnnotationService } from '../annotation.service';
+import { AnnotationEventService } from '../annotation-event.service';
 import { annotationSet } from '../../../assets/annotation-set';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { of } from 'rxjs';
-import { Annotation } from '../annotation-set/annotation/annotation.model';
+import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
 
@@ -19,7 +19,7 @@ describe('CommentSetComponent', () => {
   let fixture: ComponentFixture<CommentSetComponent>;
 
   const api = new AnnotationApiService({}  as any);
-  const mockAnnotationService = new AnnotationService();
+  const mockAnnotationService = new AnnotationEventService();
 
   const annotation: Annotation = {
     createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
@@ -182,7 +182,7 @@ describe('CommentSetComponent', () => {
     }
   ];
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         CommentSetComponent,
@@ -194,14 +194,14 @@ describe('CommentSetComponent', () => {
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
-        { provide: AnnotationService, useValue: mockAnnotationService },
+        { provide: AnnotationEventService, useValue: mockAnnotationService },
         ToolbarEventService,
         CommentService,
         CommentSetRenderService
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentSetComponent);
@@ -258,12 +258,12 @@ describe('CommentSetComponent', () => {
   });
 
   it('should set the selected comment', () => {
-    spyOn(mockAnnotationService, 'onAnnotationSelection');
+    spyOn(mockAnnotationService, 'selectAnnotation');
     const annotationId = '123';
 
     component.onSelect(annotationId);
 
-    expect(mockAnnotationService.onAnnotationSelection).toHaveBeenCalledWith(annotationId);
+    expect(mockAnnotationService.selectAnnotation).toHaveBeenCalledWith(annotationId);
   });
 
   it('should delete the comment for the annotation', () => {
@@ -288,12 +288,12 @@ describe('CommentSetComponent', () => {
     mockComment.content = 'Updating the comment 2';
     const annotationForComment = component.annotationSet.annotations.find(anno => anno.id === mockComment.annotationId);
     spyOn(api, 'postAnnotation').and.returnValue(of(annotationForComment));
-    spyOn(mockAnnotationService, 'onAnnotationSelection');
+    spyOn(mockAnnotationService, 'selectAnnotation');
 
     component.onAnnotationUpdate(annotationForComment);
 
     expect(api.postAnnotation).toHaveBeenCalledWith(annotationForComment);
-    expect(mockAnnotationService.onAnnotationSelection).toHaveBeenCalledWith({ annotationId: annotationForComment.id, editable: false });
+    expect(mockAnnotationService.selectAnnotation).toHaveBeenCalledWith({ annotationId: annotationForComment.id, editable: false });
     expect(component.annotationSet.annotations[0]).toEqual(annotationForComment);
   });
 
@@ -304,13 +304,13 @@ describe('CommentSetComponent', () => {
     expect(topRectangle).toEqual(mockRectangles[1]);
   });
 
-  it('should call the comment service to update comments state value', () => {
+  it('should call the comment service to update comments state value',
     inject([CommentService], (commentService: CommentService) => {
       spyOn(commentService, 'onCommentChange');
       component.allCommentsSaved();
       expect(commentService.onCommentChange).toHaveBeenCalled();
-    });
-  });
+    })
+  );
 
   it('all comments saved in set should return false', () => {
     component.commentComponents.reset([]);

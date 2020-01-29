@@ -9,14 +9,14 @@ describe('SearchBarComponent', () => {
   let fixture: ComponentFixture<SearchBarComponent>;
   let nativeElement, searchInput;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [ SearchBarComponent ],
       imports: [FormsModule],
       providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchBarComponent);

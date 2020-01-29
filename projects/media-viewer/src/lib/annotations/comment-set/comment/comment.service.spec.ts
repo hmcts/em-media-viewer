@@ -1,6 +1,8 @@
 import { CommentService } from './comment.service';
 import { CommentSetComponent } from '../comment-set.component';
-import { Annotation } from '../../annotation-set/annotation/annotation.model';
+import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
+import { async, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
+import { of } from 'rxjs';
 
 describe('CommentService', () => {
 
@@ -30,11 +32,13 @@ describe('CommentService', () => {
     expect(commentService.unsavedChanges.next).toHaveBeenCalledWith(false);
   });
 
-  it('get the unsavedChanges state', async () => {
+  it('should get the unsavedChanges state', fakeAsync(() => {
+    let changes = false;
+    commentService.getUnsavedChanges().subscribe(rsp => changes = rsp);
     commentService.unsavedChanges.next(true);
 
-    commentService.getUnsavedChanges().subscribe(changes => expect(changes).toBe(true));
-  });
+    expect(changes).toBe(true);
+  }));
 
   it('should update the array commentSetComponent at the correct array index', () => {
     commentService.commentSets[1] = null;

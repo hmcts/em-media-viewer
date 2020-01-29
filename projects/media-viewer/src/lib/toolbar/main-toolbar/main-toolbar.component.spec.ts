@@ -13,7 +13,7 @@ describe('MainToolbarComponent', () => {
   let fixture: ComponentFixture<MainToolbarComponent>;
   let nativeElement;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
         MainToolbarComponent,
@@ -27,7 +27,7 @@ describe('MainToolbarComponent', () => {
       providers: [ ToolbarButtonVisibilityService ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MainToolbarComponent);

@@ -178,7 +178,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
     if (this.toolbarEvents.drawModeSubject.getValue()) {
       this.annotationService.addAnnoSetToPage();
-      setTimeout(() => this.viewerEvents.shapeSelected({
+      setTimeout(() => this.viewerEvents.boxSelected({
         page: this.pdfWrapper.getPageNumber(),
         event: mouseEvent
       }), 0);
