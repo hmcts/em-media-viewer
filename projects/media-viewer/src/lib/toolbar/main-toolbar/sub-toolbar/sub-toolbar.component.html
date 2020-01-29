@@ -18,8 +18,8 @@
       </button>
       <button *ngIf="toolbarButtons.showGrabNDragButton" [class.toggled]="toolbarEvents.grabNDrag | async" class="secondaryToolbarButton grabNDrag" title="Grab N Drag" tabindex="6"
               id="grabNDrag"
-              data-l10n-id="page_drag_scroll" (click)="grabNDrag()">
-        <span data-l10n-id="page_drag_scroll_label">Grab N Drag</span>
+              data-l10n-id="page_grab_n_drag" (click)="grabNDrag()">
+        <span data-l10n-id="page_grab_n_drag_label">Grab N Drag</span>
       </button>
     <div class="horizontalToolbarSeparator"></div>
       <button id="secondaryPrint" *ngIf="toolbarButtons.showPrint" class="secondaryToolbarButton print" title="Print" tabindex="2" data-l10n-id="print" (click)="printFile()">
