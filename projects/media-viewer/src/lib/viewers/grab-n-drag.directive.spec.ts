@@ -29,11 +29,6 @@ describe('GrabNDragDirective', () => {
     fixture.detectChanges();
   });
 
-  it('should create an instance', () => {
-    const directive = new GrabNDragDirective(imageElement);
-    expect(directive).toBeTruthy();
-  });
-
   it('being able to drag the image around', () => {
     component.zoom = 5;
     imageElement.nativeElement.scrollLeft = 50;
