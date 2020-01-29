@@ -3,12 +3,12 @@ import {
   ViewChildren
 } from '@angular/core';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
-import { Annotation } from '../annotation-set/annotation/annotation.model';
+import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { CommentComponent } from './comment/comment.component';
-import { AnnotationService, SelectionAnnotation } from '../annotation.service';
+import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
 import { Subscription } from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 
@@ -39,7 +39,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   constructor(private readonly viewerEvents: ViewerEventService,
               private readonly api: AnnotationApiService,
-              private readonly annotationService: AnnotationService,
+              private readonly annotationService: AnnotationEventService,
               private readonly commentService: CommentService,
               private readonly renderService: CommentSetRenderService) {
     this.clearSelection();
@@ -83,7 +83,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   public onSelect(annotationId) {
-    this.annotationService.onAnnotationSelection(annotationId);
+    this.annotationService.selectAnnotation(annotationId);
   }
 
   public onCommentDelete(comment: Comment) {
@@ -114,7 +114,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
         this.annotationSet.annotations[index] = newAnnotation;
       });
-    this.annotationService.onAnnotationSelection({ annotationId: annotation.id, editable: false });
+    this.annotationService.selectAnnotation({ annotationId: annotation.id, editable: false });
   }
 
   topRectangle(annotationId: string) {

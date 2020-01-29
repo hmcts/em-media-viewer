@@ -34,7 +34,7 @@ describe('RectangleComponent', () => {
       y: 10,
   };
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
         RectangleComponent,
@@ -48,7 +48,7 @@ describe('RectangleComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RectangleComponent);

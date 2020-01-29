@@ -1,4 +1,4 @@
-import { AnnotationComponent } from './annotation.component';
+import { AnnotationViewComponent } from './annotation-view.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentComponent } from '../../comment-set/comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
@@ -8,8 +8,8 @@ import { Annotation } from './annotation.model';
 import { MutableDivModule } from 'mutable-div';
 
 describe('AnnotationComponent', () => {
-  let component: AnnotationComponent;
-  let fixture: ComponentFixture<AnnotationComponent>;
+  let component: AnnotationViewComponent;
+  let fixture: ComponentFixture<AnnotationViewComponent>;
 
   const annotation: Annotation = {
     createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
@@ -35,10 +35,10 @@ describe('AnnotationComponent', () => {
     type: 'highlight'
   };
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
-        AnnotationComponent,
+        AnnotationViewComponent,
         CommentComponent,
         RectangleComponent,
         PopupToolbarComponent
@@ -49,10 +49,10 @@ describe('AnnotationComponent', () => {
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AnnotationComponent);
+    fixture = TestBed.createComponent(AnnotationViewComponent);
     component = fixture.componentInstance;
     component.annotation = annotation;
     fixture.detectChanges();

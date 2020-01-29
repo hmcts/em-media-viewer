@@ -16,7 +16,7 @@ describe('ImageViewerComponent', () => {
   let nativeElement;
   const DOCUMENT_URL = 'document-url';
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
         ErrorMessageComponent,
@@ -28,7 +28,7 @@ describe('ImageViewerComponent', () => {
       ]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ImageViewerComponent);

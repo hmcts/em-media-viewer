@@ -8,13 +8,13 @@ describe('ToolbarMiddlePaneComponent', () => {
   let fixture: ComponentFixture<ToolbarMiddlePaneComponent>;
   let nativeElement;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [ ToolbarMiddlePaneComponent ],
       providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarMiddlePaneComponent);

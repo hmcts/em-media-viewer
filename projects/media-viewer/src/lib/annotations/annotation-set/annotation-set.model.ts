@@ -1,5 +1,5 @@
 import { ApiPersisted } from '../api-persisted.model';
-import { Annotation } from './annotation/annotation.model';
+import { Annotation } from './annotation-view/annotation.model';
 
 export interface AnnotationSet extends ApiPersisted {
   documentId: string;
