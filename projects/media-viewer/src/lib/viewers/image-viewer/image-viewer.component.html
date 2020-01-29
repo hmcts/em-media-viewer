@@ -1,11 +1,11 @@
 <mv-comment-set-toggle *ngIf="enableAnnotations"></mv-comment-set-toggle>
-<div drag [dragY]="enableDragScroll"
+<div grabNDrag [dragY]="enableGrabNDrag"
      id="viewer-wrapper"
      [ngStyle]="{ height: height }"
-     [ngClass]="{ 'dragScroll': enableDragScroll }"
+     [ngClass]="{ 'grabNDrag': enableGrabNDrag }"
      *ngIf="url && !errorMessage">
   <div class="split left">
-    <div drag [dragX]="enableDragScroll"
+    <div grabNDrag [dragX]="enableGrabNDrag"
          id="image-container"
          [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations, 'show-comments-panel': showCommentsPanel }"
          [style.height.px]="getImageHeight(img)">

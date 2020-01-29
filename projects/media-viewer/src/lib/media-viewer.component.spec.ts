@@ -13,7 +13,7 @@ import { AnnotationApiService } from './annotations/annotation-api.service';
 import { of } from 'rxjs';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
-import { DragDirective } from './viewers/drag.directive';
+import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -28,7 +28,7 @@ describe('MediaViewerComponent', () => {
         ImageViewerComponent,
         UnsupportedViewerComponent,
         ErrorMessageComponent,
-        DragDirective
+        GrabNDragDirective
       ],
       providers: [
         CommentService

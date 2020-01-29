@@ -1,18 +1,18 @@
-import { DragDirective } from './drag.directive';
+import { GrabNDragDirective } from './grab-n-drag.directive';
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('DragScrollDirective', () => {
+describe('GrabNDragDirective', () => {
   let component: ImageViewerComponent;
   let fixture: ComponentFixture<ImageViewerComponent>;
   let imageElement: DebugElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DragDirective, ImageViewerComponent],
+      declarations: [GrabNDragDirective, ImageViewerComponent],
       imports: [HttpClientModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
@@ -23,14 +23,14 @@ describe('DragScrollDirective', () => {
     component.height = '100px';
     component.url = 'https://images6.alphacoders.com/712/thumb-1920-712175.jpg';
     component.errorMessage = '';
-    component.enableDragScroll = true;
+    component.enableGrabNDrag = true;
     fixture.detectChanges();
     imageElement = fixture.debugElement.query(By.css('img'));
     fixture.detectChanges();
   });
 
   it('should create an instance', () => {
-    const directive = new DragDirective(imageElement);
+    const directive = new GrabNDragDirective(imageElement);
     expect(directive).toBeTruthy();
   });
 

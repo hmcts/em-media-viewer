@@ -23,7 +23,7 @@ export class RectangleComponent implements AfterViewInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   _selected: boolean;
-  enableDragScroll = false;
+  enableGrabNDrag = false;
 
   constructor(private readonly toolbarEvents: ToolbarEventService) {
   }
@@ -33,7 +33,7 @@ export class RectangleComponent implements AfterViewInit, OnDestroy {
       this.rectElement.nativeElement.focus();
     }
     this.subscriptions.push(
-      this.toolbarEvents.dragScroll.subscribe(dragScroll => this.enableDragScroll = dragScroll)
+      this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag)
     );
   }
 

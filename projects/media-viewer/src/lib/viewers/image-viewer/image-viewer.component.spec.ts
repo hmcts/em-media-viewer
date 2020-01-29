@@ -8,7 +8,7 @@ import { AnnotationsModule } from '../../annotations/annotations.module';
 import { annotationSet } from '../../../assets/annotation-set';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
-import { DragDirective } from '../drag.directive';
+import { GrabNDragDirective } from '../grab-n-drag.directive';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -21,7 +21,7 @@ describe('ImageViewerComponent', () => {
       declarations: [
         ErrorMessageComponent,
         ImageViewerComponent,
-        DragDirective
+        GrabNDragDirective
       ],
       imports: [
         AnnotationsModule
