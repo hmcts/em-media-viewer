@@ -17,3 +17,7 @@
 .selected.rectangle {
   opacity: 0.5;
 }
+
+.grabNDrag {
+  pointer-events: none;
+}

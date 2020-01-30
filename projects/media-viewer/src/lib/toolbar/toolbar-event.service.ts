@@ -33,6 +33,7 @@ export class ToolbarEventService {
   public readonly setCurrentPageInputValueSubject = new Subject<number>();
   public readonly changePageByDeltaSubject = new Subject<number>();
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
+  public readonly grabNDrag = new BehaviorSubject<boolean>(false);
 
   /**
    * Reset the stateful behaviour subjects
@@ -117,5 +118,9 @@ export class ToolbarEventService {
 
   public toggleCommentsSummary(value: boolean): void {
     this.showCommentSummary.next(value);
+  }
+
+  public toggleGrabNDrag(): void {
+    this.grabNDrag.next(!this.grabNDrag.getValue());
   }
 }

@@ -365,6 +365,10 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
   content: url(/assets/images/toolbarButton-download.png);
 }
 
+.secondaryToolbarButton.grabNDrag::before {
+  content: url(/assets/images/secondaryToolbarButton-handGrab.png);
+}
+
 .toolbarButton.bookmark,
 .secondaryToolbarButton.bookmark {
   box-sizing: border-box;
