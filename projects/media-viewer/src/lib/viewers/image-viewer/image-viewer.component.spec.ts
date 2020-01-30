@@ -8,6 +8,7 @@ import { AnnotationsModule } from '../../annotations/annotations.module';
 import { annotationSet } from '../../../assets/annotation-set';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
+import { GrabNDragDirective } from '../grab-n-drag.directive';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -19,7 +20,8 @@ describe('ImageViewerComponent', () => {
     return TestBed.configureTestingModule({
       declarations: [
         ErrorMessageComponent,
-        ImageViewerComponent
+        ImageViewerComponent,
+        GrabNDragDirective
       ],
       imports: [
         AnnotationsModule

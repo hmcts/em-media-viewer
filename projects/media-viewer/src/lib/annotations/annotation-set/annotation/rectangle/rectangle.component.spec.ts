@@ -58,6 +58,7 @@ describe('RectangleComponent', () => {
     component.rotate = 0;
     component.editable = true;
     component.selected = false;
+    component.enableGrabNDrag = false;
     nativeElement = fixture.debugElement.nativeElement;
     fixture.detectChanges();
     rectangleEl = fixture.debugElement.query(By.css('.rectangle'));

@@ -44,6 +44,11 @@ export class SubToolbarComponent {
     this.closeMenu();
   }
 
+  grabNDrag() {
+    this.toolbarEvents.toggleGrabNDrag();
+    this.closeMenu();
+  }
+
   closeMenu() {
     this.toolbarButtons.subToolbarHidden.next(true);
   }
