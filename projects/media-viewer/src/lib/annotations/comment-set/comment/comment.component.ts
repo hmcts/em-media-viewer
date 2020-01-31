@@ -39,6 +39,8 @@ export class CommentComponent implements OnChanges {
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;
+  @Input() page: number;
+  @Input() pageHeights = [];
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
@@ -134,9 +136,18 @@ export class CommentComponent implements OnChanges {
 
   formNgStyle() {
     return {
-      top: (this.rectTop * this.zoom) + 'px',
+      top: this.getTotalPreviousPagesHeight() + (this.rectTop * this.zoom) + 'px',
       'z-index': this.selected ? 100 : 0
     };
+  }
+
+  getTotalPreviousPagesHeight(): number {
+    const pageMarginBottom = 10;
+    let totalPreviousPagesHeight = 0;
+    for (let i = 0; i < this.page - 1; i++) {
+      totalPreviousPagesHeight += this.pageHeights[i] + pageMarginBottom;
+    }
+    return totalPreviousPagesHeight;
   }
 
   get commentBottomPos(): number {
