@@ -53,7 +53,7 @@ describe('PdfAnnotationService', () => {
     spyOn(annoSetService, 'addAnnotationsToPage');
     spyOn(commentSetService, 'renderCommentsOnPage');
 
-    service.addAnnotationsAndComments(pageRenderEvent);
+    service.addAnnotations(pageRenderEvent);
 
     expect(annoSetService.addAnnotationsToPage).toHaveBeenCalled();
     expect(commentSetService.renderCommentsOnPage).toHaveBeenCalled();

@@ -1,42 +1,28 @@
 import { Injectable } from '@angular/core';
 import { CommentComponent } from './comment/comment.component';
-import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 @Injectable()
 export class CommentSetRenderService {
 
-  createPageContainer(pageEvent: PageEvent) {
-    const element = pageEvent.source.div;
+  pageHeights = [];
 
-    let pageContainer = element.closest('.pageContainer');
-    if (!pageContainer) {
-      const pageWrapper =  document.createElement('div');
-      pageWrapper.setAttribute('class', 'pageWrapper');
-      pageContainer =  document.createElement('div');
-      pageContainer.setAttribute('class', 'pageContainer');
-      element.insertAdjacentElement('beforebegin', pageContainer);
-      pageWrapper.appendChild(element);
-      pageContainer.appendChild(pageWrapper);
-    }
-    return pageContainer;
+  redrawComponents(commentComponents: CommentComponent[], pageHeights: any[], containerHeight: number, rotate: number, zoom: number) {
+    this.pageHeights = pageHeights;
+    let prevComment: CommentComponent;
+    this.sortComponents(commentComponents, rotate, zoom).forEach((comment: CommentComponent) => {
+      this.adjustIfOverlapping(comment, prevComment, zoom);
+      prevComment = comment;
+    });
+    prevComment = null;
+    commentComponents.reverse().forEach((comment: CommentComponent) => {
+      prevComment = this.makeSureWithinContainer(comment, prevComment, containerHeight);
+    });
   }
 
-  redrawComponents(commentComponents: CommentComponent[], height: number, rotate: number, zoom: number) {
-      let prevComment: CommentComponent;
-      this.sortComponents(commentComponents, height, rotate, zoom).forEach((comment: CommentComponent) => {
-        this.adjustIfOverlapping(comment, prevComment, zoom);
-        prevComment = comment;
-      });
-      prevComment = null;
-      commentComponents.reverse().forEach((comment: CommentComponent) => {
-        prevComment = this.makeSureWithinContainer(comment, prevComment, height);
-      });
-  }
-
-  sortComponents(commentComponents: CommentComponent[], height: number, rotate: number, zoom: number) {
+  sortComponents(commentComponents: CommentComponent[], rotate: number, zoom: number) {
     return commentComponents.sort((a: CommentComponent, b: CommentComponent) => {
-      a.rectTop = this.top(a._rectangle, height, rotate, zoom);
-      b.rectTop = this.top(b._rectangle, height, rotate, zoom);
+      a.rectTop = this.top(a._rectangle, this.getPageHeight(a.page), rotate, zoom);
+      b.rectTop = this.top(b._rectangle, this.getPageHeight(b.page), rotate, zoom);
       return this.processSort(a, b);
     });
   }
@@ -90,5 +76,9 @@ export class CommentSetRenderService {
       comment.rectTop = 0;
     }
     return comment;
+  }
+
+  private getPageHeight(page: number) {
+    return this.pageHeights[page - 1];
   }
 }
