@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed} from '@angular/core/testing';
 import {MainToolbarComponent} from './main-toolbar.component';
 import {ToolbarLeftPaneComponent} from './left-pane/left-pane.component';
 import {ToolbarRightPaneComponent} from './right-pane/right-pane.component';
@@ -13,7 +13,7 @@ describe('MainToolbarComponent', () => {
   let fixture: ComponentFixture<MainToolbarComponent>;
   let nativeElement;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
         MainToolbarComponent,
@@ -27,7 +27,7 @@ describe('MainToolbarComponent', () => {
       providers: [ ToolbarButtonVisibilityService ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MainToolbarComponent);

@@ -7,12 +7,12 @@ export interface SelectionAnnotation {
 }
 
 @Injectable()
-export class AnnotationService {
+export class AnnotationEventService {
   public readonly selectedAnnotation = new Subject<SelectionAnnotation>();
 
   constructor() {}
 
-  public onAnnotationSelection(annotation: SelectionAnnotation): void {
+  public selectAnnotation(annotation: SelectionAnnotation): void {
     this.selectedAnnotation.next(annotation);
   }
 

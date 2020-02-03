@@ -3,7 +3,7 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { AnnotationApiService } from './annotation-api.service';
 import { AnnotationSet } from './annotation-set/annotation-set.model';
 import { User } from './user/user.model';
-import { Annotation } from './annotation-set/annotation/annotation.model';
+import { Annotation } from './annotation-set/annotation-view/annotation.model';
 import { of } from 'rxjs';
 import { Comment } from './comment-set/comment/comment.model';
 

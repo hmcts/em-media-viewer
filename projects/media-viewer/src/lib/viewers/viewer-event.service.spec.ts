@@ -23,8 +23,8 @@ describe('Viewer Events Service', () => {
   });
 
   it('should select the Shape', () => {
-    const shapeSelectSpy = spyOn(service.shapeHighlight, 'next');
-    service.shapeSelected(mockHighLight);
+    const shapeSelectSpy = spyOn(service.boxHighlight, 'next');
+    service.boxSelected(mockHighLight);
 
     expect(shapeSelectSpy).toHaveBeenCalledTimes(1);
   });

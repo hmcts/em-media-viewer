@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MediaViewerComponent } from './media-viewer.component';
 import { PdfViewerComponent } from './viewers/pdf-viewer/pdf-viewer.component';
 import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.component';
@@ -20,7 +20,7 @@ describe('MediaViewerComponent', () => {
   let fixture: ComponentFixture<MediaViewerComponent>;
   let api: AnnotationApiService;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
         MediaViewerComponent,
@@ -36,7 +36,7 @@ describe('MediaViewerComponent', () => {
       imports: [ToolbarModule, AnnotationsModule]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MediaViewerComponent);
@@ -70,14 +70,14 @@ describe('MediaViewerComponent', () => {
     expect(component.contentTypeUnsupported()).toBeTruthy();
   });
 
-  it('should reset the event state when the url is changed', async () => {
+  it('should reset the event state when the url is changed', () => {
     component.toolbarEvents.zoomValueSubject.next(2);
     component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });
 
     expect(component.toolbarEvents.zoomValueSubject.value).toBe(1);
   });
 
-  it('should set documentTitle to null if the content type is image', async () => {
+  it('should set documentTitle to null if the content type is image', () => {
     component.documentTitle = 'Document Title';
     component.contentType = 'image';
     component.ngOnChanges({ url: new SimpleChange('file.jpg', 'text.jpg', false) });
@@ -120,7 +120,7 @@ describe('MediaViewerComponent', () => {
     expect(api.annotationApiUrl).toBe(ANNOTATION_API_URL);
   });
 
-  it('onMediaLoad should emit a ResponseType', async () => {
+  it('onMediaLoad should emit a ResponseType', () => {
     const emitSpy = spyOn(component.mediaLoadStatus, 'emit');
 
     component.onMediaLoad(ResponseType.SUCCESS);
@@ -153,7 +153,7 @@ describe('MediaViewerComponent', () => {
     expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions, showCommentSummary: false });
   });
 
-  it('onLoadException should emit a ViewerException', async () => {
+  it('onLoadException should emit a ViewerException', () => {
     const viewerException = new ViewerException();
     const emitSpy = spyOn(component.viewerException, 'emit');
 
@@ -161,14 +161,14 @@ describe('MediaViewerComponent', () => {
     expect(emitSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('onUnsavedChanges should emit a boolean value', async () => {
+  it('onUnsavedChanges should emit a boolean value', () => {
     const emitSpy = spyOn(component.unsavedChanges, 'emit');
 
     component.onCommentChange(true);
     expect(emitSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('onDocumentTitleChange should update the document title value', async () => {
+  it('onDocumentTitleChange should update the document title value', () => {
     const newTitle = 'New Bundle';
     component.documentTitle = 'Document Title for Evidence';
 

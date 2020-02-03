@@ -1,8 +1,6 @@
 import { CommentSetRenderService } from './comment-set-render.service';
-import { async, inject, TestBed } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 import { CommentComponent } from './comment/comment.component';
-import { AnnotationService } from '../annotation.service';
-
 
 describe('CommentSetRenderService', () => {
   const componentList = [
@@ -20,12 +18,12 @@ describe('CommentSetRenderService', () => {
     }
   ] as CommentComponent[];
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [CommentSetRenderService]
     })
       .compileComponents();
-  }));
+  });
 
   it('should sort comment components, rotation 90',
     inject([CommentSetRenderService], (service: CommentSetRenderService) => {

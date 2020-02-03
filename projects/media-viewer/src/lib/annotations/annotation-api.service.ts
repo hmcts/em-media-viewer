@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import uuid from 'uuid/v4';
 import { AnnotationSet } from './annotation-set/annotation-set.model';
-import { Annotation } from './annotation-set/annotation/annotation.model';
+import { Annotation } from './annotation-set/annotation-view/annotation.model';
 import { Comment } from './comment-set/comment/comment.model';
 
 @Injectable()

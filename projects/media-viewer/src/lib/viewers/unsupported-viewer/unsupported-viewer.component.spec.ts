@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnsupportedViewerComponent } from './unsupported-viewer.component';
 import { ErrorMessageComponent } from '../error-message/error.message.component';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
@@ -9,20 +9,20 @@ describe('UnsupportedViewerComponent', () => {
   let component: UnsupportedViewerComponent;
   let fixture: ComponentFixture<UnsupportedViewerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ UnsupportedViewerComponent, ErrorMessageComponent ],
       providers: [ ToolbarEventService, ViewerUtilService ],
       imports: [ HttpClientTestingModule ]
     })
     .compileComponents();
-  }));
+  });
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(UnsupportedViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  }));
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

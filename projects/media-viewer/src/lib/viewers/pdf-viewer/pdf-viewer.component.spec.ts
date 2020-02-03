@@ -14,7 +14,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation.service';
-import { AnnotationService } from '../../annotations/annotation.service';
+import { AnnotationEventService } from '../../annotations/annotation-event.service';
 import { CommentSetService } from './comment-set.service';
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -50,7 +50,7 @@ describe('PdfViewerComponent', () => {
     pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>()
   } as any;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [PdfViewerComponent, ErrorMessageComponent, AnnotationSetComponent],
       imports: [HttpClientTestingModule],
@@ -59,7 +59,7 @@ describe('PdfViewerComponent', () => {
         AnnotationApiService,
         CommentSetService,
         CommentService,
-        AnnotationService,
+        AnnotationEventService,
         ToolbarEventService,
         ViewerEventService,
         PrintService,
@@ -85,14 +85,14 @@ describe('PdfViewerComponent', () => {
     annotationService = fixture.debugElement.injector.get(PdfAnnotationService);
     wrapperFactory = fixture.debugElement.injector.get(PdfJsWrapperFactory);
     spyOn(wrapperFactory, 'create').and.returnValue(mockWrapper);
-    await component.ngOnChanges({
+    component.ngOnChanges({
       url: new SimpleChange(null, component.url, true)
     });
-    await component.ngAfterContentInit();
+    component.ngAfterContentInit();
     fixture.detectChanges();
   });
 
-  afterEach(async () => {
+  afterEach(() => {
     component.ngOnDestroy();
   });
 
@@ -176,7 +176,7 @@ describe('PdfViewerComponent', () => {
 
   it('should select the page', () => {
     spyOn(annotationService, 'addAnnoSetToPage');
-    spyOn(viewerEvents, 'shapeSelected');
+    spyOn(viewerEvents, 'boxSelected');
     spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
 
     const mouseEvent = new MouseEvent('mousedown');
