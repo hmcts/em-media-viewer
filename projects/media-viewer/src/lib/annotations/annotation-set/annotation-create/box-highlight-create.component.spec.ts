@@ -61,10 +61,10 @@ describe('BoxHighlightCreateComponent', () => {
     component.init(event);
 
     expect(component.display).toBe('block');
-    expect(component.height).toBe('50px');
-    expect(component.width).toBe('50px');
-    expect(component.top).toBe('100px');
-    expect(component.left).toBe('-100px');
+    expect(component.height).toBe(50);
+    expect(component.width).toBe(50);
+    expect(component.top).toBe(100);
+    expect(component.left).toBe(-100);
   });
 
   it('should update the box highlight creator, with no rotation', () => {
@@ -74,10 +74,10 @@ describe('BoxHighlightCreateComponent', () => {
 
     component.update(updateEvent);
 
-    expect(component.width).toBe('160px');
-    expect(component.height).toBe('50px');
-    expect(component.top).toBe('0px');
-    expect(component.left).toBe('-100px');
+    expect(component.width).toBe(160);
+    expect(component.height).toBe(50);
+    expect(component.top).toBe(0);
+    expect(component.left).toBe(-100);
   });
 
   it('should update the box highlight creator, when rotate is 90', () => {
@@ -88,10 +88,10 @@ describe('BoxHighlightCreateComponent', () => {
 
     component.update(updateEvent);
 
-    expect(component.width).toBe('50px');
-    expect(component.height).toBe('160px');
-    expect(component.top).toBe('340px');
-    expect(component.left).toBe('0px');
+    expect(component.width).toBe(50);
+    expect(component.height).toBe(160);
+    expect(component.top).toBe(340);
+    expect(component.left).toBe(0);
   });
 
   it('should update the box highlight creator, when rotate is 180', () => {
@@ -102,10 +102,10 @@ describe('BoxHighlightCreateComponent', () => {
 
     component.update(updateEvent);
 
-    expect(component.width).toBe('50px');
-    expect(component.height).toBe('160px');
-    expect(component.top).toBe('350px');
-    expect(component.left).toBe('140px');
+    expect(component.width).toBe(160);
+    expect(component.height).toBe(50);
+    expect(component.top).toBe(350);
+    expect(component.left).toBe(140);
   });
 
   it('should update the box highlight creator, when rotate is 270', () => {
@@ -116,10 +116,10 @@ describe('BoxHighlightCreateComponent', () => {
 
     component.update(updateEvent);
 
-    expect(component.width).toBe('50px');
-    expect(component.height).toBe('160px');
-    expect(component.top).toBe('-100px');
-    expect(component.left).toBe('150px');
+    expect(component.width).toBe(50);
+    expect(component.height).toBe(160);
+    expect(component.top).toBe(-100);
+    expect(component.left).toBe(150);
   });
 
   it('should create the highlight', () => {
@@ -127,10 +127,10 @@ describe('BoxHighlightCreateComponent', () => {
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.display = 'block';
-    component.height = '50px';
-    component.width = '50px';
-    component.top = '50px';
-    component.left = '50px';
+    component.height = 50;
+    component.width = 50;
+    component.top = 50;
+    component.left = 50;
 
     component.create();
 
@@ -138,7 +138,7 @@ describe('BoxHighlightCreateComponent', () => {
     expect(component.drawStartX).toBe(-1);
     expect(component.drawStartY).toBe(-1);
     expect(component.display).toBe('none');
-    expect(component.width).toBe('0px');
-    expect(component.height).toBe('0px');
+    expect(component.width).toBe(0);
+    expect(component.height).toBe(0);
   });
 });
