@@ -159,13 +159,13 @@ describe('CommentsSummaryComponent', () => {
     expect(component.comments).toEqual([]);
   });
 
-  it('close', async(
+  it('close',
     inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
       spyOn(toolbarEvents, 'toggleCommentsSummary');
       component.onClose();
       expect(toolbarEvents.toggleCommentsSummary).toHaveBeenCalledWith(false);
     })
-  ));
+  );
 
   it('print', () => {
     const printSpy = spyOn(printService, 'printElementNatively').and.stub();

@@ -1,8 +1,6 @@
 import { CommentSetRenderService } from './comment-set-render.service';
-import { async, inject, TestBed } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 import { CommentComponent } from './comment/comment.component';
-import { AnnotationEventService } from '../annotation-event.service';
-
 
 describe('CommentSetRenderService', () => {
   const componentList = [

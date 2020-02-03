@@ -1,8 +1,7 @@
 import { CommentService } from './comment.service';
 import { CommentSetComponent } from '../comment-set.component';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
-import { async, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { fakeAsync } from '@angular/core/testing';
 
 describe('CommentService', () => {
 

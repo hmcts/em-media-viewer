@@ -27,7 +27,7 @@ describe('ViewerUtilService', () => {
     expect(viewerUtilService).toBeTruthy();
   }));
 
-  it('should make http head request', async() => {
+  it('should make http head request', () => {
     const url = 'url';
     service.validateFile(url).subscribe(() => {
       return new Observable<ViewerException>();

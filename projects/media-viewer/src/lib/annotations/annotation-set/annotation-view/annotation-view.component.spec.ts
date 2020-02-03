@@ -1,5 +1,5 @@
 import { AnnotationViewComponent } from './annotation-view.component';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentComponent } from '../../comment-set/comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
@@ -62,20 +62,20 @@ describe('AnnotationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('select the annotation', async () => {
+  it('select the annotation', () => {
       component.onSelect();
 
       expect(component.selected).toBe(true);
   });
 
-  it('deselect the annotation', async () => {
+  it('deselect the annotation', () => {
       const relatedTarget = document.createElement('span');
       component.onFocusOut({ relatedTarget } as any);
 
       expect(component.selected).toBe(false);
   });
 
-  it('create a comment', async () => {
+  it('create a comment', () => {
     component.annotation = annotation;
 
     component.addOrEditComment();
@@ -86,14 +86,14 @@ describe('AnnotationComponent', () => {
     expect(component.annotation.comments[0].createdByDetails).toBe(undefined);
   });
 
-  it('create a comment', async () => {
+  it('create a comment', () => {
     component.addOrEditComment();
 
     expect(component.annotation.comments[0].content).toBe('');
     expect(component.annotation.comments[0].createdByDetails).toBe(undefined);
   });
 
-  it('delete the annotation', async () => {
+  it('delete the annotation', () => {
     spyOn(component.delete, 'emit');
 
     const rectangles = { ...component.annotation.rectangles };
