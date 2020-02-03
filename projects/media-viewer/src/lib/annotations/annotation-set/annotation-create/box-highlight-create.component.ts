@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import uuid from 'uuid';
 import { Subscription } from 'rxjs';
 import { BoxHighlightCreateService } from './box-highlight-create.service';
@@ -8,7 +8,7 @@ import { BoxHighlightCreateService } from './box-highlight-create.service';
   templateUrl: './box-highlight-create.component.html',
   styleUrls: ['./box-highlight-create.component.scss']
 })
-export class BoxHighlightCreateComponent {
+export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   @Input() pageHeight: number;
   @Input() pageWidth: number;
@@ -21,10 +21,10 @@ export class BoxHighlightCreateComponent {
 
   drawStartX = -1;
   drawStartY = -1;
-  top: string;
-  left: string;
-  height: string;
-  width: string;
+  top: number;
+  left: number;
+  height: number;
+  width: number;
   display: string;
 
   private subscriptions: Subscription[] = [];
@@ -46,36 +46,37 @@ export class BoxHighlightCreateComponent {
   }
 
   init(event) {
-    this.drawStartX = event.pageX - (window.pageXOffset + this.container.left);
-    this.drawStartY = event.pageY - (window.pageYOffset + this.container.top);
+    this.drawStartX = event.pageX - window.pageXOffset - this.container.left;
+    this.drawStartY = event.pageY - window.pageYOffset - this.container.top;
 
     this.display = 'block';
-    this.height = '50px';
-    this.width = '50px';
+    this.height = 50;
+    this.width = 50;
 
     switch (this.rotate) {
       case 90:
-        this.top = this.pageHeight - this.drawStartX + 'px';
-        this.left = this.drawStartY + 'px';
+        this.top = this.pageHeight - this.drawStartX - this.height;
+        this.left = this.drawStartY;
         break;
       case 180:
-        this.top = this.pageHeight - this.drawStartY + 'px';
-        this.left = this.pageWidth - this.drawStartX + 'px';
+        this.top = this.pageHeight - this.drawStartY - this.height;
+        this.left = this.pageWidth - this.drawStartX - this.width;
         break;
       case 270:
-        this.top = this.drawStartX + 'px';
-        this.left = this.pageWidth - this.drawStartY + 'px';
+        this.top = this.drawStartX;
+        this.left = this.pageWidth - this.drawStartY - this.width;
         break;
       default:
-        this.top = this.drawStartY + 'px';
-        this.left = this.drawStartX + 'px';
+        this.top = this.drawStartY;
+        this.left = this.drawStartX;
+
     }
   }
 
   update(event: MouseEvent) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
-      const xDelta = event.pageX - this.drawStartX - (window.pageXOffset + this.container.left);
-      const yDelta = event.pageY - this.drawStartY - (window.pageYOffset + this.container.top);
+      const xDelta = event.pageX - this.drawStartX - window.pageXOffset - this.container.left;
+      const yDelta = event.pageY - this.drawStartY - window.pageYOffset - this.container.top;
       let height = yDelta;
       let width = xDelta;
       let top = this.drawStartY;
@@ -89,8 +90,8 @@ export class BoxHighlightCreateComponent {
             left = this.drawStartY;
           break;
         case 180:
-            height = -xDelta;
-            width = -yDelta;
+            height = -yDelta;
+            width = -xDelta;
             top = this.pageHeight - this.drawStartY;
             left = this.pageWidth - this.drawStartX;
           break;
@@ -108,10 +109,10 @@ export class BoxHighlightCreateComponent {
   create() {
       this.highlightCreated.emit({
         id: uuid(),
-        x: +this.left.slice(0, -2) / this.zoom,
-        y: +this.top.slice(0, -2) / this.zoom,
-        width: +this.width.slice(0, -2) / this.zoom,
-        height: +this.height.slice(0, -2) / this.zoom,
+        x: +this.left /this.zoom,
+        y: +this.top /this.zoom,
+        width: +this.width / this.zoom,
+        height: +this.height / this.zoom,
       });
       this.reset();
   }
@@ -120,14 +121,14 @@ export class BoxHighlightCreateComponent {
     this.drawStartX = -1;
     this.drawStartY = -1;
     this.display = 'none';
-    this.width = '0px';
-    this.height = '0px';
+    this.width = 0;
+    this.height = 0;
   }
 
   private setStyles(top, left, height, width) {
-      this.height = Math.abs(height) + 'px';
-      this.top = (height < 0 ? top - Math.abs(height) : top) + 'px';
-      this.width = Math.abs(width) + 'px';
-      this.left = (width < 0 ? left - Math.abs(width) : left) + 'px';
+      this.height = Math.abs(height);
+      this.top = height < 0 ? top - Math.abs(height) : top;
+      this.width = Math.abs(width);
+      this.left = width < 0 ? left - Math.abs(width) : left;
   }
 }
