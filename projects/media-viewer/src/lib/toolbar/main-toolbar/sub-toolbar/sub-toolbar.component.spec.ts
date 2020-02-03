@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SubToolbarComponent } from './sub-toolbar.component';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../../toolbar-event.service';

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnsupportedViewerComponent } from './unsupported-viewer.component';
 import { ErrorMessageComponent } from '../error-message/error.message.component';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';

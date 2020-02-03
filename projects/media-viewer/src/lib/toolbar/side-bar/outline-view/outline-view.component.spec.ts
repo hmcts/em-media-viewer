@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OutlineViewComponent } from './outline-view.component';
 import { SimpleChange } from '@angular/core';

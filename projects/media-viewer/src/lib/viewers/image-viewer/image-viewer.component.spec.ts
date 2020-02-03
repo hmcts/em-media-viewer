@@ -1,4 +1,4 @@
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
 import { PrintService } from '../../print.service';
 import { ErrorMessageComponent } from '../error-message/error.message.component';
@@ -112,7 +112,7 @@ describe('ImageViewerComponent', () => {
     expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeTruthy();
   });
 
-  it('when url changes the error message is reset', async () => {
+  it('when url changes the error message is reset', () => {
     component.errorMessage = 'errox';
     component.url = 'x';
     component.ngOnChanges({

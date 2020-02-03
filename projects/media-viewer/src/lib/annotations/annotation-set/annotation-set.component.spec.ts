@@ -1,5 +1,5 @@
 import { AnnotationSetComponent } from './annotation-set.component';
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { RectangleComponent } from './annotation-view/rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../assets/annotation-set';

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { CommentSetComponent } from './comment-set.component';
 import { CommentComponent } from './comment/comment.component';
