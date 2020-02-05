@@ -23,10 +23,7 @@ export class TextHighlightCreateService {
           // regex will be targeting the translate style in string
           // e.g. scaleX(0.969918) translateX(-110.684px) translateY(-105.274px) will become scaleX(0.969918)
           const translateCSSRegex = /translate[XYZ]\(-?\d*(\.\d+)?(px)?\)/g;
-          const spaceRegex = /\s+/g;
-          child['style']['transform'] = child['style']['transform']
-            .replace(translateCSSRegex, '')
-            .replace(spaceRegex, '');
+          child['style']['transform'] = child['style']['transform'].replace(translateCSSRegex, '').trim();
         });
       }
       const selection = window.getSelection();
