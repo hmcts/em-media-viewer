@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('PdfJsWrapper', () => {
 
@@ -52,7 +53,7 @@ describe('PdfJsWrapper', () => {
     expect(downloadSpy).toHaveBeenCalledWith('http://derp.com/derp.jpg', 'derp.jpg');
   });
 
-  it('loads a document', async () => {
+  it('loads a document', fakeAsync(() => {
     const pdfViewerSpy = spyOn(mockViewer, 'setDocument');
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
@@ -60,34 +61,32 @@ describe('PdfJsWrapper', () => {
     const loadingTask = new Promise(resolve => {
       resolve(mockDocument);
     });
-
-    // hack out the pdf.js function
     pdfjsLib.getDocument = () => loadingTask;
 
-    await wrapper.loadDocument({} as any);
+    wrapper.loadDocument({} as any);
+    tick();
 
     expect(pdfViewerSpy).toHaveBeenCalledWith(mockDocument);
     expect(newDocumentLoadInitSpy).toHaveBeenCalledTimes(1);
     expect(documentLoadedSpy).toHaveBeenCalledTimes(1);
-  });
+  }));
 
-  it('loads a document with exception', async () => {
+  it('loads a document with exception', fakeAsync(() => {
     const pdfViewerSpy = spyOn(mockViewer, 'setDocument');
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
     const documentLoadFailedSpy = spyOn(wrapper.documentLoadFailed, 'next').and.callThrough();
     const loadingTask = Promise.reject(new Error('x'));
-
-    // hack out the pdf.js function
     pdfjsLib.getDocument = () => loadingTask;
 
-    await wrapper.loadDocument({} as any);
+    wrapper.loadDocument({} as any);
+    tick();
 
     expect(pdfViewerSpy).not.toHaveBeenCalled();
     expect(newDocumentLoadInitSpy).toHaveBeenCalledTimes(1);
     expect(documentLoadedSpy).not.toHaveBeenCalled();
     expect(documentLoadFailedSpy).toHaveBeenCalledTimes(1);
-  });
+  }));
 
   it('should perform rotate operation', () => {
     mockViewer.pagesRotation = 0;

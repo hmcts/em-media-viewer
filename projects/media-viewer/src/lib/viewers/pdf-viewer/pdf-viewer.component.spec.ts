@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
@@ -18,6 +18,8 @@ import { AnnotationEventService } from '../../annotations/annotation-event.servi
 import { CommentSetService } from './comment-set.service';
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { BoxHighlightCreateService } from '../../annotations/annotation-set/annotation-create/box-highlight-create.service';
+import { TextHighlightCreateService } from '../../annotations/annotation-set/annotation-create/text-highlight-create.service';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -63,7 +65,9 @@ describe('PdfViewerComponent', () => {
         ToolbarEventService,
         ViewerEventService,
         PrintService,
-        PdfJsWrapperFactory
+        PdfJsWrapperFactory,
+        BoxHighlightCreateService,
+        TextHighlightCreateService
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -77,7 +81,7 @@ describe('PdfViewerComponent', () => {
       .compileComponents();
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
-    component.annotationSet = { ...annotationSet };
+    component.annotationSet = JSON.parse(JSON.stringify(annotationSet)) ;
     component.url = 'url';
     toolbarEvents = fixture.debugElement.injector.get(ToolbarEventService);
     printService = fixture.debugElement.injector.get(PrintService);
@@ -201,59 +205,64 @@ describe('PdfViewerComponent', () => {
     expect(component.loadingDocument).toBe(false);
   });
 
-  it('should load new document when URL changes', async () => {
+  it('should load new document when URL changes', fakeAsync(() => {
     component.enableAnnotations = true;
-    component.annotationSet = { ...annotationSet };
+    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     spyOn(mockWrapper, 'loadDocument');
     spyOn(annotationService, 'buildAnnoSetComponents');
 
-    await component.ngOnChanges({
+    component.ngOnChanges({
       url: new SimpleChange('a', component.url, true)
     });
+    tick();
 
     expect(mockWrapper.loadDocument).toHaveBeenCalled();
     expect(annotationService.buildAnnoSetComponents).toHaveBeenCalled();
-  });
+  }));
 
-  it('should emit documentTitle when document is loaded', async () => {
+  it('should emit documentTitle when document is loaded', fakeAsync(() => {
     const documentTitleSpy = spyOn(component.documentTitle, 'emit');
     component.url = 'b';
-    await component.ngOnChanges({
+
+    component.ngOnChanges({
       url: new SimpleChange('a', component.url, true)
     });
+    tick();
 
     expect(documentTitleSpy).toHaveBeenCalled();
-  });
+  }));
 
-  it('should load new document when annotations enabled', async () => {
+  it('should load new document when annotations enabled', fakeAsync(() => {
     annotationsDestroyed = false;
     component.enableAnnotations = true;
     spyOn(annotationService, 'buildAnnoSetComponents');
     spyOn(annotationService, 'addCommentsToRenderedPages');
 
-    await component.ngOnChanges({
+    component.ngOnChanges({
       enableAnnotations: new SimpleChange(false, true, false)
     });
+    tick();
 
     expect(annotationService.buildAnnoSetComponents).toHaveBeenCalled();
     expect(annotationService.addCommentsToRenderedPages).toHaveBeenCalled();
     expect(annotationsDestroyed).toBeFalsy();
-  });
+  }));
 
-  it('should load document and destroy annotations when annotations disabled', async () => {
+  it('should load document and destroy annotations when annotations disabled', fakeAsync(() => {
     annotationsDestroyed = false;
     component.enableAnnotations = false;
     spyOn(annotationService, 'destroyComponents');
     spyOn(annotationService, 'destroyCommentSetsHTML');
 
-    await component.ngOnChanges({
+    component.ngOnChanges({
       enableAnnotations: new SimpleChange(true, false, false)
     });
+    tick();
 
     expect(component.annotationSet).toBeNull();
     expect(annotationService.destroyComponents).toHaveBeenCalled();
     expect(annotationService.destroyCommentSetsHTML).toHaveBeenCalled();
-  });
+  }));
 
   it('should show comments panel', () => {
     component.showCommentsPanel = false;

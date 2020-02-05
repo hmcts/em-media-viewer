@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { ToolbarLeftPaneComponent } from './left-pane.component';
 import { By } from '@angular/platform-browser';
 import { ToolbarEventService } from '../../toolbar-event.service';
@@ -37,28 +37,40 @@ describe('ToolbarLeftPaneComponent', () => {
     expect(component.pageNumber).toEqual(2);
   });
 
-  it('should not show sidebar', async(() => {
+  it('should not show sidebar', fakeAsync((done) => {
     component.toolbarButtons.sidebarOpen.asObservable()
-      .subscribe(sidebarOpen => expect(sidebarOpen).toBeFalsy());
+      .subscribe(
+        sidebarOpen => expect(sidebarOpen).toBeFalsy()
+        , error => done(error)
+      );
   }));
 
-  it('should toggle sidebar open', async(() => {
+  it('should toggle sidebar open', fakeAsync((done) => {
     component.toggleSideBar();
 
     component.toolbarButtons.sidebarOpen.asObservable()
-      .subscribe(sidebarOpen => expect(sidebarOpen).toBeTruthy());
+      .subscribe(
+        sidebarOpen => expect(sidebarOpen).toBeTruthy()
+        , error => done(error)
+      );
   }));
 
-  it('should not show searchbar', async(() => {
+  it('should not show searchbar', fakeAsync((done) => {
     component.toolbarButtons.searchBarHidden.asObservable()
-      .subscribe(searchBarHidden => expect(searchBarHidden).toBeTruthy());
+      .subscribe(
+        searchBarHidden => expect(searchBarHidden).toBeTruthy()
+        , error => done(error)
+      );
   }));
 
-  it('should toggle searchbar visible', async(() => {
+  it('should toggle searchbar visible', fakeAsync((done) => {
     component.toggleSearchBar();
 
     component.toolbarButtons.searchBarHidden.asObservable()
-      .subscribe(searchBarHidden => expect(searchBarHidden).toBeFalsy());
+      .subscribe(
+        searchBarHidden => expect(searchBarHidden).toBeFalsy()
+        , error => done(error)
+      );
   }));
 
   it('should go to next page', () => {

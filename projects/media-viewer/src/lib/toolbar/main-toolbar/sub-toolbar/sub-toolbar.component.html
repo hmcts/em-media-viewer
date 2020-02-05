@@ -1,31 +1,48 @@
-<div id="secondaryToolbar" class="secondaryToolbar doorHangerRight" [ngClass]="{ hidden: toolbarButtons.subToolbarHidden | async }">
+<div id="secondaryToolbar" class="secondaryToolbar doorHangerRight"
+     [ngClass]="{ hidden: toolbarButtons.subToolbarHidden | async }">
   <div id="secondaryToolbarButtonContainer">
-      <button *ngIf="toolbarButtons.showHighlightButton" (click)="onClickHighlightToggle()" [class.toggled]="toolbarEvents.highlightModeSubject | async" class="secondaryToolbarButton highlightBtn" title="Highlight Text Mode" id="secondaryHighlightToggle" tabindex="0" data-l10n-id="secondaryHighlightToggle">
+      <button *ngIf="toolbarButtons.showHighlightButton" (click)="onClickHighlightToggle()"
+              [class.toggled]="toolbarEvents.highlightModeSubject | async"
+              class="secondaryToolbarButton highlightBtn"
+              title="Highlight Text Mode" id="secondaryHighlightToggle"
+              tabindex="0" data-l10n-id="secondaryHighlightToggle">
         <span data-l10n-id="highlight_label">Highlight Text</span>
       </button>
-      <button *ngIf="toolbarButtons.showDrawButton" (click)="onClickDrawToggle()" [class.toggled]="toolbarEvents.drawModeSubject | async" class="secondaryToolbarButton drawBtn" title="Draw Mode" id="secondaryToggleDrawButton" tabindex="1" data-l10n-id="secondaryToggleDrawButton"  >
+      <button *ngIf="toolbarButtons.showDrawButton"
+              (click)="onClickDrawToggle()"
+              [class.toggled]="toolbarEvents.drawModeSubject | async"
+              class="secondaryToolbarButton drawBtn" title="Draw Mode"
+              id="secondaryToggleDrawButton" tabindex="1" data-l10n-id="secondaryToggleDrawButton">
         <span data-l10n-id="draw_label">Draw</span>
       </button>
     <div class="horizontalToolbarSeparator"></div>
-      <button *ngIf="toolbarButtons.showRotate" class="secondaryToolbarButton rotateCcw" title="Rotate Counterclockwise"
+      <button *ngIf="toolbarButtons.showRotate"
+              class="secondaryToolbarButton rotateCcw" title="Rotate Counterclockwise"
               tabindex="4" data-l10n-id="page_rotate_ccw" (click)="rotateCcw()" id="secondaryRotateCcw">
         <span data-l10n-id="page_rotate_ccw_label">Rotate Counterclockwise</span>
       </button>
-      <button *ngIf="toolbarButtons.showRotate" class="secondaryToolbarButton rotateCw" title="Rotate Clockwise" tabindex="5"
+      <button *ngIf="toolbarButtons.showRotate"
+              class="secondaryToolbarButton rotateCw" title="Rotate Clockwise" tabindex="5"
               id="secondaryRotateCw"
               data-l10n-id="page_rotate_cw" (click)="rotateCw()">
         <span data-l10n-id="page_rotate_cw_label">Rotate Clockwise</span>
       </button>
-      <button *ngIf="toolbarButtons.showGrabNDragButton" [class.toggled]="toolbarEvents.grabNDrag | async" class="secondaryToolbarButton grabNDrag" title="Grab N Drag" tabindex="6"
+      <button *ngIf="toolbarButtons.showGrabNDragButton" [class.toggled]="toolbarEvents.grabNDrag | async"
+              class="secondaryToolbarButton grabNDrag" title="Grab N Drag" tabindex="6"
               id="grabNDrag"
               data-l10n-id="page_grab_n_drag" (click)="grabNDrag()">
         <span data-l10n-id="page_grab_n_drag_label">Grab N Drag</span>
       </button>
     <div class="horizontalToolbarSeparator"></div>
-      <button id="secondaryPrint" *ngIf="toolbarButtons.showPrint" class="secondaryToolbarButton print" title="Print" tabindex="2" data-l10n-id="print" (click)="printFile()">
+      <button id="secondaryPrint" *ngIf="toolbarButtons.showPrint"
+              class="secondaryToolbarButton print"
+              title="Print" tabindex="2" data-l10n-id="print"
+              (click)="printFile()">
       <span data-l10n-id="print_label">Print</span>
       </button>
-      <button id="secondaryDownload" *ngIf="toolbarButtons.showDownload" class="secondaryToolbarButton download" title="Download" tabindex="3" data-l10n-id="download" (click)="downloadFile()">
+      <button id="secondaryDownload" *ngIf="toolbarButtons.showDownload"
+              class="secondaryToolbarButton download" title="Download"
+              tabindex="3" data-l10n-id="download" (click)="downloadFile()">
       <span data-l10n-id="download_label">Download</span>
       </button>
     <div class="horizontalToolbarSeparator"></div>

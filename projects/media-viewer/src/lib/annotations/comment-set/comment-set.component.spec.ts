@@ -17,6 +17,7 @@ import { CommentSetRenderService } from './comment-set-render.service';
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
   let fixture: ComponentFixture<CommentSetComponent>;
+  let mockComment;
 
   const api = new AnnotationApiService({}  as any);
   const mockAnnotationService = new AnnotationEventService();
@@ -93,7 +94,7 @@ describe('CommentSetComponent', () => {
     type: 'highlight'
   };
 
-  const mockComment = {
+  const comment = {
     createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
     createdByDetails: {
       forename: 'Linus',
@@ -112,7 +113,6 @@ describe('CommentSetComponent', () => {
     content: 'This comment should be last',
     annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
   };
-
   const mockRectangles = [
     {
       createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
@@ -204,9 +204,10 @@ describe('CommentSetComponent', () => {
   });
 
   beforeEach(() => {
+    mockComment = JSON.parse(JSON.stringify(comment));
     fixture = TestBed.createComponent(CommentSetComponent);
     component = fixture.componentInstance;
-    component.annotationSet = { ...annotationSet };
+    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     component.page = 1;
     component.rotate = 0;
     component.height = 100;

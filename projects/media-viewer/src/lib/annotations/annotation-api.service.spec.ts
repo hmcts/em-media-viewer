@@ -1,5 +1,5 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { async, inject, TestBed } from '@angular/core/testing';
+import { fakeAsync, inject, TestBed } from '@angular/core/testing';
 import { AnnotationApiService } from './annotation-api.service';
 import { AnnotationSet } from './annotation-set/annotation-set.model';
 import { User } from './user/user.model';
@@ -103,14 +103,14 @@ describe('AnnotationApiService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should createAnnotationSet', async(() => {
+  it('should createAnnotationSet', fakeAsync((done) => {
     const requestBody = {
       documentId: dmDocumentId,
       id: '6d1f5e09-98ad-4891-aecc-936282b06148'
     };
     api.postAnnotationSet(requestBody).subscribe((response) => {
       expect(response.documentId).toEqual(dmDocumentId);
-    });
+    }, error => done(error));
 
     const req = httpMock.expectOne('/my-context-path/annotation-sets');
     expect(req.request.method).toBe('POST');
@@ -119,50 +119,50 @@ describe('AnnotationApiService', () => {
     req.flush(annotationSet);
   }));
 
-  it('get annotation set', async(() => {
+  it('get annotation set', fakeAsync((done) => {
     api.getAnnotationSet(dmDocumentId).subscribe((response) => {
       expect(response.documentId).toBe(dmDocumentId);
-    });
+    }, error => done(error));
 
     const req = httpMock.expectOne(`/my-context-path/annotation-sets/filter?documentId=${dmDocumentId}`);
     expect(req.request.method).toBe('GET');
     req.flush(annotationSet);
   }));
 
-  it('delete annotation', async(() => {
+  it('delete annotation', fakeAsync((done) => {
     api.deleteAnnotation(annotation.id).subscribe((response) => {
       expect(response).toEqual(null);
-    });
+    }, error => done(error));
 
     const req = httpMock.expectOne(`/my-context-path/annotations/${annotation.id}`);
     expect(req.request.method).toBe('DELETE');
     req.flush(null);
   }));
 
-  it('save annotation', async(() => {
+  it('save annotation', fakeAsync((done) => {
     api.postAnnotation(annotation).subscribe((response) => {
       expect(response.annotationSetId).toEqual(annotationSet.id);
-    });
+    }, error => done(error));
 
     const req = httpMock.expectOne('/my-context-path/annotations');
     expect(req.request.method).toBe('POST');
     req.flush(annotation);
   }));
 
-  it('get comments', async(() => {
+  it('get comments', fakeAsync((done) => {
     const annotationSetObservable = of(annotationSet);
     api.getComments(annotationSetObservable).subscribe((comment) => {
       expect(comment[0].content).toBe('Test comment 1');
       expect(comment[1].content).toBe('Test comment 2');
       expect(comment[2].content).toBe('Test comment 3');
-    });
+    }, error => done(error));
   }));
 
 
-  it('gets an annotation set or creates it if it does not exist', async(() => {
+  it('gets an annotation set or creates it if it does not exist', fakeAsync((done) => {
     api.getOrCreateAnnotationSet(dmDocumentId).subscribe((response) => {
       expect(response.documentId).toBe(dmDocumentId);
-    });
+    }, error => done(error));
 
     const req1 = httpMock.expectOne(`/my-context-path/annotation-sets/filter?documentId=${dmDocumentId}`);
     expect(req1.request.method).toBe('GET');

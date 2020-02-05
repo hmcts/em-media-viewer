@@ -1,4 +1,4 @@
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../../print.service';

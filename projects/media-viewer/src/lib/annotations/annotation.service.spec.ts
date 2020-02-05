@@ -16,10 +16,14 @@ describe('AnnotationEventService', () => {
   });
 
 
-  it('get the selected annotation', fakeAsync(() => {
+  it('get the selected annotation', fakeAsync((done) => {
     const selectedAnnotation = { annotationId: '123', editable: false };
     let annotation = {};
-    annotationService.getSelectedAnnotation().subscribe(res => annotation = res);
+    annotationService.getSelectedAnnotation()
+      .subscribe(
+        res => annotation = res,
+          error => done(error)
+      );
     annotationService.selectedAnnotation.next(selectedAnnotation);
 
     expect(annotation).toBe(selectedAnnotation)
