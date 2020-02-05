@@ -125,7 +125,7 @@ describe('AnnotationSetComponent', () => {
 
     fixture = TestBed.createComponent(AnnotationSetComponent);
     component = fixture.componentInstance;
-    component.annotationSet = { ...annotationSet };
+    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     component.page = 1;
     component.rotate = 0;
     component.height = 400;
@@ -142,7 +142,7 @@ describe('AnnotationSetComponent', () => {
   });
 
   it('update annotations', () => {
-    const annotation = { ...annotationSet.annotations[0] };
+    const annotation = JSON.parse(JSON.stringify(annotationSet.annotations[0]));
     const spy = spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
 
     annotation.color = 'red';
@@ -152,7 +152,7 @@ describe('AnnotationSetComponent', () => {
   });
 
   it('should assign annotation to annotation-set when updated', () => {
-    const annotation = { ...annotationSet.annotations[0] };
+    const annotation = JSON.parse(JSON.stringify(annotationSet.annotations[0]));
     spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
     spyOn(mockCommentService, 'hasUnsavedComments').and.returnValues(true);
 
@@ -165,8 +165,8 @@ describe('AnnotationSetComponent', () => {
   it('should delete annotation', () => {
     spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
     spyOn(mockCommentService, 'updateUnsavedCommentsStatus');
-    const annotations = { ...annotationSet.annotations };
-    const annotation = { ...annotations[0] };
+    const annotations = JSON.parse(JSON.stringify(annotationSet.annotations));
+    const annotation = annotations[0];
 
     component.onAnnotationDelete(annotation);
 
@@ -178,8 +178,8 @@ describe('AnnotationSetComponent', () => {
     inject([CommentService], (commentService) => {
       spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
       spyOn(commentService, 'updateUnsavedCommentsStatus');
-      const annotations = { ...annotationSet.annotations };
-      const annotation = { ...annotations[0] };
+      const annotations = JSON.parse(JSON.stringify(annotationSet.annotations));
+      const annotation = annotations[0];
 
       component.onAnnotationDelete(annotation);
 
