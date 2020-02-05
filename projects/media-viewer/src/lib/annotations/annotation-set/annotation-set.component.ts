@@ -118,8 +118,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         {
           zoom: this.zoom,
           rotate: this.rotate,
-          height: this.height,
-          width: this.width,
+          pageHeight: this.height,
+          pageWidth: this.width,
           number: this.page
         });
   }

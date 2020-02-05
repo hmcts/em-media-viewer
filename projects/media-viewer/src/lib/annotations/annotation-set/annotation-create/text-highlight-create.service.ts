@@ -32,7 +32,6 @@ export class TextHighlightCreateService {
         const clientRects = range.getClientRects();
 
         if (clientRects) {
-          const localElement = (<Element>highlight.event.target) || (<Element>highlight.event.srcElement);
           const parentRect = localElement.parentElement.getBoundingClientRect();
 
           const selectionRectangles: Rectangle[] = [];
@@ -51,31 +50,31 @@ export class TextHighlightCreateService {
   private createTextRectangle(rect: any, parentRect: any, { zoom, rotate, pageHeight, pageWidth }) {
     const height = (rect.bottom - rect.top)/zoom;
     const width = (rect.right - rect.left)/zoom;
-    const yPosition = (rect.top - parentRect.top)/zoom;
-    const xPosition = (rect.left - parentRect.left)/zoom;
+    const top = (rect.top - parentRect.top)/zoom;
+    const left = (rect.left - parentRect.left)/zoom;
 
-    const rectangle = { id: uuid(), height: height, width: width, x: 0, y: 0 };
+    let rectangle = { id: uuid(), height: height, width: width, x: 0, y: 0 };
 
     switch (rotate) {
       case 90:
         rectangle.width = height;
         rectangle.height = width;
-        rectangle.x = yPosition;
-        rectangle.y = (pageHeight/zoom) - xPosition - width;
+        rectangle.x = top;
+        rectangle.y = (pageHeight/zoom) - left - width;
         break;
       case 180:
-        rectangle.x = (pageWidth/zoom) - xPosition - width;
-        rectangle.y = (pageHeight/zoom) - yPosition - height;
+        rectangle.x = (pageWidth/zoom) - left - width;
+        rectangle.y = (pageHeight/zoom) - top - height;
         break;
       case 270:
         rectangle.width = height;
         rectangle.height = width;
-        rectangle.x = (pageWidth/zoom) - yPosition - height;
-        rectangle.y = xPosition;
+        rectangle.x = (pageWidth/zoom) - top - height;
+        rectangle.y = left;
         break;
       default:
-        rectangle.x = xPosition;
-        rectangle.y = yPosition;
+        rectangle.x = left;
+        rectangle.y = top;
     }
     return rectangle as Rectangle;
   }
