@@ -175,7 +175,7 @@ describe('AnnotationSetComponent', () => {
   });
 
   it('should call updateUnsavedCommentsStatus',
-    inject([CommentService], (commentService: CommentService) => {
+    inject([CommentService], (commentService) => {
       spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
       spyOn(commentService, 'updateUnsavedCommentsStatus');
       const annotations = { ...annotationSet.annotations };
@@ -305,8 +305,8 @@ describe('AnnotationSetComponent', () => {
         .toHaveBeenCalledWith(undefined, component.annotationSet,
         { zoom: component.zoom,
           rotate: component.rotate,
-          height: component.height,
-          width: component.width,
+          pageHeight: component.height,
+          pageWidth: component.width,
           number: component.page
         });
     })
