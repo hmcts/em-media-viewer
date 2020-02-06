@@ -48,7 +48,7 @@ describe('TextHighlightCreateService', () => {
     expect(mockHighlightModeSubject.next).toHaveBeenCalledWith(false);
   }));
 
-  it('should remove extra padding', () => {
+  it('should remove extra padding and transform', () => {
     spyOn(window, 'getSelection').and.returnValue({} as any);
 
     const mockElement = {
@@ -63,5 +63,22 @@ describe('TextHighlightCreateService', () => {
 
     expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
     expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translate');
+  });
+
+  it('should remove extra padding and transform with just only translate', () => {
+    spyOn(window, 'getSelection').and.returnValue({} as any);
+
+    const mockElement = {
+      parentElement: ({
+        getBoundingClientRect: () => ({ top: 30, left: 40}),
+        childNodes: [{ style: { padding: 20, transform: 'translateX(-110.684px) translateY(12px)' }}]
+      })
+    };
+    const mockHighlight = { event: { target: mockElement }} as any;
+
+    service.createTextHighlight(mockHighlight, {}, {});
+
+    expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
+    expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translateX');
   });
 });
