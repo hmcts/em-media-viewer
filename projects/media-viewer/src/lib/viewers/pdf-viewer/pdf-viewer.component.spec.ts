@@ -30,27 +30,7 @@ describe('PdfViewerComponent', () => {
   let viewerEvents: ViewerEventService;
   let wrapperFactory: PdfJsWrapperFactory;
   let annotationsDestroyed: boolean;
-
-  const mockWrapper = {
-    loadDocument: () => {},
-    search: () => {},
-    clearSearch: () => {},
-    rotate: () => {},
-    setZoom: () => {},
-    stepZoom: () => {},
-    downloadFile: () => {},
-    setPageNumber: () => {},
-    changePageNumber: () => {},
-    getPageNumber: () => {},
-    getCurrentPDFZoomValue: () => {},
-    getNormalisedPagesRotation: () => 0,
-    getCurrentPDFTitle: () => {},
-    documentLoadInit: new Subject<any>(),
-    documentLoadProgress: new Subject<DocumentLoadProgress>(),
-    documentLoaded: new Subject<any>(),
-    documentLoadFailed: new Subject(),
-    pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>()
-  } as any;
+  let mockWrapper: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -81,6 +61,29 @@ describe('PdfViewerComponent', () => {
       .compileComponents();
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    mockWrapper = {
+      loadDocument: () => {},
+      search: () => {},
+      clearSearch: () => {},
+      rotate: () => {},
+      setZoom: () => {},
+      stepZoom: () => {},
+      downloadFile: () => {},
+      setPageNumber: () => {},
+      changePageNumber: () => {},
+      getPageNumber: () => {},
+      getCurrentPDFZoomValue: () => {},
+      getNormalisedPagesRotation: () => 0,
+      getCurrentPDFTitle: () => {},
+      documentLoadInit: new Subject<any>(),
+      documentLoadProgress: new Subject<DocumentLoadProgress>(),
+      documentLoaded: new Subject<any>(),
+      documentLoadFailed: new Subject(),
+      pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>()
+    };
     component.annotationSet = JSON.parse(JSON.stringify(annotationSet)) ;
     component.url = 'url';
     toolbarEvents = fixture.debugElement.injector.get(ToolbarEventService);

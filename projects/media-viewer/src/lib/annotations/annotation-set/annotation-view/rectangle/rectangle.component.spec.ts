@@ -10,29 +10,32 @@ describe('RectangleComponent', () => {
   let fixture: ComponentFixture<RectangleComponent>;
   let rectangleEl: DebugElement;
   let nativeElement;
+  let mockRectangle;
 
-  const mockRectangle = {
+  beforeEach(() => {
+    mockRectangle = {
       id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
       createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
       createdByDetails: {
-          'forename': 'Linus',
-          'surname': 'Norton',
-          'email': 'linus.norton@hmcts.net'
-        },
+        'forename': 'Linus',
+        'surname': 'Norton',
+        'email': 'linus.norton@hmcts.net'
+      },
       createdDate: '2018-05-28T08:48:33.206Z',
       lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
       lastModifiedByDetails: {
-          'forename': 'Jeroen',
-          'surname': 'Rijks',
-          'email': 'jeroen.rijks@hmcts.net'
-        },
+        'forename': 'Jeroen',
+        'surname': 'Rijks',
+        'email': 'jeroen.rijks@hmcts.net'
+      },
       lastModifiedDate: '2019-05-28T08:48:33.206Z',
       annotationId: '123annotationId',
       height: 100,
       width: 50,
       x: 5,
       y: 10,
-  };
+    };
+  });
 
   beforeEach(() => {
     return TestBed.configureTestingModule({
