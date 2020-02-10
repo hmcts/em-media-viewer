@@ -73,7 +73,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    // wonder if this could be constants driven
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
@@ -175,7 +174,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   onMouseDown(mouseEvent: MouseEvent) {
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
-
       this.annotationService.addAnnoSetToPage();
     }
     if (this.toolbarEvents.drawModeSubject.getValue()) {
