@@ -83,6 +83,7 @@ export class PdfJsWrapper {
     this.pdfViewer.currentPageNumber = pageNumber;
   }
   public getPageNumber(): number {
+    console.log('getPageNumber', this.pdfViewer.currentPageNumber)
     return this.pdfViewer.currentPageNumber;
   }
   public changePageNumber(numPages: number): void {

@@ -114,6 +114,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   private createTextHighlight(highlight) {
+    debugger
     this.textHighlightService.createTextHighlight(highlight, this.annotationSet,
         {
           zoom: this.zoom,
