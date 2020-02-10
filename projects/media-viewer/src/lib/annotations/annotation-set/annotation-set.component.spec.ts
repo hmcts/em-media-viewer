@@ -283,14 +283,27 @@ describe('AnnotationSetComponent', () => {
     })
   );
 
-  it('should save box-highlight on mouseup if no annotationSet exists',
+  it('should save box-highlight',
     inject([BoxHighlightCreateService], (highlightService) => {
       spyOn(highlightService, 'saveBoxHighlight');
+      component.page = 1;
 
-      component.saveBoxHighlight({});
+      component.saveBoxHighlight({ page: 1 });
 
       expect(highlightService.saveBoxHighlight)
-        .toHaveBeenCalledWith({}, component.annotationSet, component.page);
+        .toHaveBeenCalledWith({ page: 1 }, component.annotationSet, component.page);
+    })
+  );
+
+  it('should not save box-highlight from a different page',
+    inject([BoxHighlightCreateService], (highlightService) => {
+      spyOn(highlightService, 'saveBoxHighlight');
+      component.page = 2;
+
+      component.saveBoxHighlight({ page: 1 });
+
+      expect(highlightService.saveBoxHighlight)
+        .not.toHaveBeenCalledWith({ page: 1 }, component.annotationSet, component.page);
     })
   );
 

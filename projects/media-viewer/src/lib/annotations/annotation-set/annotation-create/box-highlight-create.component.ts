@@ -33,9 +33,9 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions = [
-      this.boxHighlightEvents.initHighlight.subscribe(event => this.init(event)),
-      this.boxHighlightEvents.updateHighlight.subscribe(event => this.update(event)),
-      this.boxHighlightEvents.createHighlight.subscribe(event => this.create())
+      this.boxHighlightEvents.initHighlight.subscribe(event => this.initHighlight(event)),
+      this.boxHighlightEvents.updateHighlight.subscribe(event => this.updateHighlight(event)),
+      this.boxHighlightEvents.createHighlight.subscribe(highlightPage => this.createHighlight(highlightPage))
     ];
   }
 
@@ -45,7 +45,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  init(event) {
+  initHighlight(event) {
     this.drawStartX = event.pageX - window.pageXOffset - this.container.left;
     this.drawStartY = event.pageY - window.pageYOffset - this.container.top;
 
@@ -73,7 +73,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  update(event: MouseEvent) {
+  updateHighlight(event: MouseEvent) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
       const xDelta = event.pageX - this.drawStartX - window.pageXOffset - this.container.left;
       const yDelta = event.pageY - this.drawStartY - window.pageYOffset - this.container.top;
@@ -106,18 +106,19 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  create() {
+  createHighlight(highlightPage: number) {
       this.highlightCreated.emit({
         id: uuid(),
         x: +this.left /this.zoom,
         y: +this.top /this.zoom,
         width: +this.width / this.zoom,
         height: +this.height / this.zoom,
+        page: highlightPage
       });
-      this.reset();
+      this.resetHighlight();
   }
 
-  private reset() {
+  private resetHighlight() {
     this.drawStartX = -1;
     this.drawStartY = -1;
     this.display = 'none';
