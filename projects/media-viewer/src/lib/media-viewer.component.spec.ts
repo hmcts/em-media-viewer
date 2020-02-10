@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { MediaViewerComponent } from './media-viewer.component';
 import { PdfViewerComponent } from './viewers/pdf-viewer/pdf-viewer.component';
 import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.component';
 import { UnsupportedViewerComponent } from './viewers/unsupported-viewer/unsupported-viewer.component';
-import { ToolbarModule } from './toolbar/toolbar.module';
+import { ToolbarButtonVisibilityService, ToolbarModule } from './toolbar/toolbar.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { SimpleChange } from '@angular/core';
@@ -14,6 +14,7 @@ import { of } from 'rxjs';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
+import { By } from '@angular/platform-browser';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -31,7 +32,7 @@ describe('MediaViewerComponent', () => {
         GrabNDragDirective
       ],
       providers: [
-        CommentService
+        CommentService, ToolbarButtonVisibilityService
       ],
       imports: [ToolbarModule, AnnotationsModule]
     })
@@ -48,12 +49,18 @@ describe('MediaViewerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set the default toolbar behaviours', () => {
-    const toolbarButtonsSpy = spyOn(component, 'setToolbarButtons');
+  it('should set the default toolbar behaviour',
+    inject([ToolbarButtonVisibilityService], (toolbarButtons) => {
+      spyOn(toolbarButtons, 'setup').and.callThrough();
+      component.contentType = 'pdf';
 
-    component.ngAfterContentInit();
-    expect(toolbarButtonsSpy).toHaveBeenCalled();
-  });
+      component.ngAfterContentInit();
+      fixture.detectChanges();
+
+      expect(toolbarButtons.setup).toHaveBeenCalled();
+      expect(fixture.debugElement.query(By.css('.print')));
+    })
+  );
 
   it('should support content', () => {
     component.contentType = 'pdf';

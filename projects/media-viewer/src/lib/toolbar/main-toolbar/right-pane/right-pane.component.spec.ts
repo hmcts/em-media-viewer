@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarRightPaneComponent } from './right-pane.component';
 import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../../toolbar-event.service';
@@ -32,17 +32,23 @@ describe('ToolbarRightPaneComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should not show secondary toolbar', async(() => {
+  it('should not show secondary toolbar', fakeAsync((done) => {
     component.toolbarButtons.subToolbarHidden.asObservable()
-      .subscribe(subToolbarHidden => expect(subToolbarHidden).toBeTruthy());
+      .subscribe(
+        subToolbarHidden => expect(subToolbarHidden).toBeTruthy()
+        , error => done(error)
+      );
   }));
 
 
-  it('should toggle secondary toolbar visible', async(() => {
+  it('should toggle secondary toolbar visible', fakeAsync((done) => {
     component.toggleSecondaryToolbar();
 
     component.toolbarButtons.subToolbarHidden.asObservable()
-      .subscribe(subToolbarHidden => expect(subToolbarHidden).toBeFalsy());
+      .subscribe(
+        subToolbarHidden => expect(subToolbarHidden).toBeFalsy(),
+          error => done(error)
+      );
   }));
 
   it('should emit print event', () => {

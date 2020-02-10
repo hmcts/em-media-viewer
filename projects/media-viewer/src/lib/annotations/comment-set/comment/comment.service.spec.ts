@@ -31,9 +31,13 @@ describe('CommentService', () => {
     expect(commentService.unsavedChanges.next).toHaveBeenCalledWith(false);
   });
 
-  it('should get the unsavedChanges state', fakeAsync(() => {
+  it('should get the unsavedChanges state', fakeAsync((done) => {
     let changes = false;
-    commentService.getUnsavedChanges().subscribe(rsp => changes = rsp);
+    commentService.getUnsavedChanges()
+      .subscribe(
+        rsp => changes = rsp
+        , error => done(error)
+      );
     commentService.unsavedChanges.next(true);
 
     expect(changes).toBe(true);
