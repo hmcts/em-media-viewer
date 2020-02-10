@@ -37,7 +37,6 @@ export class AnnotationSetService {
     const pageNumber = this.pdfWrapper.getPageNumber();
     if (!this.pages.includes(pageNumber)) {
       this.pages.push(pageNumber);
-      console.log('pageNumber', pageNumber)
       const annotationSetComponent = this.createAnnotationSetComponent(pageNumber);
       this.annotationSetComponents.push(annotationSetComponent);
       annotationSetComponent.instance.addToDOM({

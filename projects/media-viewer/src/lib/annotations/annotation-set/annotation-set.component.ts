@@ -114,14 +114,13 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   private createTextHighlight(highlight) {
-    debugger
     this.textHighlightService.createTextHighlight(highlight, this.annotationSet,
         {
           zoom: this.zoom,
           rotate: this.rotate,
           pageHeight: this.height,
           pageWidth: this.width,
-          number: this.page
+          number: highlight.page
         });
   }
 
