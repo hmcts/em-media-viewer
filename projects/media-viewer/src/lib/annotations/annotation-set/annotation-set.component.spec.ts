@@ -22,62 +22,11 @@ import { Highlight, ViewerEventService } from '../../viewers/viewer-event.servic
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
   let fixture: ComponentFixture<AnnotationSetComponent>;
+  let mockTextLayerRect, mockElement, mockHighlight, mockClientRect, mockClientRects, mockRange;
 
   const api = new AnnotationApiService({}  as any);
   const mockAnnotationService = new AnnotationEventService();
   const mockCommentService = new CommentService();
-
-  const mockTextLayerRect: any = {
-    top: 0,
-    left: 0,
-  };
-
-  const mockElement: any = {
-    parentElement: {
-      getBoundingClientRect(): unknown {
-        return mockTextLayerRect;
-      },
-      childNodes: [{
-        style: {
-          padding: '100px 100px 100px 100px',
-          transform: 'scaleX(0.01) translateX(100px) translateY(-0.1)'
-        }
-      },
-      {
-        style: {
-          padding: '100px 100px 100px 100px',
-          transform: 'scaleX(0.01) translateX(100) translateY(-0.1px)'
-        }
-      }]
-    }
-  };
-
-  const mockHighlight: any = {
-    page: 1,
-    event: {
-      pageY: 10,
-      pageX: 10,
-      target: mockElement,
-      srcElement: mockElement
-    } as any,
-  };
-
-  const mockClientRect: any = {
-    top: 10,
-    bottom: 100,
-    left: 25,
-    right: 100,
-  };
-
-  const mockClientRects: any = [mockClientRect, mockClientRect];
-  const mockRange: any = {
-    cloneRange(): any {
-      return mockRange;
-    },
-    getClientRects(): any {
-      return mockClientRects;
-    }
-  };
 
   const fakeApi: any = {
     returnedAnnotation: {
@@ -97,6 +46,61 @@ describe('AnnotationSetComponent', () => {
       return of(fakeApi.returnedAnnotation);
     }
   };
+
+  beforeEach(() => {
+    mockTextLayerRect = {
+      top: 0,
+      left: 0,
+    };
+
+    mockElement = {
+      parentElement: {
+        getBoundingClientRect(): unknown {
+          return mockTextLayerRect;
+        },
+        childNodes: [{
+          style: {
+            padding: '100px 100px 100px 100px',
+            transform: 'scaleX(0.01) translateX(100px) translateY(-0.1)'
+          }
+        },
+          {
+            style: {
+              padding: '100px 100px 100px 100px',
+              transform: 'scaleX(0.01) translateX(100) translateY(-0.1px)'
+            }
+          }]
+      }
+    };
+
+    mockHighlight = {
+      page: 1,
+      event: {
+        pageY: 10,
+        pageX: 10,
+        target: mockElement,
+        srcElement: mockElement
+      } as any,
+    };
+
+    mockClientRect = {
+      top: 10,
+      bottom: 100,
+      left: 25,
+      right: 100,
+    };
+
+    mockClientRects = [mockClientRect, mockClientRect];
+    mockRange = {
+      cloneRange(): any {
+        return mockRange;
+      },
+      getClientRects(): any {
+        return mockClientRects;
+      }
+    };
+
+  })
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -125,7 +129,7 @@ describe('AnnotationSetComponent', () => {
 
     fixture = TestBed.createComponent(AnnotationSetComponent);
     component = fixture.componentInstance;
-    component.annotationSet = { ...annotationSet };
+    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     component.page = 1;
     component.rotate = 0;
     component.height = 400;
@@ -142,7 +146,7 @@ describe('AnnotationSetComponent', () => {
   });
 
   it('update annotations', () => {
-    const annotation = { ...annotationSet.annotations[0] };
+    const annotation = JSON.parse(JSON.stringify(annotationSet.annotations[0]));
     const spy = spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
 
     annotation.color = 'red';
@@ -152,7 +156,7 @@ describe('AnnotationSetComponent', () => {
   });
 
   it('should assign annotation to annotation-set when updated', () => {
-    const annotation = { ...annotationSet.annotations[0] };
+    const annotation = JSON.parse(JSON.stringify(annotationSet.annotations[0]));
     spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
     spyOn(mockCommentService, 'hasUnsavedComments').and.returnValues(true);
 
@@ -165,8 +169,8 @@ describe('AnnotationSetComponent', () => {
   it('should delete annotation', () => {
     spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
     spyOn(mockCommentService, 'updateUnsavedCommentsStatus');
-    const annotations = { ...annotationSet.annotations };
-    const annotation = { ...annotations[0] };
+    const annotations = JSON.parse(JSON.stringify(annotationSet.annotations));
+    const annotation = annotations[0];
 
     component.onAnnotationDelete(annotation);
 
@@ -178,8 +182,8 @@ describe('AnnotationSetComponent', () => {
     inject([CommentService], (commentService) => {
       spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
       spyOn(commentService, 'updateUnsavedCommentsStatus');
-      const annotations = { ...annotationSet.annotations };
-      const annotation = { ...annotations[0] };
+      const annotations = JSON.parse(JSON.stringify(annotationSet.annotations));
+      const annotation = annotations[0];
 
       component.onAnnotationDelete(annotation);
 

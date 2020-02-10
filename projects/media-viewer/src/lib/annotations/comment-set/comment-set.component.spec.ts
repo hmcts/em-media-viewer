@@ -1,5 +1,4 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-
 import { CommentSetComponent } from './comment-set.component';
 import { CommentComponent } from './comment/comment.component';
 import { FormsModule } from '@angular/forms';
@@ -17,104 +16,87 @@ import { CommentSetRenderService } from './comment-set-render.service';
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
   let fixture: ComponentFixture<CommentSetComponent>;
+  let mockComment;
+  let annotation: Annotation, annotation2: Annotation, annotation3: Annotation;
+  let comment, mockRectangles;
 
   const api = new AnnotationApiService({}  as any);
   const mockAnnotationService = new AnnotationEventService();
 
-  const annotation: Annotation = {
-    createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-    createdByDetails: {
-      forename: 'em-showcase',
-      surname: 'testuser',
-      email: 'emshowcase@hmcts.net'
-    },
-    lastModifiedByDetails: {
-      forename: 'em-showcase',
-      surname: 'testuser',
-      email: 'emshowcase@hmcts.net'
-    },
-    createdDate: '2019-05-28T08:48:19.681Z',
-    lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-    lastModifiedDate: '2019-05-28T08:48:33.206Z',
-    id: '123',
-    page: 1,
-    color: 'FFFF00',
-    annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
-    comments: [],
-    rectangles: [],
-    type: 'highlight'
-  };
+  beforeEach(() => {
+    annotation = {
+      createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+      createdByDetails: {
+        forename: 'em-showcase',
+        surname: 'testuser',
+        email: 'emshowcase@hmcts.net'
+      },
+      lastModifiedByDetails: {
+        forename: 'em-showcase',
+        surname: 'testuser',
+        email: 'emshowcase@hmcts.net'
+      },
+      createdDate: '2019-05-28T08:48:19.681Z',
+      lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+      lastModifiedDate: '2019-05-28T08:48:33.206Z',
+      id: '123',
+      page: 1,
+      color: 'FFFF00',
+      annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
+      comments: [],
+      rectangles: [],
+      type: 'highlight'
+    };
 
-  const annotation2: Annotation = {
-    createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-    createdByDetails: {
-      forename: 'em-showcase',
-      surname: 'testuser',
-      email: 'emshowcase@hmcts.net'
-    },
-    lastModifiedByDetails: {
-      forename: 'em-showcase',
-      surname: 'testuser',
-      email: 'emshowcase@hmcts.net'
-    },
-    createdDate: '2019-05-28T08:48:19.681Z',
-    lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-    lastModifiedDate: '2019-05-28T08:48:33.206Z',
-    id: '123',
-    page: 1,
-    color: 'FFFF00',
-    annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
-    comments: [],
-    rectangles: [],
-    type: 'highlight'
-  };
+    annotation2 = {
+      createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+      createdByDetails: {
+        forename: 'em-showcase',
+        surname: 'testuser',
+        email: 'emshowcase@hmcts.net'
+      },
+      lastModifiedByDetails: {
+        forename: 'em-showcase',
+        surname: 'testuser',
+        email: 'emshowcase@hmcts.net'
+      },
+      createdDate: '2019-05-28T08:48:19.681Z',
+      lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+      lastModifiedDate: '2019-05-28T08:48:33.206Z',
+      id: '123',
+      page: 1,
+      color: 'FFFF00',
+      annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
+      comments: [],
+      rectangles: [],
+      type: 'highlight'
+    };
 
-  const annotation3: Annotation = {
-    createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-    createdByDetails: {
-      forename: 'em-showcase',
-      surname: 'testuser',
-      email: 'emshowcase@hmcts.net'
-    },
-    lastModifiedByDetails: {
-      forename: 'em-showcase',
-      surname: 'testuser',
-      email: 'emshowcase@hmcts.net'
-    },
-    createdDate: '2019-05-28T08:48:19.681Z',
-    lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-    lastModifiedDate: '2019-05-28T08:48:33.206Z',
-    id: '123',
-    page: 2,
-    color: 'FFFF00',
-    annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
-    comments: [],
-    rectangles: [],
-    type: 'highlight'
-  };
+    annotation3 = {
+      createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+      createdByDetails: {
+        forename: 'em-showcase',
+        surname: 'testuser',
+        email: 'emshowcase@hmcts.net'
+      },
+      lastModifiedByDetails: {
+        forename: 'em-showcase',
+        surname: 'testuser',
+        email: 'emshowcase@hmcts.net'
+      },
+      createdDate: '2019-05-28T08:48:19.681Z',
+      lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+      lastModifiedDate: '2019-05-28T08:48:33.206Z',
+      id: '123',
+      page: 2,
+      color: 'FFFF00',
+      annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
+      comments: [],
+      rectangles: [],
+      type: 'highlight'
+    };
 
-  const mockComment = {
-    createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-    createdByDetails: {
-      forename: 'Linus',
-      surname: 'Norton',
-      email: 'linus.norton@hmcts.net'
-    },
-    lastModifiedByDetails: {
-      forename: 'Linus',
-      surname: 'Norton',
-      email: 'linus.norton@hmcts.net'
-    },
-    createdDate: '2019-05-28T08:48:33.206Z',
-    lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-    lastModifiedDate: '2019-05-28T08:48:33.206Z',
-    id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
-    content: 'This comment should be last',
-    annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
-  };
-
-  const mockRectangles = [
-    {
+    comment = {
       createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
       createdByDetails: {
         forename: 'Linus',
@@ -126,61 +108,82 @@ describe('CommentSetComponent', () => {
         surname: 'Norton',
         email: 'linus.norton@hmcts.net'
       },
-      createdDate: '2019-05-28T08:48:19.696Z',
+      createdDate: '2019-05-28T08:48:33.206Z',
       lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
       lastModifiedDate: '2019-05-28T08:48:33.206Z',
-      id: '1',
-      x: 360.134016,
-      y: 200,
-      width: 16.879571,
-      height: 10.02507,
+      id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
+      content: 'This comment should be last',
       annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
-    },
-    {
-      createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-      createdByDetails: {
-        forename: 'Linus',
-        surname: 'Norton',
-        email: 'linus.norton@hmcts.net'
+    };
+    mockRectangles = [
+      {
+        createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+        createdByDetails: {
+          forename: 'Linus',
+          surname: 'Norton',
+          email: 'linus.norton@hmcts.net'
+        },
+        lastModifiedByDetails: {
+          forename: 'Linus',
+          surname: 'Norton',
+          email: 'linus.norton@hmcts.net'
+        },
+        createdDate: '2019-05-28T08:48:19.696Z',
+        lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+        lastModifiedDate: '2019-05-28T08:48:33.206Z',
+        id: '1',
+        x: 360.134016,
+        y: 200,
+        width: 16.879571,
+        height: 10.02507,
+        annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
       },
-      lastModifiedByDetails: {
-        forename: 'Linus',
-        surname: 'Norton',
-        email: 'linus.norton@hmcts.net'
+      {
+        createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+        createdByDetails: {
+          forename: 'Linus',
+          surname: 'Norton',
+          email: 'linus.norton@hmcts.net'
+        },
+        lastModifiedByDetails: {
+          forename: 'Linus',
+          surname: 'Norton',
+          email: 'linus.norton@hmcts.net'
+        },
+        createdDate: '2019-05-28T08:48:19.696Z',
+        lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+        lastModifiedDate: '2019-05-28T08:48:33.206Z',
+        id: '2',
+        x: 360.134016,
+        y: 100,
+        width: 16.879571,
+        height: 10.02507,
+        annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
       },
-      createdDate: '2019-05-28T08:48:19.696Z',
-      lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-      lastModifiedDate: '2019-05-28T08:48:33.206Z',
-      id: '2',
-      x: 360.134016,
-      y: 100,
-      width: 16.879571,
-      height: 10.02507,
-      annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
-    },
-    {
-      createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-      createdByDetails: {
-        forename: 'Linus',
-        surname: 'Norton',
-        email: 'linus.norton@hmcts.net'
-      },
-      lastModifiedByDetails: {
-        forename: 'Linus',
-        surname: 'Norton',
-        email: 'linus.norton@hmcts.net'
-      },
-      createdDate: '2019-05-28T08:48:19.696Z',
-      lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-      lastModifiedDate: '2019-05-28T08:48:33.206Z',
-      id: '3',
-      x: 360.134016,
-      y: 400,
-      width: 16.879571,
-      height: 10.02507,
-      annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
-    }
-  ];
+      {
+        createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+        createdByDetails: {
+          forename: 'Linus',
+          surname: 'Norton',
+          email: 'linus.norton@hmcts.net'
+        },
+        lastModifiedByDetails: {
+          forename: 'Linus',
+          surname: 'Norton',
+          email: 'linus.norton@hmcts.net'
+        },
+        createdDate: '2019-05-28T08:48:19.696Z',
+        lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+        lastModifiedDate: '2019-05-28T08:48:33.206Z',
+        id: '3',
+        x: 360.134016,
+        y: 400,
+        width: 16.879571,
+        height: 10.02507,
+        annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
+      }
+    ];
+  });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -204,9 +207,10 @@ describe('CommentSetComponent', () => {
   });
 
   beforeEach(() => {
+    mockComment = JSON.parse(JSON.stringify(comment));
     fixture = TestBed.createComponent(CommentSetComponent);
     component = fixture.componentInstance;
-    component.annotationSet = { ...annotationSet };
+    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     component.page = 1;
     component.rotate = 0;
     component.height = 100;

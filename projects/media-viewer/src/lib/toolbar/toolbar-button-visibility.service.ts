@@ -56,6 +56,7 @@ export class ToolbarButtonVisibilityService {
  * Default toolbar state for the PDF viewer
  */
 export const defaultPdfOptions = {
+  showPrint: true,
   showDownload: true,
   showNavigation: true,
   showZoom: true,
@@ -69,6 +70,7 @@ export const defaultPdfOptions = {
  * Default toolbar state for the image viewer
  */
 export const defaultImageOptions = {
+  showPrint: true,
   showDownload: true,
   showZoom: true,
   showRotate: true,
