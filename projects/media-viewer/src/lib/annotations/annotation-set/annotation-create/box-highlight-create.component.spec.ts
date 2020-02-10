@@ -58,7 +58,7 @@ describe('BoxHighlightCreateComponent', () => {
   it('should initialise the box highlight creator', () => {
     const event = { pageX: 100, pageY: 200 } as MouseEvent;
 
-    component.init(event);
+    component.initHighlight(event);
 
     expect(component.display).toBe('block');
     expect(component.height).toBe(50);
@@ -72,7 +72,7 @@ describe('BoxHighlightCreateComponent', () => {
     component.drawStartX = 60;
     component.drawStartY = 50;
 
-    component.update(updateEvent);
+    component.updateHighlight(updateEvent);
 
     expect(component.width).toBe(160);
     expect(component.height).toBe(50);
@@ -86,7 +86,7 @@ describe('BoxHighlightCreateComponent', () => {
     component.drawStartY = 50;
     component.rotate = 90;
 
-    component.update(updateEvent);
+    component.updateHighlight(updateEvent);
 
     expect(component.width).toBe(50);
     expect(component.height).toBe(160);
@@ -100,7 +100,7 @@ describe('BoxHighlightCreateComponent', () => {
     component.drawStartY = 50;
     component.rotate = 180;
 
-    component.update(updateEvent);
+    component.updateHighlight(updateEvent);
 
     expect(component.width).toBe(160);
     expect(component.height).toBe(50);
@@ -114,7 +114,7 @@ describe('BoxHighlightCreateComponent', () => {
     component.drawStartY = 50;
     component.rotate = 270;
 
-    component.update(updateEvent);
+    component.updateHighlight(updateEvent);
 
     expect(component.width).toBe(50);
     expect(component.height).toBe(160);
@@ -131,8 +131,9 @@ describe('BoxHighlightCreateComponent', () => {
     component.width = 50;
     component.top = 50;
     component.left = 50;
+    const pageNumber = 1;
 
-    component.create();
+    component.createHighlight(pageNumber);
 
     expect(component.highlightCreated.emit).toHaveBeenCalled();
     expect(component.drawStartX).toBe(-1);

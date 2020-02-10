@@ -11,7 +11,7 @@ export class BoxHighlightCreateService {
 
   public readonly initHighlight = new Subject<MouseEvent>();
   public readonly updateHighlight = new Subject<MouseEvent>();
-  public readonly createHighlight = new Subject();
+  public readonly createHighlight = new Subject<number>();
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
@@ -25,11 +25,11 @@ export class BoxHighlightCreateService {
     this.updateHighlight.next(event);
   }
 
-  createBoxHighlight() {
-    this.createHighlight.next();
+  createBoxHighlight(page: number) {
+    this.createHighlight.next(page);
   }
 
-  saveBoxHighlight(rectangle: any, annotationSet, page) {
+  saveBoxHighlight(rectangle: any, annotationSet, page:number) {
     if (rectangle.height > 5 || rectangle.width > 5) {
       this.saveAnnotation([rectangle as Rectangle], annotationSet, page);
       this.toolBarEvents.drawModeSubject.next(false);
