@@ -17,7 +17,7 @@ module.exports = [
     context: [
       '/em-anno'
     ],
-    target: 'http://localhost:9999',
+    target: 'http://localhost:1337',
     secure: false
   }
 ];
