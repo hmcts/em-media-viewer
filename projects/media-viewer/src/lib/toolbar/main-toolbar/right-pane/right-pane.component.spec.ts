@@ -23,8 +23,6 @@ describe('ToolbarRightPaneComponent', () => {
     component.toolbarButtons.showPrint = true;
     component.toolbarButtons.showDownload = true;
     component.toolbarButtons.showCommentSummary = true;
-    component.enableAnnotations = true;
-
     fixture.detectChanges();
   });
 

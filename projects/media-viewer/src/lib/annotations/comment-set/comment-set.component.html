@@ -1,7 +1,11 @@
 <div #container
      [ngClass]="{ 'comments-panel comment-container': true, 'expanded': showCommentsPanel }"
      [style.height.px]="height" (click)="onContainerClick($event)">
-
+  <button *ngIf="toolbarButtons.showCommentSummary"
+          id="commentSummary" class="toolbarButton commentSummary hiddenSmallView"
+          title="Open comment summary" tabindex="0" data-l10n-id="commentSummary" (click)="toggleCommentsSummary()">
+    <span data-l10n-id="comment_summary_label">Comment Summary</span>
+  </button>
   <ng-container *ngFor="let annotation of getCommentsOnPage(); let i = index;">
     <mv-anno-comment [ngStyle]="showCommentsPanel ? {} : {'display':'none'}"
         #commentComponent

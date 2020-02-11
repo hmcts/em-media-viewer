@@ -14,6 +14,8 @@ import { ViewerEventService } from '../../viewers/viewer-event.service';
 
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
+import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visibility.service';
+import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-comment-set',
@@ -41,7 +43,9 @@ export class CommentSetComponent implements OnInit, OnDestroy {
               private readonly api: AnnotationApiService,
               private readonly annotationService: AnnotationEventService,
               private readonly commentService: CommentService,
-              private readonly renderService: CommentSetRenderService) {
+              private readonly renderService: CommentSetRenderService,
+              public readonly toolbarButtons: ToolbarButtonVisibilityService,
+              public readonly toolbarEvents: ToolbarEventService) {
     this.clearSelection();
   }
 
@@ -138,5 +142,9 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   allCommentsSavedInSet(): boolean {
     return this.commentComponents.some(comment => comment.hasUnsavedChanges === true);
+  }
+
+  toggleCommentsSummary() {
+    this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
 }
