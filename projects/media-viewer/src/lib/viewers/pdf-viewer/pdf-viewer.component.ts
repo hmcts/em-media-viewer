@@ -23,6 +23,7 @@ import { PdfAnnotationService } from './pdf-annotation.service';
 import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
 import { AnnotationSetService } from './annotation-set.service';
 import { CommentSetService } from './comment-set.service';
+import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -66,7 +67,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     private readonly printService: PrintService,
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
-    private readonly annotationService: PdfAnnotationService
+    private readonly annotationService: PdfAnnotationService,
+    public readonly toolbarButtons: ToolbarButtonVisibilityService,
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject;
     this.drawMode = toolbarEvents.drawModeSubject;
@@ -191,5 +193,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
             page: this.pdfWrapper.getPageNumber(), event: mouseEvent
       }), 0);
     }
+  }
+
+  toggleCommentsSummary() {
+    this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
 }
