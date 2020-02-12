@@ -63,7 +63,8 @@ export const defaultPdfOptions = {
   showRotate: true,
   showSearchBar: true,
   showSidebar: true,
-  showGrabNDragButton: true
+  showGrabNDragButton: true,
+  showCommentSummary: true
 };
 
 /**
@@ -74,7 +75,8 @@ export const defaultImageOptions = {
   showDownload: true,
   showZoom: true,
   showRotate: true,
-  showGrabNDragButton: true
+  showGrabNDragButton: true,
+  showCommentSummary: true
 };
 
 /**
