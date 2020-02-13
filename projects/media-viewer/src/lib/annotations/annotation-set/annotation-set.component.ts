@@ -122,7 +122,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           rotate: this.rotate,
           pageHeight: this.height,
           pageWidth: this.width,
-          number: this.page
+          number: highlight.page
         });
   }
 
