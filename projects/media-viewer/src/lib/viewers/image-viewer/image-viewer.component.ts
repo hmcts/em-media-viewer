@@ -1,26 +1,30 @@
 import {
   Component,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { PrintService } from '../../print.service';
-import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
-import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
-import { ViewerUtilService } from '../viewer-util.service';
-import { ViewerEventService } from '../viewer-event.service';
+import {Subscription} from 'rxjs';
+import {PrintService} from '../../print.service';
+import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
+import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
+import {ResponseType, ViewerException} from '../error-message/viewer-exception.model';
+import {ViewerUtilService} from '../viewer-util.service';
+import {ViewerEventService} from '../viewer-event.service';
+import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visibility.service';
 
 @Component({
     selector: 'mv-image-viewer',
     templateUrl: './image-viewer.component.html',
     styleUrls: ['./image-viewer.component.scss', '../../media-viewer.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
@@ -53,6 +57,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     private readonly viewerUtilService: ViewerUtilService,
     private readonly viewerEvents: ViewerEventService,
     private readonly toolbarEvents: ToolbarEventService,
+    public readonly toolbarButtons: ToolbarButtonVisibilityService
   ) { }
 
   ngOnInit(): void {
@@ -146,5 +151,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   getImageHeight(img) {
     return this.rotation % 180 !== 0 ? img.offsetWidth + 15 : img.offsetHeight + 15;
+  }
+
+  toggleCommentsSummary() {
+    this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
 }

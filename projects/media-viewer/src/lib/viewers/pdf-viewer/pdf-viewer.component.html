@@ -1,13 +1,9 @@
 <mv-comment-set-toggle *ngIf="enableAnnotations"></mv-comment-set-toggle>
 <div [ngClass]="{'show-comments-panel': showCommentsPanel}">
-  <div class="commentSummaryHeader">
-    <button *ngIf="toolbarButtons.showCommentSummary"
-      id="commentSummary" class="toolbarButton commentSummary hiddenSmallView"
-      title="Open comment summary" tabindex="0" data-l10n-id="commentSummary"
-      (click)="toggleCommentsSummary()">
-      <span data-l10n-id="comment_summary_label">Comment Summary</span>
-    </button>
-  </div>
+  <mv-comment-set-header
+    [showCommentSummary]="toolbarButtons.showCommentSummary"
+    (showCommentSummaryDialog)="toggleCommentsSummary()">
+  </mv-comment-set-header>
 </div>
 <div #viewerContainer
      class="pdfContainer"

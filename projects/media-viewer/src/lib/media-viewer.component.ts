@@ -3,23 +3,24 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges, OnDestroy,
+  OnChanges,
+  OnDestroy,
   Output,
-  SimpleChanges
+  SimpleChanges,
+  ViewEncapsulation
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {
   defaultImageOptions,
   defaultPdfOptions,
   defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
 } from './toolbar/toolbar-button-visibility.service';
-import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
-import { ToolbarEventService } from './toolbar/toolbar-event.service';
-import { AnnotationApiService } from './annotations/annotation-api.service';
-import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
-import { CommentService } from './annotations/comment-set/comment/comment.service';
-import { Subscription } from 'rxjs';
+import {AnnotationSet} from './annotations/annotation-set/annotation-set.model';
+import {ToolbarEventService} from './toolbar/toolbar-event.service';
+import {AnnotationApiService} from './annotations/annotation-api.service';
+import {ResponseType, ViewerException} from './viewers/error-message/viewer-exception.model';
+import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
 
 enum SupportedContentTypes {
