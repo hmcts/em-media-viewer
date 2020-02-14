@@ -1,11 +1,13 @@
-import { Observable } from 'rxjs';
-import { AfterContentInit, Component } from '@angular/core';
-import { Comment } from '../../../projects/media-viewer/src/lib/annotations/comment-set/comment/comment.model';
-import { ToolbarEventService } from '@hmcts/media-viewer/lib/toolbar/toolbar-event.service';
+import {Observable} from 'rxjs';
+import {AfterContentInit, Component, ViewEncapsulation} from '@angular/core';
+import {Comment} from '../../../projects/media-viewer/src/lib/annotations/comment-set/comment/comment.model';
+import {ToolbarEventService} from '@hmcts/media-viewer/lib/toolbar/toolbar-event.service';
 
 @Component({
   selector: 'media-viewer-wrapper',
-  templateUrl: './media-viewer-wrapper.component.html'
+  templateUrl: './media-viewer-wrapper.component.html',
+  styleUrls: ['./meida-viewer-wrapper.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MediaViewerWrapperComponent implements AfterContentInit {
 
