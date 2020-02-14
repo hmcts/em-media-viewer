@@ -298,7 +298,7 @@ describe('AnnotationSetComponent', () => {
     })
   );
 
-  fit('should create text highlight',
+  it('should create text highlight',
     inject([TextHighlightCreateService, ViewerEventService], (highlightService, viewerEvents) => {
       spyOn(highlightService, 'createTextHighlight');
       component.ngOnInit();
