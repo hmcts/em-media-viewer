@@ -19,20 +19,21 @@
   .show-comments-panel & {
     display:  block;
   }
-  border-radius: 3px;
+  text-align: right;
+  border: none;
+  border-left: 1px solid #DDDDDD;
   display: none;
-  background: #474747;
   float: right;
   position: relative;
-  background: #474747 url(/assets/images/secondaryToolbarButton-scrollWrapped@2x.png) 0 0 no-repeat;
-  background-position: 4px 4px;
+  background: url(/assets/images/icon-casefile-comments.svg) 5px 5px no-repeat;
+  fill: #0B0C0C;
   background-size: 15px 15px;
   height: 25px;
-  width: 25px;
+  width: 83px;
   margin: 5px 5px 0;
   cursor: pointer;
   &:hover {
-    background-color: #888888;
+    background-color: #DDDDDD;
   }
   span {
     display: inline-block;

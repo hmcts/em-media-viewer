@@ -25,12 +25,10 @@
       </mv-annotation-set>
     </div>
   </div>
-  <div [ngClass]="{'show-comments-panel': showCommentsPanel}">
-    <mv-comment-set-header
-      [showCommentSummary]="toolbarButtons.showCommentSummary"
-      (showCommentSummaryDialog)="toggleCommentsSummary()">
-    </mv-comment-set-header>
-  </div>
+  <mv-comment-set-header [ngClass]="{'show-comments-panel': showCommentsPanel}"
+    [showCommentSummary]="toolbarButtons.showCommentSummary"
+    (showCommentSummaryDialog)="toggleCommentsSummary()">
+  </mv-comment-set-header>
   <mv-comment-set *ngIf="enableAnnotations && annotationSet"
                   [annotationSet]="annotationSet"
                   [page]="1"
