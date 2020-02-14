@@ -4,7 +4,7 @@ import { AfterContentInit, Component, ElementRef, Input, OnChanges, SimpleChange
 @Component({
   selector: 'mv-outline-view',
   templateUrl: './outline-view.component.html',
-  styleUrls: ['../../../styles/main.scss'],
+  styleUrls: ['../../../../assets/sass/toolbar/main.scss'],
 })
 export class OutlineViewComponent implements OnChanges, AfterContentInit {
 

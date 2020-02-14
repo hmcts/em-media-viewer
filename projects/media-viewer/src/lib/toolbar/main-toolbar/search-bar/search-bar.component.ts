@@ -5,8 +5,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-search-bar',
-  templateUrl: './search-bar.component.html',
-  styleUrls: ['../../../styles/main.scss']
+  templateUrl: './search-bar.component.html'
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
 

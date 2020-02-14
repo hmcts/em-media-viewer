@@ -5,7 +5,7 @@ import { ToolbarEventService } from '../../toolbar-event.service';
 @Component({
   selector: 'mv-sub-toolbar',
   templateUrl: './sub-toolbar.component.html',
-  styleUrls: ['../../../styles/main.scss']
+  styleUrls: ['../../../../assets/sass/toolbar/main.scss']
 })
 export class SubToolbarComponent {
 
