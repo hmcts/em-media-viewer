@@ -12,7 +12,7 @@ export class CommentSetHeaderComponent {
   constructor() {}
 
 
-  toggleCommentsSummary(): void {
+  public toggleCommentsSummary(): void {
     this.showCommentSummaryDialog.emit();
   }
 }
