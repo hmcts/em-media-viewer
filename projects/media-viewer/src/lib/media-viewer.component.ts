@@ -6,8 +6,7 @@ import {
   OnChanges,
   OnDestroy,
   Output,
-  SimpleChanges,
-  ViewEncapsulation
+  SimpleChanges
 } from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {
