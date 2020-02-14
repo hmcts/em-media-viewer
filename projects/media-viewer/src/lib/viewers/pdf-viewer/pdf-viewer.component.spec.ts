@@ -285,4 +285,10 @@ describe('PdfViewerComponent', () => {
     expect(component.showCommentsPanel).toBeFalsy();
     expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');
   });
+
+  it('should emit toggleCommentsSummary event', () => {
+    const commentSummarySpy = spyOn(component.toolbarEvents.showCommentSummary, 'next');
+    component.toggleCommentsSummary();
+    expect(commentSummarySpy).toHaveBeenCalledWith(true);
+  });
 });

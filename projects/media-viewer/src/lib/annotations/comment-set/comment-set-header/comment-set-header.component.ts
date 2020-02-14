@@ -7,7 +7,7 @@ import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angula
   encapsulation: ViewEncapsulation.None
 })
 export class CommentSetHeaderComponent {
-  @Input() public readonly showCommentSummary: boolean;
+  @Input() public showCommentSummary: boolean;
   @Output() public readonly showCommentSummaryDialog = new EventEmitter();
   constructor() {}
 

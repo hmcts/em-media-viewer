@@ -65,11 +65,4 @@ describe('ToolbarRightPaneComponent', () => {
     expect(downloadSpy).toHaveBeenCalledWith();
   });
 
-  it('should emit toggleCommentsSummary event', () => {
-    const commentSummarySpy = spyOn(component.toolbarEvents.showCommentSummary, 'next');
-    const commentSummaryButton = nativeElement.querySelector('button[id=commentSummary]');
-    commentSummaryButton.click();
-
-    expect(commentSummarySpy).toHaveBeenCalledWith(true);
-  });
 });

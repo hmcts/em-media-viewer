@@ -65,7 +65,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
-    private readonly toolbarEvents: ToolbarEventService,
+    public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
     private readonly annotationService: PdfAnnotationService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,

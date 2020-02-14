@@ -56,7 +56,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     private readonly printService: PrintService,
     private readonly viewerUtilService: ViewerUtilService,
     private readonly viewerEvents: ViewerEventService,
-    private readonly toolbarEvents: ToolbarEventService,
+    public readonly toolbarEvents: ToolbarEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService
   ) { }
 
