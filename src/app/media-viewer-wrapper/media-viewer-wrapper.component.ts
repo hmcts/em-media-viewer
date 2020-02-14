@@ -6,7 +6,6 @@ import {ToolbarEventService} from '@hmcts/media-viewer/lib/toolbar/toolbar-event
 @Component({
   selector: 'media-viewer-wrapper',
   templateUrl: './media-viewer-wrapper.component.html',
-  styleUrls: ['./meida-viewer-wrapper.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class MediaViewerWrapperComponent implements AfterContentInit {
