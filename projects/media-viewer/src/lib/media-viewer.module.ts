@@ -12,6 +12,18 @@ import { AnnotationsModule } from './annotations/annotations.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
+import {EffectsModule} from '@ngrx/effects';
+import {MetaReducer, StoreModule} from '@ngrx/store';
+import {storeFreeze} from 'ngrx-store-freeze';
+// APP store
+import { CustomSerializer, reducers } from './store/reducers';
+
+// enforces immutability
+export const metaReducers: MetaReducer<any>[] = !false
+  ? [storeFreeze]
+  : [];
 
 @NgModule({
   imports: [
@@ -19,7 +31,13 @@ import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
     FormsModule,
     HttpClientModule,
     ToolbarModule,
-    AnnotationsModule
+    AnnotationsModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    // EffectsModule.forRoot(effects),
+    StoreRouterConnectingModule.forRoot(),
+    StoreDevtoolsModule.instrument({
+      logOnly: false
+    }),
   ],
   declarations: [
     PdfViewerComponent,
@@ -37,7 +55,11 @@ import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
 ],
   providers: [
     PdfJsWrapperFactory,
-    CommentService
+    CommentService,
+    {
+      provide: RouterStateSerializer,
+      useClass: CustomSerializer
+    },
   ],
   exports: [
     MediaViewerComponent
