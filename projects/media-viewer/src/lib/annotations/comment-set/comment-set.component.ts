@@ -18,7 +18,7 @@ import { CommentSetRenderService } from './comment-set-render.service';
 @Component({
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
-  styleUrls: ['./comment-set.component.scss']
+  styleUrls: ['../../../assets/sass/comment-set-panel.scss']
 })
 export class CommentSetComponent implements OnInit, OnDestroy {
 
