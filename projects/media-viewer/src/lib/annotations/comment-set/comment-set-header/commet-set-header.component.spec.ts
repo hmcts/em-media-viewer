@@ -1,7 +1,5 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {CommentSetHeaderComponent} from './comment-set-header.component';
 
 describe('CommentSetHeader', () => {
@@ -12,7 +10,7 @@ describe('CommentSetHeader', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [],
       declarations: [CommentSetHeaderComponent],
       providers: [ToolbarEventService]
     }).compileComponents();
