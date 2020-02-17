@@ -5,7 +5,7 @@
 This is an angular library that provides components to view and annotate PDF documents, as well as view images.
 
 ## Running demo app
-- npm run package
+- npm run package (deprecated)
 - npm run start:ng
 
 ## Integrating into your own Angular application
