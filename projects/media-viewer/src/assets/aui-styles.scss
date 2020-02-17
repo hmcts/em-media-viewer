@@ -2,6 +2,10 @@
 @import "sass/toolbar/main";
 @import "sass/comments-summary-dialog";
 @import "sass/comment-set-panel";
+@import "sass/comment";
+@import "sass/annotation-set";
+@import "sass/rectangle";
+@import "sass/popup-toolbar";
 
 div.govuk-prose-scope, p {
   white-space: pre-wrap;

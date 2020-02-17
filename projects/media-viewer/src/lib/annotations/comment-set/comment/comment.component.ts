@@ -8,8 +8,7 @@ import { CommentService } from './comment.service';
 
 @Component({
   selector: 'mv-anno-comment',
-  templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss']
+  templateUrl: './comment.component.html'
 })
 export class CommentComponent implements OnChanges {
 

@@ -6,7 +6,6 @@ import { ViewerEventService } from '../../../viewers/viewer-event.service';
 
 @Component({
   selector: 'mv-annotation',
-  styleUrls: ['./annotation-view.component.scss'],
   templateUrl: './annotation-view.component.html'
 })
 export class AnnotationViewComponent {

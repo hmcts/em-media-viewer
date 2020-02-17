@@ -13,7 +13,6 @@ import { BoxHighlightCreateService } from './annotation-create/box-highlight-cre
 
 @Component({
   selector: 'mv-annotation-set',
-  styleUrls: ['./annotation-set.component.scss'],
   templateUrl: './annotation-set.component.html'
 })
 export class AnnotationSetComponent implements OnInit, OnDestroy {
