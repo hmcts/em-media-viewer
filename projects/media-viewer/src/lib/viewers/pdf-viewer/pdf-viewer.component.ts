@@ -27,7 +27,6 @@ import { CommentSetService } from './comment-set.service';
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.scss'],
   providers: [PdfAnnotationService, AnnotationSetService, CommentSetService],
   encapsulation: ViewEncapsulation.None
 })

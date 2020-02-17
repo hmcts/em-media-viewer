@@ -1,0 +1,66 @@
+mv-image-viewer {
+  #viewer-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: auto;
+    background-color: #dee0e2;
+  }
+
+  .image-container {
+    position: absolute;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .image-container.annotations {
+    width: 97%;
+  }
+
+  .image-container.annotations.show-comments-panel {
+    width: 75%;
+  }
+
+  img {
+    position: absolute;
+    -webkit-transform-origin: left bottom;
+    -moz-transform-origin: left bottom;
+    -ms-transform-origin: left bottom;
+    -o-transform-origin: left bottom;
+    transform-origin: left bottom;
+    overflow: auto;
+  }
+
+  .rot90 {
+    -webkit-transform: translateY(-100%) rotate(90deg); /* Safari */
+    -moz-transform: translateY(-100%) rotate(90deg); /* Firefox 3.6 Firefox 4 */
+    /*-moz-transform-origin: right top; */
+    -ms-transform: translateY(-100%) rotate(90deg); /* IE9 */
+    -o-transform: translateY(-100%) rotate(90deg); /* Opera */
+    transform: translateY(-100%) rotate(90deg); /* W3C */
+  }
+
+  .rot180 {
+    -webkit-transform: translateX(100%) translateY(-100%) rotate(180deg); /* Safari */
+    -moz-transform: translateX(100%) translateY(-100%) rotate(180deg); /* Firefox 3.6 Firefox 4 */
+    /*-moz-transform-origin: right top; */
+    -ms-transform: translateX(100%) translateY(-100%) rotate(180deg); /* IE9 */
+    -o-transform: translateX(100%) translateY(-100%) rotate(180deg); /* Opera */
+    transform: translateX(100%) translateY(-100%) rotate(180deg); /* W3C */
+  }
+
+  .rot270 {
+    -webkit-transform: rotate(-90deg) translate(-100%, 0); /* Safari */
+    -moz-transform: rotate(-90deg) translate(-100%, 0); /* Firefox 3.6 Firefox 4 */
+    -ms-transform: rotate(-90deg) translate(-100%, 0); /* IE9 */
+    -o-transform: rotate(-90deg) translate(-100%, 0); /* Opera */
+    transform: rotate(-90deg) translate(-100%, 0); /* W3C */
+    -webkit-transform-origin: left top;
+    -moz-transform-origin: left top;
+    -ms-transform-origin: left top;
+    -o-transform-origin: left top;
+    transform-origin: left top;
+  }
+
+}
+
