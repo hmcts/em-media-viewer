@@ -29,8 +29,7 @@ enum SupportedContentTypes {
 
 @Component({
   selector: 'mv-media-viewer',
-  templateUrl: './media-viewer.component.html',
-  styleUrls: ['../assets/sass/toolbar/main.scss', './media-viewer.component.scss']
+  templateUrl: './media-viewer.component.html'
 })
 export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
 

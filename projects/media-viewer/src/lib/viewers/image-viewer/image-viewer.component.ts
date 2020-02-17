@@ -19,8 +19,7 @@ import { ViewerEventService } from '../viewer-event.service';
 
 @Component({
     selector: 'mv-image-viewer',
-    templateUrl: './image-viewer.component.html',
-    styleUrls: ['../../../assets/sass/image-viewer.scss', '../../media-viewer.component.scss'],
+    templateUrl: './image-viewer.component.html'
 })
 export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 

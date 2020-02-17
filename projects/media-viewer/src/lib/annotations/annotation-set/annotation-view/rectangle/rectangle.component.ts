@@ -5,8 +5,7 @@ import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-anno-rectangle',
-  templateUrl: './rectangle.component.html',
-  styleUrls: ['../../../../../assets/sass/rectangle.scss']
+  templateUrl: './rectangle.component.html'
 })
 export class RectangleComponent implements AfterViewInit, OnDestroy {
 
