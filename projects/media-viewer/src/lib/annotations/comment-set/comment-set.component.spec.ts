@@ -211,7 +211,6 @@ describe('CommentSetComponent', () => {
     fixture = TestBed.createComponent(CommentSetComponent);
     component = fixture.componentInstance;
     component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
-    component.page = 1;
     component.rotate = 0;
     component.height = 100;
     component.zoom = 1;
@@ -220,45 +219,6 @@ describe('CommentSetComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should use addToDOM method to set the comment-set html', () => {
-    spyOn(component, 'updateView');
-    const mockRealElement = document.createElement('div');
-    const mockPageEvent: PageEvent = {
-      pageNumber: 1,
-      source: { rotation: 0, scale: 1, div: mockRealElement }
-    };
-
-    component.addToDOM(mockPageEvent);
-    expect(component.updateView).toHaveBeenCalledWith(mockPageEvent);
-    expect(mockPageEvent.source.div.closest('.pageContainer')).toBeTruthy();
-    expect(mockPageEvent.source.div.closest('.pageWrapper')).toBeTruthy();
-    expect(mockPageEvent.source.div.parentNode.nextSibling).toEqual(component.container.nativeElement);
-  });
-
-  it('should set values for the comment set', () => {
-    const mockRealElement = document.createElement('div');
-    mockRealElement.setAttribute('height', '100px');
-    const mockEventSource: PageEvent['source'] = {
-      rotation: 0,
-      scale: 1,
-      div: mockRealElement
-    };
-
-    component.updateView({ pageNumber: 1, source: mockEventSource});
-
-    expect(component.zoom).toEqual(mockEventSource.scale);
-    expect(component.rotate).toEqual(mockEventSource.rotation);
-    expect(component.height).toEqual(mockEventSource.div.clientWidth);
-  });
-
-  it('should return all the comments for the page', () => {
-    component.annotationSet.annotations = [annotation, annotation2, annotation3];
-
-    const commentsForPage = component.getCommentsOnPage();
-
-    expect(commentsForPage.length).toEqual(2);
   });
 
   it('should set the selected comment', () => {
@@ -308,18 +268,11 @@ describe('CommentSetComponent', () => {
     expect(topRectangle).toEqual(mockRectangles[1]);
   });
 
-
-  it('all comments saved in set should return false', () => {
-    component.commentComponents.reset([]);
-    expect(component.allCommentsSavedInSet()).toEqual(false);
-  });
-
-  it('all comments saved in set should return true', () => {
-    const commentMock = {
-      hasUnsavedChanges: true
-    } as CommentComponent;
-
-    component.commentComponents.reset([commentMock]);
-    expect(component.allCommentsSavedInSet()).toEqual(true);
-  });
+  it('should call the comment service to update comments state value',
+    inject([CommentService], (commentService: CommentService) => {
+      spyOn(commentService, 'onCommentChange');
+      component.allCommentsSaved();
+      expect(commentService.onCommentChange).toHaveBeenCalled();
+    })
+  );
 });
