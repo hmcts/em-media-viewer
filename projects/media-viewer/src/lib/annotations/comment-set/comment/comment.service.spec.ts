@@ -12,7 +12,7 @@ describe('CommentService', () => {
   });
 
   it('should have an empty list at initialisation', () => {
-    expect(commentService.commentSets).toEqual([]);
+    expect(commentService.commentSetComponent).toBeNull();
   });
 
   it('should update unsavedChange status to true', () => {
@@ -43,19 +43,11 @@ describe('CommentService', () => {
     expect(changes).toBe(true);
   }));
 
-  it('should update the array commentSetComponent at the correct array index', () => {
-    commentService.commentSets[1] = null;
-    const commentSetMock = {} as CommentSetComponent;
-
-    commentService.updateCommentSets(1, commentSetMock);
-    expect(commentService.commentSets[1]).toEqual(commentSetMock);
-  });
-
   it('should reset the commentSets list', () => {
-    commentService.commentSets[1] = {} as CommentSetComponent;
+    commentService.commentSetComponent = {} as CommentSetComponent;
 
     commentService.resetCommentSet();
-    expect(commentService.commentSets).toEqual([]);
+    expect(commentService.commentSetComponent).toBeNull();
   });
 
   it('hasUnsavedComments should return false when annotation comments are empty', () => {
@@ -69,7 +61,7 @@ describe('CommentService', () => {
   it('onCommentChange should be called with false when commentSets is empty', () => {
     spyOn(commentService.unsavedChanges, 'next');
 
-    commentService.allCommentSetsSaved();
+    commentService.allCommentsSaved();
 
     expect(commentService.unsavedChanges.next).toHaveBeenCalledTimes(1);
     expect(commentService.unsavedChanges.next).toHaveBeenCalledWith(false);

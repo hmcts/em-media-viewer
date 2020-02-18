@@ -137,7 +137,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.annotationService.buildAnnoSetComponents(this.annotationSet);
     }
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
-    this.getPageHeights();
+    this.setPageHeights();
   }
 
   private onDocumentLoadInit() {
@@ -212,14 +212,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.rotate(rotation);
     this.pdfWrapper.setPageNumber(pageNumber);
     this.rotation = (this.rotation + rotation) % 360;
-    this.getPageHeights();
+    this.setPageHeights();
   }
 
   private setZoom(zoomFactor: number) {
     if (!isNaN(zoomFactor)) {
       this.pdfWrapper.setZoom(zoomFactor);
       this.zoom = this.calculateZoomValue(zoomFactor);
-      this.getPageHeights();
+      this.setPageHeights();
     }
   }
 
@@ -227,7 +227,15 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (!isNaN(zoomFactor)) {
       this.pdfWrapper.stepZoom(zoomFactor);
       this.zoom = Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10;
-      this.getPageHeights();
+      this.setPageHeights();
+    }
+  }
+
+  setPageHeights() {
+    this.pageHeights = [];
+    const pdfViewerChildren = this.pdfViewer.nativeElement.children;
+    for (let i = 0; i < pdfViewerChildren.length; i++) {
+      this.pageHeights.push(pdfViewerChildren[i].clientHeight);
     }
   }
 

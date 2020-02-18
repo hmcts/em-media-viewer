@@ -1,4 +1,7 @@
-<div class="toolbar" [ngStyle]="style">
+<div class="toolbar"
+         [ngStyle]="transformStyles"
+         [style.top.px]="top"
+         [style.left.px]="left">
   <button type="button"
           title="Delete"
           class="aui__toolbar-button aui__toolbar-button--comments contextual-btn leftButton"

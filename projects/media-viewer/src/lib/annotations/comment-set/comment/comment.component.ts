@@ -134,20 +134,13 @@ export class CommentComponent implements OnChanges {
     }
   }
 
-  formNgStyle() {
-    return {
-      top: this.getTotalPreviousPagesHeight() + (this.rectTop * this.zoom) + 'px',
-      'z-index': this.selected ? 100 : 0
-    };
-  }
-
-  getTotalPreviousPagesHeight(): number {
+  get top(): number {
     const pageMarginBottom = 10;
     let totalPreviousPagesHeight = 0;
     for (let i = 0; i < this.page - 1; i++) {
       totalPreviousPagesHeight += this.pageHeights[i] + pageMarginBottom;
     }
-    return totalPreviousPagesHeight;
+    return totalPreviousPagesHeight  + (this.rectTop * this.zoom);
   }
 
   get commentBottomPos(): number {
