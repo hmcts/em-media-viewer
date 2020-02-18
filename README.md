@@ -149,6 +149,22 @@ The structure of the `ViewerException` exception class can be seen below:
       httpResponseCode: error.status,
       message: error.message
     }
+    
+## Media Viewer Styles
+Add these styles to your component.scss if you need them
+i.e. if you writing your own toolbar styles then do not import those
+
+```
+// Import GOV.UK Frontend
+@import "~govuk-frontend/all";
+@import "~@hmcts/frontend/all";
+// Import Media Viewer Styles
+@import "projects/media-viewer/src/assets/aui-styles";
+@import "projects/media-viewer/src/assets/sass/settings";
+@import "projects/media-viewer/src/assets/sass/document";
+@import "projects/media-viewer/src/assets/sass/settings";
+@import "projects/media-viewer/src/assets/sass/toolbar/main";
+```
 
 The list of exceptions thrown by the Media Viewer are as follows:
 - UnknownErrorException
