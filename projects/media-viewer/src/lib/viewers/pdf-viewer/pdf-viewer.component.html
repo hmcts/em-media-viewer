@@ -1,4 +1,10 @@
 <mv-comment-set-toggle *ngIf="enableAnnotations"></mv-comment-set-toggle>
+
+<mv-comment-set-header [ngClass]="{'show-comments-panel': showCommentsPanel}"
+  [showCommentSummary]="toolbarButtons.showCommentSummary"
+  (showCommentSummaryDialog)="toggleCommentsSummary()">
+</mv-comment-set-header>
+
 <div #viewerContainer
      class="pdfContainer"
      [ngStyle]="{ height: height }"

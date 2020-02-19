@@ -45,7 +45,6 @@ describe('TextHighlightCreateService', () => {
 
     expect(annotationApi.postAnnotation).toHaveBeenCalled();
     expect(annotationEvents.selectAnnotation).toHaveBeenCalledWith({ annotationId: 'annoId', editable: false });
-    expect(mockHighlightModeSubject.next).toHaveBeenCalledWith(false);
   }));
 
   it('should remove extra padding and transform', () => {

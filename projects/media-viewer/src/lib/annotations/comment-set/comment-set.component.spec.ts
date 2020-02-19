@@ -267,7 +267,7 @@ describe('CommentSetComponent', () => {
 
     component.onSelect(annotationId);
 
-    expect(mockAnnotationService.selectAnnotation).toHaveBeenCalledWith(annotationId);
+    expect(mockAnnotationService.selectAnnotation).toHaveBeenCalled();
   });
 
   it('should delete the comment for the annotation', () => {
@@ -308,13 +308,6 @@ describe('CommentSetComponent', () => {
     expect(topRectangle).toEqual(mockRectangles[1]);
   });
 
-  it('should call the comment service to update comments state value',
-    inject([CommentService], (commentService: CommentService) => {
-      spyOn(commentService, 'onCommentChange');
-      component.allCommentsSaved();
-      expect(commentService.onCommentChange).toHaveBeenCalled();
-    })
-  );
 
   it('all comments saved in set should return false', () => {
     component.commentComponents.reset([]);

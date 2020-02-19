@@ -1,0 +1,38 @@
+.commentSummaryHeader {
+  width: 24%;
+  position: absolute;
+  right: 0;
+  z-index: 5;
+  border-width: 0 1px 1px 0;
+  border-color: #888888;
+  border-style: solid;
+  padding: 3px 0px 6px 0;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.30), inset 0 0px 0 0 #DDDDDD;
+  display: none;
+  .show-comments-panel & {
+    display:  block;
+  }
+}
+.commentSummary {
+  .show-comments-panel & {
+    display:  block;
+  }
+  text-align: right;
+  border: none;
+  border-left: 1px solid #DDDDDD;
+  display: none;
+  float: right;
+  position: relative;
+  background: url(../../../../assets/images/icon-casefile-comments.svg) 5px 5px no-repeat;
+  fill: #0B0C0C;
+  background-size: 15px 15px;
+  height: 25px;
+  width: 83px;
+  margin: 5px 5px 0;
+  cursor: pointer;
+  &:hover {
+    background-color: #DDDDDD;
+  }
+}

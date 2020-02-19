@@ -1,7 +1,6 @@
 <div #container
      [ngClass]="{ 'comments-panel comment-container': true, 'expanded': showCommentsPanel }"
      [style.height.px]="height" (click)="onContainerClick($event)">
-
   <ng-container *ngFor="let annotation of getCommentsOnPage(); let i = index;">
     <mv-anno-comment [ngStyle]="showCommentsPanel ? {} : {'display':'none'}"
         #commentComponent
