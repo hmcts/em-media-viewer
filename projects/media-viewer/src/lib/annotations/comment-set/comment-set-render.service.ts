@@ -29,9 +29,9 @@ export class CommentSetRenderService {
 
   private adjustIfOverlapping(comment: CommentComponent, prevComment: CommentComponent, zoom: number): void {
     if (prevComment) {
-      const endOfPrevComment = prevComment.commentTop + (this.height(prevComment) / zoom);
+      const endOfPrevComment = prevComment.commentTop + this.height(prevComment);
       if (comment.commentTop <= endOfPrevComment) {
-        comment.rectTop = endOfPrevComment - comment.totalPreviousPagesHeight;
+        comment.rectTop = (endOfPrevComment - comment.totalPreviousPagesHeight) / zoom;
       }
     }
   }
