@@ -105,23 +105,27 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   public onMouseUp() {
     if (this.annotationSet && this.drawMode) {
-      this.boxHighlightService.createBoxHighlight();
+      this.boxHighlightService.createBoxHighlight(this.page);
     }
   }
 
   public saveBoxHighlight(rectangle: any) {
-    this.boxHighlightService.saveBoxHighlight(rectangle, this.annotationSet, this.page);
+    if (rectangle.page === this.page) {
+      this.boxHighlightService.saveBoxHighlight(rectangle, this.annotationSet, rectangle.page);
+    }
   }
 
   private createTextHighlight(highlight) {
-    this.textHighlightService.createTextHighlight(highlight, this.annotationSet,
+    if (this.height && this.width) {
+      this.textHighlightService.createTextHighlight(highlight, this.annotationSet,
         {
           zoom: this.zoom,
           rotate: this.rotate,
           pageHeight: this.height,
           pageWidth: this.width,
-          number: this.page
+          number: highlight.page
         });
+    }
   }
 
   selectAnnotation(annotationId) {

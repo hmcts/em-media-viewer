@@ -1,7 +1,7 @@
 <div #container
      [ngClass]="annotationSetClass()"
-     [style.width]="width ? (width + 'px') : '100%'"
-     [style.height]="height ? (height + 'px') : '100%'"
+     [style.width.px]="width"
+     [style.height.px]="height"
      (mousedown)="onMouseDown($event)"
      (mousemove)="onMouseMove($event)"
      (mouseup)="onMouseUp()">
