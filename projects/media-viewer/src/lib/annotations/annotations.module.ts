@@ -19,14 +19,16 @@ import { BoxHighlightCreateComponent } from './annotation-set/annotation-create/
 import { BoxHighlightCreateService } from './annotation-set/annotation-create/box-highlight-create.service';
 import { TextHighlightCreateService } from './annotation-set/annotation-create/text-highlight-create.service';
 import { CommentSetHeaderComponent } from './comment-set/comment-set-header/comment-set-header.component';
+import {TagInputModule} from 'ngx-chips';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    MutableDivModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        HttpClientModule,
+        MutableDivModule,
+        TagInputModule
+    ],
   declarations: [
     AnnotationViewComponent,
     BoxHighlightCreateComponent,

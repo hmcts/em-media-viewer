@@ -13,6 +13,19 @@
       {{ lastUpdate | date: 'd MMMM y h:mm a' }}
     </time>
   </div>
+  <tag-input [ngModel]="[]" [ngModelOptions]="{standalone:true}"
+             [placeholder]="'Add tag'"
+             [onTextChangeDebounce]="500"
+             [secondaryPlaceholder]="'Search in Github'"
+             [onlyFromAutocomplete]="false">
+    <tag-input-dropdown
+      [autocompleteObservable]="requestAutocompleteItemsFake"
+      [minimumTextLength]="0">
+      <ng-template let-item="item" let-index="index">
+        {{ item.display }}
+      </ng-template>
+    </tag-input-dropdown>
+  </tag-input>
   <ng-container *ngIf="selected">
     <textarea #textArea
               mvTextAreaAutoExpand

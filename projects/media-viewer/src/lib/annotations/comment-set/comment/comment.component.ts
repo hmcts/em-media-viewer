@@ -5,6 +5,9 @@ import { User } from '../../user/user.model';
 import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
 import { SelectionAnnotation } from '../../annotation-event.service';
 import { CommentService } from './comment.service';
+import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -15,7 +18,7 @@ export class CommentComponent implements OnChanges {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
-
+  items = ['Javascript', 'Typescript'];
   lastUpdate: string;
   originalComment: string;
   fullComment: string;
@@ -45,7 +48,8 @@ export class CommentComponent implements OnChanges {
   @ViewChild('textArea') textArea: ElementRef;
 
   constructor(
-    private readonly commentService: CommentService
+    private readonly commentService: CommentService,
+    private http: HttpClient
   ) {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
@@ -163,5 +167,23 @@ export class CommentComponent implements OnChanges {
       !this.editable ? 'view-mode' : 'edit-mode',
       !this.selected && !this.editable ? 'collapsed' : 'expanded',
     ];
+  }
+
+  public requestAutocompleteItems = (text: string): Observable<any> => {
+    const url = `https://api.github.com/search/repositories?q=${text}`;
+    return this.http
+      .get<any>(url)
+      .pipe(
+        map(items => items.map(item => {
+          debugger
+          console.log(item.full_name)
+          return item.full_name
+        })));
+  }
+
+  public requestAutocompleteItemsFake = (text: string): Observable<string[]> => {
+    return of([
+      'tag1', 'tag2', 'tag3'
+    ]);
   }
 }
