@@ -1,25 +1,23 @@
-import {
-  Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild,
-  ViewChildren
-} from '@angular/core';
-import { AnnotationSet } from '../annotation-set/annotation-set.model';
-import { Annotation } from '../annotation-set/annotation-view/annotation.model';
-import { AnnotationApiService } from '../annotation-api.service';
-import { Comment } from './comment/comment.model';
-import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
-import { CommentComponent } from './comment/comment.component';
-import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
-import { Subscription } from 'rxjs';
-import { ViewerEventService } from '../../viewers/viewer-event.service';
+import {Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
+import {AnnotationSet} from '../annotation-set/annotation-set.model';
+import {Annotation} from '../annotation-set/annotation-view/annotation.model';
+import {AnnotationApiService} from '../annotation-api.service';
+import {Comment} from './comment/comment.model';
+import {PageEvent} from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
+import {CommentComponent} from './comment/comment.component';
+import {AnnotationEventService, SelectionAnnotation} from '../annotation-event.service';
+import {Subscription} from 'rxjs';
+import {ViewerEventService} from '../../viewers/viewer-event.service';
 
-import { CommentService } from './comment/comment.service';
-import { CommentSetRenderService } from './comment-set-render.service';
+import {CommentService} from './comment/comment.service';
+import {CommentSetRenderService} from './comment-set-render.service';
 
 @Component({
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
-  styleUrls: ['./comment-set.component.scss']
-})
+  styleUrls: ['./comment-set.component.scss'],
+  encapsulation: ViewEncapsulation.None
+ })
 export class CommentSetComponent implements OnInit, OnDestroy {
 
   @Input() annotationSet: AnnotationSet;
@@ -139,4 +137,5 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   allCommentsSavedInSet(): boolean {
     return this.commentComponents.some(comment => comment.hasUnsavedChanges === true);
   }
+
 }

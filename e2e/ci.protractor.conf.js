@@ -18,8 +18,6 @@ exports.config = {
       args: ['--headless']
     }
   },
-  chromeDriver: '../node_modules/protractor/node_modules/webdriver-manager/selenium/chromedriver_77.0.3865.40',
-  geckoDriver: '../node_modules/protractor/node_modules/webdriver-manager/selenium/geckodriver-v0.25.0',
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   specs: [

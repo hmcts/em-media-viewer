@@ -149,4 +149,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       this.drawMode ? 'drawMode' : ''
     ];
   }
+
+  toggleCommentsSummary() {
+    this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
+  }
 }
