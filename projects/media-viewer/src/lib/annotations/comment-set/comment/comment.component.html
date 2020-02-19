@@ -1,5 +1,5 @@
 <form #form (click)="onCommentClick()" class="aui-comment"
-      [style.top.px]="top"
+      [style.top.px]="commentTop"
       [style.zIndex]="selected ? 100 : 0"
       [ngClass]="'rotation rot' + rotate">
   <div id="detailsWrapper {{index}}" class="aui-comment__header">

@@ -25,6 +25,7 @@ export class CommentComponent implements OnChanges {
   _editable: boolean;
 
   _rectangle;
+  totalPreviousPagesHeight = 0;
   rectTop;
   rectLeft;
 
@@ -40,7 +41,6 @@ export class CommentComponent implements OnChanges {
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
-  @Input() pageHeights = [];
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
@@ -86,6 +86,15 @@ export class CommentComponent implements OnChanges {
 
   get editable(): boolean {
     return this._editable;
+  }
+
+  @Input()
+  set pageHeights(pageHeights: []) {
+    const pageMarginBottom = 10;
+    this.totalPreviousPagesHeight = 0;
+    for (let i = 0; i < this.page - 1; i++) {
+      this.totalPreviousPagesHeight += pageHeights[i] + pageMarginBottom;
+    }
   }
 
   onEdit() {
@@ -134,13 +143,8 @@ export class CommentComponent implements OnChanges {
     }
   }
 
-  get top(): number {
-    const pageMarginBottom = 10;
-    let totalPreviousPagesHeight = 0;
-    for (let i = 0; i < this.page - 1; i++) {
-      totalPreviousPagesHeight += this.pageHeights[i] + pageMarginBottom;
-    }
-    return totalPreviousPagesHeight  + (this.rectTop * this.zoom);
+  get commentTop(): number {
+    return this.totalPreviousPagesHeight + (this.rectTop * this.zoom);
   }
 
   get commentBottomPos(): number {
