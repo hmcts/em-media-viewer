@@ -13,10 +13,10 @@ export class CommentSetRenderService {
       this.adjustIfOverlapping(comment, prevComment, zoom);
       prevComment = comment;
     });
-    prevComment = null;
-    commentComponents.reverse().forEach((comment: CommentComponent) => {
-      prevComment = this.makeSureWithinContainer(comment, prevComment, containerHeight);
-    });
+    // prevComment = null;
+    // commentComponents.reverse().forEach((comment: CommentComponent) => {
+    //   prevComment = this.makeSureWithinContainer(comment, prevComment, containerHeight);
+    // });
   }
 
   sortComponents(commentComponents: CommentComponent[], rotate: number, zoom: number) {
@@ -29,9 +29,9 @@ export class CommentSetRenderService {
 
   private adjustIfOverlapping(comment: CommentComponent, prevComment: CommentComponent, zoom: number): void {
     if (prevComment) {
-      const endOfPrevComment = prevComment.rectTop + (this.height(prevComment) / zoom);
-      if (comment.rectTop <= endOfPrevComment) {
-        comment.rectTop = endOfPrevComment;
+      const endOfPrevComment = prevComment.commentTop + (this.height(prevComment) / zoom);
+      if (comment.commentTop <= endOfPrevComment) {
+        comment.rectTop = endOfPrevComment - comment.totalPreviousPagesHeight;
       }
     }
   }
@@ -40,11 +40,11 @@ export class CommentSetRenderService {
     if (this.onSameLine(a, b)) {
       return a.rectLeft >= b.rectLeft ? 1 : -1;
     }
-    return a.rectTop >= b.rectTop ? 1 : -1;
+    return a.commentTop >= b.commentTop ? 1 : -1;
   }
 
   private onSameLine(a: CommentComponent, b: CommentComponent): boolean {
-    return this.difference(a.rectTop, b.rectTop) === 0;
+    return this.difference(a.commentTop, b.commentTop) === 0;
   }
 
   private top(rectangle: { x, y, height, width }, height: number, rotate: number, zoom: number) {
