@@ -14,6 +14,7 @@ import { CommentService } from './annotations/comment-set/comment/comment.servic
 import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AnnotationsModule,
     TagInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   declarations: [
     PdfViewerComponent,

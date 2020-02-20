@@ -21,6 +21,7 @@ import { TextHighlightCreateService } from './annotation-set/annotation-create/t
 import { CommentSetHeaderComponent } from './comment-set/comment-set-header/comment-set-header.component';
 import { TagInputModule } from 'ngx-chips';
 import { TagsComponent } from './tags/tags.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { TagsComponent } from './tags/tags.component';
         FormsModule,
         HttpClientModule,
         MutableDivModule,
-        TagInputModule
+        TagInputModule,
+        RouterModule
     ],
   declarations: [
     AnnotationViewComponent,

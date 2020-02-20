@@ -187,7 +187,6 @@ export class CommentComponent implements OnChanges, OnInit {
       .get<any>(url)
       .pipe(
         map(items => items.map(item => {
-          debugger
           console.log(item.full_name)
           return item.full_name
         })));
