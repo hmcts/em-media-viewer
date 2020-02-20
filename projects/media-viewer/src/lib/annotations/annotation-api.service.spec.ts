@@ -120,9 +120,11 @@ describe('AnnotationApiService', () => {
   }));
 
   it('get annotation set', fakeAsync((done) => {
-    api.getAnnotationSet(dmDocumentId).subscribe((response) => {
-      expect(response.documentId).toBe(dmDocumentId);
-    }, error => done(error));
+    const docUrl = `/doc-store-host/documents/${dmDocumentId}`;
+    api.getAnnotationSet(docUrl)
+      .subscribe((response) => {
+        expect(response.documentId).toBe(dmDocumentId);
+        }, error => done(error));
 
     const req = httpMock.expectOne(`/my-context-path/annotation-sets/filter?documentId=${dmDocumentId}`);
     expect(req.request.method).toBe('GET');

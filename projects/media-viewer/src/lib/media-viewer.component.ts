@@ -71,8 +71,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   ngAfterContentInit() {
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
-    this.subscriptions.push(this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)));
-    this.subscriptions.push(this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes));
+    this.subscriptions.push(
+      this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)),
+      this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes)
+    );
   }
 
   contentTypeUnsupported(): boolean {
@@ -87,14 +89,14 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
-        this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
+        this.annotationSet = this.api.getAnnotationSet(this.url);
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
       }
     }
     if (changes.enableAnnotations && this.enableAnnotations) {
-      this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
+      this.annotationSet = this.api.getAnnotationSet(this.url);
     }
     this.setToolbarButtons();
   }
