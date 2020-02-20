@@ -24,6 +24,8 @@ import { ResponseType, ViewerException } from '../error-message/viewer-exception
 import { AnnotationSetService } from './annotation-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
+import { AnnotationApiService } from '../../annotations/annotation-api.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -73,6 +75,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
     private readonly annotationService: PdfAnnotationService,
+    private readonly annotationsApi: AnnotationApiService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject;
@@ -91,6 +94,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       }
     });
     this.subscriptions.push(
+      this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.setupAnnotationSet(drawMode)),
+      this.toolbarEvents.highlightModeSubject.subscribe(highlightMode => this.setupAnnotationSet(highlightMode)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
@@ -131,6 +136,18 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
     this.annotationService.destroyComponents();
+  }
+
+  setupAnnotationSet(mode: boolean) {
+    if (mode && !this.annotationSet) {
+      this.annotationsApi.getOrCreateAnnotationSet(this.url)
+        .pipe(take(1))
+        .subscribe(annotationSet => {
+          this.annotationSet = annotationSet;
+          this.annotationService.buildAnnoSetComponents(this.annotationSet);
+          console.log('annotation set', this.annotationSet)
+        });
+    }
   }
 
   private async loadDocument() {
@@ -176,10 +193,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onMouseDown(mouseEvent: MouseEvent) {
-    if (this.toolbarEvents.highlightModeSubject.getValue()) {
+    if (this.annotationSet && this.toolbarEvents.highlightModeSubject.getValue()) {
       this.annotationService.addAnnoSetToPage();
     }
-    if (this.toolbarEvents.drawModeSubject.getValue()) {
+    if (this.annotationSet && this.toolbarEvents.drawModeSubject.getValue()) {
       this.annotationService.addAnnoSetToPage();
       setTimeout(() => this.viewerEvents.boxSelected({
         page: this.pdfWrapper.getPageNumber(),
@@ -193,6 +210,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       setTimeout(() => this.viewerEvents.textSelected({
         page: this.pdfWrapper.getPageNumber(), event: mouseEvent
       }), 0);
+    }
+    if (!this.annotationSet) {
+      if (this.toolbarEvents.highlightModeSubject.getValue()) {
+        this.toolbarEvents.highlightModeSubject.next(false);
+      }
+      if (this.toolbarEvents.drawModeSubject.getValue()) {
+        this.toolbarEvents.drawModeSubject.next(false);
+      }
     }
   }
 

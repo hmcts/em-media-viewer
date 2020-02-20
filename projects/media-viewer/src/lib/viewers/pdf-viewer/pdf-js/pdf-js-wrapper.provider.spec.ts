@@ -5,6 +5,8 @@ import { ErrorMessageComponent } from '../../error-message/error.message.compone
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommentService } from '../../../annotations/comment-set/comment/comment.service';
+import { AnnotationApiService } from '../../../annotations/annotation-api.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GrabNDragDirective } from '../../grab-n-drag.directive';
 
 describe('PdfJsWrapperFactory', () => {
@@ -13,11 +15,17 @@ describe('PdfJsWrapperFactory', () => {
 
   beforeEach(() => {
     return TestBed.configureTestingModule({
-      declarations: [ PdfViewerComponent, ErrorMessageComponent, GrabNDragDirective ],
+      declarations: [
+        PdfViewerComponent,
+        ErrorMessageComponent,
+        GrabNDragDirective
+      ],
       providers: [
         ToolbarEventService,
-        CommentService
+        CommentService,
+        AnnotationApiService
       ],
+      imports: [HttpClientTestingModule],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
       ]
