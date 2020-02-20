@@ -14,31 +14,8 @@
     </time>
   </div>
 
-  <div class="tags">
-    <tag-input [(ngModel)]="tagItems"
-               [ngModelOptions]="{standalone:true}"
-               [placeholder]="'Add tag'"
-               [displayBy]="'name'"
-               [identifyBy]="'name'"
-               [onTextChangeDebounce]="250"
-               [secondaryPlaceholder]="'Search for tags'"
-               [onlyFromAutocomplete]="false">
-      <tag-input-dropdown
-        [autocompleteItems]="autocompleteItemsAsObjects"
-        [displayBy]="'name'"
-        [identifyBy]="'name'"
-        [zIndex]="10000"
-        [minimumTextLength]="3">
-        <ng-template let-item="item" let-index="index">
-          {{ item.label }}
-        </ng-template>
-      </tag-input-dropdown>
-    </tag-input>
-    <span *ngFor="let tag of tagItems"
-          [ngStyle]="{'color': tag.colour, 'border-color': tag.colour}" class="hmcts-badge">
-      {{tag.name}}
-    </span>
-  </div>
+  <mv-tags [tagItems]="tagItems" [autocompleteItems]="autocompleteItemsAsObjects"></mv-tags>
+
   <ng-container *ngIf="selected">
     <textarea #textArea
               mvTextAreaAutoExpand

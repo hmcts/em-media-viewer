@@ -4,7 +4,7 @@ import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Comment } from '../comment-set/comment/comment.model';
-import { User } from '../user/user.model';
+import { User } from '../models/user.model';
 import {ViewerEventService} from '../../viewers/viewer-event.service';
 
 describe('CommentsSummaryComponent', () => {

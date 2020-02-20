@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { fakeAsync, inject, TestBed } from '@angular/core/testing';
 import { AnnotationApiService } from './annotation-api.service';
 import { AnnotationSet } from './annotation-set/annotation-set.model';
-import { User } from './user/user.model';
+import { User } from './models/user.model';
 import { Annotation } from './annotation-set/annotation-view/annotation.model';
 import { of } from 'rxjs';
 import { Comment } from './comment-set/comment/comment.model';

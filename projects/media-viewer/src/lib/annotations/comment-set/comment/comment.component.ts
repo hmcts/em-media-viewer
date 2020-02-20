@@ -2,7 +2,7 @@ import {
   Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges, OnInit
 } from '@angular/core';
 import { Comment } from './comment.model';
-import { User } from '../../user/user.model';
+import { User } from '../../models/user.model';
 import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
 import { SelectionAnnotation } from '../../annotation-event.service';
 import { CommentService } from './comment.service';
