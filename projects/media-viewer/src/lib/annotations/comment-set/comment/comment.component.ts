@@ -1,5 +1,6 @@
 import {
-  Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges} from '@angular/core';
+  Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges, OnInit
+} from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../../user/user.model';
 import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
@@ -8,17 +9,18 @@ import { CommentService } from './comment.service';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
+import {TagItemModel} from '../../models/tag-item.model';
 
 @Component({
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent implements OnChanges {
+export class CommentComponent implements OnChanges, OnInit {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
-  items = ['Javascript', 'Typescript'];
+  public tagItems: TagItemModel[];
   lastUpdate: string;
   originalComment: string;
   fullComment: string;
@@ -33,6 +35,12 @@ export class CommentComponent implements OnChanges {
   rectLeft;
 
   hasUnsavedChanges = false;
+
+  autocompleteItemsAsObjects = [
+    {name: 'divorce', label: 'Divorce', colour: '#f00'},
+    {name: 'dispute', label: 'Dispute', colour: '#0f0'},
+    {name: 'critical', label: 'Critical', colour: '#00f'}
+  ];
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() renderComments = new EventEmitter<Comment>();
@@ -53,6 +61,10 @@ export class CommentComponent implements OnChanges {
   ) {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
+  }
+
+  ngOnInit(): void {
+    //this.tagItems = [];
   }
 
   ngOnChanges(): void {
