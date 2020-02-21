@@ -16,7 +16,7 @@
 
   <mv-tags
     [tagItems]="tagItems"
-    [autocompleteItems]="autocompleteItemsAsObjects"
+    [autocompleteItems]="autocompleteItems$ | async"
     [editable]="editable"
     [commentId]="_comment.id">
   </mv-tags>

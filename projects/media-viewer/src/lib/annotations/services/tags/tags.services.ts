@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {TagItemModel} from '../../models/tag-item.model';
 
 @Injectable()
@@ -19,17 +19,13 @@ export class TagsServices {
 
   public getAllTags(): Observable<TagItemModel[]> {
     const url = 'add/url';
-    return this.http.get<TagItemModel[]>(url);
+    // return this.http.get<TagItemModel[]>(url);
+    return of(this.autocompleteItemsAsObjects)
   }
 
   public updateTags(payload): Observable<any> {
     const url = 'add/url';
     return this.http.patch<TagItemModel[]>(url, payload);
-  }
-
-
-  public getAutoCompleteItems() {
-    return this.autocompleteItemsAsObjects;
   }
 
   getTagItems(commentId): TagItemModel[] {

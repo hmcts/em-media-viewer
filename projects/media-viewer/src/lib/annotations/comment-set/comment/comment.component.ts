@@ -36,8 +36,7 @@ export class CommentComponent implements OnChanges, OnInit {
   rectLeft;
 
   hasUnsavedChanges = false;
-
-  autocompleteItemsAsObjects = [];
+  autocompleteItems$: Observable<TagItemModel[]>;
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() renderComments = new EventEmitter<Comment>();
@@ -63,7 +62,7 @@ export class CommentComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     this.tagItems = this.tagsServices.getTagItems(this._comment.id);
-    this.autocompleteItemsAsObjects = this.tagsServices.getAutoCompleteItems();
+    this.autocompleteItems$ = this.tagsServices.getAllTags();
   }
 
   ngOnChanges(): void {
