@@ -8,7 +8,8 @@
     [displayBy]="'label'"
     [identifyBy]="'name'"
     [onTextChangeDebounce]="250"
-    [secondaryPlaceholder]="'Search for tags'"
+    [separatorKeyCodes]="[32, 188]"
+    [secondaryPlaceholder]="'Search or add tags'"
     [onlyFromAutocomplete]="false">
     <tag-input-dropdown
       [autocompleteItems]="availableTags"
