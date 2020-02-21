@@ -5,11 +5,16 @@
   (showCommentSummaryDialog)="toggleCommentsSummary()">
 </mv-comment-set-header>
 
-<div #viewerContainer
+<div grabNDrag [dragY]="enableGrabNDrag"
+     #viewerContainer
      class="pdfContainer"
      [ngStyle]="{ height: height }"
-     [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage, 'show-comments-panel': showCommentsPanel }">
-  <div #pdfViewer (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" class="pdfViewer"
+     [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage, 'show-comments-panel': showCommentsPanel, 'grabNDrag': enableGrabNDrag }">
+  <div grabNDrag [dragX]="enableGrabNDrag"
+       #pdfViewer
+       class="pdfViewer"
+       (mousedown)="onMouseDown($event)"
+       (mouseup)="onMouseUp($event)"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
