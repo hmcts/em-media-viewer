@@ -22,7 +22,7 @@
     </tag-input-dropdown>
   </tag-input>
 
-  <div class="tags__render" *ngIf="!editable">
+  <div class="tags__renderer" *ngIf="!editable && (tagItems && tagItems.length)">
     <span *ngFor="let tag of tagItems" class="tags__item hmcts-badge">
       {{tag.label}}
     </span>

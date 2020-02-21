@@ -23,11 +23,6 @@ export class TagsServices {
     return of(this.autocompleteItemsAsObjects)
   }
 
-  public updateTags(payload): Observable<any> {
-    const url = 'add/url';
-    return this.http.patch<TagItemModel[]>(url, payload);
-  }
-
   getTagItems(commentId): TagItemModel[] {
     return this.tagItems ? this.tagItems[commentId] : [];
   }
