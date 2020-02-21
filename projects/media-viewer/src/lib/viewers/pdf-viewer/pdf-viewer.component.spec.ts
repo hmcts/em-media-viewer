@@ -19,6 +19,7 @@ import { CommentService } from '../../annotations/comment-set/comment/comment.se
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BoxHighlightCreateService } from '../../annotations/annotation-set/annotation-create/box-highlight-create.service';
 import { TextHighlightCreateService } from '../../annotations/annotation-set/annotation-create/text-highlight-create.service';
+import { GrabNDragDirective } from '../grab-n-drag.directive';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -33,7 +34,7 @@ describe('PdfViewerComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PdfViewerComponent, ErrorMessageComponent, AnnotationSetComponent],
+      declarations: [PdfViewerComponent, ErrorMessageComponent, AnnotationSetComponent, GrabNDragDirective],
       imports: [HttpClientTestingModule],
       providers: [
         PdfAnnotationService,
