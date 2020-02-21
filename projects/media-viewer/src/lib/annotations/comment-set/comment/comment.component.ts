@@ -37,9 +37,10 @@ export class CommentComponent implements OnChanges, OnInit {
   hasUnsavedChanges = false;
 
   autocompleteItemsAsObjects = [
-    {name: 'divorce', label: 'Divorce', colour: '#f00'},
-    {name: 'dispute', label: 'Dispute', colour: '#0f0'},
-    {name: 'critical', label: 'Critical', colour: '#00f'}
+    {name: 'divorce', label: 'Divorce'},
+    {name: 'witness', label: 'Witness'},
+    {name: 'dispute', label: 'Dispute'},
+    {name: 'critical', label: 'Critical'}
   ];
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();

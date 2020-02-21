@@ -1,6 +1,6 @@
 <div class="tags">
-  <p><a [routerLink]="" (click)="manageTags()">{{!isEdit ? 'Edit tags' : 'Save tags'}}</a></p>
-  <div *ngIf="isEdit">
+  <p><a class="tags__manage" [routerLink]="" (click)="manageTags()">{{!isEdit ? 'Edit tags' : 'Save tags'}}</a></p>
+  <div *ngIf="isEdit" class="tags__edit">
     <tag-input [(ngModel)]="tagItems"
                [ngModelOptions]="{standalone:true}"
                [placeholder]="'Add tag'"
@@ -22,9 +22,10 @@
     </tag-input>
   </div>
   <div *ngIf="!isEdit">
-    <span *ngFor="let tag of tagItems"
-        [ngStyle]="{'color': tag.colour, 'border-color': tag.colour}" class="hmcts-badge">
-      {{tag.name}}
-    </span>
+    <div class="tags__render">
+      <span *ngFor="let tag of tagItems" class="tags__item hmcts-badge">
+        {{tag.name}}
+      </span>
+    </div>
   </div>
 </div>
