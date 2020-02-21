@@ -14,7 +14,12 @@
     </time>
   </div>
 
-  <mv-tags [tagItems]="tagItems" [autocompleteItems]="autocompleteItemsAsObjects"></mv-tags>
+  <mv-tags
+    [tagItems]="tagItems"
+    [autocompleteItems]="autocompleteItemsAsObjects"
+    [editable]="editable"
+    [commentId]="_comment.id">
+  </mv-tags>
 
   <ng-container *ngIf="selected">
     <textarea #textArea

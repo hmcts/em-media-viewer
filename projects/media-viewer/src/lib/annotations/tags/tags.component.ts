@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {TagItemModel} from '../models/tag-item.model';
-import {debug} from 'ng-packagr/lib/util/log';
+import {TagsServices} from '../services/tags/tags.services';
 
 @Component({
   selector: 'mv-tags',
@@ -10,9 +10,13 @@ import {debug} from 'ng-packagr/lib/util/log';
 export class TagsComponent {
   @Input() tagItems: TagItemModel[];
   @Input() autocompleteItems: TagItemModel[];
-  isEdit = false;
+  @Input() editable: boolean;
+  @Input() commentId: string
 
-  manageTags(): void {
-    this.isEdit = !this.isEdit;
+  constructor(private tagsServices: TagsServices) {
+  }
+
+  onUpdateTags(value) {
+    this.tagsServices.updateTagItems(value, this.commentId);
   }
 }

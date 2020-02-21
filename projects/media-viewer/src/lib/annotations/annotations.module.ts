@@ -22,6 +22,7 @@ import { CommentSetHeaderComponent } from './comment-set/comment-set-header/comm
 import { TagInputModule } from 'ngx-chips';
 import { TagsComponent } from './tags/tags.component';
 import { RouterModule } from '@angular/router';
+import {TagsServices} from './services/tags/tags.services';
 
 @NgModule({
     imports: [
@@ -56,7 +57,8 @@ import { RouterModule } from '@angular/router';
     AnnotationEventService,
     CommentSetRenderService,
     BoxHighlightCreateService,
-    TextHighlightCreateService
+    TextHighlightCreateService,
+    TagsServices
   ],
   exports: [
     AnnotationViewComponent,

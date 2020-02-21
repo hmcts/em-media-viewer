@@ -10,6 +10,7 @@ import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {TagItemModel} from '../../models/tag-item.model';
+import {TagsServices} from '../../services/tags/tags.services';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -36,12 +37,7 @@ export class CommentComponent implements OnChanges, OnInit {
 
   hasUnsavedChanges = false;
 
-  autocompleteItemsAsObjects = [
-    {name: 'divorce', label: 'Divorce'},
-    {name: 'witness', label: 'Witness'},
-    {name: 'dispute', label: 'Dispute'},
-    {name: 'critical', label: 'Critical'}
-  ];
+  autocompleteItemsAsObjects = [];
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() renderComments = new EventEmitter<Comment>();
@@ -58,14 +54,16 @@ export class CommentComponent implements OnChanges, OnInit {
 
   constructor(
     private readonly commentService: CommentService,
-    private http: HttpClient
+    private http: HttpClient,
+    private tagsServices: TagsServices
   ) {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
   }
 
   ngOnInit(): void {
-    //this.tagItems = [];
+    this.tagItems = this.tagsServices.getTagItems(this._comment.id);
+    this.autocompleteItemsAsObjects = this.tagsServices.getAutoCompleteItems();
   }
 
   ngOnChanges(): void {

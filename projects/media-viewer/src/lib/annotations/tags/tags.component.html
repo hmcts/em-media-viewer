@@ -1,31 +1,30 @@
 <div class="tags">
-  <p><a class="tags__manage" [routerLink]="" (click)="manageTags()">{{!isEdit ? 'Edit tags' : 'Save tags'}}</a></p>
-  <div *ngIf="isEdit" class="tags__edit">
-    <tag-input [(ngModel)]="tagItems"
-               [ngModelOptions]="{standalone:true}"
-               [placeholder]="'Add tag'"
-               [displayBy]="'name'"
-               [identifyBy]="'name'"
-               [onTextChangeDebounce]="250"
-               [secondaryPlaceholder]="'Search for tags'"
-               [onlyFromAutocomplete]="false">
-      <tag-input-dropdown
-        [autocompleteItems]="autocompleteItems"
-        [displayBy]="'name'"
-        [identifyBy]="'name'"
-        [zIndex]="10000"
-        [minimumTextLength]="3">
-        <ng-template let-item="item" let-index="index">
-          {{ item.label }}
-        </ng-template>
-      </tag-input-dropdown>
-    </tag-input>
-  </div>
-  <div *ngIf="!isEdit">
-    <div class="tags__render">
-      <span *ngFor="let tag of tagItems" class="tags__item hmcts-badge">
-        {{tag.name}}
-      </span>
-    </div>
+  <tag-input
+    *ngIf="editable" class="tags__edit"
+    [ngModel]="tagItems"
+    (ngModelChange)="onUpdateTags($event)"
+    [ngModelOptions]="{standalone:true}"
+    [placeholder]="'Add tag'"
+    [displayBy]="'name'"
+    [identifyBy]="'name'"
+    [onTextChangeDebounce]="250"
+    [secondaryPlaceholder]="'Search for tags'"
+    [onlyFromAutocomplete]="false">
+    <tag-input-dropdown
+      [autocompleteItems]="autocompleteItems"
+      [displayBy]="'name'"
+      [identifyBy]="'name'"
+      [zIndex]="10000"
+      [minimumTextLength]="3">
+      <ng-template let-item="item" let-index="index">
+        {{ item.label }}
+      </ng-template>
+    </tag-input-dropdown>
+  </tag-input>
+
+  <div class="tags__render" *ngIf="!editable">
+    <span *ngFor="let tag of tagItems" class="tags__item hmcts-badge">
+      {{tag.name}}
+    </span>
   </div>
 </div>
