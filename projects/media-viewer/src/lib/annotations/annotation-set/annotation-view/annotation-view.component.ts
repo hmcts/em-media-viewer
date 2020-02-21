@@ -59,7 +59,8 @@ export class AnnotationViewComponent {
         id: uuid(),
         lastModifiedBy: '',
         lastModifiedByDetails: undefined,
-        lastModifiedDate: ''
+        lastModifiedDate: '',
+        tags: []
       });
     }
     this.selected = true;

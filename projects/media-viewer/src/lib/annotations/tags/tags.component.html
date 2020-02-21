@@ -5,14 +5,14 @@
     (ngModelChange)="onUpdateTags($event)"
     [ngModelOptions]="{standalone:true}"
     [placeholder]="'Add tag'"
-    [displayBy]="'name'"
+    [displayBy]="'label'"
     [identifyBy]="'name'"
     [onTextChangeDebounce]="250"
     [secondaryPlaceholder]="'Search for tags'"
     [onlyFromAutocomplete]="false">
     <tag-input-dropdown
       [autocompleteItems]="autocompleteItems"
-      [displayBy]="'name'"
+      [displayBy]="'label'"
       [identifyBy]="'name'"
       [zIndex]="10000"
       [minimumTextLength]="3">
@@ -24,7 +24,7 @@
 
   <div class="tags__render" *ngIf="!editable">
     <span *ngFor="let tag of tagItems" class="tags__item hmcts-badge">
-      {{tag.name}}
+      {{tag.label}}
     </span>
   </div>
 </div>

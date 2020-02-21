@@ -135,6 +135,7 @@ export class CommentComponent implements OnChanges, OnInit {
 
   public onSave() {
     this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
+    this._comment.tags = this.tagsServices.getTagItems(this._comment.id);
     this.updated.emit(this._comment);
     this.editable = false;
     this.hasUnsavedChanges = false;
