@@ -10,6 +10,7 @@ import { AnnotationEventService, SelectionAnnotation } from '../annotation-event
 import { CommentService } from '../comment-set/comment/comment.service';
 import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-annotation-set',
