@@ -15,7 +15,6 @@ import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation.service';
 import { AnnotationEventService } from '../../annotations/annotation-event.service';
-import { CommentSetService } from './comment-set.service';
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BoxHighlightCreateService } from '../../annotations/annotation-set/annotation-create/box-highlight-create.service';
@@ -39,7 +38,6 @@ describe('PdfViewerComponent', () => {
       providers: [
         PdfAnnotationService,
         AnnotationApiService,
-        CommentSetService,
         CommentService,
         AnnotationEventService,
         ToolbarEventService,
@@ -115,16 +113,14 @@ describe('PdfViewerComponent', () => {
 
     toolbarEvents.printSubject.next();
     toolbarEvents.downloadSubject.next();
-    toolbarEvents.rotateSubject.next();
-    toolbarEvents.zoomSubject.next();
-    toolbarEvents.stepZoomSubject.next();
+    toolbarEvents.zoomSubject.next(0.2);
+    toolbarEvents.stepZoomSubject.next(0.2);
     toolbarEvents.searchSubject.next();
     toolbarEvents.setCurrentPageSubject.next();
     toolbarEvents.changePageByDeltaSubject.next();
 
     expect(printService.printDocumentNatively).toHaveBeenCalledWith(component.url);
     expect(mockWrapper.downloadFile).toHaveBeenCalled();
-    expect(mockWrapper.rotate).toHaveBeenCalled();
     expect(mockWrapper.setZoom).toHaveBeenCalled();
     expect(mockWrapper.stepZoom).toHaveBeenCalled();
     expect(mockWrapper.search).toHaveBeenCalled();
@@ -239,7 +235,6 @@ describe('PdfViewerComponent', () => {
     annotationsDestroyed = false;
     component.enableAnnotations = true;
     spyOn(annotationService, 'buildAnnoSetComponents');
-    spyOn(annotationService, 'addCommentsToRenderedPages');
 
     component.ngOnChanges({
       enableAnnotations: new SimpleChange(false, true, false)
@@ -247,7 +242,6 @@ describe('PdfViewerComponent', () => {
     tick();
 
     expect(annotationService.buildAnnoSetComponents).toHaveBeenCalled();
-    expect(annotationService.addCommentsToRenderedPages).toHaveBeenCalled();
     expect(annotationsDestroyed).toBeFalsy();
   }));
 
@@ -255,7 +249,6 @@ describe('PdfViewerComponent', () => {
     annotationsDestroyed = false;
     component.enableAnnotations = false;
     spyOn(annotationService, 'destroyComponents');
-    spyOn(annotationService, 'destroyCommentSetsHTML');
 
     component.ngOnChanges({
       enableAnnotations: new SimpleChange(true, false, false)
@@ -264,7 +257,6 @@ describe('PdfViewerComponent', () => {
 
     expect(component.annotationSet).toBeNull();
     expect(annotationService.destroyComponents).toHaveBeenCalled();
-    expect(annotationService.destroyCommentSetsHTML).toHaveBeenCalled();
   }));
 
   it('should show comments panel', () => {

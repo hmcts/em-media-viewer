@@ -8,10 +8,10 @@ import { CommentComponent } from './comment.component';
 export class CommentService {
 
   public readonly unsavedChanges = new Subject<boolean>();
-  commentSets: CommentSetComponent[];
+  commentSetComponent: CommentSetComponent;
 
-  constructor() {
-    this.commentSets = [];
+  setCommentSet(commentSetComponent) {
+    this.commentSetComponent = commentSetComponent;
   }
 
   onCommentChange(changes: boolean): void {
@@ -33,24 +33,19 @@ export class CommentService {
   updateUnsavedCommentsStatus(annotation: Annotation, hasUnsavedChanges: boolean): void {
     const comment = this.getComment(annotation);
     comment.hasUnsavedChanges = hasUnsavedChanges;
-    this.allCommentSetsSaved();
+    this.allCommentsSaved();
   }
 
   getComment(annotation: Annotation): CommentComponent {
-    return this.commentSets[annotation.page].commentComponents
+    return this.commentSetComponent.commentComponents
       .find(c => c.comment.annotationId === annotation.comments[0].annotationId);
   }
 
   resetCommentSet(): void {
-    this.commentSets = [];
+    this.commentSetComponent = null;
   }
 
-  updateCommentSets(index: number, commentSetComponent: CommentSetComponent): void {
-    this.commentSets[index] = commentSetComponent;
-  }
-
-  allCommentSetsSaved(): void {
-    this.onCommentChange(
-      this.commentSets.some(commentSet => commentSet.allCommentsSavedInSet()));
+  allCommentsSaved(): void {
+    this.onCommentChange(this.commentSetComponent.commentComponents.some(comment => comment.hasUnsavedChanges === true));
   }
 }
