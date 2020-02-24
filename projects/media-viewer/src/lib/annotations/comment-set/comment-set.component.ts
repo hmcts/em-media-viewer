@@ -1,16 +1,25 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
-import {AnnotationSet} from '../annotation-set/annotation-set.model';
-import {Annotation} from '../annotation-set/annotation-view/annotation.model';
-import {AnnotationApiService} from '../annotation-api.service';
-import {Comment} from './comment/comment.model';
-import {PageEvent} from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
-import {CommentComponent} from './comment/comment.component';
-import {AnnotationEventService, SelectionAnnotation} from '../annotation-event.service';
-import {Subscription} from 'rxjs';
-import {ViewerEventService} from '../../viewers/viewer-event.service';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ViewEncapsulation
+} from '@angular/core';
+import { AnnotationSet } from '../annotation-set/annotation-set.model';
+import { Annotation } from '../annotation-set/annotation-view/annotation.model';
+import { AnnotationApiService } from '../annotation-api.service';
+import { Comment } from './comment/comment.model';
+import { CommentComponent } from './comment/comment.component';
+import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
+import { Subscription } from 'rxjs';
+import { ViewerEventService } from '../../viewers/viewer-event.service';
 
-import {CommentService} from './comment/comment.service';
-import {CommentSetRenderService} from './comment-set-render.service';
+import { CommentService } from './comment/comment.service';
+import { CommentSetRenderService } from './comment-set-render.service';
 
 @Component({
   selector: 'mv-comment-set',
@@ -21,10 +30,10 @@ import {CommentSetRenderService} from './comment-set-render.service';
 export class CommentSetComponent implements OnInit, OnDestroy {
 
   @Input() annotationSet: AnnotationSet;
-  @Input() page: number;
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() height: number;
+  @Input() pageHeights = [];
 
   comments: Comment[];
   selectAnnotation: SelectionAnnotation;
@@ -44,6 +53,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.commentService.setCommentSet(this);
     this.subscriptions.push(
       this.annotationService.getSelectedAnnotation()
         .subscribe(selectedAnnotation => this.selectAnnotation = selectedAnnotation),
@@ -52,31 +62,11 @@ export class CommentSetComponent implements OnInit, OnDestroy {
         this.showCommentsPanel = toggle;
       })
     );
-    this.commentService.updateCommentSets(this.page, this);
   }
 
   ngOnDestroy() {
     if (this.subscriptions.length > 0) {
       this.subscriptions.forEach(subscription => subscription.unsubscribe());
-    }
-  }
-
-  addToDOM(pageEvent: PageEvent) {
-    this.updateView(pageEvent);
-    const pageContainer = this.renderService.createPageContainer(pageEvent);
-    pageContainer.appendChild(this.container.nativeElement);
-  }
-
-  updateView(pageRenderEvent: PageEvent) {
-    this.height = pageRenderEvent.source.div.clientHeight;
-    this.zoom = pageRenderEvent.source.scale;
-    this.rotate = pageRenderEvent.source.rotation;
-    this.commentService.updateCommentSets(pageRenderEvent.pageNumber, this);
-  }
-
-  public getCommentsOnPage(): Annotation[] {
-    if (this.annotationSet) {
-      return this.annotationSet.annotations.filter(a => a.page === this.page);
     }
   }
 
@@ -94,8 +84,8 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   redrawComments() {
     setTimeout(() => {
       const componentList: CommentComponent[] = this.commentComponents.map(comment => comment);
-      this.renderService.redrawComponents(componentList, this.height, this.rotate, this.zoom);
-    });
+      this.renderService.redrawComponents(componentList, this.pageHeights, this.rotate, this.zoom);
+    }, 0);
   }
 
   public onCommentUpdate(comment: Comment) {
@@ -131,11 +121,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   allCommentsSaved() {
-    this.commentService.allCommentSetsSaved();
-  }
-
-  allCommentsSavedInSet(): boolean {
-    return this.commentComponents.some(comment => comment.hasUnsavedChanges === true);
+    this.commentService.allCommentsSaved();
   }
 
 }

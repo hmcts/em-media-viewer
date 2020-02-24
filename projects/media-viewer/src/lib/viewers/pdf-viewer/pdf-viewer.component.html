@@ -15,5 +15,13 @@
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
   </div>
+  <mv-comment-set #commentPanel
+                  *ngIf="enableAnnotations && annotationSet"
+                  [annotationSet]="annotationSet"
+                  [zoom]="zoom"
+                  [rotate]="rotation"
+                  [height]="pdfViewer.offsetHeight"
+                  [pageHeights]="pageHeights">
+  </mv-comment-set>
 </div>
 <mv-error-message [errorMessage]="errorMessage" *ngIf="errorMessage"></mv-error-message>

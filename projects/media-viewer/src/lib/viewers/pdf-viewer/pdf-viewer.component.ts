@@ -22,14 +22,14 @@ import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation.service';
 import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
 import { AnnotationSetService } from './annotation-set.service';
-import { CommentSetService } from './comment-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
+import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.scss'],
-  providers: [PdfAnnotationService, AnnotationSetService, CommentSetService],
+  providers: [PdfAnnotationService, AnnotationSetService],
   encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
@@ -45,6 +45,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Input() annotationSet: AnnotationSet | null;
 
   @Input() height: string;
+  pageHeights = [];
+  rotation = 0;
+  zoom = 1;
 
   highlightMode: BehaviorSubject<boolean>;
   drawMode: BehaviorSubject<boolean>;
@@ -55,6 +58,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
+  @ViewChild('commentPanel') commentPanel: CommentSetComponent;
 
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
@@ -82,19 +86,15 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
     this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {
-        this.annotationService.addAnnotationsAndComments(event);
+        this.annotationService.addAnnotations(event);
       }
     });
     this.subscriptions.push(
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
-      this.toolbarEvents.rotateSubject.subscribe(rotation => {
-        const pageNumber = this.pdfWrapper.getPageNumber();
-        this.pdfWrapper.rotate(rotation);
-        this.pdfWrapper.setPageNumber(pageNumber);
-      }),
-      this.toolbarEvents.zoomSubject.subscribe(zoom => this.pdfWrapper.setZoom(zoom)),
-      this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.pdfWrapper.stepZoom(zoom)),
+      this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
+      this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
+      this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
       this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)),
       this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
       this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)),
@@ -116,7 +116,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       } else {
         this.annotationSet = null;
         this.annotationService.destroyComponents();
-        this.annotationService.destroyCommentSetsHTML();
       }
     }
     if (changes.annotationSet && this.annotationSet) {
@@ -124,7 +123,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
     if (reloadAnnotations) {
       this.annotationService.buildAnnoSetComponents(this.annotationSet);
-      this.annotationService.addCommentsToRenderedPages();
     }
   }
 
@@ -139,6 +137,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.annotationService.buildAnnoSetComponents(this.annotationSet);
     }
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
+    this.setPageHeights();
   }
 
   private onDocumentLoadInit() {
@@ -190,12 +189,60 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   onMouseUp(mouseEvent: MouseEvent) {
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
       setTimeout(() => this.viewerEvents.textSelected({
-            page: this.pdfWrapper.getPageNumber(), event: mouseEvent
+        page: this.pdfWrapper.getPageNumber(), event: mouseEvent
       }), 0);
     }
   }
 
   toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
+  }
+
+  getPageHeights() {
+    this.pageHeights = [];
+    const pdfViewerChildren = this.pdfViewer.nativeElement.children;
+    for (let i = 0; i < pdfViewerChildren.length; i++) {
+      this.pageHeights.push(pdfViewerChildren[i].clientHeight);
+    }
+  }
+
+  private setRotation(rotation: number) {
+    const pageNumber = this.pdfWrapper.getPageNumber();
+    this.commentPanel.container.nativeElement.style.height = 0;
+    this.pdfWrapper.rotate(rotation);
+    this.pdfWrapper.setPageNumber(pageNumber);
+    this.rotation = (this.rotation + rotation) % 360;
+    this.setPageHeights();
+  }
+
+  private setZoom(zoomFactor: number) {
+    if (!isNaN(zoomFactor)) {
+      this.pdfWrapper.setZoom(zoomFactor);
+      this.zoom = this.calculateZoomValue(zoomFactor);
+      this.setPageHeights();
+    }
+  }
+
+  private stepZoom(zoomFactor: number) {
+    if (!isNaN(zoomFactor)) {
+      this.pdfWrapper.stepZoom(zoomFactor);
+      this.zoom = Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10;
+      this.setPageHeights();
+    }
+  }
+
+  setPageHeights() {
+    this.pageHeights = [];
+    const pdfViewerChildren = this.pdfViewer.nativeElement.children;
+    for (let i = 0; i < pdfViewerChildren.length; i++) {
+      this.pageHeights.push(pdfViewerChildren[i].clientHeight);
+    }
+  }
+
+  calculateZoomValue(zoomValue, increment = 0) {
+    const newZoomValue = zoomValue + increment;
+    if (newZoomValue > 5) { return 5; }
+    if (newZoomValue < 0.1) { return 0.1; }
+    return newZoomValue;
   }
 }
