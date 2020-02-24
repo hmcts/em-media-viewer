@@ -31,50 +31,45 @@ describe('CommentSetRenderService', () => {
 
   it('should sort comment components, rotation 90',
     inject([CommentSetRenderService], (service: CommentSetRenderService) => {
-      service.pageHeights = pageHeights;
       const commentList = [...componentList];
 
-      service.sortComponents(commentList, 90, 1);
+      service.sortComponents(commentList, pageHeights, 90, 1);
 
       expect(commentList[0].rectTop).toBe(40);
   }));
 
   it('should sort comment components, rotation 180',
     inject([CommentSetRenderService], (service: CommentSetRenderService) => {
-      service.pageHeights = pageHeights;
       const commentList = [...componentList];
 
-      service.sortComponents(commentList, 180, 1);
+      service.sortComponents(commentList, pageHeights, 180, 1);
 
       expect(commentList[0].rectTop).toBe(840);
   }));
 
   it('should sort comment components, rotation 270',
     inject([CommentSetRenderService], (service: CommentSetRenderService) => {
-      service.pageHeights = pageHeights;
       const commentList = [...componentList];
 
-      service.sortComponents(commentList, 270, 1);
+      service.sortComponents(commentList, pageHeights, 270, 1);
 
       expect(commentList[0].rectTop).toBe(710);
   }));
 
   it('should sort comment components, rotation 0',
     inject([CommentSetRenderService], (service: CommentSetRenderService) => {
-      service.pageHeights = pageHeights;
       const commentList = [...componentList];
 
-      service.sortComponents(commentList, 0, 1);
+      service.sortComponents(commentList, pageHeights, 0, 1);
 
       expect(commentList[0].rectTop).toBe(60);
   }));
 
   it('should sort comment components, zoomed 200%',
     inject([CommentSetRenderService], (service: CommentSetRenderService) => {
-      service.pageHeights = pageHeights;
       const commentList = [...componentList];
 
-      service.sortComponents(commentList, 0, 2);
+      service.sortComponents(commentList, pageHeights, 0, 2);
 
       expect(commentList[0].rectTop).toBe(60);
     }));

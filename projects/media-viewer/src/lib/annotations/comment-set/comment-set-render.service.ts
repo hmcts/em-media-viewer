@@ -4,21 +4,18 @@ import { CommentComponent } from './comment/comment.component';
 @Injectable()
 export class CommentSetRenderService {
 
-  pageHeights = [];
-
   redrawComponents(commentComponents: CommentComponent[], pageHeights: any[], rotate: number, zoom: number) {
-    this.pageHeights = pageHeights;
     let prevComment: CommentComponent;
-    this.sortComponents(commentComponents, rotate, zoom).forEach((comment: CommentComponent) => {
+    this.sortComponents(commentComponents, pageHeights, rotate, zoom).forEach((comment: CommentComponent) => {
       this.adjustIfOverlapping(comment, prevComment, zoom);
       prevComment = comment;
     });
   }
 
-  sortComponents(commentComponents: CommentComponent[], rotate: number, zoom: number) {
+  sortComponents(commentComponents: CommentComponent[], pageHeights: any[], rotate: number, zoom: number) {
     return commentComponents.sort((a: CommentComponent, b: CommentComponent) => {
-      a.rectTop = this.top(a._rectangle, this.getPageHeight(a.page), rotate, zoom);
-      b.rectTop = this.top(b._rectangle, this.getPageHeight(b.page), rotate, zoom);
+      a.rectTop = this.top(a._rectangle, pageHeights[a.page - 1], rotate, zoom);
+      b.rectTop = this.top(b._rectangle, pageHeights[b.page - 1], rotate, zoom);
       return this.processSort(a, b);
     });
   }
@@ -58,8 +55,4 @@ export class CommentSetRenderService {
   }
 
   private difference(a: number, b: number): number { return Math.abs(a - b); }
-
-  private getPageHeight(page: number) {
-    return this.pageHeights[page - 1];
-  }
 }
