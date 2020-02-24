@@ -110,19 +110,19 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngOnChanges(changes: SimpleChanges) {
+    let reloadAnnotations = false;
     if (!this.pdfWrapper) {
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
     if (changes.url && this.pdfWrapper) {
       this.loadDocument();
+      this.clearAnnotationSet();
     }
-    let reloadAnnotations = false;
     if (changes.enableAnnotations && this.pdfWrapper) {
       if (this.enableAnnotations) {
         reloadAnnotations = true;
       } else {
-        this.annotationSet = null;
-        this.annotationService.destroyComponents();
+        this.clearAnnotationSet();
       }
     }
     if (changes.annotationSet && this.annotationSet) {
@@ -131,6 +131,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (reloadAnnotations) {
       this.annotationService.buildAnnoSetComponents(this.annotationSet);
     }
+  }
+
+  clearAnnotationSet() {
+    this.annotationSet = null;
+    this.annotationService.destroyComponents();
   }
 
   ngOnDestroy(): void {
@@ -145,7 +150,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         .subscribe(annotationSet => {
           this.annotationSet = annotationSet;
           this.annotationService.buildAnnoSetComponents(this.annotationSet);
-          console.log('annotation set', this.annotationSet)
         });
     }
   }
@@ -223,14 +227,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
-  }
-
-  getPageHeights() {
-    this.pageHeights = [];
-    const pdfViewerChildren = this.pdfViewer.nativeElement.children;
-    for (let i = 0; i < pdfViewerChildren.length; i++) {
-      this.pageHeights.push(pdfViewerChildren[i].clientHeight);
-    }
   }
 
   private setRotation(rotation: number) {

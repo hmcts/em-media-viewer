@@ -14,10 +14,6 @@ export class PdfAnnotationService {
   annotationSet: AnnotationSet;
   pdfWrapper: PdfJsWrapper;
   pdfViewer: ElementRef<HTMLDivElement>;
-
-  annotationSetComponents: ComponentRef<AnnotationSetComponent>[] = [];
-  commentSetComponents: ComponentRef<CommentSetComponent>[] = [];
-
   highlightMode: BehaviorSubject<boolean>;
   drawMode: BehaviorSubject<boolean>;
 
