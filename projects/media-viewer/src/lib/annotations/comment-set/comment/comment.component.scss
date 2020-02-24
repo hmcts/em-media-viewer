@@ -89,3 +89,13 @@ textarea.view-mode {
   white-space: nowrap;
   margin-bottom: 10px;
 }
+
+.aui-comment {
+  &__padlock {
+    background: url("../../../../assets/images/lock_48px.svg") 0 0 no-repeat;
+    background-size: 20px 20px;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+  }
+}
