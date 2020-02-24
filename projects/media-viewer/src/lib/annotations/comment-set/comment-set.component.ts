@@ -84,7 +84,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   redrawComments() {
     setTimeout(() => {
       const componentList: CommentComponent[] = this.commentComponents.map(comment => comment);
-      this.renderService.redrawComponents(componentList, this.pageHeights, this.height, this.rotate, this.zoom);
+      this.renderService.redrawComponents(componentList, this.pageHeights, this.rotate, this.zoom);
     }, 0);
   }
 

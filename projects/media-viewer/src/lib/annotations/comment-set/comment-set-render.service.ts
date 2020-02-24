@@ -6,17 +6,13 @@ export class CommentSetRenderService {
 
   pageHeights = [];
 
-  redrawComponents(commentComponents: CommentComponent[], pageHeights: any[], containerHeight: number, rotate: number, zoom: number) {
+  redrawComponents(commentComponents: CommentComponent[], pageHeights: any[], rotate: number, zoom: number) {
     this.pageHeights = pageHeights;
     let prevComment: CommentComponent;
     this.sortComponents(commentComponents, rotate, zoom).forEach((comment: CommentComponent) => {
       this.adjustIfOverlapping(comment, prevComment, zoom);
       prevComment = comment;
     });
-    // prevComment = null;
-    // commentComponents.reverse().forEach((comment: CommentComponent) => {
-    //   prevComment = this.makeSureWithinContainer(comment, prevComment, containerHeight);
-    // });
   }
 
   sortComponents(commentComponents: CommentComponent[], rotate: number, zoom: number) {
@@ -62,21 +58,6 @@ export class CommentSetRenderService {
   }
 
   private difference(a: number, b: number): number { return Math.abs(a - b); }
-
-  private makeSureWithinContainer(comment: CommentComponent, prevComment: CommentComponent, containerHeight: number) {
-    containerHeight -= 10;
-    if (comment.commentBottomPos > containerHeight) {
-      comment.rectTop -= comment.commentBottomPos - containerHeight;
-    } else if (prevComment) {
-      if (comment.commentBottomPos > prevComment.rectTop) {
-        comment.rectTop -= comment.commentBottomPos - prevComment.rectTop;
-      }
-    }
-    if (comment.rectTop < 0 ) {
-      comment.rectTop = 0;
-    }
-    return comment;
-  }
 
   private getPageHeight(page: number) {
     return this.pageHeights[page - 1];
