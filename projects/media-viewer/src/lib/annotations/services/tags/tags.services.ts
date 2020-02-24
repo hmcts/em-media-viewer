@@ -28,23 +28,9 @@ export class TagsServices {
   }
 
   updateTagItems(items, commentId) {
-    const snakeCased = items.map(item => {
-      return {
-        ...item,
-        name: this.snakeCase(item.name)
-      };
-    });
-
     this.tagItems = {
-      [commentId]: snakeCased
+      [commentId]: items
     };
-
   }
 
-  private snakeCase = string => {
-    return string.replace(/\W+/g, " ")
-      .split(/ |\B(?=[A-Z])/)
-      .map(word => word.toLowerCase())
-      .join('_');
-  };
 }

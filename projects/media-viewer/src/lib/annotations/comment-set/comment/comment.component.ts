@@ -7,7 +7,6 @@ import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectan
 import { SelectionAnnotation } from '../../annotation-event.service';
 import { CommentService } from './comment.service';
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {TagItemModel} from '../../models/tag-item.model';
 import {TagsServices} from '../../services/tags/tags.services';
@@ -178,22 +177,5 @@ export class CommentComponent implements OnChanges, OnInit {
       !this.editable ? 'view-mode' : 'edit-mode',
       !this.selected && !this.editable ? 'collapsed' : 'expanded',
     ];
-  }
-
-  public requestAutocompleteItems = (text: string): Observable<any> => {
-    const url = `https://api.github.com/search/repositories?q=${text}`;
-    return this.http
-      .get<any>(url)
-      .pipe(
-        map(items => items.map(item => {
-          console.log(item.full_name)
-          return item.full_name
-        })));
-  }
-
-  public requestAutocompleteItemsFake = (text: string): Observable<string[]> => {
-    return of([
-      'tag1', 'tag2', 'tag3'
-    ]);
   }
 }

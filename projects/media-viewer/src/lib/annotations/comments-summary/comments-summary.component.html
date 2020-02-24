@@ -2,7 +2,7 @@
   <div id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
     <div id="comment-container" class="comment-container" #commentContainer>
       <h2 class="govuk-heading-m">{{ title }}</h2>
-      <table class="govuk-table">
+      <table class="govuk-table" *ngIf="comments.length; else noComments">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">User</th>
@@ -11,7 +11,7 @@
             <th scope="col" class="govuk-table__header">Comment</th>
           </tr>
         </thead>
-        <tbody class="govuk-table__body">
+        <tbody class="govuk-table__body" >
           <tr *ngFor='let commentSummary of comments; let i = index' [id]="'comment-row-'+i" class="govuk-table__row">
             <td class="govuk-table__cell">
               <span title="{{commentSummary.comment.createdByDetails.forename}} {{commentSummary.comment.createdByDetails.surname}}">
@@ -32,6 +32,9 @@
           </tr>
         </tbody>
       </table>
+      <ng-template #noComments>
+       <h3 class="govuk-heading-s" >No comments available!</h3>
+      </ng-template>
     </div>
 
     <div class="button-container">
