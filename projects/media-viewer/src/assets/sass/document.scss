@@ -250,15 +250,6 @@
   @include mq($from: desktop) {
     position: relative; top: 578px;
   }
-
-  &__padlock {
-    background: url("../../assets/images/lock_48px.svg") 0 0 no-repeat;
-    background-size: 15px 15px;
-    display: inline-block;
-    height: 15px;
-    width: 15px;
-  }
-
 }
 
 
