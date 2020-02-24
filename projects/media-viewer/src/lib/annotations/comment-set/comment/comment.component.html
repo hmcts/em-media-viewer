@@ -14,7 +14,7 @@
     </time>
   </div>
 
-  <mv-tags
+  <mv-tags *ngIf="fullComment"
     [tagItems]="tagItems"
     [autocompleteItems]="autocompleteItems$ | async"
     [editable]="editable"
