@@ -78,6 +78,9 @@ textarea.view-mode {
 
 .aui-comment__header {
   margin-bottom: 10px;
+  background: url("../../../../assets/images/lock_48px.svg") 0 0 no-repeat;
+  background-size: 20px 20px;
+  padding-left: 25px;
 }
 
 .unselectedText {
@@ -90,12 +93,6 @@ textarea.view-mode {
   margin-bottom: 10px;
 }
 
-.aui-comment {
-  &__padlock {
-    background: url("../../../../assets/images/lock_48px.svg") 0 0 no-repeat;
-    background-size: 20px 20px;
-    display: inline-block;
-    height: 20px;
-    width: 20px;
-  }
+.aui-comment__meta {
+  margin-left: -25px;
 }
