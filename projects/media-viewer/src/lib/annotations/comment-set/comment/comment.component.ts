@@ -40,7 +40,7 @@ export class CommentComponent implements OnChanges, OnInit {
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() renderComments = new EventEmitter<Comment>();
   @Output() delete = new EventEmitter<Comment>();
-  @Output() updated = new EventEmitter<Comment>();
+  @Output() updated = new EventEmitter<{comment: Comment, tags: TagItemModel[]}>();
   @Output() changes = new EventEmitter<boolean>();
   @Input() selected = false;
   @Input() rotate = 0;
@@ -133,8 +133,12 @@ export class CommentComponent implements OnChanges, OnInit {
 
   public onSave() {
     this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
-    this._comment.tags = this.tagsServices.getTagItems(this._comment.id);
-    this.updated.emit(this._comment);
+    const tags = this.tagsServices.getTagItems(this._comment.id);
+    const payload = {
+      comment: this._comment,
+      tags,
+    };
+    this.updated.emit(payload);
     this.editable = false;
     this.hasUnsavedChanges = false;
     this.changes.emit(false);

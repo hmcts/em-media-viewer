@@ -88,13 +88,15 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  public onCommentUpdate(comment: Comment) {
-    const annotation = this.annotationSet.annotations.find(anno => anno.id === comment.annotationId);
-    annotation.comments[0] = comment;
+  public onCommentUpdate(payload) {
+    const annotation = this.annotationSet.annotations.find(anno => anno.id === payload.comment.annotationId);
+    annotation.comments[0] = payload.comment;
+    annotation.tags = payload.tags;
     this.onAnnotationUpdate(annotation);
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
+    debugger
     this.api
       .postAnnotation(annotation)
       .subscribe(newAnnotation => {
@@ -123,5 +125,6 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   allCommentsSaved() {
     this.commentService.allCommentsSaved();
   }
+
 
 }
