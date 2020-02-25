@@ -20,7 +20,7 @@ export class TagsServices {
   public getAllTags(): Observable<TagItemModel[]> {
     const url = 'add/url';
     // return this.http.get<TagItemModel[]>(url);
-    return of(this.autocompleteItemsAsObjects)
+    return of(this.autocompleteItemsAsObjects);
   }
 
   getTagItems(commentId): TagItemModel[] {
@@ -28,9 +28,23 @@ export class TagsServices {
   }
 
   updateTagItems(items, commentId) {
+    const snakeCased = items.map(item => {
+      return {
+        ...item,
+        name: this.snakeCase(item.name)
+      };
+    });
+
     this.tagItems = {
-      [commentId]: items
+      [commentId]: snakeCased
     };
+
   }
 
+  private snakeCase = string => {
+    return string.replace(/\W+/g, " ")
+      .split(/ |\B(?=[A-Z])/)
+      .map(word => word.toLowerCase())
+      .join('_');
+  };
 }

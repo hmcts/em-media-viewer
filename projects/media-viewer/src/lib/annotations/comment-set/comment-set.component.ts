@@ -96,7 +96,6 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
-    debugger
     this.api
       .postAnnotation(annotation)
       .subscribe(newAnnotation => {
