@@ -92,9 +92,6 @@ export class CommentComponent implements OnChanges, OnInit {
   @Input()
   set editable(editable: boolean) {
     this._editable = editable || this.hasUnsavedChanges;
-    if (this._editable) {
-      setTimeout(() => this.textArea.nativeElement.focus(), 10);
-    }
   }
 
   get editable(): boolean {
