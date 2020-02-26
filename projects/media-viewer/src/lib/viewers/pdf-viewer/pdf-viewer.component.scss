@@ -52,6 +52,10 @@ mv-pdf-viewer {
   width: 75%;
 }
 
-.grabNDrag > .pdfViewer > * {
-  pointer-events: none;
+.grabNDrag {
+  .pdfViewer {
+    & > * {
+      pointer-events: none;
+    }
+  }
 }
