@@ -1,14 +1,16 @@
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
 import { PrintService } from '../../print.service';
 import { ErrorMessageComponent } from '../error-message/error.message.component';
 import { By } from '@angular/platform-browser';
 import { SimpleChange } from '@angular/core';
 import { AnnotationsModule } from '../../annotations/annotations.module';
-import { annotationSet } from '../../../assets/annotation-set';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
+import { AnnotationApiService } from '../../annotations/annotation-api.service';
+import { of } from 'rxjs';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -17,12 +19,13 @@ describe('ImageViewerComponent', () => {
   const DOCUMENT_URL = 'document-url';
 
   beforeEach(() => {
-    return TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [
         ErrorMessageComponent,
         ImageViewerComponent,
         GrabNDragDirective
       ],
+      providers: [AnnotationApiService],
       imports: [
         AnnotationsModule
       ]
@@ -35,7 +38,6 @@ describe('ImageViewerComponent', () => {
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
     component.url = DOCUMENT_URL;
-    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     fixture.detectChanges();
   });
 
@@ -103,11 +105,14 @@ describe('ImageViewerComponent', () => {
       expect(anchor.download).toBe('download-filename');
   }));
 
-  it('when errorMessage available show error message', () => {
-    expect(fixture.debugElement.query(By.css('.image-container')).nativeElement.className).not.toContain('hidden');
+  it('should show errorMessage when set', () => {
+    expect(fixture.debugElement.query(By.css('.image-container')).nativeElement.className)
+      .not.toContain('hidden');
     expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBe(null);
+
     component.errorMessage = 'errorx';
     fixture.detectChanges();
+
     expect(fixture.debugElement.query(By.css('.image-container'))).toBeNull();
     expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeTruthy();
   });
@@ -115,15 +120,19 @@ describe('ImageViewerComponent', () => {
   it('when url changes the error message is reset', () => {
     component.errorMessage = 'errox';
     component.url = 'x';
+
     component.ngOnChanges({
       url: new SimpleChange('a', 'b', true)
     });
+
     expect(component.errorMessage).toBeNull();
   });
 
   it('on load error show error message', () => {
     component.url = 'x';
+
     component.onLoadError(component.url);
+
     expect(component.errorMessage).toContain('Could not load the image');
   });
 
@@ -156,5 +165,17 @@ describe('ImageViewerComponent', () => {
     component.toggleCommentsSummary();
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
+
+  it('should setup annotationSet', fakeAsync(
+    inject([AnnotationApiService], (annotationsApi) => {
+      spyOn(annotationsApi, 'getOrCreateAnnotationSet')
+        .and.returnValue(of({} as AnnotationSet));
+
+      component.setupAnnotationSet(true);
+      tick();
+
+      expect(component.annotationSet).toEqual({} as AnnotationSet);
+    })
+  ));
 });
 

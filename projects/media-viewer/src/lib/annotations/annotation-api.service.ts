@@ -19,26 +19,45 @@ export class AnnotationApiService {
     private readonly httpClient: HttpClient
   ) { }
 
+  public getOrCreateAnnotationSet(url: string): Observable<AnnotationSet> {
+    const fixedUrl = this.fixFindCall(url);
+    return this.httpClient
+      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true })
+      .pipe(
+        map(response => response.body),
+        catchError(() => this.postAnnotationSet({
+          id: uuid(),
+          documentId: this.extractDocumentId(url)
+        }))
+      );
+  }
+
+  public getAnnotationSet(url: string): Observable<AnnotationSet> {
+    const fixedUrl = this.fixFindCall(url);
+    return this.httpClient
+      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true })
+      .pipe(
+        map(response => response.body),
+        catchError(() => [])
+      );
+  }
+
   public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
     return this.httpClient
       .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
-      .pipe(map(response => response.body));
-  }
-
-  public getAnnotationSet(documentId: string): Observable<AnnotationSet> {
-    const url = `${this.annotationSetsFullUrl}/filter?documentId=${documentId}`;
-
-    return this.httpClient
-      .get<AnnotationSet>(url, { observe: 'response' , withCredentials: true })
-      .pipe(map(response => response.body))
-      .pipe(catchError(() => []));
+      .pipe(
+        map(response => response.body),
+        catchError(() => [])
+      );
   }
 
   public getComments(annotationSet: Observable<AnnotationSet>): Observable<Comment[]> {
     return annotationSet
-      .pipe(map(this.sortAnnotations))
-      .pipe(map(this.extractComments))
-      .pipe(catchError(() => []));
+      .pipe(
+        map(this.sortAnnotations),
+        map(this.extractComments),
+        catchError(() => [])
+      );
   }
 
   /**
@@ -64,20 +83,6 @@ export class AnnotationApiService {
     return this.httpClient
       .post<Annotation>(this.annotationFullsUrl, annotation, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
-  }
-
-  public getOrCreateAnnotationSet(url: string): Observable<AnnotationSet> {
-    const fixedUrl = this.fixFindCall(url);
-
-    return this.httpClient
-      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true })
-      .pipe(map(response => response.body))
-      .pipe(
-        catchError(() => this.postAnnotationSet({
-          id: uuid(),
-          documentId: this.extractDocumentId(url)
-        }))
-      );
   }
 
   private fixFindCall(url: string): string {

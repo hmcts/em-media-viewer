@@ -19,6 +19,8 @@ import {ResponseType, ViewerException} from '../error-message/viewer-exception.m
 import {ViewerUtilService} from '../viewer-util.service';
 import {ViewerEventService} from '../viewer-event.service';
 import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visibility.service';
+import { take } from 'rxjs/operators';
+import { AnnotationApiService } from '../../annotations/annotation-api.service';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -53,6 +55,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   enableGrabNDrag = false;
 
   constructor(
+    private readonly annotationsApi: AnnotationApiService,
     private readonly printService: PrintService,
     private readonly viewerUtilService: ViewerUtilService,
     private readonly viewerEvents: ViewerEventService,
@@ -62,6 +65,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     this.subscriptions.push(
+      this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.setupAnnotationSet(drawMode)),
+      this.toolbarEvents.highlightModeSubject.subscribe(highlightMode => this.setupAnnotationSet(highlightMode)),
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
       this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
@@ -84,6 +89,16 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     if (changes.url) {
       this.errorMessage = null;
       this.toolbarEvents.reset();
+    }
+  }
+
+  setupAnnotationSet(mode: boolean) {
+    if (mode && !this.annotationSet) {
+      this.annotationsApi.getOrCreateAnnotationSet(this.url)
+        .pipe(take(1))
+        .subscribe(annotationSet => {
+          this.annotationSet = annotationSet;
+        });
     }
   }
 
