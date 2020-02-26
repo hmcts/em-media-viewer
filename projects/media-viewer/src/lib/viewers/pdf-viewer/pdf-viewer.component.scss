@@ -51,3 +51,11 @@ mv-pdf-viewer {
 .show-comments-panel > .pdfViewer {
   width: 75%;
 }
+
+.grabNDrag {
+  .pdfViewer {
+    & > * {
+      pointer-events: none;
+    }
+  }
+}
