@@ -1,8 +1,9 @@
 <mv-comment-set-toggle *ngIf="enableAnnotations && annotationSet"></mv-comment-set-toggle>
 
 <mv-comment-set-header [ngClass]="{'show-comments-panel': showCommentsPanel}"
-  [showCommentSummary]="toolbarButtons.showCommentSummary"
-  (showCommentSummaryDialog)="toggleCommentsSummary()">
+                       [annotationSet]="annotationSet"
+                       [showCommentSummary]="toolbarButtons.showCommentSummary"
+                       (showCommentSummaryDialog)="toggleCommentsSummary()">
 </mv-comment-set-header>
 
 <div grabNDrag [dragY]="enableGrabNDrag"

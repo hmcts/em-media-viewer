@@ -1,18 +1,29 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation} from '@angular/core';
-import {Comment} from './comment.model';
-import {User} from '../../models/user.model';
-import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
-import {SelectionAnnotation} from '../../annotation-event.service';
-import {CommentService} from './comment.service';
 import {TagItemModel} from '../../models/tag-item.model';
 import {TagsServices} from '../../services/tags/tags.services';
+import {
+  Component, ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import { User } from '../../models/user.model';
+import { AnnotationEventService, SelectionAnnotation } from '../../annotation-event.service';
+import { Subscription } from 'rxjs';
+import { CommentService } from './comment.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
+import { Comment } from './comment.model';
 
 @Component({
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class CommentComponent implements OnChanges {
+export class CommentComponent implements OnChanges, OnDestroy {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
@@ -31,6 +42,8 @@ export class CommentComponent implements OnChanges {
   rectLeft;
 
   hasUnsavedChanges = false;
+  searchString: string;
+  tagItems: TagItemModel[];
 
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
@@ -43,21 +56,33 @@ export class CommentComponent implements OnChanges {
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
-  public tagItems: TagItemModel[];
-  @ViewChild('form') form: ElementRef;
-  @ViewChild('textArea') textArea: ElementRef;
 
-  constructor(
-    private readonly commentService: CommentService,
+  @ViewChild('form') form: ElementRef;
+  @ViewChild('editableComment') editableComment: ElementRef<HTMLElement>;
+
+  private subscription: Subscription;
+
+  constructor(private readonly commentService: CommentService,
+              private readonly annotationEvents: AnnotationEventService,
     private tagsServices: TagsServices
   ) {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
-  }
 
+    this.subscription = annotationEvents.commentSearch
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(searchString => this.searchString = searchString);
+  }
 
   ngOnChanges(): void {
     this.reRenderComments();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   @Input()
@@ -87,7 +112,7 @@ export class CommentComponent implements OnChanges {
   set editable(editable: boolean) {
     this._editable = editable || this.hasUnsavedChanges;
     if (this._editable) {
-      setTimeout(() => this.textArea.nativeElement.focus(), 10);
+      setTimeout(() => this.editableComment.nativeElement.focus(), 10);
     }
   }
 
@@ -104,41 +129,41 @@ export class CommentComponent implements OnChanges {
     }
   }
 
-  onEdit() {
-    this.editable = true;
-  }
-
   onCommentChange(updatedComment) {
     this.hasUnsavedChanges = this.originalComment.substring(0, this.COMMENT_CHAR_LIMIT) !==
       updatedComment.substring(0, this.COMMENT_CHAR_LIMIT);
     this.commentService.onCommentChange(this.hasUnsavedChanges);
   }
 
-  onCancel() {
-    this.hasUnsavedChanges = false;
-    this.editable = false;
-    this.fullComment = this.originalComment;
-    this.changes.emit(false);
-    if (!this.author && !this.fullComment) {
+  deleteOrCancel() {
+    if (!this.editable) {
       this.delete.emit(this._comment);
+    } else {
+      this.hasUnsavedChanges = false;
+      this.editable = false;
+      this.fullComment = this.originalComment;
+      this.changes.emit(false);
+      if (!this.author && !this.fullComment) {
+        this.delete.emit(this._comment);
+      }
     }
   }
 
-  public onDelete() {
-    this.delete.emit(this._comment);
-  }
-
-  public onSave() {
-    this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
-    const tags = this.tagsServices.getTagItems(this._comment.annotationId);
-    const payload = {
-      comment: this._comment,
-      tags
-    };
-    this.updated.emit(payload);
-    this.editable = false;
-    this.hasUnsavedChanges = false;
-    this.changes.emit(false);
+  public editOrSave() {
+    if (!this.editable) {
+      this.editable = true;
+    } else {
+      this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
+      const tags = this.tagsServices.getTagItems(this._comment.annotationId);
+      const payload = {
+        comment: this._comment,
+        tags
+      };
+      this.updated.emit(payload);
+      this.hasUnsavedChanges = false;
+      this.editable = false;
+      this.changes.emit(false);
+    }
   }
 
   onCommentClick() {
@@ -159,15 +184,5 @@ export class CommentComponent implements OnChanges {
 
   get height() {
     return this.form.nativeElement.getBoundingClientRect().height / this.zoom;
-  }
-
-  commentStyle() {
-    return [
-      'aui-comment__content',
-      'form-control',
-      'mimic-focus',
-      !this.editable ? 'view-mode' : 'edit-mode',
-      !this.selected && !this.editable ? 'collapsed' : 'expanded',
-    ];
   }
 }
