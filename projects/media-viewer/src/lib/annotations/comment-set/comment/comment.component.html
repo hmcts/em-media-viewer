@@ -14,32 +14,30 @@
     </time>
   </div>
 
-  <mv-tags *ngIf="fullComment"
+  <mv-tags
     [tagItems]="tagItems"
     [autocompleteItems]="autocompleteItems$ | async"
     [editable]="editable"
     [commentId]="_comment.id">
   </mv-tags>
 
-  <ng-container *ngIf="selected">
+  <ng-container *ngIf="selected && editable">
     <textarea #textArea
               mvTextAreaAutoExpand
               type="text"
               required
               name="content"
               [maxlength]="COMMENT_CHAR_LIMIT"
-              (focusout)="onFocusOut()"
               [ngClass]="commentStyle()"
               [(ngModel)]="fullComment"
-              [readOnly]="!editable"
               (ngModelChange)="reRenderComments(); onCommentChange($event);"
               aria-label="comment">
     </textarea>
   </ng-container>
-  <div *ngIf="!selected" class="unselectedText">
+  <div *ngIf="!editable" class="unselectedText">
     {{fullComment}}
   </div>
-  <ng-container *ngIf="selected || this.editable">
+  <ng-container *ngIf="selected || editable || (!fullComment.length && !tagItems.length)">
     <div class="aui-comment__footer commentBtns">
       <button *ngIf="!editable; else Save"
               class="govuk-button" type="button" role="button"

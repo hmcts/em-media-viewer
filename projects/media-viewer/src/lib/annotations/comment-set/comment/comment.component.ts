@@ -125,6 +125,9 @@ export class CommentComponent implements OnChanges, OnInit {
     this.editable = false;
     this.fullComment = this.originalComment;
     this.changes.emit(false);
+    if (!this.author && !this.fullComment) {
+      this.delete.emit(this._comment);
+    }
   }
 
   public onDelete() {
@@ -133,10 +136,10 @@ export class CommentComponent implements OnChanges, OnInit {
 
   public onSave() {
     this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
-    const tags = this.tagsServices.getTagItems(this._comment.id);
+    this.tagItems = this.tagsServices.getTagItems(this._comment.id);
     const payload = {
       comment: this._comment,
-      tags,
+      tags: this.tagItems
     };
     this.updated.emit(payload);
     this.editable = false;
@@ -153,12 +156,6 @@ export class CommentComponent implements OnChanges, OnInit {
 
   reRenderComments() {
     this.renderComments.emit(this._comment);
-  }
-
-  onFocusOut() {
-    if (!this.author && !this.fullComment) {
-      this.delete.emit(this._comment);
-    }
   }
 
   get commentTop(): number {
