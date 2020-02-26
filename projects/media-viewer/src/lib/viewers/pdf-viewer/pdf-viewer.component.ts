@@ -28,7 +28,7 @@ import { CommentSetComponent } from '../../annotations/comment-set/comment-set.c
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.scss'],
+  styleUrls: ['./pdf-viewer.component.scss', '../../media-viewer.component.scss'],
   providers: [PdfAnnotationService, AnnotationSetService],
   encapsulation: ViewEncapsulation.None
 })
@@ -64,6 +64,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private subscriptions: Subscription[] = [];
   private viewerException: ViewerException;
   showCommentsPanel: boolean;
+  enableGrabNDrag = false;
 
   constructor(
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
@@ -98,6 +99,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)),
       this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
       this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)),
+      this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag),
       this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
   }
