@@ -1,5 +1,5 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Subject } from 'rxjs';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { of, Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
@@ -291,4 +291,18 @@ describe('PdfViewerComponent', () => {
     component.toggleCommentsSummary();
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
+
+  it('should setup annotationSet', fakeAsync(
+    inject([AnnotationApiService], (annotationsApi) => {
+      spyOn(annotationsApi, 'getOrCreateAnnotationSet')
+        .and.returnValue(of({} as AnnotationSet));
+      spyOn(annotationService, 'buildAnnoSetComponents');
+
+      component.setupAnnotationSet(true);
+      tick();
+
+      expect(component.annotationSet).toEqual({} as AnnotationSet);
+      expect(annotationService.buildAnnoSetComponents).toHaveBeenCalledWith({} as AnnotationSet);
+    })
+  ));
 });
