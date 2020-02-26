@@ -98,7 +98,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
         .pipe(take(1))
         .subscribe(annotationSet => {
           this.annotationSet = annotationSet;
-          console.log('annotation set', this.annotationSet)
         });
     }
   }
