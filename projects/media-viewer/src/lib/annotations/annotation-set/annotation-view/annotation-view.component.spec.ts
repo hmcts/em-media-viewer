@@ -1,6 +1,5 @@
 import { AnnotationViewComponent } from './annotation-view.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommentComponent } from '../../comment-set/comment/comment.component';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { PopupToolbarComponent } from './popup-toolbar/popup-toolbar.component';
@@ -42,7 +41,6 @@ describe('AnnotationComponent', () => {
     return TestBed.configureTestingModule({
       declarations: [
         AnnotationViewComponent,
-        CommentComponent,
         RectangleComponent,
         PopupToolbarComponent,
         TagsComponent

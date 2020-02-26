@@ -8,7 +8,10 @@ export interface SelectionAnnotation {
 
 @Injectable()
 export class AnnotationEventService {
+
   public readonly selectedAnnotation = new Subject<SelectionAnnotation>();
+  public readonly commentSearch = new Subject<string>();
+  public readonly resetHighlightEvent = new Subject();
 
   constructor() {}
 
@@ -18,5 +21,13 @@ export class AnnotationEventService {
 
   getSelectedAnnotation(): Observable<SelectionAnnotation> {
     return this.selectedAnnotation.asObservable();
+  }
+
+  onCommentSearch(searchString: string) {
+    this.commentSearch.next(searchString);
+  }
+
+  resetTextHighlight() {
+    this.resetHighlightEvent.next();
   }
 }

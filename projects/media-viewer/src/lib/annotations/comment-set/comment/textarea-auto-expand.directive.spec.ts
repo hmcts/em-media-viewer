@@ -5,6 +5,8 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommentService } from './comment.service';
+import { TextHighlightDirective } from './text-highlight.directive';
+import { AnnotationEventService } from '../../annotation-event.service';
 import {TagsComponent} from '../../tags/tags.component';
 import {TagInputModule} from 'ngx-chips';
 import {TagsServices} from '../../services/tags/tags.services';
@@ -17,8 +19,8 @@ describe('TextareaAutoExpandDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TextareaAutoExpandDirective, CommentComponent, TagsComponent],
-      providers: [CommentService, TagsServices],
+      declarations: [TextareaAutoExpandDirective, CommentComponent, TextHighlightDirective, TagsComponent],
+      providers: [CommentService, TagsServices, AnnotationEventService],
       imports: [FormsModule, TagInputModule, HttpClientTestingModule]
     });
     fixture = TestBed.createComponent(CommentComponent);
@@ -27,6 +29,7 @@ describe('TextareaAutoExpandDirective', () => {
     component._comment = {
       annotationId: '123',
     } as any
+    component.editable = true;
     fixture.detectChanges();
     textareaEl = fixture.debugElement.query(By.css('textarea'));
   });
