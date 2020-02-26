@@ -78,9 +78,6 @@ textarea.view-mode {
 
 .aui-comment__header {
   margin-bottom: 10px;
-  background: url("../../../../assets/images/lock_48px.svg") 0 0 no-repeat;
-  background-size: 20px 20px;
-  padding-left: 25px;
 }
 
 .unselectedText {
@@ -93,6 +90,29 @@ textarea.view-mode {
   margin-bottom: 10px;
 }
 
-.aui-comment__meta {
-  margin-left: -25px;
+.aui-comment__private {
+  background: url("../../../../assets/images/lock_48px.svg") 0 0 no-repeat;
+  background-size: 20px 20px;
+  padding-left: 25px;
+  width: 55px;
+  text-transform: uppercase;
+  color: #990000;
+  font-size: .8rem;
+  display: block;
+  margin-bottom: 10px;
+  position: relative;
+  font-weight: bold;
+  padding-top: 2px;
+  &:after {
+    display: block;
+    content: '';
+    border: 1px solid #990000;
+    width: 58px;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+  }
 }
+
