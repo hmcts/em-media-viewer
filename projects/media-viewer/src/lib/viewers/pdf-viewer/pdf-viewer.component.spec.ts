@@ -1,5 +1,5 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Subject } from 'rxjs';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { of, Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
@@ -19,6 +19,7 @@ import { CommentService } from '../../annotations/comment-set/comment/comment.se
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BoxHighlightCreateService } from '../../annotations/annotation-set/annotation-create/box-highlight-create.service';
 import { TextHighlightCreateService } from '../../annotations/annotation-set/annotation-create/text-highlight-create.service';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 
 describe('PdfViewerComponent', () => {
@@ -34,7 +35,12 @@ describe('PdfViewerComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PdfViewerComponent, ErrorMessageComponent, AnnotationSetComponent, GrabNDragDirective],
+      declarations: [
+        PdfViewerComponent,
+        ErrorMessageComponent,
+        AnnotationSetComponent,
+        GrabNDragDirective
+      ],
       imports: [HttpClientTestingModule],
       providers: [
         PdfAnnotationService,
@@ -179,6 +185,7 @@ describe('PdfViewerComponent', () => {
   });
 
   it('should select the page', () => {
+    component.annotationSet = {} as AnnotationSet;
     spyOn(annotationService, 'addAnnoSetToPage');
     spyOn(viewerEvents, 'boxSelected');
     spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
@@ -209,7 +216,7 @@ describe('PdfViewerComponent', () => {
     component.enableAnnotations = true;
     component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     spyOn(mockWrapper, 'loadDocument');
-    spyOn(annotationService, 'buildAnnoSetComponents');
+    spyOn(annotationService, 'destroyComponents');
 
     component.ngOnChanges({
       url: new SimpleChange('a', component.url, true)
@@ -217,7 +224,7 @@ describe('PdfViewerComponent', () => {
     tick();
 
     expect(mockWrapper.loadDocument).toHaveBeenCalled();
-    expect(annotationService.buildAnnoSetComponents).toHaveBeenCalled();
+    expect(annotationService.destroyComponents).toHaveBeenCalled();
   }));
 
   it('should emit documentTitle when document is loaded', fakeAsync(() => {
@@ -284,4 +291,18 @@ describe('PdfViewerComponent', () => {
     component.toggleCommentsSummary();
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
+
+  it('should setup annotationSet', fakeAsync(
+    inject([AnnotationApiService], (annotationsApi) => {
+      spyOn(annotationsApi, 'getOrCreateAnnotationSet')
+        .and.returnValue(of({} as AnnotationSet));
+      spyOn(annotationService, 'buildAnnoSetComponents');
+
+      component.setupAnnotationSet(true);
+      tick();
+
+      expect(component.annotationSet).toEqual({} as AnnotationSet);
+      expect(annotationService.buildAnnoSetComponents).toHaveBeenCalledWith({} as AnnotationSet);
+    })
+  ));
 });

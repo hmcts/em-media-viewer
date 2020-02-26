@@ -94,7 +94,7 @@ describe('MediaViewerComponent', () => {
 
   it('should set annotationSet when annotations enabled', () => {
     const annotationSet = of({} as AnnotationSet);
-    spyOn(api, 'getOrCreateAnnotationSet').and.returnValue(annotationSet);
+    spyOn(api, 'getAnnotationSet').and.returnValue(annotationSet);
     component.annotationSet = null;
 
     component.enableAnnotations = true;

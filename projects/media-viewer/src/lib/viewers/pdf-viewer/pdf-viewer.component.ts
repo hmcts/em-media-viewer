@@ -24,6 +24,8 @@ import { ResponseType, ViewerException } from '../error-message/viewer-exception
 import { AnnotationSetService } from './annotation-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
+import { AnnotationApiService } from '../../annotations/annotation-api.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -73,6 +75,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
     private readonly annotationService: PdfAnnotationService,
+    private readonly annotationsApi: AnnotationApiService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject;
@@ -91,6 +94,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       }
     });
     this.subscriptions.push(
+      this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.setupAnnotationSet(drawMode)),
+      this.toolbarEvents.highlightModeSubject.subscribe(highlightMode => this.setupAnnotationSet(highlightMode)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
@@ -105,19 +110,19 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngOnChanges(changes: SimpleChanges) {
+    let reloadAnnotations = false;
     if (!this.pdfWrapper) {
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
     if (changes.url && this.pdfWrapper) {
       this.loadDocument();
+      this.clearAnnotationSet();
     }
-    let reloadAnnotations = false;
     if (changes.enableAnnotations && this.pdfWrapper) {
       if (this.enableAnnotations) {
         reloadAnnotations = true;
       } else {
-        this.annotationSet = null;
-        this.annotationService.destroyComponents();
+        this.clearAnnotationSet();
       }
     }
     if (changes.annotationSet && this.annotationSet) {
@@ -128,9 +133,25 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
   }
 
+  clearAnnotationSet() {
+    this.annotationSet = null;
+    this.annotationService.destroyComponents();
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
     this.annotationService.destroyComponents();
+  }
+
+  setupAnnotationSet(mode: boolean) {
+    if (mode && !this.annotationSet) {
+      this.annotationsApi.getOrCreateAnnotationSet(this.url)
+        .pipe(take(1))
+        .subscribe(annotationSet => {
+          this.annotationSet = annotationSet;
+          this.annotationService.buildAnnoSetComponents(this.annotationSet);
+        });
+    }
   }
 
   private async loadDocument() {
@@ -176,10 +197,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onMouseDown(mouseEvent: MouseEvent) {
-    if (this.toolbarEvents.highlightModeSubject.getValue()) {
+    if (this.annotationSet && this.toolbarEvents.highlightModeSubject.getValue()) {
       this.annotationService.addAnnoSetToPage();
     }
-    if (this.toolbarEvents.drawModeSubject.getValue()) {
+    if (this.annotationSet && this.toolbarEvents.drawModeSubject.getValue()) {
       this.annotationService.addAnnoSetToPage();
       setTimeout(() => this.viewerEvents.boxSelected({
         page: this.pdfWrapper.getPageNumber(),
@@ -194,18 +215,18 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         page: this.pdfWrapper.getPageNumber(), event: mouseEvent
       }), 0);
     }
+    if (!this.annotationSet) {
+      if (this.toolbarEvents.highlightModeSubject.getValue()) {
+        this.toolbarEvents.highlightModeSubject.next(false);
+      }
+      if (this.toolbarEvents.drawModeSubject.getValue()) {
+        this.toolbarEvents.drawModeSubject.next(false);
+      }
+    }
   }
 
   toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
-  }
-
-  getPageHeights() {
-    this.pageHeights = [];
-    const pdfViewerChildren = this.pdfViewer.nativeElement.children;
-    for (let i = 0; i < pdfViewerChildren.length; i++) {
-      this.pageHeights.push(pdfViewerChildren[i].clientHeight);
-    }
   }
 
   private setRotation(rotation: number) {
