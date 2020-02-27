@@ -1,6 +1,7 @@
 <div class="tags">
   <tag-input
     *ngIf="editable" class="tags__edit"
+    [maxItems]="10"
     [ngModel]="tagItems"
     (ngModelChange)="onUpdateTags($event)"
     [ngModelOptions]="{standalone:true}"
@@ -9,6 +10,8 @@
     [identifyBy]="'name'"
     [onTextChangeDebounce]="250"
     [secondaryPlaceholder]="'Search or add tags'"
+    [validators]="validators"
+    [errorMessages]="errorMessages"
     [onlyFromAutocomplete]="false">
     <tag-input-dropdown
       [autocompleteItems]="availableTags"

@@ -1,5 +1,13 @@
 import {
-  Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges, OnInit
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  OnChanges,
+  OnInit,
+  Inject
 } from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../../models/user.model';
@@ -10,6 +18,7 @@ import {Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {TagItemModel} from '../../models/tag-item.model';
 import {TagsServices} from '../../services/tags/tags.services';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -53,7 +62,8 @@ export class CommentComponent implements OnChanges, OnInit {
   constructor(
     private readonly commentService: CommentService,
     private http: HttpClient,
-    private tagsServices: TagsServices
+    private tagsServices: TagsServices,
+    @Inject(DOCUMENT) private document
   ) {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
@@ -145,6 +155,10 @@ export class CommentComponent implements OnChanges, OnInit {
   }
 
   onCommentClick() {
+    const textarea = this.document.querySelector(`textarea`);
+    if (textarea) {
+      textarea.focus();
+    }
     if (!this.selected) {
       this.selected = true;
       this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
