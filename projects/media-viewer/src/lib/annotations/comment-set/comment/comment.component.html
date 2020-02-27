@@ -21,18 +21,18 @@
     [commentId]="_comment.id">
   </mv-tags>
 
-  <ng-container *ngIf="selected && editable">
-    <textarea mvTextAreaAutoExpand
-              type="text"
-              required
-              name="content"
-              [maxlength]="COMMENT_CHAR_LIMIT"
-              [ngClass]="commentStyle()"
-              [(ngModel)]="fullComment"
-              (ngModelChange)="reRenderComments(); onCommentChange($event);"
-              aria-label="comment">
-    </textarea>
-  </ng-container>
+  <textarea [style.display]="selected && editable ? 'block' : 'none'"
+            mvTextAreaAutoExpand
+            type="text"
+            required
+            name="content"
+            [maxlength]="COMMENT_CHAR_LIMIT"
+            [ngClass]="commentStyle()"
+            [(ngModel)]="fullComment"
+            (ngModelChange)="reRenderComments(); onCommentChange($event);"
+            aria-label="comment"
+            #textArea>
+  </textarea>
   <p *ngIf="!editable" [ngClass]="{'unselectedText' : !selected}">{{fullComment}}</p>
   <ng-container
     *ngIf="selected || editable || (!fullComment.length && (tagItems && !tagItems.length))">
