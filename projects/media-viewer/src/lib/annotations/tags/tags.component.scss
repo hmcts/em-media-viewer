@@ -1,7 +1,7 @@
 .tags {
   margin-bottom: 10px;
   &__renderer {
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     border-bottom: 1px solid #DDDDDD;
   }
   &__manage {
@@ -10,7 +10,7 @@
   }
   &__item {
     display: inline-block;
-    margin: 0 3px 3px 0;
+    margin: 3px 3px 3px 0;
   }
   &__edit {
     clear: both;

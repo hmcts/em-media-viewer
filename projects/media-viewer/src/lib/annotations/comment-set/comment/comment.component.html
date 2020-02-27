@@ -34,11 +34,9 @@
               aria-label="comment">
     </textarea>
   </ng-container>
-  <div *ngIf="!editable" class="unselectedText">
-    {{fullComment}}
-  </div>
+  <p *ngIf="!editable" [ngClass]="{'unselectedText' : !selected}">{{fullComment}}</p>
   <ng-container
-    *ngIf="selected || editable || (!fullComment.length && tagItems && !tagItems.length)">
+    *ngIf="selected || editable || (!fullComment.length && (tagItems && !tagItems.length))">
     <div class="aui-comment__footer commentBtns">
       <button *ngIf="!editable; else Save"
               class="govuk-button" type="button" role="button"
