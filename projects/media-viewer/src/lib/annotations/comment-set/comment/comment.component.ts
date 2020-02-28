@@ -20,7 +20,7 @@ export class CommentComponent implements OnChanges, OnInit {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
-  public tagItems: TagItemModel[];
+  public autocompleteTagItems: TagItemModel[];
   lastUpdate: string;
   originalComment: string;
   fullComment: string;
@@ -35,7 +35,7 @@ export class CommentComponent implements OnChanges, OnInit {
   rectLeft;
 
   hasUnsavedChanges = false;
-  autocompleteItems$: Observable<TagItemModel[]>;
+
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() renderComments = new EventEmitter<Comment>();
@@ -47,6 +47,10 @@ export class CommentComponent implements OnChanges, OnInit {
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
+  @Input() tagItems: TagItemModel[];
+  @Input() set autocompleteItems$(value: TagItemModel[]) {
+    this.autocompleteTagItems = value;
+  }
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
@@ -60,8 +64,8 @@ export class CommentComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.tagItems = this.tagsServices.getTagItems(this._comment.id);
-    this.autocompleteItems$ = this.tagsServices.getAllTags();
+    // this.tagItems = this.tagsServices.getTagItems(this._comment.id);
+    // this.autocompleteItems$ = this.tagsServices.getAllTags(31);
   }
 
   ngOnChanges(): void {

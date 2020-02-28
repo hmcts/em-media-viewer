@@ -15,11 +15,13 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { CommentComponent } from './comment/comment.component';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
+import {TagItemModel} from '../models/tag-item.model';
+import {TagsServices} from '../services/tags/tags.services';
 
 @Component({
   selector: 'mv-comment-set',
@@ -38,6 +40,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   comments: Comment[];
   selectAnnotation: SelectionAnnotation;
   private subscriptions: Subscription[] = [];
+  autocompleteTagItems$: Observable<TagItemModel[]>;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
@@ -48,11 +51,13 @@ export class CommentSetComponent implements OnInit, OnDestroy {
               private readonly api: AnnotationApiService,
               private readonly annotationService: AnnotationEventService,
               private readonly commentService: CommentService,
-              private readonly renderService: CommentSetRenderService) {
+              private readonly renderService: CommentSetRenderService,
+              private tagsServices: TagsServices) {
     this.clearSelection();
   }
 
   ngOnInit() {
+    this.autocompleteTagItems$ = this.tagsServices.getAllTags(this.annotationSet.createdBy);
     this.commentService.setCommentSet(this);
     this.subscriptions.push(
       this.annotationService.getSelectedAnnotation()
