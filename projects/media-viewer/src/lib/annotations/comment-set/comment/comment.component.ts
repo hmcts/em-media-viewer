@@ -47,6 +47,9 @@ export class CommentComponent implements OnChanges {
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
+  @Input() set allTags(allTags) {
+    this.autocompleteTagItems = allTags ? allTags : [];
+  }
   tagItems: TagItemModel[];
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
@@ -74,9 +77,6 @@ export class CommentComponent implements OnChanges {
     this.originalComment = comment.content;
     this.fullComment = this.originalComment;
     this.tagItems = this.tagsServices.getTagItems(this._comment.annotationId);
-    this.tagsServices.getAllTags(this._comment.createdBy).subscribe(tags => {
-    });
-
   }
 
   get comment() {

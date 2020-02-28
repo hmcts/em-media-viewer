@@ -10,9 +10,8 @@ import {Observable} from 'rxjs';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent {
-  autoCom: Observable<TagItemModel[]>;
   @Input() tagItems: TagItemModel[];
-  @Input() autocompleteItems
+  @Input() autocompleteItems: TagItemModel[];
 
   @Input() editable: boolean;
   @Input() annoId: string;

@@ -19,7 +19,8 @@
         [pageHeights]="pageHeights"
         [comment]="annotation.comments[0]"
         [rectangle]="topRectangle(annotation.comments[0].annotationId)"
-        (renderComments)="redrawComments()">
+        (renderComments)="redrawComments()"
+        [allTags]="allTags">
     </mv-anno-comment>
   </ng-container>
 </div>

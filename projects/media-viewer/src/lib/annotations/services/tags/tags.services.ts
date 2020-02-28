@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {TagItemModel} from '../../models/tag-item.model';
+import {take, tap} from 'rxjs/operators';
 
 @Injectable()
 export class TagsServices {
 
-  public tagItems
-  public autoCompleteTagItems: TagItemModel[]
+  public tagItems: {[id: string]: TagItemModel[]};
 
   constructor(private http: HttpClient) {}
 

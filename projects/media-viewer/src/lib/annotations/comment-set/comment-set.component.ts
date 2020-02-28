@@ -22,6 +22,7 @@ import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
 import {TagItemModel} from '../models/tag-item.model';
 import {TagsServices} from '../services/tags/tags.services';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-comment-set',
@@ -40,6 +41,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   comments: Comment[];
   selectAnnotation: SelectionAnnotation;
   private subscriptions: Subscription[] = [];
+  allTags: TagItemModel[];
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
@@ -57,6 +59,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     // set the annotation tags state
     if (changes.annotationSet) {
+      this.tagsServices.getAllTags(this.annotationSet.createdBy).pipe(take(1)).subscribe(allTags => this.allTags = allTags);
       this.annotationSet.annotations.map(annotation => {
         if (annotation.comments.length) {
           this.tagsServices.updateTagItems(annotation.tags, annotation.id);
