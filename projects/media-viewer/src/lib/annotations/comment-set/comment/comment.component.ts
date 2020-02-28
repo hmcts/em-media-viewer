@@ -1,5 +1,5 @@
 import {
-  Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges, OnInit
+  Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges
 } from '@angular/core';
 import { Comment } from './comment.model';
 import { User } from '../../models/user.model';
@@ -16,7 +16,7 @@ import {TagsServices} from '../../services/tags/tags.services';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent implements OnChanges, OnInit {
+export class CommentComponent implements OnChanges {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
@@ -47,10 +47,7 @@ export class CommentComponent implements OnChanges, OnInit {
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
-  @Input() tagItems: TagItemModel[];
-  @Input() set autocompleteItems$(value: TagItemModel[]) {
-    this.autocompleteTagItems = value;
-  }
+  tagItems: TagItemModel[];
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
@@ -63,10 +60,6 @@ export class CommentComponent implements OnChanges, OnInit {
     this.COMMENT_CHAR_LIMIT = 5000;
   }
 
-  ngOnInit(): void {
-    // this.tagItems = this.tagsServices.getTagItems(this._comment.id);
-    // this.autocompleteItems$ = this.tagsServices.getAllTags(31);
-  }
 
   ngOnChanges(): void {
     this.reRenderComments();
@@ -80,6 +73,10 @@ export class CommentComponent implements OnChanges, OnInit {
     this.editor = comment.lastModifiedByDetails;
     this.originalComment = comment.content;
     this.fullComment = this.originalComment;
+    this.tagItems = this.tagsServices.getTagItems(this._comment.annotationId);
+    this.tagsServices.getAllTags(this._comment.createdBy).subscribe(tags => {
+    });
+
   }
 
   get comment() {
@@ -141,10 +138,10 @@ export class CommentComponent implements OnChanges, OnInit {
 
   public onSave() {
     this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
-    this.tagItems = this.tagsServices.getTagItems(this._comment.id);
+    const tags = this.tagsServices.getTagItems(this._comment.annotationId);
     const payload = {
       comment: this._comment,
-      tags: this.tagItems
+      tags
     };
     this.updated.emit(payload);
     this.editable = false;

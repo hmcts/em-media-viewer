@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {TagItemModel} from '../models/tag-item.model';
 import {TagsServices} from '../services/tags/tags.services';
 import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'mv-tags',
@@ -9,11 +10,12 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent {
-
+  autoCom: Observable<TagItemModel[]>;
   @Input() tagItems: TagItemModel[];
-  @Input() autocompleteItems: TagItemModel[];
+  @Input() autocompleteItems
+
   @Input() editable: boolean;
-  @Input() commentId: string;
+  @Input() annoId: string;
   public validators = [this.minLength, this.maxLength20];
   public errorMessages: {[id: string]: string} = {
     'minLength': 'Minimum of 2 characters',
@@ -23,7 +25,7 @@ export class TagsComponent {
   constructor(private tagsServices: TagsServices) {}
 
   onUpdateTags(value) {
-    this.tagsServices.updateTagItems(value, this.commentId);
+    this.tagsServices.updateTagItems(value, this.annoId);
   }
 
   private minLength(control: FormControl) {

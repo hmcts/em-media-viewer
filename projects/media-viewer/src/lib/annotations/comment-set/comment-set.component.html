@@ -19,9 +19,7 @@
         [pageHeights]="pageHeights"
         [comment]="annotation.comments[0]"
         [rectangle]="topRectangle(annotation.comments[0].annotationId)"
-        (renderComments)="redrawComments()"
-        [tagItems]="annotation.tags"
-        [autocompleteItems$]="autocompleteTagItems$ | async">
+        (renderComments)="redrawComments()">
     </mv-anno-comment>
   </ng-container>
 </div>

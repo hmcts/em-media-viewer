@@ -6,7 +6,8 @@ import {TagItemModel} from '../../models/tag-item.model';
 @Injectable()
 export class TagsServices {
 
-  public tagItems: {[id: string]: TagItemModel[]};
+  public tagItems
+  public autoCompleteTagItems: TagItemModel[]
 
   constructor(private http: HttpClient) {}
 
@@ -15,11 +16,11 @@ export class TagsServices {
     return this.http.get<TagItemModel[]>(url);
   }
 
-  getTagItems(commentId): TagItemModel[] {
-    return this.tagItems ? this.tagItems[commentId] : [];
+  getTagItems(annoid): TagItemModel[] {
+    return this.tagItems ? this.tagItems[annoid] : [];
   }
 
-  updateTagItems(items, commentId) {
+  updateTagItems(items, annoId) {
     const snakeCased = items.map(item => {
       return {
         ...item,
@@ -28,9 +29,10 @@ export class TagsServices {
     });
 
     this.tagItems = {
-      [commentId]: snakeCased
+      ...this.tagItems,
+      [annoId]: snakeCased
     };
-
+    console.log(this.tagItems);
   }
 
   private snakeCase = string => {

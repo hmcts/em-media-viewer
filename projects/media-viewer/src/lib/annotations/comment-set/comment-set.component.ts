@@ -1,10 +1,10 @@
 import {
   Component,
   ElementRef,
-  Input,
+  Input, OnChanges,
   OnDestroy,
   OnInit,
-  QueryList,
+  QueryList, SimpleChanges,
   ViewChild,
   ViewChildren,
   ViewEncapsulation
@@ -29,7 +29,7 @@ import {TagsServices} from '../services/tags/tags.services';
   styleUrls: ['./comment-set.component.scss'],
   encapsulation: ViewEncapsulation.None
  })
-export class CommentSetComponent implements OnInit, OnDestroy {
+export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() annotationSet: AnnotationSet;
   @Input() zoom: number;
@@ -40,7 +40,6 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   comments: Comment[];
   selectAnnotation: SelectionAnnotation;
   private subscriptions: Subscription[] = [];
-  autocompleteTagItems$: Observable<TagItemModel[]>;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
@@ -55,9 +54,18 @@ export class CommentSetComponent implements OnInit, OnDestroy {
               private tagsServices: TagsServices) {
     this.clearSelection();
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    // set the annotation tags state
+    if (changes.annotationSet) {
+      this.annotationSet.annotations.map(annotation => {
+        if (annotation.comments.length) {
+          this.tagsServices.updateTagItems(annotation.tags, annotation.id);
+        }
+      })
+    }
+  }
 
   ngOnInit() {
-    this.autocompleteTagItems$ = this.tagsServices.getAllTags(this.annotationSet.createdBy);
     this.commentService.setCommentSet(this);
     this.subscriptions.push(
       this.annotationService.getSelectedAnnotation()
