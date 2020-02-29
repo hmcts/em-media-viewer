@@ -21,6 +21,7 @@ import {AnnotationApiService} from './annotations/annotation-api.service';
 import {ResponseType, ViewerException} from './viewers/error-message/viewer-exception.model';
 import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
+import {tap} from 'rxjs/operators';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -89,14 +90,15 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
-        this.annotationSet = this.api.getAnnotationSet(this.url);
+
+        this.annotationSet = this.api.getAnnotationSet(this.url).pipe(tap(console.log));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
       }
     }
     if (changes.enableAnnotations && this.enableAnnotations) {
-      this.annotationSet = this.api.getAnnotationSet(this.url);
+      this.annotationSet = this.api.getAnnotationSet(this.url).pipe(tap(console.log));
     }
     this.setToolbarButtons();
   }

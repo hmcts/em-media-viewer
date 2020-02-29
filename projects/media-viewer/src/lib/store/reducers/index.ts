@@ -6,6 +6,7 @@ import {
 import { createFeatureSelector, ActionReducerMap, createSelector } from '@ngrx/store';
 
 import * as fromRouter from '@ngrx/router-store';
+import * as fromAnnotation from './annotatons.reducer';
 
 
 export interface RouterStateUrl {
@@ -16,10 +17,12 @@ export interface RouterStateUrl {
 
 export interface State {
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
+  annotationsReducer: fromAnnotation.AnnotationSetState;
 }
 
 export const reducers: ActionReducerMap<State> = {
   routerReducer: fromRouter.routerReducer,
+  annotationsReducer: fromAnnotation.reducer
 };
 
 export class CustomSerializer
@@ -42,6 +45,10 @@ export class CustomSerializer
 export const getRouterState = createFeatureSelector<
   fromRouter.RouterReducerState<RouterStateUrl>
   >('routerReducer');
+
+export const getAnnoSetState = createFeatureSelector<
+  fromRouter.RouterReducerState<RouterStateUrl>
+  >('annotationsReducer');
 
 
 export const getRouterUrl = createSelector(
