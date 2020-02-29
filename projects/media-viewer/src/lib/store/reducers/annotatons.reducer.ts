@@ -2,23 +2,17 @@ import * as fromAnnotations from '../actions/annotations.action';
 import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
 
 export interface AnnotationSetState {
-  annotationSetPdf: AnnotationSet | null;
-  annotationSetImage: AnnotationSet | null;
+  annotationSet: AnnotationSet | null;
   comments: {[id: string]: Comment} | null;
-  loadedPdf: boolean;
-  loadedImg: boolean;
-  loadingPdf: boolean;
-  loadingImg: boolean;
+  loaded: boolean;
+  loading: boolean;
 }
 
 export const initialState: AnnotationSetState = {
-  annotationSetPdf: null,
-  annotationSetImage: null,
+  annotationSet: null,
   comments: null,
-  loadingPdf: false,
-  loadedImg: false,
-  loadedPdf: false,
-  loadingImg: false
+  loading: false,
+  loaded: false,
 };
 
 export function reducer (
@@ -37,7 +31,6 @@ export function reducer (
   return state;
 }
 
-export const getAnnoPdf = (state: AnnotationSetState) => state.annotationSetPdf;
-export const getAnnoImg = (state: AnnotationSetState) => state.annotationSetImage;
+export const getAnnotationSet = (state: AnnotationSetState) => state.annotationSet;
 export const getComments = (state: AnnotationSetState) => state.comments;
 

@@ -22,6 +22,8 @@ import {ResponseType, ViewerException} from './viewers/error-message/viewer-exce
 import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
 import {tap} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import * as fromStore from './store';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -59,6 +61,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   private subscriptions: Subscription[] = [];
 
   constructor(
+    private store: Store<fromStore.AnnotationSetState>,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly api: AnnotationApiService,
@@ -90,15 +93,16 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
-
-        this.annotationSet = this.api.getAnnotationSet(this.url).pipe(tap(console.log));
+        this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
+        // this.annotationSet = this.api.getAnnotationSet(this.url).pipe(tap(console.log));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
       }
     }
     if (changes.enableAnnotations && this.enableAnnotations) {
-      this.annotationSet = this.api.getAnnotationSet(this.url).pipe(tap(console.log));
+      this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
+      // this.annotationSet = this.api.getAnnotationSet(this.url).pipe(tap(console.log));
     }
     this.setToolbarButtons();
   }

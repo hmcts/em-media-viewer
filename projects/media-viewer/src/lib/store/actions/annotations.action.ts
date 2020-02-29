@@ -7,7 +7,7 @@ export const LOAD_ANNOTATION_SET_FAIL = '[Annotations] Load Annotation Set Fail'
 
 export class LoadAnnotationSet implements Action {
   readonly type = LOAD_ANNOTATION_SET;
-  constructor(public payload: any) { }
+  constructor(public payload: string) { }
 }
 
 export class LoadAnnotationSetSucess implements Action {

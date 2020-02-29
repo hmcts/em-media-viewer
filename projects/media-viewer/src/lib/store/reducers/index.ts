@@ -58,3 +58,4 @@ export const getRouterUrl = createSelector(
 
 export const getAppConfigState = createFeatureSelector<any>( 'appConfig' );
 
+export * from './annotatons.reducer';

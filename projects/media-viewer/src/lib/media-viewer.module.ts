@@ -18,7 +18,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {MetaReducer, StoreModule} from '@ngrx/store';
 import {storeFreeze} from 'ngrx-store-freeze';
 // APP store
-import { CustomSerializer, reducers } from './store/reducers';
+import { CustomSerializer, reducers, effects} from './store';
 
 // enforces immutability
 export const metaReducers: MetaReducer<any>[] = !false
@@ -33,7 +33,7 @@ export const metaReducers: MetaReducer<any>[] = !false
     ToolbarModule,
     AnnotationsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    // EffectsModule.forRoot(effects),
+    EffectsModule.forRoot(effects),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
       logOnly: false
