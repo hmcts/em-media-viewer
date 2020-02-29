@@ -50,7 +50,7 @@ export class BoxHighlightCreateService {
       type: 'highlight'
     };
 
-    this.store.dispatch(new fromStore.SaveAnnotation(annotationPayload))
+    this.store.dispatch(new fromStore.SaveAnnotation(annotationPayload));
     // this.api.postAnnotation({
     //   id: uuid(),
     //   annotationSetId: annotationSet.id,

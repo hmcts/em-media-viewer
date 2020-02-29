@@ -15,11 +15,14 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { CommentComponent } from './comment/comment.component';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
+import * as fromStore from '../../store';
+import {select, Store} from '@ngrx/store';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-comment-set',
@@ -30,6 +33,7 @@ import { CommentSetRenderService } from './comment-set-render.service';
 export class CommentSetComponent implements OnInit, OnDestroy {
 
   @Input() annotationSet: AnnotationSet;
+  // todo hook up here store for comments
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() height: number;
@@ -38,13 +42,15 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   comments: Comment[];
   selectAnnotation: SelectionAnnotation;
   private subscriptions: Subscription[] = [];
+  public comments$: Observable<Annotation[]>;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
   showCommentsPanel: boolean;
 
-  constructor(private readonly viewerEvents: ViewerEventService,
+  constructor(private store: Store<fromStore.AnnotationSetState>,
+              private readonly viewerEvents: ViewerEventService,
               private readonly api: AnnotationApiService,
               private readonly annotationService: AnnotationEventService,
               private readonly commentService: CommentService,
@@ -53,6 +59,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.comments$ = this.store.pipe(select(fromStore.getCommentsArray)).pipe(tap(console.log))
     this.commentService.setCommentSet(this);
     this.subscriptions.push(
       this.annotationService.getSelectedAnnotation()

@@ -12,3 +12,13 @@ export const getAnnotationSet = createSelector(
   getAnnotationsSetState,
   fromAnnotations.getAnnoSet
 );
+
+export const getAnnComments = createSelector(
+  getAnnotationsSetState,
+  fromAnnotations.getComments
+);
+
+export const getCommentsArray = createSelector(
+  getAnnComments,
+  (comments) => Object.keys(comments).map(key => comments[key])
+)
