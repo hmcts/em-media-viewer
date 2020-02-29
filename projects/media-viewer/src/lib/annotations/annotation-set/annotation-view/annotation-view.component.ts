@@ -50,6 +50,7 @@ export class AnnotationViewComponent {
 
   public addOrEditComment() {
     if (this.annotation.comments.length === 0) {
+
       this.annotation.comments.push({
         annotationId: this.annotation.id,
         content: '',

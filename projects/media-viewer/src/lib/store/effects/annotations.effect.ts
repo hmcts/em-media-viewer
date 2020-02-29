@@ -13,13 +13,27 @@ export class AnnotationEffects {
   ) { }
 
   @Effect()
-  loadUsers$ = this.actions$.pipe(
+  loadAnnotation$ = this.actions$.pipe(
     ofType(annotationsActions.LOAD_ANNOTATION_SET),
     map((action: annotationsActions.LoadAnnotationSet) => action.payload),
     switchMap((url) => {
       return this.annotationApiService.getAnnotationSet(url).pipe(
         map(annotations => {
           return new annotationsActions.LoadAnnotationSetSucess(annotations);
+        }),
+        catchError(error => {
+          return of(new annotationsActions.LoadAnnotationSetFail(error));
+        }));
+    }));
+
+  @Effect()
+  postAnnotation$ = this.actions$.pipe(
+    ofType(annotationsActions.SAVE_ANNOTATION),
+    map((action: annotationsActions.SaveAnnotation) => action.payload),
+    switchMap((annotation) => {
+      return this.annotationApiService.postAnnotation(annotation).pipe(
+        map(annotations => {
+          return new annotationsActions.SaveAnnotationSuccess(annotations);
         }),
         catchError(error => {
           return of(new annotationsActions.LoadAnnotationSetFail(error));

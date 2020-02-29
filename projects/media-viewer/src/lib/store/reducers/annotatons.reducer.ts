@@ -1,5 +1,6 @@
 import * as fromAnnotations from '../actions/annotations.action';
 import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
+import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 
 export interface AnnotationSetState {
   annotationSet: AnnotationSet | {};
@@ -28,7 +29,38 @@ export function reducer (
       };
     }
     case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS: {
-      const annotationSet = action.payload
+      const annotationSet = action.payload;
+      const comments = annotationSet.annotations
+        .reduce(
+          (commentEntities: { [id: string]: Annotation }, annotation: Annotation) => {
+            if (annotation.comments.length) {
+              return {
+                ...commentEntities,
+                [annotation.id]: annotation.comments[0]
+              };
+            }
+          }, {}
+      );
+
+      return {
+        ...state,
+        annotationSet,
+        comments,
+        loading: false,
+        loaded: true
+      };
+    }
+
+    case fromAnnotations.SAVE_ANNOTATION_SUCCESS: {
+      const annotations = [
+        ...state.annotationSet['annotations'],
+        ...action.payload
+      ];
+      const annotationSet = {
+        ...state.annotationSet,
+        annotations
+      };
+
       return {
         ...state,
         annotationSet,

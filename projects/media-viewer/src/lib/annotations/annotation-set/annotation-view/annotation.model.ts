@@ -9,4 +9,5 @@ export interface Annotation extends ApiPersisted {
   comments: Comment[];
   rectangles: Rectangle[];
   type: string;
+  id: string;
 }

@@ -5,6 +5,8 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { AnnotationApiService } from '../../annotation-api.service';
 import { AnnotationEventService } from '../../annotation-event.service';
 import { Injectable } from '@angular/core';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../../store';
 
 @Injectable()
 export class BoxHighlightCreateService {
@@ -15,7 +17,8 @@ export class BoxHighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private readonly annotationService: AnnotationEventService) {}
+              private readonly annotationService: AnnotationEventService,
+              private store: Store<fromStore.AnnotationSetState>, ) {}
 
   initBoxHighlight(event: MouseEvent) {
     this.initHighlight.next(event);
@@ -37,7 +40,7 @@ export class BoxHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    this.api.postAnnotation({
+    const annotationPayload = {
       id: uuid(),
       annotationSetId: annotationSet.id,
       color: 'FFFF00',
@@ -45,10 +48,21 @@ export class BoxHighlightCreateService {
       page: page,
       rectangles: rectangles,
       type: 'highlight'
-    })
-      .subscribe(savedAnnotation => {
-        annotationSet.annotations.push(savedAnnotation);
-        this.annotationService.selectAnnotation({ annotationId: savedAnnotation.id, editable: false });
-      });
+    };
+
+    this.store.dispatch(new fromStore.SaveAnnotation(annotationPayload))
+    // this.api.postAnnotation({
+    //   id: uuid(),
+    //   annotationSetId: annotationSet.id,
+    //   color: 'FFFF00',
+    //   comments: [],
+    //   page: page,
+    //   rectangles: rectangles,
+    //   type: 'highlight'
+    // })
+    //   .subscribe(savedAnnotation => {
+    //     annotationSet.annotations.push(savedAnnotation);
+    //     this.annotationService.selectAnnotation({ annotationId: savedAnnotation.id, editable: false });
+    //   });
   }
 }
