@@ -24,7 +24,7 @@ describe('AnnotationSetService', () => {
     expect(service.pdfViewer).toBe(mockViewer);
   });
 
-  it('should set annotationSet', () => {
+  it('should set annotationSet$', () => {
     const annotationSet = {} as AnnotationSet;
 
     service.setAnnotationSet(annotationSet);
@@ -44,7 +44,7 @@ describe('AnnotationSetService', () => {
     expect(annoSetComp1.instance.addToDOM).toHaveBeenCalled();
   });
 
-  it('should add annotationSet to page', () => {
+  it('should add annotationSet$ to page', () => {
     service.pdfViewer = { nativeElement: { querySelector: () => null }} as any;
     const mockAnnoSetComp = mockAnnotationSetCreation();
     spyOn(mockAnnoSetComp.instance, 'addToDOM');
@@ -56,7 +56,7 @@ describe('AnnotationSetService', () => {
     expect(mockAnnoSetComp.instance.addToDOM).toHaveBeenCalledWith({ rotation: 90, scale: 0.2, div: null });
   });
 
-  it('should build annotationSet components', () => {
+  it('should build annotationSet$ components', () => {
     const mockAnnoSetComp = mockAnnotationSetCreation();
     spyOn(mockAnnoSetComp.instance, 'addToDOM');
 

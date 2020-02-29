@@ -7,6 +7,7 @@ import { createFeatureSelector, ActionReducerMap, createSelector } from '@ngrx/s
 
 import * as fromRouter from '@ngrx/router-store';
 import * as fromAnnotation from './annotatons.reducer';
+import {AnnotationSetState} from './annotatons.reducer';
 
 
 export interface RouterStateUrl {
@@ -46,9 +47,7 @@ export const getRouterState = createFeatureSelector<
   fromRouter.RouterReducerState<RouterStateUrl>
   >('routerReducer');
 
-export const getAnnoSetState = createFeatureSelector<
-  fromRouter.RouterReducerState<RouterStateUrl>
-  >('annotationsReducer');
+export const getAnnoSetState = createFeatureSelector<AnnotationSetState>('annotationsReducer');
 
 
 export const getRouterUrl = createSelector(

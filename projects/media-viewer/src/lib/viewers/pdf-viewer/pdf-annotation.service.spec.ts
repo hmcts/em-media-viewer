@@ -51,7 +51,7 @@ describe('PdfAnnotationService', () => {
     expect(annoSetService.addAnnotationsToPage).toHaveBeenCalled();
   });
 
-  it('should add annotationSet to page', () => {
+  it('should add annotationSet$ to page', () => {
     spyOn(annoSetService, 'addAnnoSetToPage');
 
     service.addAnnoSetToPage();
@@ -59,7 +59,7 @@ describe('PdfAnnotationService', () => {
     expect(annoSetService.addAnnoSetToPage).toHaveBeenCalled();
   });
 
-  it('should build annotationSet components', () => {
+  it('should build annotationSet$ components', () => {
     const annotationSet = {} as AnnotationSet;
     spyOn(annoSetService, 'destroyComponents');
     spyOn(annoSetService, 'setAnnotationSet');

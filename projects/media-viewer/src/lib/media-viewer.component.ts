@@ -22,7 +22,7 @@ import {ResponseType, ViewerException} from './viewers/error-message/viewer-exce
 import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
 import {tap} from 'rxjs/operators';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as fromStore from './store';
 
 enum SupportedContentTypes {
@@ -56,7 +56,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   documentTitle: string;
   showCommentSummary: boolean;
-  annotationSet: Observable<AnnotationSet>;
+  annotationSet$: Observable<AnnotationSet | {}>;
 
   private subscriptions: Subscription[] = [];
 
@@ -73,6 +73,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
+    this.annotationSet$ = this.store.pipe(select(fromStore.getAnnotationSet)).pipe(tap(console.log));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(
@@ -94,7 +95,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
         this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
-        // this.annotationSet = this.api.getAnnotationSet(this.url).pipe(tap(console.log));
+        // this.annotationSet$ = this.api.getAnnoSet(this.url).pipe(tap(console.log));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
@@ -102,7 +103,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
     if (changes.enableAnnotations && this.enableAnnotations) {
       this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
-      // this.annotationSet = this.api.getAnnotationSet(this.url).pipe(tap(console.log));
+      // this.annotationSet$ = this.api.getAnnoSet(this.url).pipe(tap(console.log));
     }
     this.setToolbarButtons();
   }

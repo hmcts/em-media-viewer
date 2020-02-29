@@ -292,7 +292,7 @@ describe('PdfViewerComponent', () => {
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
 
-  it('should setup annotationSet', fakeAsync(
+  it('should setup annotationSet$', fakeAsync(
     inject([AnnotationApiService], (annotationsApi) => {
       spyOn(annotationsApi, 'getOrCreateAnnotationSet')
         .and.returnValue(of({} as AnnotationSet));

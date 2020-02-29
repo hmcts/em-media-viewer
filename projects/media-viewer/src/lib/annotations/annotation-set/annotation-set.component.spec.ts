@@ -200,7 +200,7 @@ describe('AnnotationSetComponent', () => {
     expect(highlightService.initBoxHighlight).toHaveBeenCalled();
   }));
 
-  it('should not initialise box-highlight on mousedown if no annotationSet exists',
+  it('should not initialise box-highlight on mousedown if no annotationSet$ exists',
     inject([BoxHighlightCreateService], (highlightService) => {
       spyOn(highlightService, 'initBoxHighlight');
       component.drawMode = true;
@@ -244,7 +244,7 @@ describe('AnnotationSetComponent', () => {
     })
   );
 
-  it('should not update box-highlight on mousemove if no annotationSet exists',
+  it('should not update box-highlight on mousemove if no annotationSet$ exists',
     inject([BoxHighlightCreateService], (highlightService) => {
       spyOn(highlightService, 'updateBoxHighlight');
       component.annotationSet = undefined;
@@ -276,7 +276,7 @@ describe('AnnotationSetComponent', () => {
     })
   );
 
-  it('should not create box-highlight on mouseup if no annotationSet exists',
+  it('should not create box-highlight on mouseup if no annotationSet$ exists',
     inject([BoxHighlightCreateService], (highlightService) => {
       spyOn(highlightService, 'createBoxHighlight');
       component.annotationSet = undefined;

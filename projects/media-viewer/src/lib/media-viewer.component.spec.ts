@@ -92,28 +92,28 @@ describe('MediaViewerComponent', () => {
     expect(component.documentTitle).toBeNull();
   });
 
-  it('should set annotationSet when annotations enabled', () => {
+  it('should set annotationSet$ when annotations enabled', () => {
     const annotationSet = of({} as AnnotationSet);
     spyOn(api, 'getAnnotationSet').and.returnValue(annotationSet);
-    component.annotationSet = null;
+    component.annotationSet$ = null;
 
     component.enableAnnotations = true;
     component.ngOnChanges({
       enableAnnotations: new SimpleChange(false, true, false)
     });
 
-    expect(component.annotationSet).toBe(annotationSet);
+    expect(component.annotationSet$).toBe(annotationSet);
   });
 
-  it('should not set annotationSet when annotations disabled', () => {
-    component.annotationSet = null;
+  it('should not set annotationSet$ when annotations disabled', () => {
+    component.annotationSet$ = null;
 
     component.enableAnnotations = false;
     component.ngOnChanges({
       enableAnnotations: new SimpleChange(true, false, false)
     });
 
-    expect(component.annotationSet).toBe(null);
+    expect(component.annotationSet$).toBe(null);
   });
 
   it('should set annotationApiUrl', () => {

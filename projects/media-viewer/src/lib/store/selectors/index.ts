@@ -1,1 +1,1 @@
-// export * from './app.selectors';
+export * from './annotatioins.selectors';
