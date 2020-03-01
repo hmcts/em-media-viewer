@@ -82,6 +82,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   public onCommentDelete(comment: Comment) {
+    debugger;
     const annotation = this.annotationSet.annotations.find(anno => anno.id === comment.annotationId);
     annotation.comments = [];
     this.onAnnotationUpdate(annotation);

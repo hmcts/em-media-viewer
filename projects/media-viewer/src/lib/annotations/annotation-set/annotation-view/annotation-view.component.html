@@ -1,4 +1,4 @@
-<div #container class="annotation-wrapper" [tabindex]="annotation.id" (focusout)="onFocusOut($event)">
+<div #container class="annotation-wrapper" [tabindex]="anno.id" (focusout)="onFocusOut($event)">
   <mv-popup-toolbar *ngIf="selected"
                     [rectangle]="topRectangle()"
                     [zoom]="zoom"
@@ -8,16 +8,16 @@
                     (deleteHighlight)="deleteHighlight()"
                     (addOrEditComment)="addOrEditComment()">
   </mv-popup-toolbar>
-  <ng-container *ngFor="let rectangle of annotation.rectangles">
+  <ng-container *ngFor="let rectangle of anno.rectangles">
     <mv-anno-rectangle
       (select)="onSelect()"
       (update)="onRectangleUpdate($event)"
       [selected]="selected"
       [zoom]="zoom"
       [rotate]="rotate"
-      [editable]="annotation.rectangles.length<=1"
+      [editable]="anno.rectangles.length<=1"
       [rectangle]="rectangle"
-      [color]="annotation.color">
+      [color]="anno.color">
     </mv-anno-rectangle>
   </ng-container>
 </div>

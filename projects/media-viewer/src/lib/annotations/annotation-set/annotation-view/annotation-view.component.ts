@@ -11,7 +11,10 @@ import { ViewerEventService } from '../../../viewers/viewer-event.service';
 })
 export class AnnotationViewComponent {
 
-  @Input() annotation: Annotation;
+  @Input() set annotation(value) {
+    this.anno = {...value};
+  }
+  anno: Annotation;
   @Input() commentsLeftOffset: number;
   @Input() zoom: number;
   @Input() rotate: number;
@@ -28,14 +31,14 @@ export class AnnotationViewComponent {
 
   public onSelect() {
     this.selected = true;
-    this.annotationClick.emit({ annotationId: this.annotation.id, editable: false });
+    this.annotationClick.emit({ annotationId: this.anno.id, editable: false });
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
-    this.annotation.rectangles = this.annotation.rectangles.filter(r => r.id !== rectangle.id);
-    this.annotation.rectangles.push(rectangle);
+    this.anno.rectangles = this.anno.rectangles.filter(r => r.id !== rectangle.id);
+    this.anno.rectangles.push(rectangle);
 
-    this.update.emit(this.annotation);
+    this.update.emit(this.anno);
   }
 
   public onFocusOut(event: FocusEvent) {
@@ -45,14 +48,14 @@ export class AnnotationViewComponent {
   }
 
   public deleteHighlight() {
-    this.delete.emit(this.annotation);
+    this.delete.emit(this.anno);
   }
 
   public addOrEditComment() {
-    if (this.annotation.comments.length === 0) {
+    if (this.anno.comments.length === 0) {
 
-      this.annotation.comments.push({
-        annotationId: this.annotation.id,
+      this.anno.comments.push({
+        annotationId: this.anno.id,
         content: '',
         createdBy: '',
         createdByDetails: undefined,
@@ -64,11 +67,11 @@ export class AnnotationViewComponent {
       });
     }
     this.selected = true;
-    this.annotationClick.emit({ annotationId: this.annotation.id, editable: true });
+    this.annotationClick.emit({ annotationId: this.anno.id, editable: true });
     this.viewerEvents.toggleCommentsPanel(true);
   }
 
   topRectangle() {
-    return this.annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
+    return this.anno.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
   }
 }
