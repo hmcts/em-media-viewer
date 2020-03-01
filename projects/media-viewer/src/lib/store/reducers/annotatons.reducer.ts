@@ -68,6 +68,21 @@ export function reducer (
         loaded: true
       };
     }
+
+    case fromAnnotations.ADD_OR_EDIT_COMMENT: {
+      const comment = {
+        [action.payload.annotationId]: action.payload
+      };
+      const comments = {
+        ...state.comments,
+        ...comment
+      };
+      return {
+        ...state,
+        comments
+      };
+    }
+
   }
 
 

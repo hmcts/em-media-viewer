@@ -8,6 +8,7 @@ export const LOAD_ANNOTATION_SET_FAIL = '[Annotations] Load Annotation Set Fail'
 export const SAVE_ANNOTATION = '[Annotations] Save Annotation';
 export const SAVE_ANNOTATION_SUCCESS = '[Annotations] Save Annotation Success';
 export const SAVE_ANNOTATION_FAIL = '[Annotations] Save Annotation Fail';
+export const ADD_OR_EDIT_COMMENT = '[Annotations] Add or Edit Comment';
 
 
 export class LoadAnnotationSet implements Action {
@@ -40,6 +41,11 @@ export class SaveAnnotationFail implements Action {
   constructor(public payload: any) { }
 }
 
+export class AddOrEditComment implements Action {
+  readonly type = ADD_OR_EDIT_COMMENT;
+  constructor(public payload: Annotation) { }
+}
+
 
 export type AnnotationsActions =
   | LoadAnnotationSet
@@ -47,4 +53,5 @@ export type AnnotationsActions =
   | LoadAnnotationSetFail
   | SaveAnnotation
   | SaveAnnotationSuccess
-  | SaveAnnotationFail;
+  | SaveAnnotationFail
+  | AddOrEditComment;

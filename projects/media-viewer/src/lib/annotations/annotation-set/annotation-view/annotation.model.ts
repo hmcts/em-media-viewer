@@ -3,11 +3,12 @@ import { Rectangle } from './rectangle/rectangle.model';
 import { Comment } from '../../comment-set/comment/comment.model';
 
 export interface Annotation extends ApiPersisted {
-  annotationSetId: string;
-  page: number;
-  color: string;
-  comments: Comment[];
-  rectangles: Rectangle[];
-  type: string;
+  annotationSetId?: string;
+  annotationId?: string;
+  page?: number;
+  color?: string;
+  comments?: Comment[];
+  rectangles?: Rectangle[];
+  type?: string;
   id: string;
 }

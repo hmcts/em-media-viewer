@@ -18,7 +18,7 @@ export class BoxHighlightCreateService {
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
               private readonly annotationService: AnnotationEventService,
-              private store: Store<fromStore.AnnotationSetState>, ) {}
+              private store: Store<fromStore.AnnotationSetState>) {}
 
   initBoxHighlight(event: MouseEvent) {
     this.initHighlight.next(event);

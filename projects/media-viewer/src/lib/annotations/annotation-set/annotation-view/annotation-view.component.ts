@@ -3,6 +3,8 @@ import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../../store';
 
 @Component({
   selector: 'mv-annotation',
@@ -27,7 +29,9 @@ export class AnnotationViewComponent {
 
   @ViewChild('container') container: ElementRef;
 
-  constructor(private viewerEvents: ViewerEventService) {}
+  constructor(
+    private viewerEvents: ViewerEventService,
+    private store: Store<fromStore.AnnotationSetState>) {}
 
   public onSelect() {
     this.selected = true;
@@ -53,8 +57,7 @@ export class AnnotationViewComponent {
 
   public addOrEditComment() {
     if (this.anno.comments.length === 0) {
-
-      this.anno.comments.push({
+      const comment = {
         annotationId: this.anno.id,
         content: '',
         createdBy: '',
@@ -64,7 +67,19 @@ export class AnnotationViewComponent {
         lastModifiedBy: '',
         lastModifiedByDetails: undefined,
         lastModifiedDate: ''
-      });
+      };
+      this.store.dispatch(new fromStore.AddOrEditComment(comment))
+      // this.anno.comments.push({
+      //   annotationId: this.anno.id,
+      //   content: '',
+      //   createdBy: '',
+      //   createdByDetails: undefined,
+      //   createdDate: new Date().getTime().toString(),
+      //   id: uuid(),
+      //   lastModifiedBy: '',
+      //   lastModifiedByDetails: undefined,
+      //   lastModifiedDate: ''
+      // });
     }
     this.selected = true;
     this.annotationClick.emit({ annotationId: this.anno.id, editable: true });
