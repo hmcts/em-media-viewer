@@ -18,6 +18,8 @@ import { TextHighlightCreateService } from './annotation-create/text-highlight-c
 import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
+import { TagsComponent } from '../tags/tags.component';
+import { TagInputModule } from 'ngx-chips';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -110,12 +112,14 @@ describe('AnnotationSetComponent', () => {
         BoxHighlightCreateComponent,
         CommentComponent,
         RectangleComponent,
-        PopupToolbarComponent
+        PopupToolbarComponent,
+        TagsComponent
       ],
       imports: [
         FormsModule,
         HttpClientTestingModule,
-        MutableDivModule
+        MutableDivModule,
+        TagInputModule
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },

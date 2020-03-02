@@ -10,6 +10,7 @@ import { AnnotationEventService } from '../../annotation-event.service';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { CommentSetRenderService } from '../comment-set-render.service';
 import { annotationSet } from '../../../../assets/annotation-set';
+import {TagsServices} from '../../services/tags/tags.services';
 
 describe('CommentService', () => {
   let component: CommentSetComponent;
@@ -31,7 +32,8 @@ describe('CommentService', () => {
         { provide: AnnotationEventService, useValue: mockAnnotationService },
         ToolbarEventService,
         CommentService,
-        CommentSetRenderService
+        CommentSetRenderService,
+        TagsServices
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

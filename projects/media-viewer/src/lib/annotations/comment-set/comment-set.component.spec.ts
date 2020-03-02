@@ -7,11 +7,13 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AnnotationEventService } from '../annotation-event.service';
 import { annotationSet } from '../../../assets/annotation-set';
-import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
+import {TagsServices} from '../services/tags/tags.services';
+import {TagsComponent} from '../tags/tags.component';
+import {TagInputModule} from 'ngx-chips';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -45,7 +47,8 @@ describe('CommentSetComponent', () => {
       annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
       comments: [],
       rectangles: [],
-      type: 'highlight'
+      type: 'highlight',
+      tags: []
     };
 
     annotation2 = {
@@ -69,7 +72,8 @@ describe('CommentSetComponent', () => {
       annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
       comments: [],
       rectangles: [],
-      type: 'highlight'
+      type: 'highlight',
+      tags: []
     };
 
     annotation3 = {
@@ -93,7 +97,8 @@ describe('CommentSetComponent', () => {
       annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
       comments: [],
       rectangles: [],
-      type: 'highlight'
+      type: 'highlight',
+      tags: []
     };
 
     comment = {
@@ -189,18 +194,21 @@ describe('CommentSetComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CommentSetComponent,
-        CommentComponent
+        CommentComponent,
+        TagsComponent
       ],
       imports: [
         FormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TagInputModule
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
         { provide: AnnotationEventService, useValue: mockAnnotationService },
         ToolbarEventService,
         CommentService,
-        CommentSetRenderService
+        CommentSetRenderService,
+        TagsServices
       ]
     })
     .compileComponents();

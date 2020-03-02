@@ -12,7 +12,7 @@ describe('CommentsSummaryComponent', () => {
   let fixture: ComponentFixture<CommentsSummaryComponent>;
   let printService: PrintService;
 
-  const annotationSet = {
+  const annotationSet: any = {
     documentId: 'id',
     id: 'id',
     createdBy: 'user',
@@ -22,6 +22,7 @@ describe('CommentsSummaryComponent', () => {
     lastModifiedByDetails: {} as User,
     lastModifiedDate: 'modified date',
     annotations: [{
+      tags: [],
       annotationSetId: 'id',
       page: 1,
       color: 'yellow',
@@ -126,7 +127,8 @@ describe('CommentsSummaryComponent', () => {
           lastModifiedByDetails: {} as User,
           lastModifiedDate: 'modified date',
           annotationId: 'id',
-          content: 'a comment'
+          content: 'a comment',
+          tags: []
         },
         x: 12,
         y: 13

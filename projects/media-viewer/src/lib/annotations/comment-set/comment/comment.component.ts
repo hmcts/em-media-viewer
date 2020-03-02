@@ -56,7 +56,6 @@ export class CommentComponent implements OnChanges {
 
   constructor(
     private readonly commentService: CommentService,
-    private http: HttpClient,
     private tagsServices: TagsServices
   ) {
     this.MAX_COMMENT_LENGTH = 48;

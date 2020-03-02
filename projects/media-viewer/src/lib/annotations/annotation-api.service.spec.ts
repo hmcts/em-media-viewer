@@ -29,7 +29,8 @@ describe('AnnotationApiService', () => {
       lastModifiedBy: 'example@example.org',
       lastModifiedByDetails: user,
       lastModifiedDate: '2019-06-03T10:00:00Z',
-      content: 'Test comment 1'
+      content: 'Test comment 1',
+      tags: []
     },
     {
       id: '2',
@@ -40,7 +41,8 @@ describe('AnnotationApiService', () => {
       lastModifiedBy: 'example@example.org',
       lastModifiedByDetails: user,
       lastModifiedDate: '2019-06-03T10:00:00Z',
-      content: 'Test comment 2'
+      content: 'Test comment 2',
+      tags: []
     },
     {
       id: '3',
@@ -51,7 +53,8 @@ describe('AnnotationApiService', () => {
       lastModifiedBy: 'example@example.org',
       lastModifiedByDetails: user,
       lastModifiedDate: '2019-06-03T10:00:00Z',
-      content: 'Test comment 3'
+      content: 'Test comment 3',
+      tags: []
     },
   ];
 
@@ -68,7 +71,8 @@ describe('AnnotationApiService', () => {
     color: 'FFFF00',
     type: 'highlight',
     comments: comments,
-    rectangles: []
+    rectangles: [],
+    tags: []
   };
 
   const annotationSet: AnnotationSet = {
