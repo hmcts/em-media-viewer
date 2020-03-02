@@ -57,7 +57,7 @@ export class CommentComponent implements OnChanges {
 
   @Input()
   set comment(comment: Comment) {
-    this._comment = comment;
+    this._comment = {...comment};
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
     this.editor = comment.lastModifiedByDetails;

@@ -82,10 +82,14 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   public onCommentDelete(comment: Comment) {
-    debugger;
     const annotation = this.annotationSet.annotations.find(anno => anno.id === comment.annotationId);
-    annotation.comments = [];
-    this.onAnnotationUpdate(annotation);
+    const comments = [];
+    const annot = {
+      ...annotation,
+      comments
+    };
+    debugger
+    this.onAnnotationUpdate(annot);
     this.redrawComments();
   }
 
@@ -98,18 +102,18 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   public onCommentUpdate(comment: Comment) {
     const annotation = this.annotationSet.annotations.find(anno => anno.id === comment.annotationId);
-    annotation.comments[0] = comment;
-    this.onAnnotationUpdate(annotation);
+    const comments = [comment];
+    const annot = {
+      ...annotation,
+      comments
+    };
+    this.onAnnotationUpdate(annot);
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
-    this.api
-      .postAnnotation(annotation)
-      .subscribe(newAnnotation => {
-        const index = this.annotationSet.annotations.findIndex(a => a.id === newAnnotation.id);
 
-        this.annotationSet.annotations[index] = newAnnotation;
-      });
+    this.store.dispatch(new fromStore.SaveAnnotation(annotation));
+
     this.annotationService.selectAnnotation({ annotationId: annotation.id, editable: false });
   }
 

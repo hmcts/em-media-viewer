@@ -39,9 +39,10 @@ export function reducer (
                 [annotation.id]: annotation.comments[0]
               };
             }
-          }, {}
-      );
-
+            return {
+              ...commentEntities
+            };
+          }, {});
       return {
         ...state,
         annotationSet,
@@ -60,10 +61,24 @@ export function reducer (
         ...state.annotationSet,
         annotations
       };
-
+      const comments = annotationSet.annotations
+        .reduce(
+          (commentEntities: { [id: string]: Annotation }, annotation: Annotation) => {
+            console.log(annotation)
+            if (annotation.comments.length) {
+              return {
+                ...commentEntities,
+                [annotation.id]: annotation.comments[0]
+              };
+            }
+            return {
+              ...commentEntities
+            };
+          }, {});
       return {
         ...state,
         annotationSet,
+        comments,
         loading: false,
         loaded: true
       };
