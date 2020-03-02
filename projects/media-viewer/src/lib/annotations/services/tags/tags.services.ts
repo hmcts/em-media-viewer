@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of, Subject} from 'rxjs';
+import {Observable,} from 'rxjs';
 import {TagItemModel} from '../../models/tag-item.model';
-import {take, tap} from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class TagsServices {
@@ -21,16 +21,18 @@ export class TagsServices {
   }
 
   updateTagItems(items, annoId) {
-    const snakeCased = items.map(item => {
+    const snakeCasedWithId = items.map(item => {
+      const id = item.id ? item.id : uuid();
       return {
         ...item,
+        id,
         name: this.snakeCase(item.name)
       };
     });
 
     this.tagItems = {
       ...this.tagItems,
-      [annoId]: snakeCased
+      [annoId]: snakeCasedWithId
     };
     console.log(this.tagItems);
   }
