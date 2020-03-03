@@ -8,7 +8,6 @@ import { CommentService } from './comment.service';
 import {TagsComponent} from '../../tags/tags.component';
 import {TagInputModule} from 'ngx-chips';
 import {TagsServices} from '../../services/tags/tags.services';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('TextareaAutoExpandDirective', () => {

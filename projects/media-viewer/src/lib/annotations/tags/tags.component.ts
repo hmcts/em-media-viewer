@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {TagItemModel} from '../models/tag-item.model';
 import {TagsServices} from '../services/tags/tags.services';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'mv-tags',

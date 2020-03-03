@@ -20,7 +20,7 @@ export class TagsServices {
   }
 
   updateTagItems(items, annoId) {
-    const snakeCasedWithId = items.map(item => {
+    const snakeCased = items.map(item => {
       return {
         ...item,
         name: this.snakeCase(item.name)
@@ -29,15 +29,16 @@ export class TagsServices {
 
     this.tagItems = {
       ...this.tagItems,
-      [annoId]: snakeCasedWithId
+      [annoId]: snakeCased
     };
     console.log(this.tagItems);
   }
 
   private snakeCase = string => {
-    return string.replace(/\W+/g, " ")
-      .split(/ |\B(?=[A-Z])/)
-      .map(word => word.toLowerCase())
-      .join('_');
+    // transform string_to_snake_case
+    return string.replace(/\W+/g, " ")  // find space
+      .split(/ |\B(?=[A-Z])/) // split it into array
+      .map(word => word.toLowerCase()) // transform to lover case
+      .join('_'); // trun array into sting using _
   };
 }

@@ -6,10 +6,8 @@ import { User } from '../../models/user.model';
 import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
 import { SelectionAnnotation } from '../../annotation-event.service';
 import { CommentService } from './comment.service';
-import {Observable, of} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {TagItemModel} from '../../models/tag-item.model';
-import {TagsServices} from '../../services/tags/tags.services';
+import { TagItemModel } from '../../models/tag-item.model';
+import { TagsServices } from '../../services/tags/tags.services';
 
 @Component({
   selector: 'mv-anno-comment',

@@ -4,13 +4,12 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { AnnotationSet } from './annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-import {BehaviorSubject, of, Subscription} from 'rxjs';
+import { Subscription} from 'rxjs';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
 import { CommentService } from '../comment-set/comment/comment.service';
 import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
-import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-annotation-set',
