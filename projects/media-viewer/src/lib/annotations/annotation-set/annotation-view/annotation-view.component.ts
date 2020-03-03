@@ -53,7 +53,7 @@ export class AnnotationViewComponent {
       this.annotation.comments.push({
         annotationId: this.annotation.id,
         content: '',
-        createdBy: '',
+        createdBy: this.annotation.createdBy,
         createdByDetails: undefined,
         createdDate: new Date().getTime().toString(),
         id: uuid(),

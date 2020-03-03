@@ -15,14 +15,13 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { CommentComponent } from './comment/comment.component';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
-import {Observable, Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
-import {TagItemModel} from '../models/tag-item.model';
+
 import {TagsServices} from '../services/tags/tags.services';
-import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-comment-set',
