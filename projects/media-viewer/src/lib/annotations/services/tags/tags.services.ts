@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable,} from 'rxjs';
-import {TagItemModel} from '../../models/tag-item.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { TagItemModel } from '../../models/tag-item.model';
 
 @Injectable()
 export class TagsServices {
@@ -31,7 +31,6 @@ export class TagsServices {
       ...this.tagItems,
       [annoId]: snakeCased
     };
-    console.log(this.tagItems);
   }
 
   private snakeCase = string => {

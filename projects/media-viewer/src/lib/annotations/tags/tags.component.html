@@ -14,7 +14,7 @@
     [errorMessages]="errorMessages"
     [onlyFromAutocomplete]="false">
     <tag-input-dropdown
-      [autocompleteItems]="autocompleteItems"
+      [autocompleteObservable]="requestAutocompleteItems"
       [displayBy]="'label'"
       [identifyBy]="'name'"
       [zIndex]="10000"

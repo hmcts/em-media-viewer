@@ -23,6 +23,7 @@ export class CommentComponent implements OnChanges {
   originalComment: string;
   fullComment: string;
   author: User;
+  createdBy: string;
   editor: User;
   _comment: Comment;
   _editable: boolean;
@@ -45,9 +46,6 @@ export class CommentComponent implements OnChanges {
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
-  @Input() set allTags(allTags) {
-    this.autocompleteTagItems = allTags ? allTags : [];
-  }
   tagItems: TagItemModel[];
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
@@ -70,6 +68,7 @@ export class CommentComponent implements OnChanges {
     this._comment = comment;
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
+    this.createdBy = comment.createdBy;
     this.editor = comment.lastModifiedByDetails;
     this.originalComment = comment.content;
     this.fullComment = this.originalComment;

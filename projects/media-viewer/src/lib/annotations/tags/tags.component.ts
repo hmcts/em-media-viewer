@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {TagItemModel} from '../models/tag-item.model';
 import {TagsServices} from '../services/tags/tags.services';
 import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'mv-tags',
@@ -10,8 +11,7 @@ import {FormControl} from '@angular/forms';
 })
 export class TagsComponent {
   @Input() tagItems: TagItemModel[];
-  @Input() autocompleteItems: TagItemModel[];
-
+  @Input() userId: string;
   @Input() editable: boolean;
   @Input() annoId: string;
   public validators = [this.minLength, this.maxLength20];
@@ -24,7 +24,11 @@ export class TagsComponent {
 
   onUpdateTags(value) {
     this.tagsServices.updateTagItems(value, this.annoId);
-  }
+  };
+
+  public requestAutocompleteItems = (text: string): Observable<any[]> => {
+    return this.tagsServices.getAllTags(this.userId);
+  };
 
   private minLength(control: FormControl) {
     if (control.value.length < 2) {
