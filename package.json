@@ -19,7 +19,7 @@
     "build:lib": "npm install && npm run install:js-dependencies && cd projects/media-viewer && ng build",
     "npm-pack": "cd dist/media-viewer && npm pack",
     "package": "npm run build:lib && npm run copy:files && npm run npm-pack",
-    "test": "cd projects/media-viewer; ng test",
+    "test": "ng test",
     "lint": "ng lint",
     "test:codacy-upload": "cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
     "test:coveralls-upload": "cat ./reports/tests/coverage/ng/lcov.info | coveralls",
