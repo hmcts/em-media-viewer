@@ -96,6 +96,30 @@ describe('CommentComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should subscribe to commentSearch event',
+    inject([AnnotationEventService],
+      fakeAsync((annotationEvents: AnnotationEventService) => {
+        annotationEvents.commentSearch.next('searchText');
+
+        tick(100);
+        expect(component.searchString).toBeUndefined();
+
+        tick(200);
+        expect(component.searchString).toBe('searchText');
+    }))
+  );
+
+  it('should unsubscribe',
+    inject([AnnotationEventService],
+      fakeAsync((annotationEvents: AnnotationEventService) => {
+        component.ngOnDestroy();
+        annotationEvents.commentSearch.next('searchText');
+
+        tick(300);
+        expect(component.searchString).toBeUndefined();
+    }))
+  );
+
   it('should set comment if date modified exists', () => {
     component.comment = {...mockComment};
 
@@ -126,7 +150,9 @@ describe('CommentComponent', () => {
 
   it('should set the unsavedChanges value to false', () => {
     component.originalComment = 'old comment';
+
     component.onCommentChange('old comment');
+
     expect(component.hasUnsavedChanges).toBeFalsy();
   });
 

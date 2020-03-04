@@ -7,6 +7,7 @@ import {
   OnChanges,
   OnDestroy,
   Output,
+  SimpleChanges,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
@@ -27,6 +28,7 @@ export class CommentComponent implements OnChanges, OnDestroy {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
+
   lastUpdate: string;
   originalComment: string;
   fullComment: string;
