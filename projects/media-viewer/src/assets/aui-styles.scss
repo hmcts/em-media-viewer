@@ -11,6 +11,8 @@
 @import "sass/error-message";
 @import "sass/tags";
 @import "sass/comment-set-header";
+@import "sass/box-highlight";
+@import "sass/comment-set-toggle";
 
 div.govuk-prose-scope, p {
   white-space: pre-wrap;

@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'mv-comment-set-toggle',
   templateUrl: './comment-set-toggle.component.html',
-  styleUrls: ['./comment-set-toggle.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class CommentSetToggleComponent implements AfterContentInit, OnDestroy {
