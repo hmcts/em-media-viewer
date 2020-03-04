@@ -6,7 +6,8 @@ import {
   OnChanges,
   OnDestroy,
   Output,
-  SimpleChanges
+  SimpleChanges,
+  ViewEncapsulation
 } from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {
@@ -29,7 +30,8 @@ enum SupportedContentTypes {
 
 @Component({
   selector: 'mv-media-viewer',
-  templateUrl: './media-viewer.component.html'
+  templateUrl: './media-viewer.component.html',
+  encapsulation: ViewEncapsulation.None
 })
 export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
 
