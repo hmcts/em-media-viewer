@@ -1,18 +1,17 @@
-@import "~ngx-chips/core/styles/core/core";
-
-$foundation-primary: #1779ba;
-$foundation-primary-dark: darken($foundation-primary, 10%);
-
 mv-anno-comment {
-  form {
-    position: absolute;
+  form.aui-comment {
     width: 85%;
     left: 0;
     right: 0;
     z-index: 1;
     margin: auto;
-    background-color: #ffffff;
-    padding: 20px 20px 0;
+    background-color: govuk-colour(white);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.30), inset 0 -1px 0 0 #DDDDDD;
+    padding: 20px 20px 5px 20px;
+
+    @include mq($from: desktop) {
+      position: relative; top: 578px;
+    }
   }
 
   span, textarea, p {
@@ -99,68 +98,36 @@ mv-anno-comment {
     margin-bottom: 10px;
   }
 
+  .aui-comment__header {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: govuk-spacing(5);
+  }
 
 
-}
-
-$foundation-theme: (
-  container-border-bottom: 1px solid $foundation-primary
-);
-
-$foundation-tag-theme: (
-  background: $foundation-primary,
-  background-focused: $foundation-primary-dark,
-  background-active: $foundation-primary-dark,
-  background-hover: $foundation-primary-dark,
-  color: #fff,
-  color-hover: #fff,
-  border-radius: 2px
-);
-
-$foundation-icon-theme: (
-  fill: #fff,
-  fill-focus: #eee,
-  transition: all 0.35s
-);
-
-:ng-deep .ng2-tag-input.foundation-theme {
-  @include tag-input-theme($foundation-theme);
-}
-
-:ng-deep .ng2-tag-input.foundation-theme tag {
-  @include tag-theme($foundation-tag-theme);
-}
-
-:ng-deep .ng2-tag-input.foundation-theme tag delete-icon {
-  @include icon-theme($foundation-icon-theme);
-}
-
-button {
-  font-size: 1rem;
-}
-
-.aui-comment__private {
-  background: url("/assets/images/lock_48px.svg") 0 0 no-repeat;
-  background-size: 20px 20px;
-  padding-left: 25px;
-  width: 55px;
-  text-transform: uppercase;
-  color: #990000;
-  font-size: .8rem;
-  display: block;
-  margin-bottom: 10px;
-  position: relative;
-  font-weight: bold;
-  padding-top: 2px;
-  &:after {
+  .aui-comment__author {
+    @include govuk-font($size: 19);
     display: block;
-    content: '';
-    border: 1px solid #990000;
-    width: 58px;
-    height: 18px;
-    position: absolute;
-    right: 0;
-    top: 0;
+    font-weight: bold;
+  }
+
+
+  .aui-comment__meta {
+    @include govuk-font($size: 16);
+    color: $govuk-secondary-text-colour;
+  }
+
+
+  .aui-comment__footer {
+    font-size: .1px;
+
+    .govuk-button {
+      margin-right: govuk-spacing(2);
+    }
 
   }
+
 }
+
+
+
+

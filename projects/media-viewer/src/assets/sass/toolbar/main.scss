@@ -53,14 +53,6 @@ html[dir='rtl'] #viewerContainer {
   box-shadow: inset -1px 0 0 hsla(0,0%,100%,.05);
 }
 
-.toolbar {
-  position: relative;
-  left: 0;
-  right: 0;
-  z-index: 5;
-  cursor: default;
-}
-
 #toolbarContainer {
   width: 100%;
 }
