@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { fakeAsync, inject, TestBed } from '@angular/core/testing';
 import { AnnotationApiService } from './annotation-api.service';
 import { AnnotationSet } from './annotation-set/annotation-set.model';
-import { User } from './user/user.model';
+import { User } from './models/user.model';
 import { Annotation } from './annotation-set/annotation-view/annotation.model';
 import { of } from 'rxjs';
 import { Comment } from './comment-set/comment/comment.model';
@@ -29,7 +29,8 @@ describe('AnnotationApiService', () => {
       lastModifiedBy: 'example@example.org',
       lastModifiedByDetails: user,
       lastModifiedDate: '2019-06-03T10:00:00Z',
-      content: 'Test comment 1'
+      content: 'Test comment 1',
+      tags: []
     },
     {
       id: '2',
@@ -40,7 +41,8 @@ describe('AnnotationApiService', () => {
       lastModifiedBy: 'example@example.org',
       lastModifiedByDetails: user,
       lastModifiedDate: '2019-06-03T10:00:00Z',
-      content: 'Test comment 2'
+      content: 'Test comment 2',
+      tags: []
     },
     {
       id: '3',
@@ -51,7 +53,8 @@ describe('AnnotationApiService', () => {
       lastModifiedBy: 'example@example.org',
       lastModifiedByDetails: user,
       lastModifiedDate: '2019-06-03T10:00:00Z',
-      content: 'Test comment 3'
+      content: 'Test comment 3',
+      tags: []
     },
   ];
 
@@ -68,7 +71,8 @@ describe('AnnotationApiService', () => {
     color: 'FFFF00',
     type: 'highlight',
     comments: comments,
-    rectangles: []
+    rectangles: [],
+    tags: []
   };
 
   const annotationSet: AnnotationSet = {

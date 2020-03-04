@@ -13,25 +13,29 @@
       {{ lastUpdate | date: 'd MMMM y h:mm a' }}
     </time>
   </div>
-  <ng-container *ngIf="selected">
-    <textarea #textArea
-              mvTextAreaAutoExpand
-              type="text"
-              required
-              name="content"
-              [maxlength]="COMMENT_CHAR_LIMIT"
-              (focusout)="onFocusOut()"
-              [ngClass]="commentStyle()"
-              [(ngModel)]="fullComment"
-              [readOnly]="!editable"
-              (ngModelChange)="reRenderComments(); onCommentChange($event);"
-              aria-label="comment">
-    </textarea>
-  </ng-container>
-  <div *ngIf="!selected" class="unselectedText">
-    {{fullComment}}
-  </div>
-  <ng-container *ngIf="selected || this.editable">
+
+  <mv-tags
+    [tagItems]="tagItems"
+    [userId]="createdBy"
+    [editable]="editable"
+    [annoId]="_comment.annotationId">
+  </mv-tags>
+
+  <textarea #textArea
+            [style.display]="selected && editable ? 'block' : 'none'"
+            mvTextAreaAutoExpand
+            type="text"
+            required
+            name="content"
+            [maxlength]="COMMENT_CHAR_LIMIT"
+            [ngClass]="commentStyle()"
+            [(ngModel)]="fullComment"
+            (ngModelChange)="reRenderComments(); onCommentChange($event);"
+            aria-label="comment">
+  </textarea>
+  <p *ngIf="!editable" [ngClass]="{'unselectedText' : !selected}">{{fullComment}}</p>
+  <ng-container
+    *ngIf="selected || editable || (!fullComment.length && (tagItems && !tagItems.length))">
     <div class="aui-comment__footer commentBtns">
       <button *ngIf="!editable; else Save"
               class="govuk-button" type="button" role="button"
