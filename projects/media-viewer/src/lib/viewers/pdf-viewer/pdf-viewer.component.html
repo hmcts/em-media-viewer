@@ -1,13 +1,32 @@
-<mv-comment-set-toggle *ngIf="enableAnnotations"></mv-comment-set-toggle>
-<div #viewerContainer
+<mv-comment-set-toggle *ngIf="enableAnnotations && annotationSet"></mv-comment-set-toggle>
+
+<mv-comment-set-header [ngClass]="{'show-comments-panel': showCommentsPanel}"
+  [showCommentSummary]="toolbarButtons.showCommentSummary"
+  (showCommentSummaryDialog)="toggleCommentsSummary()">
+</mv-comment-set-header>
+
+<div grabNDrag [dragY]="enableGrabNDrag"
+     #viewerContainer
      class="pdfContainer"
      [ngStyle]="{ height: height }"
-     [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage, 'show-comments-panel': showCommentsPanel }">
-  <div #pdfViewer (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" class="pdfViewer"
+     [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage, 'show-comments-panel': showCommentsPanel, 'grabNDrag': enableGrabNDrag }">
+  <div grabNDrag [dragX]="enableGrabNDrag"
+       #pdfViewer
+       class="pdfViewer"
+       (mousedown)="onMouseDown($event)"
+       (mouseup)="onMouseUp($event)"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
   </div>
+  <mv-comment-set #commentPanel
+                  *ngIf="enableAnnotations && annotationSet"
+                  [annotationSet]="annotationSet"
+                  [zoom]="zoom"
+                  [rotate]="rotation"
+                  [height]="pdfViewer.offsetHeight"
+                  [pageHeights]="pageHeights">
+  </mv-comment-set>
 </div>
 <mv-error-message [errorMessage]="errorMessage" *ngIf="errorMessage"></mv-error-message>

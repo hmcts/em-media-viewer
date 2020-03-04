@@ -46,7 +46,6 @@ describe('BoxHighlightCreateService', () => {
 
     expect(annotationApi.postAnnotation).toHaveBeenCalled();
     expect(annotationEvents.selectAnnotation).toHaveBeenCalledWith({ annotationId: 'annoId', editable: false });
-    expect(mockDrawModeSubject.next).toHaveBeenCalledWith(false);
   }));
 
 });

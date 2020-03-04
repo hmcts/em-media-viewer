@@ -1,31 +1,37 @@
 import {
-  Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild,
-  ViewChildren
+  Component,
+  ElementRef,
+  Input, OnChanges,
+  OnDestroy,
+  OnInit,
+  QueryList, SimpleChanges,
+  ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
-import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { CommentComponent } from './comment/comment.component';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
 import { Subscription } from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
+import { TagsServices } from '../services/tags/tags.services';
+import {TagItemModel} from '../models/tag-item.model';
 
 @Component({
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
-})
-export class CommentSetComponent implements OnInit, OnDestroy {
+ })
+export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() annotationSet: AnnotationSet;
-  @Input() page: number;
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() height: number;
+  @Input() pageHeights = [];
 
   comments: Comment[];
   selectAnnotation: SelectionAnnotation;
@@ -40,11 +46,23 @@ export class CommentSetComponent implements OnInit, OnDestroy {
               private readonly api: AnnotationApiService,
               private readonly annotationService: AnnotationEventService,
               private readonly commentService: CommentService,
-              private readonly renderService: CommentSetRenderService) {
+              private readonly renderService: CommentSetRenderService,
+              private tagsServices: TagsServices) {
     this.clearSelection();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    // set the annotation tags state
+    if (changes.annotationSet) {
+      this.annotationSet.annotations.map(annotation => {
+        if (annotation.comments.length) {
+          this.tagsServices.updateTagItems(annotation.tags, annotation.id);
+        }
+      });
+    }
   }
 
   ngOnInit() {
+    this.commentService.setCommentSet(this);
     this.subscriptions.push(
       this.annotationService.getSelectedAnnotation()
         .subscribe(selectedAnnotation => this.selectAnnotation = selectedAnnotation),
@@ -53,31 +71,11 @@ export class CommentSetComponent implements OnInit, OnDestroy {
         this.showCommentsPanel = toggle;
       })
     );
-    this.commentService.updateCommentSets(this.page, this);
   }
 
   ngOnDestroy() {
     if (this.subscriptions.length > 0) {
       this.subscriptions.forEach(subscription => subscription.unsubscribe());
-    }
-  }
-
-  addToDOM(pageEvent: PageEvent) {
-    this.updateView(pageEvent);
-    const pageContainer = this.renderService.createPageContainer(pageEvent);
-    pageContainer.appendChild(this.container.nativeElement);
-  }
-
-  updateView(pageRenderEvent: PageEvent) {
-    this.height = pageRenderEvent.source.div.clientHeight;
-    this.zoom = pageRenderEvent.source.scale;
-    this.rotate = pageRenderEvent.source.rotation;
-    this.commentService.updateCommentSets(pageRenderEvent.pageNumber, this);
-  }
-
-  public getCommentsOnPage(): Annotation[] {
-    if (this.annotationSet) {
-      return this.annotationSet.annotations.filter(a => a.page === this.page);
     }
   }
 
@@ -95,13 +93,14 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   redrawComments() {
     setTimeout(() => {
       const componentList: CommentComponent[] = this.commentComponents.map(comment => comment);
-      this.renderService.redrawComponents(componentList, this.height, this.rotate, this.zoom);
-    });
+      this.renderService.redrawComponents(componentList, this.pageHeights, this.rotate, this.zoom);
+    }, 0);
   }
 
-  public onCommentUpdate(comment: Comment) {
-    const annotation = this.annotationSet.annotations.find(anno => anno.id === comment.annotationId);
-    annotation.comments[0] = comment;
+  public onCommentUpdate(payload: {comment: Comment, tags: TagItemModel[]} ) {
+    const annotation = this.annotationSet.annotations.find(anno => anno.id === payload.comment.annotationId);
+    annotation.comments[0] = payload.comment;
+    annotation.tags = payload.tags;
     this.onAnnotationUpdate(annotation);
   }
 
@@ -132,10 +131,8 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   }
 
   allCommentsSaved() {
-    this.commentService.allCommentSetsSaved();
+    this.commentService.allCommentsSaved();
   }
 
-  allCommentsSavedInSet(): boolean {
-    return this.commentComponents.some(comment => comment.hasUnsavedChanges === true);
-  }
+
 }

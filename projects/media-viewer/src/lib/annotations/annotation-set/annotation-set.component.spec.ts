@@ -1,5 +1,5 @@
 import { AnnotationSetComponent } from './annotation-set.component';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { RectangleComponent } from './annotation-view/rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../assets/annotation-set';
@@ -18,6 +18,8 @@ import { TextHighlightCreateService } from './annotation-create/text-highlight-c
 import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
+import { TagsComponent } from '../tags/tags.component';
+import { TagInputModule } from 'ngx-chips';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -110,12 +112,14 @@ describe('AnnotationSetComponent', () => {
         BoxHighlightCreateComponent,
         CommentComponent,
         RectangleComponent,
-        PopupToolbarComponent
+        PopupToolbarComponent,
+        TagsComponent
       ],
       imports: [
         FormsModule,
         HttpClientTestingModule,
-        MutableDivModule
+        MutableDivModule,
+        TagInputModule
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
@@ -312,14 +316,15 @@ describe('AnnotationSetComponent', () => {
   );
 
   it('should create text highlight',
-    inject([TextHighlightCreateService, ViewerEventService], (highlightService, viewerEvents) => {
+    inject([TextHighlightCreateService, ViewerEventService], fakeAsync((highlightService, viewerEvents) => {
       spyOn(highlightService, 'createTextHighlight');
       component.ngOnInit();
 
-      viewerEvents.textSelected(undefined);
+      viewerEvents.textSelected({ page: 1 } as Highlight);
+      tick();
 
       expect(highlightService.createTextHighlight)
-        .toHaveBeenCalledWith(undefined, component.annotationSet,
+        .toHaveBeenCalledWith({ page: 1 }, component.annotationSet,
         { zoom: component.zoom,
           rotate: component.rotate,
           pageHeight: component.height,
@@ -327,7 +332,7 @@ describe('AnnotationSetComponent', () => {
           number: component.page
         });
     })
-  );
+  ));
 
   it('should use addToDOM method to set values', () => {
     const mockRealElement = document.createElement('div');

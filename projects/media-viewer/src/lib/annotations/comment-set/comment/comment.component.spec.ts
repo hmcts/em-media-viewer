@@ -3,6 +3,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommentComponent } from './comment.component';
 import { FormsModule } from '@angular/forms';
 import { CommentService } from './comment.service';
+import {TagsServices} from '../../services/tags/tags.services';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('CommentComponent', () => {
   let component: CommentComponent;
@@ -26,6 +28,7 @@ describe('CommentComponent', () => {
         'email': 'jeroen.rijks@hmcts.net'
       },
     content: 'This is a comment.',
+    tags: []
   };
 
   const mockRectangle = {
@@ -60,10 +63,12 @@ describe('CommentComponent', () => {
         CommentComponent
       ],
       imports: [
-        FormsModule
+        FormsModule,
+        HttpClientTestingModule,
       ],
       providers: [
-        CommentService
+        CommentService,
+        TagsServices
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA

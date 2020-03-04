@@ -1,8 +1,10 @@
 .comments-panel {
-  position: relative;
+  position: absolute;
+  overflow-y: auto;
+  top: 0;
+  right: 0;
   z-index: 1;
   width: 2%;
-  float: right;
 }
 
 .comments-panel.expanded {
@@ -13,5 +15,4 @@
   border-color: #969494;
   border-width: thin;
   padding-top: -10px;
-  border-radius: 0.5rem;
 }

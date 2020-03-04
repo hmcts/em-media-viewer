@@ -1,3 +1,8 @@
+@import "~ngx-chips/core/styles/core/core";
+
+$foundation-primary: #1779ba;
+$foundation-primary-dark: darken($foundation-primary, 10%);
+
 mv-anno-comment {
   form {
     position: absolute;
@@ -10,8 +15,8 @@ mv-anno-comment {
     padding: 20px 20px 0;
   }
 
-  span, textarea {
-    font-size: 19px;
+  span, textarea, p {
+    font-size: 1rem;
     font-family: nta,Arial,sans-serif;
     color: #000000;
   }
@@ -41,6 +46,8 @@ mv-anno-comment {
 
   .commentBtns {
     height: 50px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
   }
 
   .expanded {
@@ -61,7 +68,7 @@ mv-anno-comment {
   }
 
   time {
-    font-size: 19px;
+    font-size: 0.88rem;
     color: #6F777B;
   }
 
@@ -78,11 +85,12 @@ mv-anno-comment {
   }
 
   .aui-comment__header {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
   }
 
   .unselectedText {
-    font-size: 19px;
+    font-size: 1rem;
     font-family: nta,Arial,sans-serif;
     color: #000000;
     overflow: hidden;
@@ -90,5 +98,69 @@ mv-anno-comment {
     white-space: nowrap;
     margin-bottom: 10px;
   }
+
+
+
 }
 
+$foundation-theme: (
+  container-border-bottom: 1px solid $foundation-primary
+);
+
+$foundation-tag-theme: (
+  background: $foundation-primary,
+  background-focused: $foundation-primary-dark,
+  background-active: $foundation-primary-dark,
+  background-hover: $foundation-primary-dark,
+  color: #fff,
+  color-hover: #fff,
+  border-radius: 2px
+);
+
+$foundation-icon-theme: (
+  fill: #fff,
+  fill-focus: #eee,
+  transition: all 0.35s
+);
+
+:ng-deep .ng2-tag-input.foundation-theme {
+  @include tag-input-theme($foundation-theme);
+}
+
+:ng-deep .ng2-tag-input.foundation-theme tag {
+  @include tag-theme($foundation-tag-theme);
+}
+
+:ng-deep .ng2-tag-input.foundation-theme tag delete-icon {
+  @include icon-theme($foundation-icon-theme);
+}
+
+button {
+  font-size: 1rem;
+}
+
+.aui-comment__private {
+  background: url("../../assets/images/lock_48px.svg") 0 0 no-repeat;
+  background-size: 20px 20px;
+  padding-left: 25px;
+  width: 55px;
+  text-transform: uppercase;
+  color: #990000;
+  font-size: .8rem;
+  display: block;
+  margin-bottom: 10px;
+  position: relative;
+  font-weight: bold;
+  padding-top: 2px;
+  &:after {
+    display: block;
+    content: '';
+    border: 1px solid #990000;
+    width: 58px;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+  }
+}

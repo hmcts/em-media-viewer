@@ -35,12 +35,14 @@ export class CommentsSummaryComponent implements OnChanges {
   generateCommentsSummary() {
     this.annotationSet.annotations
       .forEach(annotation => {
-        this.comments.push({
-          page: annotation.page,
-          comment: annotation.comments[0],
-          x: annotation.rectangles[0].x,
-          y: annotation.rectangles[0].y
-        });
+        if (annotation.comments.length) {
+          this.comments.push({
+            page: annotation.page,
+            comment: annotation.comments[0],
+            x: annotation.rectangles[0].x,
+            y: annotation.rectangles[0].y
+          });
+        }
       });
   }
 

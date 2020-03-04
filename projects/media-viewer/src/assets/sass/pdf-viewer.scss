@@ -6,24 +6,6 @@ mv-pdf-viewer {
     background-color: #dee0e2;
   }
 
-  .pageContainer {
-    overflow: auto;
-  }
-
-  .pageWrapper {
-    overflow-x: auto;
-    width: 100%;
-    float: left;
-  }
-
-  .pdfContainer.annotations .pageWrapper {
-    width: 97%;
-  }
-
-  .pdfContainer.annotations.show-comments-panel .pageWrapper {
-    width: 75%;
-  }
-
   .hidden {
     display:none!important;
   }
@@ -36,7 +18,7 @@ mv-pdf-viewer {
     z-index: 1000;
   }
 
-  .highlightMode > .pageContainer > .pageWrapper > .page >.textLayer {
+  .highlightMode > .page > .textLayer {
     z-index: 1000;
   }
 
@@ -55,4 +37,26 @@ mv-pdf-viewer {
   .annotationLayer * {
     z-index: 2;
   }
+
+  .commentSummaryHeader {
+    top: 37px
+  }
+
+  .pdfViewer {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .show-comments-panel > .pdfViewer {
+    width: 75%;
+  }
+
+  .grabNDrag {
+    .pdfViewer {
+      & > * {
+        pointer-events: none;
+      }
+    }
+  }
+
 }

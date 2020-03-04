@@ -3,23 +3,23 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges, OnDestroy,
+  OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {
   defaultImageOptions,
   defaultPdfOptions,
   defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
 } from './toolbar/toolbar-button-visibility.service';
-import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
-import { ToolbarEventService } from './toolbar/toolbar-event.service';
-import { AnnotationApiService } from './annotations/annotation-api.service';
-import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
-import { CommentService } from './annotations/comment-set/comment/comment.service';
-import { Subscription } from 'rxjs';
+import {AnnotationSet} from './annotations/annotation-set/annotation-set.model';
+import {ToolbarEventService} from './toolbar/toolbar-event.service';
+import {AnnotationApiService} from './annotations/annotation-api.service';
+import {ResponseType, ViewerException} from './viewers/error-message/viewer-exception.model';
+import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
 
 enum SupportedContentTypes {
@@ -70,8 +70,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   ngAfterContentInit() {
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
-    this.subscriptions.push(this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)));
-    this.subscriptions.push(this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes));
+    this.subscriptions.push(
+      this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)),
+      this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes)
+    );
   }
 
   contentTypeUnsupported(): boolean {
@@ -86,14 +88,14 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
-        this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
+        this.annotationSet = this.api.getAnnotationSet(this.url);
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
       }
     }
     if (changes.enableAnnotations && this.enableAnnotations) {
-      this.annotationSet = this.api.getOrCreateAnnotationSet(this.url);
+      this.annotationSet = this.api.getAnnotationSet(this.url);
     }
     this.setToolbarButtons();
   }

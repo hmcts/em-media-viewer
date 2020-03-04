@@ -4,7 +4,7 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { AnnotationSet } from './annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-import { Subscription } from 'rxjs';
+import { Subscription} from 'rxjs';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
 import { CommentService } from '../comment-set/comment/comment.service';
@@ -115,7 +115,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   private createTextHighlight(highlight) {
-    this.textHighlightService.createTextHighlight(highlight, this.annotationSet,
+    if (this.height && this.width) {
+      this.textHighlightService.createTextHighlight(highlight, this.annotationSet,
         {
           zoom: this.zoom,
           rotate: this.rotate,
@@ -123,6 +124,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           pageWidth: this.width,
           number: highlight.page
         });
+    }
   }
 
   selectAnnotation(annotationId) {
@@ -145,5 +147,9 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       'rotation rot' + this.rotate,
       this.drawMode ? 'drawMode' : ''
     ];
+  }
+
+  toggleCommentsSummary() {
+    this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
 }

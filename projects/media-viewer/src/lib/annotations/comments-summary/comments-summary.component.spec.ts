@@ -4,7 +4,7 @@ import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Comment } from '../comment-set/comment/comment.model';
-import { User } from '../user/user.model';
+import { User } from '../models/user.model';
 import {ViewerEventService} from '../../viewers/viewer-event.service';
 
 describe('CommentsSummaryComponent', () => {
@@ -12,7 +12,7 @@ describe('CommentsSummaryComponent', () => {
   let fixture: ComponentFixture<CommentsSummaryComponent>;
   let printService: PrintService;
 
-  const annotationSet = {
+  const annotationSet: any = {
     documentId: 'id',
     id: 'id',
     createdBy: 'user',
@@ -22,6 +22,7 @@ describe('CommentsSummaryComponent', () => {
     lastModifiedByDetails: {} as User,
     lastModifiedDate: 'modified date',
     annotations: [{
+      tags: [],
       annotationSetId: 'id',
       page: 1,
       color: 'yellow',
@@ -114,7 +115,6 @@ describe('CommentsSummaryComponent', () => {
   it('should generate comment summary collection', () => {
     component.annotationSet = annotationSet;
     component.generateCommentsSummary();
-
     expect(component.comments).toEqual([{
       page: 1,
         comment: {
@@ -126,11 +126,11 @@ describe('CommentsSummaryComponent', () => {
           lastModifiedByDetails: {} as User,
           lastModifiedDate: 'modified date',
           annotationId: 'id',
-          content: 'a comment'
+          content: 'a comment',
         },
         x: 12,
         y: 13
-    }]);
+    }] as any);
   });
 
   it('should order the comments', () => {

@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { PopupToolbarComponent } from './popup-toolbar/popup-toolbar.component';
 import { Annotation } from './annotation.model';
 import { MutableDivModule } from 'mutable-div';
+import {TagsComponent} from '../../tags/tags.component';
+import {TagInputModule} from 'ngx-chips';
 
 describe('AnnotationComponent', () => {
   let component: AnnotationViewComponent;
@@ -32,7 +34,8 @@ describe('AnnotationComponent', () => {
     annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
     comments: [],
     rectangles: [],
-    type: 'highlight'
+    type: 'highlight',
+    tags: []
   };
 
   beforeEach(() => {
@@ -41,11 +44,13 @@ describe('AnnotationComponent', () => {
         AnnotationViewComponent,
         CommentComponent,
         RectangleComponent,
-        PopupToolbarComponent
+        PopupToolbarComponent,
+        TagsComponent
       ],
       imports: [
         FormsModule,
-        MutableDivModule
+        MutableDivModule,
+        TagInputModule
       ]
     })
     .compileComponents();

@@ -1,5 +1,5 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Subject } from 'rxjs';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { of, Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
@@ -15,11 +15,12 @@ import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation.service';
 import { AnnotationEventService } from '../../annotations/annotation-event.service';
-import { CommentSetService } from './comment-set.service';
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BoxHighlightCreateService } from '../../annotations/annotation-set/annotation-create/box-highlight-create.service';
 import { TextHighlightCreateService } from '../../annotations/annotation-set/annotation-create/text-highlight-create.service';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import { GrabNDragDirective } from '../grab-n-drag.directive';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -34,12 +35,16 @@ describe('PdfViewerComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PdfViewerComponent, ErrorMessageComponent, AnnotationSetComponent],
+      declarations: [
+        PdfViewerComponent,
+        ErrorMessageComponent,
+        AnnotationSetComponent,
+        GrabNDragDirective
+      ],
       imports: [HttpClientTestingModule],
       providers: [
         PdfAnnotationService,
         AnnotationApiService,
-        CommentSetService,
         CommentService,
         AnnotationEventService,
         ToolbarEventService,
@@ -115,16 +120,14 @@ describe('PdfViewerComponent', () => {
 
     toolbarEvents.printSubject.next();
     toolbarEvents.downloadSubject.next();
-    toolbarEvents.rotateSubject.next();
-    toolbarEvents.zoomSubject.next();
-    toolbarEvents.stepZoomSubject.next();
+    toolbarEvents.zoomSubject.next(0.2);
+    toolbarEvents.stepZoomSubject.next(0.2);
     toolbarEvents.searchSubject.next();
     toolbarEvents.setCurrentPageSubject.next();
     toolbarEvents.changePageByDeltaSubject.next();
 
     expect(printService.printDocumentNatively).toHaveBeenCalledWith(component.url);
     expect(mockWrapper.downloadFile).toHaveBeenCalled();
-    expect(mockWrapper.rotate).toHaveBeenCalled();
     expect(mockWrapper.setZoom).toHaveBeenCalled();
     expect(mockWrapper.stepZoom).toHaveBeenCalled();
     expect(mockWrapper.search).toHaveBeenCalled();
@@ -182,6 +185,7 @@ describe('PdfViewerComponent', () => {
   });
 
   it('should select the page', () => {
+    component.annotationSet = {} as AnnotationSet;
     spyOn(annotationService, 'addAnnoSetToPage');
     spyOn(viewerEvents, 'boxSelected');
     spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
@@ -212,7 +216,7 @@ describe('PdfViewerComponent', () => {
     component.enableAnnotations = true;
     component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     spyOn(mockWrapper, 'loadDocument');
-    spyOn(annotationService, 'buildAnnoSetComponents');
+    spyOn(annotationService, 'destroyComponents');
 
     component.ngOnChanges({
       url: new SimpleChange('a', component.url, true)
@@ -220,7 +224,7 @@ describe('PdfViewerComponent', () => {
     tick();
 
     expect(mockWrapper.loadDocument).toHaveBeenCalled();
-    expect(annotationService.buildAnnoSetComponents).toHaveBeenCalled();
+    expect(annotationService.destroyComponents).toHaveBeenCalled();
   }));
 
   it('should emit documentTitle when document is loaded', fakeAsync(() => {
@@ -239,7 +243,6 @@ describe('PdfViewerComponent', () => {
     annotationsDestroyed = false;
     component.enableAnnotations = true;
     spyOn(annotationService, 'buildAnnoSetComponents');
-    spyOn(annotationService, 'addCommentsToRenderedPages');
 
     component.ngOnChanges({
       enableAnnotations: new SimpleChange(false, true, false)
@@ -247,7 +250,6 @@ describe('PdfViewerComponent', () => {
     tick();
 
     expect(annotationService.buildAnnoSetComponents).toHaveBeenCalled();
-    expect(annotationService.addCommentsToRenderedPages).toHaveBeenCalled();
     expect(annotationsDestroyed).toBeFalsy();
   }));
 
@@ -255,7 +257,6 @@ describe('PdfViewerComponent', () => {
     annotationsDestroyed = false;
     component.enableAnnotations = false;
     spyOn(annotationService, 'destroyComponents');
-    spyOn(annotationService, 'destroyCommentSetsHTML');
 
     component.ngOnChanges({
       enableAnnotations: new SimpleChange(true, false, false)
@@ -264,7 +265,6 @@ describe('PdfViewerComponent', () => {
 
     expect(component.annotationSet).toBeNull();
     expect(annotationService.destroyComponents).toHaveBeenCalled();
-    expect(annotationService.destroyCommentSetsHTML).toHaveBeenCalled();
   }));
 
   it('should show comments panel', () => {
@@ -285,4 +285,24 @@ describe('PdfViewerComponent', () => {
     expect(component.showCommentsPanel).toBeFalsy();
     expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');
   });
+
+  it('should emit toggleCommentsSummary event', () => {
+    const commentSummarySpy = spyOn(component.toolbarEvents.showCommentSummary, 'next');
+    component.toggleCommentsSummary();
+    expect(commentSummarySpy).toHaveBeenCalledWith(true);
+  });
+
+  it('should setup annotationSet', fakeAsync(
+    inject([AnnotationApiService], (annotationsApi) => {
+      spyOn(annotationsApi, 'getOrCreateAnnotationSet')
+        .and.returnValue(of({} as AnnotationSet));
+      spyOn(annotationService, 'buildAnnoSetComponents');
+
+      component.setupAnnotationSet(true);
+      tick();
+
+      expect(component.annotationSet).toEqual({} as AnnotationSet);
+      expect(annotationService.buildAnnoSetComponents).toHaveBeenCalledWith({} as AnnotationSet);
+    })
+  ));
 });
