@@ -14,6 +14,7 @@ export class TagsComponent {
   @Input() userId: string;
   @Input() editable: boolean;
   @Input() annoId: string;
+
   public validators = [this.minLength, this.maxLength20];
   public errorMessages: {[id: string]: string} = {
     'minLength': 'Minimum of 2 characters',

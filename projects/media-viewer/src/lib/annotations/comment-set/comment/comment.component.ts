@@ -46,7 +46,7 @@ export class CommentComponent implements OnChanges {
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
-  tagItems: TagItemModel[];
+  public tagItems: TagItemModel[];
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
@@ -159,9 +159,6 @@ export class CommentComponent implements OnChanges {
     return this.totalPreviousPagesHeight + (this.rectTop * this.zoom);
   }
 
-  get commentBottomPos(): number {
-    return this.rectTop + this.height;
-  }
 
   get height() {
     return this.form.nativeElement.getBoundingClientRect().height / this.zoom;

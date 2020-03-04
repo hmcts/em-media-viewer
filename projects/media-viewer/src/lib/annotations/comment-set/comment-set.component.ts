@@ -17,11 +17,10 @@ import { CommentComponent } from './comment/comment.component';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
 import { Subscription } from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
-
-import {TagsServices} from '../services/tags/tags.services';
+import { TagsServices } from '../services/tags/tags.services';
+import {TagItemModel} from '../models/tag-item.model';
 
 @Component({
   selector: 'mv-comment-set',
@@ -101,7 +100,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
     }, 0);
   }
 
-  public onCommentUpdate(payload) {
+  public onCommentUpdate(payload: {comment: Comment, tags: TagItemModel[]} ) {
     const annotation = this.annotationSet.annotations.find(anno => anno.id === payload.comment.annotationId);
     annotation.comments[0] = payload.comment;
     annotation.tags = payload.tags;

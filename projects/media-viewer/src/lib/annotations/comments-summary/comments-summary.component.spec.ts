@@ -115,7 +115,6 @@ describe('CommentsSummaryComponent', () => {
   it('should generate comment summary collection', () => {
     component.annotationSet = annotationSet;
     component.generateCommentsSummary();
-
     expect(component.comments).toEqual([{
       page: 1,
         comment: {
@@ -128,11 +127,10 @@ describe('CommentsSummaryComponent', () => {
           lastModifiedDate: 'modified date',
           annotationId: 'id',
           content: 'a comment',
-          tags: []
         },
         x: 12,
         y: 13
-    }]);
+    }] as any);
   });
 
   it('should order the comments', () => {

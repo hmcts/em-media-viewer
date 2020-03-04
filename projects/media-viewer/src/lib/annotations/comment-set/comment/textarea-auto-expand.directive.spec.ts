@@ -24,6 +24,9 @@ describe('TextareaAutoExpandDirective', () => {
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
     component.selected = true;
+    component._comment = {
+      annotationId: '123',
+    } as any
     fixture.detectChanges();
     textareaEl = fixture.debugElement.query(By.css('textarea'));
   });
@@ -36,7 +39,6 @@ describe('TextareaAutoExpandDirective', () => {
   it('input into textarea', () => {
     textareaEl.nativeElement.value = 'test';
     const initialHeight = textareaEl.nativeElement.style.height;
-
     textareaEl.nativeElement.value = 'testing the comment height when a large amount of text is enter' +
       ' so the initial height will not be the same as the final height. testing the comment height when a large amount of text is enter' +
       ' so the initial height will not be the same as the final height, testing the comment height when a large amount of text is enter' +

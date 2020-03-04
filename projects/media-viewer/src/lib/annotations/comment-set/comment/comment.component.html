@@ -21,7 +21,8 @@
     [annoId]="_comment.annotationId">
   </mv-tags>
 
-  <textarea [style.display]="selected && editable ? 'block' : 'none'"
+  <textarea #textArea
+            [style.display]="selected && editable ? 'block' : 'none'"
             mvTextAreaAutoExpand
             type="text"
             required
@@ -30,8 +31,7 @@
             [ngClass]="commentStyle()"
             [(ngModel)]="fullComment"
             (ngModelChange)="reRenderComments(); onCommentChange($event);"
-            aria-label="comment"
-            #textArea>
+            aria-label="comment">
   </textarea>
   <p *ngIf="!editable" [ngClass]="{'unselectedText' : !selected}">{{fullComment}}</p>
   <ng-container
