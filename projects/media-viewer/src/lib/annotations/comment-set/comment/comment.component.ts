@@ -18,7 +18,6 @@ export class CommentComponent implements OnChanges {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
-  public autocompleteTagItems: TagItemModel[];
   lastUpdate: string;
   originalComment: string;
   fullComment: string;
