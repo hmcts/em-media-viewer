@@ -9,9 +9,6 @@ mv-anno-comment {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.30), inset 0 -1px 0 0 #DDDDDD;
     padding: 20px 20px 5px 20px;
 
-    @include mq($from: desktop) {
-      position: relative; top: 578px;
-    }
   }
 
   span, textarea, p {
@@ -84,8 +81,9 @@ mv-anno-comment {
   }
 
   .aui-comment__header {
-    margin-bottom: 5px;
     padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: govuk-spacing(1);
   }
 
   .unselectedText {
@@ -96,11 +94,6 @@ mv-anno-comment {
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-bottom: 10px;
-  }
-
-  .aui-comment__header {
-    border-bottom: 1px solid #ddd;
-    margin-bottom: govuk-spacing(5);
   }
 
 
