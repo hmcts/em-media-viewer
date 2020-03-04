@@ -7,11 +7,13 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AnnotationEventService } from '../annotation-event.service';
 import { annotationSet } from '../../../assets/annotation-set';
-import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
+import {TagsServices} from '../services/tags/tags.services';
+import {TagsComponent} from '../tags/tags.component';
+import {TagInputModule} from 'ngx-chips';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -45,7 +47,8 @@ describe('CommentSetComponent', () => {
       annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
       comments: [],
       rectangles: [],
-      type: 'highlight'
+      type: 'highlight',
+      tags: []
     };
 
     annotation2 = {
@@ -69,7 +72,8 @@ describe('CommentSetComponent', () => {
       annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
       comments: [],
       rectangles: [],
-      type: 'highlight'
+      type: 'highlight',
+      tags: []
     };
 
     annotation3 = {
@@ -93,27 +97,31 @@ describe('CommentSetComponent', () => {
       annotationSetId: '8f7aa07c-2343-44e3-b3db-bf689066d00e',
       comments: [],
       rectangles: [],
-      type: 'highlight'
+      type: 'highlight',
+      tags: []
     };
 
     comment = {
-      createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-      createdByDetails: {
-        forename: 'Linus',
-        surname: 'Norton',
-        email: 'linus.norton@hmcts.net'
+      comment: {
+        createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+        createdByDetails: {
+          forename: 'Linus',
+          surname: 'Norton',
+          email: 'linus.norton@hmcts.net'
+        },
+        lastModifiedByDetails: {
+          forename: 'Linus',
+          surname: 'Norton',
+          email: 'linus.norton@hmcts.net'
+        },
+        createdDate: '2019-05-28T08:48:33.206Z',
+        lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
+        lastModifiedDate: '2019-05-28T08:48:33.206Z',
+        id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
+        content: 'This comment should be last',
+        annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
       },
-      lastModifiedByDetails: {
-        forename: 'Linus',
-        surname: 'Norton',
-        email: 'linus.norton@hmcts.net'
-      },
-      createdDate: '2019-05-28T08:48:33.206Z',
-      lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
-      lastModifiedDate: '2019-05-28T08:48:33.206Z',
-      id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
-      content: 'This comment should be last',
-      annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329'
+      tags: []
     };
     mockRectangles = [
       {
@@ -189,18 +197,21 @@ describe('CommentSetComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CommentSetComponent,
-        CommentComponent
+        CommentComponent,
+        TagsComponent
       ],
       imports: [
         FormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TagInputModule
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
         { provide: AnnotationEventService, useValue: mockAnnotationService },
         ToolbarEventService,
         CommentService,
-        CommentSetRenderService
+        CommentSetRenderService,
+        TagsServices
       ]
     })
     .compileComponents();
@@ -232,25 +243,24 @@ describe('CommentSetComponent', () => {
 
   it('should delete the comment for the annotation', () => {
     spyOn(component, 'onAnnotationUpdate');
-    component.onCommentDelete(mockComment);
-
+    component.onCommentDelete(mockComment.comment);
     expect(component.onAnnotationUpdate).toHaveBeenCalled();
     expect(component.annotationSet).not.toContain(mockComment);
   });
 
   it('should update the comment for the annotation', () => {
     spyOn(component, 'onAnnotationUpdate');
-    mockComment.content = 'Updating the comment 1';
+    mockComment.comment.content = 'Updating the comment 1';
 
     component.onCommentUpdate(mockComment);
 
     expect(component.onAnnotationUpdate).toHaveBeenCalled();
-    expect(component.annotationSet.annotations[0].comments[0]).toEqual(mockComment);
+    expect(component.annotationSet.annotations[0].comments[0]).toEqual(mockComment.comment);
   });
 
   it('should post the updated the comment for the annotation', () => {
-    mockComment.content = 'Updating the comment 2';
-    const annotationForComment = component.annotationSet.annotations.find(anno => anno.id === mockComment.annotationId);
+    mockComment.comment.content = 'Updating the comment 2';
+    const annotationForComment = component.annotationSet.annotations.find(anno => anno.id === mockComment.comment.annotationId);
     spyOn(api, 'postAnnotation').and.returnValue(of(annotationForComment));
     spyOn(mockAnnotationService, 'selectAnnotation');
 

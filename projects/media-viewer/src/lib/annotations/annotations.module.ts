@@ -19,14 +19,20 @@ import { BoxHighlightCreateComponent } from './annotation-set/annotation-create/
 import { BoxHighlightCreateService } from './annotation-set/annotation-create/box-highlight-create.service';
 import { TextHighlightCreateService } from './annotation-set/annotation-create/text-highlight-create.service';
 import { CommentSetHeaderComponent } from './comment-set/comment-set-header/comment-set-header.component';
+import { TagInputModule } from 'ngx-chips';
+import { TagsComponent } from './tags/tags.component';
+import { RouterModule } from '@angular/router';
+import {TagsServices} from './services/tags/tags.services';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    MutableDivModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        HttpClientModule,
+        MutableDivModule,
+        TagInputModule,
+        RouterModule
+    ],
   declarations: [
     AnnotationViewComponent,
     BoxHighlightCreateComponent,
@@ -38,7 +44,8 @@ import { CommentSetHeaderComponent } from './comment-set/comment-set-header/comm
     CommentSetComponent,
     TextareaAutoExpandDirective,
     CommentSetToggleComponent,
-    CommentsSummaryComponent
+    CommentsSummaryComponent,
+    TagsComponent
   ],
   entryComponents: [
     AnnotationViewComponent,
@@ -50,7 +57,8 @@ import { CommentSetHeaderComponent } from './comment-set/comment-set-header/comm
     AnnotationEventService,
     CommentSetRenderService,
     BoxHighlightCreateService,
-    TextHighlightCreateService
+    TextHighlightCreateService,
+    TagsServices
   ],
   exports: [
     AnnotationViewComponent,
@@ -59,7 +67,8 @@ import { CommentSetHeaderComponent } from './comment-set/comment-set-header/comm
     CommentSetComponent,
     CommentSetHeaderComponent,
     CommentSetToggleComponent,
-    CommentsSummaryComponent
+    CommentsSummaryComponent,
+    TagsComponent
   ]
 })
 export class AnnotationsModule { }

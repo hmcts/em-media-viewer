@@ -1,10 +1,10 @@
 import {
   Component,
   ElementRef,
-  Input,
+  Input, OnChanges,
   OnDestroy,
   OnInit,
-  QueryList,
+  QueryList, SimpleChanges,
   ViewChild,
   ViewChildren,
   ViewEncapsulation
@@ -17,9 +17,10 @@ import { CommentComponent } from './comment/comment.component';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
 import { Subscription } from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
+import { TagsServices } from '../services/tags/tags.services';
+import {TagItemModel} from '../models/tag-item.model';
 
 @Component({
   selector: 'mv-comment-set',
@@ -27,7 +28,7 @@ import { CommentSetRenderService } from './comment-set-render.service';
   styleUrls: ['./comment-set.component.scss'],
   encapsulation: ViewEncapsulation.None
  })
-export class CommentSetComponent implements OnInit, OnDestroy {
+export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() annotationSet: AnnotationSet;
   @Input() zoom: number;
@@ -48,8 +49,19 @@ export class CommentSetComponent implements OnInit, OnDestroy {
               private readonly api: AnnotationApiService,
               private readonly annotationService: AnnotationEventService,
               private readonly commentService: CommentService,
-              private readonly renderService: CommentSetRenderService) {
+              private readonly renderService: CommentSetRenderService,
+              private tagsServices: TagsServices) {
     this.clearSelection();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    // set the annotation tags state
+    if (changes.annotationSet) {
+      this.annotationSet.annotations.map(annotation => {
+        if (annotation.comments.length) {
+          this.tagsServices.updateTagItems(annotation.tags, annotation.id);
+        }
+      });
+    }
   }
 
   ngOnInit() {
@@ -88,9 +100,10 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  public onCommentUpdate(comment: Comment) {
-    const annotation = this.annotationSet.annotations.find(anno => anno.id === comment.annotationId);
-    annotation.comments[0] = comment;
+  public onCommentUpdate(payload: {comment: Comment, tags: TagItemModel[]} ) {
+    const annotation = this.annotationSet.annotations.find(anno => anno.id === payload.comment.annotationId);
+    annotation.comments[0] = payload.comment;
+    annotation.tags = payload.tags;
     this.onAnnotationUpdate(annotation);
   }
 
@@ -123,5 +136,6 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   allCommentsSaved() {
     this.commentService.allCommentsSaved();
   }
+
 
 }
