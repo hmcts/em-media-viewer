@@ -62,7 +62,7 @@ export class CommentComponent implements OnChanges, OnDestroy {
   @ViewChild('form') form: ElementRef;
   @ViewChild('editableComment') editableComment: ElementRef<HTMLElement>;
 
-  private subscription: Subscription;
+  private subscriptions: Subscription[];
 
   constructor(private readonly commentService: CommentService,
               private readonly annotationEvents: AnnotationEventService,
@@ -71,12 +71,15 @@ export class CommentComponent implements OnChanges, OnDestroy {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
 
-    this.subscription = annotationEvents.commentSearch
-      .pipe(
+    this.subscriptions = [
+      annotationEvents.commentSearch.pipe(
         debounceTime(300),
         distinctUntilChanged()
       )
-      .subscribe(searchString => this.searchString = searchString);
+      .subscribe(searchString => this.searchString = searchString),
+      annotationEvents.resetHighlightEvent
+        .subscribe(() => this.searchString = undefined)
+    ];
   }
 
   ngOnChanges(): void {
@@ -84,7 +87,7 @@ export class CommentComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   @Input()
