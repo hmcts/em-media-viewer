@@ -6,7 +6,7 @@
   <button type="button"
           [class.govuk-button--disabled]="searchInput?.value.length <= 2"
           class="govuk-button comment-search"
-          (click)="searchComments(searchInput.value)">Search</button>
+          (click)="searchComments(searchInput.value.trim())">Search</button>
   <ng-container *ngIf="searchResults.length > 0">
     <span class="comment-search">
       Found {{ searchIndex + 1 }} of {{ searchResults.length }}

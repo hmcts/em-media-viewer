@@ -65,6 +65,7 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
     this.searchString = undefined;
     this.searchResults = [];
     this.searchIndex = 0;
+    this.annotationEvents.resetTextHighlight();
   }
 
   upperRectangle(rectangles: Rectangle[]) {
