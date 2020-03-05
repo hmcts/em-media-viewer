@@ -7,17 +7,17 @@ mv-anno-comment {
     margin: auto;
     background-color: govuk-colour(white);
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.30), inset 0 -1px 0 0 #DDDDDD;
-    padding: 20px 20px 5px 20px;
-
+    padding: 13px 20px 5px 20px;
   }
 
   span, textarea, p {
     font-size: 1rem;
     font-family: nta,Arial,sans-serif;
     color: #000000;
+    padding-bottom: 0;
   }
 
-  form textarea {
+ textarea {
     width: 100%;
     padding: 2px;
     border: none;
