@@ -1,5 +1,4 @@
 @import "sass/annotation-ui-theme";
-//@import "sass/toolbar/main";
 @import "sass/comments-summary-dialog";
 @import "sass/comment-set-panel";
 @import "sass/comment";
@@ -13,6 +12,10 @@
 @import "sass/comment-set-header";
 @import "sass/box-highlight";
 @import "sass/comment-set-toggle";
+@import 'sass/media-viewer';
+@import 'sass/settings';
+@import 'sass/document';
+@import "sass/toolbar/main";
 
 div.govuk-prose-scope, p {
   white-space: pre-wrap;

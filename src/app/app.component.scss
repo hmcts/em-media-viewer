@@ -8,11 +8,7 @@ $hmcts-page-width: 1220px;
 @import "~govuk-frontend/all";
 @import "~@hmcts/frontend/all";
 // Import Media Viewer Styles
-@import "projects/media-viewer/src/assets/aui-styles";
-@import "projects/media-viewer/src/assets/sass/settings";
-@import "projects/media-viewer/src/assets/sass/document";
-@import "projects/media-viewer/src/assets/sass/settings";
-@import "projects/media-viewer/src/assets/sass/toolbar/main";
+@import "../../projects/media-viewer/src/assets/all";
 // END
 
 html {

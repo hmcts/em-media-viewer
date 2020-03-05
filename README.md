@@ -159,11 +159,9 @@ i.e. if you writing your own toolbar styles then do not import those
 @import "~govuk-frontend/all";
 @import "~@hmcts/frontend/all";
 // Import Media Viewer Styles
-@import "projects/media-viewer/src/assets/aui-styles";
-@import "projects/media-viewer/src/assets/sass/settings";
-@import "projects/media-viewer/src/assets/sass/document";
-@import "projects/media-viewer/src/assets/sass/settings";
-@import "projects/media-viewer/src/assets/sass/toolbar/main";
+@import "~media-viewer/src/assets/all"; // use this to import all the styles 
+alternatevly it is possible to import file by file from assets/scss directory 
+i.e. "~media-viewer/src/assets/toolbar/main"
 ```
 
 The list of exceptions thrown by the Media Viewer are as follows:
