@@ -12,9 +12,6 @@
     <mv-main-toolbar *ngIf="showToolbar"
                      [enableAnnotations]="enableAnnotations">
     </mv-main-toolbar>
-    <mv-side-bar *ngIf="contentType === 'pdf' && toolbarButtons.sidebarOpen"
-                 id="sidebarContainer"
-                 [url]="url"></mv-side-bar>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (pdfLoadStatus)="onMediaLoad($event)"
                    (pdfViewerException)="onLoadException($event)"

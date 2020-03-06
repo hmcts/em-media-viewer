@@ -26,11 +26,12 @@ import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-vis
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { take } from 'rxjs/operators';
+import { Outline } from './outline-view/outline.model';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.scss', '../../media-viewer.component.scss'],
+  styleUrls: ['../../styles/main.scss','./pdf-viewer.component.scss', '../../media-viewer.component.scss'],
   providers: [PdfAnnotationService, AnnotationSetService],
   encapsulation: ViewEncapsulation.None
 })
@@ -54,6 +55,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   highlightMode: BehaviorSubject<boolean>;
   drawMode: BehaviorSubject<boolean>;
 
+  documentOutline: Outline;
   loadingDocument = false;
   loadingDocumentProgress: number;
   errorMessage: string;
@@ -87,6 +89,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
+    this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
     this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {

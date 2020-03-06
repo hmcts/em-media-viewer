@@ -3,6 +3,7 @@ import { ElementRef, Injectable } from '@angular/core';
 import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { Outline } from '../outline-view/outline.model';
 
 @Injectable({providedIn: 'root'})
 export class PdfJsWrapperFactory {
@@ -41,6 +42,7 @@ export class PdfJsWrapperFactory {
       new Subject<string>(),
       new Subject<DocumentLoadProgress>(),
       new Subject<any>(),
+      new Subject<Outline>(),
       new Subject(),
       new Subject<{ pageNumber: number, source: { rotation: number, scale: number, div: HTMLDivElement }}>()
     );
