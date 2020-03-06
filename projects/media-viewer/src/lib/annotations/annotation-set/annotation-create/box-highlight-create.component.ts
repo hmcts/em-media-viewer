@@ -6,7 +6,6 @@ import { BoxHighlightCreateService } from './box-highlight-create.service';
 @Component({
   selector: 'mv-box-highlight-create',
   templateUrl: './box-highlight-create.component.html',
-  styleUrls: ['./box-highlight-create.component.scss']
 })
 export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 

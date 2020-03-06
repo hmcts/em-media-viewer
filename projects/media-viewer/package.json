@@ -14,8 +14,6 @@
     "url": "https://github.com/hmcts/media-viewer"
   },
   "dependencies": {
-    "@hmcts/frontend": "^0.0.34-alpha",
-    "govuk-frontend": "^2.11.0",
     "hammerjs": "^2.0.8",
     "mutable-div": "0.0.11",
     "pdfjs-dist": "2.0.943",

@@ -1,18 +1,16 @@
-import {
-  Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges
-} from '@angular/core';
-import { Comment } from './comment.model';
-import { User } from '../../models/user.model';
-import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
-import { SelectionAnnotation } from '../../annotation-event.service';
-import { CommentService } from './comment.service';
-import { TagItemModel } from '../../models/tag-item.model';
-import { TagsServices } from '../../services/tags/tags.services';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Comment} from './comment.model';
+import {User} from '../../models/user.model';
+import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
+import {SelectionAnnotation} from '../../annotation-event.service';
+import {CommentService} from './comment.service';
+import {TagItemModel} from '../../models/tag-item.model';
+import {TagsServices} from '../../services/tags/tags.services';
 
 @Component({
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss']
+  encapsulation: ViewEncapsulation.None
 })
 export class CommentComponent implements OnChanges {
 

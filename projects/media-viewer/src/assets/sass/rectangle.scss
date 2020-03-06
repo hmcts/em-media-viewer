@@ -1,0 +1,25 @@
+mv-anno-rectangle {
+  .rectangle {
+    position: absolute;
+    z-index: 3;
+    opacity: 0.3;
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+  }
+
+  .rectangle:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+  }
+
+  .selected.rectangle {
+    opacity: 0.5;
+  }
+
+  .grabNDrag {
+    pointer-events: none;
+  }
+}

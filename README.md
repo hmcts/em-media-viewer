@@ -5,7 +5,7 @@
 This is an angular library that provides components to view and annotate PDF documents, as well as view images.
 
 ## Running demo app
-- npm run package
+- npm run package (deprecated)
 - npm run start:ng
 
 ## Integrating into your own Angular application
@@ -149,6 +149,20 @@ The structure of the `ViewerException` exception class can be seen below:
       httpResponseCode: error.status,
       message: error.message
     }
+    
+## Media Viewer Styles
+Add these styles to your component.scss if you need them
+i.e. if you writing your own toolbar styles then do not import those
+
+```
+// Import GOV.UK Frontend
+@import "~govuk-frontend/all";
+@import "~@hmcts/frontend/all";
+// Import Media Viewer Styles
+@import "~media-viewer/src/assets/all"; // use this to import all the styles 
+alternatevly it is possible to import file by file from assets/scss directory 
+i.e. "~media-viewer/src/assets/toolbar/main"
+```
 
 The list of exceptions thrown by the Media Viewer are as follows:
 - UnknownErrorException

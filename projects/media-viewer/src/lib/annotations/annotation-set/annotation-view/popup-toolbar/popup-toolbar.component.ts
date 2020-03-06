@@ -3,8 +3,7 @@ import { Rectangle } from '../rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-popup-toolbar',
-  templateUrl: './popup-toolbar.component.html',
-  styleUrls: ['./popup-toolbar.component.scss']
+  templateUrl: './popup-toolbar.component.html'
 })
 export class PopupToolbarComponent {
 
