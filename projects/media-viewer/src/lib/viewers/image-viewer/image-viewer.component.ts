@@ -24,9 +24,7 @@ import { AnnotationApiService } from '../../annotations/annotation-api.service';
 
 @Component({
     selector: 'mv-image-viewer',
-    templateUrl: './image-viewer.component.html',
-    styleUrls: ['./image-viewer.component.scss', '../../media-viewer.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    templateUrl: './image-viewer.component.html'
 })
 export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 

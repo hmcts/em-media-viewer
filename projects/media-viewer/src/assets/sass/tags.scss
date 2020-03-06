@@ -1,0 +1,87 @@
+.tags {
+  margin-bottom: 10px;
+  &__renderer {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #DDDDDD;
+  }
+  &__manage {
+    float: right;
+    display: inline-block;
+  }
+  &__item {
+    display: inline-block;
+    margin: 3px 3px 3px 0;
+  }
+  &__edit {
+    clear: both;
+  }
+}
+
+
+@import "~ngx-chips/core/styles/core/core";
+
+$foundation-primary: #1779ba;
+$foundation-primary-dark: darken($foundation-primary, 10%);
+
+$foundation-theme: (
+  container-border-bottom: 1px solid $foundation-primary
+);
+
+$foundation-tag-theme: (
+  background: $foundation-primary,
+  background-focused: $foundation-primary-dark,
+  background-active: $foundation-primary-dark,
+  background-hover: $foundation-primary-dark,
+  color: #fff,
+  color-hover: #fff,
+  border-radius: 2px
+);
+
+$foundation-icon-theme: (
+  fill: #fff,
+  fill-focus: #eee,
+  transition: all 0.35s
+);
+
+:ng-deep .ng2-tag-input.foundation-theme {
+  @include tag-input-theme($foundation-theme);
+}
+
+:ng-deep .ng2-tag-input.foundation-theme tag {
+  @include tag-theme($foundation-tag-theme);
+}
+
+:ng-deep .ng2-tag-input.foundation-theme tag delete-icon {
+  @include icon-theme($foundation-icon-theme);
+}
+
+button {
+  font-size: 1rem;
+}
+
+.aui-comment__private {
+  background: url("/assets/images/lock_48px.svg") 0 0 no-repeat;
+  background-size: 20px 20px;
+  padding-left: 25px;
+  width: 55px;
+  text-transform: uppercase;
+  color: #990000;
+  font-size: .8rem;
+  display: block;
+  margin-bottom: 10px;
+  position: relative;
+  font-weight: bold;
+  padding-top: 2px;
+  &:after {
+    display: block;
+    content: '';
+    border: 1px solid #990000;
+    width: 58px;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+  }
+}
+

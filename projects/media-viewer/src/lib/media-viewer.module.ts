@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PdfViewerComponent } from './viewers/pdf-viewer/pdf-viewer.component';
 import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.component';
@@ -12,11 +12,14 @@ import { AnnotationsModule } from './annotations/annotations.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
-import {EffectsModule} from '@ngrx/effects';
-import {MetaReducer, StoreModule} from '@ngrx/store';
-import {storeFreeze} from 'ngrx-store-freeze';
+import { TagInputModule } from 'ngx-chips';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
+import { EffectsModule } from '@ngrx/effects';
+import { MetaReducer, StoreModule} from '@ngrx/store';
+import { storeFreeze } from 'ngrx-store-freeze';
 // APP store
 import { CustomSerializer, reducers, effects} from './store';
 
@@ -28,10 +31,14 @@ export const metaReducers: MetaReducer<any>[] = !false
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ToolbarModule,
     AnnotationsModule,
+    TagInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(effects),
     StoreRouterConnectingModule.forRoot(),

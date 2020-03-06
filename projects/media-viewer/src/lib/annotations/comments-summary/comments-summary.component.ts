@@ -8,7 +8,6 @@ import {ViewerEventService} from '../../viewers/viewer-event.service';
 @Component({
   selector: 'mv-comments-summary',
   templateUrl: './comments-summary.component.html',
-  styleUrls: ['./comments-summary.component.scss']
 })
 export class CommentsSummaryComponent implements OnChanges {
 
@@ -36,12 +35,14 @@ export class CommentsSummaryComponent implements OnChanges {
   generateCommentsSummary() {
     this.annotationSet.annotations
       .forEach(annotation => {
-        this.comments.push({
-          page: annotation.page,
-          comment: annotation.comments[0],
-          x: annotation.rectangles[0].x,
-          y: annotation.rectangles[0].y
-        });
+        if (annotation.comments.length) {
+          this.comments.push({
+            page: annotation.page,
+            comment: annotation.comments[0],
+            x: annotation.rectangles[0].x,
+            y: annotation.rectangles[0].y
+          });
+        }
       });
   }
 

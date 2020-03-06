@@ -1,0 +1,34 @@
+<div class="tags">
+  <tag-input
+    *ngIf="editable" class="tags__edit"
+    [maxItems]="10"
+    [(ngModel)]="tagItems"
+    (ngModelChange)="onUpdateTags($event)"
+    [ngModelOptions]="{standalone:true}"
+    [placeholder]="'Add tag'"
+    [displayBy]="'label'"
+    [identifyBy]="'name'"
+    [onTextChangeDebounce]="250"
+    [secondaryPlaceholder]="'Search or add tags'"
+    [validators]="validators"
+    [errorMessages]="errorMessages"
+    [onlyFromAutocomplete]="false">
+    <tag-input-dropdown
+      [autocompleteObservable]="requestAutocompleteItems"
+      [displayBy]="'label'"
+      [identifyBy]="'name'"
+      [zIndex]="10000"
+      [minimumTextLength]="2">
+      <ng-template let-item="item" let-index="index">
+        {{ item.label }}
+      </ng-template>
+    </tag-input-dropdown>
+  </tag-input>
+
+  <div class="tags__renderer" *ngIf="!editable && (tagItems && tagItems.length)">
+    <span *ngFor="let tag of tagItems" class="tags__item hmcts-badge">
+      {{tag.label}}
+    </span>
+  </div>
+</div>
+

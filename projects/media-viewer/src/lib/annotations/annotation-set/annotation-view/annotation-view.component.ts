@@ -8,7 +8,6 @@ import * as fromStore from '../../../store';
 
 @Component({
   selector: 'mv-annotation',
-  styleUrls: ['./annotation-view.component.scss'],
   templateUrl: './annotation-view.component.html'
 })
 export class AnnotationViewComponent {
@@ -60,13 +59,14 @@ export class AnnotationViewComponent {
       const comment = {
         annotationId: this.anno.id,
         content: '',
-        createdBy: '',
+        createdBy: this.annotation.createdBy,
         createdByDetails: undefined,
         createdDate: new Date().getTime().toString(),
         id: uuid(),
         lastModifiedBy: '',
         lastModifiedByDetails: undefined,
-        lastModifiedDate: ''
+        lastModifiedDate: '',
+        tags: []
       };
       this.store.dispatch(new fromStore.AddOrEditComment(comment))
       // this.anno.comments.push({

@@ -1,0 +1,126 @@
+mv-anno-comment {
+  form.aui-comment {
+    width: 85%;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    margin: auto;
+    background-color: govuk-colour(white);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.30), inset 0 -1px 0 0 #DDDDDD;
+    padding: 13px 20px 5px 20px;
+  }
+
+  span, textarea, p {
+    font-size: 1rem;
+    font-family: nta,Arial,sans-serif;
+    color: #000000;
+    padding-bottom: 0;
+  }
+
+ textarea {
+    width: 100%;
+    padding: 2px;
+    border: none;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    resize: none;
+  }
+
+  textarea.view-mode:focus {
+    outline: none;
+  }
+
+  #detailsWrapper {
+    padding: 0;
+  }
+
+  #detailsWrapper.expanded {
+    margin-bottom: 15px;
+  }
+
+  .commentBtns {
+    height: 50px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+
+  .expanded {
+    margin-top: 0px;
+  }
+
+  .collapsed {
+    height: 30px;
+  }
+  textarea.expanded {
+    margin-bottom: 10px;
+  }
+
+  textarea.collapsed {
+    margin-top: -25px;
+    max-height: 20px;
+    overflow: hidden;
+  }
+
+  time {
+    font-size: 0.88rem;
+    color: #6F777B;
+  }
+
+  .collapsed > time {
+    display: none;
+  }
+
+  textarea.edit-mode {
+    outline: 5px auto #0B0C0C;
+  }
+
+  textarea.view-mode {
+    outline: none;
+  }
+
+  .aui-comment__header {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: govuk-spacing(1);
+  }
+
+  .unselectedText {
+    font-size: 1rem;
+    font-family: nta,Arial,sans-serif;
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 10px;
+  }
+
+
+  .aui-comment__author {
+    @include govuk-font($size: 19);
+    display: block;
+    font-weight: bold;
+  }
+
+
+  .aui-comment__meta {
+    @include govuk-font($size: 16);
+    color: $govuk-secondary-text-colour;
+  }
+
+
+  .aui-comment__footer {
+    font-size: .1px;
+
+    .govuk-button {
+      margin-right: govuk-spacing(2);
+    }
+
+  }
+
+}
+
+
+
+

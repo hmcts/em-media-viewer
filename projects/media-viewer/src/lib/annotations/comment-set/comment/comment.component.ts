@@ -1,25 +1,26 @@
-import {
-  Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges} from '@angular/core';
-import { Comment } from './comment.model';
-import { User } from '../../user/user.model';
-import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
-import { SelectionAnnotation } from '../../annotation-event.service';
-import { CommentService } from './comment.service';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Comment} from './comment.model';
+import {User} from '../../models/user.model';
+import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
+import {SelectionAnnotation} from '../../annotation-event.service';
+import {CommentService} from './comment.service';
+import {TagItemModel} from '../../models/tag-item.model';
+import {TagsServices} from '../../services/tags/tags.services';
 
 @Component({
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss']
+  encapsulation: ViewEncapsulation.None
 })
 export class CommentComponent implements OnChanges {
 
   readonly MAX_COMMENT_LENGTH;
   readonly COMMENT_CHAR_LIMIT;
-
   lastUpdate: string;
   originalComment: string;
   fullComment: string;
   author: User;
+  createdBy: string;
   editor: User;
   _comment: Comment;
   _editable: boolean;
@@ -31,25 +32,29 @@ export class CommentComponent implements OnChanges {
 
   hasUnsavedChanges = false;
 
+
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() renderComments = new EventEmitter<Comment>();
   @Output() delete = new EventEmitter<Comment>();
-  @Output() updated = new EventEmitter<Comment>();
+  @Output() updated = new EventEmitter<{comment: Comment, tags: TagItemModel[]}>();
   @Output() changes = new EventEmitter<boolean>();
   @Input() selected = false;
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
+  public tagItems: TagItemModel[];
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
   constructor(
-    private readonly commentService: CommentService
+    private readonly commentService: CommentService,
+    private tagsServices: TagsServices
   ) {
     this.MAX_COMMENT_LENGTH = 48;
     this.COMMENT_CHAR_LIMIT = 5000;
   }
+
 
   ngOnChanges(): void {
     this.reRenderComments();
@@ -60,9 +65,11 @@ export class CommentComponent implements OnChanges {
     this._comment = {...comment};
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
+    this.createdBy = comment.createdBy;
     this.editor = comment.lastModifiedByDetails;
     this.originalComment = comment.content;
     this.fullComment = this.originalComment;
+    this.tagItems = this.tagsServices.getTagItems(this._comment.annotationId);
   }
 
   get comment() {
@@ -112,6 +119,9 @@ export class CommentComponent implements OnChanges {
     this.editable = false;
     this.fullComment = this.originalComment;
     this.changes.emit(false);
+    if (!this.author && !this.fullComment) {
+      this.delete.emit(this._comment);
+    }
   }
 
   public onDelete() {
@@ -120,7 +130,12 @@ export class CommentComponent implements OnChanges {
 
   public onSave() {
     this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
-    this.updated.emit(this._comment);
+    const tags = this.tagsServices.getTagItems(this._comment.annotationId);
+    const payload = {
+      comment: this._comment,
+      tags
+    };
+    this.updated.emit(payload);
     this.editable = false;
     this.hasUnsavedChanges = false;
     this.changes.emit(false);
@@ -137,19 +152,10 @@ export class CommentComponent implements OnChanges {
     this.renderComments.emit(this._comment);
   }
 
-  onFocusOut() {
-    if (!this.author && !this.fullComment) {
-      this.delete.emit(this._comment);
-    }
-  }
-
   get commentTop(): number {
     return this.totalPreviousPagesHeight + (this.rectTop * this.zoom);
   }
 
-  get commentBottomPos(): number {
-    return this.rectTop + this.height;
-  }
 
   get height() {
     return this.form.nativeElement.getBoundingClientRect().height / this.zoom;

@@ -1,0 +1,18 @@
+mv-media-viewer {
+  #outerContainer {
+    display: block;
+  }
+
+  .grabNDrag {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+  }
+
+  .grabNDrag:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+  }
+}

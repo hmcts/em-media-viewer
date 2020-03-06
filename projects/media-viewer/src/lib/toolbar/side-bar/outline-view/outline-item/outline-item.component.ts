@@ -5,8 +5,7 @@ import { Outline } from '../outline.model';
 
 @Component({
   selector: 'mv-outline-item',
-  templateUrl: './outline-item.component.html',
-  styleUrls: ['../../../../styles/main.scss'],
+  templateUrl: './outline-item.component.html'
 })
 export class OutlineItemComponent implements OnInit {
 

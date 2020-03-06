@@ -70,6 +70,7 @@
   @include govuk-font($size: 19);
   background-color: govuk-colour("white");
   border: 0 none;
+  border: 1px solid #f00;
   color: govuk-colour("black");
   cursor: pointer;
   float: left;
@@ -238,47 +239,3 @@
 
 }
 
-
-
-// Comment
-
-.aui-comment {
-  background-color: govuk-colour(white);
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.30), inset 0 -1px 0 0 #DDDDDD;
-  padding: 20px 20px 0;
-
-  @include mq($from: desktop) {
-    position: relative; top: 578px;
-  }
-
-}
-
-
-.aui-comment__header {
-  border-bottom: 1px solid #ddd;
-  margin-bottom: govuk-spacing(5);
-  padding-bottom: govuk-spacing(5);
-}
-
-
-.aui-comment__author {
-  @include govuk-font($size: 19);
-  display: block;
-  font-weight: bold;
-}
-
-
-.aui-comment__meta {
-  @include govuk-font($size: 16);
-  color: $govuk-secondary-text-colour;
-}
-
-
-.aui-comment__footer {
-  font-size: .1px;
-
-  .govuk-button {
-    margin-right: govuk-spacing(2);
-  }
-
-}
