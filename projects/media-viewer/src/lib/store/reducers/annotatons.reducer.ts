@@ -3,7 +3,7 @@ import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.mod
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 
 export interface AnnotationSetState {
-  annotationSet: AnnotationSet | {};
+  annotationSet: any; // todo add type
   annotationEntities: {[id: string]: Annotation[]};
   comments: {[id: string]: Comment} | {};
   loaded: boolean;
@@ -63,13 +63,16 @@ export function reducer (
 
     case fromAnnotations.SAVE_ANNOTATION_SUCCESS: {
       const annotations = [
-        ...state.annotationSet['annotationEntities'],
+        ...state.annotationSet.annotations,
         ...action.payload
       ];
       const annotationSet = {
         ...state.annotationSet,
         annotations
       };
+
+      const annotationEntities = annotationSet.annotations.reduce((h, obj) =>
+        Object.assign(h, { [obj.page]:( h[obj.page] || [] ).concat(obj) }), {});
       const comments = annotationSet.annotations
         .reduce(
           (commentEntities: { [id: string]: Annotation }, annotation: Annotation) => {
@@ -84,9 +87,11 @@ export function reducer (
               ...commentEntities
             };
           }, {});
+
       return {
         ...state,
         annotationSet,
+        annotationEntities,
         comments,
         loading: false,
         loaded: true
