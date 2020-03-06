@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Outline } from './outline.model';
 
 @Component({
   selector: 'mv-outline-view',
@@ -7,5 +8,10 @@ import { Component, Input } from '@angular/core';
 })
 export class OutlineViewComponent {
 
-  @Input() outline: [];
+  @Input() outline: Outline;
+  @Output() navigationEvent = new EventEmitter();
+
+  goToDestination(destination: any) {
+    this.navigationEvent.emit(destination);
+  }
 }
