@@ -50,7 +50,7 @@ export class PdfJsWrapperFactory {
     return this.pdfJsWrapper;
   }
 
-  public navigateTo(destination: any[]) {
-    this.pdfJsWrapper.navigateTo(destination);
+  pdfWrapper() {
+    return this.pdfJsWrapper;
   }
 }
