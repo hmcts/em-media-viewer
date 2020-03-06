@@ -1,0 +1,62 @@
+mv-pdf-viewer {
+  .pdfContainer {
+    overflow: auto;
+    position: relative;
+    width: 100%;
+    background-color: #dee0e2;
+  }
+
+  .hidden {
+    display:none!important;
+  }
+
+  .loadingMessage {
+    text-align: center;
+  }
+
+  .highlightMode > .page > .textLayer {
+    z-index: 1000;
+  }
+
+  .highlightMode > .page > .textLayer {
+    z-index: 1000;
+  }
+
+  .drawMode > .page > mv-annotation-set > div {
+    z-index: 1000;
+  }
+
+  .linkAnnotation > a:hover {
+    opacity: 0.0 !important;
+  }
+
+  .textLayer {
+    z-index: 1;
+  }
+
+  .annotationLayer * {
+    z-index: 2;
+  }
+
+  .commentSummaryHeader {
+    top: 33px
+  }
+
+  .pdfViewer {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .show-comments-panel > .pdfViewer {
+    width: 75%;
+  }
+
+  .grabNDrag {
+    .pdfViewer {
+      & > * {
+        pointer-events: none;
+      }
+    }
+  }
+
+}

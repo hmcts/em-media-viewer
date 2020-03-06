@@ -8,7 +8,6 @@ import {ViewerEventService} from '../../viewers/viewer-event.service';
 @Component({
   selector: 'mv-comments-summary',
   templateUrl: './comments-summary.component.html',
-  styleUrls: ['./comments-summary.component.scss']
 })
 export class CommentsSummaryComponent implements OnChanges {
 

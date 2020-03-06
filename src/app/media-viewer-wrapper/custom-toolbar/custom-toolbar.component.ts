@@ -2,8 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-custom-toolbar',
-  templateUrl: './custom-toolbar.component.html',
-  styleUrls: ['./custom-toolbar.component.css']
+  templateUrl: './custom-toolbar.component.html'
 })
 export class CustomToolbarComponent implements OnInit {
 

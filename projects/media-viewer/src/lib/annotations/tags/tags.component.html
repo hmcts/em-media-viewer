@@ -2,7 +2,7 @@
   <tag-input
     *ngIf="editable" class="tags__edit"
     [maxItems]="10"
-    [ngModel]="tagItems"
+    [(ngModel)]="tagItems"
     (ngModelChange)="onUpdateTags($event)"
     [ngModelOptions]="{standalone:true}"
     [placeholder]="'Add tag'"

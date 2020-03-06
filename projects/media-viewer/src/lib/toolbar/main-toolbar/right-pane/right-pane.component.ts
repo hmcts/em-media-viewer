@@ -5,7 +5,6 @@ import { ToolbarEventService } from '../../toolbar-event.service';
 @Component({
   selector: 'mv-tb-right-pane',
   templateUrl: './right-pane.component.html',
-  styleUrls: ['../../../styles/main.scss']
 })
 export class ToolbarRightPaneComponent {
   @Input() enableAnnotations = false;

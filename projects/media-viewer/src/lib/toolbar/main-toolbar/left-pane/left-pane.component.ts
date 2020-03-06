@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'mv-tb-left-pane',
   templateUrl: './left-pane.component.html',
-  styleUrls: ['../../../styles/main.scss']
 })
 export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   public pageNumber = 1;

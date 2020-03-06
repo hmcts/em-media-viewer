@@ -7,7 +7,6 @@ import {
   QueryList, SimpleChanges,
   ViewChild,
   ViewChildren,
-  ViewEncapsulation
 } from '@angular/core';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
@@ -25,8 +24,6 @@ import {TagItemModel} from '../models/tag-item.model';
 @Component({
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
-  styleUrls: ['./comment-set.component.scss'],
-  encapsulation: ViewEncapsulation.None
  })
 export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 

@@ -30,7 +30,6 @@ import { take } from 'rxjs/operators';
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.scss', '../../media-viewer.component.scss'],
   providers: [PdfAnnotationService, AnnotationSetService],
   encapsulation: ViewEncapsulation.None
 })

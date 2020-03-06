@@ -5,7 +5,6 @@ import { ToolbarEventService } from '../../toolbar-event.service';
 @Component({
   selector: 'mv-tb-middle-pane',
   templateUrl: './middle-pane.component.html',
-  styleUrls: ['../../../styles/main.scss']
 })
 export class ToolbarMiddlePaneComponent {
 

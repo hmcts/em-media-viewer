@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {TagItemModel} from '../models/tag-item.model';
 import {TagsServices} from '../services/tags/tags.services';
 import {FormControl} from '@angular/forms';
@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 @Component({
   selector: 'mv-tags',
   templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.scss']
+  encapsulation: ViewEncapsulation.None
 })
 export class TagsComponent {
   @Input() tagItems: TagItemModel[];

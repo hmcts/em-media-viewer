@@ -1,96 +1,20 @@
-form {
-  position: absolute;
-  width: 85%;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  margin: auto;
-  background-color: #ffffff;
-  padding: 20px 20px 0;
-}
-
-span, textarea, p {
-  font-size: 1rem;
-  font-family: nta,Arial,sans-serif;
-  color: #000000;
-}
-
-form textarea {
-  width: 100%;
-  padding: 2px;
-  border: none;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  resize: none;
-}
-
-textarea.view-mode:focus {
-  outline: none;
-}
-
-#detailsWrapper {
-  padding: 0;
-}
-
-#detailsWrapper.expanded {
-  margin-bottom: 15px;
-}
-
-.commentBtns {
-  height: 50px;
-  border-bottom: 1px solid #ddd;
+.tags {
   margin-bottom: 10px;
-}
-
-.expanded {
-  margin-top: 0px;
-}
-
-.collapsed {
-  height: 30px;
-}
-textarea.expanded {
-  margin-bottom: 10px;
-}
-
-textarea.collapsed {
-  margin-top: -25px;
-  max-height: 20px;
-  overflow: hidden;
-}
-
-time {
-  font-size: 0.88rem;
-  color: #6F777B;
-}
-
-.collapsed > time {
-  display: none;
-}
-
-textarea.edit-mode {
-  outline: 5px auto #0B0C0C;
-}
-
-textarea.view-mode {
-  outline: none;
-}
-
-.aui-comment__header {
-  margin-bottom: 5px;
-  padding-bottom: 5px;
-}
-
-.unselectedText {
-  font-size: 1rem;
-  font-family: nta,Arial,sans-serif;
-  color: #000000;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-bottom: 10px;
+  &__renderer {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #DDDDDD;
+  }
+  &__manage {
+    float: right;
+    display: inline-block;
+  }
+  &__item {
+    display: inline-block;
+    margin: 3px 3px 3px 0;
+  }
+  &__edit {
+    clear: both;
+  }
 }
 
 
@@ -136,7 +60,7 @@ button {
 }
 
 .aui-comment__private {
-  background: url("../../../../assets/images/lock_48px.svg") 0 0 no-repeat;
+  background: url("/assets/images/lock_48px.svg") 0 0 no-repeat;
   background-size: 20px 20px;
   padding-left: 25px;
   width: 55px;
@@ -160,3 +84,4 @@ button {
 
   }
 }
+
