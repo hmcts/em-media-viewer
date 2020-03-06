@@ -25,6 +25,8 @@ export function reducer (
     case fromAnnotations.LOAD_ANNOTATION_SET: {
       return {
         ...state,
+        annotationSet: {},
+        comments: {},
         loading: true
       };
     }

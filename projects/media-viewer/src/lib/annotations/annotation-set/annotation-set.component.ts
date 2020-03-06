@@ -16,8 +16,10 @@ import { BoxHighlightCreateService } from './annotation-create/box-highlight-cre
   templateUrl: './annotation-set.component.html'
 })
 export class AnnotationSetComponent implements OnInit, OnDestroy {
-
-  @Input() annotationSet: AnnotationSet;
+  annoSet: AnnotationSet;
+  @Input() set annotationSet(annoSet) {
+    this.annoSet = {...annoSet};
+  }
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() width: number;
@@ -71,9 +73,9 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       .postAnnotation(annotation)
       .subscribe(newAnnotation => {
         const unsavedComment = this.commentService.hasUnsavedComments(annotation);
-        const index = this.annotationSet.annotations.findIndex(a => a.id === newAnnotation.id);
+        const index = this.annoSet.annotations.findIndex(a => a.id === newAnnotation.id);
 
-        this.annotationSet.annotations[index] = unsavedComment ? annotation : newAnnotation;
+        this.annoSet.annotations[index] = unsavedComment ? annotation : newAnnotation;
         this.selectAnnotation({ annotationId: annotation.id, editable: false });
       });
   }
@@ -85,38 +87,38 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.api
       .deleteAnnotation(annotation.id)
       .subscribe(() => {
-        this.annotationSet.annotations = this.annotationSet.annotations.filter(a => a.id !== annotation.id);
+        this.annoSet.annotations = this.annoSet.annotations.filter(a => a.id !== annotation.id);
         this.selectAnnotation({ annotationId: '', editable: false });
       });
   }
 
   public onMouseDown(event: MouseEvent) {
-    if (this.annotationSet && this.drawMode) {
+    if (this.annoSet && this.drawMode) {
       this.boxHighlightService.initBoxHighlight(event);
     }
   }
 
   public onMouseMove(event: MouseEvent) {
-    if (this.annotationSet && this.drawMode) {
+    if (this.annoSet && this.drawMode) {
       this.boxHighlightService.updateBoxHighlight(event);
     }
   }
 
   public onMouseUp() {
-    if (this.annotationSet && this.drawMode) {
+    if (this.annoSet && this.drawMode) {
       this.boxHighlightService.createBoxHighlight(this.page);
     }
   }
 
   public saveBoxHighlight(rectangle: any) {
     if (rectangle.page === this.page) {
-      this.boxHighlightService.saveBoxHighlight(rectangle, this.annotationSet, rectangle.page);
+      this.boxHighlightService.saveBoxHighlight(rectangle, this.annoSet, rectangle.page);
     }
   }
 
   private createTextHighlight(highlight) {
     if (this.height && this.width) {
-      this.textHighlightService.createTextHighlight(highlight, this.annotationSet,
+      this.textHighlightService.createTextHighlight(highlight, this.annoSet,
         {
           zoom: this.zoom,
           rotate: this.rotate,
@@ -132,8 +134,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   public getAnnotationsOnPage(): Annotation[] {
-    if (this.annotationSet) {
-      return this.annotationSet.annotations.filter(a => a.page === this.page);
+    if (this.annoSet && this.annoSet.annotations) {
+      return this.annoSet.annotations.filter(a => a.page === this.page);
     }
   }
 

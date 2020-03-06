@@ -19,7 +19,7 @@ export class AnnotationEffects {
     switchMap((url) => {
       return this.annotationApiService.getAnnotationSet(url).pipe(
         map(annotations => {
-          return new annotationsActions.LoadAnnotationSetSucess(annotations);
+          return new annotationsActions.LoadAnnotationSetSucess(annotations.body);
         }),
         catchError(error => {
           return of(new annotationsActions.LoadAnnotationSetFail(error));

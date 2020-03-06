@@ -58,7 +58,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     // set the annotation tags state
-    if (changes.annotationSet) {
+    if (changes.annotationSet && this.annotationSet.annotations) {
       this.annotationSet.annotations.map(annotation => {
         if (annotation.comments.length) {
           this.tagsServices.updateTagItems(annotation.tags, annotation.id);

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map } from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import uuid from 'uuid/v4';
 import { AnnotationSet } from './annotation-set/annotation-set.model';
 import { Annotation } from './annotation-set/annotation-view/annotation.model';
@@ -32,14 +32,11 @@ export class AnnotationApiService {
       );
   }
 
-  public getAnnotationSet(url: string): Observable<AnnotationSet> {
+  public getAnnotationSet(url: string): Observable<any> { // todo add model
     const fixedUrl = this.fixFindCall(url);
     return this.httpClient
-      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true })
-      .pipe(
-        map(response => response.body),
-        catchError(() => [])
-      );
+      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
+
   }
 
   public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {

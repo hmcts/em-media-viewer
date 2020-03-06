@@ -129,7 +129,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       reloadAnnotations = true;
     }
     if (reloadAnnotations) {
-      this.annotationService.buildAnnoSetComponents(this.annotationSet);
+      // this.annotationService.buildAnnoSetComponents(this.annotationSet);
     }
   }
 
@@ -149,7 +149,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         .pipe(take(1))
         .subscribe(annotationSet => {
           this.annotationSet = annotationSet;
-          this.annotationService.buildAnnoSetComponents(this.annotationSet);
+          // this.annotationService.buildAnnoSetComponents(this.annotationSet);
         });
     }
   }
@@ -157,7 +157,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private async loadDocument() {
     await this.pdfWrapper.loadDocument(this.url);
     if (this.enableAnnotations && this.annotationSet) {
-      this.annotationService.buildAnnoSetComponents(this.annotationSet);
+      // this.annotationService.buildAnnoSetComponents(this.annotationSet);
     }
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
     this.setPageHeights();

@@ -59,7 +59,7 @@ export class AnnotationViewComponent {
       const comment = {
         annotationId: this.anno.id,
         content: '',
-        createdBy: this.annotation.createdBy,
+        createdBy: this.anno.createdBy,
         createdByDetails: undefined,
         createdDate: new Date().getTime().toString(),
         id: uuid(),
@@ -69,17 +69,7 @@ export class AnnotationViewComponent {
         tags: []
       };
       this.store.dispatch(new fromStore.AddOrEditComment(comment))
-      // this.anno.comments.push({
-      //   annotationId: this.anno.id,
-      //   content: '',
-      //   createdBy: '',
-      //   createdByDetails: undefined,
-      //   createdDate: new Date().getTime().toString(),
-      //   id: uuid(),
-      //   lastModifiedBy: '',
-      //   lastModifiedByDetails: undefined,
-      //   lastModifiedDate: ''
-      // });
+
     }
     this.selected = true;
     this.annotationClick.emit({ annotationId: this.anno.id, editable: true });
