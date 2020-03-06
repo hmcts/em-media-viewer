@@ -1,6 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { PdfJsWrapperFactory } from '../../../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
-import * as pdfjsOutlineViewer from 'pdfjs-dist/lib/web/pdf_outline_viewer';
+import { PdfJsWrapperFactory } from '../../pdf-js/pdf-js-wrapper.provider';
 import { Outline } from '../outline.model';
 
 @Component({

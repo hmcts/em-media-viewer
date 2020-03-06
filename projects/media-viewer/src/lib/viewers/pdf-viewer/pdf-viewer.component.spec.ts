@@ -21,6 +21,7 @@ import { BoxHighlightCreateService } from '../../annotations/annotation-set/anno
 import { TextHighlightCreateService } from '../../annotations/annotation-set/annotation-create/text-highlight-create.service';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
+import { Outline } from './outline-view/outline.model';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -86,6 +87,7 @@ describe('PdfViewerComponent', () => {
       documentLoadInit: new Subject<any>(),
       documentLoadProgress: new Subject<DocumentLoadProgress>(),
       documentLoaded: new Subject<any>(),
+      outlineLoaded: new Subject<Outline>(),
       documentLoadFailed: new Subject(),
       pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>()
     };

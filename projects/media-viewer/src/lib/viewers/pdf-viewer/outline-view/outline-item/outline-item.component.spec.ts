@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OutlineItemComponent } from './outline-item.component';
 import { Outline } from '../outline.model';
-import { PdfJsWrapperFactory } from '../../../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
+import { PdfJsWrapperFactory } from '../../pdf-js/pdf-js-wrapper.provider';
 
 describe('OutlineItemComponent', () => {
   let component: OutlineItemComponent;
