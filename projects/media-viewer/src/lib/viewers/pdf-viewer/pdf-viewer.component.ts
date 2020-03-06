@@ -26,6 +26,8 @@ import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-vis
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { take } from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../store';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -68,6 +70,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   enableGrabNDrag = false;
 
   constructor(
+    private store: Store<fromStore.AnnotationSetState>,
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
@@ -90,7 +93,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.pageRendered.subscribe((event) => {
       console.log(event)
       if (this.enableAnnotations) {
-        this.annotationService.addAnnotations(event);
+        this.store.dispatch(new fromStore.AddPage(event.pageNumber))
+        // this.annotationService.addAnnotations(event);
       }
     });
     this.subscriptions.push(

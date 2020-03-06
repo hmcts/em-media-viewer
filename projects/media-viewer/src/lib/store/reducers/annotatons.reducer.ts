@@ -6,6 +6,7 @@ export interface AnnotationSetState {
   annotationSet: any; // todo add type
   annotationEntities: {[id: string]: Annotation[]};
   comments: {[id: string]: Comment} | {};
+  pages: number[];
   loaded: boolean;
   loading: boolean;
 }
@@ -14,6 +15,7 @@ export const initialState: AnnotationSetState = {
   annotationSet: {},
   comments: {},
   annotationEntities: {},
+  pages: [],
   loading: false,
   loaded: false,
 };
@@ -23,6 +25,22 @@ export function reducer (
   action: fromAnnotations.AnnotationsActions
 ): AnnotationSetState {
   switch (action.type) {
+
+    case fromAnnotations.ADD_PAGE: {
+      const page = {
+        [action.payload]: action.payload
+      }
+
+      const pages = {
+        ...state.pages,
+        ...page
+      }
+
+      return {
+        ...state,
+        pages
+      }
+    }
 
     case fromAnnotations.LOAD_ANNOTATION_SET: {
       return {
