@@ -4,6 +4,7 @@ import {Annotation} from '../../annotations/annotation-set/annotation-view/annot
 
 export interface AnnotationSetState {
   annotationSet: AnnotationSet | {};
+  annotationEntities: {[id: string]: Annotation[]};
   comments: {[id: string]: Comment} | {};
   loaded: boolean;
   loading: boolean;
@@ -12,6 +13,7 @@ export interface AnnotationSetState {
 export const initialState: AnnotationSetState = {
   annotationSet: {},
   comments: {},
+  annotationEntities: {},
   loading: false,
   loaded: false,
 };
@@ -45,9 +47,14 @@ export function reducer (
               ...commentEntities
             };
           }, {});
+
+      const annotationEntities = annotationSet.annotations.reduce((h, obj) =>
+        Object.assign(h, { [obj.page]:( h[obj.page] || [] ).concat(obj) }), {});
+
       return {
         ...state,
         annotationSet,
+        annotationEntities,
         comments,
         loading: false,
         loaded: true
@@ -56,7 +63,7 @@ export function reducer (
 
     case fromAnnotations.SAVE_ANNOTATION_SUCCESS: {
       const annotations = [
-        ...state.annotationSet['annotations'],
+        ...state.annotationSet['annotationEntities'],
         ...action.payload
       ];
       const annotationSet = {
