@@ -24,5 +24,12 @@ describe('OutlineViewComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should emit navigation event', () => {
+    const navigateSpy = spyOn(component.navigationEvent, 'emit');
+
+    component.goToDestination({});
+
+    expect(navigateSpy).toHaveBeenCalled();
+  });
 
 });

@@ -271,4 +271,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
   }
+
+  goToOutlineDest(destination: any) {
+    this.pdfWrapper.navigateTo(destination);
+  }
 }
