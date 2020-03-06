@@ -4,6 +4,7 @@ import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { fakeAsync, tick } from '@angular/core/testing';
+import { Outline } from '../outline-view/outline.model';
 
 describe('PdfJsWrapper', () => {
 
@@ -41,6 +42,7 @@ describe('PdfJsWrapper', () => {
       new Subject<string>(),
       new Subject<DocumentLoadProgress>(),
       new Subject<any>(),
+      new Subject<Outline>(),
       new Subject(),
       new Subject<PageEvent>(),
     );

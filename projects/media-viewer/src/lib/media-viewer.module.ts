@@ -12,6 +12,8 @@ import { AnnotationsModule } from './annotations/annotations.module';
 import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
+import { OutlineViewComponent } from './viewers/pdf-viewer/outline-view/outline-view.component';
+import { OutlineItemComponent } from './viewers/pdf-viewer/outline-view/outline-item/outline-item.component';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
@@ -30,6 +32,8 @@ import {RouterModule} from '@angular/router';
   ],
   declarations: [
     PdfViewerComponent,
+    OutlineViewComponent,
+    OutlineItemComponent,
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,

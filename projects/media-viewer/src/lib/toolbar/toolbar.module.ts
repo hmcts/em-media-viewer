@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
-import { SideBarComponent } from './side-bar/side-bar.component';
 import { SearchBarComponent } from './main-toolbar/search-bar/search-bar.component';
 import { SubToolbarComponent } from './main-toolbar/sub-toolbar/sub-toolbar.component';
 import { ToolbarLeftPaneComponent } from './main-toolbar/left-pane/left-pane.component';
@@ -10,8 +9,6 @@ import { ToolbarMiddlePaneComponent } from './main-toolbar/middle-pane/middle-pa
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 import { ToolbarEventService } from './toolbar-event.service';
-import { OutlineViewComponent } from './side-bar/outline-view/outline-view.component';
-import { OutlineItemComponent } from './side-bar/outline-view/outline-item/outline-item.component';
 
 export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 export { ToolbarEventService } from './toolbar-event.service';
@@ -22,13 +19,10 @@ export { ToolbarEventService } from './toolbar-event.service';
   declarations: [
     SearchBarComponent,
     SubToolbarComponent,
-    SideBarComponent,
     ToolbarLeftPaneComponent,
     ToolbarRightPaneComponent,
     MainToolbarComponent,
-    ToolbarMiddlePaneComponent,
-    OutlineViewComponent,
-    OutlineItemComponent,
+    ToolbarMiddlePaneComponent
   ],
   providers: [
     ToolbarButtonVisibilityService,
@@ -37,8 +31,7 @@ export { ToolbarEventService } from './toolbar-event.service';
   exports: [
     MainToolbarComponent,
     SearchBarComponent,
-    SubToolbarComponent,
-    SideBarComponent
+    SubToolbarComponent
   ],
   imports: [
     CommonModule,
