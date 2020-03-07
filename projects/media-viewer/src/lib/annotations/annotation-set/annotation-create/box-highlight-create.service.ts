@@ -29,6 +29,7 @@ export class BoxHighlightCreateService {
   }
 
   createBoxHighlight(page: number) {
+
     this.createHighlight.next(page);
   }
 
@@ -51,18 +52,5 @@ export class BoxHighlightCreateService {
     };
 
     this.store.dispatch(new fromStore.SaveAnnotation(annotationPayload));
-    // this.api.postAnnotation({
-    //   id: uuid(),
-    //   annotationSetId: annotationSet.id,
-    //   color: 'FFFF00',
-    //   comments: [],
-    //   page: page,
-    //   rectangles: rectangles,
-    //   type: 'highlight'
-    // })
-    //   .subscribe(savedAnnotation => {
-    //     annotationSet.annotations.push(savedAnnotation);
-    //     this.annotationService.selectAnnotation({ annotationId: savedAnnotation.id, editable: false });
-    //   });
   }
 }
