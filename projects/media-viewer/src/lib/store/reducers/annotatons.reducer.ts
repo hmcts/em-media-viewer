@@ -5,7 +5,7 @@ import {Annotation} from '../../annotations/annotation-set/annotation-view/annot
 export interface AnnotationSetState {
   annotationSet: any; // todo add type
   annotationEntities: {[id: string]: Annotation[]};
-  comments: {[id: string]: Comment} | {};
+  commentEntities: {[id: string]: Comment} | {};
   pages: number[];
   loaded: boolean;
   loading: boolean;
@@ -13,7 +13,7 @@ export interface AnnotationSetState {
 
 export const initialState: AnnotationSetState = {
   annotationSet: {},
-  comments: {},
+  commentEntities: {},
   annotationEntities: {},
   pages: [],
   loading: false,
@@ -46,7 +46,7 @@ export function reducer (
       return {
         ...state,
         annotationSet: {},
-        comments: {},
+        commentEntities: {},
         loading: true
       };
     }
@@ -73,7 +73,7 @@ export function reducer (
         ...state,
         annotationSet,
         annotationEntities,
-        comments,
+        commentEntities: comments,
         loading: false,
         loaded: true
       };
@@ -110,7 +110,7 @@ export function reducer (
         ...state,
         annotationSet,
         annotationEntities,
-        comments,
+        commentEntities: comments,
         loading: false,
         loaded: true
       };
@@ -121,12 +121,12 @@ export function reducer (
         [action.payload.annotationId]: action.payload
       };
       const comments = {
-        ...state.comments,
+        ...state.commentEntities,
         ...comment
       };
       return {
         ...state,
-        comments
+        commentEntities: comments
       };
     }
 
@@ -137,5 +137,5 @@ export function reducer (
 }
 
 export const getAnnoSet = (state: AnnotationSetState) => state.annotationSet;
-export const getComments = (state: AnnotationSetState) => state.comments;
+export const getComments = (state: AnnotationSetState) => state.commentEntities;
 

@@ -5,13 +5,16 @@ import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { AnnotationApiService } from '../../annotation-api.service';
 import { AnnotationEventService } from '../../annotation-event.service';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../../store';
 
 @Injectable()
 export class TextHighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private readonly annotationEvents: AnnotationEventService) {}
+              private readonly annotationEvents: AnnotationEventService,
+              private store: Store<fromStore.AnnotationSetState>,) {}
 
   createTextHighlight(highlight: Highlight, annotationSet, pageInfo) {
     if (window.getSelection()) {
@@ -80,18 +83,17 @@ export class TextHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    this.api.postAnnotation({
-        id: uuid(),
-        annotationSetId: annotationSet.id,
-        color: 'FFFF00',
-        comments: [],
-        page: page,
-        rectangles: rectangles,
-        type: 'highlight'
-      })
-      .subscribe(savedAnnotation => {
-        annotationSet.annotations.push(savedAnnotation);
-        this.annotationEvents.selectAnnotation({ annotationId: savedAnnotation.id, editable: false });
-      });
+    debugger
+    const anno = {
+      id: uuid(),
+      annotationSetId: annotationSet.id,
+      color: 'FFFF00',
+      comments: [],
+      page: page,
+      rectangles: rectangles,
+      type: 'highlight'
+    }
+    this.store.dispatch(new fromStore.SaveAnnotation(anno));
+
   }
 }

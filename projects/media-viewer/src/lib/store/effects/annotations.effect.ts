@@ -31,6 +31,7 @@ export class AnnotationEffects {
     ofType(annotationsActions.SAVE_ANNOTATION),
     map((action: annotationsActions.SaveAnnotation) => action.payload),
     switchMap((annotation) => {
+      debugger;
       return this.annotationApiService.postAnnotation(annotation).pipe(
         map(annotations => {
           return new annotationsActions.SaveAnnotationSuccess(annotations);
