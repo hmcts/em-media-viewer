@@ -13,7 +13,7 @@ import * as fromStore from '../../../store';
 export class AnnotationViewComponent {
 
   @Input() set annotation(value) {
-    this.anno = {...value};
+      this.anno = {...value};
   }
   anno: Annotation;
   @Input() commentsLeftOffset: number;

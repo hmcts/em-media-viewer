@@ -4,12 +4,15 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { AnnotationSet } from './annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-import { Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
 import { CommentService } from '../comment-set/comment/comment.service';
 import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../store';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -17,8 +20,11 @@ import { BoxHighlightCreateService } from './annotation-create/box-highlight-cre
 })
 export class AnnotationSetComponent implements OnInit, OnDestroy {
   annoSet: AnnotationSet;
+  annotationsPerPage$: Observable<any>; // todo add type
   @Input() set annotationSet(annoSet) {
-    this.annoSet = {...annoSet};
+    if (annoSet) {
+      this.annoSet = {...annoSet};
+    }
   }
   @Input() zoom: number;
   @Input() rotate: number;
@@ -34,6 +40,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(
+    private store: Store<fromStore.AnnotationSetState>,
     private readonly api: AnnotationApiService,
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
@@ -43,6 +50,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly textHighlightService: TextHighlightCreateService) {}
 
   ngOnInit(): void {
+    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage).pipe(tap(console.log))
     this.subscriptions = [
       this.viewerEvents.textHighlight
         .subscribe(highlight => this.createTextHighlight(highlight)),
@@ -136,6 +144,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   public getAnnotationsOnPage(): Annotation[] {
     if (this.annoSet && this.annoSet.annotations) {
+      console.log('anno on page', this.annoSet.annotations.filter(a => a.page === this.page))
       return this.annoSet.annotations.filter(a => a.page === this.page);
     }
   }
@@ -147,8 +156,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   annotationSetClass() {
     return [
-      'rotation rot' + this.rotate,
-      this.drawMode ? 'drawMode' : ''
+      // 'rotation rot' + this.rotate,
+      // this.drawMode ? 'drawMode' : ''
     ];
   }
 

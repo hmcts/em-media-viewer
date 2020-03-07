@@ -21,4 +21,30 @@ export const getAnnComments = createSelector(
 export const getCommentsArray = createSelector(
   getAnnComments,
   (comments) => Object.keys(comments).map(key => comments[key])
-)
+);
+
+export const getAnnoEntities = createSelector(
+  getAnnotationsSetState,
+  fromAnnotations.getAnnoEnt
+);
+
+export const getAnnoPages = createSelector(
+  getAnnotationsSetState,
+  fromAnnotations.getPages
+);
+
+export const getAnnoPerPage = createSelector(
+  getAnnoPages,
+  getAnnoEntities,
+  (pages, annoEnt) => {
+    if (pages) {
+    return Object.keys(pages).map(key => {
+      const styles = pages[key].split(';')
+      return {
+        anno: annoEnt[key] ? annoEnt[key] : [],
+        styles
+      };
+    });
+    }
+  }
+);

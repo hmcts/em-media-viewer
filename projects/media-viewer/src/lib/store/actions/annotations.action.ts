@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
+import {PageEvent} from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 export const LOAD_ANNOTATION_SET = '[Annotations] Load Annotation Set';
 export const LOAD_ANNOTATION_SET_SUCCESS = '[Annotations] Load Annotation Set Success';
@@ -50,7 +51,7 @@ export class AddOrEditComment implements Action {
 
 export class AddPage implements Action {
   readonly type = ADD_PAGE;
-  constructor(public payload: number) { }
+  constructor(public payload: {div: object; pageNumber: number}) { }
 }
 
 
