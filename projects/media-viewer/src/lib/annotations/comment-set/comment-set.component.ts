@@ -97,7 +97,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
       ...annotation,
       comments
     };
-    debugger
     this.onAnnotationUpdate(annot);
     this.redrawComments();
   }
