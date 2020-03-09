@@ -207,7 +207,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.annotationService.addAnnoSetToPage();
       setTimeout(() => this.viewerEvents.boxSelected({
         page: this.pdfWrapper.getPageNumber(),
-        event: mouseEvent
+        event: mouseEvent,
+        annoSet: this.annotationSet
       }), 0);
     }
   }
@@ -216,7 +217,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
       this.viewerEvents.textSelected({
         page: this.pdfWrapper.getPageNumber(),
-        event: mouseEvent
+        event: mouseEvent,
+        annoSet: this.annotationSet
       });
     }
     if (!this.annotationSet) {
