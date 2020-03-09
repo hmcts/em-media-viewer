@@ -9,7 +9,6 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-  ViewEncapsulation
 } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {PrintService} from '../../print.service';

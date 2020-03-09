@@ -3,8 +3,7 @@ import { Outline } from './outline.model';
 
 @Component({
   selector: 'mv-outline-view',
-  templateUrl: './outline-view.component.html',
-  styleUrls: ['../../../styles/main.scss'],
+  templateUrl: './outline-view.component.html'
 })
 export class OutlineViewComponent {
 
