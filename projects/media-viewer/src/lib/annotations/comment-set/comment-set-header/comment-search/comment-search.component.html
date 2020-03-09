@@ -1,0 +1,26 @@
+<div class="govuk-form-group">
+  <input #searchInput type="text"
+         class="govuk-input comment-search"
+         id="search-comments-input" name="searchString"
+         aria-label="search comments input" [ngModel]="searchString">
+  <button type="button"
+          [class.govuk-button--disabled]="searchInput?.value.length <= 2"
+          class="govuk-button comment-search"
+          (click)="searchComments(searchInput.value.trim())">Search</button>
+  <ng-container *ngIf="searchResults.length > 0">
+    <span class="comment-search">
+      Found {{ searchIndex + 1 }} of {{ searchResults.length }}
+    </span>
+    <a href="#" class="comment-search"
+       [class.disabledLink]="searchIndex === 0"
+       (click)="prevSearchItem()">Prev</a>
+    <a href="#" class="comment-search"
+       [class.disabledLink]="searchIndex === searchResults.length -1"
+       (click)="nextSearchItem()">Next</a>
+  </ng-container>
+  <ng-container *ngIf="searchString && searchResults.length == 0">
+    <span class="comment-search">
+      No matches have been found
+    </span>
+  </ng-container>
+</div>
