@@ -31,7 +31,6 @@ import { Outline } from './outline-view/outline.model';
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['../../styles/main.scss','./pdf-viewer.component.scss', '../../media-viewer.component.scss'],
   providers: [PdfAnnotationService, AnnotationSetService],
   encapsulation: ViewEncapsulation.None
 })

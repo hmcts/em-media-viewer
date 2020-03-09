@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { AnnotationApiService } from '../annotations/annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-xdescribe('GrabNDragDirective', () => {
+describe('GrabNDragDirective', () => {
   let component: ImageViewerComponent;
   let fixture: ComponentFixture<ImageViewerComponent>;
   let imageElement: DebugElement;
