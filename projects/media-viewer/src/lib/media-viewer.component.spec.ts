@@ -1,19 +1,18 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { MediaViewerComponent } from './media-viewer.component';
-import { PdfViewerComponent } from './viewers/pdf-viewer/pdf-viewer.component';
-import { ImageViewerComponent } from './viewers/image-viewer/image-viewer.component';
-import { UnsupportedViewerComponent } from './viewers/unsupported-viewer/unsupported-viewer.component';
 import { ToolbarButtonVisibilityService, ToolbarModule } from './toolbar/toolbar.module';
-import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { AnnotationsModule } from './annotations/annotations.module';
-import { SimpleChange } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
-import { defaultImageOptions, defaultPdfOptions, defaultUnsupportedOptions } from './toolbar/toolbar-button-visibility.service';
+import {
+  defaultImageOptions,
+  defaultPdfOptions,
+  defaultUnsupportedOptions
+} from './toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from './annotations/annotation-api.service';
 import { of } from 'rxjs';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
-import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
 import { By } from '@angular/platform-browser';
 
 describe('MediaViewerComponent', () => {
@@ -24,17 +23,13 @@ describe('MediaViewerComponent', () => {
   beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
-        MediaViewerComponent,
-        PdfViewerComponent,
-        ImageViewerComponent,
-        UnsupportedViewerComponent,
-        ErrorMessageComponent,
-        GrabNDragDirective
+        MediaViewerComponent
       ],
       providers: [
         CommentService, ToolbarButtonVisibilityService
       ],
-      imports: [ToolbarModule, AnnotationsModule]
+      imports: [ToolbarModule, AnnotationsModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   });
@@ -69,11 +64,13 @@ describe('MediaViewerComponent', () => {
 
   it('should not support content', () => {
     component.contentType = 'unsupported';
+
     expect(component.contentTypeUnsupported()).toBeTruthy();
   });
 
   it('should not support content when content type is null', () => {
     component.contentType = null;
+
     expect(component.contentTypeUnsupported()).toBeTruthy();
   });
 
