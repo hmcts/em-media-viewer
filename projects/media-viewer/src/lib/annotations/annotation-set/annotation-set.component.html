@@ -11,7 +11,7 @@
                            [pageHeight]="height" [pageWidth]="width" [rotate]="rotate" [zoom]="zoom"
                            (highlightCreated)="saveBoxHighlight($event)"></mv-box-highlight-create>
   <div  *ngFor="let annotation of (annotationsPerPage$ | async);  index as i"
-        style="width: 793px; height: 1122px" class="pageContainer__page">
+        style="width: 793px;" class="pageContainer__page" [ngStyle]="{'top.px': 1122 * i}">
     <ng-container *ngFor="let anno of annotation.anno">
       <mv-annotation [annotation]="anno"
                      [zoom]="zoom"

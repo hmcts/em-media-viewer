@@ -83,7 +83,6 @@ export class TextHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    debugger
     const anno = {
       id: uuid(),
       annotationSetId: annotationSet.id,
