@@ -25,7 +25,7 @@ import { AnnotationSetService } from './annotation-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import { take } from 'rxjs/operators';
+import {exhaust, take, throttleTime} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store';
 
@@ -90,7 +90,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
-    this.pdfWrapper.pageRendered.subscribe((event) => {
+    this.pdfWrapper.pageRendered.pipe(throttleTime(500)).subscribe((event) => {
       if (this.enableAnnotations) {
         this.store.dispatch(new fromStore.AddPage({div: event.source.div, pageNumber: event.pageNumber}));
         // this.annotationService.addAnnotations(event);

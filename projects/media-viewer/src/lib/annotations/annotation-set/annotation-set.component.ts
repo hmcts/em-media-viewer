@@ -112,8 +112,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onMouseUp(pageNumber) {
-    this.page = pageNumber;
+  public onMouseUp() {
+   // this.page = pageNumber;
     if (this.annoSet && this.drawMode) {
       this.boxHighlightService.createBoxHighlight(this.page);
     }
