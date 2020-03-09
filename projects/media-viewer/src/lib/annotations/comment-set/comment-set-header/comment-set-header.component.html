@@ -5,4 +5,12 @@
           (click)="toggleCommentsSummary()">
     Summary
   </button>
+  <button *ngIf="annotationSet"
+          id="searchCommentsToggle" class="searchComments"
+          title="Search comments" tabindex="0" data-l10n-id="searchComments"
+          (click)="toggleCommentSearch()">
+  </button>
+  <mv-comment-search *ngIf="showCommentSearch"
+                     [annotationSet]="annotationSet">
+  </mv-comment-search>
 </div>

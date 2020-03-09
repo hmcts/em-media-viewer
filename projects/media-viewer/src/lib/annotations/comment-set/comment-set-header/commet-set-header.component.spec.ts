@@ -1,6 +1,7 @@
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import {CommentSetHeaderComponent} from './comment-set-header.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CommentSetHeader', () => {
   let component: CommentSetHeaderComponent;
@@ -12,7 +13,8 @@ describe('CommentSetHeader', () => {
     TestBed.configureTestingModule({
       imports: [],
       declarations: [CommentSetHeaderComponent],
-      providers: [ToolbarEventService]
+      providers: [ToolbarEventService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CommentSetHeaderComponent);
