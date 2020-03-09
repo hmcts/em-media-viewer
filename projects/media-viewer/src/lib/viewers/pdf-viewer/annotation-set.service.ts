@@ -34,18 +34,18 @@ export class AnnotationSetService {
   }
 
   addAnnoSetToPage() {
-    const pageNumber = this.pdfWrapper.getPageNumber();
-    if (!this.pages.includes(pageNumber)) {
-      this.pages.push(pageNumber);
-      const annotationSetComponent = this.createAnnotationSetComponent(pageNumber);
-      this.annotationSetComponents.push(annotationSetComponent);
-      annotationSetComponent.instance.addToDOM({
-        rotation: this.pdfWrapper.getNormalisedPagesRotation(),
-        scale: this.pdfWrapper.getCurrentPDFZoomValue(),
-        div: this.pdfViewer.nativeElement
-          .querySelector(`div.page[data-page-number="${this.pdfWrapper.getPageNumber()}"]`)
-      });
-    }
+    // const pageNumber = this.pdfWrapper.getPageNumber();
+    // if (!this.pages.includes(pageNumber)) {
+    //   this.pages.push(pageNumber);
+    //   const annotationSetComponent = this.createAnnotationSetComponent(pageNumber);
+    //   this.annotationSetComponents.push(annotationSetComponent);
+    //   annotationSetComponent.instance.addToDOM({
+    //     rotation: this.pdfWrapper.getNormalisedPagesRotation(),
+    //     scale: this.pdfWrapper.getCurrentPDFZoomValue(),
+    //     div: this.pdfViewer.nativeElement
+    //       .querySelector(`div.page[data-page-number="${this.pdfWrapper.getPageNumber()}"]`)
+    //   });
+    // }
   }
 
   buildAnnoSetComponents() {

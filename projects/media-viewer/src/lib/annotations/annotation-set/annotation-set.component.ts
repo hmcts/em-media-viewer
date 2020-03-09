@@ -126,7 +126,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   private createTextHighlight(highlight) {
-    if (this.height && this.width) {
+    // if (this.height && this.width) {
       this.textHighlightService.createTextHighlight(highlight, highlight.annoSet,
         {
           zoom: this.zoom,
@@ -135,7 +135,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           pageWidth: this.width,
           number: highlight.page
         });
-    }
+    // }
   }
 
   selectAnnotation(annotationId) {
