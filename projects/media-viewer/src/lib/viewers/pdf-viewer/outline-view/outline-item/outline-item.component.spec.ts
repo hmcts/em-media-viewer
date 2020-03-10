@@ -1,16 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OutlineItemComponent } from './outline-item.component';
 import { Outline } from '../outline.model';
-import { PdfJsWrapperFactory } from '../../../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
 
 describe('OutlineItemComponent', () => {
   let component: OutlineItemComponent;
   let fixture: ComponentFixture<OutlineItemComponent>;
-  let pdfJsWrapper;
-
-  const mockFactory = {
-    navigateTo: () => {}
-  };
 
   const outline: Outline = {
     bold: true,
@@ -27,14 +21,9 @@ describe('OutlineItemComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ OutlineItemComponent ],
-      providers: [
-        OutlineItemComponent,
-        { provide: PdfJsWrapperFactory, useValue: mockFactory }
-      ],
+      declarations: [ OutlineItemComponent ]
     })
     .compileComponents();
-    pdfJsWrapper = TestBed.get(PdfJsWrapperFactory);
     fixture = TestBed.createComponent(OutlineItemComponent);
     component = fixture.componentInstance;
     component.outline = outline;
@@ -57,20 +46,20 @@ describe('OutlineItemComponent', () => {
     expect(component.showOutlineItems).toEqual(false);
   });
 
-  it('should call navigateTo()', () => {
-    const navigateSpy = spyOn(pdfJsWrapper, 'navigateTo');
+  it('should emit navigation event', () => {
+    const navigateSpy = spyOn(component.navigationEvent, 'emit');
 
-    component.navigateLink();
+    component.goToDestination(outline.dest);
 
-    expect(navigateSpy).toHaveBeenCalledTimes(1);
+    expect(navigateSpy).toHaveBeenCalled();
   });
 
-  it('should not call navigateTo()', () => {
-    const navigateSpy = spyOn(pdfJsWrapper, 'navigateTo');
+  it('should not emit navigation event', () => {
+    const navigateSpy = spyOn(component.navigationEvent, 'emit');
     component.outline.dest = undefined;
 
-    component.navigateLink();
+    component.goToDestination(outline.dest);
 
-    expect(navigateSpy).toHaveBeenCalledTimes(0);
+    expect(navigateSpy).not.toHaveBeenCalled();
   });
 });

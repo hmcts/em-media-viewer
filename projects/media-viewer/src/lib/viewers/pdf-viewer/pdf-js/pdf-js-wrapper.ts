@@ -3,6 +3,7 @@ import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
 import { Subject } from 'rxjs';
 import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { Outline } from '../outline-view/outline.model';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
@@ -20,6 +21,7 @@ export class PdfJsWrapper {
 
   private zoomValue: number;
   private documentTitle: string;
+  private documentOutline: Outline;
 
   constructor(
     private readonly pdfViewer: PDFViewer,
@@ -28,6 +30,7 @@ export class PdfJsWrapper {
     public readonly documentLoadInit: Subject<string>,
     public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
     public readonly documentLoaded: Subject<any>,
+    public readonly outlineLoaded: Subject<Outline>,
     public readonly documentLoadFailed: Subject<Error>,
     public readonly pageRendered: Subject<PageEvent>
   ) {
@@ -63,11 +66,14 @@ export class PdfJsWrapper {
 
     try {
       const pdfDocument = await loadingTask;
-
       this.documentLoaded.next(pdfDocument);
 
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
+
+      this.documentOutline = await pdfDocument.getOutline();
+      this.outlineLoaded.next(this.documentOutline);
+
       const pdfMetaData = await pdfDocument.getMetadata();
       this.setCurrentPDFTitle(pdfMetaData.info.Title);
     } catch (e) {
