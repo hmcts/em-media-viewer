@@ -37,14 +37,14 @@ export const getAnnoPerPage = createSelector(
   getAnnoPages,
   getAnnoEntities,
   (pages, annoEnt) => {
-    if (pages) {
-    return Object.keys(pages).map(key => {
-      const styles = pages[key]
-      return {
-        anno: annoEnt[key] ? annoEnt[key] : null,
-        styles
-      };
-    });
+    if (pages && pages.numberOfPages) {
+      const arr = [];
+      for (let i = 1; i <= pages.numberOfPages; i++) {
+          arr.push({
+            anno: annoEnt[i] ? annoEnt[i] : []
+          });
+      }
+      return arr;
     }
   }
 );

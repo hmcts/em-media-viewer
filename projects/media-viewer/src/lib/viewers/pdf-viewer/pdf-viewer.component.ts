@@ -25,7 +25,7 @@ import { AnnotationSetService } from './annotation-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import {exhaust, take, throttleTime} from 'rxjs/operators';
+import {exhaust, sample, sampleTime, take, throttleTime} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store';
 

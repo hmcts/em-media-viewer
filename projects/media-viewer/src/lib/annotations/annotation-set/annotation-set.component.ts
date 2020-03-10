@@ -68,12 +68,12 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   addToDOM(eventSource: PageEvent['source']) {
-    this.zoom = eventSource.scale;
-    this.rotate = eventSource.rotation;
-    const element = eventSource.div;
-    this.width = this.rotate % 180 === 0 ? element.clientWidth : element.clientHeight;
-    this.height = this.rotate % 180 === 0 ? element.clientHeight : element.clientWidth;
-    element.appendChild(this.container.nativeElement);
+    // this.zoom = eventSource.scale;
+    // this.rotate = eventSource.rotation;
+    // const element = eventSource.div;
+    // this.width = this.rotate % 180 === 0 ? element.clientWidth : element.clientHeight;
+    // this.height = this.rotate % 180 === 0 ? element.clientHeight : element.clientWidth;
+    // element.appendChild(this.container.nativeElement);
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
