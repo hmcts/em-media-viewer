@@ -53,8 +53,6 @@ mv-annotation-set {
       margin: 0 auto 8px auto;
       width: 793px;
       overflow: visible;
-      z-index: 1000;
-      position: relative;
     }
 
     &__page-item {
@@ -62,6 +60,12 @@ mv-annotation-set {
       z-index: 1000;
     }
   }
+  .pageContainer__page--draw {
+    z-index: 1000;
+    position: absolute;
+    margin-bottom: 8px;
+  }
 }
+
 
 

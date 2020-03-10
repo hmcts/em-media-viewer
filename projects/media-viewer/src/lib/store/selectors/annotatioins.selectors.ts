@@ -41,10 +41,12 @@ export const getAnnoPerPage = createSelector(
       const arr = [];
       for (let i = 1; i <= pages.numberOfPages; i++) {
           arr.push({
-            anno: annoEnt[i] ? annoEnt[i] : []
+            anno: annoEnt[i] ? annoEnt[i] : [],
+            styles: pages.styles
           });
       }
       return arr;
     }
   }
 );
+

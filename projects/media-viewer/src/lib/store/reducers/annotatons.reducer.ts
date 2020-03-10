@@ -6,7 +6,7 @@ export interface AnnotationSetState {
   annotationSet: any; // todo add type
   annotationEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
-  pages: {numberOfPages: number; styles: string};
+  pages: { numberOfPages: number; styles: any }; // todo add proper typing
   loaded: boolean;
   loading: boolean;
 }
@@ -17,7 +17,7 @@ export const initialState: AnnotationSetState = {
   annotationEntities: {},
   pages: {
     numberOfPages: 0,
-    styles: ''
+    styles: {}
   },
   loading: false,
   loaded: false,
@@ -33,9 +33,15 @@ export function reducer (
       const payload = action.payload
       const  numberOfPages = (state.pages.numberOfPages <= payload.pageNumber) ?
         payload.pageNumber : state.pages.numberOfPages;
+      const styles = {
+        'left': payload.div['offsetLeft'],
+        'height': payload.div['offsetHeight'],
+        'width': payload.div['offsetWidth']
+      };
+
       const page = {
         numberOfPages,
-        styles: action.payload['div']['style']['cssText'] // todo turn into object for ngStyles
+        styles
       };
 
       const pages = {
