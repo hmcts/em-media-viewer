@@ -117,7 +117,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       this.boxHighlightService.createBoxHighlight(this.page);
     }
   }
-
+  // todo revisit this multiple acctions are getting issues
   public saveBoxHighlight(rectangle: any) {
     if (rectangle.page === this.page) {
       this.boxHighlightService.saveBoxHighlight(rectangle, this.annoSet, rectangle.page);
