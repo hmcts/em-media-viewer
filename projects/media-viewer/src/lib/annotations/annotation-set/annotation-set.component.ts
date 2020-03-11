@@ -1,16 +1,16 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
 import { Annotation } from './annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { AnnotationSet } from './annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-import {Observable, Subscription} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
 import { CommentService } from '../comment-set/comment/comment.service';
 import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import {tap} from 'rxjs/operators';
 
@@ -112,8 +112,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onMouseUp() {
-   // this.page = pageNumber;
+  public onMouseUp(page) {
+    this.page = page;
     if (this.annoSet && this.drawMode) {
       this.boxHighlightService.createBoxHighlight(this.page);
     }

@@ -9,7 +9,6 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-  ViewEncapsulation
 } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {PrintService} from '../../print.service';
@@ -91,13 +90,13 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   setupAnnotationSet(mode: boolean) {
-    if (mode && !this.annotationSet) {
-      this.annotationsApi.getOrCreateAnnotationSet(this.url)
-        .pipe(take(1))
-        .subscribe(annotationSet => {
-          this.annotationSet = annotationSet;
-        });
-    }
+    // if (mode && !this.annotationSet) {
+    //   this.annotationsApi.getOrCreateAnnotationSet(this.url)
+    //     .pipe(take(1))
+    //     .subscribe(annotationSet => {
+    //       this.annotationSet = annotationSet;
+    //     });
+    // }
   }
 
   private setRotation(rotation: number) {

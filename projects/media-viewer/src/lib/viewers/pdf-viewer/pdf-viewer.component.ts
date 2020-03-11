@@ -202,10 +202,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   onMouseDown(mouseEvent: MouseEvent) {
     if (this.annotationSet && this.toolbarEvents.highlightModeSubject.getValue()) {
-      this.annotationService.addAnnoSetToPage();
+     // this.annotationService.addAnnoSetToPage();
     }
     if (this.annotationSet && this.toolbarEvents.drawModeSubject.getValue()) {
-      this.annotationService.addAnnoSetToPage();
+      // this.annotationService.addAnnoSetToPage();
       setTimeout(() => this.viewerEvents.boxSelected({
         page: this.pdfWrapper.getPageNumber(),
         event: mouseEvent,

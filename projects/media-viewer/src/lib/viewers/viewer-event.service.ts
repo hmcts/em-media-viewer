@@ -25,6 +25,7 @@ export class ViewerEventService {
 
   // Function to inform Observers that shape has been selected in the viewer
   public boxSelected(selectionData: Highlight): void {
+    debugger
     this.boxHighlight.next(selectionData);
   }
 

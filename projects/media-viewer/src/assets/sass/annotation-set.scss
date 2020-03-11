@@ -51,7 +51,6 @@ mv-annotation-set {
     &__page {
       border: 1px solid #f00;
       margin: 0 auto 8px auto;
-      width: 793px;
       overflow: visible;
     }
 
@@ -63,7 +62,6 @@ mv-annotation-set {
   .pageContainer__page--draw {
     z-index: 1000;
     position: absolute;
-    margin-bottom: 8px;
   }
 }
 

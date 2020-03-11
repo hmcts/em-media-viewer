@@ -108,10 +108,10 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   createHighlight(highlightPage: number) {
       this.highlightCreated.emit({
         id: uuid(),
-        x: +this.left /this.zoom,
-        y: +this.top /this.zoom,
-        width: +this.width / this.zoom,
-        height: +this.height / this.zoom,
+        x: + this.left / this.zoom,
+        y: + this.top / this.zoom,
+        width: + this.width / this.zoom,
+        height: + this.height / this.zoom,
         page: highlightPage
       });
       this.resetHighlight();
