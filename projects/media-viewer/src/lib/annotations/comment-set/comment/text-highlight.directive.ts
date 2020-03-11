@@ -54,7 +54,6 @@ export class TextHighlightDirective implements AfterViewChecked, OnDestroy {
   }
 
   private highlightPattern(dynamicText: string) {
-    this.spanElement.innerText = escape(dynamicText);
-    return unescape(this.spanElement.outerHTML);
+    return '<span class="mvTextHighlight">' + dynamicText + '</span>'
   }
 }
