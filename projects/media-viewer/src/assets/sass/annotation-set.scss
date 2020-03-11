@@ -59,9 +59,9 @@ mv-annotation-set {
       z-index: 1000;
     }
   }
-  .pageContainer__page--draw {
+
+  .pageContainer.pageContainer--draw {
     z-index: 1000;
-    position: absolute;
   }
 }
 

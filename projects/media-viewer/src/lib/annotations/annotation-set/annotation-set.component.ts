@@ -30,12 +30,12 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Input() width: number;
   @Input() height: number;
-  @Input() page: number;
 
   @ViewChild('container') container: ElementRef;
-
+  page: number;
   selectedAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
   drawMode = false;
+  pageDimensions: any; // todo add type
 
   private subscriptions: Subscription[] = [];
 
@@ -50,7 +50,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly textHighlightService: TextHighlightCreateService) {}
 
   ngOnInit(): void {
-    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage).pipe(tap(console.log))
+    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage).pipe(
+      tap(annotations => {
+          this.pageDimensions = annotations ? annotations[0].styles : null;
+      }));
     this.subscriptions = [
       this.viewerEvents.textHighlight
         .subscribe(highlight => this.createTextHighlight(highlight)),

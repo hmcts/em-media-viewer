@@ -45,8 +45,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   }
 
   initHighlight(event) {
-    this.drawStartX = event.pageX - window.pageXOffset - this.container.left;
-    this.drawStartY = event.pageY - window.pageYOffset - this.container.top;
+    this.drawStartX = event.offsetX;
+    this.drawStartY = event.offsetY;
 
     this.display = 'block';
     this.height = 50;
@@ -74,8 +74,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   updateHighlight(event: MouseEvent) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
-      const xDelta = event.pageX - this.drawStartX - window.pageXOffset - this.container.left;
-      const yDelta = event.pageY - this.drawStartY - window.pageYOffset - this.container.top;
+      const xDelta = event.offsetX - this.drawStartX;
+      const yDelta = event.offsetY - this.drawStartY;
       let height = yDelta;
       let width = xDelta;
       let top = this.drawStartY;
