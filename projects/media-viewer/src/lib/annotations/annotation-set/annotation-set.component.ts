@@ -30,8 +30,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Input() width: number;
   @Input() height: number;
-
-  @ViewChild('container') container: ElementRef;
   page: number;
   selectedAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
   drawMode = false;
@@ -50,10 +48,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly textHighlightService: TextHighlightCreateService) {}
 
   ngOnInit(): void {
-    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage).pipe(
-      tap(annotations => {
-          this.pageDimensions = annotations ? annotations[0].styles : null;
-      }));
+    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage).pipe(tap(console.log));
+
     this.subscriptions = [
       this.viewerEvents.textHighlight
         .subscribe(highlight => this.createTextHighlight(highlight)),
@@ -143,18 +139,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   selectAnnotation(annotationId) {
     this.annotationService.selectAnnotation(annotationId);
-  }
-
-  public getAnnotationsOnPage(): Annotation[] {
-    if (this.annoSet && this.annoSet.annotations) {
-      console.log('anno on page', this.annoSet.annotations.filter(a => a.page === this.page))
-      return this.annoSet.annotations.filter(a => a.page === this.page);
-    }
-  }
-
-
-  public containerRectangle() {
-    return this.container.nativeElement.getBoundingClientRect();
   }
 
   annotationSetClass() {

@@ -52,15 +52,14 @@ mv-annotation-set {
       border: 1px solid #f00;
       margin: 0 auto 8px auto;
       overflow: visible;
+      position: absolute;
     }
 
     &__page-item {
-      position: relative;
       z-index: 1000;
     }
   }
-
-  .pageContainer.pageContainer--draw {
+  .pageContainer__page--draw {
     z-index: 1000;
   }
 }

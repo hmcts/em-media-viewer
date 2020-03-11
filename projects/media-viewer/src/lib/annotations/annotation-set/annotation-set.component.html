@@ -1,13 +1,6 @@
-<div  #container class="pageContainer" [ngClass]="{'pageContainer--draw': drawMode}"
-      [ngStyle]="{'width.px': pageDimensions?.width, 'left.px': pageDimensions?.left}">
-  <mv-box-highlight-create
-    *ngIf="drawMode"
-    [container]="containerRectangle()"
-    [pageHeight]="height"
-    [pageWidth]="width" [rotate]="rotate" [zoom]="zoom"
-    (highlightCreated)="saveBoxHighlight($event)">
-  </mv-box-highlight-create>
-  <div *ngFor="let annotation of (annotationsPerPage$ | async);  index as i"
+<div class="pageContainer">
+
+  <div  *ngFor="let annotation of (annotationsPerPage$ | async);  index as i"
        class="pageContainer__page"
        [ngStyle]="{
        'width.px': annotation.styles.width,
@@ -15,9 +8,19 @@
        'height.px': annotation.styles.height,
        'top.px': (annotation.styles.height + 10) * i
        }"
+       [ngClass]="{'pageContainer__page--draw' : drawMode }"
        (mouseup)="onMouseUp( i + 1)"
        (mousedown)="onMouseDown($event)"
        (mousemove)="onMouseMove($event)">
+
+    <mv-box-highlight-create
+      [pageHeight]="height"
+      [pageWidth]="width"
+      [rotate]="rotate"
+      [zoom]="zoom"
+      (highlightCreated)="saveBoxHighlight($event)">
+    </mv-box-highlight-create>
+
     <div class="pageContainer__page-item">
     <ng-container *ngFor="let anno of annotation.anno">
       <mv-annotation [annotation]="anno"

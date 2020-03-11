@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
 import uuid from 'uuid';
 import { Subscription } from 'rxjs';
 import { BoxHighlightCreateService } from './box-highlight-create.service';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-box-highlight-create',

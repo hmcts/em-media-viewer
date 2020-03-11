@@ -29,7 +29,6 @@ export class BoxHighlightCreateService {
   }
 
   createBoxHighlight(page: number) {
-
     this.createHighlight.next(page);
   }
 
