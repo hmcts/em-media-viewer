@@ -92,7 +92,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
     this.pdfWrapper.pageRendered.pipe(sampleTime(1000)).subscribe((event) => {
       if (this.enableAnnotations) {
-        console.log(event)
         this.store.dispatch(new fromStore.AddPage({div: event.source.div, pageNumber: event.pageNumber}));
         // this.annotationService.addAnnotations(event);
       }
@@ -148,14 +147,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   setupAnnotationSet(mode: boolean) {
-    if (mode && !this.annotationSet) {
-      this.annotationsApi.getOrCreateAnnotationSet(this.url)
-        .pipe(take(1))
-        .subscribe(annotationSet => {
-          this.annotationSet = annotationSet;
-          // this.annotationService.buildAnnoSetComponents(this.annotationSet);
-        });
-    }
+    // if (mode && !this.annotationSet) {
+    //   this.annotationsApi.getOrCreateAnnotationSet(this.url)
+    //     .pipe(take(1))
+    //     .subscribe(annotationSet => {
+    //       this.annotationSet = annotationSet;
+    //       // this.annotationService.buildAnnoSetComponents(this.annotationSet);
+    //     });
+    // }
   }
 
   private async loadDocument() {

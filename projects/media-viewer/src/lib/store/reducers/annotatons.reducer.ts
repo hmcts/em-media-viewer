@@ -76,7 +76,7 @@ export function reducer (
               ...commentEntities
             };
           }, {});
-
+      // create annotation per page
       const annotationEntities = annotationSet.annotations.reduce((h, obj) =>
         Object.assign(h, { [obj.page]:( h[obj.page] || [] ).concat(obj) }), {});
 

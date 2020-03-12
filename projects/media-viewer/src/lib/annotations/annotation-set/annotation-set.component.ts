@@ -33,7 +33,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   page: number;
   selectedAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
   drawMode = false;
-  pageDimensions: any; // todo add type
 
   private subscriptions: Subscription[] = [];
 

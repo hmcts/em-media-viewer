@@ -44,10 +44,11 @@ mv-annotation-set {
   .drawMode, .rot90, .rot180, .rot270 {
     z-index: 4;
   }
+
   .pageContainer {
+    width: 100%;
     position: absolute;
     top: 0;
-    width: 100%;
     &__page {
       border: 1px solid #f00;
       margin: 0 auto 8px auto;
