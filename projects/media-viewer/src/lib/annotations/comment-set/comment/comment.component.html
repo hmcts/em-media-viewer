@@ -31,14 +31,10 @@
             (ngModelChange)="reRenderComments(); onCommentChange($event);"
             aria-label="comment">
   </textarea>
-  <span *ngIf="selected && !editable"
-        mvTextHighlight [textToHighlight]="searchString">
+  <p *ngIf="!editable"
+     mvTextHighlight class="commentText" [textToHighlight]="searchString">
       {{ fullComment }}
-  </span>
-  <span *ngIf="!selected" class="unselectedText"
-        mvTextHighlight [textToHighlight]="searchString">
-    {{ fullComment }}
-  </span>
+  </p>
   <div *ngIf="selected || this.editable || (!fullComment.length && (tagItems && !tagItems.length))"
        class="aui-comment__footer commentBtns">
     <button class="govuk-button"
