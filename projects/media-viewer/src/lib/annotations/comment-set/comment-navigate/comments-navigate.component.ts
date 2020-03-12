@@ -11,6 +11,7 @@ import { AnnotationEventService } from '../../annotation-event.service';
 export class CommentsNavigateComponent implements OnChanges {
 
   @Input() annotationList: Annotation[];
+  @Input() autoSelect = false;
 
   navigationList: string[];
   index = 0;
@@ -33,7 +34,12 @@ export class CommentsNavigateComponent implements OnChanges {
       }))
       .sort(this.sortComments)
       .map(mappedComment => mappedComment.annotationId);
-    this.annotationEvents.selectAnnotation({ annotationId: this.navigationList[0], editable: false });
+    if (this.autoSelect) {
+      this.annotationEvents.selectAnnotation({
+        annotationId: this.navigationList[0],
+        editable: false
+      });
+    }
   }
 
   sortComments(mappedCommentA, mappedCommentB) {

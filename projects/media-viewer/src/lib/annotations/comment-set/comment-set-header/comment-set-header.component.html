@@ -13,4 +13,6 @@
   <mv-comment-search *ngIf="showCommentSearch"
                      [annotationSet]="annotationSet">
   </mv-comment-search>
+  <mv-comments-navigate *ngIf="navigationList?.length > 0"
+                        [annotationList]="navigationList"></mv-comments-navigate>
 </div>
