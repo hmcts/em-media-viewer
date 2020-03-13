@@ -87,8 +87,9 @@ export function reducer (
     }
 
     case fromAnnotations.SAVE_ANNOTATION_SUCCESS: {
+      const withOutCurrentAnno  = state.annotationSet.annotations.filter(anno => anno.id !== action.payload.id);
       const annotations = [
-        ...state.annotationSet.annotations,
+        ...withOutCurrentAnno,
         ...action.payload
       ];
       const annotationSet = {
