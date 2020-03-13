@@ -98,7 +98,7 @@ export function reducer (
       };
       const annotationEntities = StoreUtils.generateAnnotationEntities(annotationSet.annotations);
       const annotationPageEntities = StoreUtils.generatePageEntities(annotationSet.annotations);
-      const commentEntities = StoreUtils.generateCommentsEntities(annotationSet.annotations);
+      const commentEntities = StoreUtils.generateCommentsEntities(annotations);
 
       return {
         ...state,
