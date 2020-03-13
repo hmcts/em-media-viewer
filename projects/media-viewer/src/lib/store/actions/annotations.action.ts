@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
-import {PageEvent} from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 export const LOAD_ANNOTATION_SET = '[Annotations] Load Annotation Set';
 export const LOAD_ANNOTATION_SET_SUCCESS = '[Annotations] Load Annotation Set Success';
@@ -13,6 +12,9 @@ export const ADD_OR_EDIT_COMMENT = '[Annotations] Add or Edit Comment';
 
 export const ADD_PAGE = '[Annotations] Add Page';
 
+export const DELETE_ANNOTATION = '[Annotations] Delete Annotation';
+export const DELETE_ANNOTATION_SUCCESS = '[Annotations] Delete Annotation Success';
+export const DELETE_ANNOTATION_FAIL = '[Annotations] Delete Annotation Fail';
 
 export class LoadAnnotationSet implements Action {
   readonly type = LOAD_ANNOTATION_SET;
@@ -54,6 +56,23 @@ export class AddPage implements Action {
   constructor(public payload: any) { }
 }
 
+export class DeleteAnnotation implements Action {
+  readonly type = DELETE_ANNOTATION;
+  constructor(public payload: string) { }
+}
+
+export class DeleteAnnotationSucess implements Action {
+  readonly type = DELETE_ANNOTATION_SUCCESS;
+  constructor(public payload: any) { }
+}
+
+export class DeleteAnnotationFail implements Action {
+  readonly type = DELETE_ANNOTATION_FAIL;
+
+  constructor(public payload: any) {
+  }
+
+}
 
 export type AnnotationsActions =
   | LoadAnnotationSet
@@ -63,4 +82,7 @@ export type AnnotationsActions =
   | SaveAnnotationSuccess
   | SaveAnnotationFail
   | AddOrEditComment
-  | AddPage;
+  | AddPage
+  | DeleteAnnotation
+  | DeleteAnnotationSucess
+  | DeleteAnnotationFail;

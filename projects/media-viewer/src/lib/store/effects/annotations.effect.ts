@@ -39,5 +39,19 @@ export class AnnotationEffects {
           return of(new annotationsActions.LoadAnnotationSetFail(error));
         }));
     }));
+
+  @Effect()
+  deleteAnnotation$ = this.actions$.pipe(
+    ofType(annotationsActions.DELETE_ANNOTATION),
+    map((action: annotationsActions.DeleteAnnotation) => action.payload),
+    exhaustMap((annotation) => {
+      return this.annotationApiService.deleteAnnotation(annotation).pipe(
+        map(result => {
+          return new annotationsActions.DeleteAnnotationSucess(annotation);
+        }),
+        catchError(error => {
+          return of(new annotationsActions.DeleteAnnotationFail(error));
+        }));
+    }));
 }
 

@@ -111,6 +111,29 @@ export function reducer (
       };
     }
 
+    case fromAnnotations.DELETE_ANNOTATION_SUCCESS: {
+      const id = action.payload;
+      const page = state.annotationEntities[id].page;
+      const pageAnnotationsRemoved = [
+        ...state.annotationPageEntities[page].filter(anno => anno.id !== id)
+      ];
+      const annotationPageEntities = {
+        ...state.annotationPageEntities,
+        [page]: pageAnnotationsRemoved
+      };
+      const commentEntities = {
+        ...state.commentEntities
+      };
+      if(state.commentEntities[id]) {
+        delete commentEntities[id];
+      }
+      return {
+        ...state,
+        annotationPageEntities,
+        commentEntities
+      };
+    }
+
     case fromAnnotations.ADD_OR_EDIT_COMMENT: {
       const comment = {
         [action.payload.annotationId]: action.payload
