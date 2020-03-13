@@ -92,7 +92,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
     this.pdfWrapper.pageRendered.pipe(sampleTime(1000)).subscribe((event) => {
       if (this.enableAnnotations) {
-        this.store.dispatch(new fromStore.AddPage({div: event.source.div, pageNumber: event.pageNumber}));
+        console.log(event)
+        const payload = {
+          div: event.source.div,
+          pageNumber: event.pageNumber,
+          scale: event.source.scale,
+          rotation: event.source.rotation
+        }
+        this.store.dispatch(new fromStore.AddPage(payload));
         // this.annotationService.addAnnotations(event);
       }
     });

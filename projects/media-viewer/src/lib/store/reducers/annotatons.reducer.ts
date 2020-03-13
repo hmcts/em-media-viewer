@@ -7,7 +7,7 @@ export interface AnnotationSetState {
   annotationEntities: {[id: string]: any}; // todo add type
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
-  pages: { numberOfPages: number; styles: any }; // todo add proper typing
+  pages: { numberOfPages: number; styles: any; scaleRotation: object }; // todo add proper typing
   loaded: boolean;
   loading: boolean;
 }
@@ -19,7 +19,8 @@ export const initialState: AnnotationSetState = {
   annotationPageEntities: {},
   pages: {
     numberOfPages: 0,
-    styles: {}
+    styles: {},
+    scaleRotation: {}
   },
   loading: false,
   loaded: false,
@@ -40,10 +41,15 @@ export function reducer (
         'height': payload.div['offsetHeight'],
         'width': payload.div['offsetWidth']
       };
-
+      const scaleRotation = {
+        scale: payload.scale,
+        rotation: payload.rotation
+      };
+      const annotationPageEntities = StoreUtils.scaleRotateAnno(state.annotationSet.annotations, scaleRotation, styles);
       const page = {
         numberOfPages,
-        styles
+        styles,
+        scaleRotation
       };
 
       const pages = {
@@ -51,6 +57,7 @@ export function reducer (
       };
       return {
         ...state,
+        annotationPageEntities,
         pages
       };
     }

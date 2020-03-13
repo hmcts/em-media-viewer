@@ -51,7 +51,7 @@ export class AddOrEditComment implements Action {
 
 export class AddPage implements Action {
   readonly type = ADD_PAGE;
-  constructor(public payload: {div: object; pageNumber: number}) { }
+  constructor(public payload: any) { }
 }
 
 
