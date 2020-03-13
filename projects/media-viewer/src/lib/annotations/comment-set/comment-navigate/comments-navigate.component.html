@@ -1,7 +1,11 @@
-<span class="comment-search">Found {{ index + 1 }} of {{ navigationList.length }}</span>
-<a href="#" class="comment-search"
-   [class.disabledLink]="index === 0"
+<span class="comment-search">
+  Showing {{ index + 1 }} of {{ navigationList.length }}
+</span>
+<a href="#"
+   class="comment-search"
+   title="Previous comment"
    (click)="prevSearchItem()">Prev</a>
-<a href="#" class="comment-search"
-   [class.disabledLink]="index === navigationList.length -1"
+<a href="#"
+   class="comment-search"
+   title="Next comment'"
    (click)="nextSearchItem()">Next</a>

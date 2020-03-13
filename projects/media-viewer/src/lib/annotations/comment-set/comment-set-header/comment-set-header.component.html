@@ -1,18 +1,30 @@
-<div class="commentSummaryHeader">
-  <button *ngIf="showCommentSummary"
-          id="commentSummary" class="commentSummary"
-          title="Open collate summary" tabindex="0" data-l10n-id="commentSummary"
-          (click)="toggleCommentsSummary()">
-    Summary
-  </button>
-  <button *ngIf="annotationSet"
-          id="searchCommentsToggle" class="searchComments"
-          title="Search comments" tabindex="0" data-l10n-id="searchComments"
-          (click)="toggleCommentSearch()">
-  </button>
-  <mv-comment-search *ngIf="showCommentSearch"
-                     [annotationSet]="annotationSet">
-  </mv-comment-search>
-  <mv-comments-navigate *ngIf="navigationList?.length > 0"
-                        [annotationList]="navigationList"></mv-comments-navigate>
+<div class="govuk-tabs commentSummaryHeader" data-module="govuk-tabs">
+  <ul class="govuk-tabs__list">
+    <li *ngFor="let tab of tabs"
+        class="govuk-tabs__list-item govuk-tabs__list-item">
+      <a (click)="selectTab(tab)" href="#"
+         [ngClass]="{ 'govuk-tabs__tab': true, 'govuk-tabs__tab--selected': tabSelected === tab }">
+        {{ tab | titlecase }}
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" *ngIf="tabSelected">
+    <ng-container *ngIf="tabSelected === 'comments'">
+      <div style="width: 100%">
+        <button type="button" class="govuk-button"
+                id="commentSummary" tabindex="0"
+                data-l10n-id="commentSummary"
+                title="Open collate summary"
+                (click)="toggleCommentsSummary()">Collate comments</button>
+      </div>
+      <mv-comments-navigate *ngIf="navigationList?.length > 0"
+                            [annotationList]="navigationList"></mv-comments-navigate>
+    </ng-container>
+    <ng-container *ngIf="tabSelected === 'filter'">
+      <p>Comment filtering not yet implemented</p>
+    </ng-container>
+    <ng-container *ngIf="tabSelected === 'search'">
+      <mv-comment-search [annotationSet]="annotationSet"></mv-comment-search>
+    </ng-container>
+  </div>
 </div>

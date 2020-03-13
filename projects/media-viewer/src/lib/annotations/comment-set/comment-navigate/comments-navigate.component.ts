@@ -57,23 +57,25 @@ export class CommentsNavigateComponent implements OnChanges {
   }
 
   nextSearchItem() {
-    if (this.index < this.annotationList.length - 1) {
-      this.index += 1;
-      this.annotationEvents.selectAnnotation({
-        annotationId: this.navigationList[this.index],
-        editable: false
-      });
+    this.index += 1;
+    if (this.index == this.annotationList.length) {
+      this.index = 0;
     }
+    this.annotationEvents.selectAnnotation({
+      annotationId: this.navigationList[this.index],
+      editable: false
+    });
   }
 
   prevSearchItem() {
-    if (this.index > 0) {
-      this.index -= 1;
-      this.annotationEvents.selectAnnotation({
-        annotationId: this.navigationList[this.index],
-        editable: false
-      });
+    this.index -= 1;
+    if (this.index < 0) {
+      this.index = this.navigationList.length - 1;
     }
+    this.annotationEvents.selectAnnotation({
+      annotationId: this.navigationList[this.index],
+      editable: false
+    });
   }
 
   upperRectangle(rectangles: Rectangle[]) {
