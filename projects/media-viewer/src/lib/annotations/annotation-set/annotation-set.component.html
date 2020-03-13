@@ -4,9 +4,7 @@
        class="pageContainer__page"
        [ngStyle]="{
        'width.px': annotation.styles.width,
-       'left.px': annotation.styles.left,
-       'height.px': annotation.styles.height,
-       'top.px': (annotation.styles.height + 10) * i
+       'height.px': annotation.styles.height
        }"
        [ngClass]="{'pageContainer__page--draw' : drawMode }"
        (mouseup)="onMouseUp( i + 1)"
