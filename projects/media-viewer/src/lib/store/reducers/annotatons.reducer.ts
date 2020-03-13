@@ -1,10 +1,11 @@
 import * as fromAnnotations from '../actions/annotations.action';
-import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
+import {StoreUtils} from '../store-utils';
 
 export interface AnnotationSetState {
-  annotationSet: any; // todo add type
-  annotationEntities: {[id: string]: Annotation[]};
+  annotationSet: any; // todo add type to be removed
+  annotationEntities: {[id: string]: any}; // todo add type
+  annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
   pages: { numberOfPages: number; styles: any }; // todo add proper typing
   loaded: boolean;
@@ -13,8 +14,9 @@ export interface AnnotationSetState {
 
 export const initialState: AnnotationSetState = {
   annotationSet: {},
-  commentEntities: {},
   annotationEntities: {},
+  commentEntities: {},
+  annotationPageEntities: {},
   pages: {
     numberOfPages: 0,
     styles: {}
@@ -30,7 +32,7 @@ export function reducer (
   switch (action.type) {
 
     case fromAnnotations.ADD_PAGE: {
-      const payload = action.payload
+      const payload = action.payload;
       const  numberOfPages = (state.pages.numberOfPages <= payload.pageNumber) ?
         payload.pageNumber : state.pages.numberOfPages;
       const styles = {
@@ -63,28 +65,15 @@ export function reducer (
     }
     case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS: {
       const annotationSet = action.payload;
-      const comments = annotationSet.annotations
-        .reduce(
-          (commentEntities: { [id: string]: Annotation }, annotation: Annotation) => {
-            if (annotation.comments.length) {
-              return {
-                ...commentEntities,
-                [annotation.id]: annotation.comments[0]
-              };
-            }
-            return {
-              ...commentEntities
-            };
-          }, {});
-      // create annotation per page
-      const annotationEntities = annotationSet.annotations.reduce((h, obj) =>
-        Object.assign(h, { [obj.page]:( h[obj.page] || [] ).concat(obj) }), {});
-
+      const annotationEntities = StoreUtils.generateAnnotationEntities(annotationSet.annotations);
+      const annotationPageEntities = StoreUtils.generatePageEntities(annotationSet.annotations);
+      const commentEntities = StoreUtils.generateCommentsEntities(annotationSet.annotations);
       return {
         ...state,
         annotationSet,
         annotationEntities,
-        commentEntities: comments,
+        annotationPageEntities,
+        commentEntities,
         loading: false,
         loaded: true
       };
@@ -99,29 +88,16 @@ export function reducer (
         ...state.annotationSet,
         annotations
       };
-
-      const annotationEntities = annotationSet.annotations.reduce((h, obj) =>
-        Object.assign(h, { [obj.page]:( h[obj.page] || [] ).concat(obj) }), {});
-      const comments = annotationSet.annotations
-        .reduce(
-          (commentEntities: { [id: string]: Annotation }, annotation: Annotation) => {
-            console.log(annotation)
-            if (annotation.comments.length) {
-              return {
-                ...commentEntities,
-                [annotation.id]: annotation.comments[0]
-              };
-            }
-            return {
-              ...commentEntities
-            };
-          }, {});
+      const annotationEntities = StoreUtils.generateAnnotationEntities(annotationSet.annotations);
+      const annotationPageEntities = StoreUtils.generatePageEntities(annotationSet.annotations);
+      const commentEntities = StoreUtils.generateCommentsEntities(annotationSet.annotations);
 
       return {
         ...state,
         annotationSet,
         annotationEntities,
-        commentEntities: comments,
+        annotationPageEntities,
+        commentEntities,
         loading: false,
         loaded: true
       };
@@ -149,6 +125,7 @@ export function reducer (
 
 export const getAnnoSet = (state: AnnotationSetState) => state.annotationSet;
 export const getComments = (state: AnnotationSetState) => state.commentEntities;
+export const getAnnoPageEnt = (state: AnnotationSetState) => state.annotationPageEntities;
 export const getAnnoEnt = (state: AnnotationSetState) => state.annotationEntities;
 export const getPages = (state: AnnotationSetState) => state.pages;
 

@@ -24,6 +24,7 @@ export class CommentComponent implements OnChanges {
   editor: User;
   _comment: Comment;
   _editable: boolean;
+  commentTop: number;
 
   _rectangle;
   totalPreviousPagesHeight = 0;
@@ -63,6 +64,7 @@ export class CommentComponent implements OnChanges {
   @Input()
   set comment(comment: Comment) {
     this._comment = {...comment};
+    this.commentTop = this._comment.positionTop;
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
     this.createdBy = comment.createdBy;
@@ -152,9 +154,9 @@ export class CommentComponent implements OnChanges {
     this.renderComments.emit(this._comment);
   }
 
-  get commentTop(): number {
-    return this.totalPreviousPagesHeight + (this.rectTop * this.zoom);
-  }
+  // get commentTop(): number {
+  //   return this.totalPreviousPagesHeight + (this.rectTop * this.zoom);
+  // }
 
 
   get height() {
