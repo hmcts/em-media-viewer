@@ -24,6 +24,7 @@ import { BoxHighlightCreateService } from './annotation-create/box-highlight-cre
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import {tap} from 'rxjs/operators';
+import {BoxHighlightCreateComponent} from './annotation-create/box-highlight-create.component';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -41,6 +42,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Input() width: number;
   @Input() height: number;
+  @ViewChild('boxHighlight') private boxHighlight: BoxHighlightCreateComponent;
   page: number;
   selectedAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
   drawMode = false;
@@ -66,7 +68,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       this.viewerEvents.boxHighlight
         .subscribe(highlight => this.boxHighlightService.initBoxHighlight(highlight.event)),
       this.annotationService.getSelectedAnnotation()
-        .subscribe(selectedAnnotation => this.selectedAnnotation = selectedAnnotation),
+        .subscribe(selectedAnnotation => {
+          console.log(selectedAnnotation)
+          this.selectedAnnotation = selectedAnnotation
+        }),
       this.toolbarEvents.drawModeSubject
         .subscribe(drawMode => this.drawMode = drawMode)
     ];
@@ -112,12 +117,14 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   public onMouseUp(page) {
     this.page = page;
     if (this.annoSet && this.drawMode) {
-      this.boxHighlightService.createBoxHighlight(this.page);
+      this.boxHighlight.createHighlight(this.page)
+      // this.boxHighlightService.createBoxHighlight(this.page);
     }
   }
   // todo revisit this multiple acctions are getting issues
   public saveBoxHighlight(rectangle: any) {
     if (rectangle.page === this.page) {
+      // this.annotationService.selectAnnotation(rectangle.id);
       this.boxHighlightService.saveBoxHighlight(rectangle, this.annoSet, rectangle.page);
     }
   }

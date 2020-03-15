@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import {AsyncSubject, Observable, Subject} from 'rxjs';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';

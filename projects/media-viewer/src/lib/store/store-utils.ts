@@ -11,7 +11,6 @@ export class StoreUtils {
   static generateCommentsEntities(annotations): {[id: string]: Annotation[]} {
      return annotations.reduce(
       (commentEntities: { [id: string]: Annotation }, annotation: Annotation) => {
-        console.log(annotation)
         if (annotation.comments.length) {
           const comment = {
             ...annotation.comments[0],
