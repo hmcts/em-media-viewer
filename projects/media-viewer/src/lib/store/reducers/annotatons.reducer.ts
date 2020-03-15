@@ -1,6 +1,7 @@
 import * as fromAnnotations from '../actions/annotations.action';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 import {StoreUtils} from '../store-utils';
+import {getAnnotationEntities} from '../selectors';
 
 export interface AnnotationSetState {
   annotationSet: any; // todo add type to be removed
@@ -45,7 +46,7 @@ export function reducer (
         scale: payload.scale,
         rotation: payload.rotation
       };
-      const annotationPageEntities = StoreUtils.scaleRotateAnno(state.annotationSet.annotations, scaleRotation, styles);
+      // const annotationPageEntities = StoreUtils.scaleRotateAnno(state.annotationSet.annotations, scaleRotation, styles); // todo grab this from entities
       const page = {
         numberOfPages,
         styles,
@@ -57,7 +58,7 @@ export function reducer (
       };
       return {
         ...state,
-        annotationPageEntities,
+        // annotationPageEntities,
         pages
       };
     }
@@ -87,22 +88,18 @@ export function reducer (
     }
 
     case fromAnnotations.SAVE_ANNOTATION_SUCCESS: {
-      const withOutCurrentAnno  = state.annotationSet.annotations.filter(anno => anno.id !== action.payload.id);
-      const annotations = [
-        ...withOutCurrentAnno,
-        ...action.payload
-      ];
-      const annotationSet = {
-        ...state.annotationSet,
-        annotations
+      const anno = action.payload;
+      const annEntities = {
+        ...state.annotationEntities,
+        [anno.id]: anno
       };
-      const annotationEntities = StoreUtils.generateAnnotationEntities(annotationSet.annotations);
-      const annotationPageEntities = StoreUtils.generatePageEntities(annotationSet.annotations);
-      const commentEntities = StoreUtils.generateCommentsEntities(annotations);
+      const annotArray = Object.keys(annEntities).map(key => annEntities[key]);
+      const annotationEntities = StoreUtils.generateAnnotationEntities(annotArray);
+      const annotationPageEntities = StoreUtils.generatePageEntities(annotArray);
+      const commentEntities = StoreUtils.generateCommentsEntities(annotArray);
 
       return {
         ...state,
-        annotationSet,
         annotationEntities,
         annotationPageEntities,
         commentEntities,
@@ -114,6 +111,10 @@ export function reducer (
     case fromAnnotations.DELETE_ANNOTATION_SUCCESS: {
       const id = action.payload;
       const page = state.annotationEntities[id].page;
+      const annotationEntities = {
+        ...state.annotationEntities
+      }
+      delete annotationEntities[id];
       const pageAnnotationsRemoved = [
         ...state.annotationPageEntities[page].filter(anno => anno.id !== id)
       ];
@@ -129,6 +130,7 @@ export function reducer (
       }
       return {
         ...state,
+        annotationEntities,
         annotationPageEntities,
         commentEntities
       };

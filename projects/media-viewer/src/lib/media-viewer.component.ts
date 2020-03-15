@@ -74,7 +74,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
-    this.annotationSet$ = this.store.pipe(select(fromStore.getAnnotationSet)).pipe(tap(console.log));
+    this.annotationSet$ = this.store.pipe(select(fromStore.getAnnotationSet)).pipe(tap(value => console.log('annotationSEt', value)));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(

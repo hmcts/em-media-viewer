@@ -104,9 +104,9 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   redrawComments() {
     setTimeout(() => {
       const componentList: CommentComponent[] = this.commentComponents.map(comment => comment);
-      this.renderService.redrawComponents(componentList, this.pageHeights, this.rotate, this.zoom);
+        this.renderService.redrawComponents(componentList, this.pageHeights, this.rotate, this.zoom);
     }, 0);
-  }
+      }
 
   public onCommentUpdate(payload: {comment: Comment, tags: TagItemModel[]} ) {
     const annotation = this.annotationSet.annotations.find(anno => anno.id === payload.comment.annotationId);

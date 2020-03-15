@@ -8,14 +8,23 @@ export const getAnnotationsSetState = createSelector(
   (state: fromAnnotations.AnnotationSetState) =>  state
 );
 
-export const getAnnotationSet = createSelector(
-  getAnnotationsSetState,
-  fromAnnotations.getAnnoSet
-);
-
 export const getAnnotationEntities = createSelector(
   getAnnotationsSetState,
   fromAnnotations.getAnnoEnt
+);
+export const getSet = createSelector(
+  getAnnotationsSetState,
+  fromAnnotations.getAnnoSet
+);
+export const getAnnotationSet = createSelector(
+  getAnnotationEntities,
+  getSet,
+  (entities, set) => {
+    return {
+      ...set,
+      annotations: Object.keys(entities).map(key => entities[key])
+    }
+  }
 );
 
 export const getAnnComments = createSelector(

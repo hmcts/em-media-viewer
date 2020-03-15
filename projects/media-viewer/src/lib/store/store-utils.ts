@@ -28,16 +28,16 @@ export class StoreUtils {
       }, {});
   }
 
-  static generateAnnotationEntities(annotation): {[id: string]: Annotation[]} {
-    return annotation.reduce(
+  static generateAnnotationEntities(anno): {[id: string]: Annotation[]} {
+    return anno.reduce(
       (annoEntities: { [id: string]: Annotation }, annotation: Annotation) => {
-        const anno = {
-          page: annotation.page,
+        const annot = {
+          ...annotation,
           positionTop: annotation.rectangles[0].y
         }
         return {
           ...annoEntities,
-          [annotation.id]: anno
+          [annotation.id]: annot
         };
       }, {});
   }
