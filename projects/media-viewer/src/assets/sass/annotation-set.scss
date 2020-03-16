@@ -57,11 +57,11 @@ mv-annotation-set {
     }
 
     &__page-item {
-      z-index: 1000;
+      z-index: 100;
     }
   }
   .pageContainer__page--draw {
-    z-index: 1000;
+    z-index: 100;
   }
 }
 

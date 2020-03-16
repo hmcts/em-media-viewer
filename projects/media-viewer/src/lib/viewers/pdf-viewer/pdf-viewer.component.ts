@@ -211,7 +211,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onMouseUp(mouseEvent: MouseEvent) {
-    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: '', editable: false}));
+   // this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: '', editable: false}));
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
       this.viewerEvents.textSelected({
         page: this.pdfWrapper.getPageNumber(),
