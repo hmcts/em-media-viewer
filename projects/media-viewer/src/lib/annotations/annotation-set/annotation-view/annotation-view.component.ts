@@ -21,7 +21,7 @@ export class AnnotationViewComponent {
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() set selectedAnnoId(selectedId) {
-    this.selected = selectedId === this.anno.id;
+    this.selected = selectedId.annotationId ? (selectedId.annotationId === this.anno.id) : false;
   };
   @Input() height: number;
   @Input() width: number;

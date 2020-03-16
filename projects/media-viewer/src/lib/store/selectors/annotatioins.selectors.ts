@@ -1,7 +1,7 @@
 import {createSelector} from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
-import * as fromAnnotations from '../reducers/annotatons.reducer'
+import * as fromAnnotations from '../reducers/annotatons.reducer';
 
 export const getAnnotationsSetState = createSelector(
   fromFeature.getAnnoSetState,
@@ -12,6 +12,7 @@ export const getAnnotationEntities = createSelector(
   getAnnotationsSetState,
   fromAnnotations.getAnnoEnt
 );
+
 export const getSet = createSelector(
   getAnnotationsSetState,
   fromAnnotations.getAnnoSet
@@ -25,6 +26,11 @@ export const getAnnotationSet = createSelector(
       annotations: Object.keys(entities).map(key => entities[key])
     }
   }
+);
+
+export const getSelectedAnnotation = createSelector(
+  getAnnotationsSetState,
+  fromAnnotations.getSelectedAnno
 );
 
 export const getAnnComments = createSelector(

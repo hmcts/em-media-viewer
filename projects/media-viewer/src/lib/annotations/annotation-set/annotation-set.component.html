@@ -25,7 +25,7 @@
       <mv-annotation [annotation]="anno"
                      [zoom]="zoom"
                      [rotate]="rotate"
-                     [selectedAnnoId]="selectedAnnotation.annotationId"
+                     [selectedAnnoId]="selectedAnnotation$ | async"
                      [height]="height"
                      [width]="width"
                      (update)="onAnnotationUpdate($event)"

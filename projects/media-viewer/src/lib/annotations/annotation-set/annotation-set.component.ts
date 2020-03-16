@@ -44,7 +44,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   @Input() height: number;
   @ViewChild('boxHighlight') private boxHighlight: BoxHighlightCreateComponent;
   page: number;
-  selectedAnnotation: SelectionAnnotation = { annotationId: '', editable: false };
+  selectedAnnotation$: Observable<string>;
   drawMode = false;
 
   private subscriptions: Subscription[] = [];
@@ -61,17 +61,18 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage).pipe(tap(console.log));
+    this.selectedAnnotation$ = this.store.select(fromStore.getSelectedAnnotation).pipe(tap(console.log))
 
     this.subscriptions = [
       this.viewerEvents.textHighlight
         .subscribe(highlight => this.createTextHighlight(highlight)),
       this.viewerEvents.boxHighlight
         .subscribe(highlight => this.boxHighlightService.initBoxHighlight(highlight.event)),
-      this.annotationService.getSelectedAnnotation()
-        .subscribe(selectedAnnotation => {
-          console.log(selectedAnnotation)
-          this.selectedAnnotation = selectedAnnotation
-        }),
+      // this.annotationService.getSelectedAnnotation()
+      //   .subscribe(selectedAnnotation => {
+      //     console.log(selectedAnnotation)
+      //     this.selectedAnnotation = selectedAnnotation
+      //   }),
       this.toolbarEvents.drawModeSubject
         .subscribe(drawMode => this.drawMode = drawMode)
     ];
@@ -142,7 +143,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   selectAnnotation(annotationId) {
-    this.annotationService.selectAnnotation(annotationId);
+    this.store.dispatch(new fromStore.SelectedAnnotation(annotationId))
+    // this.annotationService.selectAnnotation(annotationId);
   }
 
   annotationSetClass() {

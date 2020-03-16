@@ -8,6 +8,7 @@ export interface AnnotationSetState {
   annotationEntities: {[id: string]: any}; // todo add type
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
+  selectedAnnotation: string;
   pages: { numberOfPages: number; styles: any; scaleRotation: object }; // todo add proper typing
   loaded: boolean;
   loading: boolean;
@@ -18,6 +19,7 @@ export const initialState: AnnotationSetState = {
   annotationEntities: {},
   commentEntities: {},
   annotationPageEntities: {},
+  selectedAnnotation: '',
   pages: {
     numberOfPages: 0,
     styles: {},
@@ -152,6 +154,13 @@ export function reducer (
       };
     }
 
+    case fromAnnotations.SELECT_ANNOTATION: {
+      return {
+        ...state,
+        selectedAnnotation: action.payload
+      };
+    }
+
   }
 
 
@@ -163,4 +172,5 @@ export const getComments = (state: AnnotationSetState) => state.commentEntities;
 export const getAnnoPageEnt = (state: AnnotationSetState) => state.annotationPageEntities;
 export const getAnnoEnt = (state: AnnotationSetState) => state.annotationEntities;
 export const getPages = (state: AnnotationSetState) => state.pages;
+export const getSelectedAnno = (state: AnnotationSetState) => state.selectedAnnotation;
 
