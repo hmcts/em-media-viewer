@@ -46,7 +46,9 @@ export function reducer (
         scale: payload.scale,
         rotation: payload.rotation
       };
-      const annotationPageEntities = StoreUtils.scaleRotateAnno(state.annotationSet.annotations, scaleRotation, styles); // todo grab this from entities
+      // todo if sale of select
+      const annotArray = Object.keys(state.annotationEntities).map(key => state.annotationEntities[key]);
+      const annotationPageEntities = StoreUtils.scaleRotateAnno(annotArray, scaleRotation, styles);
       const page = {
         numberOfPages,
         styles,
