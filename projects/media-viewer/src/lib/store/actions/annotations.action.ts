@@ -16,6 +16,8 @@ export const DELETE_ANNOTATION = '[Annotations] Delete Annotation';
 export const DELETE_ANNOTATION_SUCCESS = '[Annotations] Delete Annotation Success';
 export const DELETE_ANNOTATION_FAIL = '[Annotations] Delete Annotation Fail';
 
+export const SELECT_ANNOTATION  = '[Annotations] Select Annotation';
+
 export class LoadAnnotationSet implements Action {
   readonly type = LOAD_ANNOTATION_SET;
   constructor(public payload: string) { }
@@ -68,10 +70,12 @@ export class DeleteAnnotationSucess implements Action {
 
 export class DeleteAnnotationFail implements Action {
   readonly type = DELETE_ANNOTATION_FAIL;
+  constructor(public payload: any) {}
+}
 
-  constructor(public payload: any) {
-  }
-
+export class SelectedAnnotation implements Action {
+  readonly type = SELECT_ANNOTATION;
+  constructor(public payload: any) {}
 }
 
 export type AnnotationsActions =
@@ -85,4 +89,5 @@ export type AnnotationsActions =
   | AddPage
   | DeleteAnnotation
   | DeleteAnnotationSucess
-  | DeleteAnnotationFail;
+  | DeleteAnnotationFail
+  | SelectedAnnotation;

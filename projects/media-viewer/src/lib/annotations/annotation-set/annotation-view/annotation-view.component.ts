@@ -16,10 +16,13 @@ export class AnnotationViewComponent {
       this.anno = {...value};
   }
   anno: Annotation;
+  selected: boolean;
   @Input() commentsLeftOffset: number;
   @Input() zoom: number;
   @Input() rotate: number;
-  @Input() selected: boolean;
+  @Input() set selectedAnnoId(selectedId) {
+    this.selected = selectedId === this.anno.id;
+  };
   @Input() height: number;
   @Input() width: number;
   @Output() update = new EventEmitter<Annotation>();
@@ -34,6 +37,7 @@ export class AnnotationViewComponent {
 
   public onSelect() {
     this.selected = true;
+
     this.annotationClick.emit({ annotationId: this.anno.id, editable: false });
   }
 

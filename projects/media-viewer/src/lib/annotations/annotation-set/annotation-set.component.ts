@@ -117,8 +117,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   public onMouseUp(page) {
     this.page = page;
     if (this.annoSet && this.drawMode) {
-      this.boxHighlight.createHighlight(this.page)
-      // this.boxHighlightService.createBoxHighlight(this.page);
+      this.boxHighlight.createHighlight(this.page);
     }
   }
   // todo revisit this multiple acctions are getting issues

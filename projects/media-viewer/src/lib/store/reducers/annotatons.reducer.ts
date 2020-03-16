@@ -46,7 +46,7 @@ export function reducer (
         scale: payload.scale,
         rotation: payload.rotation
       };
-      // const annotationPageEntities = StoreUtils.scaleRotateAnno(state.annotationSet.annotations, scaleRotation, styles); // todo grab this from entities
+      const annotationPageEntities = StoreUtils.scaleRotateAnno(state.annotationSet.annotations, scaleRotation, styles); // todo grab this from entities
       const page = {
         numberOfPages,
         styles,
@@ -58,7 +58,7 @@ export function reducer (
       };
       return {
         ...state,
-        // annotationPageEntities,
+        annotationPageEntities,
         pages
       };
     }
