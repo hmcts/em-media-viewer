@@ -8,16 +8,12 @@ import { Subscription } from 'rxjs';
 export class TextHighlightDirective implements AfterViewChecked, OnDestroy {
 
   @Input() textToHighlight: string;
-  spanElement: HTMLSpanElement;
 
   private subscription: Subscription;
 
   constructor(private element: ElementRef<HTMLElement>,
-              private renderer:Renderer2,
               annotationEvents: AnnotationEventService) {
     this.subscription = annotationEvents.resetHighlightEvent.subscribe(() => this.resetHighlight());
-    this.spanElement = this.renderer.createElement('span');
-    this.spanElement.className = 'mvTextHighlight';
   }
 
   ngAfterViewChecked(): void {

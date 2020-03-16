@@ -10,7 +10,7 @@ import { AnnotationEventService } from '../../annotation-event.service';
 })
 export class CommentsNavigateComponent implements OnChanges {
 
-  @Input() annotationList: Annotation[];
+  @Input() public readonly annotationList: Annotation[];
   @Input() autoSelect = false;
 
   navigationList: string[];
@@ -56,7 +56,7 @@ export class CommentsNavigateComponent implements OnChanges {
     }
   }
 
-  nextSearchItem() {
+  nextItem() {
     this.index += 1;
     if (this.index == this.annotationList.length) {
       this.index = 0;
@@ -67,7 +67,7 @@ export class CommentsNavigateComponent implements OnChanges {
     });
   }
 
-  prevSearchItem() {
+  prevItem() {
     this.index -= 1;
     if (this.index < 0) {
       this.index = this.navigationList.length - 1;

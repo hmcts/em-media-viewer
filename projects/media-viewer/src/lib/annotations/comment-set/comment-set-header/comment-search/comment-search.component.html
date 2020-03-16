@@ -9,7 +9,7 @@
 <ng-container *ngIf="searchResults.length > 0">
   <mv-comments-navigate [annotationList]="searchResults"></mv-comments-navigate>
 </ng-container>
-<ng-container *ngIf="searchString && searchResults.length == 0">
+<ng-container *ngIf="searchString && searchResults?.length == 0">
   <span class="comment-search">
     No matches have been found
   </span>
