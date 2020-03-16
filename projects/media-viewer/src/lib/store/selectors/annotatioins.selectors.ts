@@ -74,7 +74,8 @@ export const getCommentsArray = createSelector(
     const pageHeight = pages.styles.height;
     if (comments && pageHeight && annoEnt) {
       return Object.keys(comments).map(key => {
-        const positionTop = (pageHeight * (annoEnt[key].page -1)) + annoEnt[key].positionTop;
+        const topOffSet = 10;
+        const positionTop = ((pageHeight + topOffSet) * (annoEnt[key].page -1)) + annoEnt[key].positionTop;
         return {
           ...comments[key],
           positionTop
