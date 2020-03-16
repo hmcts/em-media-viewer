@@ -102,12 +102,17 @@ export function reducer (
       const annotationEntities = StoreUtils.generateAnnotationEntities(annotArray);
       const annotationPageEntities = StoreUtils.generatePageEntities(annotArray);
       const commentEntities = StoreUtils.generateCommentsEntities(annotArray);
-
+      const selectedAnnotation = {
+        ...state.selectedAnnotation,
+        annotationId : anno.id,
+        editable: true
+      };
       return {
         ...state,
         annotationEntities,
         annotationPageEntities,
         commentEntities,
+        selectedAnnotation,
         loading: false,
         loaded: true
       };

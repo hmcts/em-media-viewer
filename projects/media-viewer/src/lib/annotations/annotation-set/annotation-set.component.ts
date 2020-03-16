@@ -44,7 +44,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   @Input() height: number;
   @ViewChild('boxHighlight') private boxHighlight: BoxHighlightCreateComponent;
   page: number;
-  selectedAnnotation$: Observable<string>;
+  selectedAnnotation$: Observable<SelectionAnnotation>;
   drawMode = false;
 
   private subscriptions: Subscription[] = [];

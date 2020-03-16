@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
+import {SelectionAnnotation} from '../../annotations/annotation-event.service';
 
 export const LOAD_ANNOTATION_SET = '[Annotations] Load Annotation Set';
 export const LOAD_ANNOTATION_SET_SUCCESS = '[Annotations] Load Annotation Set Success';
@@ -75,7 +76,7 @@ export class DeleteAnnotationFail implements Action {
 
 export class SelectedAnnotation implements Action {
   readonly type = SELECT_ANNOTATION;
-  constructor(public payload: any) {}
+  constructor(public payload: SelectionAnnotation) {}
 }
 
 export type AnnotationsActions =
