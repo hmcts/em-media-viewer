@@ -33,7 +33,7 @@ export class RectangleComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (this.selected) {
-      this.rectElement.nativeElement.focus();
+      // this.rectElement.nativeElement.focus();
     }
     this.subscriptions.push(
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag)
@@ -49,7 +49,7 @@ export class RectangleComponent implements AfterViewInit, OnDestroy {
   set selected(selected: boolean) {
     this._selected = selected;
     if (this._selected && this.rectElement) {
-      this.rectElement.nativeElement.focus();
+      // this.rectElement.nativeElement.focus();
     }
   }
 
