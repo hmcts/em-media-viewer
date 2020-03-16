@@ -264,7 +264,7 @@ describe('CommentComponent', () => {
 
     fixture.detectChanges();
 
-    expect(nativeElement.querySelector('.unselectedText').textContent.trim()).toBe('short comment');
+    expect(nativeElement.querySelector('.commentText').textContent.trim()).toBe('short comment');
   });
 
   it('should emit a comment rendered', () => {

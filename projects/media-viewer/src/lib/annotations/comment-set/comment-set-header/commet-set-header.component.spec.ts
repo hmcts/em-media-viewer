@@ -21,7 +21,8 @@ describe('CommentSetHeader', () => {
     nativeElement = fixture.debugElement.nativeElement;
     component = fixture.componentInstance;
     toolbarEventService = new ToolbarEventService();
-    component.showCommentSummary = true
+    component.showCommentSummary = true;
+    component.tabSelected = 'comments';
     fixture.detectChanges();
   });
 
@@ -33,6 +34,7 @@ describe('CommentSetHeader', () => {
   it('should emit toggleCommentsSummary event', () => {
     const commentSummarySpy = spyOn(component.showCommentSummaryDialog, 'emit');
     const commentSummaryButton = nativeElement.querySelector('#commentSummary');
+
     commentSummaryButton.click();
 
     expect(commentSummarySpy).toHaveBeenCalled();

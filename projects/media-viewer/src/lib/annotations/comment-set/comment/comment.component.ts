@@ -1,15 +1,14 @@
-import {TagItemModel} from '../../models/tag-item.model';
-import {TagsServices} from '../../services/tags/tags.services';
+import { TagItemModel } from '../../models/tag-item.model';
+import { TagsServices } from '../../services/tags/tags.services';
 import {
-  Component, ElementRef,
+  Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   Output,
-  SimpleChanges,
-  ViewChild,
-  ViewEncapsulation
+  ViewChild
 } from '@angular/core';
 import { User } from '../../models/user.model';
 import { AnnotationEventService, SelectionAnnotation } from '../../annotation-event.service';
@@ -21,8 +20,7 @@ import { Comment } from './comment.model';
 
 @Component({
   selector: 'mv-anno-comment',
-  templateUrl: './comment.component.html',
-  encapsulation: ViewEncapsulation.None
+  templateUrl: './comment.component.html'
 })
 export class CommentComponent implements OnChanges, OnDestroy {
 

@@ -1,21 +1,22 @@
-@import "sass/annotation-ui-theme";
-@import "sass/comments-summary-dialog";
-@import "sass/comment-set-panel";
-@import "sass/comment";
-@import "sass/annotation-set";
-@import "sass/rectangle";
-@import "sass/popup-toolbar";
-@import "sass/pdf-viewer";
-@import "sass/image-viewer";
-@import "sass/error-message";
-@import "sass/tags";
-@import "sass/comment-set-header";
-@import "sass/box-highlight";
-@import "sass/comment-set-toggle";
-@import 'sass/media-viewer';
 @import 'sass/settings';
+@import "sass/annotation-set";
+@import "sass/annotation-ui-theme";
+@import "sass/box-highlight";
+@import "sass/comment";
+@import "sass/comment-search";
+@import "sass/comment-set-header";
+@import "sass/comment-set-panel";
+@import "sass/comment-set-toggle";
+@import "sass/comments-summary-dialog";
 @import 'sass/document';
+@import "sass/error-message";
+@import "sass/image-viewer";
+@import 'sass/media-viewer';
 @import 'sass/outline-attachment';
+@import "sass/pdf-viewer";
+@import "sass/popup-toolbar";
+@import "sass/rectangle";
+@import "sass/tags";
 @import "sass/toolbar/main";
 
 div.govuk-prose-scope, p {
