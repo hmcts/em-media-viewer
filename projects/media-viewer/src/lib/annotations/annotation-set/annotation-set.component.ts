@@ -60,8 +60,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly textHighlightService: TextHighlightCreateService) {}
 
   ngOnInit(): void {
-    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage).pipe(tap(console.log));
-    this.selectedAnnotation$ = this.store.select(fromStore.getSelectedAnnotation).pipe(tap(console.log))
+    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage);
+    this.selectedAnnotation$ = this.store.select(fromStore.getSelectedAnnotation);
 
     this.subscriptions = [
       this.viewerEvents.textHighlight

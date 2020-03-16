@@ -105,7 +105,7 @@ export function reducer (
       const selectedAnnotation = {
         ...state.selectedAnnotation,
         annotationId : anno.id,
-        editable: true
+        editable: false
       };
       return {
         ...state,

@@ -24,7 +24,7 @@ export const getAnnotationSet = createSelector(
     return {
       ...set,
       annotations: Object.keys(entities).map(key => entities[key])
-    }
+    };
   }
 );
 

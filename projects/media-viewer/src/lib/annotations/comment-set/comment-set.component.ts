@@ -20,7 +20,6 @@ import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
 import * as fromStore from '../../store';
 import {select, Store} from '@ngrx/store';
-import {tap} from 'rxjs/operators';
 import { TagsServices } from '../services/tags/tags.services';
 import {TagItemModel} from '../models/tag-item.model';
 
@@ -68,7 +67,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    this.comments$ = this.store.pipe(select(fromStore.getCommentsArray)).pipe(tap(console.log))
+    this.comments$ = this.store.pipe(select(fromStore.getCommentsArray));
     this.selectAnnotation$ = this.store.pipe(select(fromStore.getSelectedAnnotation));
     this.commentService.setCommentSet(this);
     this.subscriptions.push(
@@ -123,7 +122,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   public onAnnotationUpdate(annotation: Annotation) {
 
     this.store.dispatch(new fromStore.SaveAnnotation(annotation));
-    this.store.dispatch(new fromStore.SelectedAnnotation({ annotationId: annotation.id, editable: false }))
+    this.store.dispatch(new fromStore.SelectedAnnotation({ annotationId: annotation.id, editable: false }));
     // this.annotationService.selectAnnotation({ annotationId: annotation.id, editable: false });
   }
 

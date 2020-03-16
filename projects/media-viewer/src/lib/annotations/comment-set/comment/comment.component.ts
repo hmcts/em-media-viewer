@@ -41,9 +41,8 @@ export class CommentComponent implements OnChanges {
   @Output() updated = new EventEmitter<{comment: Comment, tags: TagItemModel[]}>();
   @Output() changes = new EventEmitter<boolean>();
   @Input() set selectedAnno(selectedAnno){
-   this.selected =  (selectedAnno.annotationId && this._comment) ? (selectedAnno.annotationId === this._comment.annotationId) : false;
-   const editable = selectedAnno.editable;
-    this._editable = editable || this.hasUnsavedChanges;
+    this.selected =  (selectedAnno.annotationId && this._comment) ? (selectedAnno.annotationId === this._comment.annotationId) : false;
+    this._editable = (this.selected || this.hasUnsavedChanges) ? selectedAnno.editable : false;
     if (this._editable) {
       setTimeout(() => this.textArea.nativeElement.focus(), 10);
     }
@@ -93,14 +92,6 @@ export class CommentComponent implements OnChanges {
     this.rectLeft = this._rectangle.x;
   }
 
-  @Input()
-  set editable(editable: boolean) {
-    this._editable = editable || this.hasUnsavedChanges;
-    if (this._editable) {
-      setTimeout(() => this.textArea.nativeElement.focus(), 10);
-    }
-  }
-
   get editable(): boolean {
     return this._editable;
   }
@@ -115,7 +106,7 @@ export class CommentComponent implements OnChanges {
   }
 
   onEdit() {
-    this.editable = true;
+    this._editable = true;
   }
 
   onCommentChange(updatedComment) {
@@ -126,7 +117,7 @@ export class CommentComponent implements OnChanges {
 
   onCancel() {
     this.hasUnsavedChanges = false;
-    this.editable = false;
+    this._editable = false;
     this.fullComment = this.originalComment;
     this.changes.emit(false);
     if (!this.author && !this.fullComment) {
@@ -146,7 +137,7 @@ export class CommentComponent implements OnChanges {
       tags
     };
     this.updated.emit(payload);
-    this.editable = false;
+    this._editable = false;
     this.hasUnsavedChanges = false;
     this.changes.emit(false);
   }

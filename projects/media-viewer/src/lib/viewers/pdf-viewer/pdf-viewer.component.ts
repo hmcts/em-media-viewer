@@ -92,7 +92,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.annotationService.init(this.pdfWrapper, this.pdfViewer);
     this.pdfWrapper.pageRendered.pipe(sampleTime(1000)).subscribe((event) => {
       if (this.enableAnnotations) {
-        console.log(event)
         const payload = {
           div: event.source.div,
           pageNumber: event.pageNumber,
@@ -100,7 +99,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
           rotation: event.source.rotation
         }
         this.store.dispatch(new fromStore.AddPage(payload));
-        // this.annotationService.addAnnotations(event);
       }
     });
     this.subscriptions.push(
@@ -135,12 +133,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         this.clearAnnotationSet();
       }
     }
-    if (changes.annotationSet && this.annotationSet) {
-      reloadAnnotations = true;
-    }
-    if (reloadAnnotations) {
-      // this.annotationService.buildAnnoSetComponents(this.annotationSet);
-    }
+
   }
 
   clearAnnotationSet() {
@@ -166,9 +159,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private async loadDocument() {
     await this.pdfWrapper.loadDocument(this.url);
-    if (this.enableAnnotations && this.annotationSet) {
-      // this.annotationService.buildAnnoSetComponents(this.annotationSet);
-    }
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
     this.setPageHeights();
   }
@@ -207,17 +197,17 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onMouseDown(mouseEvent: MouseEvent) {
-    if (this.annotationSet && this.toolbarEvents.highlightModeSubject.getValue()) {
-     // this.annotationService.addAnnoSetToPage();
-    }
-    if (this.annotationSet && this.toolbarEvents.drawModeSubject.getValue()) {
-      // this.annotationService.addAnnoSetToPage();
-      setTimeout(() => this.viewerEvents.boxSelected({
-        page: this.pdfWrapper.getPageNumber(),
-        event: mouseEvent,
-        annoSet: this.annotationSet
-      }), 0);
-    }
+    // if (this.annotationSet && this.toolbarEvents.highlightModeSubject.getValue()) {
+    //  // this.annotationService.addAnnoSetToPage();
+    // }
+    // if (this.annotationSet && this.toolbarEvents.drawModeSubject.getValue()) {
+    //   // this.annotationService.addAnnoSetToPage();
+    //   setTimeout(() => this.viewerEvents.boxSelected({
+    //     page: this.pdfWrapper.getPageNumber(),
+    //     event: mouseEvent,
+    //     annoSet: this.annotationSet
+    //   }), 0);
+    // }
   }
 
   onMouseUp(mouseEvent: MouseEvent) {

@@ -22,7 +22,6 @@ import {AnnotationApiService} from './annotations/annotation-api.service';
 import {ResponseType, ViewerException} from './viewers/error-message/viewer-exception.model';
 import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
-import {tap} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
 import * as fromStore from './store';
 
@@ -74,7 +73,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
-    this.annotationSet$ = this.store.pipe(select(fromStore.getAnnotationSet)).pipe(tap(value => console.log('annotationSEt', value)));
+    this.annotationSet$ = this.store.pipe(select(fromStore.getAnnotationSet));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(
