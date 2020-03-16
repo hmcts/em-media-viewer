@@ -68,11 +68,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         .subscribe(highlight => this.createTextHighlight(highlight)),
       this.viewerEvents.boxHighlight
         .subscribe(highlight => this.boxHighlightService.initBoxHighlight(highlight.event)),
-      // this.annotationService.getSelectedAnnotation()
-      //   .subscribe(selectedAnnotation => {
-      //     console.log(selectedAnnotation)
-      //     this.selectedAnnotation = selectedAnnotation
-      //   }),
+
       this.toolbarEvents.drawModeSubject
         .subscribe(drawMode => this.drawMode = drawMode)
     ];
