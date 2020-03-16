@@ -24,7 +24,8 @@ import { TextHighlightDirective } from './comment-set/comment/text-highlight.dir
 import { TagInputModule } from 'ngx-chips';
 import { TagsComponent } from './tags/tags.component';
 import { RouterModule } from '@angular/router';
-import {TagsServices} from './services/tags/tags.services';
+import { TagsServices } from './services/tags/tags.services';
+import { CommentsNavigateComponent } from './comment-set/comment-navigate/comments-navigate.component';
 
 @NgModule({
     imports: [
@@ -46,6 +47,7 @@ import {TagsServices} from './services/tags/tags.services';
     TextHighlightDirective,
     PopupToolbarComponent,
     CommentSetComponent,
+    CommentsNavigateComponent,
     TextareaAutoExpandDirective,
     CommentSetToggleComponent,
     CommentsSummaryComponent,
