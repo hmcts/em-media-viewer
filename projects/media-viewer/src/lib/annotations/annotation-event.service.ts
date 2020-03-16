@@ -11,12 +11,12 @@ export class AnnotationEventService {
   public readonly selectedAnnotation = new Subject<SelectionAnnotation>();
 
   constructor() {}
-
-  public selectAnnotation(annotation: SelectionAnnotation): void {
-    this.selectedAnnotation.next(annotation);
-  }
-
-  getSelectedAnnotation(): Observable<SelectionAnnotation> {
-    return this.selectedAnnotation.asObservable();
-  }
+  // todo to remove
+  // public selectAnnotation(annotation: SelectionAnnotation): void {
+  //   this.selectedAnnotation.next(annotation);
+  // }
+  //
+  // getSelectedAnnotation(): Observable<SelectionAnnotation> {
+  //   return this.selectedAnnotation.asObservable();
+  // }
 }

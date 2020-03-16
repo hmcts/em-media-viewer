@@ -32,6 +32,7 @@ export class CommentComponent implements OnChanges {
   rectLeft;
 
   hasUnsavedChanges = false;
+  selected: boolean;
 
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
@@ -39,7 +40,14 @@ export class CommentComponent implements OnChanges {
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<{comment: Comment, tags: TagItemModel[]}>();
   @Output() changes = new EventEmitter<boolean>();
-  @Input() selected = false;
+  @Input() set selectedAnno(selectedAnno){
+   this.selected =  (selectedAnno.annotationId && this._comment) ? (selectedAnno.annotationId === this._comment.annotationId) : false;
+   const editable = selectedAnno.editable;
+    this._editable = editable || this.hasUnsavedChanges;
+    if (this._editable) {
+      setTimeout(() => this.textArea.nativeElement.focus(), 10);
+    }
+  };
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;

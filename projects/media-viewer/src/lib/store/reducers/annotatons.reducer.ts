@@ -2,13 +2,14 @@ import * as fromAnnotations from '../actions/annotations.action';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 import {StoreUtils} from '../store-utils';
 import {getAnnotationEntities} from '../selectors';
+import {SelectionAnnotation} from '../../annotations/annotation-event.service';
 
 export interface AnnotationSetState {
   annotationSet: any; // todo add type to be removed
   annotationEntities: {[id: string]: any}; // todo add type
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
-  selectedAnnotation: string;
+  selectedAnnotation: SelectionAnnotation | null;
   pages: { numberOfPages: number; styles: any; scaleRotation: object }; // todo add proper typing
   loaded: boolean;
   loading: boolean;
@@ -19,7 +20,7 @@ export const initialState: AnnotationSetState = {
   annotationEntities: {},
   commentEntities: {},
   annotationPageEntities: {},
-  selectedAnnotation: '',
+  selectedAnnotation: null,
   pages: {
     numberOfPages: 0,
     styles: {},

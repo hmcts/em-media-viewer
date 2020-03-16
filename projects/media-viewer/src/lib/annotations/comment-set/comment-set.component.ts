@@ -38,7 +38,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @Input() pageHeights = [];
 
   comments: Comment[];
-  selectAnnotation: SelectionAnnotation;
+  selectAnnotation$: Observable<SelectionAnnotation>;
   private subscriptions: Subscription[] = [];
   public comments$: Observable<Annotation[]>;
 
@@ -69,10 +69,9 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.comments$ = this.store.pipe(select(fromStore.getCommentsArray)).pipe(tap(console.log))
+    this.selectAnnotation$ = this.store.pipe(select(fromStore.getSelectedAnnotation));
     this.commentService.setCommentSet(this);
     this.subscriptions.push(
-      this.annotationService.getSelectedAnnotation()
-        .subscribe(selectedAnnotation => this.selectAnnotation = selectedAnnotation),
       this.viewerEvents.commentsPanelVisible.subscribe(toggle => {
         this.redrawComments();
         this.showCommentsPanel = toggle;
@@ -87,7 +86,8 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public onSelect(annotationId) {
-    this.annotationService.selectAnnotation(annotationId);
+    this.store.dispatch(new fromStore.SelectedAnnotation(annotationId));
+    // this.annotationService.selectAnnotation(annotationId);
   }
 
   public onCommentDelete(comment: Comment) {
@@ -123,8 +123,8 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   public onAnnotationUpdate(annotation: Annotation) {
 
     this.store.dispatch(new fromStore.SaveAnnotation(annotation));
-
-    this.annotationService.selectAnnotation({ annotationId: annotation.id, editable: false });
+    this.store.dispatch(new fromStore.SelectedAnnotation({ annotationId: annotation.id, editable: false }))
+    // this.annotationService.selectAnnotation({ annotationId: annotation.id, editable: false });
   }
 
   topRectangle(annotationId: string) {
@@ -139,7 +139,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   clearSelection() {
-    this.selectAnnotation = { annotationId: '', editable: false };
+    this.store.dispatch(new fromStore.SelectedAnnotation({ annotationId: '', editable: false }))
   }
 
   allCommentsSaved() {
