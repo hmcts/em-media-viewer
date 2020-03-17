@@ -63,7 +63,7 @@ export class TextHighlightCreateService {
         rectangle.width = height;
         rectangle.height = width;
         rectangle.x = top;
-        rectangle.y = (pageHeight/zoom) - left - width;
+        rectangle.y = (pageWidth/zoom) - left - width;
         break;
       case 180:
         rectangle.x = (pageWidth/zoom) - left - width;
@@ -72,7 +72,7 @@ export class TextHighlightCreateService {
       case 270:
         rectangle.width = height;
         rectangle.height = width;
-        rectangle.x = (pageWidth/zoom) - top - height;
+        rectangle.x = (pageHeight/zoom) - top - height;
         rectangle.y = left;
         break;
       default:

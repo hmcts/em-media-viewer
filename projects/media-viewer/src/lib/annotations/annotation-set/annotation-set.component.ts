@@ -1,15 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  QueryList, SimpleChanges,
-  ViewChild,
-  ViewChildren,
-  ViewContainerRef
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Annotation } from './annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { AnnotationSet } from './annotation-set.model';
@@ -23,8 +12,7 @@ import { TextHighlightCreateService } from './annotation-create/text-highlight-c
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
-import {tap} from 'rxjs/operators';
-import {BoxHighlightCreateComponent} from './annotation-create/box-highlight-create.component';
+import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -68,9 +56,14 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         .subscribe(highlight => this.createTextHighlight(highlight)),
       this.viewerEvents.boxHighlight
         .subscribe(highlight => this.boxHighlightService.initBoxHighlight(highlight.event)),
-
       this.toolbarEvents.drawModeSubject
-        .subscribe(drawMode => this.drawMode = drawMode)
+        .subscribe(drawMode => this.drawMode = drawMode),
+      this.annotationsPerPage$.subscribe(annotations => {
+        if (annotations) {
+          this.height = annotations[0].styles.height;
+          this.width = annotations[0].styles.width;
+        }
+      })
     ];
   }
 
@@ -117,6 +110,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       this.boxHighlight.createHighlight(this.page);
     }
   }
+
+
   // todo revisit this multiple acctions are getting issues
   public saveBoxHighlight(rectangle: any) {
     if (rectangle.page === this.page) {
