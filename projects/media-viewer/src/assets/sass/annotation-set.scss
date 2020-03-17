@@ -6,8 +6,6 @@ mv-annotation-set {
     -o-transform-origin: left bottom;
     transform-origin: left bottom;
     position: absolute;
-    top: 0;
-    left: 0;
   }
 
   .rot90 {
@@ -30,16 +28,17 @@ mv-annotation-set {
   }
 
   .rot270 {
-    -webkit-transform: rotate(-90deg) translate(-100%, 0); /* Safari */
-    -moz-transform: rotate(-90deg) translate(-100%, 0); /* Firefox 3.6 Firefox 4 */
-    -ms-transform: rotate(-90deg) translate(-100%, 0); /* IE9 */
-    -o-transform: rotate(-90deg) translate(-100%, 0); /* Opera */
-    transform: rotate(-90deg) translate(-100%, 0); /* W3C */
+    -webkit-transform: rotate(-90deg) translate(-71%, 0); /* Safari */
+    -moz-transform: rotate(-90deg) translate(-71%, 0); /* Firefox 3.6 Firefox 4 */
+    -ms-transform: rotate(-90deg) translate(-71%, 0); /* IE9 */
+    -o-transform: rotate(-90deg) translate(-71%, 0); /* Opera */
+    transform: rotate(-90deg)  translate(-71%, 0); /* W3C */
     -webkit-transform-origin: left top;
     -moz-transform-origin: left top;
     -ms-transform-origin: left top;
     -o-transform-origin: left top;
     transform-origin: left top;
+    position: relative;
   }
 
   .drawMode, .rot90, .rot180, .rot270 {
@@ -51,7 +50,7 @@ mv-annotation-set {
     position: absolute;
     top: 0;
     &__page {
-      border: 1px solid #f00;
+      //border: 1px solid #f00;
       margin: 0 auto 8px auto;
       overflow: visible;
       position: relative;

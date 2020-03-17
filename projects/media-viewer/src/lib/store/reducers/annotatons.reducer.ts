@@ -51,7 +51,7 @@ export function reducer (
       };
       // todo if sale of select
       const annotArray = Object.keys(state.annotationEntities).map(key => state.annotationEntities[key]);
-      const annotationPageEntities = StoreUtils.scaleRotateAnno(annotArray, scaleRotation, styles);
+      // const annotationPageEntities = StoreUtils.scaleRotateAnno(annotArray, scaleRotation, styles);
       const page = {
         numberOfPages,
         styles,
@@ -63,7 +63,7 @@ export function reducer (
       };
       return {
         ...state,
-        annotationPageEntities,
+        // annotationPageEntities,
         pages
       };
     }
