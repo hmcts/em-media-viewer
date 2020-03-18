@@ -28,9 +28,9 @@ export class PdfAnnotationService {
     this.pdfWrapper = pdfWrapper;
   }
 
-  addAnnotations(pageRenderEvent: PageEvent): void {
-    this.annotationSetService.addAnnotationsToPage(pageRenderEvent);
-  }
+  // addAnnotations(pageRenderEvent: PageEvent): void {
+  //   this.annotationSetService.addAnnotationsToPage(pageRenderEvent);
+  // }
 
   addAnnoSetToPage() {
     this.annotationSetService.addAnnoSetToPage();

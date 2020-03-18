@@ -27,11 +27,11 @@ export class AnnotationSetService {
     this.annotationSet = annotationSet;
   }
 
-  addAnnotationsToPage(pageRenderEvent: PageEvent) {
-    this.annotationSetComponents
-      .filter(annotationComp => annotationComp.instance.page === pageRenderEvent.pageNumber)
-      .forEach(annotationSetComponent => annotationSetComponent.instance.addToDOM(pageRenderEvent.source));
-  }
+  // addAnnotationsToPage(pageRenderEvent: PageEvent) {
+  //   this.annotationSetComponents
+  //     .filter(annotationComp => annotationComp.instance.page === pageRenderEvent.pageNumber)
+  //     .forEach(annotationSetComponent => annotationSetComponent.instance.addToDOM(pageRenderEvent.source));
+  // }
 
   addAnnoSetToPage() {
     // const pageNumber = this.pdfWrapper.getPageNumber();

@@ -51,10 +51,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage)
       .pipe(tap(annotations => {
-      if (annotations) {
-        this.height = annotations[0].styles.height;
-        this.width = annotations[0].styles.width;
-      }
+        if (annotations) {
+          this.height = annotations[0].styles.height;
+          this.width = annotations[0].styles.width;
+        }
     }));
     this.selectedAnnotation$ = this.store.select(fromStore.getSelectedAnnotation);
 
@@ -73,14 +73,14 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  addToDOM(eventSource: PageEvent['source']) {
-    // this.zoom = eventSource.scale;
-    // this.rotate = eventSource.rotation;
-    // const element = eventSource.div;
-    // this.width = this.rotate % 180 === 0 ? element.clientWidth : element.clientHeight;
-    // this.height = this.rotate % 180 === 0 ? element.clientHeight : element.clientWidth;
-    // element.appendChild(this.container.nativeElement);
-  }
+  // addToDOM(eventSource: PageEvent['source']) {
+  //   // this.zoom = eventSource.scale;
+  //   // this.rotate = eventSource.rotation;
+  //   // const element = eventSource.div;
+  //   // this.width = this.rotate % 180 === 0 ? element.clientWidth : element.clientHeight;
+  //   // this.height = this.rotate % 180 === 0 ? element.clientHeight : element.clientWidth;
+  //   // element.appendChild(this.container.nativeElement);
+  // }
 
   public onAnnotationUpdate(annotation: Annotation) {
     this.store.dispatch(new fromStore.SaveAnnotation(annotation));
@@ -113,16 +113,13 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
 
-  // todo revisit this multiple acctions are getting issues
   public saveBoxHighlight(rectangle: any) {
     if (rectangle.page === this.page) {
-      // this.annotationService.selectAnnotation(rectangle.id);
       this.boxHighlightService.saveBoxHighlight(rectangle, this.annoSet, rectangle.page);
     }
   }
 
   private createTextHighlight(highlight) {
-    // if (this.height && this.width) {
       this.textHighlightService.createTextHighlight(highlight, highlight.annoSet,
         {
           zoom: this.zoom,
@@ -131,7 +128,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           pageWidth: this.width,
           number: highlight.page
         });
-    // }
   }
 
   selectAnnotation(annotationId) {
