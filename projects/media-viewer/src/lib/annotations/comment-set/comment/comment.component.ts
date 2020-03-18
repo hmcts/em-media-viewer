@@ -24,13 +24,11 @@ export class CommentComponent implements OnChanges {
   editor: User;
   _comment: Comment;
   _editable: boolean;
-  commentTop: number;
-
   _rectangle;
   totalPreviousPagesHeight = 0;
   rectTop;
   rectLeft;
-
+  pageHeight: number;
   hasUnsavedChanges = false;
   selected: boolean;
 
@@ -66,16 +64,14 @@ export class CommentComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.reRenderComments();
+
   }
 
   @Input()
   set comment(comment: Comment) {
     this._comment = {...comment};
-    if (!this._comment.content && this._comment.tags && !this._comment.tags.length) {
-      this._editable = true;
-      this.selected = true;
-    }
-    this.commentTop = this._comment.positionTop;
+    this.page = this._comment.page;
+    this.pageHeight = this._comment.pageHeight;
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
     this.createdBy = comment.createdBy;
@@ -83,6 +79,11 @@ export class CommentComponent implements OnChanges {
     this.originalComment = comment.content;
     this.fullComment = this.originalComment;
     this.tagItems = this.tagsServices.getTagItems(this._comment.annotationId);
+    const pageMarginBottom = 10;
+    this.totalPreviousPagesHeight = 0;
+    for (let i = 0; i < this.page - 1; i++) {
+      this.totalPreviousPagesHeight += this.pageHeight + pageMarginBottom;
+    }
   }
 
   get comment() {
@@ -100,14 +101,14 @@ export class CommentComponent implements OnChanges {
     return this._editable;
   }
 
-  @Input()
-  set pageHeights(pageHeights: []) {
-    const pageMarginBottom = 10;
-    this.totalPreviousPagesHeight = 0;
-    for (let i = 0; i < this.page - 1; i++) {
-      this.totalPreviousPagesHeight += pageHeights[i] + pageMarginBottom;
-    }
-  }
+  // @Input()
+  // set pageHeights(value) {
+  //   // const pageMarginBottom = 10;
+  //   // this.totalPreviousPagesHeight = 0;
+  //   // for (let i = 0; i < this.page - 1; i++) {
+  //   //   this.totalPreviousPagesHeight += this.pageHeight + pageMarginBottom;
+  //   // }
+  // }
 
   onEdit() {
     this._editable = true;
@@ -159,9 +160,9 @@ export class CommentComponent implements OnChanges {
     this.renderComments.emit(this._comment);
   }
 
-  // get commentTop(): number {
-  //   return this.totalPreviousPagesHeight + (this.rectTop * this.zoom);
-  // }
+  get commentTop(): number {
+    return this.totalPreviousPagesHeight + (this.rectTop * this.zoom);
+  }
 
 
   get height() {
