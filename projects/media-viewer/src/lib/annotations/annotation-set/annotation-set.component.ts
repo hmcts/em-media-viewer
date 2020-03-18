@@ -13,6 +13,7 @@ import { BoxHighlightCreateService } from './annotation-create/box-highlight-cre
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
 import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -48,7 +49,13 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly textHighlightService: TextHighlightCreateService) {}
 
   ngOnInit(): void {
-    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage);
+    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage)
+      .pipe(tap(annotations => {
+      if (annotations) {
+        this.height = annotations[0].styles.height;
+        this.width = annotations[0].styles.width;
+      }
+    }));
     this.selectedAnnotation$ = this.store.select(fromStore.getSelectedAnnotation);
 
     this.subscriptions = [
@@ -57,13 +64,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       this.viewerEvents.boxHighlight
         .subscribe(highlight => this.boxHighlightService.initBoxHighlight(highlight.event)),
       this.toolbarEvents.drawModeSubject
-        .subscribe(drawMode => this.drawMode = drawMode),
-      this.annotationsPerPage$.subscribe(annotations => {
-        if (annotations) {
-          this.height = annotations[0].styles.height;
-          this.width = annotations[0].styles.width;
-        }
-      })
+        .subscribe(drawMode => this.drawMode = drawMode)
     ];
   }
 
