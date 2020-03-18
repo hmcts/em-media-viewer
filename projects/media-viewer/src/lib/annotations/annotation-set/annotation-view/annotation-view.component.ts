@@ -38,7 +38,7 @@ export class AnnotationViewComponent {
   public onSelect() {
     this.selected = true;
 
-    this.annotationClick.emit({ annotationId: this.anno.id, editable: false });
+    this.annotationClick.emit({ annotationId: this.anno.id, editable: true });
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {

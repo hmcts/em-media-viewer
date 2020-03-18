@@ -42,9 +42,9 @@ export class CommentComponent implements OnChanges {
   @Output() changes = new EventEmitter<boolean>();
   @Input() set selectedAnno(selectedAnno){
     this.selected =  (selectedAnno.annotationId && this._comment) ? (selectedAnno.annotationId === this._comment.annotationId) : false;
-    this._editable = (this.selected || this.hasUnsavedChanges) ? selectedAnno.editable : false;
+    this._editable = (this.selected && this.hasUnsavedChanges) ? selectedAnno.editable : false;
     if (this._editable) {
-      setTimeout(() => this.textArea.nativeElement.focus(), 10);
+      this.textArea.nativeElement.focus();
     }
   };
   @Input() rotate = 0;
@@ -71,6 +71,11 @@ export class CommentComponent implements OnChanges {
   @Input()
   set comment(comment: Comment) {
     this._comment = {...comment};
+    console.log('comment, ', this._comment)
+    if (!this._comment.content) {
+      this._editable = true;
+      this.selected = true;
+    }
     this.commentTop = this._comment.positionTop;
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
@@ -138,6 +143,7 @@ export class CommentComponent implements OnChanges {
     };
     this.updated.emit(payload);
     this._editable = false;
+    this.selected = false;
     this.hasUnsavedChanges = false;
     this.changes.emit(false);
   }
@@ -145,6 +151,7 @@ export class CommentComponent implements OnChanges {
   onCommentClick() {
     if (!this.selected) {
       this.selected = true;
+      this._editable = false;
       this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
     }
   }
