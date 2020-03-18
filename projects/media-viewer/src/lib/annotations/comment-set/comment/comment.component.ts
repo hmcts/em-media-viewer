@@ -71,8 +71,7 @@ export class CommentComponent implements OnChanges {
   @Input()
   set comment(comment: Comment) {
     this._comment = {...comment};
-    console.log('comment, ', this._comment)
-    if (!this._comment.content) {
+    if (!this._comment.content && this._comment.tags && !this._comment.tags.length) {
       this._editable = true;
       this.selected = true;
     }
