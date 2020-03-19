@@ -67,7 +67,7 @@ export function reducer (
 
     case fromAnnotations.LOAD_ANNOTATION_SET: {
       return {
-        ...state,
+        ...initialState,
         annotationSet: {},
         commentEntities: {},
         loading: true

@@ -13,9 +13,7 @@ import {TagsServices} from '../../services/tags/tags.services';
   encapsulation: ViewEncapsulation.None
 })
 export class CommentComponent implements OnChanges {
-
-  readonly MAX_COMMENT_LENGTH;
-  readonly COMMENT_CHAR_LIMIT;
+  COMMENT_CHAR_LIMIT = 5000;
   lastUpdate: string;
   originalComment: string;
   fullComment: string;
@@ -31,6 +29,7 @@ export class CommentComponent implements OnChanges {
   pageHeight: number;
   hasUnsavedChanges = false;
   selected: boolean;
+  public tagItems: TagItemModel[];
 
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
@@ -49,17 +48,13 @@ export class CommentComponent implements OnChanges {
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
-  public tagItems: TagItemModel[];
   @ViewChild('form') form: ElementRef;
   @ViewChild('textArea') textArea: ElementRef;
 
   constructor(
     private readonly commentService: CommentService,
     private tagsServices: TagsServices
-  ) {
-    this.MAX_COMMENT_LENGTH = 48;
-    this.COMMENT_CHAR_LIMIT = 5000;
-  }
+  ) {}
 
 
   ngOnChanges(): void {
@@ -79,6 +74,7 @@ export class CommentComponent implements OnChanges {
     this.originalComment = comment.content;
     this.fullComment = this.originalComment;
     this.tagItems = this.tagsServices.getTagItems(this._comment.annotationId);
+
     const pageMarginBottom = 10;
     this.totalPreviousPagesHeight = 0;
     for (let i = 0; i < this.page - 1; i++) {
@@ -100,15 +96,6 @@ export class CommentComponent implements OnChanges {
   get editable(): boolean {
     return this._editable;
   }
-
-  // @Input()
-  // set pageHeights(value) {
-  //   // const pageMarginBottom = 10;
-  //   // this.totalPreviousPagesHeight = 0;
-  //   // for (let i = 0; i < this.page - 1; i++) {
-  //   //   this.totalPreviousPagesHeight += this.pageHeight + pageMarginBottom;
-  //   // }
-  // }
 
   onEdit() {
     this._editable = true;

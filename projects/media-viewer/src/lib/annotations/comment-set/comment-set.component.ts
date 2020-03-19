@@ -30,7 +30,6 @@ import {TagItemModel} from '../models/tag-item.model';
 export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() annotationSet: AnnotationSet;
-  // todo hook up here store for comments
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() height: number;
@@ -86,7 +85,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   public onSelect(annotationId) {
     this.store.dispatch(new fromStore.SelectedAnnotation(annotationId));
-    // this.annotationService.selectAnnotation(annotationId);
   }
 
   public onCommentDelete(comment: Comment) {
@@ -120,12 +118,10 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
-
     this.store.dispatch(new fromStore.SaveAnnotation(annotation));
     this.store.dispatch(new fromStore.SelectedAnnotation({ annotationId: annotation.id, editable: false }));
-    // this.annotationService.selectAnnotation({ annotationId: annotation.id, editable: false });
   }
-
+  // TODO move this to comment component instead of input
   topRectangle(annotationId: string) {
     const annotation = this.annotationSet.annotations.find((anno) => anno.id === annotationId);
     return annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
