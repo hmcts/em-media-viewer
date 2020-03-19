@@ -52,57 +52,32 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.height = 50;
     this.width = 50;
 
+    this.top = this.drawStartY;
+    this.left = this.drawStartX;
+
     switch (this.rotate) {
       case 90:
-        this.top = this.pageHeight - this.drawStartX - this.height;
-        this.left = this.drawStartY;
+        this.top = this.drawStartY - this.height;
         break;
       case 180:
-        this.top = this.pageHeight - this.drawStartY - this.height;
-        this.left = this.pageWidth - this.drawStartX - this.width;
+        this.top = this.drawStartY - this.height;
+        this.left = this.drawStartX - this.width;
         break;
       case 270:
-        this.top = this.drawStartX;
-        this.left = this.pageWidth - this.drawStartY - this.width;
+        this.left = this.drawStartX - this.width;
         break;
-      default:
-        this.top = this.drawStartY;
-        this.left = this.drawStartX;
-
     }
   }
 
   updateHighlight(event: MouseEvent) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
-      const xDelta = event.offsetX - this.drawStartX;
-      const yDelta = event.offsetY - this.drawStartY;
-      let height = yDelta;
-      let width = xDelta;
-      let top = this.drawStartY;
-      let left = this.drawStartX;
-      switch (this.rotate) {
-        case 90:
-            height = -xDelta;
-            width = yDelta;
-            top = this.pageHeight - this.drawStartX;
-            left = this.drawStartY;
-          break;
-        case 180:
-            height = -yDelta;
-            width = -xDelta;
-            top = this.pageHeight - this.drawStartY;
-            left = this.pageWidth - this.drawStartX;
-          break;
-        case 270:
-            height = xDelta;
-            width = -yDelta;
-            top = this.drawStartX;
-            left = this.pageWidth - this.drawStartY;
-          break;
-      }
-      this.setStyles(top, left, height, width);
+      this.height = Math.abs(event.offsetY - this.drawStartY);
+      this.width = Math.abs(event.offsetX - this.drawStartX);
+      this.top = Math.min(event.offsetY, this.drawStartY);
+      this.left = Math.min(event.offsetX, this.drawStartX);
     }
   }
+
   // todo revisit this multiple acctions are getting issues
   createHighlight(highlightPage: number) {
       this.highlightCreated.emit({
@@ -122,12 +97,5 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.display = 'none';
     this.width = 0;
     this.height = 0;
-  }
-
-  private setStyles(top, left, height, width) {
-      this.height = Math.abs(height);
-      this.top = height < 0 ? top - Math.abs(height) : top;
-      this.width = Math.abs(width);
-      this.left = width < 0 ? left - Math.abs(width) : left;
   }
 }
