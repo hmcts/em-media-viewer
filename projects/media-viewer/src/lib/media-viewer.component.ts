@@ -95,7 +95,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
         this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
-        // this.annotationSet$ = this.api.getAnnoSet(this.url).pipe(tap(console.log));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
@@ -103,7 +102,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
     if (changes.enableAnnotations && this.enableAnnotations) {
       this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
-      // this.annotationSet$ = this.api.getAnnoSet(this.url).pipe(tap(console.log));
     }
     this.setToolbarButtons();
   }
