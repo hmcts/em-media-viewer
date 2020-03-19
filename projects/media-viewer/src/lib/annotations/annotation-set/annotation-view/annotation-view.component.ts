@@ -5,6 +5,8 @@ import { Rectangle } from './rectangle/rectangle.model';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store';
+import {SelectedAnnotation} from '../../../store';
+import {SelectionAnnotation} from '../../annotation-event.service';
 
 @Component({
   selector: 'mv-annotation',
@@ -27,7 +29,7 @@ export class AnnotationViewComponent {
   @Input() width: number;
   @Output() update = new EventEmitter<Annotation>();
   @Output() delete = new EventEmitter<Annotation>();
-  @Output() annotationClick = new EventEmitter();
+  @Output() annotationClick = new EventEmitter<SelectionAnnotation>();
 
   @ViewChild('container') container: ElementRef;
 
@@ -38,7 +40,7 @@ export class AnnotationViewComponent {
   public onSelect() {
     this.selected = true;
 
-    this.annotationClick.emit({ annotationId: this.anno.id, editable: true });
+    this.annotationClick.emit({ annotationId: this.anno.id, editable: true, selected: true });
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
@@ -76,7 +78,7 @@ export class AnnotationViewComponent {
 
     }
     this.selected = true;
-    this.annotationClick.emit({ annotationId: this.anno.id, editable: true });
+    this.annotationClick.emit({ annotationId: this.anno.id, editable: true, selected: true });
     this.viewerEvents.toggleCommentsPanel(true);
   }
 

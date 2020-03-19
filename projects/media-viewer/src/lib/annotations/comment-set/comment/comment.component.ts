@@ -139,7 +139,7 @@ export class CommentComponent implements OnChanges {
     if (!this.selected) {
       this.selected = true;
       this._editable = false;
-      this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
+      this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable, selected: true });
     }
   }
 

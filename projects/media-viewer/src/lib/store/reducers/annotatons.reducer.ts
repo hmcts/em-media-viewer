@@ -156,8 +156,19 @@ export function reducer (
     }
 
     case fromAnnotations.SELECT_ANNOTATION: {
+      const payload = action.payload;
+      const commentEntity = {
+        ...state.commentEntities[payload.annotationId],
+        editable: payload.editable,
+        selected: payload.selected
+      };
+      const commentEntities = payload.annotationId ? {
+        ...state.commentEntities,
+      [payload.annotationId]: commentEntity
+      } : {...state.commentEntities}
       return {
         ...state,
+        commentEntities,
         selectedAnnotation: action.payload
       };
     }

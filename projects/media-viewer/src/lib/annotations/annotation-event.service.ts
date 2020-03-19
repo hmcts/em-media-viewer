@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 export interface SelectionAnnotation {
   annotationId: string;
   editable: boolean;
+  selected: boolean;
 }
 
 @Injectable()
