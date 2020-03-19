@@ -1,5 +1,4 @@
 import {Annotation} from '../annotations/annotation-set/annotation-view/annotation.model';
-import {Rectangle} from '../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
 // @dynamic
 export class StoreUtils {
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Comment} from './comment.model';
 import {User} from '../../models/user.model';
 import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
@@ -12,7 +12,7 @@ import {TagsServices} from '../../services/tags/tags.services';
   templateUrl: './comment.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class CommentComponent implements OnChanges {
+export class CommentComponent implements OnInit {
   COMMENT_CHAR_LIMIT = 5000;
   lastUpdate: string;
   originalComment: string;
@@ -50,9 +50,8 @@ export class CommentComponent implements OnChanges {
   ) {}
 
 
-  ngOnChanges(): void {
+  ngOnInit(): void {
     this.reRenderComments();
-
   }
 
   @Input()

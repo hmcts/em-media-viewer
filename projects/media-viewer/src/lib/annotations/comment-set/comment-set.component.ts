@@ -13,7 +13,7 @@ import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { CommentComponent } from './comment/comment.component';
-import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
+import { AnnotationEventService } from '../annotation-event.service';
 import {Observable, Subscription} from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { CommentService } from './comment/comment.service';
@@ -36,7 +36,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @Input() pageHeights = [];
 
   comments: Comment[];
-  selectAnnotation$: Observable<SelectionAnnotation>;
   private subscriptions: Subscription[] = [];
   public comments$: Observable<Annotation[]>;
 
@@ -59,6 +58,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
     if (changes.annotationSet && this.annotationSet.annotations) {
       this.annotationSet.annotations.map(annotation => {
         if (annotation.comments.length) {
+          // todo move this to srore
           this.tagsServices.updateTagItems(annotation.tags, annotation.id);
         }
       });

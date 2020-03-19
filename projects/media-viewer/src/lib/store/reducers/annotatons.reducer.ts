@@ -1,7 +1,6 @@
 import * as fromAnnotations from '../actions/annotations.action';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 import {StoreUtils} from '../store-utils';
-import {getAnnotationEntities} from '../selectors';
 import {SelectionAnnotation} from '../../annotations/annotation-event.service';
 
 export interface AnnotationSetState {
@@ -164,8 +163,9 @@ export function reducer (
       };
       const ent = {
          ...state.commentEntities
-      }
-      const resetCommentEnt = Object.keys(ent).reduce((object, key) => {
+      };
+
+      const resetCommentEntSelect = Object.keys(ent).reduce((object, key) => {
         object[key] = {
           ...state.commentEntities[key],
           editable: false,
@@ -173,10 +173,11 @@ export function reducer (
         };
         return object;
       }, {});
-      const commentEntities = payload.annotationId ? {
-        ...resetCommentEnt,
+
+      const commentEntities = payload.annotationId && state.commentEntities[payload.annotationId] ? {
+        ...resetCommentEntSelect,
       [payload.annotationId]: commentEntity
-      } : {...resetCommentEnt};
+      } : {...resetCommentEntSelect};
 
       return {
         ...state,
