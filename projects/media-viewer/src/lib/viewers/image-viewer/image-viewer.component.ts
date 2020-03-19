@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -10,7 +11,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {Subscription} from 'rxjs';
+import {of, Subscription} from 'rxjs';
 import {PrintService} from '../../print.service';
 import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
 import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
@@ -18,14 +19,15 @@ import {ResponseType, ViewerException} from '../error-message/viewer-exception.m
 import {ViewerUtilService} from '../viewer-util.service';
 import {ViewerEventService} from '../viewer-event.service';
 import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visibility.service';
-import { take } from 'rxjs/operators';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../store';
 
 @Component({
     selector: 'mv-image-viewer',
     templateUrl: './image-viewer.component.html'
 })
-export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
+export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -52,6 +54,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   enableGrabNDrag = false;
 
   constructor(
+    private store: Store<fromStore.AnnotationSetState>,
     private readonly annotationsApi: AnnotationApiService,
     private readonly printService: PrintService,
     private readonly viewerUtilService: ViewerUtilService,
@@ -62,8 +65,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.setupAnnotationSet(drawMode)),
-      this.toolbarEvents.highlightModeSubject.subscribe(highlightMode => this.setupAnnotationSet(highlightMode)),
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
       this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
@@ -89,14 +90,15 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  setupAnnotationSet(mode: boolean) {
-    // if (mode && !this.annotationSet) {
-    //   this.annotationsApi.getOrCreateAnnotationSet(this.url)
-    //     .pipe(take(1))
-    //     .subscribe(annotationSet => {
-    //       this.annotationSet = annotationSet;
-    //     });
-    // }
+  ngAfterViewInit() {
+    const payload = {
+      div: {offsetHeight: 1122}, // todo add dynamic height
+      pageNumber: 1,
+      scale: 1,
+      rotation: 1
+    };
+    this.store.dispatch(new fromStore.AddPage(payload));
+
   }
 
   private setRotation(rotation: number) {

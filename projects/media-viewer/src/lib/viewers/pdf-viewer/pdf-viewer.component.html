@@ -13,7 +13,6 @@
   <div grabNDrag [dragX]="enableGrabNDrag"
        #pdfViewer
        class="pdfViewer"
-       (mousedown)="onMouseDown($event)"
        (mouseup)="onMouseUp($event)"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>

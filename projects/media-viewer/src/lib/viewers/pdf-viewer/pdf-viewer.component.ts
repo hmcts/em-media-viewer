@@ -25,7 +25,6 @@ import { AnnotationSetService } from './annotation-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import {exhaust, sample, sampleTime, take, throttleTime} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store';
 
@@ -97,13 +96,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
           pageNumber: event.pageNumber,
           scale: event.source.scale,
           rotation: event.source.rotation
-        }
+        };
         this.store.dispatch(new fromStore.AddPage(payload));
       }
     });
     this.subscriptions.push(
-      this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.setupAnnotationSet(drawMode)),
-      this.toolbarEvents.highlightModeSubject.subscribe(highlightMode => this.setupAnnotationSet(highlightMode)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
@@ -146,16 +143,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.annotationService.destroyComponents();
   }
 
-  setupAnnotationSet(mode: boolean) {
-    // if (mode && !this.annotationSet) {
-    //   this.annotationsApi.getOrCreateAnnotationSet(this.url)
-    //     .pipe(take(1))
-    //     .subscribe(annotationSet => {
-    //       this.annotationSet = annotationSet;
-    //       // this.annotationService.buildAnnoSetComponents(this.annotationSet);
-    //     });
-    // }
-  }
+
 
   private async loadDocument() {
     await this.pdfWrapper.loadDocument(this.url);
@@ -196,22 +184,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
   }
 
-  onMouseDown(mouseEvent: MouseEvent) {
-    // if (this.annotationSet && this.toolbarEvents.highlightModeSubject.getValue()) {
-    //  // this.annotationService.addAnnoSetToPage();
-    // }
-    // if (this.annotationSet && this.toolbarEvents.drawModeSubject.getValue()) {
-    //   // this.annotationService.addAnnoSetToPage();
-    //   setTimeout(() => this.viewerEvents.boxSelected({
-    //     page: this.pdfWrapper.getPageNumber(),
-    //     event: mouseEvent,
-    //     annoSet: this.annotationSet
-    //   }), 0);
-    // }
-  }
-
   onMouseUp(mouseEvent: MouseEvent) {
-   // this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: '', editable: false}));
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
       this.viewerEvents.textSelected({
         page: this.pdfWrapper.getPageNumber(),

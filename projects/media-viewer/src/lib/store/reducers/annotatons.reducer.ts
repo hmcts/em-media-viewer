@@ -5,7 +5,7 @@ import {getAnnotationEntities} from '../selectors';
 import {SelectionAnnotation} from '../../annotations/annotation-event.service';
 
 export interface AnnotationSetState {
-  annotationSet: any; // todo add type to be removed
+  annotationSet: any;
   annotationEntities: {[id: string]: any}; // todo add type
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
@@ -68,8 +68,6 @@ export function reducer (
     case fromAnnotations.LOAD_ANNOTATION_SET: {
       return {
         ...initialState,
-        annotationSet: {},
-        commentEntities: {},
         loading: true
       };
     }
