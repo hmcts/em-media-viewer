@@ -199,7 +199,7 @@ describe('AnnotationSetComponent', () => {
     spyOn(highlightService, 'initBoxHighlight');
     component.drawMode = true;
 
-    component.onMouseDown({} as MouseEvent);
+    component.onInitBoxHighlight({} as MouseEvent);
 
     expect(highlightService.initBoxHighlight).toHaveBeenCalled();
   }));
@@ -210,7 +210,7 @@ describe('AnnotationSetComponent', () => {
       component.drawMode = true;
       component.annotationSet = undefined;
 
-      component.onMouseDown({} as MouseEvent);
+      component.onInitBoxHighlight({} as MouseEvent);
 
       expect(highlightService.initBoxHighlight).not.toHaveBeenCalled();
     })
@@ -221,7 +221,7 @@ describe('AnnotationSetComponent', () => {
       spyOn(highlightService, 'initBoxHighlight');
       component.drawMode = true;
 
-      component.onMouseDown({} as MouseEvent);
+      component.onInitBoxHighlight({} as MouseEvent);
 
       expect(highlightService.initBoxHighlight).toHaveBeenCalled();
     })
@@ -264,7 +264,7 @@ describe('AnnotationSetComponent', () => {
       spyOn(highlightService, 'createBoxHighlight');
       component.drawMode = true;
 
-      component.onMouseUp();
+      component.onCreateBoxHighlight();
 
       expect(highlightService.createBoxHighlight).toHaveBeenCalled();
     })
@@ -274,7 +274,7 @@ describe('AnnotationSetComponent', () => {
     inject([BoxHighlightCreateService], (highlightService) => {
       spyOn(highlightService, 'createBoxHighlight');
 
-      component.onMouseUp();
+      component.onCreateBoxHighlight();
 
       expect(highlightService.createBoxHighlight).not.toHaveBeenCalled();
     })
@@ -285,7 +285,7 @@ describe('AnnotationSetComponent', () => {
       spyOn(highlightService, 'createBoxHighlight');
       component.annotationSet = undefined;
 
-      component.onMouseUp();
+      component.onCreateBoxHighlight();
 
       expect(highlightService.createBoxHighlight).not.toHaveBeenCalled();
     })

@@ -82,7 +82,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromStore.DeleteAnnotation(annotation.id));
   }
 
-  public onMouseDown(event: MouseEvent) {
+  public onInitBoxHighlight(event: MouseEvent) {
     if (this.annoSet && this.drawMode) {
       this.boxHighlightService.initBoxHighlight(event);
     }
@@ -94,7 +94,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onMouseUp(page) {
+  public onCreateBoxHighlight(page) {
     this.page = page;
     if (this.annoSet && this.drawMode) {
       this.boxHighlight.createHighlight(this.page);

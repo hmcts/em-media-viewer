@@ -80,7 +80,6 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
       let width = xDelta;
       let top = this.drawStartY;
       let left = this.drawStartX;
-      // todo check the bug with rotation.
       switch (this.rotate) {
         case 90:
             height = -xDelta;

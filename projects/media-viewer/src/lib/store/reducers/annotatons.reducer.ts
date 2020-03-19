@@ -5,11 +5,11 @@ import {SelectionAnnotation} from '../../annotations/models/event-select.model';
 
 export interface AnnotationSetState {
   annotationSet: any;
-  annotationEntities: {[id: string]: any}; // todo add type
+  annotationEntities: {[id: string]: any};
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation | null;
-  pages: { numberOfPages: number; styles: any; scaleRotation: object }; // todo add proper typing
+  pages: { numberOfPages: number; styles: any; scaleRotation: object };
   loaded: boolean;
   loading: boolean;
 }

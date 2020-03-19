@@ -13,8 +13,8 @@
          'rot180': rotate === 180,
          'rot270': rotate === 270
        }"
-       (mouseup)="onMouseUp( i + 1)"
-       (mousedown)="onMouseDown($event)"
+       (mouseup)="onCreateBoxHighlight( i + 1)"
+       (mousedown)="onInitBoxHighlight($event)"
        (mousemove)="onMouseMove($event)">
 
     <mv-box-highlight-create
