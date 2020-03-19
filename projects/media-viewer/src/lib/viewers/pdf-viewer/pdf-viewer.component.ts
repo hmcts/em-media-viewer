@@ -19,19 +19,17 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
-import { PdfAnnotationService } from './pdf-annotation.service';
 import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
 import { AnnotationSetService } from './annotation-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
-import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  providers: [PdfAnnotationService, AnnotationSetService],
+  providers: [ AnnotationSetService],
   encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
@@ -75,8 +73,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     private readonly printService: PrintService,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
-    private readonly annotationService: PdfAnnotationService,
-    private readonly annotationsApi: AnnotationApiService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject;
@@ -88,7 +84,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
-    this.annotationService.init(this.pdfWrapper, this.pdfViewer);
     this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {
         const payload = {
@@ -115,7 +110,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngOnChanges(changes: SimpleChanges) {
-    let reloadAnnotations = false;
     if (!this.pdfWrapper) {
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
@@ -123,26 +117,15 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.loadDocument();
       this.clearAnnotationSet();
     }
-    if (changes.enableAnnotations && this.pdfWrapper) {
-      if (this.enableAnnotations) {
-        reloadAnnotations = true;
-      } else {
-        this.clearAnnotationSet();
-      }
-    }
-
   }
 
   clearAnnotationSet() {
     this.annotationSet = null;
-    this.annotationService.destroyComponents();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
-    this.annotationService.destroyComponents();
   }
-
 
 
   private async loadDocument() {

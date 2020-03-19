@@ -27,27 +27,6 @@ export class AnnotationSetService {
     this.annotationSet = annotationSet;
   }
 
-  // addAnnotationsToPage(pageRenderEvent: PageEvent) {
-  //   this.annotationSetComponents
-  //     .filter(annotationComp => annotationComp.instance.page === pageRenderEvent.pageNumber)
-  //     .forEach(annotationSetComponent => annotationSetComponent.instance.addToDOM(pageRenderEvent.source));
-  // }
-
-  addAnnoSetToPage() {
-    // const pageNumber = this.pdfWrapper.getPageNumber();
-    // if (!this.pages.includes(pageNumber)) {
-    //   this.pages.push(pageNumber);
-    //   const annotationSetComponent = this.createAnnotationSetComponent(pageNumber);
-    //   this.annotationSetComponents.push(annotationSetComponent);
-    //   annotationSetComponent.instance.addToDOM({
-    //     rotation: this.pdfWrapper.getNormalisedPagesRotation(),
-    //     scale: this.pdfWrapper.getCurrentPDFZoomValue(),
-    //     div: this.pdfViewer.nativeElement
-    //       .querySelector(`div.page[data-page-number="${this.pdfWrapper.getPageNumber()}"]`)
-    //   });
-    // }
-  }
-
   buildAnnoSetComponents() {
     if (this.annotationSet) {
       this.annotationSet.annotations.forEach(annotation => {
