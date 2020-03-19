@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, V
 import {Comment} from './comment.model';
 import {User} from '../../models/user.model';
 import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
-import {SelectionAnnotation} from '../../annotation-event.service';
+import {SelectionAnnotation} from '../../models/event-select.model';
 import {CommentService} from './comment.service';
 import {TagItemModel} from '../../models/tag-item.model';
 import {TagsServices} from '../../services/tags/tags.services';

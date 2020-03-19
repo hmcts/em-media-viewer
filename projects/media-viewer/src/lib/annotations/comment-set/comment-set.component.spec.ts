@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { AnnotationApiService } from '../annotation-api.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AnnotationEventService } from '../annotation-event.service';
 import { annotationSet } from '../../../assets/annotation-set';
 import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';

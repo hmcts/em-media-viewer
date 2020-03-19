@@ -5,7 +5,7 @@ import { AnnotationSet } from './annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { Observable, Subscription } from 'rxjs';
-import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
+import { SelectionAnnotation } from '../models/event-select.model';
 import { CommentService } from '../comment-set/comment/comment.service';
 import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
@@ -42,7 +42,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly api: AnnotationApiService,
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
-    private readonly annotationService: AnnotationEventService,
     private readonly commentService: CommentService,
     private readonly boxHighlightService: BoxHighlightCreateService,
     private readonly textHighlightService: TextHighlightCreateService) {}

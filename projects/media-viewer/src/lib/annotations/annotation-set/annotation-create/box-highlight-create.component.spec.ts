@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { AnnotationApiService } from '../../annotation-api.service';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AnnotationEventService } from '../../annotation-event.service';
+import { AnnotationEventService } from '../../models/event-select.model';
 
 describe('BoxHighlightCreateComponent', () => {
   let component: BoxHighlightCreateComponent;

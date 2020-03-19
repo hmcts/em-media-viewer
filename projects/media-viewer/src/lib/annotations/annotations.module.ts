@@ -9,7 +9,6 @@ import { RectangleComponent } from './annotation-set/annotation-view/rectangle/r
 import { CommentComponent } from './comment-set/comment/comment.component';
 import { PopupToolbarComponent } from './annotation-set/annotation-view/popup-toolbar/popup-toolbar.component';
 import { CommentSetComponent } from './comment-set/comment-set.component';
-import { AnnotationEventService } from './annotation-event.service';
 import { TextareaAutoExpandDirective } from './comment-set/comment/textarea-auto-expand.directive';
 import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comment-set-toggle.component';
 import { CommentsSummaryComponent } from './comments-summary/comments-summary.component';
@@ -54,7 +53,6 @@ import {TagsServices} from './services/tags/tags.services';
   ],
   providers: [
     AnnotationApiService,
-    AnnotationEventService,
     CommentSetRenderService,
     BoxHighlightCreateService,
     TextHighlightCreateService,

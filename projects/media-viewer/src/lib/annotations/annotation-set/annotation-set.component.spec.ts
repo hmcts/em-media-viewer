@@ -11,7 +11,7 @@ import { Observable, of } from 'rxjs';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { CommentComponent } from '../comment-set/comment/comment.component';
-import { AnnotationEventService } from '../annotation-event.service';
+import { AnnotationEventService } from '../models/event-select.model';
 import { CommentService } from '../comment-set/comment/comment.service';
 import { MutableDivModule } from 'mutable-div';
 import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';

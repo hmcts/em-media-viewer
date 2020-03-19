@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
-import {SelectionAnnotation} from '../../annotations/annotation-event.service';
+import {SelectionAnnotation} from '../../annotations/models/event-select.model';
 
 export const LOAD_ANNOTATION_SET = '[Annotations] Load Annotation Set';
 export const LOAD_ANNOTATION_SET_SUCCESS = '[Annotations] Load Annotation Set Success';

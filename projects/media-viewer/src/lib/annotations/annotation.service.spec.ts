@@ -1,4 +1,4 @@
-import { AnnotationEventService, SelectionAnnotation } from './annotation-event.service';
+import { AnnotationEventService, SelectionAnnotation } from './models/event-select.model';
 import { fakeAsync } from '@angular/core/testing';
 
 

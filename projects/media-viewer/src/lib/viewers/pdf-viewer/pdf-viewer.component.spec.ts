@@ -14,7 +14,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
 import { PdfAnnotationService } from './pdf-annotation.service';
-import { AnnotationEventService } from '../../annotations/annotation-event.service';
+
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BoxHighlightCreateService } from '../../annotations/annotation-set/annotation-create/box-highlight-create.service';

@@ -1,9 +1,8 @@
-import {AsyncSubject, Observable, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { AnnotationApiService } from '../../annotation-api.service';
-import { AnnotationEventService } from '../../annotation-event.service';
 import { Injectable } from '@angular/core';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store';
@@ -17,7 +16,6 @@ export class BoxHighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private readonly annotationService: AnnotationEventService,
               private store: Store<fromStore.AnnotationSetState>) {}
 
   initBoxHighlight(event: MouseEvent) {

@@ -3,7 +3,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AnnotationApiService } from '../../annotation-api.service';
-import { AnnotationEventService } from '../../annotation-event.service';
+import { AnnotationEventService } from '../../models/event-select.model';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import {TagsServices} from '../../services/tags/tags.services';
 import {TagsComponent} from '../../tags/tags.component';

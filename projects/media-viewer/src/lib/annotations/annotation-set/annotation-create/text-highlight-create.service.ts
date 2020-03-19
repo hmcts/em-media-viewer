@@ -4,7 +4,7 @@ import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { AnnotationApiService } from '../../annotation-api.service';
-import { AnnotationEventService } from '../../annotation-event.service';
+
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store';
 
@@ -13,7 +13,6 @@ export class TextHighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private readonly annotationEvents: AnnotationEventService,
               private store: Store<fromStore.AnnotationSetState>,) {}
 
   createTextHighlight(highlight: Highlight, annotationSet, pageInfo) {

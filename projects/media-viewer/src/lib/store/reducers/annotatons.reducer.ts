@@ -1,7 +1,7 @@
 import * as fromAnnotations from '../actions/annotations.action';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 import {StoreUtils} from '../store-utils';
-import {SelectionAnnotation} from '../../annotations/annotation-event.service';
+import {SelectionAnnotation} from '../../annotations/models/event-select.model';
 
 export interface AnnotationSetState {
   annotationSet: any;
