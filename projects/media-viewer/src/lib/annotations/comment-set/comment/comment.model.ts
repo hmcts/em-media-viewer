@@ -7,4 +7,6 @@ export interface Comment extends ApiPersisted {
   tags: TagItemModel[];
   page: number;
   pageHeight: number;
+  selected: boolean;
+  editable: boolean;
 }

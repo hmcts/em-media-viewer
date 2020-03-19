@@ -124,13 +124,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromStore.SelectedAnnotation(annotationId))
   }
 
-  annotationSetClass() {
-    return [
-      // 'rotation rot' + this.rotate,
-      // this.drawMode ? 'drawMode' : ''
-    ];
-  }
-
   toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }

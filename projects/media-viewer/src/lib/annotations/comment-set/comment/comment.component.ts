@@ -37,13 +37,6 @@ export class CommentComponent implements OnChanges {
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<{comment: Comment, tags: TagItemModel[]}>();
   @Output() changes = new EventEmitter<boolean>();
-  @Input() set selectedAnno(selectedAnno){
-    this.selected =  (selectedAnno.annotationId && this._comment) ? (selectedAnno.annotationId === this._comment.annotationId) : false;
-    this._editable = (this.selected && this.hasUnsavedChanges) ? selectedAnno.editable : false;
-    if (this._editable) {
-      this.textArea.nativeElement.focus();
-    }
-  };
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;
@@ -74,6 +67,9 @@ export class CommentComponent implements OnChanges {
     this.originalComment = comment.content;
     this.fullComment = this.originalComment;
     this.tagItems = this.tagsServices.getTagItems(this._comment.annotationId);
+
+    this.selected = this._comment.selected;
+    this._editable = this._comment.editable;
 
     const pageMarginBottom = 10;
     this.totalPreviousPagesHeight = 0;

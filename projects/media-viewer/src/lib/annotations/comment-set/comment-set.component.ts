@@ -67,7 +67,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.comments$ = this.store.pipe(select(fromStore.getCommentsArray));
-    this.selectAnnotation$ = this.store.pipe(select(fromStore.getSelectedAnnotation));
     this.commentService.setCommentSet(this);
     this.subscriptions.push(
       this.viewerEvents.commentsPanelVisible.subscribe(toggle => {

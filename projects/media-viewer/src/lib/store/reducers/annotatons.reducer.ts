@@ -162,10 +162,22 @@ export function reducer (
         editable: payload.editable,
         selected: payload.selected
       };
+      const ent = {
+         ...state.commentEntities
+      }
+      const resetCommentEnt = Object.keys(ent).reduce((object, key) => {
+        object[key] = {
+          ...state.commentEntities[key],
+          editable: false,
+          selected: false
+        };
+        return object;
+      }, {});
       const commentEntities = payload.annotationId ? {
-        ...state.commentEntities,
+        ...resetCommentEnt,
       [payload.annotationId]: commentEntity
-      } : {...state.commentEntities}
+      } : {...resetCommentEnt};
+
       return {
         ...state,
         commentEntities,
