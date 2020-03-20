@@ -32,29 +32,6 @@ describe('AnnotationSetService', () => {
     expect(service.annotationSet).toBe(annotationSet);
   });
 
-  it('should add annotations to page', () => {
-    const annoSetComp1 = { instance: { page: 1, addToDOM: () => {} }} as any;
-    const annoSetComp2 = { instance: { page: 2, addToDOM: () => {}  }} as any;
-    service.annotationSetComponents = [annoSetComp1, annoSetComp2];
-    const pageRenderEvent = { pageNumber: 1 } as PageEvent;
-    spyOn(annoSetComp1.instance, 'addToDOM');
-
-    service.addAnnotationsToPage(pageRenderEvent);
-
-    expect(annoSetComp1.instance.addToDOM).toHaveBeenCalled();
-  });
-
-  it('should add annotationSet$ to page', () => {
-    service.pdfViewer = { nativeElement: { querySelector: () => null }} as any;
-    const mockAnnoSetComp = mockAnnotationSetCreation();
-    spyOn(mockAnnoSetComp.instance, 'addToDOM');
-
-    service.addAnnoSetToPage();
-
-    expect(mockFactoryResolver.resolveComponentFactory).toHaveBeenCalled();
-    expect(mockContainerRef.createComponent).toHaveBeenCalled();
-    expect(mockAnnoSetComp.instance.addToDOM).toHaveBeenCalledWith({ rotation: 90, scale: 0.2, div: null });
-  });
 
   it('should build annotationSet$ components', () => {
     const mockAnnoSetComp = mockAnnotationSetCreation();

@@ -2,14 +2,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { hot } from 'jasmine-marbles';
-import { of } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as fromRouterEffects from './router.effect';
 import { RouterEffects } from './router.effect';
 import { Go, CreateCaseGo, Back, Forward } from '../actions/router.action';
 import { Location } from '@angular/common';
 import { Store, StoreModule } from '@ngrx/store';
-import { AppConfigService } from '../../services/config/configuration.services';
+
 import { MockStore } from '@ngrx/store/testing';
 import { State } from '../reducers';
 
@@ -35,7 +34,6 @@ describe('Router Effects', () => {
         HttpClientTestingModule
       ],
       providers: [
-        AppConfigService,
         {
           provide: Location,
           useValue: LocationMock
@@ -119,24 +117,6 @@ describe('Router Effects', () => {
     });
   });
 
-  describe('navigateNewCase$', () => {
-
-    it('should call Angular\'s router on dispatch of RouterActions.CREATE_CASE_GO', () => {
-      const payload = {
-        path: [],
-        caseId: 'dummy'
-      };
-
-      RouterMock.navigate.and.returnValue(Promise.resolve(true));
-
-      const action = new CreateCaseGo(payload);
-      actions$ = hot('-a', { a: action });
-
-      effects.navigateNewCase$.subscribe(() => {
-        expect(RouterMock.navigate).toHaveBeenCalled();
-      });
-    });
-  });
 
   describe('navigateBack$', () => {
     it('should call Angular\'s Location.back() on dispatch' +

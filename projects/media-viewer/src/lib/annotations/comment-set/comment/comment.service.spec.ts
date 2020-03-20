@@ -17,7 +17,6 @@ describe('CommentService', () => {
   let commentService: CommentService;
 
   const api = new AnnotationApiService({}  as any);
-  const mockAnnotationService = new AnnotationEventService();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,7 +27,6 @@ describe('CommentService', () => {
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
-        { provide: AnnotationEventService, useValue: mockAnnotationService },
         ToolbarEventService,
         CommentService,
         CommentSetRenderService,

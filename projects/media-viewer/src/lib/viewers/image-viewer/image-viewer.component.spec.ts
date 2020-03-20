@@ -165,17 +165,5 @@ describe('ImageViewerComponent', () => {
     component.toggleCommentsSummary();
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
-
-  it('should setup annotationSet$', fakeAsync(
-    inject([AnnotationApiService], (annotationsApi) => {
-      spyOn(annotationsApi, 'getOrCreateAnnotationSet')
-        .and.returnValue(of({} as AnnotationSet));
-
-      component.setupAnnotationSet(true);
-      tick();
-
-      expect(component.annotationSet).toEqual({} as AnnotationSet);
-    })
-  ));
 });
 
