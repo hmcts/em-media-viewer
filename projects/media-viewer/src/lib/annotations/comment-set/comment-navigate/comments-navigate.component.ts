@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../../store';
 
 @Component({
   selector: 'mv-comments-navigate',
@@ -15,7 +17,7 @@ export class CommentsNavigateComponent implements OnChanges {
   navigationList: string[];
   index = 0;
 
-  constructor() {}
+  constructor(private store: Store<fromStore.AnnotationSetState>) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.annotationList) {
@@ -34,11 +36,7 @@ export class CommentsNavigateComponent implements OnChanges {
       .sort(this.sortComments)
       .map(mappedComment => mappedComment.annotationId);
     if (this.autoSelect) {
-      // todo
-      // this.annotationEvents.selectAnnotation({
-      //   annotationId: this.navigationList[0],
-      //   editable: false
-      // });
+      this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[0], editable: false, selected: true}));
     }
   }
 
@@ -61,10 +59,7 @@ export class CommentsNavigateComponent implements OnChanges {
     if (this.index == this.annotationList.length) {
       this.index = 0;
     }
-    // this.annotationEvents.selectAnnotation({
-    //   annotationId: this.navigationList[this.index],
-    //   editable: false
-    // });
+    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[this.index], editable: false, selected: true}));
   }
 
   prevItem() {
@@ -72,10 +67,7 @@ export class CommentsNavigateComponent implements OnChanges {
     if (this.index < 0) {
       this.index = this.navigationList.length - 1;
     }
-    // this.annotationEvents.selectAnnotation({
-    //   annotationId: this.navigationList[this.index],
-    //   editable: false
-    // });
+    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[this.index], editable: false, selected: true}));
   }
 
   upperRectangle(rectangles: Rectangle[]) {

@@ -7,7 +7,7 @@ import {CommentService} from './comment.service';
 import {TagItemModel} from '../../models/tag-item.model';
 import {TagsServices} from '../../services/tags/tags.services';
 import { Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store';
 
@@ -88,6 +88,10 @@ export class CommentComponent implements OnInit, OnDestroy {
     this.totalPreviousPagesHeight = 0;
     for (let i = 0; i < this.page - 1; i++) {
       this.totalPreviousPagesHeight += this.pageHeight + pageMarginBottom;
+    }
+    // todo
+    if (this.selected) {
+      setTimeout(() => this.form.nativeElement.focus(), 10);
     }
   }
 
