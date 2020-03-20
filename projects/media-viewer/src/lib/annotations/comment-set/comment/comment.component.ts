@@ -1,4 +1,14 @@
-import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {Comment} from './comment.model';
 import {User} from '../../models/user.model';
 import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
@@ -15,7 +25,8 @@ import * as fromStore from '../../../store';
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html'
 })
-export class CommentComponent implements OnInit, OnDestroy {
+export class CommentComponent implements OnInit, OnDestroy, AfterViewChecked {
+
   COMMENT_CHAR_LIMIT = 5000;
   lastUpdate: string;
   originalComment: string;
@@ -64,6 +75,12 @@ export class CommentComponent implements OnInit, OnDestroy {
     this.reRenderComments();
   }
 
+  ngAfterViewChecked(): void {
+    if (this.editableComment && this.editable) {
+        this.editableComment.nativeElement.focus();
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -88,10 +105,6 @@ export class CommentComponent implements OnInit, OnDestroy {
     this.totalPreviousPagesHeight = 0;
     for (let i = 0; i < this.page - 1; i++) {
       this.totalPreviousPagesHeight += this.pageHeight + pageMarginBottom;
-    }
-    // todo
-    if (this.selected) {
-      setTimeout(() => this.form.nativeElement.focus(), 10);
     }
   }
 
