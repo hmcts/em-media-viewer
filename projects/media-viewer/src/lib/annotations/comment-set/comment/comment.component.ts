@@ -111,10 +111,6 @@ export class CommentComponent implements OnInit {
     return this._editable;
   }
 
-  onEdit() {
-    this._editable = true;
-  }
-
   onCommentChange(updatedComment) {
     this.hasUnsavedChanges = this.originalComment.substring(0, this.COMMENT_CHAR_LIMIT) !==
       updatedComment.substring(0, this.COMMENT_CHAR_LIMIT);
