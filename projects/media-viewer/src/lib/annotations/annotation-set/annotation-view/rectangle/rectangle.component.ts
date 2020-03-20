@@ -32,9 +32,6 @@ export class RectangleComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.selected) {
-      this.rectElement.nativeElement.focus();
-    }
     this.subscriptions.push(
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag)
     );

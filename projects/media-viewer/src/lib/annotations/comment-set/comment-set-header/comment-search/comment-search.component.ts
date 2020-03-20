@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AnnotationSet } from '../../../annotation-set/annotation-set.model';
 import { Annotation } from '../../../annotation-set/annotation-view/annotation.model';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromStore from '../../../../store';
 
 @Component({
@@ -29,7 +29,6 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.store.dispatch(new fromStore.SearchComment(''));
-    // this.annotationEvents.resetTextHighlight();
   }
 
   searchComments(searchText: string): void {
@@ -41,7 +40,6 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
         .filter(annotation => annotation.comments[0].content.toLowerCase().includes(this.searchString.toLowerCase()));
       if (this.searchResults.length > 0) {
         this.store.dispatch(new fromStore.SearchComment(searchText));
-        // this.annotationEvents.onCommentSearch(this.searchString);
       }
     }
   }
@@ -51,6 +49,5 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
     this.searchResults = [];
     this.searchIndex = 0;
     this.store.dispatch(new fromStore.SearchComment(''));
-    // this.annotationEvents.resetTextHighlight();
   }
 }

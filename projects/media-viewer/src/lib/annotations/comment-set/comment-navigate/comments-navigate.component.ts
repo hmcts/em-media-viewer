@@ -3,6 +3,7 @@ import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectan
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store';
+import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-comments-navigate',
@@ -14,10 +15,10 @@ export class CommentsNavigateComponent implements OnChanges {
   @Input() public readonly annotationList: Annotation[];
   @Input() autoSelect = false;
 
-  navigationList: string[];
+  navigationList: any[];
   index = 0;
 
-  constructor(private store: Store<fromStore.AnnotationSetState>) {}
+  constructor(private store: Store<fromStore.AnnotationSetState>, public readonly toolbarEvents: ToolbarEventService,) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.annotationList) {
@@ -33,10 +34,11 @@ export class CommentsNavigateComponent implements OnChanges {
         page: annotation.page,
         rectangle: this.upperRectangle(annotation.rectangles),
       }))
-      .sort(this.sortComments)
-      .map(mappedComment => mappedComment.annotationId);
+      .sort(this.sortComments);
     if (this.autoSelect) {
-      this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[0], editable: false, selected: true}));
+
+      this.toolbarEvents.setPage(Number.parseInt(this.navigationList[0].page, 0));
+      this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[0].annotationId, editable: false, selected: true}));
     }
   }
 
@@ -59,15 +61,18 @@ export class CommentsNavigateComponent implements OnChanges {
     if (this.index == this.annotationList.length) {
       this.index = 0;
     }
-    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[this.index], editable: false, selected: true}));
+    this.toolbarEvents.setPage(Number.parseInt(this.navigationList[this.index].page, 0));
+    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true}));
   }
+
 
   prevItem() {
     this.index -= 1;
     if (this.index < 0) {
       this.index = this.navigationList.length - 1;
     }
-    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[this.index], editable: false, selected: true}));
+    this.toolbarEvents.setPage(Number.parseInt(this.navigationList[this.index].page, 0));
+    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true}));
   }
 
   upperRectangle(rectangles: Rectangle[]) {

@@ -25,7 +25,7 @@ import * as fromStore from '../../../store';
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html'
 })
-export class CommentComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class CommentComponent implements OnInit, OnDestroy {
 
   COMMENT_CHAR_LIMIT = 5000;
   lastUpdate: string;
@@ -75,11 +75,6 @@ export class CommentComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.reRenderComments();
   }
 
-  ngAfterViewChecked(): void {
-    if (this.editableComment && this.editable) {
-        this.editableComment.nativeElement.focus();
-    }
-  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
@@ -106,6 +101,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterViewChecked {
     for (let i = 0; i < this.page - 1; i++) {
       this.totalPreviousPagesHeight += this.pageHeight + pageMarginBottom;
     }
+
   }
 
   get comment() {
