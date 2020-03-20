@@ -3,6 +3,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommentComponent } from './comment.component';
 import { FormsModule } from '@angular/forms';
 import { CommentService } from './comment.service';
+import { TextHighlightDirective } from './text-highlight.directive';
+import { AnnotationEventService } from '../../annotation-event.service';
 import {TagsServices} from '../../services/tags/tags.services';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
@@ -52,7 +54,6 @@ describe('CommentComponent', () => {
   };
 
   const waitForChanges = () => {
-    fixture.detectChanges();
     tick(10);
     fixture.detectChanges();
   };
@@ -60,13 +61,15 @@ describe('CommentComponent', () => {
   beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
-        CommentComponent
+        CommentComponent, TextHighlightDirective
       ],
       imports: [
         FormsModule,
         HttpClientTestingModule,
       ],
       providers: [
+        CommentService,
+        AnnotationEventService,
         CommentService,
         TagsServices
       ],
@@ -92,6 +95,30 @@ describe('CommentComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should subscribe to commentSearch event',
+    inject([AnnotationEventService],
+      fakeAsync((annotationEvents: AnnotationEventService) => {
+        annotationEvents.commentSearch.next('searchText');
+
+        tick(100);
+        expect(component.searchString).toBeUndefined();
+
+        tick(200);
+        expect(component.searchString).toBe('searchText');
+    }))
+  );
+
+  it('should unsubscribe',
+    inject([AnnotationEventService],
+      fakeAsync((annotationEvents: AnnotationEventService) => {
+        component.ngOnDestroy();
+        annotationEvents.commentSearch.next('searchText');
+
+        tick(300);
+        expect(component.searchString).toBeUndefined();
+    }))
+  );
 
   it('should set comment if date modified exists', () => {
     component.comment = {...mockComment};
@@ -123,7 +150,9 @@ describe('CommentComponent', () => {
 
   it('should set the unsavedChanges value to false', () => {
     component.originalComment = 'old comment';
+
     component.onCommentChange('old comment');
+
     expect(component.hasUnsavedChanges).toBeFalsy();
   });
 
@@ -142,15 +171,23 @@ describe('CommentComponent', () => {
     expect(component.fullComment).toEqual(modifiedMockComment.content);
   });
 
-  it('should emit changes event when comment editing cancelled', () => {
+  it('should emit changes event when comment editing cancelled', fakeAsync(() => {
     const commentChangesEmitEventSpy = spyOn(component.changes, 'emit');
-    component.onCancel();
+    component.editableComment = { nativeElement: ({ focus: () => ({})}) } as any;
+    component.editable = true;
+    waitForChanges();
+
+    component.deleteOrCancel();
+
     expect(commentChangesEmitEventSpy).toHaveBeenCalledTimes(1);
-  });
+  }));
 
   it('should emit changes event when comment is saved', () => {
     const commentChangesEmitEventSpy = spyOn(component.changes, 'emit');
-    component.onSave();
+    component.editable = true;
+
+    component.editOrSave();
+
     expect(commentChangesEmitEventSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -162,78 +199,55 @@ describe('CommentComponent', () => {
 
   it('should emit a delete', () => {
     const deleteEmitEventSpy = spyOn(component.delete, 'emit');
-    component.onDelete();
+    component.deleteOrCancel();
     expect(deleteEmitEventSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should set comments to editable', () => {
     component.editable = false;
-    component.onEdit();
+    component.editOrSave();
     expect(component.editable).toBe(true);
   });
 
   it('should set comments to non-editable', fakeAsync(() => {
+    component.editableComment = { nativeElement: ({ focus: () => ({})}) } as any;
     component.editable = true;
     component.selected = true;
-
     waitForChanges();
-    component.onCancel();
+
+    component.deleteOrCancel();
 
     expect(component.editable).toBe(false);
   }));
 
   it('should set hasUnsavedChanges to false when changes cancelled', fakeAsync(() => {
+    component.editableComment = { nativeElement: ({ focus: () => ({})}) } as any;
     component.hasUnsavedChanges = true;
+    component.editable = true;
 
     waitForChanges();
-    component.onCancel();
+    component.deleteOrCancel();
 
     expect(component.hasUnsavedChanges).toBe(false);
   }));
 
   it('should not set focus on textArea when comment made non-editable', fakeAsync(() => {
+    component.editableComment = { nativeElement: ({ focus: () => ({})}) } as any;
     component.editable = true;
     component.selected = true;
     component.fullComment = 'test comment';
 
     waitForChanges();
-    component.onSave();
+    component.editOrSave();
 
     expect(component.selected).toBe(true);
     expect(component.editable).toBe(false);
     expect(component.hasUnsavedChanges).toBe(false);
   }));
 
-  it('should set commentStyle to uneditable', () => {
-    component.editable = false;
-    const commentStyleValue = component.commentStyle();
-    expect(commentStyleValue).toContain('view-mode');
-  });
-
-  it('should set commentStyle to editable', fakeAsync(() => {
-    component.editable = true;
-    component.selected = true;
-
-    waitForChanges();
-
-    const commentStyleValue = component.commentStyle();
-    expect(commentStyleValue).toContain('edit-mode');
-  }));
-
-  it('should set commentStyle to unselected', () => {
-    component.selected = false;
-    const commentStyleValue = component.commentStyle();
-    expect(commentStyleValue).toContain('collapsed');
-  });
-
-  it('should set commentStyle to selected', () => {
-    component.selected = true;
-    const commentStyleValue = component.commentStyle();
-    expect(commentStyleValue).toContain('expanded');
-  });
-
   it('should get selected short comment', () => {
     component.selected = true;
+    component.editable = true;
     component.fullComment = 'short comment';
 
     fixture.detectChanges();
@@ -250,7 +264,7 @@ describe('CommentComponent', () => {
 
     fixture.detectChanges();
 
-    expect(nativeElement.querySelector('.unselectedText').textContent.trim()).toBe('short comment');
+    expect(nativeElement.querySelector('.commentText').textContent.trim()).toBe('short comment');
   });
 
   it('should emit a comment rendered', () => {

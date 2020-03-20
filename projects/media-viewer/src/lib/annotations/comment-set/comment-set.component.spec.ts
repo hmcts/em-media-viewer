@@ -13,6 +13,7 @@ import { CommentSetRenderService } from './comment-set-render.service';
 import {TagsServices} from '../services/tags/tags.services';
 import {TagsComponent} from '../tags/tags.component';
 import {TagInputModule} from 'ngx-chips';
+import { TextHighlightDirective } from './comment/text-highlight.directive';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -197,7 +198,8 @@ describe('CommentSetComponent', () => {
       declarations: [
         CommentSetComponent,
         CommentComponent,
-        TagsComponent
+        TagsComponent,
+        TextHighlightDirective
       ],
       imports: [
         FormsModule,

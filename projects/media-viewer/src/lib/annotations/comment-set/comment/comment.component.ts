@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Comment} from './comment.model';
 import {User} from '../../models/user.model';
 import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
@@ -6,11 +6,12 @@ import {SelectionAnnotation} from '../../models/event-select.model';
 import {CommentService} from './comment.service';
 import {TagItemModel} from '../../models/tag-item.model';
 import {TagsServices} from '../../services/tags/tags.services';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'mv-anno-comment',
-  templateUrl: './comment.component.html',
-  encapsulation: ViewEncapsulation.None
+  templateUrl: './comment.component.html'
 })
 export class CommentComponent implements OnInit {
   COMMENT_CHAR_LIMIT = 5000;
@@ -29,6 +30,7 @@ export class CommentComponent implements OnInit {
   pageHeight: number;
   hasUnsavedChanges = false;
   selected: boolean;
+  searchString: string;
   public tagItems: TagItemModel[];
 
 
@@ -41,18 +43,35 @@ export class CommentComponent implements OnInit {
   @Input() zoom = 1;
   @Input() index: number;
   @Input() page: number;
+
   @ViewChild('form') form: ElementRef;
-  @ViewChild('textArea') textArea: ElementRef;
+  @ViewChild('editableComment') editableComment: ElementRef<HTMLElement>;
+
+  private subscriptions: Subscription[];
 
   constructor(
     private readonly commentService: CommentService,
     private tagsServices: TagsServices
-  ) {}
+  ) {
+    // this.subscriptions = [
+    //   annotationEvents.commentSearch.pipe(
+    //     debounceTime(300),
+    //     distinctUntilChanged()
+    //   )
+    //     .subscribe(searchString => this.searchString = searchString),
+    //   annotationEvents.resetHighlightEvent
+    //     .subscribe(() => this.searchString = undefined)
+    // ];
+  }
 
 
   ngOnInit(): void {
     this.reRenderComments();
   }
+
+  // ngOnDestroy(): void {
+  //   this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  // }
 
   @Input()
   set comment(comment: Comment) {
@@ -102,32 +121,35 @@ export class CommentComponent implements OnInit {
     this.commentService.onCommentChange(this.hasUnsavedChanges);
   }
 
-  onCancel() {
-    this.hasUnsavedChanges = false;
-    this._editable = false;
-    this.fullComment = this.originalComment;
-    this.changes.emit(false);
-    if (!this.author && !this.fullComment) {
+  deleteOrCancel() {
+    if (!this.editable) {
       this.delete.emit(this._comment);
+    } else {
+      this.hasUnsavedChanges = false;
+      this._editable = false;
+      this.fullComment = this.originalComment;
+      this.changes.emit(false);
+      if (!this.author && !this.fullComment) {
+        this.delete.emit(this._comment);
+      }
     }
   }
 
-  public onDelete() {
-    this.delete.emit(this._comment);
-  }
-
-  public onSave() {
-    this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
-    const tags = this.tagsServices.getTagItems(this._comment.annotationId);
-    const payload = {
-      comment: this._comment,
-      tags
-    };
-    this.updated.emit(payload);
-    this._editable = false;
-    this.selected = false;
-    this.hasUnsavedChanges = false;
-    this.changes.emit(false);
+  public editOrSave() {
+    if (!this.editable) {
+      this._editable = true;
+    } else {
+      this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
+      const tags = this.tagsServices.getTagItems(this._comment.annotationId);
+      const payload = {
+        comment: this._comment,
+        tags
+      };
+      this.updated.emit(payload);
+      this.hasUnsavedChanges = false;
+      this._editable = false;
+      this.changes.emit(false);
+    }
   }
 
   onCommentClick() {
@@ -149,15 +171,5 @@ export class CommentComponent implements OnInit {
 
   get height() {
     return this.form.nativeElement.getBoundingClientRect().height / this.zoom;
-  }
-
-  commentStyle() {
-    return [
-      'aui-comment__content',
-      'form-control',
-      'mimic-focus',
-      !this.editable ? 'view-mode' : 'edit-mode',
-      !this.selected && !this.editable ? 'collapsed' : 'expanded',
-    ];
   }
 }

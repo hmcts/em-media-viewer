@@ -1,0 +1,21 @@
+<div #outlineItem class="outlineItem">
+  <div *ngIf="outline.items.length > 0"
+       [ngClass]="{ 'outlineItemToggler': true, 'outlineItemsHidden': !showOutlineItems }"
+       (click)="toggleOutline()"
+       (keyup.enter)="toggleOutline()" tabindex="0"></div>
+  <a (click)="goToDestination(outline?.dest)"
+     (keyup.enter)="goToDestination(outline?.dest)"
+     [style.font-weight]="outline.bold ? 'bold' : ''"
+     [style.font-style]="outline.italic ? 'italic' : ''"
+     tabindex="0">
+    {{ outline.title }}
+  </a>
+  <div *ngIf="outline.items.length > 0" class="outlineItems">
+    <div *ngFor="let outline of outline.items">
+      <mv-outline-item
+        [outline]="outline" (navigationEvent)="goToDestination($event)">
+      </mv-outline-item>
+    </div>
+  </div>
+</div>
+

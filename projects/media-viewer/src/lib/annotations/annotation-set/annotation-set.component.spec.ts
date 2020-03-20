@@ -110,7 +110,6 @@ describe('AnnotationSetComponent', () => {
         AnnotationSetComponent,
         AnnotationViewComponent,
         BoxHighlightCreateComponent,
-        CommentComponent,
         RectangleComponent,
         PopupToolbarComponent,
         TagsComponent

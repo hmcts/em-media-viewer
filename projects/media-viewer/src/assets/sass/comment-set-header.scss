@@ -15,6 +15,7 @@
     display:  block;
   }
 }
+
 .commentSummary {
   .show-comments-panel & {
     display:  block;
@@ -33,6 +34,23 @@
   margin: 5px 5px 0;
   cursor: pointer;
   font-size: 0.8rem;
+  &:hover {
+    background-color: #DDDDDD;
+  }
+}
+
+.searchComments {
+  border: none;
+  border-left: 1px solid #DDDDDD;
+  float: right;
+  position: relative;
+  background: url(/assets/images/toolbarButton-searchComments.png) 5px 5px no-repeat;
+  fill: #0B0C0C;
+  background-size: 15px 15px;
+  height: 25px;
+  width: 25px;
+  margin: 5px 5px 0;
+  cursor: pointer;
   &:hover {
     background-color: #DDDDDD;
   }

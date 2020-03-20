@@ -87,7 +87,7 @@ mv-anno-comment {
     margin-bottom: govuk-spacing(1);
   }
 
-  .unselectedText {
+  .commentText {
     font-size: 1rem;
     font-family: nta,Arial,sans-serif;
     color: #000000;
@@ -120,6 +120,9 @@ mv-anno-comment {
 
   }
 
+  .mvTextHighlight {
+    background-color: yellow;
+  }
 }
 
 

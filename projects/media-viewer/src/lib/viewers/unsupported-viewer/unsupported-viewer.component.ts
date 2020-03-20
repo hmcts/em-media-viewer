@@ -6,8 +6,7 @@ import { ViewerUtilService } from '../viewer-util.service';
 
 @Component({
   selector: 'mv-unsupported-viewer',
-  templateUrl: './unsupported-viewer.component.html',
-  styleUrls: ['./unsupported-viewer.component.scss']
+  templateUrl: './unsupported-viewer.component.html'
 })
 export class UnsupportedViewerComponent implements OnInit, OnDestroy {
 

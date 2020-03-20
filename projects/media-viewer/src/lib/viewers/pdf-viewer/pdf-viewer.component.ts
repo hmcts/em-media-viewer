@@ -23,6 +23,7 @@ import { ResponseType, ViewerException } from '../error-message/viewer-exception
 import { AnnotationSetService } from './annotation-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
+import { Outline } from './outline-view/outline.model';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store';
 
@@ -52,6 +53,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   highlightMode: BehaviorSubject<boolean>;
   drawMode: BehaviorSubject<boolean>;
 
+  documentOutline: Outline;
   loadingDocument = false;
   loadingDocumentProgress: number;
   errorMessage: string;
@@ -84,6 +86,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
+    this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
     this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {
         const payload = {
@@ -231,5 +234,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
+  }
+
+  goToOutlineDest(destination: any) {
+    this.pdfWrapper.navigateTo(destination);
   }
 }

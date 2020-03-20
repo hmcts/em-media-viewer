@@ -13,56 +13,40 @@
       {{ lastUpdate | date: 'd MMMM y h:mm a' }}
     </time>
   </div>
-
   <mv-tags
     [tagItems]="tagItems"
     [userId]="createdBy"
     [editable]="editable"
     [annoId]="_comment.annotationId">
   </mv-tags>
-
-  <textarea #textArea
-            [style.display]="selected && editable ? 'block' : 'none'"
+  <textarea *ngIf="selected && editable"
+            #editableComment
             mvTextAreaAutoExpand
             type="text"
             required
             name="content"
             [maxlength]="COMMENT_CHAR_LIMIT"
-            [ngClass]="commentStyle()"
+            class="aui-comment__content form-control mimic-focus edit-mode expanded"
             [(ngModel)]="fullComment"
             (ngModelChange)="reRenderComments(); onCommentChange($event);"
             aria-label="comment">
   </textarea>
-  <p *ngIf="!editable" [ngClass]="{'unselectedText' : !selected}">{{fullComment}}</p>
-  <ng-container
-    *ngIf="selected || editable || (!fullComment.length && (tagItems && !tagItems.length))">
-    <div class="aui-comment__footer commentBtns">
-      <button *ngIf="!editable; else Save"
-              class="govuk-button" type="button" role="button"
-              (click)="onEdit()">
-        Edit
-      </button>
-      <button *ngIf="!editable; else Cancel"
-              type="button" role="button"
-              class="govuk-button govuk-button--secondary"
-              (click)="onDelete()">
-        Delete
-      </button>
-    </div>
-  </ng-container>
-  <ng-template #Save>
-    <button class="govuk-button" type="button" role="button"
-            (click)="onSave()">
-      Save
+  <p *ngIf="!editable"
+     mvTextHighlight class="commentText" [textToHighlight]="searchString">
+      {{ fullComment }}
+  </p>
+  <div *ngIf="selected || this.editable || (!fullComment.length && (tagItems && !tagItems.length))"
+       class="aui-comment__footer commentBtns">
+    <button class="govuk-button"
+            type="button" role="button"
+            (click)="editOrSave()">
+      {{ !editable ? 'Edit' : 'Save' }}
     </button>
-  </ng-template>
-  <ng-template #Cancel>
     <button type="button" role="button"
             class="govuk-button govuk-button--secondary"
-            (click)="onCancel()">
-      Cancel
+            (click)="deleteOrCancel()">
+      {{ !editable ? 'Delete' : 'Cancel' }}
     </button>
-  </ng-template>
+  </div>
   <span class="aui-comment__private">private</span>
 </form>
-
