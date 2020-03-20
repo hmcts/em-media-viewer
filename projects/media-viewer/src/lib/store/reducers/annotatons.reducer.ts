@@ -8,8 +8,9 @@ export interface AnnotationSetState {
   annotationEntities: {[id: string]: any};
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
-  selectedAnnotation: SelectionAnnotation | null;
+  selectedAnnotation: SelectionAnnotation;
   pages: { numberOfPages: number; styles: any; scaleRotation: object };
+  commentSearchQueries: {commentSearch: string; tags: string[]};
   loaded: boolean;
   loading: boolean;
 }
@@ -25,6 +26,7 @@ export const initialState: AnnotationSetState = {
     styles: {},
     scaleRotation: {}
   },
+  commentSearchQueries: {commentSearch: '', tags: []},
   loading: false,
   loaded: false,
 };
@@ -186,6 +188,17 @@ export function reducer (
       };
     }
 
+
+    case fromAnnotations.SEARCH_COMMENT: {
+      const commentSearchQueries = {
+        ...state.commentSearchQueries,
+        commentSearch: action.payload
+      }
+      return {
+        ...state,
+        commentSearchQueries
+      }
+    }
   }
 
 

@@ -18,6 +18,7 @@ export const DELETE_ANNOTATION_SUCCESS = '[Annotations] Delete Annotation Succes
 export const DELETE_ANNOTATION_FAIL = '[Annotations] Delete Annotation Fail';
 
 export const SELECT_ANNOTATION  = '[Annotations] Select Annotation';
+export const SEARCH_COMMENT  = '[Comments] Search Comments';
 
 export class LoadAnnotationSet implements Action {
   readonly type = LOAD_ANNOTATION_SET;
@@ -79,6 +80,11 @@ export class SelectedAnnotation implements Action {
   constructor(public payload: SelectionAnnotation) {}
 }
 
+export class SearchComment implements Action {
+  readonly type = SEARCH_COMMENT;
+  constructor(public payload: string) {}
+}
+
 export type AnnotationsActions =
   | LoadAnnotationSet
   | LoadAnnotationSetSucess
@@ -91,4 +97,5 @@ export type AnnotationsActions =
   | DeleteAnnotation
   | DeleteAnnotationSucess
   | DeleteAnnotationFail
-  | SelectedAnnotation;
+  | SelectedAnnotation
+  | SearchComment;
