@@ -49,6 +49,17 @@ export const getAnnoPages = createSelector(
   fromAnnotations.getPages
 );
 
+export const getComponentSearchQueries = createSelector(
+  getAnnotationsSetState,
+  fromAnnotations.commentSearchQueries
+);
+
+export const getComponentSearchText = createSelector(
+  getComponentSearchQueries,
+  (queries) => queries.commentSearch
+);
+
+
 export const getAnnoPerPage = createSelector(
   getAnnoPages,
   getAnnoEntities,

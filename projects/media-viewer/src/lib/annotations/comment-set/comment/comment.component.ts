@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {Comment} from './comment.model';
 import {User} from '../../models/user.model';
 import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
@@ -8,12 +8,14 @@ import {TagItemModel} from '../../models/tag-item.model';
 import {TagsServices} from '../../services/tags/tags.services';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../../store';
 
 @Component({
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html'
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent implements OnInit, OnDestroy {
   COMMENT_CHAR_LIMIT = 5000;
   lastUpdate: string;
   originalComment: string;
@@ -47,31 +49,23 @@ export class CommentComponent implements OnInit {
   @ViewChild('form') form: ElementRef;
   @ViewChild('editableComment') editableComment: ElementRef<HTMLElement>;
 
-  private subscriptions: Subscription[];
+  private subscriptions: Subscription;
 
   constructor(
+    private store: Store<fromStore.AnnotationSetState>,
     private readonly commentService: CommentService,
     private tagsServices: TagsServices
-  ) {
-    // this.subscriptions = [
-    //   annotationEvents.commentSearch.pipe(
-    //     debounceTime(300),
-    //     distinctUntilChanged()
-    //   )
-    //     .subscribe(searchString => this.searchString = searchString),
-    //   annotationEvents.resetHighlightEvent
-    //     .subscribe(() => this.searchString = undefined)
-    // ];
-  }
+  ) {}
 
 
   ngOnInit(): void {
+    this.subscriptions = this.store.select(fromStore.getComponentSearchText).subscribe(searchString => this.searchString = searchString);
     this.reRenderComments();
   }
 
-  // ngOnDestroy(): void {
-  //   this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  // }
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
   @Input()
   set comment(comment: Comment) {

@@ -211,4 +211,5 @@ export const getAnnoPageEnt = (state: AnnotationSetState) => state.annotationPag
 export const getAnnoEnt = (state: AnnotationSetState) => state.annotationEntities;
 export const getPages = (state: AnnotationSetState) => state.pages;
 export const getSelectedAnno = (state: AnnotationSetState) => state.selectedAnnotation;
+export const commentSearchQueries = (state: AnnotationSetState) => state.commentSearchQueries;
 
