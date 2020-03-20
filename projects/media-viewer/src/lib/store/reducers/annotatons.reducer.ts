@@ -163,18 +163,8 @@ export function reducer (
         editable: payload.editable,
         selected: payload.selected
       };
-      const ent = {
-         ...state.commentEntities
-      };
 
-      const resetCommentEntSelect = Object.keys(ent).reduce((object, key) => {
-        object[key] = {
-          ...state.commentEntities[key],
-          editable: false,
-          selected: false
-        };
-        return object;
-      }, {});
+      const resetCommentEntSelect = StoreUtils.resetCommentEntSelect({...state.commentEntities});
 
       const commentEntities = payload.annotationId && state.commentEntities[payload.annotationId] ? {
         ...resetCommentEntSelect,
@@ -193,9 +183,12 @@ export function reducer (
       const commentSearchQueries = {
         ...state.commentSearchQueries,
         commentSearch: action.payload
-      }
+      };
+
+      const commentEntities = StoreUtils.resetCommentEntSelect({...state.commentEntities});
       return {
         ...state,
+        commentEntities,
         commentSearchQueries
       }
     }
@@ -211,5 +204,5 @@ export const getAnnoPageEnt = (state: AnnotationSetState) => state.annotationPag
 export const getAnnoEnt = (state: AnnotationSetState) => state.annotationEntities;
 export const getPages = (state: AnnotationSetState) => state.pages;
 export const getSelectedAnno = (state: AnnotationSetState) => state.selectedAnnotation;
-export const commentSearchQueries = (state: AnnotationSetState) => state.commentSearchQueries;
+export const commentSearchQ = (state: AnnotationSetState) => state.commentSearchQueries;
 

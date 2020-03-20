@@ -41,4 +41,16 @@ export class StoreUtils {
   }
 
 
+  static resetCommentEntSelect(ent) {
+    return Object.keys(ent).reduce((object, key) => {
+      object[key] = {
+        ...ent[key],
+        editable: false,
+        selected: false
+      };
+      return object;
+    }, {});
+  }
+
+
 }

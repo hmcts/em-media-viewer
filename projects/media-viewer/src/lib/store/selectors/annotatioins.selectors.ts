@@ -51,7 +51,7 @@ export const getAnnoPages = createSelector(
 
 export const getComponentSearchQueries = createSelector(
   getAnnotationsSetState,
-  fromAnnotations.commentSearchQueries
+  fromAnnotations.commentSearchQ
 );
 
 export const getComponentSearchText = createSelector(

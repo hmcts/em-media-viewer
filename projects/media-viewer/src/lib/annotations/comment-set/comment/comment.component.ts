@@ -59,7 +59,8 @@ export class CommentComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.subscriptions = this.store.select(fromStore.getComponentSearchText).subscribe(searchString => this.searchString = searchString);
+    this.subscriptions = this.store.select(fromStore.getComponentSearchText)
+      .pipe(distinctUntilChanged()).subscribe(searchString => this.searchString = searchString);
     this.reRenderComments();
   }
 
