@@ -190,7 +190,7 @@ export function reducer (
         ...state,
         commentEntities,
         commentSearchQueries
-      }
+      };
     }
   }
 

@@ -18,12 +18,11 @@ import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { MetaReducer, StoreModule} from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 // APP store
-import { CustomSerializer, reducers, effects} from './store';
+import { reducers, effects} from './store';
 import { environment } from '../../../../src/environments/environment';
 
 // enforces immutability
@@ -44,7 +43,6 @@ export const metaReducers: MetaReducer<any>[] = !false
     RouterModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(effects),
-    StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production
     }),
@@ -68,10 +66,6 @@ export const metaReducers: MetaReducer<any>[] = !false
   providers: [
     PdfJsWrapperFactory,
     CommentService,
-    {
-      provide: RouterStateSerializer,
-      useClass: CustomSerializer
-    },
   ],
   exports: [
     MediaViewerComponent

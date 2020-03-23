@@ -31,8 +31,8 @@ export class StoreUtils {
       (annoEntities: { [id: string]: Annotation }, annotation: Annotation) => {
         const annot = {
           ...annotation,
-          positionTop: annotation.rectangles[0].y
-        }
+          positionTop: annotation.rectangles[0].y // todo remove this
+        };
         return {
           ...annoEntities,
           [annotation.id]: annot

@@ -18,7 +18,7 @@ export class CommentsNavigateComponent implements OnChanges {
   navigationList: any[];
   index = 0;
 
-  constructor(private store: Store<fromStore.AnnotationSetState>, public readonly toolbarEvents: ToolbarEventService,) {}
+  constructor(private store: Store<fromStore.AnnotationSetState>, public readonly toolbarEvents: ToolbarEventService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.annotationList) {
