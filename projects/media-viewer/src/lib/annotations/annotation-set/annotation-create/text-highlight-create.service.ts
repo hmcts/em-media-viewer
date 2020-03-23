@@ -13,7 +13,7 @@ export class TextHighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private store: Store<fromStore.AnnotationSetState>,) {}
+              private store: Store<fromStore.AnnotationSetState>) {}
 
   createTextHighlight(highlight: Highlight, annotationSet, pageInfo) {
     if (window.getSelection()) {

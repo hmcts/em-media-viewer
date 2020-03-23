@@ -8,6 +8,8 @@ import { CommentService } from '../../../annotations/comment-set/comment/comment
 import { AnnotationApiService } from '../../../annotations/annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GrabNDragDirective } from '../../grab-n-drag.directive';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../../store/reducers';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
@@ -25,7 +27,7 @@ describe('PdfJsWrapperFactory', () => {
         CommentService,
         AnnotationApiService
       ],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, StoreModule.forRoot({...reducers})],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
       ]

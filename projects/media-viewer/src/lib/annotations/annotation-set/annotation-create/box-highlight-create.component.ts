@@ -78,7 +78,6 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  // todo revisit this multiple acctions are getting issues
   createHighlight(highlightPage: number) {
       this.highlightCreated.emit({
         id: uuid(),

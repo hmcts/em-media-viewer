@@ -5,7 +5,6 @@ import { Rectangle } from './rectangle/rectangle.model';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store';
-import {SelectedAnnotation} from '../../../store';
 import {SelectionAnnotation} from '../../models/event-select.model';
 
 @Component({

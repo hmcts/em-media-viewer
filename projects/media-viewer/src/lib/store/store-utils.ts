@@ -7,7 +7,7 @@ export class StoreUtils {
       Object.assign(h, { [obj.page]:( h[obj.page] || [] ).concat(obj) }), {});
   }
 
-  static generateCommentsEntities(annotations): {[id: string]: Annotation[]} {
+  static generateCommentsEntities(annotations): {[id: string]: Comment} {
      return annotations.reduce(
       (commentEntities: { [id: string]: Annotation }, annotation: Annotation) => {
         if (annotation.comments.length) {

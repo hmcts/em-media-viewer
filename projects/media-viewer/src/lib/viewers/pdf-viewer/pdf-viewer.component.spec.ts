@@ -21,6 +21,8 @@ import { TextHighlightCreateService } from '../../annotations/annotation-set/ann
 
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { Outline } from './outline-view/outline.model';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../store/reducers';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -40,7 +42,7 @@ describe('PdfViewerComponent', () => {
         AnnotationSetComponent,
         GrabNDragDirective
       ],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, StoreModule.forRoot({...reducers})],
       providers: [
         AnnotationApiService,
         CommentService,

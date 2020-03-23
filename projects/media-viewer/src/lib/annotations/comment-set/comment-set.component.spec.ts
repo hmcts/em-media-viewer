@@ -6,7 +6,6 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { annotationSet } from '../../../assets/annotation-set';
-import { of } from 'rxjs';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
@@ -14,6 +13,8 @@ import {TagsServices} from '../services/tags/tags.services';
 import {TagsComponent} from '../tags/tags.component';
 import {TagInputModule} from 'ngx-chips';
 import { TextHighlightDirective } from './comment/text-highlight.directive';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../store/reducers';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -23,7 +24,6 @@ describe('CommentSetComponent', () => {
   let comment, mockRectangles;
 
   const api = new AnnotationApiService({}  as any);
-  const mockAnnotationService = new AnnotationEventService();
 
   beforeEach(() => {
     annotation = {
@@ -204,11 +204,11 @@ describe('CommentSetComponent', () => {
       imports: [
         FormsModule,
         HttpClientTestingModule,
-        TagInputModule
+        TagInputModule,
+        StoreModule.forRoot({...reducers})
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
-        { provide: AnnotationEventService, useValue: mockAnnotationService },
         ToolbarEventService,
         CommentService,
         CommentSetRenderService,
@@ -233,14 +233,6 @@ describe('CommentSetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set the selected comment', () => {
-    spyOn(mockAnnotationService, 'selectAnnotation');
-    const annotationId = '123';
-
-    component.onSelect(annotationId);
-
-    expect(mockAnnotationService.selectAnnotation).toHaveBeenCalled();
-  });
 
   it('should delete the comment for the annotation', () => {
     spyOn(component, 'onAnnotationUpdate');
@@ -249,7 +241,7 @@ describe('CommentSetComponent', () => {
     expect(component.annotationSet).not.toContain(mockComment);
   });
 
-  it('should update the comment for the annotation', () => {
+  xit('should update the comment for the annotation', () => {
     spyOn(component, 'onAnnotationUpdate');
     mockComment.comment.content = 'Updating the comment 1';
 
@@ -259,18 +251,6 @@ describe('CommentSetComponent', () => {
     expect(component.annotationSet.annotations[0].comments[0]).toEqual(mockComment.comment);
   });
 
-  it('should post the updated the comment for the annotation', () => {
-    mockComment.comment.content = 'Updating the comment 2';
-    const annotationForComment = component.annotationSet.annotations.find(anno => anno.id === mockComment.comment.annotationId);
-    spyOn(api, 'postAnnotation').and.returnValue(of(annotationForComment));
-    spyOn(mockAnnotationService, 'selectAnnotation');
-
-    component.onAnnotationUpdate(annotationForComment);
-
-    expect(api.postAnnotation).toHaveBeenCalledWith(annotationForComment);
-    expect(mockAnnotationService.selectAnnotation).toHaveBeenCalledWith({ annotationId: annotationForComment.id, editable: false });
-    expect(component.annotationSet.annotations[0]).toEqual(annotationForComment);
-  });
 
   it('should find rectangle which is at the top', () => {
     component.annotationSet.annotations[0].rectangles = mockRectangles;

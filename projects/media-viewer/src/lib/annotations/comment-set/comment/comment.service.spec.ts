@@ -10,6 +10,8 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { CommentSetRenderService } from '../comment-set-render.service';
 import { annotationSet } from '../../../../assets/annotation-set';
 import {TagsServices} from '../../services/tags/tags.services';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../../store/reducers';
 
 describe('CommentService', () => {
   let component: CommentSetComponent;
@@ -23,7 +25,8 @@ describe('CommentService', () => {
       declarations: [CommentSetComponent],
       imports: [
         FormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        StoreModule.forRoot({...reducers})
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },

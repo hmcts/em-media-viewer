@@ -11,6 +11,8 @@ import {TagInputModule} from 'ngx-chips';
 import {TagsServices} from '../../services/tags/tags.services';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../../store/reducers';
 
 describe('TextareaAutoExpandDirective', () => {
   let component: CommentComponent;
@@ -21,7 +23,7 @@ describe('TextareaAutoExpandDirective', () => {
     TestBed.configureTestingModule({
       declarations: [TextareaAutoExpandDirective, CommentComponent, TextHighlightDirective, TagsComponent],
       providers: [CommentService, TagsServices],
-      imports: [BrowserAnimationsModule, FormsModule, TagInputModule, HttpClientTestingModule]
+      imports: [BrowserAnimationsModule, FormsModule, TagInputModule, HttpClientTestingModule, StoreModule.forRoot({...reducers})]
     });
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
