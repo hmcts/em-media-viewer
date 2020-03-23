@@ -38,7 +38,7 @@ export class BoxHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    const annotationPayload = {
+    const annotationPayload: any = {
       id: uuid(),
       annotationSetId: annotationSet.id,
       color: 'FFFF00',

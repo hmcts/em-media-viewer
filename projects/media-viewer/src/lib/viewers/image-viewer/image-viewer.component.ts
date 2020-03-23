@@ -11,7 +11,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {of, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {PrintService} from '../../print.service';
 import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
 import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
@@ -91,7 +91,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, After
   }
 
   ngAfterViewInit() {
-    const payload = {
+    const payload: any = {
       div: {offsetHeight: 1122}, // todo add dynamic height
       pageNumber: 1,
       scale: 1,

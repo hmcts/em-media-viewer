@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 import {SelectionAnnotation} from '../../annotations/models/event-select.model';
+import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
 
 export const LOAD_ANNOTATION_SET = '[Annotations] Load Annotation Set';
 export const LOAD_ANNOTATION_SET_SUCCESS = '[Annotations] Load Annotation Set Success';
@@ -27,12 +28,12 @@ export class LoadAnnotationSet implements Action {
 
 export class LoadAnnotationSetSucess implements Action {
   readonly type = LOAD_ANNOTATION_SET_SUCCESS;
-  constructor(public payload: any) { }
+  constructor(public payload: AnnotationSet) { }
 }
 
 export class LoadAnnotationSetFail implements Action {
   readonly type = LOAD_ANNOTATION_SET_FAIL;
-  constructor(public payload: any) { }
+  constructor(public payload: Error) { }
 }
 
 export class SaveAnnotation implements Action {
@@ -47,7 +48,7 @@ export class SaveAnnotationSuccess implements Action {
 
 export class SaveAnnotationFail implements Action {
   readonly type = SAVE_ANNOTATION_FAIL;
-  constructor(public payload: any) { }
+  constructor(public payload: Error) { }
 }
 
 export class AddOrEditComment implements Action {
@@ -57,7 +58,7 @@ export class AddOrEditComment implements Action {
 
 export class AddPage implements Action {
   readonly type = ADD_PAGE;
-  constructor(public payload: any) { }
+  constructor(public payload: { div: any; pageNumber: number; scale: string; rotation: string }) { }
 }
 
 export class DeleteAnnotation implements Action {
@@ -67,12 +68,12 @@ export class DeleteAnnotation implements Action {
 
 export class DeleteAnnotationSucess implements Action {
   readonly type = DELETE_ANNOTATION_SUCCESS;
-  constructor(public payload: any) { }
+  constructor(public payload: string) { }
 }
 
 export class DeleteAnnotationFail implements Action {
   readonly type = DELETE_ANNOTATION_FAIL;
-  constructor(public payload: any) {}
+  constructor(public payload: Error) {}
 }
 
 export class SelectedAnnotation implements Action {

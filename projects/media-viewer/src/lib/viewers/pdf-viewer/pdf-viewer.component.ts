@@ -20,7 +20,6 @@ import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
 import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
-import { AnnotationSetService } from './annotation-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './outline-view/outline.model';
@@ -30,7 +29,6 @@ import * as fromStore from '../../store';
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  providers: [ AnnotationSetService],
   encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
@@ -89,7 +87,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
     this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {
-        const payload = {
+        const payload: any  = {
           div: event.source.div,
           pageNumber: event.pageNumber,
           scale: event.source.scale,

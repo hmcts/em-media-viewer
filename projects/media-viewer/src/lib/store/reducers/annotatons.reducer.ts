@@ -9,7 +9,7 @@ export interface AnnotationSetState {
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation;
-  pages: { numberOfPages: number; styles: any; scaleRotation: object };
+  pages: { numberOfPages: number; styles: any; scaleRotation: {scale: string; rotation: string} | {}};
   commentSearchQueries: {commentSearch: string; tags: string[]};
   loaded: boolean;
   loading: boolean;

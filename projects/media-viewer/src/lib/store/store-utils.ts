@@ -12,7 +12,7 @@ export class StoreUtils {
       (commentEntities: { [id: string]: Annotation }, annotation: Annotation) => {
         if (annotation.comments.length) {
           const comment = {
-            ...annotation.comments[0],
+            ...annotation.comments[0]
 
           }
           return {
@@ -26,7 +26,7 @@ export class StoreUtils {
       }, {});
   }
 
-  static generateAnnotationEntities(anno): {[id: string]: Annotation[]} {
+  static generateAnnotationEntities(anno): {[id: string]: Annotation} {
     return anno.reduce(
       (annoEntities: { [id: string]: Annotation }, annotation: Annotation) => {
         const annot = {
