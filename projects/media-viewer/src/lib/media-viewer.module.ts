@@ -23,9 +23,10 @@ import { MetaReducer, StoreModule} from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 // APP store
 import { reducers, effects} from './store';
+import { environment } from '../environments/environment';
 
 // enforces immutability
-export const metaReducers: MetaReducer<any>[] = !false
+export const metaReducers: MetaReducer<any>[] = !environment
   ? [storeFreeze]
   : [];
 
@@ -43,7 +44,7 @@ export const metaReducers: MetaReducer<any>[] = !false
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({
-      logOnly: true
+      logOnly: environment.production
     }),
   ],
   declarations: [
