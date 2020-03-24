@@ -73,7 +73,7 @@ export function reducer (
       };
     }
     case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS: {
-      const annotationSet = action.payload;
+      const annotationSet = action.payload || {annotations: []};
       const annotationEntities = StoreUtils.generateAnnotationEntities(annotationSet.annotations);
       const annotationPageEntities = StoreUtils.generatePageEntities(annotationSet.annotations);
       const commentEntities = StoreUtils.generateCommentsEntities(annotationSet.annotations);
