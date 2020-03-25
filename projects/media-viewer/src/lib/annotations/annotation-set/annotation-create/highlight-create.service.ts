@@ -7,31 +7,24 @@ import { AnnotationApiService } from '../../annotation-api.service';
 
 import {select, Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers';
-import * as fromSelectors from '../../../store/selectors/annotatioins.selectors';
+import * as fromSelectors from '../../../store/selectors/annotations.selectors';
 import * as fromActions from '../../../store/actions/annotations.action';
 import {take} from 'rxjs/operators';
 
 @Injectable()
-export class TextHighlightCreateService {
+export class HighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
               private store: Store<fromStore.AnnotationSetState>) {}
 
-  createTextHighlight(highlight: Highlight, annotationSet, pageInfo) {
-    if (window.getSelection()) {
+  getRectangles(highlight: Highlight, pageInfo) {
+    const selection = window.getSelection();
+    if (selection) {
       const localElement = (<HTMLElement>highlight.event.target) || (<HTMLElement>highlight.event.srcElement);
 
-      if (localElement.parentElement.childNodes) {
-        localElement.parentElement.childNodes.forEach(child => {
-          child['style']['padding'] = 0;
-          // regex will be targeting the translate style in string
-          // e.g. scaleX(0.969918) translateX(-110.684px) translateY(-105.274px) will become scaleX(0.969918)
-          const translateCSSRegex = /translate[XYZ]\(-?\d*(\.\d+)?(px)?\)/g;
-          child['style']['transform'] = child['style']['transform'].replace(translateCSSRegex, '').trim();
-        });
-      }
-      const selection = window.getSelection();
+      this.removeEnhancedTextModeStyling(localElement);
+
       if (selection.rangeCount && !selection.isCollapsed) {
         const range = selection.getRangeAt(0).cloneRange();
         const clientRects = range.getClientRects();
@@ -44,9 +37,7 @@ export class TextHighlightCreateService {
             const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect, pageInfo);
             selectionRectangles.push(selectionRectangle);
           }
-          this.saveAnnotation(selectionRectangles, annotationSet, pageInfo.number);
-          selection.removeAllRanges();
-          this.toolBarEvents.highlightModeSubject.next(false);
+          return selectionRectangles;
         }
       }
     }
@@ -84,11 +75,11 @@ export class TextHighlightCreateService {
     return rectangle as Rectangle;
   }
 
-  private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
+  private saveAnnotation(rectangles: Rectangle[], annotationSetId, page) {
     this.store.pipe(select(fromSelectors.getDocumentIdSetId), take(1)).subscribe(anoSetDocId => {
       const anno = {
         id: uuid(),
-        annotationSetId: annotationSet.id,
+        annotationSetId: annotationSetId,
         color: 'FFFF00',
         comments: [],
         page: page,
@@ -98,5 +89,22 @@ export class TextHighlightCreateService {
       };
       this.store.dispatch(new fromActions.SaveAnnotation(anno));
     });
+  }
+
+  resetHighlight() {
+    window.getSelection().removeAllRanges();
+    this.toolBarEvents.highlightModeSubject.next(false);
+  }
+
+  private removeEnhancedTextModeStyling(element: HTMLElement) {
+    if (element.parentElement.childNodes) {
+      element.parentElement.childNodes.forEach(child => {
+        child['style']['padding'] = 0;
+        // regex will be targeting the translate style in string
+        // e.g. scaleX(0.969918) translateX(-110.684px) translateY(-105.274px) will become scaleX(0.969918)
+        const translateCSSRegex = /translate[XYZ]\(-?\d*(\.\d+)?(px)?\)/g;
+        child['style']['transform'] = child['style']['transform'].replace(translateCSSRegex, '').trim();
+      });
+    }
   }
 }

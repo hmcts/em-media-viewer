@@ -377,6 +377,14 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
   text-decoration: none;
 }
 
+.toolbarButton.addBookmark,
+.secondaryToolbarButton.addBookmark {
+  box-sizing: border-box;
+  outline: none;
+  padding-top: 4px;
+  text-decoration: none;
+}
+
 .toolbarButton.commentSummary::before {
   content: url(/assets/images/secondaryToolbarButton-scrollWrapped@2x.png);
 }
@@ -385,7 +393,16 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
   padding-top: 5px;
 }
 
+.secondaryToolbarButton.addBookmark {
+  padding-top: 5px;
+}
+
 .bookmark[href='#'] {
+  opacity: .5;
+  pointer-events: none;
+}
+
+.addBookmark[href='#'] {
   opacity: .5;
   pointer-events: none;
 }
@@ -393,6 +410,11 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
 .toolbarButton.bookmark::before,
 .secondaryToolbarButton.bookmark::before {
   content: url(/assets/images/toolbarButton-bookmark.png);
+}
+
+.toolbarButton.addBookmark::before,
+.secondaryToolbarButton.addBookmark::before {
+  content: url(/assets/images/toolbarButton-addBookmark.png);
 }
 
 #viewThumbnail.toolbarButton::before {
@@ -446,14 +468,23 @@ html[dir='rtl'] .toolbarButton.pdfSidebarNotification::after {
   padding-left: 24px;
   text-align: left;
 }
+
 html[dir="rtl"] .secondaryToolbarButton {
   padding-right: 24px;
   text-align: right;
 }
+
 .secondaryToolbarButton.bookmark {
   padding-left: 27px;
 }
 html[dir="rtl"] .secondaryToolbarButton.bookmark {
+  padding-right: 27px;
+}
+
+.secondaryToolbarButton.addBookmark {
+  padding-left: 27px;
+}
+html[dir="rtl"] .secondaryToolbarButton.addBookmark {
   padding-right: 27px;
 }
 

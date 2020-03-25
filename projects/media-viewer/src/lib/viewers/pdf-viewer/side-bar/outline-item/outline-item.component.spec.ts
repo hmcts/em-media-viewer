@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OutlineItemComponent } from './outline-item.component';
-import { Outline } from '../outline.model';
+import { Outline } from './outline.model';
 
 describe('OutlineItemComponent', () => {
   let component: OutlineItemComponent;

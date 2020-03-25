@@ -190,7 +190,6 @@ export function reducer (
       };
     }
 
-
     case fromAnnotations.SEARCH_COMMENT: {
       const commentSearchQueries = {
         ...state.commentSearchQueries,

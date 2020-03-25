@@ -1,13 +1,10 @@
 mv-box-highlight-create {
   .box-highlight {
-    display: none;
-    position: absolute;
     top: 0;
     left: 0;
     width: 0;
     height: 0;
     z-index: 10;
     opacity: 0.5;
-    background-color: yellow;
   }
 }

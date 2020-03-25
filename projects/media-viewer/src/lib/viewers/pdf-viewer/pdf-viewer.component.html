@@ -1,5 +1,6 @@
 <mv-outline-view *ngIf="toolbarButtons.sidebarOpen"
                  id="sidebarContainer"
+                 [url]="url"
                  [outline]="documentOutline"
                  (navigationEvent)="goToOutlineDest($event)">
 </mv-outline-view>
@@ -40,4 +41,3 @@
                   [pageHeights]="pageHeights">
   </mv-comment-set>
 </div>
-<mv-error-message [errorMessage]="errorMessage" *ngIf="errorMessage"></mv-error-message>

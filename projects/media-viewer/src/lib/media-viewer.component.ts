@@ -24,7 +24,7 @@ import {CommentService} from './annotations/comment-set/comment/comment.service'
 import 'hammerjs';
 import {select, Store} from '@ngrx/store';
 import * as fromStore from './store/reducers';
-import * as fromSelectors from './store/selectors/annotatioins.selectors';
+import * as fromSelectors from './store/selectors/annotations.selectors';
 import * as fromActions from './store/actions/annotations.action';
 
 enum SupportedContentTypes {

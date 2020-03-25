@@ -105,6 +105,11 @@
     content: url(/assets/images/toolbarButton-bookmark@2x.png);
   }
 
+  .toolbarButton.addBookmark::before,
+  .secondaryToolbarButton.addBookmark::before {
+    content: url(/assets/images/toolbarButton-addBookmark@2x.png);
+  }
+
   #viewThumbnail.toolbarButton::before {
     content: url(/assets/images/toolbarButton-viewThumbnail@2x.png);
   }

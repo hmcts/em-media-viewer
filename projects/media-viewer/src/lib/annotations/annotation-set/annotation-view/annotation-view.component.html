@@ -1,12 +1,13 @@
 <div #container [tabindex]="anno.id">
   <mv-popup-toolbar *ngIf="selected"
+                    [canDelete]="true" [canComment]="true"
                     [rectangle]="topRectangle()"
                     [zoom]="zoom"
                     [rotate]="rotate"
                     [height]="height"
                     [width]="width"
-                    (deleteHighlight)="deleteHighlight()"
-                    (addOrEditComment)="addOrEditComment()">
+                    (deleteHighlightEvent)="deleteHighlight()"
+                    (addOrEditCommentEvent)="addOrEditComment()">
   </mv-popup-toolbar>
   <ng-container *ngFor="let rectangle of anno.rectangles">
     <mv-anno-rectangle

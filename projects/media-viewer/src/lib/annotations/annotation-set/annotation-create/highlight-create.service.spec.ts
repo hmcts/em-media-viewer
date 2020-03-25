@@ -1,4 +1,4 @@
-import { TextHighlightCreateService } from './text-highlight-create.service';
+import { HighlightCreateService } from './highlight-create.service';
 import { AnnotationSet } from '../annotation-set.model';
 import { of } from 'rxjs';
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
@@ -6,19 +6,17 @@ import {Store, StoreModule} from '@ngrx/store';
 import {reducers} from '../../../store/reducers';
 
 
-
-xdescribe('TextHighlightCreateService', () => {
+describe('HighlightCreateService', () => {
 
   const mockHighlightModeSubject = { next: () => {} };
   const toolbarEvents = { highlightModeSubject: mockHighlightModeSubject } as any;
   const annotationApi = { postAnnotation: () => {}} as any;
   const annotationEvents = { selectAnnotation: () => {}} as any;
 
-
-  let service: TextHighlightCreateService;
+  let service: HighlightCreateService;
 
   beforeEach(() => {
-    service = new TextHighlightCreateService(toolbarEvents, annotationApi, annotationEvents,);
+    service = new HighlightCreateService(toolbarEvents, annotationApi, annotationEvents,);
     TestBed.configureTestingModule({
       imports: [StoreModule.forFeature('meida-viewer', reducers), StoreModule.forRoot({}),],
     }).compileComponents();

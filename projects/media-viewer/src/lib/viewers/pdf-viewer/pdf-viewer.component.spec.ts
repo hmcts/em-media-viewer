@@ -16,11 +16,10 @@ import { ViewerEventService } from '../viewer-event.service';
 
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { BoxHighlightCreateService } from '../../annotations/annotation-set/annotation-create/box-highlight-create.service';
-import { TextHighlightCreateService } from '../../annotations/annotation-set/annotation-create/text-highlight-create.service';
-
+import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
-import { Outline } from './outline-view/outline.model';
+import { Outline } from './side-bar/outline-item/outline.model';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../store/reducers';
 
@@ -50,8 +49,7 @@ describe('PdfViewerComponent', () => {
         ViewerEventService,
         PrintService,
         PdfJsWrapperFactory,
-        BoxHighlightCreateService,
-        TextHighlightCreateService
+        HighlightCreateService
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -182,6 +180,15 @@ describe('PdfViewerComponent', () => {
     expect(viewerEvents.textSelected).not.toHaveBeenCalled();
   });
 
+  it('should select the page', () => {
+    component.annotationSet = {} as AnnotationSet;
+    spyOn(viewerEvents, 'boxSelected');
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+
+    const mouseEvent = new MouseEvent('mousedown');
+
+  });
+
   it('should initialize loading of document', () => {
     mockWrapper.documentLoadInit.next();
 
@@ -223,19 +230,6 @@ describe('PdfViewerComponent', () => {
     expect(documentTitleSpy).toHaveBeenCalled();
   }));
 
-  it('should load new document when annotations enabled', fakeAsync(() => {
-    annotationsDestroyed = false;
-    component.enableAnnotations = true;
-
-    component.ngOnChanges({
-      enableAnnotations: new SimpleChange(false, true, false)
-    });
-    tick();
-
-    expect(annotationsDestroyed).toBeFalsy();
-  }));
-
-
   it('should show comments panel', () => {
     component.showCommentsPanel = false;
 
@@ -260,5 +254,4 @@ describe('PdfViewerComponent', () => {
     component.toggleCommentsSummary();
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
-
 });

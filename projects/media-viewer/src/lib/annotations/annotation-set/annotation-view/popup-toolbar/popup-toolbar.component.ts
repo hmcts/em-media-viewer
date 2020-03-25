@@ -15,13 +15,39 @@ export class PopupToolbarComponent {
   @Input() rotate = 0;
   @Input() height: number;
   @Input() width: number;
-  @Output() deleteHighlight = new EventEmitter();
-  @Output() addOrEditComment = new EventEmitter();
+
+  @Input() canHighlight: boolean;
+  @Input() canBookmark: boolean;
+  @Input() canComment: boolean;
+  @Input() canDelete: boolean;
+
+  @Output() createHighlightEvent = new EventEmitter();
+  @Output() deleteHighlightEvent = new EventEmitter();
+  @Output() addOrEditCommentEvent = new EventEmitter();
+  @Output() createBookmarkEvent = new EventEmitter();
 
   constructor() {
     this.defaultHeight = 70;
     this.defaultWidth = 350;
   }
+
+  createHighlight() {
+    this.createHighlightEvent.emit();
+  }
+
+  deleteHighlight() {
+    this.deleteHighlightEvent.emit();
+  }
+
+  addOrEditComment() {
+    this.addOrEditCommentEvent.emit();
+  }
+
+  createBookmark() {
+    this.createBookmarkEvent.emit();
+  }
+
+
 
   get transformStyles() {
     switch (this.rotate) {
