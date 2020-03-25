@@ -4,6 +4,7 @@ import * as fromActions from '../actions/annotations.action';
 const annotation = {
   annotations: [{
     createdBy: 'fab3a662-4375-42e8-850c-664b9daaa716',
+    annotationId: '1234',
     createdByDetails: {
       forename: 'EM',
       surname: 'showcase',
@@ -121,6 +122,36 @@ describe('AnnotationReducer', () => {
       const state2 = fromAnnotations.reducer(state, action);
       expect(state2.annotationEntities).toEqual({});
       expect(state2.annotationPageEntities).toEqual({1: []});
+    });
+  });
+
+  describe('ADD_OR_EDIT_COMMENT action', () => {
+    it('should change comments', () => {
+      const { initialState } = fromAnnotations;
+      const payload: any = annotation.annotations[0];
+      const action = new fromActions.AddOrEditComment(payload);
+      const state = fromAnnotations.reducer(initialState, action);
+      expect(state.commentEntities[annotation.annotations[0].annotationId]).toEqual(annotation.annotations[0]);
+    });
+  });
+
+  describe('SELECT_ANNOTATION action', () => {
+    it('should change comments', () => {
+      const { initialState } = fromAnnotations;
+      const payload2 = {annotationId: '1234', editable: true, selected: true};
+      const action2 = new fromActions.SelectedAnnotation(payload2);
+      const state2 =  fromAnnotations.reducer(initialState, action2);
+      expect(state2.selectedAnnotation).toEqual(payload2);
+    });
+  });
+
+  describe('SEARCH_COMMENT action', () => {
+    it('should change comments', () => {
+      const { initialState } = fromAnnotations;
+      const payload2 = 'MY SEARCH TEXT';
+      const action2 = new fromActions.SearchComment(payload2);
+      const state2 =  fromAnnotations.reducer(initialState, action2);
+      expect(state2.commentSearchQueries.commentSearch).toEqual(payload2);
     });
   });
 
