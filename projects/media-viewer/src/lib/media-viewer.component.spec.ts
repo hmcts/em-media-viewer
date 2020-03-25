@@ -10,8 +10,6 @@ import {
   defaultUnsupportedOptions
 } from './toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from './annotations/annotation-api.service';
-import { of } from 'rxjs';
-import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { By } from '@angular/platform-browser';
 import {reducers} from './store/reducers';

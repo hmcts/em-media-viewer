@@ -1,7 +1,56 @@
 import * as fromAnnotations from './annotatons.reducer';
 import * as fromActions from '../actions/annotations.action';
 
-describe('AnnotationReducer', () => {
+const annotation = {
+  annotations: [{
+    createdBy: 'fab3a662-4375-42e8-850c-664b9daaa716',
+    createdByDetails: {
+      forename: 'EM',
+      surname: 'showcase',
+      email: 'emshowcaseuser@hmcts.net'
+    },
+    lastModifiedByDetails: {
+      forename: 'EM',
+      surname: 'showcase',
+      email: 'emshowcaseuser@hmcts.net'
+    },
+    createdDate: '2020-03-25T11:15:03.601Z',
+    lastModifiedBy: 'fab3a662-4375-42e8-850c-664b9daaa716',
+    lastModifiedDate: '2020-03-25T11:15:03.601Z',
+    id: '961bd154-d0d4-40d2-bb9d-f0f0af772473',
+    page: 1,
+    color: 'FFFF00',
+    annotationSetId: null,
+    comments: [],
+    tags: [],
+    rectangles: [
+      {
+        createdBy: 'fab3a662-4375-42e8-850c-664b9daaa716',
+        createdByDetails: {
+          forename: 'EM',
+          surname: 'showcase',
+          email: 'emshowcaseuser@hmcts.net'
+        },
+        lastModifiedByDetails: {
+          forename: 'EM',
+          surname: 'showcase',
+          email: 'emshowcaseuser@hmcts.net'
+        },
+        createdDate: '2020-03-25T11:15:03.659Z',
+        lastModifiedBy: 'fab3a662-4375-42e8-850c-664b9daaa716',
+        lastModifiedDate: '2020-03-25T11:15:03.659Z',
+        id: 'b6239fb3-062e-4690-82e4-ac6d2f8e5769',
+        x: 174,
+        y: 159,
+        width: 185,
+        height: 139,
+        annotationId: '961bd154-d0d4-40d2-bb9d-f0f0af772473'
+      }
+    ],
+    type: 'highlight'
+  }]};
+
+fdescribe('AnnotationReducer', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
       const { initialState } = fromAnnotations;
@@ -37,6 +86,41 @@ describe('AnnotationReducer', () => {
       }
 
       expect(state.pages).toEqual(pages);
+    });
+  });
+
+  describe('LOAD_ANNOTATION_SET action', () => {
+    it('should set loading to true', () => {
+      const { initialState } = fromAnnotations;
+      const action = new fromActions.LoadAnnotationSet('12345');
+      const state = fromAnnotations.reducer(initialState, action);
+      expect(state.loading).toEqual(true);
+    });
+  });
+
+  describe('LOAD_ANNOTATION_SET_SUCCESS action', () => {
+    it('should set annotation entities page entities and comment entities', () => {
+      const { initialState } = fromAnnotations;
+      const payload: any = annotation;
+      const action = new fromActions.LoadAnnotationSetSucess(payload);
+      const state = fromAnnotations.reducer(initialState, action);
+      expect(state.loading).toEqual(false);
+      expect(state.loaded).toEqual(true);
+      // todo add the other exception once be is finished.
+    });
+  });
+
+  describe('DELETE_ANNOTATION_SUCCESS action', () => {
+    it('should delete annotations', () => {
+      const { initialState } = fromAnnotations;
+      const payload1: any = annotation;
+      const action1 = new fromActions.LoadAnnotationSetSucess(payload1);
+      const state = fromAnnotations.reducer(initialState, action1);
+      const payload2 = annotation.annotations[0].id;
+      const action = new fromActions.DeleteAnnotationSucess(payload2);
+      const state2 = fromAnnotations.reducer(state, action);
+      expect(state2.annotationEntities).toEqual({});
+      expect(state2.annotationPageEntities).toEqual({1: []});
     });
   });
 

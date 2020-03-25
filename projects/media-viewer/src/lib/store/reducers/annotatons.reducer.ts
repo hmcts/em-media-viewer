@@ -2,6 +2,7 @@ import * as fromAnnotations from '../actions/annotations.action';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 import {StoreUtils} from '../store-utils';
 import {SelectionAnnotation} from '../../annotations/models/event-select.model';
+import {debug} from 'ng-packagr/lib/util/log';
 
 export interface AnnotationSetState {
   annotationSet: any;
@@ -119,7 +120,7 @@ export function reducer (
       const page = state.annotationEntities[id].page;
       const annotationEntities = {
         ...state.annotationEntities
-      }
+      };
       delete annotationEntities[id];
       const pageAnnotationsRemoved = [
         ...state.annotationPageEntities[page].filter(anno => anno.id !== id)
