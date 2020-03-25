@@ -50,7 +50,7 @@ const annotation = {
     type: 'highlight'
   }]};
 
-fdescribe('AnnotationReducer', () => {
+describe('AnnotationReducer', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
       const { initialState } = fromAnnotations;
