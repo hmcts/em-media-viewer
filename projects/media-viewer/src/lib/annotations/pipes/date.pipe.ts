@@ -17,8 +17,7 @@ export class MomentDatePipe extends DatePipe implements PipeTransform {
     format: string = 'mediumDate',
     timezone: string = 'Europe/London'
   ): string {
-    const date = moment(new Date(value));
-    const timezoneOffset = moment.utc(date).tz(timezone).format('Z');
+    const timezoneOffset = moment.utc(value).tz(timezone).format('Z');
     return super.transform(value, format, timezoneOffset);
   }
 }
