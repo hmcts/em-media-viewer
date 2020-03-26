@@ -56,7 +56,7 @@ export class TextHighlightCreateService {
     const top = (rect.top - parentRect.top)/zoom;
     const left = (rect.left - parentRect.left)/zoom;
 
-    let rectangle = { id: uuid(), height: height, width: width, x: 0, y: 0 };
+    const rectangle = { id: uuid(), height: height, width: width, x: 0, y: 0 };
 
     switch (rotate) {
       case 90:
@@ -83,7 +83,7 @@ export class TextHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    this.store.pipe(select(fromStore.getDocumentId), take(1)).subscribe(documentId => {
+    this.store.pipe(select(fromStore.getDocumentIdSetId), take(1)).subscribe(anoSetDocId => {
       const anno = {
         id: uuid(),
         annotationSetId: annotationSet.id,
@@ -92,7 +92,7 @@ export class TextHighlightCreateService {
         page: page,
         rectangles: rectangles,
         type: 'highlight',
-        documentId
+        ...anoSetDocId
       };
       this.store.dispatch(new fromStore.SaveAnnotation(anno));
     });

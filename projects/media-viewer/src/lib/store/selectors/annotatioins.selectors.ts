@@ -18,9 +18,13 @@ export const getSet = createSelector(
   fromAnnotations.getAnnoSet
 );
 
-export const getDocumentId = createSelector(
+export const getDocumentIdSetId = createSelector(
   getSet,
-  (annoSet) => annoSet.documentId
+  (annoSet) => {
+    return {
+      documentId: annoSet.documentId,
+      annotationSetId: annoSet.annotationSetId
+    }}
 );
 
 

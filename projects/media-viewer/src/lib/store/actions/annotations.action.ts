@@ -33,7 +33,7 @@ export class LoadAnnotationSetSucess implements Action {
 
 export class LoadAnnotationSetFail implements Action {
   readonly type = LOAD_ANNOTATION_SET_FAIL;
-  constructor(public payload: Error) { }
+  constructor(public payload: any) { }
 }
 
 export class SaveAnnotation implements Action {

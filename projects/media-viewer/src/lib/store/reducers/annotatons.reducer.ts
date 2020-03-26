@@ -2,7 +2,7 @@ import * as fromAnnotations from '../actions/annotations.action';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 import {StoreUtils} from '../store-utils';
 import {SelectionAnnotation} from '../../annotations/models/event-select.model';
-import {debug} from 'ng-packagr/lib/util/log';
+import uuid from 'uuid/v4';
 
 export interface AnnotationSetState {
   annotationSet: any;
@@ -68,13 +68,24 @@ export function reducer (
     }
 
     case fromAnnotations.LOAD_ANNOTATION_SET: {
+      const annotationSet = {
+        ...state.annotationSet,
+        documentId: action.payload
+      };
       return {
         ...initialState,
+        annotationSet,
         loading: true
       };
     }
-    case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS: {
-      const annotationSet = action.payload || {annotations: []};
+    case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS:
+    case fromAnnotations.LOAD_ANNOTATION_SET_FAIL: {
+      const annotationSet = action.payload.status !== 404 ? action.payload :
+        {
+          ...state.annotationSet,
+          annotations: [],
+          annotationSetId: uuid()
+        };
       const annotationEntities = StoreUtils.generateAnnotationEntities(annotationSet.annotations);
       const annotationPageEntities = StoreUtils.generatePageEntities(annotationSet.annotations);
       const commentEntities = StoreUtils.generateCommentsEntities(annotationSet.annotations);
