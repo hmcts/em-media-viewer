@@ -17,6 +17,13 @@ export const getSet = createSelector(
   getAnnotationsSetState,
   fromAnnotations.getAnnoSet
 );
+
+export const getDocumentId = createSelector(
+  getSet,
+  (annoSet) => annoSet.documentId
+);
+
+
 export const getAnnotationSet = createSelector(
   getAnnotationEntities,
   getSet,

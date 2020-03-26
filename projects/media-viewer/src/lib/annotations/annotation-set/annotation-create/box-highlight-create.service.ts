@@ -4,8 +4,9 @@ import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { AnnotationApiService } from '../../annotation-api.service';
 import { Injectable } from '@angular/core';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as fromStore from '../../../store';
+import {take, tap} from 'rxjs/operators';
 
 @Injectable()
 export class BoxHighlightCreateService {
@@ -26,10 +27,6 @@ export class BoxHighlightCreateService {
     this.updateHighlight.next(event);
   }
 
-  createBoxHighlight(page: number) {
-    this.createHighlight.next(page);
-  }
-
   saveBoxHighlight(rectangle: any, annotationSet, page:number) {
     if (rectangle.height > 5 || rectangle.width > 5) {
       this.saveAnnotation([rectangle as Rectangle], annotationSet, page);
@@ -38,16 +35,19 @@ export class BoxHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    const annotationPayload: any = {
-      id: uuid(),
-      annotationSetId: annotationSet.id,
-      color: 'FFFF00',
-      comments: [],
-      page: page,
-      rectangles: rectangles,
-      type: 'highlight'
-    };
+    this.store.pipe(select(fromStore.getDocumentId), take(1), tap(console.log)).subscribe(documentId => {
+      const annotationPayload: any = {
+        id: uuid(),
+        annotationSetId: annotationSet.id,
+        color: 'FFFF00',
+        comments: [],
+        page: page,
+        rectangles: rectangles,
+        type: 'highlight',
+        documentId
+      };
 
-    this.store.dispatch(new fromStore.SaveAnnotation(annotationPayload));
+      this.store.dispatch(new fromStore.SaveAnnotation(annotationPayload));
+    });
   }
 }
