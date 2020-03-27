@@ -1,5 +1,5 @@
 import {
-  AfterViewChecked,
+  AfterContentInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -14,7 +14,7 @@ import {User} from '../../models/user.model';
 import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
 import {SelectionAnnotation} from '../../models/event-select.model';
 import {CommentService} from './comment.service';
-import {TagItemModel} from '../../models/tag-item.model';
+import {TagsModel} from '../../models/tags.model';
 import {TagsServices} from '../../services/tags/tags.services';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -26,7 +26,7 @@ import * as fromSelector from '../../../store/selectors/annotatioins.selectors';
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html'
 })
-export class CommentComponent implements OnInit, OnDestroy {
+export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
 
   COMMENT_CHAR_LIMIT = 5000;
   lastUpdate: string;
@@ -45,13 +45,13 @@ export class CommentComponent implements OnInit, OnDestroy {
   hasUnsavedChanges = false;
   selected: boolean;
   searchString: string;
-  public tagItems: TagItemModel[];
+  public tagItems: TagsModel[];
 
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
   @Output() renderComments = new EventEmitter<Comment>();
   @Output() delete = new EventEmitter<Comment>();
-  @Output() updated = new EventEmitter<{comment: Comment, tags: TagItemModel[]}>();
+  @Output() updated = new EventEmitter<{comment: Comment, tags: TagsModel[]}>();
   @Output() changes = new EventEmitter<boolean>();
   @Input() rotate = 0;
   @Input() zoom = 1;
@@ -66,7 +66,7 @@ export class CommentComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
     private readonly commentService: CommentService,
-    private tagsServices: TagsServices
+    private tagsServices: TagsServices // TODO replace this with the FormGroup
   ) {}
 
 
@@ -76,6 +76,11 @@ export class CommentComponent implements OnInit, OnDestroy {
     this.reRenderComments();
   }
 
+  ngAfterContentInit(): void {
+    if (this.tagItems && this.tagItems.length) {
+      this.tagsServices.updateTagItems(this.tagItems, this._comment.annotationId);
+    }
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
@@ -92,11 +97,9 @@ export class CommentComponent implements OnInit, OnDestroy {
     this.editor = comment.lastModifiedByDetails;
     this.originalComment = comment.content;
     this.fullComment = this.originalComment;
-    this.tagItems = this.tagsServices.getTagItems(this._comment.annotationId);
-
     this.selected = this._comment.selected;
     this._editable = this._comment.editable;
-
+    this.tagItems = this._comment.tags;
     const pageMarginBottom = 10;
     this.totalPreviousPagesHeight = 0;
     for (let i = 0; i < this.page - 1; i++) {
@@ -145,7 +148,7 @@ export class CommentComponent implements OnInit, OnDestroy {
       this._editable = true;
     } else {
       this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
-      const tags = this.tagsServices.getTagItems(this._comment.annotationId);
+      const tags = this.tagsServices.getNewTags(this._comment.annotationId);
       const payload = {
         comment: this._comment,
         tags

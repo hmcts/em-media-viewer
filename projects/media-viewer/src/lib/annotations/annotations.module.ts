@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AnnotationApiService } from './annotation-api.service';
 import { AnnotationViewComponent } from './annotation-set/annotation-view/annotation-view.component';
@@ -25,17 +25,19 @@ import { TagsComponent } from './tags/tags.component';
 import { RouterModule } from '@angular/router';
 import { TagsServices } from './services/tags/tags.services';
 import { CommentsNavigateComponent } from './comment-set/comment-navigate/comments-navigate.component';
+import {CommentFilterComponent} from './comment-set/comment-set-header/comment-filter/comment-filter.component';
 import {MomentDatePipe} from './pipes/date.pipe';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        HttpClientModule,
-        MutableDivModule,
-        TagInputModule,
-        RouterModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    MutableDivModule,
+    TagInputModule,
+    RouterModule,
+    ReactiveFormsModule
+  ],
   declarations: [
     AnnotationViewComponent,
     BoxHighlightCreateComponent,
@@ -52,7 +54,8 @@ import {MomentDatePipe} from './pipes/date.pipe';
     CommentSetToggleComponent,
     CommentsSummaryComponent,
     TagsComponent,
-    MomentDatePipe
+    MomentDatePipe,
+    CommentFilterComponent
   ],
   entryComponents: [
     AnnotationViewComponent,
@@ -76,6 +79,7 @@ import {MomentDatePipe} from './pipes/date.pipe';
     CommentSetToggleComponent,
     CommentsSummaryComponent,
     TagsComponent,
+    CommentFilterComponent,
     MomentDatePipe
   ]
 })

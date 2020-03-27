@@ -2,6 +2,7 @@ import {createSelector} from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
+import * as fromTags from './tags.selectors';
 
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
@@ -70,7 +71,6 @@ export const getComponentSearchText = createSelector(
   (queries) => queries.commentSearch
 );
 
-
 export const getAnnoPerPage = createSelector(
   getAnnoPages,
   getAnnoEntities,
@@ -101,7 +101,7 @@ export const getCommentsArray = createSelector(
           ...comments[key],
           page,
           pageHeight
-        }
+        };
       });
     }
   }

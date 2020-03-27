@@ -2,9 +2,9 @@ import {Annotation} from '../annotations/annotation-set/annotation-view/annotati
 // @dynamic
 export class StoreUtils {
 
-  static generatePageEntities(annotations): {[id: string]: Annotation[]} {
+  static groupByKeyEntities(annotations, key): {[id: string]: Annotation[]} {
     return annotations.reduce((h, obj) =>
-      Object.assign(h, { [obj.page]:( h[obj.page] || [] ).concat(obj) }), {});
+      Object.assign(h, { [obj[key]]:( h[obj[key]] || [] ).concat(obj) }), {});
   }
 
   static generateCommentsEntities(annotations): {[id: string]: Comment} {
@@ -12,8 +12,8 @@ export class StoreUtils {
       (commentEntities: { [id: string]: Annotation }, annotation: Annotation) => {
         if (annotation.comments.length) {
           const comment = {
-            ...annotation.comments[0]
-
+            ...annotation.comments[0] || '',
+            tags: [...annotation.tags || []]
           }
           return {
             ...commentEntities,
@@ -24,6 +24,42 @@ export class StoreUtils {
           ...commentEntities
         };
       }, {});
+  }
+
+  // todo group this by name ['annoid']
+  static genTagNameEntities(annotations) {
+    const allTags = annotations.map(anno => this.groupByKeyEntities(anno.tags, 'name'));
+    console.log(allTags)
+    console.log(annotations)
+    const groupedByName = allTags.reduce(
+      (tagEntitiy: { [id: string]: Annotation }, tagItem) => {
+        const tag = tagItem;
+        return {
+          ...tagEntitiy,
+          ...tag
+        };
+      }, {});
+
+    return this.genNameEnt(annotations, groupedByName)
+  };
+
+  static genNameEnt(annos, groupedByName) {
+     return Object.keys(groupedByName).reduce(
+      (tagNameEnt, key) => {
+        const annot = annos.map(anno => {
+          const tags = anno.tags.map(tag => {
+            if (tag.name === key) {
+              return anno.id;
+            }
+          });
+          return tags.filter(a => a !== undefined);
+        });
+        return {
+          ...tagNameEnt,
+          [key]: [...annot].filter(a =>  !!a.length)
+        }
+      }, {});
+
   }
 
   static generateAnnotationEntities(anno): {[id: string]: Annotation} {
@@ -51,6 +87,14 @@ export class StoreUtils {
       return object;
     }, {});
   }
+
+  static snakeCase = string => {
+    // transform string_to_snake_case
+    return string.replace(/\W+/g, " ")  // find space
+      .split(/ |\B(?=[A-Z])/) // split it into array
+      .map(word => word.toLowerCase()) // transform to lover case
+      .join('_'); // trun array into sting using _
+  };
 
 
 }

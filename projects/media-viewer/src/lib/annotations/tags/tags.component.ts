@@ -1,5 +1,5 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
-import {TagItemModel} from '../models/tag-item.model';
+import {TagsModel} from '../models/tags.model';
 import {TagsServices} from '../services/tags/tags.services';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -10,7 +10,7 @@ import {Observable} from 'rxjs';
   encapsulation: ViewEncapsulation.None
 })
 export class TagsComponent {
-  @Input() tagItems: TagItemModel[];
+  @Input() tagItems: TagsModel[];
   @Input() userId: string;
   @Input() editable: boolean;
   @Input() annoId: string;
