@@ -100,9 +100,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
         this.documentTitle = null;
       }
     }
-    if (changes.enableAnnotations && this.enableAnnotations) {
-      this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
-    }
+    // TODO this is causing the annotations to load twice - leaving it commeted out to check if any regressions
+    // if (changes.enableAnnotations && this.enableAnnotations) {
+    //   this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
+    // }
     this.setToolbarButtons();
   }
 
