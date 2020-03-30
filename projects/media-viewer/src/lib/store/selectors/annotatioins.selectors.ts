@@ -23,7 +23,7 @@ export const getDocumentIdSetId = createSelector(
   (annoSet) => {
     return {
       documentId: annoSet.documentId,
-      // annotationSetId: annoSet.annotationSetId
+      annotationSetId: annoSet.id
     }}
 );
 

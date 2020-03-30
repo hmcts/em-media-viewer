@@ -78,13 +78,12 @@ export function reducer (
         loading: true
       };
     }
-    case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS:
-    case fromAnnotations.LOAD_ANNOTATION_SET_FAIL: {
-      const annotationSet = action.payload.status !== 404 ? action.payload :
+    case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS: {
+      const annotationSet = !!action.payload ? action.payload : // check the 204 status no paylod
         {
           ...state.annotationSet,
           annotations: [],
-          annotationSetId: uuid()
+          id: uuid()
         };
       const annotationEntities = StoreUtils.generateAnnotationEntities(annotationSet.annotations);
       const annotationPageEntities = StoreUtils.generatePageEntities(annotationSet.annotations);
