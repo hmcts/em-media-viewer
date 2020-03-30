@@ -37,8 +37,6 @@ export class AnnotationViewComponent {
     private store: Store<fromStore.AnnotationSetState>) {}
 
   public onSelect() {
-    this.selected = true;
-
     this.annotationClick.emit({ annotationId: this.anno.id, editable: false, selected: true });
   }
 
@@ -47,12 +45,6 @@ export class AnnotationViewComponent {
     this.anno.rectangles.push(rectangle);
 
     this.update.emit(this.anno);
-  }
-
-  public onFocusOut(event: FocusEvent) {
-    if (!this.container.nativeElement.contains(event.relatedTarget)) {
-      this.selected = false;
-    }
   }
 
   public deleteHighlight() {

@@ -35,7 +35,7 @@ export class BoxHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    this.store.pipe(select(fromStore.getDocumentIdSetId), take(1), tap(console.log)).subscribe(docAndSetId => {
+    this.store.pipe(select(fromStore.getDocumentIdSetId), take(1)).subscribe(docAndSetId => {
       const annotationPayload: any = {
         id: uuid(),
         annotationSetId: annotationSet.id,

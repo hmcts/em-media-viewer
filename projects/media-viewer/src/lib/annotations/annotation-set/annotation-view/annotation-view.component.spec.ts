@@ -74,12 +74,12 @@ describe('AnnotationComponent', () => {
       expect(component.selected).toBe(true);
   });
 
-  it('deselect the annotation', () => {
-      const relatedTarget = document.createElement('span');
-      component.onFocusOut({ relatedTarget } as any);
-
-      expect(component.selected).toBe(false);
-  });
+  // it('deselect the annotation', () => {
+  //     const relatedTarget = document.createElement('span');
+  //     component.onFocusOut({ relatedTarget } as any);
+  //
+  //     expect(component.selected).toBe(false);
+  // });
 
   // it('create a comment', () => {
   //   component.annotation = annotation;

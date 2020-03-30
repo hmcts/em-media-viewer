@@ -1,4 +1,4 @@
-<div #container class="annotation-wrapper" [tabindex]="anno.id" (focusout)="onFocusOut($event)">
+<div #container [tabindex]="anno.id">
   <mv-popup-toolbar *ngIf="selected"
                     [rectangle]="topRectangle()"
                     [zoom]="zoom"
