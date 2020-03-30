@@ -10,7 +10,6 @@ import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 export class RectangleComponent implements AfterViewInit, OnDestroy {
 
   @Input() set rectangle(rect) {
-
     this.rect = {...rect};
   }
   rect: Rectangle;

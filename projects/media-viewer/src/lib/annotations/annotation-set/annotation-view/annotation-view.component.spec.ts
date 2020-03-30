@@ -68,45 +68,4 @@ describe('AnnotationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('select the annotation', () => {
-      component.onSelect();
-
-      expect(component.selected).toBe(true);
-  });
-
-  // it('deselect the annotation', () => {
-  //     const relatedTarget = document.createElement('span');
-  //     component.onFocusOut({ relatedTarget } as any);
-  //
-  //     expect(component.selected).toBe(false);
-  // });
-
-  // it('create a comment', () => {
-  //   component.annotation = annotation;
-  //
-  //   component.addOrEditComment();
-  //
-  //   expect(component.annotation.comments.length).toBeGreaterThan(0);
-  //   expect(component.annotation.comments[0].annotationId).toEqual(component.annotation.id);
-  //   expect(component.annotation.comments[0].content).toBe('');
-  //   expect(component.annotation.comments[0].createdByDetails).toBe(undefined);
-  // });
-
-  // it('create a comment', () => {
-  //   component.addOrEditComment();
-  //
-  //   expect(component.annotation.comments[0].content).toBe('');
-  //   expect(component.annotation.comments[0].createdByDetails).toBe(undefined);
-  // });
-  //
-  // it('delete the annotation', () => {
-  //   spyOn(component.delete, 'emit');
-  //
-  //   const rectangles = { ...component.annotation.rectangles };
-  //
-  //   component.deleteHighlight();
-  //
-  //   expect(rectangles).not.toEqual(component.annotation.rectangles);
-  //   expect(component.delete.emit).toHaveBeenCalledWith(component.annotation);
-  // });
 });
