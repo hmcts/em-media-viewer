@@ -51,8 +51,8 @@ mv-annotation-set {
     top: 0;
     &__page {
       border: 1px solid transparent; // fix for text-highlight mispositioned
+      background-color: transparent;
       margin: 0 auto 8px auto;
-      overflow: visible;
       position: relative;
     }
 

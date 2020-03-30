@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
 import uuid from 'uuid';
 import { Subscription } from 'rxjs';
 import { BoxHighlightCreateService } from './box-highlight-create.service';
+import {distinctUntilChanged, sampleTime} from 'rxjs/operators';
 
 
 @Component({
@@ -33,8 +34,10 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions = [
-      this.boxHighlightEvents.initHighlight.subscribe(event => this.initHighlight(event)),
-      this.boxHighlightEvents.updateHighlight.subscribe(event => this.updateHighlight(event)),
+      this.boxHighlightEvents.initHighlight
+        .pipe(distinctUntilChanged()).subscribe(event => this.initHighlight(event)),
+      this.boxHighlightEvents.updateHighlight
+        .pipe(sampleTime(50), distinctUntilChanged()).subscribe(event => this.updateHighlight(event)),
     ];
   }
 
