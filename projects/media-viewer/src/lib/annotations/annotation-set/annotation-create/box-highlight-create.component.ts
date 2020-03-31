@@ -1,10 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import uuid from 'uuid';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { HighlightCreateService } from './highlight-create.service';
-import { BoxHighlightCreateService } from './box-highlight-create.service';
-import {distinctUntilChanged, sampleTime} from 'rxjs/operators';
 
 
 @Component({

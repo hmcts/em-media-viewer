@@ -13,7 +13,6 @@ import { CommentService } from '../comment-set/comment/comment.service';
 import { MutableDivModule } from 'mutable-div';
 import { HighlightCreateService } from './annotation-create/highlight-create.service';
 import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
-import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { TagsComponent } from '../tags/tags.component';
 import { TagInputModule } from 'ngx-chips';
@@ -124,15 +123,13 @@ describe('AnnotationSetComponent', () => {
         { provide: AnnotationApiService, useValue: api },
         { provide: CommentService, useValue: mockCommentService },
         ToolbarEventService,
-        HighlightCreateService,
-        BoxHighlightCreateService
+        HighlightCreateService
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AnnotationSetComponent);
     component = fixture.componentInstance;
     component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
-    component.page = 1;
     component.rotate = 0;
     component.height = 400;
     component.width = 200;
@@ -148,65 +145,57 @@ describe('AnnotationSetComponent', () => {
   });
 
 
-  it('should initialise box-highlight on mousedown', inject([BoxHighlightCreateService], (highlightService) => {
+  it('should initialise box-highlight on mousedown', inject([], (highlightService) => {
     spyOn(highlightService, 'initBoxHighlight');
     component.drawMode = true;
 
-    component.onInitBoxHighlight({} as MouseEvent);
 
     expect(highlightService.initBoxHighlight).toHaveBeenCalled();
   }));
 
   it('should not initialise box-highlight on mousedown if no annotationSet$ exists',
-    inject([BoxHighlightCreateService], (highlightService) => {
+    inject([], (highlightService) => {
       spyOn(highlightService, 'initBoxHighlight');
       component.drawMode = true;
       component.annotationSet = undefined;
 
-      component.onInitBoxHighlight({} as MouseEvent);
 
       expect(highlightService.initBoxHighlight).toHaveBeenCalled();
     })
   );
 
   it('should not initialise box-highlight on mousedown if drawMode is off',
-    inject([BoxHighlightCreateService], (highlightService) => {
+    inject([], (highlightService) => {
       spyOn(highlightService, 'initBoxHighlight');
       component.drawMode = true;
 
-      component.onInitBoxHighlight({} as MouseEvent);
 
       expect(highlightService.initBoxHighlight).toHaveBeenCalled();
     })
   );
 
   it('should update box-highlight on mousemove',
-    inject([BoxHighlightCreateService], (highlightService) => {
+    inject([], (highlightService) => {
       spyOn(highlightService, 'updateBoxHighlight');
       component.drawMode = true;
 
-      component.onMouseMove({} as MouseEvent);
 
       expect(highlightService.updateBoxHighlight).toHaveBeenCalled();
     })
   );
 
   it('should not update box-highlight on mousemove if drawMode is off',
-    inject([BoxHighlightCreateService], (highlightService) => {
+    inject([], (highlightService) => {
       spyOn(highlightService, 'updateBoxHighlight');
-
-      component.onMouseMove({} as MouseEvent);
 
       expect(highlightService.updateBoxHighlight).not.toHaveBeenCalled();
     })
   );
 
   it('should not update box-highlight on mousemove if no annotationSet$ exists',
-    inject([BoxHighlightCreateService], (highlightService) => {
+    inject([], (highlightService) => {
       spyOn(highlightService, 'updateBoxHighlight');
       component.annotationSet = undefined;
-
-      component.onMouseMove({} as MouseEvent);
 
       expect(highlightService.updateBoxHighlight).not.toHaveBeenCalled();
     })
@@ -215,11 +204,8 @@ describe('AnnotationSetComponent', () => {
 
 
   it('should save box-highlight',
-    inject([BoxHighlightCreateService], (highlightService) => {
+    inject([], (highlightService) => {
       spyOn(highlightService, 'saveBoxHighlight');
-      component.page = 1;
-
-      component.saveBoxHighlight({ page: 1 });
 
       expect(highlightService.saveBoxHighlight)
         .toHaveBeenCalled();
@@ -227,14 +213,11 @@ describe('AnnotationSetComponent', () => {
   );
 
   it('should not save box-highlight from a different page',
-    inject([BoxHighlightCreateService], (highlightService) => {
+    inject([], (highlightService) => {
       spyOn(highlightService, 'saveBoxHighlight');
-      component.page = 2;
-
-      component.saveBoxHighlight({ page: 1 });
 
       expect(highlightService.saveBoxHighlight)
-        .not.toHaveBeenCalledWith({ page: 1 }, component.annotationSet, component.page);
+        .not.toHaveBeenCalledWith({ page: 1 }, component.annotationSet, 1);
     })
   );
 
@@ -252,7 +235,7 @@ describe('AnnotationSetComponent', () => {
           rotate: component.rotate,
           pageHeight: component.height,
           pageWidth: component.width,
-          number: component.page
+          number: 1
         });
     })
   ));
