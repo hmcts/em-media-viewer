@@ -9,7 +9,10 @@ import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 })
 export class RectangleComponent implements AfterViewInit, OnDestroy {
 
-  @Input() rectangle: Rectangle;
+  @Input() set rectangle(rect) {
+    this.rect = {...rect};
+  }
+  rect: Rectangle;
   @Input() color: String;
   @Input() zoom: number;
   @Input() rotate: number;
@@ -28,9 +31,6 @@ export class RectangleComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.selected) {
-      this.rectElement.nativeElement.focus();
-    }
     this.subscriptions.push(
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag)
     );
@@ -58,12 +58,12 @@ export class RectangleComponent implements AfterViewInit, OnDestroy {
   }
 
   onUpdate() {
-    if (this.hasRectangleChanged(this.rectangle, this.rectElement.nativeElement)) {
-      this.rectangle.x = this.rectElement.nativeElement.offsetLeft / this.zoom;
-      this.rectangle.y = this.rectElement.nativeElement.offsetTop / this.zoom;
-      this.rectangle.width = this.rectElement.nativeElement.offsetWidth / this.zoom;
-      this.rectangle.height = this.rectElement.nativeElement.offsetHeight / this.zoom;
-      this.update.emit(this.rectangle);
+    if (this.hasRectangleChanged(this.rect, this.rectElement.nativeElement)) {
+      this.rect.x = this.rectElement.nativeElement.offsetLeft / this.zoom;
+      this.rect.y = this.rectElement.nativeElement.offsetTop / this.zoom;
+      this.rect.width = this.rectElement.nativeElement.offsetWidth / this.zoom;
+      this.rect.height = this.rectElement.nativeElement.offsetHeight / this.zoom;
+      this.update.emit(this.rect);
     }
   }
 

@@ -47,8 +47,10 @@ mv-pdf-viewer {
     overflow-x: auto;
   }
 
-  .show-comments-panel > .pdfViewer {
-    width: 75%;
+  .show-comments-panel {
+    .pdfViewer, .pageContainer {
+      width: 75%;
+    }
   }
 
   .grabNDrag {

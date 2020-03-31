@@ -11,6 +11,8 @@ import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { of } from 'rxjs';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../store/reducers';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -27,7 +29,8 @@ describe('ImageViewerComponent', () => {
       ],
       providers: [AnnotationApiService],
       imports: [
-        AnnotationsModule
+        AnnotationsModule,
+        StoreModule.forRoot({...reducers})
       ]
     })
       .compileComponents();
@@ -165,17 +168,5 @@ describe('ImageViewerComponent', () => {
     component.toggleCommentsSummary();
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
-
-  it('should setup annotationSet', fakeAsync(
-    inject([AnnotationApiService], (annotationsApi) => {
-      spyOn(annotationsApi, 'getOrCreateAnnotationSet')
-        .and.returnValue(of({} as AnnotationSet));
-
-      component.setupAnnotationSet(true);
-      tick();
-
-      expect(component.annotationSet).toEqual({} as AnnotationSet);
-    })
-  ));
 });
 

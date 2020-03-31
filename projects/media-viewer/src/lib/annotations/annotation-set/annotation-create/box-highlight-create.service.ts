@@ -1,10 +1,12 @@
-import { Subject } from 'rxjs';
+import {Subject} from 'rxjs';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { AnnotationApiService } from '../../annotation-api.service';
-import { AnnotationEventService } from '../../annotation-event.service';
 import { Injectable } from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import * as fromStore from '../../../store';
+import {take, tap} from 'rxjs/operators';
 
 @Injectable()
 export class BoxHighlightCreateService {
@@ -15,7 +17,7 @@ export class BoxHighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private readonly annotationService: AnnotationEventService) {}
+              private store: Store<fromStore.AnnotationSetState>) {}
 
   initBoxHighlight(event: MouseEvent) {
     this.initHighlight.next(event);
@@ -23,10 +25,6 @@ export class BoxHighlightCreateService {
 
   updateBoxHighlight(event: MouseEvent) {
     this.updateHighlight.next(event);
-  }
-
-  createBoxHighlight(page: number) {
-    this.createHighlight.next(page);
   }
 
   saveBoxHighlight(rectangle: any, annotationSet, page:number) {
@@ -37,18 +35,19 @@ export class BoxHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    this.api.postAnnotation({
-      id: uuid(),
-      annotationSetId: annotationSet.id,
-      color: 'FFFF00',
-      comments: [],
-      page: page,
-      rectangles: rectangles,
-      type: 'highlight'
-    })
-      .subscribe(savedAnnotation => {
-        annotationSet.annotations.push(savedAnnotation);
-        this.annotationService.selectAnnotation({ annotationId: savedAnnotation.id, editable: false });
-      });
+    this.store.pipe(select(fromStore.getDocumentIdSetId), take(1)).subscribe(docAndSetId => {
+      const annotationPayload: any = {
+        id: uuid(),
+        annotationSetId: annotationSet.id,
+        color: 'FFFF00',
+        comments: [],
+        page: page,
+        rectangles: rectangles,
+        type: 'highlight',
+        ...docAndSetId
+      };
+
+      this.store.dispatch(new fromStore.SaveAnnotation(annotationPayload));
+    });
   }
 }

@@ -1,32 +1,33 @@
-import { TagItemModel } from '../../models/tag-item.model';
-import { TagsServices } from '../../services/tags/tags.services';
 import {
+  AfterViewChecked,
   Component,
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   ViewChild
 } from '@angular/core';
-import { User } from '../../models/user.model';
-import { AnnotationEventService, SelectionAnnotation } from '../../annotation-event.service';
+import {Comment} from './comment.model';
+import {User} from '../../models/user.model';
+import {Rectangle} from '../../annotation-set/annotation-view/rectangle/rectangle.model';
+import {SelectionAnnotation} from '../../models/event-select.model';
+import {CommentService} from './comment.service';
+import {TagItemModel} from '../../models/tag-item.model';
+import {TagsServices} from '../../services/tags/tags.services';
 import { Subscription } from 'rxjs';
-import { CommentService } from './comment.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
-import { Comment } from './comment.model';
+import { distinctUntilChanged } from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../../store';
 
 @Component({
   selector: 'mv-anno-comment',
   templateUrl: './comment.component.html'
 })
-export class CommentComponent implements OnChanges, OnDestroy {
+export class CommentComponent implements OnInit, OnDestroy {
 
-  readonly MAX_COMMENT_LENGTH;
-  readonly COMMENT_CHAR_LIMIT;
-
+  COMMENT_CHAR_LIMIT = 5000;
   lastUpdate: string;
   originalComment: string;
   fullComment: string;
@@ -35,15 +36,15 @@ export class CommentComponent implements OnChanges, OnDestroy {
   editor: User;
   _comment: Comment;
   _editable: boolean;
-
   _rectangle;
   totalPreviousPagesHeight = 0;
   rectTop;
   rectLeft;
-
+  pageHeight: number;
   hasUnsavedChanges = false;
+  selected: boolean;
   searchString: string;
-  tagItems: TagItemModel[];
+  public tagItems: TagItemModel[];
 
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
@@ -51,7 +52,6 @@ export class CommentComponent implements OnChanges, OnDestroy {
   @Output() delete = new EventEmitter<Comment>();
   @Output() updated = new EventEmitter<{comment: Comment, tags: TagItemModel[]}>();
   @Output() changes = new EventEmitter<boolean>();
-  @Input() selected = false;
   @Input() rotate = 0;
   @Input() zoom = 1;
   @Input() index: number;
@@ -60,37 +60,31 @@ export class CommentComponent implements OnChanges, OnDestroy {
   @ViewChild('form') form: ElementRef;
   @ViewChild('editableComment') editableComment: ElementRef<HTMLElement>;
 
-  private subscriptions: Subscription[];
+  private subscriptions: Subscription;
 
-  constructor(private readonly commentService: CommentService,
-              private readonly annotationEvents: AnnotationEventService,
+  constructor(
+    private store: Store<fromStore.AnnotationSetState>,
+    private readonly commentService: CommentService,
     private tagsServices: TagsServices
-  ) {
-    this.MAX_COMMENT_LENGTH = 48;
-    this.COMMENT_CHAR_LIMIT = 5000;
+  ) {}
 
-    this.subscriptions = [
-      annotationEvents.commentSearch.pipe(
-        debounceTime(300),
-        distinctUntilChanged()
-      )
-      .subscribe(searchString => this.searchString = searchString),
-      annotationEvents.resetHighlightEvent
-        .subscribe(() => this.searchString = undefined)
-    ];
-  }
 
-  ngOnChanges(): void {
+  ngOnInit(): void {
+    this.subscriptions = this.store.select(fromStore.getComponentSearchText)
+      .pipe(distinctUntilChanged()).subscribe(searchString => this.searchString = searchString);
     this.reRenderComments();
   }
 
+
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.unsubscribe();
   }
 
   @Input()
   set comment(comment: Comment) {
-    this._comment = comment;
+    this._comment = {...comment};
+    this.page = this._comment.page;
+    this.pageHeight = this._comment.pageHeight;
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
     this.createdBy = comment.createdBy;
@@ -98,6 +92,16 @@ export class CommentComponent implements OnChanges, OnDestroy {
     this.originalComment = comment.content;
     this.fullComment = this.originalComment;
     this.tagItems = this.tagsServices.getTagItems(this._comment.annotationId);
+
+    this.selected = this._comment.selected;
+    this._editable = this._comment.editable;
+
+    const pageMarginBottom = 10;
+    this.totalPreviousPagesHeight = 0;
+    for (let i = 0; i < this.page - 1; i++) {
+      this.totalPreviousPagesHeight += this.pageHeight + pageMarginBottom;
+    }
+
   }
 
   get comment() {
@@ -111,25 +115,8 @@ export class CommentComponent implements OnChanges, OnDestroy {
     this.rectLeft = this._rectangle.x;
   }
 
-  @Input()
-  set editable(editable: boolean) {
-    this._editable = editable || this.hasUnsavedChanges;
-    if (this._editable) {
-      setTimeout(() => this.editableComment.nativeElement.focus(), 10);
-    }
-  }
-
   get editable(): boolean {
     return this._editable;
-  }
-
-  @Input()
-  set pageHeights(pageHeights: []) {
-    const pageMarginBottom = 10;
-    this.totalPreviousPagesHeight = 0;
-    for (let i = 0; i < this.page - 1; i++) {
-      this.totalPreviousPagesHeight += pageHeights[i] + pageMarginBottom;
-    }
   }
 
   onCommentChange(updatedComment) {
@@ -143,7 +130,7 @@ export class CommentComponent implements OnChanges, OnDestroy {
       this.delete.emit(this._comment);
     } else {
       this.hasUnsavedChanges = false;
-      this.editable = false;
+      this._editable = false;
       this.fullComment = this.originalComment;
       this.changes.emit(false);
       if (!this.author && !this.fullComment) {
@@ -154,7 +141,7 @@ export class CommentComponent implements OnChanges, OnDestroy {
 
   public editOrSave() {
     if (!this.editable) {
-      this.editable = true;
+      this._editable = true;
     } else {
       this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
       const tags = this.tagsServices.getTagItems(this._comment.annotationId);
@@ -164,7 +151,7 @@ export class CommentComponent implements OnChanges, OnDestroy {
       };
       this.updated.emit(payload);
       this.hasUnsavedChanges = false;
-      this.editable = false;
+      this._editable = false;
       this.changes.emit(false);
     }
   }
@@ -172,7 +159,8 @@ export class CommentComponent implements OnChanges, OnDestroy {
   onCommentClick() {
     if (!this.selected) {
       this.selected = true;
-      this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable });
+      this._editable = false;
+      this.commentClick.emit({ annotationId: this._comment.annotationId, editable: this._editable, selected: true });
     }
   }
 

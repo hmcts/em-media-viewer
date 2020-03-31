@@ -9,9 +9,6 @@ import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable, of } from 'rxjs';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
-import { CommentComponent } from '../comment-set/comment/comment.component';
-import { AnnotationEventService } from '../annotation-event.service';
 import { CommentService } from '../comment-set/comment/comment.service';
 import { MutableDivModule } from 'mutable-div';
 import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';
@@ -20,6 +17,8 @@ import { BoxHighlightCreateService } from './annotation-create/box-highlight-cre
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { TagsComponent } from '../tags/tags.component';
 import { TagInputModule } from 'ngx-chips';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../store/reducers';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -27,7 +26,6 @@ describe('AnnotationSetComponent', () => {
   let mockTextLayerRect, mockElement, mockHighlight, mockClientRect, mockClientRects, mockRange;
 
   const api = new AnnotationApiService({}  as any);
-  const mockAnnotationService = new AnnotationEventService();
   const mockCommentService = new CommentService();
 
   const fakeApi: any = {
@@ -118,11 +116,11 @@ describe('AnnotationSetComponent', () => {
         FormsModule,
         HttpClientTestingModule,
         MutableDivModule,
-        TagInputModule
+        TagInputModule,
+        StoreModule.forRoot({...reducers})
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
-        { provide: AnnotationEventService, useValue: mockAnnotationService },
         { provide: CommentService, useValue: mockCommentService },
         ToolbarEventService,
         TextHighlightCreateService,
@@ -148,70 +146,25 @@ describe('AnnotationSetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('update annotations', () => {
-    const annotation = JSON.parse(JSON.stringify(annotationSet.annotations[0]));
-    const spy = spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
-
-    annotation.color = 'red';
-    component.onAnnotationUpdate(annotation);
-
-    expect(spy).toHaveBeenCalledWith(annotation);
-  });
-
-  it('should assign annotation to annotation-set when updated', () => {
-    const annotation = JSON.parse(JSON.stringify(annotationSet.annotations[0]));
-    spyOn(api, 'postAnnotation').and.returnValues(of(annotation));
-    spyOn(mockCommentService, 'hasUnsavedComments').and.returnValues(true);
-
-    annotation.color = 'red';
-    component.onAnnotationUpdate(annotation);
-
-    expect(component.annotationSet.annotations[0]).toEqual(annotation);
-  });
-
-  it('should delete annotation', () => {
-    spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
-    spyOn(mockCommentService, 'updateUnsavedCommentsStatus');
-    const annotations = JSON.parse(JSON.stringify(annotationSet.annotations));
-    const annotation = annotations[0];
-
-    component.onAnnotationDelete(annotation);
-
-    expect(api.deleteAnnotation).toHaveBeenCalledWith(annotation.id);
-    expect(annotations).not.toEqual(component.annotationSet.annotations);
-  });
-
-  it('should call updateUnsavedCommentsStatus',
-    inject([CommentService], (commentService) => {
-      spyOn(api, 'deleteAnnotation').and.returnValues(of(null));
-      spyOn(commentService, 'updateUnsavedCommentsStatus');
-      const annotations = JSON.parse(JSON.stringify(annotationSet.annotations));
-      const annotation = annotations[0];
-
-      component.onAnnotationDelete(annotation);
-
-      expect(commentService.updateUnsavedCommentsStatus).toHaveBeenCalledWith(annotation, false);
-    })
-  );
 
   it('should initialise box-highlight on mousedown', inject([BoxHighlightCreateService], (highlightService) => {
     spyOn(highlightService, 'initBoxHighlight');
     component.drawMode = true;
 
-    component.onMouseDown({} as MouseEvent);
+    component.onInitBoxHighlight({} as MouseEvent);
 
     expect(highlightService.initBoxHighlight).toHaveBeenCalled();
   }));
 
-  it('should not initialise box-highlight on mousedown if no annotationSet exists',
+  it('should not initialise box-highlight on mousedown if no annotationSet$ exists',
     inject([BoxHighlightCreateService], (highlightService) => {
       spyOn(highlightService, 'initBoxHighlight');
       component.drawMode = true;
       component.annotationSet = undefined;
 
-      component.onMouseDown({} as MouseEvent);
+      component.onInitBoxHighlight({} as MouseEvent);
 
-      expect(highlightService.initBoxHighlight).not.toHaveBeenCalled();
+      expect(highlightService.initBoxHighlight).toHaveBeenCalled();
     })
   );
 
@@ -220,7 +173,7 @@ describe('AnnotationSetComponent', () => {
       spyOn(highlightService, 'initBoxHighlight');
       component.drawMode = true;
 
-      component.onMouseDown({} as MouseEvent);
+      component.onInitBoxHighlight({} as MouseEvent);
 
       expect(highlightService.initBoxHighlight).toHaveBeenCalled();
     })
@@ -247,7 +200,7 @@ describe('AnnotationSetComponent', () => {
     })
   );
 
-  it('should not update box-highlight on mousemove if no annotationSet exists',
+  it('should not update box-highlight on mousemove if no annotationSet$ exists',
     inject([BoxHighlightCreateService], (highlightService) => {
       spyOn(highlightService, 'updateBoxHighlight');
       component.annotationSet = undefined;
@@ -258,37 +211,7 @@ describe('AnnotationSetComponent', () => {
     })
   );
 
-  it('should create box-highlight on mouseup',
-    inject([BoxHighlightCreateService], (highlightService) => {
-      spyOn(highlightService, 'createBoxHighlight');
-      component.drawMode = true;
 
-      component.onMouseUp();
-
-      expect(highlightService.createBoxHighlight).toHaveBeenCalled();
-    })
-  );
-
-  it('should not create box-highlight on mouseup if drawMode is off',
-    inject([BoxHighlightCreateService], (highlightService) => {
-      spyOn(highlightService, 'createBoxHighlight');
-
-      component.onMouseUp();
-
-      expect(highlightService.createBoxHighlight).not.toHaveBeenCalled();
-    })
-  );
-
-  it('should not create box-highlight on mouseup if no annotationSet exists',
-    inject([BoxHighlightCreateService], (highlightService) => {
-      spyOn(highlightService, 'createBoxHighlight');
-      component.annotationSet = undefined;
-
-      component.onMouseUp();
-
-      expect(highlightService.createBoxHighlight).not.toHaveBeenCalled();
-    })
-  );
 
   it('should save box-highlight',
     inject([BoxHighlightCreateService], (highlightService) => {
@@ -298,7 +221,7 @@ describe('AnnotationSetComponent', () => {
       component.saveBoxHighlight({ page: 1 });
 
       expect(highlightService.saveBoxHighlight)
-        .toHaveBeenCalledWith({ page: 1 }, component.annotationSet, component.page);
+        .toHaveBeenCalled();
     })
   );
 
@@ -333,41 +256,5 @@ describe('AnnotationSetComponent', () => {
     })
   ));
 
-  it('should use addToDOM method to set values', () => {
-    const mockRealElement = document.createElement('div');
-    const mockEventSource: PageEvent['source'] = {
-      rotation: 0,
-      scale: 50,
-      div: mockRealElement
-    };
 
-    component.addToDOM(mockEventSource);
-    expect(component.zoom).toEqual(mockEventSource.scale);
-    expect(component.rotate).toEqual(mockEventSource.rotation);
-    expect(component.width).toEqual(mockEventSource.div.clientHeight);
-    expect(component.height).toEqual(mockEventSource.div.clientWidth);
-    expect(mockEventSource.div.childNodes).toContain(component.container.nativeElement);
-  });
-
-  it('should add annotation to annotationset', () => {
-    spyOn<any>(api, 'postAnnotation').and.callFake(fakeApi.postAnnotation);
-
-    component.onAnnotationUpdate(fakeApi.returnedAnnotation);
-
-    expect(component.selectedAnnotation).toEqual({ annotationId: fakeApi.returnedAnnotation.id, editable: false });
-  });
-
-  it('should return the correct class values', () => {
-    component.drawMode = false;
-    component.rotate = 0;
-
-    let className = component.annotationSetClass();
-    expect(className).toEqual(['rotation rot0', '']);
-
-    component.drawMode = true;
-    component.rotate = 90;
-
-    className = component.annotationSetClass();
-    expect(className).toEqual(['rotation rot90', 'drawMode']);
-  });
 });

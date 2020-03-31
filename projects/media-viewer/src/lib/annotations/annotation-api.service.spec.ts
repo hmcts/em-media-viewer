@@ -30,6 +30,10 @@ describe('AnnotationApiService', () => {
       lastModifiedByDetails: user,
       lastModifiedDate: '2019-06-03T10:00:00Z',
       content: 'Test comment 1',
+      page: 1,
+      pageHeight: 1122,
+      selected: false,
+      editable: false,
       tags: []
     },
     {
@@ -42,6 +46,10 @@ describe('AnnotationApiService', () => {
       lastModifiedByDetails: user,
       lastModifiedDate: '2019-06-03T10:00:00Z',
       content: 'Test comment 2',
+      page: 1,
+      pageHeight: 1122,
+      selected: false,
+      editable: false,
       tags: []
     },
     {
@@ -54,6 +62,10 @@ describe('AnnotationApiService', () => {
       lastModifiedByDetails: user,
       lastModifiedDate: '2019-06-03T10:00:00Z',
       content: 'Test comment 3',
+      page: 1,
+      pageHeight: 1122,
+      selected: false,
+      editable: false,
       tags: []
     },
   ];
@@ -127,7 +139,7 @@ describe('AnnotationApiService', () => {
     const docUrl = `/doc-store-host/documents/${dmDocumentId}`;
     api.getAnnotationSet(docUrl)
       .subscribe((response) => {
-        expect(response.documentId).toBe(dmDocumentId);
+        expect(response.body.documentId).toBe(dmDocumentId);
         }, error => done(error));
 
     const req = httpMock.expectOne(`/my-context-path/annotation-sets/filter?documentId=${dmDocumentId}`);

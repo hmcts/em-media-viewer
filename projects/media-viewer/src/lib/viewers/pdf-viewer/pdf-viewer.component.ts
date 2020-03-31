@@ -19,19 +19,16 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
-import { PdfAnnotationService } from './pdf-annotation.service';
 import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
-import { AnnotationSetService } from './annotation-set.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
-import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import { take } from 'rxjs/operators';
 import { Outline } from './outline-view/outline.model';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../store';
 
 @Component({
   selector: 'mv-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
-  providers: [PdfAnnotationService, AnnotationSetService],
   encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
@@ -70,13 +67,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   enableGrabNDrag = false;
 
   constructor(
+    private store: Store<fromStore.AnnotationSetState>,
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
-    private readonly annotationService: PdfAnnotationService,
-    private readonly annotationsApi: AnnotationApiService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject;
@@ -89,15 +85,18 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
     this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
-    this.annotationService.init(this.pdfWrapper, this.pdfViewer);
     this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {
-        this.annotationService.addAnnotations(event);
+        const payload: any  = {
+          div: event.source.div,
+          pageNumber: event.pageNumber,
+          scale: event.source.scale,
+          rotation: event.source.rotation
+        };
+        this.store.dispatch(new fromStore.AddPage(payload));
       }
     });
     this.subscriptions.push(
-      this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.setupAnnotationSet(drawMode)),
-      this.toolbarEvents.highlightModeSubject.subscribe(highlightMode => this.setupAnnotationSet(highlightMode)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
@@ -112,7 +111,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngOnChanges(changes: SimpleChanges) {
-    let reloadAnnotations = false;
     if (!this.pdfWrapper) {
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
@@ -120,47 +118,19 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.loadDocument();
       this.clearAnnotationSet();
     }
-    if (changes.enableAnnotations && this.pdfWrapper) {
-      if (this.enableAnnotations) {
-        reloadAnnotations = true;
-      } else {
-        this.clearAnnotationSet();
-      }
-    }
-    if (changes.annotationSet && this.annotationSet) {
-      reloadAnnotations = true;
-    }
-    if (reloadAnnotations) {
-      this.annotationService.buildAnnoSetComponents(this.annotationSet);
-    }
   }
 
   clearAnnotationSet() {
     this.annotationSet = null;
-    this.annotationService.destroyComponents();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
-    this.annotationService.destroyComponents();
   }
 
-  setupAnnotationSet(mode: boolean) {
-    if (mode && !this.annotationSet) {
-      this.annotationsApi.getOrCreateAnnotationSet(this.url)
-        .pipe(take(1))
-        .subscribe(annotationSet => {
-          this.annotationSet = annotationSet;
-          this.annotationService.buildAnnoSetComponents(this.annotationSet);
-        });
-    }
-  }
 
   private async loadDocument() {
     await this.pdfWrapper.loadDocument(this.url);
-    if (this.enableAnnotations && this.annotationSet) {
-      this.annotationService.buildAnnoSetComponents(this.annotationSet);
-    }
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
     this.setPageHeights();
   }
@@ -198,24 +168,16 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
   }
 
-  onMouseDown(mouseEvent: MouseEvent) {
-    if (this.annotationSet && this.toolbarEvents.highlightModeSubject.getValue()) {
-      this.annotationService.addAnnoSetToPage();
-    }
-    if (this.annotationSet && this.toolbarEvents.drawModeSubject.getValue()) {
-      this.annotationService.addAnnoSetToPage();
-      setTimeout(() => this.viewerEvents.boxSelected({
-        page: this.pdfWrapper.getPageNumber(),
-        event: mouseEvent
-      }), 0);
-    }
+  onPdfViewerClick() {
+    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
   }
 
   onMouseUp(mouseEvent: MouseEvent) {
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
       this.viewerEvents.textSelected({
         page: this.pdfWrapper.getPageNumber(),
-        event: mouseEvent
+        event: mouseEvent,
+        annoSet: this.annotationSet
       });
     }
     if (!this.annotationSet) {

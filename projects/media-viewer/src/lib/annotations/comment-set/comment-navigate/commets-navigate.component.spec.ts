@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { CommentsNavigateComponent } from './comments-navigate.component';
 import { FormsModule } from '@angular/forms';
-import { AnnotationEventService } from '../../annotation-event.service';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../../store/reducers';
 
 describe('CommentsNavigateComponent', () => {
   let hostComponent: TestHostComponent;
@@ -12,9 +12,8 @@ describe('CommentsNavigateComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule],
+      imports: [FormsModule, StoreModule.forRoot({...reducers})],
       declarations: [CommentsNavigateComponent, TestHostComponent],
-      providers: [ToolbarEventService, AnnotationEventService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
@@ -37,10 +36,14 @@ describe('CommentsNavigateComponent', () => {
   });
 
   it('should navigate to next item', () => {
+    component.index = 0;
+    component.navigationList = [{page: 1}, {page: 2}];
     component.nextItem();
   });
 
   it('should navigate to previous item', () => {
+    component.index = 1;
+    component.navigationList = [{page: 1}];
     component.prevItem();
   });
 });

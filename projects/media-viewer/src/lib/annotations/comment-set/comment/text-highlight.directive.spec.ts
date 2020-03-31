@@ -1,13 +1,11 @@
 import { ElementRef } from '@angular/core';
 import { TextHighlightDirective } from './text-highlight.directive';
-import { AnnotationEventService } from '../../annotation-event.service';
 
 describe('TextHighlightDirective', () => {
   let directive: TextHighlightDirective;
 
   beforeEach(() => {
-    directive = new TextHighlightDirective(new ElementRef<HTMLElement>(document.createElement('div')),
-      new AnnotationEventService());
+    directive = new TextHighlightDirective(new ElementRef<HTMLElement>(document.createElement('div')));
   });
 
   it('should highlight search string', () => {

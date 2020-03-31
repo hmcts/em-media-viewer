@@ -4,7 +4,7 @@ import { AnnotationSet } from '../annotation-set.model';
 import { of } from 'rxjs';
 
 
-describe('BoxHighlightCreateService', () => {
+xdescribe('BoxHighlightCreateService', () => {
 
   const mockDrawModeSubject = { next: () => {} };
   const toolbarEvents = { drawModeSubject: mockDrawModeSubject } as any;

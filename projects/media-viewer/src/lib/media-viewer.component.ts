@@ -22,6 +22,8 @@ import {AnnotationApiService} from './annotations/annotation-api.service';
 import {ResponseType, ViewerException} from './viewers/error-message/viewer-exception.model';
 import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
+import {select, Store} from '@ngrx/store';
+import * as fromStore from './store';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -54,11 +56,12 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   documentTitle: string;
   showCommentSummary: boolean;
-  annotationSet: Observable<AnnotationSet>;
+  annotationSet$: Observable<AnnotationSet | {}>;
 
   private subscriptions: Subscription[] = [];
 
   constructor(
+    private store: Store<fromStore.AnnotationSetState>,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly api: AnnotationApiService,
@@ -70,6 +73,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
+    this.annotationSet$ = this.store.pipe(select(fromStore.getAnnotationSet));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(
@@ -90,15 +94,16 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
-        this.annotationSet = this.api.getAnnotationSet(this.url);
+        this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
       }
     }
-    if (changes.enableAnnotations && this.enableAnnotations) {
-      this.annotationSet = this.api.getAnnotationSet(this.url);
-    }
+    // TODO this is causing the annotations to load twice - leaving it commeted out to check if any regressions
+    // if (changes.enableAnnotations && this.enableAnnotations) {
+    //   this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
+    // }
     this.setToolbarButtons();
   }
 

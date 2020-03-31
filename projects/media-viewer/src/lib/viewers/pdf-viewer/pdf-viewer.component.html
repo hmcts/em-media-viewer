@@ -19,13 +19,18 @@
   <div grabNDrag [dragX]="enableGrabNDrag"
        #pdfViewer
        class="pdfViewer"
-       (mousedown)="onMouseDown($event)"
        (mouseup)="onMouseUp($event)"
+       (click)="onPdfViewerClick()"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
   </div>
+  <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
+                     [annotationSet]="annotationSet"
+                     [zoom]="zoom"
+                     [rotate]="rotation">
+  </mv-annotation-set>
   <mv-comment-set #commentPanel
                   *ngIf="enableAnnotations && annotationSet"
                   [annotationSet]="annotationSet"

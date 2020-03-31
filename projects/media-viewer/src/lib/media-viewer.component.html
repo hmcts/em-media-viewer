@@ -5,7 +5,7 @@
   <mv-comments-summary *ngIf="showCommentSummary"
                        [title]="documentTitle || 'Comment Summary'"
                        [contentType]="contentType"
-                       [annotationSet]="enableAnnotations ? (annotationSet | async) : null">
+                       [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null">
   </mv-comments-summary>
 
   <div id="mainContainer">
@@ -18,7 +18,7 @@
                    (documentTitle)="onDocumentTitleChange($event)"
                    [url]="url"
                    [enableAnnotations]="enableAnnotations"
-                   [annotationSet]="enableAnnotations ? (annotationSet | async) : null"
+                   [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                    [downloadFileName]="downloadFileName"
                    [height]="height">
     </mv-pdf-viewer>
@@ -27,7 +27,7 @@
                      (imageViewerException)="onLoadException($event)"
                      [url]="url"
                      [enableAnnotations]="enableAnnotations"
-                     [annotationSet]="enableAnnotations ? (annotationSet | async) : null"
+                     [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                      [downloadFileName]="downloadFileName"
                      [height]="height">
     </mv-image-viewer>
