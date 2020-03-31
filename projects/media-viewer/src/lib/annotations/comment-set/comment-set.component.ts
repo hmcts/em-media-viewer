@@ -13,11 +13,12 @@ import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { CommentComponent } from './comment/comment.component';
-import { AnnotationEventService, SelectionAnnotation } from '../annotation-event.service';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
+import * as fromStore from '../../store';
+import {select, Store} from '@ngrx/store';
 import { TagsServices } from '../services/tags/tags.services';
 import {TagItemModel} from '../models/tag-item.model';
 
@@ -34,17 +35,17 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @Input() pageHeights = [];
 
   comments: Comment[];
-  selectAnnotation: SelectionAnnotation;
   private subscriptions: Subscription[] = [];
+  public comments$: Observable<Annotation[]>;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
   showCommentsPanel: boolean;
 
-  constructor(private readonly viewerEvents: ViewerEventService,
+  constructor(private store: Store<fromStore.AnnotationSetState>,
+              private readonly viewerEvents: ViewerEventService,
               private readonly api: AnnotationApiService,
-              private readonly annotationService: AnnotationEventService,
               private readonly commentService: CommentService,
               private readonly renderService: CommentSetRenderService,
               private tagsServices: TagsServices) {
@@ -52,9 +53,10 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     // set the annotation tags state
-    if (changes.annotationSet) {
+    if (changes.annotationSet && this.annotationSet.annotations) {
       this.annotationSet.annotations.map(annotation => {
         if (annotation.comments.length) {
+          // todo move this to srore
           this.tagsServices.updateTagItems(annotation.tags, annotation.id);
         }
       });
@@ -62,10 +64,9 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
+    this.comments$ = this.store.pipe(select(fromStore.getCommentsArray));
     this.commentService.setCommentSet(this);
     this.subscriptions.push(
-      this.annotationService.getSelectedAnnotation()
-        .subscribe(selectedAnnotation => this.selectAnnotation = selectedAnnotation),
       this.viewerEvents.commentsPanelVisible.subscribe(toggle => {
         this.redrawComments();
         this.showCommentsPanel = toggle;
@@ -80,41 +81,43 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public onSelect(annotationId) {
-    this.annotationService.selectAnnotation(annotationId);
+    this.store.dispatch(new fromStore.SelectedAnnotation(annotationId));
   }
 
   public onCommentDelete(comment: Comment) {
     const annotation = this.annotationSet.annotations.find(anno => anno.id === comment.annotationId);
-    annotation.comments = [];
-    this.onAnnotationUpdate(annotation);
+    const comments = [];
+    const annot = {
+      ...annotation,
+      comments
+    };
+    this.onAnnotationUpdate(annot);
     this.redrawComments();
   }
 
   redrawComments() {
     setTimeout(() => {
       const componentList: CommentComponent[] = this.commentComponents.map(comment => comment);
-      this.renderService.redrawComponents(componentList, this.pageHeights, this.rotate, this.zoom);
+        this.renderService.redrawComponents(componentList, this.pageHeights, this.rotate, this.zoom);
     }, 0);
-  }
+      }
 
   public onCommentUpdate(payload: {comment: Comment, tags: TagItemModel[]} ) {
     const annotation = this.annotationSet.annotations.find(anno => anno.id === payload.comment.annotationId);
-    annotation.comments[0] = payload.comment;
-    annotation.tags = payload.tags;
-    this.onAnnotationUpdate(annotation);
+    const comments = [payload.comment];
+    const tags = payload.tags;
+    const annot = {
+      ...annotation,
+      comments,
+      tags
+    };
+    this.onAnnotationUpdate(annot);
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
-    this.api
-      .postAnnotation(annotation)
-      .subscribe(newAnnotation => {
-        const index = this.annotationSet.annotations.findIndex(a => a.id === newAnnotation.id);
-
-        this.annotationSet.annotations[index] = newAnnotation;
-      });
-    this.annotationService.selectAnnotation({ annotationId: annotation.id, editable: false });
+    this.store.dispatch(new fromStore.SaveAnnotation(annotation));
   }
-
+  // TODO move this to comment component instead of input
   topRectangle(annotationId: string) {
     const annotation = this.annotationSet.annotations.find((anno) => anno.id === annotationId);
     return annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
@@ -127,7 +130,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   clearSelection() {
-    this.selectAnnotation = { annotationId: '', editable: false };
+    this.store.dispatch(new fromStore.SelectedAnnotation({ annotationId: '', editable: false, selected: false}));
   }
 
   allCommentsSaved() {

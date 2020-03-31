@@ -4,10 +4,6 @@ a.disabledLink {
   color: grey;
 }
 
-.comment-search {
-  margin-top: 10px;
-}
-
 a.comment-search,
 span.comment-search {
   padding: 5px;
@@ -16,10 +12,12 @@ span.comment-search {
 button.comment-search {
   width: 24%;
   margin-bottom: 10px;
+  //@include govuk-font($size: 16);
 }
 
 input.comment-search {
   width: 74%;
   margin-left: 2px;
   margin-right: 2px;
+  @include govuk-font($size: 16);
 }

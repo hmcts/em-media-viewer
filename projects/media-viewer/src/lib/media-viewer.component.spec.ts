@@ -10,10 +10,10 @@ import {
   defaultUnsupportedOptions
 } from './toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from './annotations/annotation-api.service';
-import { of } from 'rxjs';
-import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { By } from '@angular/platform-browser';
+import {reducers} from './store/reducers';
+import {StoreModule} from '@ngrx/store';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -28,7 +28,11 @@ describe('MediaViewerComponent', () => {
       providers: [
         CommentService, ToolbarButtonVisibilityService
       ],
-      imports: [ToolbarModule, AnnotationsModule],
+      imports: [
+        ToolbarModule,
+        AnnotationsModule,
+        StoreModule.forRoot({...reducers})
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
@@ -89,28 +93,16 @@ describe('MediaViewerComponent', () => {
     expect(component.documentTitle).toBeNull();
   });
 
-  it('should set annotationSet when annotations enabled', () => {
-    const annotationSet = of({} as AnnotationSet);
-    spyOn(api, 'getAnnotationSet').and.returnValue(annotationSet);
-    component.annotationSet = null;
 
-    component.enableAnnotations = true;
-    component.ngOnChanges({
-      enableAnnotations: new SimpleChange(false, true, false)
-    });
-
-    expect(component.annotationSet).toBe(annotationSet);
-  });
-
-  it('should not set annotationSet when annotations disabled', () => {
-    component.annotationSet = null;
+  it('should not set annotationSet$ when annotations disabled', () => {
+    component.annotationSet$ = null;
 
     component.enableAnnotations = false;
     component.ngOnChanges({
       enableAnnotations: new SimpleChange(true, false, false)
     });
 
-    expect(component.annotationSet).toBe(null);
+    expect(component.annotationSet$).toBe(null);
   });
 
   it('should set annotationApiUrl', () => {

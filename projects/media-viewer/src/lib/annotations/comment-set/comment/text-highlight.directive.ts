@@ -1,5 +1,4 @@
 import { AfterViewChecked, Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
-import { AnnotationEventService } from '../../annotation-event.service';
 import { Subscription } from 'rxjs';
 
 @Directive({
@@ -11,9 +10,8 @@ export class TextHighlightDirective implements AfterViewChecked, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private element: ElementRef<HTMLElement>,
-              annotationEvents: AnnotationEventService) {
-    this.subscription = annotationEvents.resetHighlightEvent.subscribe(() => this.resetHighlight());
+  constructor(private element: ElementRef<HTMLElement>,) {
+    // this.subscription = annotationEvents.resetHighlightEvent.subscribe(() => this.resetHighlight());
   }
 
   ngAfterViewChecked(): void {
@@ -23,7 +21,7 @@ export class TextHighlightDirective implements AfterViewChecked, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
   highlightSearchString(searchString: string) {

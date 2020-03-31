@@ -5,4 +5,8 @@ export interface Comment extends ApiPersisted {
   annotationId: string;
   content: string;
   tags: TagItemModel[];
+  page: number;
+  pageHeight: number;
+  selected: boolean;
+  editable: boolean;
 }

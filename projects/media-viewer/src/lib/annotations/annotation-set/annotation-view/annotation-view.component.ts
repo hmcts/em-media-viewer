@@ -3,6 +3,9 @@ import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
+import {Store} from '@ngrx/store';
+import * as fromStore from '../../../store';
+import {SelectionAnnotation} from '../../models/event-select.model';
 
 @Component({
   selector: 'mv-annotation',
@@ -10,49 +13,50 @@ import { ViewerEventService } from '../../../viewers/viewer-event.service';
 })
 export class AnnotationViewComponent {
 
-  @Input() annotation: Annotation;
+  @Input() set annotation(value) {
+      this.anno = {...value};
+  }
+  anno: Annotation;
+  selected: boolean;
   @Input() commentsLeftOffset: number;
   @Input() zoom: number;
   @Input() rotate: number;
-  @Input() selected: boolean;
+  @Input() set selectedAnnoId(selectedId) {
+    this.selected = selectedId.annotationId ? (selectedId.annotationId === this.anno.id) : false;
+  };
   @Input() height: number;
   @Input() width: number;
   @Output() update = new EventEmitter<Annotation>();
   @Output() delete = new EventEmitter<Annotation>();
-  @Output() annotationClick = new EventEmitter();
+  @Output() annotationClick = new EventEmitter<SelectionAnnotation>();
 
   @ViewChild('container') container: ElementRef;
 
-  constructor(private viewerEvents: ViewerEventService) {}
+  constructor(
+    private viewerEvents: ViewerEventService,
+    private store: Store<fromStore.AnnotationSetState>) {}
 
   public onSelect() {
-    this.selected = true;
-    this.annotationClick.emit({ annotationId: this.annotation.id, editable: false });
+    this.annotationClick.emit({ annotationId: this.anno.id, editable: false, selected: true });
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
-    this.annotation.rectangles = this.annotation.rectangles.filter(r => r.id !== rectangle.id);
-    this.annotation.rectangles.push(rectangle);
+    this.anno.rectangles = this.anno.rectangles.filter(r => r.id !== rectangle.id);
+    this.anno.rectangles.push(rectangle);
 
-    this.update.emit(this.annotation);
-  }
-
-  public onFocusOut(event: FocusEvent) {
-    if (!this.container.nativeElement.contains(event.relatedTarget)) {
-      this.selected = false;
-    }
+    this.update.emit(this.anno);
   }
 
   public deleteHighlight() {
-    this.delete.emit(this.annotation);
+    this.delete.emit(this.anno);
   }
 
   public addOrEditComment() {
-    if (this.annotation.comments.length === 0) {
-      this.annotation.comments.push({
-        annotationId: this.annotation.id,
+    if (this.anno.comments.length === 0) {
+      const comment = {
+        annotationId: this.anno.id,
         content: '',
-        createdBy: this.annotation.createdBy,
+        createdBy: this.anno.createdBy,
         createdByDetails: undefined,
         createdDate: new Date().getTime().toString(),
         id: uuid(),
@@ -60,14 +64,16 @@ export class AnnotationViewComponent {
         lastModifiedByDetails: undefined,
         lastModifiedDate: '',
         tags: []
-      });
+      };
+      this.store.dispatch(new fromStore.AddOrEditComment(comment))
+
     }
     this.selected = true;
-    this.annotationClick.emit({ annotationId: this.annotation.id, editable: true });
+    this.annotationClick.emit({ annotationId: this.anno.id, editable: true, selected: true });
     this.viewerEvents.toggleCommentsPanel(true);
   }
 
   topRectangle() {
-    return this.annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
+    return this.anno.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
   }
 }

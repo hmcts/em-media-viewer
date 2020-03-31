@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import {AnnotationSet} from '../annotations/annotation-set/annotation-set.model';
 
 export interface Highlight {
   page: number;
   event: MouseEvent;
+  annoSet: AnnotationSet;
 }
 
 @Injectable({ providedIn: 'root' })

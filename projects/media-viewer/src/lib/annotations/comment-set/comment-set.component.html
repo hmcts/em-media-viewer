@@ -2,23 +2,19 @@
      [ngClass]="{ 'comments-panel comment-container': true, 'expanded': showCommentsPanel }"
      [style.height.px]="height"
      (click)="onContainerClick($event)">
-  <ng-container *ngFor="let annotation of annotationSet.annotations; let i = index;">
+  <ng-container *ngFor="let comment of (comments$ | async); let i = index;">
     <mv-anno-comment [ngStyle]="showCommentsPanel ? {} : {'display':'none'}"
         #commentComponent
-        *ngIf="annotation.comments[0]"
         (commentClick)="onSelect($event)"
         (delete)="onCommentDelete($event)"
         (updated)="onCommentUpdate($event)"
         (changes)="allCommentsSaved()"
-        [selected]="annotation.comments[0].annotationId === selectAnnotation.annotationId"
-        [editable]="annotation.comments[0].annotationId === selectAnnotation.annotationId ? selectAnnotation.editable : false"
         [zoom]="zoom"
         [rotate]="rotate"
         [index]="i"
-        [page]="annotation.page"
-        [pageHeights]="pageHeights"
-        [comment]="annotation.comments[0]"
-        [rectangle]="topRectangle(annotation.comments[0].annotationId)"
+        [page]="comment.page"
+        [comment]="comment"
+        [rectangle]="topRectangle(comment.annotationId)"
         (renderComments)="redrawComments()">
     </mv-anno-comment>
   </ng-container>

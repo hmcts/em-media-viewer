@@ -4,14 +4,17 @@ import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { AnnotationApiService } from '../../annotation-api.service';
-import { AnnotationEventService } from '../../annotation-event.service';
+
+import {select, Store} from '@ngrx/store';
+import * as fromStore from '../../../store';
+import {take} from 'rxjs/operators';
 
 @Injectable()
 export class TextHighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private readonly annotationEvents: AnnotationEventService) {}
+              private store: Store<fromStore.AnnotationSetState>) {}
 
   createTextHighlight(highlight: Highlight, annotationSet, pageInfo) {
     if (window.getSelection()) {
@@ -53,14 +56,14 @@ export class TextHighlightCreateService {
     const top = (rect.top - parentRect.top)/zoom;
     const left = (rect.left - parentRect.left)/zoom;
 
-    let rectangle = { id: uuid(), height: height, width: width, x: 0, y: 0 };
+    const rectangle = { id: uuid(), height: height, width: width, x: 0, y: 0 };
 
     switch (rotate) {
       case 90:
         rectangle.width = height;
         rectangle.height = width;
         rectangle.x = top;
-        rectangle.y = (pageHeight/zoom) - left - width;
+        rectangle.y = (pageWidth/zoom) - left - width;
         break;
       case 180:
         rectangle.x = (pageWidth/zoom) - left - width;
@@ -69,7 +72,7 @@ export class TextHighlightCreateService {
       case 270:
         rectangle.width = height;
         rectangle.height = width;
-        rectangle.x = (pageWidth/zoom) - top - height;
+        rectangle.x = (pageHeight/zoom) - top - height;
         rectangle.y = left;
         break;
       default:
@@ -80,18 +83,18 @@ export class TextHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    this.api.postAnnotation({
+    this.store.pipe(select(fromStore.getDocumentIdSetId), take(1)).subscribe(anoSetDocId => {
+      const anno = {
         id: uuid(),
         annotationSetId: annotationSet.id,
         color: 'FFFF00',
         comments: [],
         page: page,
         rectangles: rectangles,
-        type: 'highlight'
-      })
-      .subscribe(savedAnnotation => {
-        annotationSet.annotations.push(savedAnnotation);
-        this.annotationEvents.selectAnnotation({ annotationId: savedAnnotation.id, editable: false });
-      });
+        type: 'highlight',
+        ...anoSetDocId
+      };
+      this.store.dispatch(new fromStore.SaveAnnotation(anno));
+    });
   }
 }
