@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
@@ -28,7 +28,8 @@
     "@ngrx/effects": "^8.6.0",
     "@ngrx/router-store": "^8.6.0",
     "@ngrx/store": "^8.6.0",
-    "@ngrx/store-devtools": "^8.6.0"
+    "@ngrx/store-devtools": "^8.6.0",
+    "ngx-chips": "^2.1.0"
   },
   "publishConfig": {
     "access": "public"
