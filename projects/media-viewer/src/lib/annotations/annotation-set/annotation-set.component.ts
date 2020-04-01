@@ -11,8 +11,8 @@ import { TextHighlightCreateService } from './annotation-create/text-highlight-c
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
-import * as fromActions from '../../store/actions';
-import * as fromSelectors from '../../store/selectors';
+import * as fromActions from '../../store/actions/annotations.action';
+import * as fromSelectors from '../../store/selectors/annotatioins.selectors';
 import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
 import {tap} from 'rxjs/operators';
 

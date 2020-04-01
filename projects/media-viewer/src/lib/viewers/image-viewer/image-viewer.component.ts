@@ -22,7 +22,7 @@ import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visib
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
-import * as fromActions from '../../store/actions';
+import * as fromActions from '../../store/actions/annotations.action';
 
 @Component({
     selector: 'mv-image-viewer',

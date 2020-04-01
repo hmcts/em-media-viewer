@@ -6,8 +6,8 @@ import { AnnotationApiService } from '../../annotation-api.service';
 import { Injectable } from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers';
-import * as fromSelectors from '../../../store/selectors';
-import * as fromActions from '../../../store/actions';
+import * as fromSelectors from '../../../store/selectors/annotatioins.selectors';
+import * as fromActions from '../../../store/actions/annotations.action';
 import {take} from 'rxjs/operators';
 
 @Injectable()

@@ -25,7 +25,7 @@ import { CommentSetComponent } from '../../annotations/comment-set/comment-set.c
 import { Outline } from './outline-view/outline.model';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
-import * as fromActions from '../../store/actions';
+import * as fromActions from '../../store/actions/annotations.action';
 
 @Component({
   selector: 'mv-pdf-viewer',

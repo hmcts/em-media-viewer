@@ -20,8 +20,7 @@ import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers';
-import * as fromActions from '../../../store/actions';
-import * as fromSelector from '../../../store/selectors';
+import * as fromSelector from '../../../store/selectors/annotatioins.selectors';
 
 @Component({
   selector: 'mv-anno-comment',
