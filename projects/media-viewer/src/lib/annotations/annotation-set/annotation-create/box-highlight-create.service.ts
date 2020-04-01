@@ -4,8 +4,10 @@ import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { AnnotationApiService } from '../../annotation-api.service';
 import { Injectable } from '@angular/core';
-import {select, Store} from '@ngrx/store';
-import * as fromStore from '../../../store';
+import {select, Store} from '@ngrx/store/';
+import * as fromStore from '../../../store/reducers/annotatons.reducer';
+import * as fromSelectors from '../../../store/selectors/annotatioins.selectors';
+import * as fromActions from '../../../store/actions/annotations.action';
 import {take, tap} from 'rxjs/operators';
 
 @Injectable()
@@ -35,7 +37,7 @@ export class BoxHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    this.store.pipe(select(fromStore.getDocumentIdSetId), take(1)).subscribe(docAndSetId => {
+    this.store.pipe(select(fromSelectors.getDocumentIdSetId), take(1)).subscribe(docAndSetId => {
       const annotationPayload: any = {
         id: uuid(),
         annotationSetId: annotationSet.id,
@@ -47,7 +49,7 @@ export class BoxHighlightCreateService {
         ...docAndSetId
       };
 
-      this.store.dispatch(new fromStore.SaveAnnotation(annotationPayload));
+      this.store.dispatch(new fromActions.SaveAnnotation(annotationPayload));
     });
   }
 }

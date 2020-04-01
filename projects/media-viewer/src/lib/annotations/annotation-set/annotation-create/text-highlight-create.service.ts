@@ -6,7 +6,9 @@ import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { AnnotationApiService } from '../../annotation-api.service';
 
 import {select, Store} from '@ngrx/store';
-import * as fromStore from '../../../store';
+import * as fromStore from '../../../store/reducers/annotatons.reducer';
+import * as fromActions from '../../../store/actions/annotations.action';
+import * as fromSelectors from '../../../store/selectors/annotatioins.selectors';
 import {take} from 'rxjs/operators';
 
 @Injectable()
@@ -83,7 +85,7 @@ export class TextHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    this.store.pipe(select(fromStore.getDocumentIdSetId), take(1)).subscribe(anoSetDocId => {
+    this.store.pipe(select(fromSelectors.getDocumentIdSetId), take(1)).subscribe(anoSetDocId => {
       const anno = {
         id: uuid(),
         annotationSetId: annotationSet.id,
@@ -94,7 +96,7 @@ export class TextHighlightCreateService {
         type: 'highlight',
         ...anoSetDocId
       };
-      this.store.dispatch(new fromStore.SaveAnnotation(anno));
+      this.store.dispatch(new fromActions.SaveAnnotation(anno));
     });
   }
 }

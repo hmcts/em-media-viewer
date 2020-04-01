@@ -10,7 +10,9 @@ import { CommentService } from '../comment-set/comment/comment.service';
 import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';
 import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
 import { Store } from '@ngrx/store';
-import * as fromStore from '../../store';
+import * as fromStore from '../../store/reducers/annotatons.reducer';
+import * as fromActions from '../../store/actions/annotations.action';
+import * as fromSelectors from '../../store/selectors/annotatioins.selectors';
 import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
 import {tap} from 'rxjs/operators';
 
@@ -47,14 +49,14 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly textHighlightService: TextHighlightCreateService) {}
 
   ngOnInit(): void {
-    this.annotationsPerPage$ = this.store.select(fromStore.getAnnoPerPage)
+    this.annotationsPerPage$ = this.store.select(fromSelectors.getAnnoPerPage)
       .pipe(tap(annotations => {
         if (annotations) {
           this.height = annotations[0].styles.height;
           this.width = annotations[0].styles.width;
         }
     }));
-    this.selectedAnnotation$ = this.store.select(fromStore.getSelectedAnnotation);
+    this.selectedAnnotation$ = this.store.select(fromSelectors.getSelectedAnnotation);
 
     this.subscriptions = [
       this.viewerEvents.textHighlight
@@ -72,14 +74,14 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
-    this.store.dispatch(new fromStore.SaveAnnotation(annotation));
+    this.store.dispatch(new fromActions.SaveAnnotation(annotation));
   }
 
   public onAnnotationDelete(annotation: Annotation) {
     if (annotation.comments.length > 0) {
       this.commentService.updateUnsavedCommentsStatus(annotation, false);
     }
-    this.store.dispatch(new fromStore.DeleteAnnotation(annotation.id));
+    this.store.dispatch(new fromActions.DeleteAnnotation(annotation.id));
   }
 
   public onInitBoxHighlight(event: MouseEvent) {
@@ -120,7 +122,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   selectAnnotation(annotationId) {
-    this.store.dispatch(new fromStore.SelectedAnnotation(annotationId))
+    this.store.dispatch(new fromActions.SelectedAnnotation(annotationId));
   }
 
   toggleCommentsSummary() {

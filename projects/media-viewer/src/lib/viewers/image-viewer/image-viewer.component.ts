@@ -21,7 +21,8 @@ import {ViewerEventService} from '../viewer-event.service';
 import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../../store';
+import * as fromStore from '../../store/reducers/annotatons.reducer';
+import * as fromActions from '../../store/actions/annotations.action';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -97,7 +98,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, After
       scale: 1,
       rotation: 1
     };
-    this.store.dispatch(new fromStore.AddPage(payload));
+    this.store.dispatch(new fromActions.AddPage(payload));
 
   }
 

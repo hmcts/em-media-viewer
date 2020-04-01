@@ -17,7 +17,9 @@ import {Observable, Subscription} from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
-import * as fromStore from '../../store';
+import * as fromStore from '../../store/reducers/annotatons.reducer';
+import * as fromActions from '../../store/actions/annotations.action';
+import * as fromSelectors from '../../store/selectors/annotatioins.selectors';
 import {select, Store} from '@ngrx/store';
 import { TagsServices } from '../services/tags/tags.services';
 import {TagItemModel} from '../models/tag-item.model';
@@ -64,7 +66,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    this.comments$ = this.store.pipe(select(fromStore.getCommentsArray));
+    this.comments$ = this.store.pipe(select(fromSelectors.getCommentsArray));
     this.commentService.setCommentSet(this);
     this.subscriptions.push(
       this.viewerEvents.commentsPanelVisible.subscribe(toggle => {
@@ -81,7 +83,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public onSelect(annotationId) {
-    this.store.dispatch(new fromStore.SelectedAnnotation(annotationId));
+    this.store.dispatch(new fromActions.SelectedAnnotation(annotationId));
   }
 
   public onCommentDelete(comment: Comment) {
@@ -115,7 +117,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
-    this.store.dispatch(new fromStore.SaveAnnotation(annotation));
+    this.store.dispatch(new fromActions.SaveAnnotation(annotation));
   }
   // TODO move this to comment component instead of input
   topRectangle(annotationId: string) {
@@ -130,7 +132,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   clearSelection() {
-    this.store.dispatch(new fromStore.SelectedAnnotation({ annotationId: '', editable: false, selected: false}));
+    this.store.dispatch(new fromActions.SelectedAnnotation({ annotationId: '', editable: false, selected: false}));
   }
 
   allCommentsSaved() {

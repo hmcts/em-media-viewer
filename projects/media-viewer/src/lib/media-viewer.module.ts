@@ -22,7 +22,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { MetaReducer, StoreModule} from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 // APP store
-import { reducers, effects} from './store';
+import { effects} from './store/effects';
+import { reducers} from './store/reducers';
 import { environment } from '../environments/environment';
 
 // enforces immutability
