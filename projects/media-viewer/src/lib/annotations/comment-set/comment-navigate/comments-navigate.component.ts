@@ -2,7 +2,8 @@ import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@
 import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectangle.model';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../../../store';
+import * as fromStore from '../../../store/reducers';
+import * as fromActions from '../../../store/actions/annotations.action';
 import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
 
 @Component({
@@ -38,7 +39,7 @@ export class CommentsNavigateComponent implements OnChanges {
     if (this.autoSelect) {
 
       this.toolbarEvents.setPage(Number.parseInt(this.navigationList[0].page, 0));
-      this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[0].annotationId, editable: false, selected: true}));
+      this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: this.navigationList[0].annotationId, editable: false, selected: true}));
     }
   }
 
@@ -62,7 +63,7 @@ export class CommentsNavigateComponent implements OnChanges {
       this.index = 0;
     }
     this.toolbarEvents.setPage(Number.parseInt(this.navigationList[this.index].page, 0));
-    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true}));
+    this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true}));
   }
 
 
@@ -72,7 +73,7 @@ export class CommentsNavigateComponent implements OnChanges {
       this.index = this.navigationList.length - 1;
     }
     this.toolbarEvents.setPage(Number.parseInt(this.navigationList[this.index].page, 0));
-    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true}));
+    this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true}));
   }
 
   upperRectangle(rectangles: Rectangle[]) {

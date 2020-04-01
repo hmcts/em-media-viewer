@@ -23,7 +23,9 @@ import {ResponseType, ViewerException} from './viewers/error-message/viewer-exce
 import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
 import {select, Store} from '@ngrx/store';
-import * as fromStore from './store';
+import * as fromStore from './store/reducers';
+import * as fromSelectors from './store/selectors/annotatioins.selectors';
+import * as fromActions from './store/actions/annotations.action';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -73,7 +75,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
-    this.annotationSet$ = this.store.pipe(select(fromStore.getAnnotationSet));
+    this.annotationSet$ = this.store.pipe(select(fromSelectors.getAnnotationSet));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(
@@ -94,7 +96,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
-        this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
+        this.store.dispatch(new fromActions.LoadAnnotationSet(this.url));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;

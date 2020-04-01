@@ -4,7 +4,8 @@ import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../../../store';
+import * as fromStore from '../../../store/reducers';
+import * as fromActions from '../../../store/actions/annotations.action';
 import {SelectionAnnotation} from '../../models/event-select.model';
 
 @Component({
@@ -18,7 +19,6 @@ export class AnnotationViewComponent {
   }
   anno: Annotation;
   selected: boolean;
-  @Input() commentsLeftOffset: number;
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() set selectedAnnoId(selectedId) {
@@ -65,7 +65,7 @@ export class AnnotationViewComponent {
         lastModifiedDate: '',
         tags: []
       };
-      this.store.dispatch(new fromStore.AddOrEditComment(comment))
+      this.store.dispatch(new fromActions.AddOrEditComment(comment))
 
     }
     this.selected = true;
