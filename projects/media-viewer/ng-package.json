@@ -11,6 +11,7 @@
     "pdfjs-dist",
     "uuid",
     "mutable-div",
-    "hammerjs"
+    "hammerjs",
+    "ngx-chips"
   ]
 }

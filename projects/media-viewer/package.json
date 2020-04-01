@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "hammerjs": "^2.0.8",
+    "ngx-chips": "^2.1.0",
     "mutable-div": "0.0.11",
     "pdfjs-dist": "2.0.943",
     "uuid": "^3.3.2"
@@ -28,8 +29,7 @@
     "@ngrx/effects": "^8.6.0",
     "@ngrx/router-store": "^8.6.0",
     "@ngrx/store": "^8.6.0",
-    "@ngrx/store-devtools": "^8.6.0",
-    "ngx-chips": "^2.1.0"
+    "@ngrx/store-devtools": "^8.6.0"
   },
   "publishConfig": {
     "access": "public"
