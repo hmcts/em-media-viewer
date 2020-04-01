@@ -19,7 +19,8 @@ import {TagsServices} from '../../services/tags/tags.services';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../../../store';
+import * as fromStore from '../../../store/reducers';
+import * as fromSelector from '../../../store/selectors/annotatioins.selectors';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -70,7 +71,7 @@ export class CommentComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.subscriptions = this.store.select(fromStore.getComponentSearchText)
+    this.subscriptions = this.store.select(fromSelector.getComponentSearchText)
       .pipe(distinctUntilChanged()).subscribe(searchString => this.searchString = searchString);
     this.reRenderComments();
   }

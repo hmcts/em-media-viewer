@@ -2,7 +2,8 @@ import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, View
 import { AnnotationSet } from '../../../annotation-set/annotation-set.model';
 import { Annotation } from '../../../annotation-set/annotation-view/annotation.model';
 import { Store } from '@ngrx/store';
-import * as fromStore from '../../../../store';
+import * as fromStore from '../../../../store/reducers';
+import * as fromActions from '../../../../store/actions/annotations.action';
 
 @Component({
   selector: 'mv-comment-search',
@@ -28,7 +29,7 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(new fromStore.SearchComment(''));
+    this.store.dispatch(new fromActions.SearchComment(''));
   }
 
   searchComments(searchText: string): void {
@@ -39,7 +40,7 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
         .filter(annotation => annotation.comments.length > 0)
         .filter(annotation => annotation.comments[0].content.toLowerCase().includes(this.searchString.toLowerCase()));
       if (this.searchResults.length > 0) {
-        this.store.dispatch(new fromStore.SearchComment(searchText));
+        this.store.dispatch(new fromActions.SearchComment(searchText));
       }
     }
   }
@@ -48,6 +49,6 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
     this.searchString = undefined;
     this.searchResults = [];
     this.searchIndex = 0;
-    this.store.dispatch(new fromStore.SearchComment(''));
+    this.store.dispatch(new fromActions.SearchComment(''));
   }
 }
