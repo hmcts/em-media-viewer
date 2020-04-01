@@ -5,8 +5,10 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { AnnotationApiService } from '../../annotation-api.service';
 import { Injectable } from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import * as fromStore from '../../../store';
-import {take, tap} from 'rxjs/operators';
+import * as fromStore from '../../../store/reducers';
+import * as fromSelectors from '../../../store/selectors';
+import * as fromActions from '../../../store/actions';
+import {take} from 'rxjs/operators';
 
 @Injectable()
 export class BoxHighlightCreateService {
@@ -27,7 +29,7 @@ export class BoxHighlightCreateService {
     this.updateHighlight.next(event);
   }
 
-  saveBoxHighlight(rectangle: any, annotationSet, page:number) {
+  saveBoxHighlight(rectangle: any, annotationSet, page: number) {
     if (rectangle.height > 5 || rectangle.width > 5) {
       this.saveAnnotation([rectangle as Rectangle], annotationSet, page);
       this.toolBarEvents.drawModeSubject.next(false);
@@ -35,7 +37,7 @@ export class BoxHighlightCreateService {
   }
 
   private saveAnnotation(rectangles: Rectangle[], annotationSet, page) {
-    this.store.pipe(select(fromStore.getDocumentIdSetId), take(1)).subscribe(docAndSetId => {
+    this.store.pipe(select(fromSelectors.getDocumentIdSetId), take(1)).subscribe(docAndSetId => {
       const annotationPayload: any = {
         id: uuid(),
         annotationSetId: annotationSet.id,
@@ -47,7 +49,7 @@ export class BoxHighlightCreateService {
         ...docAndSetId
       };
 
-      this.store.dispatch(new fromStore.SaveAnnotation(annotationPayload));
+      this.store.dispatch(new fromActions.SaveAnnotation(annotationPayload));
     });
   }
 }
