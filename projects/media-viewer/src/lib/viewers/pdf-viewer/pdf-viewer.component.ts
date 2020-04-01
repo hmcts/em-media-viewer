@@ -24,7 +24,8 @@ import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-vis
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './outline-view/outline.model';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../../store';
+import * as fromStore from '../../store/reducers';
+import * as fromActions from '../../store/actions';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -93,7 +94,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
           scale: event.source.scale,
           rotation: event.source.rotation
         };
-        this.store.dispatch(new fromStore.AddPage(payload));
+        this.store.dispatch(new fromActions.AddPage(payload));
       }
     });
     this.subscriptions.push(
@@ -169,7 +170,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onPdfViewerClick() {
-    this.store.dispatch(new fromStore.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
+    this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
   }
 
   onMouseUp(mouseEvent: MouseEvent) {
