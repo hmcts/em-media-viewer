@@ -13,4 +13,3 @@ export const reducers: ActionReducerMap<State> = {
 
 export const getAnnoSetState = createFeatureSelector<AnnotationSetState>('annotationsReducer');
 
-export * from './annotatons.reducer';
