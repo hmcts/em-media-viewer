@@ -20,7 +20,8 @@
                    [enableAnnotations]="enableAnnotations"
                    [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                    [downloadFileName]="downloadFileName"
-                   [height]="height">
+                   [height]="height"
+                   [page]="page">
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      (imageLoadStatus)="onMediaLoad($event)"

@@ -42,6 +42,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Input() url;
   @Input() downloadFileName: string;
   @Input() contentType: string;
+  @Input() page: number;
 
   @Input() showToolbar = true;
   @Input() toolbarButtonOverrides: any = {};
@@ -52,6 +53,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Output() viewerException = new EventEmitter<ViewerException>();
   @Output() toolbarEventsOutput = new EventEmitter<ToolbarEventService>();
   @Output() unsavedChanges = new EventEmitter<boolean>();
+  @Output() pageChange = new EventEmitter<number>();
 
   @Input() enableAnnotations = false;
   @Input() annotationApiUrl;
@@ -80,7 +82,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(
       this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)),
-      this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes)
+      this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes),
+      this.toolbarEvents.getCurrentPageNumber().subscribe(changes => this.onPageChange(changes))
     );
   }
 
@@ -146,5 +149,9 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   onDocumentTitleChange(title: string) {
     this.documentTitle = title;
+  }
+
+  onPageChange(changes: number) {
+    this.pageChange.emit(changes);
   }
 }
