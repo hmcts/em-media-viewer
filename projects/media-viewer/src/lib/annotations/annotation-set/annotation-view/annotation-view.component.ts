@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
+import * as moment_ from 'moment-timezone';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers';
 import * as fromActions from '../../../store/actions/annotations.action';
@@ -53,12 +54,13 @@ export class AnnotationViewComponent {
 
   public addOrEditComment() {
     if (this.anno.comments.length === 0) {
+      const moment = moment_;
       const comment = {
         annotationId: this.anno.id,
         content: '',
         createdBy: this.anno.createdBy,
         createdByDetails: undefined,
-        createdDate: new Date().getTime().toString(),
+        createdDate: moment.utc().tz('Europe/London'),
         id: uuid(),
         lastModifiedBy: '',
         lastModifiedByDetails: undefined,

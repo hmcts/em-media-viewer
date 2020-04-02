@@ -10,7 +10,7 @@
       {{ editor.forename }} {{ editor.surname }}
     </span>
     <time [hidden]="!selected && !this.editable" class="aui-comment__meta">
-      {{ lastUpdate | date: 'd MMMM y h:mm a' }}
+      {{ lastUpdate | momentDate: 'd MMMM y h:mm a' }}
     </time>
   </div>
   <mv-tags

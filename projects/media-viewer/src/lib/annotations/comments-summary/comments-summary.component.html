@@ -22,7 +22,7 @@
               <a>{{commentSummary.page}}</a>
             </td>
             <td class="govuk-table__cell">
-              {{commentSummary.comment.createdDate | date : "d MMM yyyy hh:mm" }}
+              {{commentSummary.comment.lastModifiedDate | momentDate : "d MMM yyyy" }}
             </td>
             <td title="{{commentSummary.comment.content}}" class="govuk-table__cell">
               <span class="clipped">
