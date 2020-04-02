@@ -121,7 +121,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.clearAnnotationSet();
     }
 
-    if (changes.page && this.pdfWrapper) {
+    if (changes.page && this.pdfWrapper && this.page !== undefined) {
       this.pdfWrapper.setPageNumber(this.page);
     }
   }
