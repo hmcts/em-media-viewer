@@ -58,6 +58,8 @@
     "formidable": "^1.2.1",
     "glob": "^7.1.4",
     "global-tunnel-ng": "^2.7.1",
+    "moment-timezone": "^0.5.28",
+    "ngx-chips": "^2.1.0",
     "nodemon": "^1.19.0",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",

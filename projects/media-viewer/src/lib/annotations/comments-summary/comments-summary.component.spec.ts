@@ -6,6 +6,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Comment } from '../comment-set/comment/comment.model';
 import { User } from '../models/user.model';
 import {ViewerEventService} from '../../viewers/viewer-event.service';
+import {MomentDatePipe} from '../pipes/date.pipe';
 
 describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
@@ -74,7 +75,7 @@ describe('CommentsSummaryComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommentsSummaryComponent ],
+      declarations: [ CommentsSummaryComponent, MomentDatePipe ],
       providers: [ PrintService ]
     })
     .compileComponents();

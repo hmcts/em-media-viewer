@@ -6,6 +6,7 @@ import { CommentService } from './comment.service';
 import { TextHighlightDirective } from './text-highlight.directive';
 import {TagsServices} from '../../services/tags/tags.services';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MomentDatePipe} from '../../pipes/date.pipe';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../../store/reducers';
 
@@ -66,7 +67,7 @@ describe('CommentComponent', () => {
   beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [
-        CommentComponent, TextHighlightDirective
+        CommentComponent, TextHighlightDirective, MomentDatePipe
       ],
       imports: [
         FormsModule,
