@@ -27,7 +27,7 @@ import { environment } from '../environments/environment';
 import { effects } from './store/effects/index';
 
 // enforces immutability
-export const metaReducers: MetaReducer<any>[] = !environment
+export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
   : [];
 
@@ -44,9 +44,9 @@ export const metaReducers: MetaReducer<any>[] = !environment
     RouterModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(effects),
-    StoreDevtoolsModule.instrument({
-      logOnly: environment.production
-    }),
+    !environment.production ?
+      StoreDevtoolsModule.instrument( {} )
+      : [],
   ],
   declarations: [
     PdfViewerComponent,
