@@ -19,6 +19,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   documentType = 'pdf';
   url;
   comments: Observable<Comment[]>;
+  page;
 
   mediaLoadStatus: string;
   unsavedChanges: boolean;
@@ -75,6 +76,10 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   onUnsavedChanges(changes: boolean) {
     this.unsavedChanges = changes;
+  }
+
+  onPageChange(changes: number) {
+    this.page = changes;
   }
 
   toggleToolbarBtns(toolbarButtonOverrides: any) {
