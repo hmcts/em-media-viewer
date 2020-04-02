@@ -102,6 +102,8 @@
                    [enableAnnotations]="enableAnnotations"
                    [showToolbar]="showToolbar"
                    [toolbarButtonOverrides]="toolbarButtonOverrides"
+                   [page]="page"
+                   (pageChange)="onPageChange($event)"
                    (mediaLoadStatus)="onMediaLoad($event)"
                    (toolbarEventsOutput)="getToolbarFunctions($event)"
                    (unsavedChanges)="onUnsavedChanges($event)"></mv-media-viewer>
