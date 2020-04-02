@@ -5,7 +5,6 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod && ng run media-viewer:serve",
-    "start:ng": "ng serve --proxy-config proxy.config.js",
     "copy:license": "cp ./README.md dist/media-viewer",
     "copy:readme": "cp ./LICENSE dist/media-viewer",
     "copy:docs": "npm run copy:readme && npm run copy:license",

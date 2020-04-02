@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Annotation } from './annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { AnnotationSet } from './annotation-set.model';
@@ -15,7 +15,6 @@ import * as fromSelectors from '../../store/selectors/annotatioins.selectors';
 import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
 import { tap } from 'rxjs/operators';
 import { Rectangle } from './annotation-view/rectangle/rectangle.model';
-import uuid from 'uuid';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -78,13 +77,14 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       this.rectangles = this.highlightService.getRectangles(highlight, {
         zoom: this.zoom,
         rotate: this.rotate,
-        height: this.height,
-        width: this.width
+        pageHeight: this.height,
+        pageWidth: this.width
       });
       if (this.rectangles) {
         this.rectangle = this.rectangles
           .reduce((prev, current) => prev.y < current.y ? prev : current);
       }
+      this.toolbarEvents.highlightModeSubject.next(false);
     }
   }
 
@@ -99,7 +99,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     const selection = window.getSelection().toString();
     this.viewerEvents.createBookmarkEvent.next({
       name: selection.length > 0 ? selection : 'new bookmark',
-      pageNumber: new String(this.popupPage - 1).toString(),
+      pageNumber: `${this.popupPage - 1}`,
       xCoordinate: this.width - this.rectangle.x,
       yCoordinate: this.height - this.rectangle.y
     });

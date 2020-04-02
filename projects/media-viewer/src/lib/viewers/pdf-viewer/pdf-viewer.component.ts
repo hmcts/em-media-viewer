@@ -59,7 +59,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
-  @ViewChild('commentPanel') commentPanel: CommentSetComponent;
+  @ViewChild('commentsPanel') commentsPanel: CommentSetComponent;
 
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
@@ -197,7 +197,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private setRotation(rotation: number) {
     const pageNumber = this.pdfWrapper.getPageNumber();
-    this.commentPanel.container.nativeElement.style.height = 0;
+    if(this.commentsPanel) {
+      this.commentsPanel.container.nativeElement.style.height = 0;
+    }
     this.pdfWrapper.rotate(rotation);
     this.pdfWrapper.setPageNumber(pageNumber);
     this.rotation = (this.rotation + rotation) % 360;

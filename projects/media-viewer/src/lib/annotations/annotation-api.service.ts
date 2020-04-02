@@ -25,13 +25,6 @@ export class AnnotationApiService {
       .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
   }
 
-  public getBookmarks(url: string): Observable<any> {
-    const documentId = this.extractDocumentId(url);
-    return this.httpClient
-      .get(`${this.annotationApiUrl}/${documentId}/bookmarks`,
-        { observe: 'response' , withCredentials: true });
-  }
-
   public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
     return this.httpClient
       .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
