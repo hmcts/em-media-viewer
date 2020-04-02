@@ -40,6 +40,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @Input() url: string;
   @Input() downloadFileName: string;
+  @Input() page: number;
 
   @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
@@ -118,6 +119,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (changes.url && this.pdfWrapper) {
       this.loadDocument();
       this.clearAnnotationSet();
+    }
+
+    if (changes.page && this.pdfWrapper) {
+      this.pdfWrapper.setPageNumber(this.page);
     }
   }
 
