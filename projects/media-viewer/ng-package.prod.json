@@ -5,11 +5,10 @@
     "entryFile": "src/public_api.ts"
   },
   "whitelistedNonPeerDependencies": [
-    "@hmcts/frontend",
-    "govuk-frontend",
     "pdfjs-dist",
     "uuid",
     "mutable-div",
-    "hammerjs"
+    "hammerjs",
+    "ngx-chips"
   ]
 }

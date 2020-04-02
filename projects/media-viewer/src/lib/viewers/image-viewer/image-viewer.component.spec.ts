@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
 import { PrintService } from '../../print.service';
 import { ErrorMessageComponent } from '../error-message/error.message.component';
@@ -9,10 +9,9 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import { of } from 'rxjs';
-import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../store/reducers';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -30,7 +29,8 @@ describe('ImageViewerComponent', () => {
       providers: [AnnotationApiService],
       imports: [
         AnnotationsModule,
-        StoreModule.forRoot({...reducers})
+        StoreModule.forRoot({...reducers}),
+        RouterTestingModule
       ]
     })
       .compileComponents();
