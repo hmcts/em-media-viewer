@@ -2,7 +2,7 @@
   <ul class="govuk-tabs__list">
     <li *ngFor="let tab of tabs"
         class="govuk-tabs__list-item govuk-tabs__list-item">
-      <a (click)="selectTab(tab)" href="#"
+      <a (click)="selectTab(tab)" [routerLink]=""
          [ngClass]="{ 'govuk-tabs__tab': true, 'govuk-tabs__tab--selected': tabSelected === tab }">
         {{ tab | titlecase }}
       </a>
