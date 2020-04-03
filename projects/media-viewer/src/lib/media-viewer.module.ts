@@ -17,19 +17,12 @@ import { OutlineItemComponent } from './viewers/pdf-viewer/outline-view/outline-
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { MetaReducer, StoreModule} from '@ngrx/store';
-import { storeFreeze } from 'ngrx-store-freeze';
+import { StoreModule} from '@ngrx/store';
 // APP store
 import { reducers} from './store';
-import { environment } from '../environments/environment';
 import { effects } from './store/effects/index';
 
-// enforces immutability
-export const metaReducers: MetaReducer<any>[] = !environment.production
-  ? [storeFreeze]
-  : [];
 
 @NgModule({
   imports: [
@@ -42,11 +35,8 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot(effects),
-    !environment.production ?
-      StoreDevtoolsModule.instrument( {} )
-      : [],
+    StoreModule.forFeature('media-viewer', reducers),
+    EffectsModule.forFeature(effects),
   ],
   declarations: [
     PdfViewerComponent,

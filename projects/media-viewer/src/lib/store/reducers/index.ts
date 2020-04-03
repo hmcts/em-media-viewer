@@ -1,16 +1,15 @@
 import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 
 import * as fromAnnotation from './annotatons.reducer';
-import {AnnotationSetState} from './annotatons.reducer';
 
 export interface State {
-  annotationsReducer: fromAnnotation.AnnotationSetState;
+  annotations: fromAnnotation.AnnotationSetState;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  annotationsReducer: fromAnnotation.reducer
+  annotations: fromAnnotation.reducer,
 };
 
-export const getAnnoSetState = createFeatureSelector<AnnotationSetState>('annotationsReducer');
+export const getMVState = createFeatureSelector<State>('media-viewer');
 
 export * from './annotatons.reducer';
