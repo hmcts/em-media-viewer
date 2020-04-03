@@ -19,21 +19,8 @@ export class AnnotationApiService {
     private readonly httpClient: HttpClient
   ) { }
 
-  public getOrCreateAnnotationSet(url: string): Observable<AnnotationSet> {
-    const fixedUrl = this.fixFindCall(url);
-    return this.httpClient
-      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true })
-      .pipe(
-        map(response => response.body),
-        catchError(() => this.postAnnotationSet({
-          id: uuid(),
-          documentId: this.extractDocumentId(url)
-        }))
-      );
-  }
-
-  public getAnnotationSet(url: string): Observable<any> { // todo add model
-    const fixedUrl = this.fixFindCall(url);
+  public getAnnotationSet(documentId: string): Observable<any> { // todo add model
+    const fixedUrl = `${this.annotationSetsFullUrl}/filter?documentId=${documentId}`;
     return this.httpClient
       .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
 
@@ -80,15 +67,6 @@ export class AnnotationApiService {
     return this.httpClient
       .post<Annotation>(this.annotationFullsUrl, annotation, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
-  }
-
-  private fixFindCall(url: string): string {
-    return `${this.annotationSetsFullUrl}/filter?documentId=${this.extractDocumentId(url)}`;
-  }
-
-  private extractDocumentId(url: string): string {
-    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
-    return url.replace('/binary', '');
   }
 
   get annotationSetsFullUrl() {

@@ -136,8 +136,7 @@ describe('AnnotationApiService', () => {
   }));
 
   it('get annotation set', fakeAsync((done) => {
-    const docUrl = `/doc-store-host/documents/${dmDocumentId}`;
-    api.getAnnotationSet(docUrl)
+    api.getAnnotationSet(dmDocumentId)
       .subscribe((response) => {
         expect(response.body.documentId).toBe(dmDocumentId);
         }, error => done(error));
@@ -174,23 +173,5 @@ describe('AnnotationApiService', () => {
       expect(comment[1].content).toBe('Test comment 2');
       expect(comment[2].content).toBe('Test comment 3');
     }, error => done(error));
-  }));
-
-
-  it('gets an annotation set or creates it if it does not exist', fakeAsync((done) => {
-    api.getOrCreateAnnotationSet(dmDocumentId).subscribe((response) => {
-      expect(response.documentId).toBe(dmDocumentId);
-    }, error => done(error));
-
-    const req1 = httpMock.expectOne(`/my-context-path/annotation-sets/filter?documentId=${dmDocumentId}`);
-    expect(req1.request.method).toBe('GET');
-    req1.error(new ErrorEvent('Not found'), { status: 404 });
-
-    const req2 = httpMock.expectOne('/my-context-path/annotation-sets');
-    expect(req2.request.method).toBe('POST');
-    expect(req2.request.body.documentId).toBe(dmDocumentId);
-    expect(req2.request.body.id).toBeTruthy();
-
-    req2.flush(annotationSet);
   }));
 });
