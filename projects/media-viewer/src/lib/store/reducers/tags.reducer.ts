@@ -1,6 +1,5 @@
 import * as fromAnnotations from '../actions/annotations.action';
 import * as fromTags from '../actions/tags.actions';
-import {TagsModel} from '../../annotations/models/tags.model';
 import {StoreUtils} from '../store-utils';
 
 export interface TagsState {

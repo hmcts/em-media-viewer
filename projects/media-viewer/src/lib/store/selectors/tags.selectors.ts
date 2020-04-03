@@ -3,8 +3,8 @@ import * as fromFeature from '../reducers';
 import * as fromTags from '../reducers/tags.reducer';
 
 export const getTagsRootState = createSelector(
-  fromFeature.getTagState,
-  (state: fromTags.TagsState) =>  state
+  fromFeature.getMVState,
+  (state: fromFeature.State) =>  state.tags
 );
 
 export const getTagEntities = createSelector(
