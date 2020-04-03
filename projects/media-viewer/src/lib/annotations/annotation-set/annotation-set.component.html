@@ -13,7 +13,6 @@
          'rot270': rotate === 270
        }">
     <mv-box-highlight-create
-      #boxHighlight
       [page]="i + 1"
       [pageHeight]="height"
       [pageWidth]="width"
@@ -21,7 +20,7 @@
       [zoom]="zoom"
       [annotationSetId]="annotation.annotationSetId">
     </mv-box-highlight-create>
-    <mv-popup-toolbar *ngIf="rectangle && popupPage === (i+1)"
+    <mv-popup-toolbar *ngIf="rectangle && popupPage -1 === i"
                       [canBookmark]="true" [canHighlight]="true"
                       [rectangle]="rectangle"
                       [zoom]="zoom"

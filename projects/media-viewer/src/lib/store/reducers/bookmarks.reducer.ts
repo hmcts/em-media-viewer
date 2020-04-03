@@ -1,4 +1,4 @@
-import * as fromBookmarks from '../actions';
+import * as fromBookmarks from '../actions/bookmarks.action';
 
 export interface BookmarksState {
   bookmarks: Bookmark[];

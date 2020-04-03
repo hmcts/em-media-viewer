@@ -13,13 +13,14 @@ import { ToolbarButtonVisibilityService } from '../../../toolbar/toolbar.module'
 import { Observable, Subscription } from 'rxjs';
 import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import { select, Store } from '@ngrx/store';
-import * as fromStore from '../../../store';
+import * as fromSelectors from '../../../store/selectors/bookmarks.selectors';
+import * as fromStore from '../../../store/reducers/bookmarks.reducer';
 import { Bookmark } from '../../../store/reducers/bookmarks.reducer';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
 import uuid from 'uuid';
 
 @Component({
-  selector: 'mv-outline-view',
+  selector: 'mv-side-bar',
   templateUrl: './side-bar.component.html'
 })
 export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
@@ -43,7 +44,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.bookmarks$ = this.store.pipe(select(fromStore.getAllBookmarks));
+    this.bookmarks$ = this.store.pipe(select(fromSelectors.getAllBookmarks));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -86,7 +87,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       name: 'new bookmark',
       pageNumber: pdfLocation.pageNumber - 1,
       xCoordinate: pdfLocation.left,
-      yCoordinate: pdfLocation.top,
+      yCoordinate: pdfLocation.top
     });
   }
 

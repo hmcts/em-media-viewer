@@ -11,8 +11,7 @@ import { HighlightCreateService } from './annotation-create/highlight-create.ser
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
-import * as fromSelectors from '../../store/selectors/annotatioins.selectors';
-import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
+import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import { tap } from 'rxjs/operators';
 import { Rectangle } from './annotation-view/rectangle/rectangle.model';
 
@@ -97,11 +96,29 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   createBookmark() {
     const selection = window.getSelection().toString();
+    let xCoordinate, yCoordinate;
+    switch (this.rotate) {
+      case 90:
+        xCoordinate = this.rectangle.y;
+        yCoordinate = this.height - this.rectangle.x;
+        break;
+      case 180:
+        xCoordinate = this.rectangle.x;
+        yCoordinate = this.rectangle.y;
+        break;
+      case 270:
+        xCoordinate = this.width - this.rectangle.y;
+        yCoordinate = this.rectangle.x;
+        break;
+      default:
+        xCoordinate = (this.width - this.rectangle.x)/this.zoom;
+        yCoordinate = (this.height - this.rectangle.y)/this.zoom;
+    }
     this.viewerEvents.createBookmarkEvent.next({
       name: selection.length > 0 ? selection : 'new bookmark',
       pageNumber: `${this.popupPage - 1}`,
-      xCoordinate: this.width - this.rectangle.x,
-      yCoordinate: this.height - this.rectangle.y
+      xCoordinate,
+      yCoordinate
     });
     this.highlightService.resetHighlight();
     this.rectangle = undefined;

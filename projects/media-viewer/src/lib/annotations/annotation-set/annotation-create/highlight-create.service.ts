@@ -75,7 +75,7 @@ export class HighlightCreateService {
     return rectangle as Rectangle;
   }
 
-  private saveAnnotation(rectangles: Rectangle[], annotationSetId, page) {
+  saveAnnotation(rectangles: Rectangle[], annotationSetId, page) {
     this.store.pipe(select(fromSelectors.getDocumentIdSetId), take(1)).subscribe(anoSetDocId => {
       const anno = {
         id: uuid(),

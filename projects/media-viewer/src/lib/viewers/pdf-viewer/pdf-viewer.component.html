@@ -1,9 +1,9 @@
-<mv-outline-view *ngIf="toolbarButtons.sidebarOpen"
-                 id="sidebarContainer"
-                 [url]="url"
-                 [outline]="documentOutline"
-                 (navigationEvent)="goToOutlineDest($event)">
-</mv-outline-view>
+<mv-side-bar *ngIf="toolbarButtons.sidebarOpen"
+             id="sidebarContainer"
+             [url]="url"
+             [outline]="documentOutline"
+             (navigationEvent)="goToOutlineDest($event)">
+</mv-side-bar>
 <mv-comment-set-toggle *ngIf="enableAnnotations && annotationSet"></mv-comment-set-toggle>
 
 <mv-comment-set-header [ngClass]="{'show-comments-panel': showCommentsPanel}"
