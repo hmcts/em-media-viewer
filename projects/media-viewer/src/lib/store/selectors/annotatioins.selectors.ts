@@ -4,8 +4,8 @@ import * as fromFeature from '../reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
 
 export const getAnnotationsSetState = createSelector(
-  fromFeature.getAnnoSetState,
-  (state: fromAnnotations.AnnotationSetState) =>  state
+  fromFeature.getMVState,
+  (state: fromFeature.State) =>  state.annotations
 );
 
 export const getAnnotationEntities = createSelector(

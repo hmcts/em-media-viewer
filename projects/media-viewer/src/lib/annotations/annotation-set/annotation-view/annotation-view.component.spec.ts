@@ -51,7 +51,8 @@ describe('AnnotationComponent', () => {
         FormsModule,
         MutableDivModule,
         TagInputModule,
-        StoreModule.forRoot({...reducers})
+        StoreModule.forRoot({}),
+        StoreModule.forFeature('media-viewer', reducers)
       ]
     })
     .compileComponents();

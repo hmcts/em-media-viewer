@@ -16,7 +16,7 @@ xdescribe('BoxHighlightCreateComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, StoreModule.forRoot({...reducers})],
+      imports: [HttpClientTestingModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
       declarations: [BoxHighlightCreateComponent],
       providers: [BoxHighlightCreateService, AnnotationApiService, ToolbarEventService]
     }).compileComponents();

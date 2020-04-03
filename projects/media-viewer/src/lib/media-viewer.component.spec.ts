@@ -31,7 +31,8 @@ describe('MediaViewerComponent', () => {
       imports: [
         ToolbarModule,
         AnnotationsModule,
-        StoreModule.forRoot({...reducers})
+        StoreModule.forRoot({}),
+        StoreModule.forFeature('media-viewer', reducers)
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
