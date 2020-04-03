@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../../store/reducers';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('CommentsNavigateComponent', () => {
   let hostComponent: TestHostComponent;
@@ -12,7 +13,9 @@ describe('CommentsNavigateComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
+      imports: [FormsModule,
+        StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),
+        RouterTestingModule],
       declarations: [CommentsNavigateComponent, TestHostComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
