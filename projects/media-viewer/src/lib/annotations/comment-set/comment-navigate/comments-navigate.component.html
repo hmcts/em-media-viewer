@@ -2,11 +2,11 @@
   <span class="comment-search">
     Showing {{ index + 1 }} of {{ navigationList.length }}
   </span>
-  <a href="#"
+  <a [routerLink]=""
      class="comment-search"
      title="Previous comment"
      (click)="prevItem()">Prev</a>
-  <a href="#"
+  <a [routerLink]=""
      class="comment-search"
      title="Next comment'"
      (click)="nextItem()">Next</a>

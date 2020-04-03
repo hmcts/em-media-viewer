@@ -96,16 +96,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
-        this.store.dispatch(new fromActions.LoadAnnotationSet(this.url));
+        const documentId = this.extractDMStoreDocId(this.url);
+        this.store.dispatch(new fromActions.LoadAnnotationSet(documentId));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
       }
     }
-    // TODO this is causing the annotations to load twice - leaving it commeted out to check if any regressions
-    // if (changes.enableAnnotations && this.enableAnnotations) {
-    //   this.store.dispatch(new fromStore.LoadAnnotationSet(this.url));
-    // }
     this.setToolbarButtons();
   }
 
@@ -146,5 +143,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   onDocumentTitleChange(title: string) {
     this.documentTitle = title;
+  }
+
+  private extractDMStoreDocId(url: string): string {
+    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
+    return url.replace('/binary', '');
   }
 }

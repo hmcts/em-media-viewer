@@ -13,7 +13,7 @@ describe('CommentSearch', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, StoreModule.forRoot({...reducers})],
+      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
       declarations: [CommentSearchComponent, TestHostComponent],
       providers: [ToolbarEventService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]

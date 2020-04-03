@@ -29,7 +29,8 @@ describe('ImageViewerComponent', () => {
       providers: [AnnotationApiService],
       imports: [
         AnnotationsModule,
-        StoreModule.forRoot({...reducers}),
+        StoreModule.forRoot({}),
+        StoreModule.forFeature('media-viewer', reducers),
         RouterTestingModule
       ]
     })

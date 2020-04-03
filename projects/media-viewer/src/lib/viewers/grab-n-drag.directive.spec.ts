@@ -17,7 +17,7 @@ describe('GrabNDragDirective', () => {
     TestBed.configureTestingModule({
       declarations: [GrabNDragDirective, ImageViewerComponent],
       providers: [AnnotationApiService],
-      imports: [HttpClientTestingModule, StoreModule.forRoot({...reducers})],
+      imports: [HttpClientTestingModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
     fixture = TestBed.createComponent(ImageViewerComponent);
