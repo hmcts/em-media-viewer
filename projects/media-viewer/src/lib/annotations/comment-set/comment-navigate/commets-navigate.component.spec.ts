@@ -12,7 +12,7 @@ describe('CommentsNavigateComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, StoreModule.forRoot({...reducers})],
+      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
       declarations: [CommentsNavigateComponent, TestHostComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

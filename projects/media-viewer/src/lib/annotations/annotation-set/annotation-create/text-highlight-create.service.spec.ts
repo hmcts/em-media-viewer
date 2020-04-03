@@ -20,7 +20,7 @@ xdescribe('TextHighlightCreateService', () => {
   beforeEach(() => {
     service = new TextHighlightCreateService(toolbarEvents, annotationApi, annotationEvents,);
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({...reducers})],
+      imports: [StoreModule.forFeature('meida-viewer', reducers), StoreModule.forRoot({}),],
     }).compileComponents();
   });
 

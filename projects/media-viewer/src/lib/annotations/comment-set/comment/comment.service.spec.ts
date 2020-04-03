@@ -26,7 +26,8 @@ describe('CommentService', () => {
       imports: [
         FormsModule,
         HttpClientTestingModule,
-        StoreModule.forRoot({...reducers})
+        StoreModule.forRoot({}),
+        StoreModule.forFeature('media-viewer', reducers)
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },

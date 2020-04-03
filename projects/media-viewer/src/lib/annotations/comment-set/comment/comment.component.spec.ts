@@ -72,7 +72,8 @@ describe('CommentComponent', () => {
       imports: [
         FormsModule,
         HttpClientTestingModule,
-        StoreModule.forRoot({...reducers})
+        StoreModule.forRoot({}),
+        StoreModule.forFeature('media-viewer', reducers)
       ],
       providers: [
         CommentService,

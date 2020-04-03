@@ -24,7 +24,8 @@ describe('TextareaAutoExpandDirective', () => {
     TestBed.configureTestingModule({
       declarations: [TextareaAutoExpandDirective, CommentComponent, TextHighlightDirective, TagsComponent, MomentDatePipe],
       providers: [CommentService, TagsServices, CommentService],
-      imports: [BrowserAnimationsModule, FormsModule, TagInputModule, HttpClientTestingModule, StoreModule.forRoot({...reducers})]
+      imports: [BrowserAnimationsModule, FormsModule, TagInputModule, HttpClientTestingModule,
+        StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({})]
     });
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;

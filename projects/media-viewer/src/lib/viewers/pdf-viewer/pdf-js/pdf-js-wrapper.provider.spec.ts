@@ -27,7 +27,7 @@ describe('PdfJsWrapperFactory', () => {
         CommentService,
         AnnotationApiService
       ],
-      imports: [HttpClientTestingModule, StoreModule.forRoot({...reducers})],
+      imports: [HttpClientTestingModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
       ]
