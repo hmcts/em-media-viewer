@@ -15,7 +15,6 @@ import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
 import { OutlineViewComponent } from './viewers/pdf-viewer/outline-view/outline-view.component';
 import { OutlineItemComponent } from './viewers/pdf-viewer/outline-view/outline-item/outline-item.component';
 import { TagInputModule } from 'ngx-chips';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule} from '@ngrx/store';
@@ -27,7 +26,6 @@ import { effects } from './store/effects/index';
 @NgModule({
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     HttpClientModule,
     ToolbarModule,
     AnnotationsModule,
