@@ -1,6 +1,8 @@
 <mv-side-bar *ngIf="toolbarButtons.sidebarOpen"
              id="sidebarContainer"
              [url]="url"
+             [zoom]="zoom"
+             [rotate]="rotation"
              [outline]="documentOutline"
              (navigationEvent)="goToOutlineDest($event)">
 </mv-side-bar>

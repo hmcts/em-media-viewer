@@ -13,8 +13,10 @@ import { ToolbarButtonVisibilityService } from '../../../toolbar/toolbar.module'
 import { Observable, Subscription } from 'rxjs';
 import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import { select, Store } from '@ngrx/store';
-import * as fromSelectors from '../../../store/selectors/bookmarks.selectors';
-import * as fromStore from '../../../store/reducers/bookmarks.reducer';
+import * as bookmarksSelectors from '../../../store/selectors/bookmarks.selectors';
+import * as annoSelectors from '../../../store/selectors/annotations.selectors';
+import * as fromAnnotations from '../../../store/reducers/annotatons.reducer';
+import * as fromBookmarks from '../../../store/reducers/bookmarks.reducer';
 import { Bookmark } from '../../../store/reducers/bookmarks.reducer';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
 import uuid from 'uuid';
@@ -27,54 +29,88 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() outline: Outline;
   @Input() url: string;
+  @Input() zoom: number;
+  @Input() rotate: number;
   @Output() navigationEvent = new EventEmitter();
 
   selectedView = 'outline';
   bookmarks$: Observable<Bookmark[]>;
 
-  subscription: Subscription;
+  height: number;
+  width: number;
+
+  subscriptions: Subscription[];
 
   constructor(private viewerEvents: ViewerEventService,
               private toolbarButtons: ToolbarButtonVisibilityService,
               private pdfWrapperProvider: PdfJsWrapperFactory,
-              private store: Store<fromStore.BookmarksState>,
+              private bookmarksStore: Store<fromBookmarks.BookmarksState>,
+              private annotationsStore: Store<fromAnnotations.AnnotationSetState>,
   ) {
-    this.subscription =
-    viewerEvents.createBookmarkEvent.subscribe(bookmark => this.addBookmark(bookmark));
+    this.subscriptions = [
+      viewerEvents.createBookmarkEvent.subscribe(bookmark => this.addBookmark(bookmark)),
+      this.annotationsStore.select(annoSelectors.getAnnoPerPage)
+        .subscribe(annotations => {
+          if (annotations) {
+            this.height = annotations[0].styles.height;
+            this.width = annotations[0].styles.width;
+          }
+        })
+    ];
   }
 
   ngOnInit(): void {
-    this.bookmarks$ = this.store.pipe(select(fromSelectors.getAllBookmarks));
+    this.bookmarks$ = this.bookmarksStore.pipe(select(bookmarksSelectors.getAllBookmarks));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.url && this.url) {
-      console.log('dispatching the first call with this url: ', this.url)
-      this.store.dispatch(new LoadBookmarks(this.url));
+      this.bookmarksStore.dispatch(new LoadBookmarks(this.url));
     }
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   addBookmark(bookmark) {
     const documentId = this.extractDocumentId(this.url);
     const id = uuid();
-    console.log('bookmark is: ', bookmark)
-    this.store.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
+    this.bookmarksStore.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
     this.toolbarButtons.sidebarOpen.next(true);
     this.selectedView = 'bookmark'
   }
 
-  goToDestination(bookmark: Bookmark) {
-    console.log('destination is: ', bookmark)
-    this.navigationEvent.emit([
+  goToBookmark(bookmark: Bookmark) {
+    let xCoordinate, yCoordinate;
+    switch (this.rotate) {
+      case 90:
+        xCoordinate = bookmark.yCoordinate;
+        yCoordinate = this.height - bookmark.xCoordinate;
+        break;
+      case 180:
+        xCoordinate = bookmark.xCoordinate;
+        yCoordinate = bookmark.yCoordinate;
+        break;
+      case 270:
+        xCoordinate = this.width - bookmark.yCoordinate;
+        yCoordinate = bookmark.xCoordinate;
+        break;
+      default:
+        xCoordinate = this.width - bookmark.xCoordinate;
+        yCoordinate = this.height - bookmark.yCoordinate;
+    }
+    console.log('this is the zoom value ', this.zoom)
+    this.goToDestination([
       bookmark.pageNumber,
       { 'name': 'XYZ' },
-      bookmark.xCoordinate,
-      bookmark.yCoordinate
+      xCoordinate,
+      yCoordinate
     ]);
+  }
+
+  goToDestination(destionation: any[]) {
+    this.navigationEvent.emit(destionation);
   }
 
   toggleSidebarView(sidebarView: string) {

@@ -32,7 +32,7 @@
     </div>
     <div class="outlineItem" *ngIf="selectedView === 'bookmark'">
       <a *ngFor="let bookmark of (bookmarks$ | async)"
-         class="outlineItem" (click)="goToDestination(bookmark)">{{ bookmark.name }}</a>
+         class="outlineItem" (click)="goToBookmark(bookmark)">{{ bookmark.name }}</a>
       <a *ngIf="(bookmarks$ | async)?.length === 0" class="outlineItem">No bookmarks created yet</a>
     </div>
   </div>

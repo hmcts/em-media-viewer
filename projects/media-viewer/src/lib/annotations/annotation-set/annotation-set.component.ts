@@ -96,29 +96,12 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   createBookmark() {
     const selection = window.getSelection().toString();
-    let xCoordinate, yCoordinate;
-    switch (this.rotate) {
-      case 90:
-        xCoordinate = this.rectangle.y;
-        yCoordinate = this.height - this.rectangle.x;
-        break;
-      case 180:
-        xCoordinate = this.rectangle.x;
-        yCoordinate = this.rectangle.y;
-        break;
-      case 270:
-        xCoordinate = this.width - this.rectangle.y;
-        yCoordinate = this.rectangle.x;
-        break;
-      default:
-        xCoordinate = (this.width - this.rectangle.x)/this.zoom;
-        yCoordinate = (this.height - this.rectangle.y)/this.zoom;
-    }
     this.viewerEvents.createBookmarkEvent.next({
       name: selection.length > 0 ? selection : 'new bookmark',
       pageNumber: `${this.popupPage - 1}`,
-      xCoordinate,
-      yCoordinate
+      xCoordinate: this.rectangle.x,
+      yCoordinate: this.rectangle.y,
+      pageInfo: { height: this.height, width: this.width, zoom: this.zoom, rotate: this.rotate }
     });
     this.highlightService.resetHighlight();
     this.rectangle = undefined;
