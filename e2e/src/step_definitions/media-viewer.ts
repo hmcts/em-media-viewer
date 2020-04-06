@@ -444,7 +444,6 @@ When('I choose to navigate to {string}', async function (link: string) {
   await outlinePage.navigateToLink(link);
 });
 
-
 When('I enable custom toolbar', async () => {
   await page.showCustomToolbarButtons();
 });
@@ -458,12 +457,7 @@ Then('I expect custom toolbar should be enabled', async () => {
 });
 
 When(/^The user clicks on the show comments panel toggle icon$/, async function () {
-  await genericMethods.sleep(2000);
-  await commentsPanelPage.clickShowCommentsToggleIcon();
-  await genericMethods.sleep(3000);
-
-  // await commentsPanelPage.clickOnSearchTab();
-
+  await commentsPanelPage.clickCommentsToggleIcon();
 });
 
 //I expect to see the comments filter and search tabs
@@ -477,75 +471,41 @@ When(/^I expect to be able to click on the Filter Search And Comments Tab$/, asy
 });
 
 
-When(/^I do a invalid search of the Comments Tab$/, async function () {
+When(/^I Search for Comments$/, async function () {
   await genericMethods.sleep(2000);
-  await commentsPanelPage.performSearch();
+  let searchText = "Some Random to Search";
+  await commentsPanelPage.performSearch(searchText);
 
-});
-
-
-
-When(/^The user enters a random search string$/, async function () {
-  await genericMethods.sleep(2000);
-  await commentsPanelPage.clickShowCommentsToggleIcon();
-
-  console.log('media viewer comments tab is  found');
   const viewableDoc = await browser.takeScreenshot();
   this.attach(viewableDoc, 'image/png');
+  // this.hideCommentsToggle();
 
 });
-
-When(/^The user clicks on the search button of the comments panel$/, async function () {
-  await genericMethods.sleep(2000);
-  await commentsPanelPage.clickShowCommentsToggleIcon();
-
-  console.log('media viewer comments tab is  found');
-  const viewableDoc = await browser.takeScreenshot();
-  this.attach(viewableDoc, 'image/png');
-
-});
-
-When(/^The search results are empty$/, async function () {
-
-  //TODO Logic
-  let noMatchText ="No matches have been found".trim();
+Then(/^No matching results have been found$/, async function () {
+  let noMatchText ="No matches have been found";
   await commentsPanelPage.assertSearchResultText(noMatchText);
-  const viewableDoc = await browser.takeScreenshot();
-
-  this.attach(viewableDoc, 'image/png');
-
 });
 
-Then(/^The user should see that comments panel is visible$/, async function () {
-  await genericMethods.sleep(1000);
-  await commentsPanelPage.hideCommentsToggle();
-  const viewableDoc = await browser.takeScreenshot();
-  this.attach(viewableDoc, 'image/png');
-});
 
-When(/^The user clicks on the Comments Tab And Then clicks on Collate Summary$/, async function () {
-  await genericMethods.sleep(2000);
+When(/^The user clicks on the Comments Tab$/, async function () {
   await commentsPanelPage.clickOnCommentsTab();
-  await genericMethods.sleep(3000);
-
-  await commentsPanelPage.clickOnCollateCommentsButton();
-
 });
 
-When(/^There are no comment rows present$/, async function () {
-  await genericMethods.sleep(2000);
-  //  await commentsPanelPage.assertNoCommentRowsPresent();
-  await genericMethods.sleep(2000);
-  await commentsPanelPage.closeOverlayPanel()
-
+When(/^The user clicks on Collate Summary$/, async function () {
+  await commentsPanelPage.clickOnCommentsTab();
 });
 
-When(/^The user closes the overlay panel$/, async function () {
+
+Then(/^There are no comment rows present$/, async function () {
+  await commentsPanelPage.assertNoCommentRowsPresent();
   await genericMethods.sleep(2000);
   await commentsPanelPage.closeOverlayPanel()
-
 });
 
+Then(/^The user closes the overlay panel$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.closeOverlayPanel()
+});
 
 Then(/^The user clicks to hide the toggle icon$/, async function () {
   await genericMethods.sleep(1000);
