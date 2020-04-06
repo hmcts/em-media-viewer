@@ -4,10 +4,12 @@ import {StoreUtils} from '../store-utils';
 
 export interface TagsState {
   tagNameEnt: {[id: string]: string[]};
+  filters: string[]
 }
 
 export const initialTagState: TagsState = {
   tagNameEnt: {},
+  filters: []
 };
 
 export function tagsReducer (
@@ -24,48 +26,23 @@ export function tagsReducer (
       };
     }
 
-    // case fromAnnotations.SAVE_ANNOTATION_SUCCESS: {
-    //   const annotation = action.payload;
-    //   const tagNameEnt = {
-    //     ...state.tagNameEnt,
-    //     ...StoreUtils.genTagNameEntities([annotation])
-    //   };
-    //   return {
-    //     ...state,
-    //     tagNameEnt
-    //   }
-    //
-    // }
+    case fromTags.ADD_FILTER_TAGS: {
+      const payload = action.payload;
+      const filters = Object.keys(payload).reduce((arr: string[], key: string) => {
+        return payload[key] ? [...arr, key] : arr;
+      }, []);
 
-    // case fromAnnotations.DELETE_ANNOTATION_SUCCESS: {
-    //   const annotation = action.payload;
-    //   const tagNameEnt = {
-    //     ...state.tagNameEnt,
-    //   };
-    //   delete tagNameEnt[annotation];
-    //   return {
-    //     ...state,
-    //     tagNameEnt
-    //   };
-    // }
-    //
-    // case fromTags.UPDATE_TAGS: {
-    //   const payload = action.payload;
-    //   const tagNameEnt = {
-    //     ...state.tagNameEnt,
-    //     [payload.annoId]: payload.tags
-    //   };
-    //
-    //   return {
-    //     ...state,
-    //     tagNameEnt
-    //   };
-    // }
+      return {
+        ...state,
+        filters
+      };
+    }
 
   }
   return state;
 }
 
 export const getTagNameEnt = (state: TagsState) => state.tagNameEnt;
+export const getFilters = (state: TagsState) => state.filters;
 
 

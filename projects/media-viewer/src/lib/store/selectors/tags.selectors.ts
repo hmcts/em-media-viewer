@@ -12,6 +12,11 @@ export const getTagEntities = createSelector(
   fromTags.getTagNameEnt
 );
 
+export const getTagFilters = createSelector(
+  getTagsRootState,
+  fromTags.getFilters
+);
+
 export const getAllTagsArr = createSelector(
   getTagEntities,
   (tagEnt) => Object.keys(tagEnt).map(key => key)

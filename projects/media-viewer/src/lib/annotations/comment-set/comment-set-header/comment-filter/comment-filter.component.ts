@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 
 import {select, Store} from '@ngrx/store';
 import * as fromStore from '../../../../store/reducers';
 import * as fromSelectors from '../../../../store/selectors/tags.selectors';
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import * as fromActions from '../../../../store/actions/tags.actions';
+import {Observable, Subscription} from 'rxjs';
 import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
 
 
@@ -13,21 +13,39 @@ import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
   templateUrl: './comment-filter.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class CommentFilterComponent implements OnInit{
-  allTags$: Observable<any>;
+export class CommentFilterComponent implements OnInit, OnDestroy{
   tagGroup: FormGroup;
+  $subscriptions: Subscription;
+  filter$: Observable<string[]>;
+  searchValue: string;
   constructor(
     private store: Store<fromStore.State>,
     private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.allTags$ = this.store.pipe(select(fromSelectors.getAllTagsArr), tap(console.log));
-    this.tagGroup = this.fb.group({
-      allTags: new FormControl('')
-    })
+    this.bulldFrom();
+    this.filter$ = this.store.pipe(select(fromSelectors.getTagFilters));
+
   }
 
-  onFilterTags() {
-    debugger;
+  bulldFrom() {
+    this.tagGroup = this.fb.group({
+      'tagFilters': this.fb.group({}),
+    });
+    const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
+    this.$subscriptions = this.store.pipe(select(fromSelectors.getAllTagsArr)).subscribe(tags => {
+      tags.forEach(value => checkboxes.addControl(value, new FormControl(false)));
+    });
+    const formValues = this.tagGroup.valueChanges.subscribe(value => {
+      const tagFilters = value['tagFilters'];
+      this.store.dispatch(new fromActions.AddFilterTags(tagFilters));
+    });
+    this.$subscriptions.add(formValues);
   }
+
+  ngOnDestroy(): void {
+    this.$subscriptions.unsubscribe();
+  }
+
+
 }

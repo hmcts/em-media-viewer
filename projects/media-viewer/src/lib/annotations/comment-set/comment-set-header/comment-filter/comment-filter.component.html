@@ -8,9 +8,7 @@
       </div>
       <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Tags</h3>
       <ul class="hmcts-filter-tags">
-<!--        ng for -->
-        <li><a class="hmcts-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> Divorce</a></li>
-        <li><a class="hmcts-filter__tag" href="/path/to/remove/this"><span class="govuk-visually-hidden">Remove this filter</span> Financial remedy</a></li>
+        <li *ngFor="let tagName of (filter$ | async)"><a class="hmcts-filter__tag" [routerLink]=""><span class="govuk-visually-hidden">Remove this filter</span>{{tagName}}</a></li>
       </ul>
     </div>
 
@@ -19,21 +17,20 @@
         <label class="govuk-label govuk-label--m" for="keywords">
           Search Tags
         </label>
-        <input class="govuk-input" id="keywords" name="keywords" type="text">
+        <input class="govuk-input" id="keywords" name="keywords" type="text" [(ngModel)]="searchValue">
       </div>
 
       <div class="govuk-form-group">
         <form [formGroup]="tagGroup">
-          <fieldset class="govuk-fieldset">
+          <fieldset class="govuk-fieldset" formGroupName="tagFilters">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
               Tags
             </legend>
-
             <div class="govuk-checkboxes govuk-checkboxes--small">
-              <div class="govuk-checkboxes__item" *ngFor="let tag of (allTags$ | async)" [formGroup]="tagGroup">
-                <input formGroupName="allTags" (click)="onFilterTags()" class="govuk-checkboxes__input" [name]="tag" [id]="tag" type="checkbox">
-                <label class="govuk-label govuk-checkboxes__label" [for]="tag">
-                  {{ tag }}
+              <div class="govuk-checkboxes__item" *ngFor="let item of tagGroup.get('tagFilters').value | keyvalue | filter: searchValue">
+                <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="item.value"  type="checkbox">
+                <label class="govuk-label govuk-checkboxes__label">
+                  {{ item.key }}
                 </label>
               </div>
             </div>
