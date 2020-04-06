@@ -1,5 +1,5 @@
 .govuk-tabs {
-  p {
+  p{
     @include govuk-font($size: 16);
   }
 
@@ -8,4 +8,8 @@
 .govuk-tabs__tab {
   @include govuk-font($size: 16);
 
+}
+
+.govuk-tabs__panel {
+  background-color: #f8f8f8;
 }

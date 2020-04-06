@@ -1,0 +1,45 @@
+.comment-filter {
+  background-color: #f8f8f8;
+  border: none;
+  .hmcts-filter__selected, .hmcts-filter__options {
+    padding: 0;
+  }
+
+  .hmcts-filter__options {
+    box-shadow: none;
+  }
+
+  .hmcts-filter__tag {
+    &:after {
+      background-image: url(/assets/images/icon-tag-remove-cross.svg);
+    }
+  }
+
+  .hmcts-filter__tag:hover {
+    &:after {
+      fill: #FFF;
+    }
+  }
+
+  .govuk-checkboxes__item {
+    label {
+      @include govuk-font($size: 16);
+    }
+  }
+
+  .hmcts-filter__selected-heading {
+    float: right;
+  }
+
+  .hmcts-filter-tags {
+    clear: both;
+  }
+
+  h3 {
+    float: left;
+  }
+
+  fieldset {
+    border: none;
+  }
+}

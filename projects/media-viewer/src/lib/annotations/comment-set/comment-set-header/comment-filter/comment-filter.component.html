@@ -1,20 +1,19 @@
-<div class="hmcts-filter">
+<div class="comment-filter">
   <div class="hmcts-filter__content">
-    <div class="hmcts-filter__selected">
-      <div class="hmcts-filter__selected-heading">
-        <div class="hmcts-filter__heading-action">
-          <p><a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a></p>
-        </div>
+    <div class="hmcts-filter__selected-heading">
+      <div class="hmcts-filter__heading-action">
+        <p><a class="govuk-link govuk-link--no-visited-state" href="">Clear filters</a></p>
       </div>
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Tags</h3>
-      <ul class="hmcts-filter-tags">
-        <li *ngFor="let tagName of (filter$ | async)"><a class="hmcts-filter__tag" [routerLink]=""><span class="govuk-visually-hidden">Remove this filter</span>{{tagName}}</a></li>
-      </ul>
     </div>
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Tags</h3>
+    <ul class="hmcts-filter-tags">
+      <li *ngFor="let tagName of (filter$ | async)"><a class="hmcts-filter__tag" [routerLink]="">
+        <span class="govuk-visually-hidden">Remove this filter</span>{{tagName}}</a></li>
+    </ul>
 
     <div class="hmcts-filter__options">
       <div class="govuk-form-group">
-        <label class="govuk-label govuk-label--m" for="keywords">
+        <label class="govuk-label govuk-label--s" for="keywords">
           Search Tags
         </label>
         <input class="govuk-input" id="keywords" name="keywords" type="text" [(ngModel)]="searchValue">
@@ -23,11 +22,11 @@
       <div class="govuk-form-group">
         <form [formGroup]="tagGroup">
           <fieldset class="govuk-fieldset" formGroupName="tagFilters">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               Tags
             </legend>
             <div class="govuk-checkboxes govuk-checkboxes--small">
-              <div class="govuk-checkboxes__item" *ngFor="let item of tagGroup.get('tagFilters').value | keyvalue | filter: searchValue">
+              <div class="govuk-checkboxes__item" *ngFor="let item of tagGroup.get('tagFilters').value | keyvalue | filter: searchValue: 'key'">
                 <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="item.value"  type="checkbox">
                 <label class="govuk-label govuk-checkboxes__label">
                   {{ item.key }}
