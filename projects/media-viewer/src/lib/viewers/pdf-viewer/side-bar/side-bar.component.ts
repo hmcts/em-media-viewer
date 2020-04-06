@@ -86,31 +86,31 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     switch (this.rotate) {
       case 90:
         xCoordinate = bookmark.yCoordinate;
-        yCoordinate = this.height - bookmark.xCoordinate;
+        yCoordinate = this.height/this.zoom - bookmark.xCoordinate;
         break;
       case 180:
         xCoordinate = bookmark.xCoordinate;
         yCoordinate = bookmark.yCoordinate;
         break;
       case 270:
-        xCoordinate = this.width - bookmark.yCoordinate;
+        xCoordinate = this.width/this.zoom - bookmark.yCoordinate;
         yCoordinate = bookmark.xCoordinate;
         break;
       default:
-        xCoordinate = this.width - bookmark.xCoordinate;
-        yCoordinate = this.height - bookmark.yCoordinate;
+        xCoordinate = this.width/this.zoom - bookmark.xCoordinate;
+        yCoordinate = this.height/this.zoom - bookmark.yCoordinate;
     }
-    console.log('this is the zoom value ', this.zoom)
     this.goToDestination([
       bookmark.pageNumber,
       { 'name': 'XYZ' },
-      xCoordinate,
-      yCoordinate
+      0,
+      yCoordinate,
+      this.zoom * 100
     ]);
   }
 
-  goToDestination(destionation: any[]) {
-    this.navigationEvent.emit(destionation);
+  goToDestination(destination: any[]) {
+    this.navigationEvent.emit(destination);
   }
 
   toggleSidebarView(sidebarView: string) {

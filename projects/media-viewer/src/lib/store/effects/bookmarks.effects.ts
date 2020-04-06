@@ -15,42 +15,36 @@ export class BookmarksEffects {
   loadBookmarks$ = this.actions$.pipe(
     ofType(bookmarksActions.LOAD_BOOKMARKS),
     map((action: bookmarksActions.LoadBookmarks) => action.payload),
-    exhaustMap((url) => {
-      return this.bookmarksApiService.getBookmarks(url).pipe(
-        map(res => {
-          return new bookmarksActions.LoadBookmarksSuccess(res.body);
-        }),
-        catchError(error => {
-          return of(new bookmarksActions.LoadBookmarksFail([]));
-        }));
-    }));
+    exhaustMap((url) =>
+      this.bookmarksApiService.getBookmarks(url)
+        .pipe(
+          map(res => new bookmarksActions.LoadBookmarksSuccess(res.body)),
+          catchError(error => of(new bookmarksActions.LoadBookmarksFail([])))
+        )
+    ));
 
   @Effect()
   postAnnotation$ = this.actions$.pipe(
     ofType(bookmarksActions.CREATE_BOOKMARK),
     map((action: bookmarksActions.CreateBookmark) => action.payload),
-    exhaustMap((bookmark) => {
-      return this.bookmarksApiService.createBookmark(bookmark).pipe(
-        map(bookmark => {
-          return new bookmarksActions.CreateBookmarkSuccess(bookmark);
-        }),
-        catchError(error => {
-          return of(new bookmarksActions.CreateBookmarkFail(error));
-        }));
-    }));
+    exhaustMap((bookmark) =>
+      this.bookmarksApiService.createBookmark(bookmark)
+        .pipe(
+          map(bookmark => new bookmarksActions.CreateBookmarkSuccess(bookmark)),
+          catchError(error => of(new bookmarksActions.CreateBookmarkFail(error)))
+        )
+    ));
 
   @Effect()
   deleteAnnotation$ = this.actions$.pipe(
     ofType(bookmarksActions.DELETE_BOOKMARK),
     map((action: bookmarksActions.DeleteBookmark) => action.payload),
-    exhaustMap((bookmarkId) => {
-      return this.bookmarksApiService.deleteBookmark(bookmarkId).pipe(
-        map(() => {
-          return new bookmarksActions.DeleteBookmarkSuccess(bookmarkId);
-        }),
-        catchError(error => {
-          return of(new bookmarksActions.DeleteBookmarkFail(error));
-        }));
-    }));
+    exhaustMap((bookmarkId) =>
+      this.bookmarksApiService.deleteBookmark(bookmarkId)
+        .pipe(
+          map(() => new bookmarksActions.DeleteBookmarkSuccess(bookmarkId)),
+          catchError(error => of(new bookmarksActions.DeleteBookmarkFail(error)))
+        )
+    ));
 }
 
