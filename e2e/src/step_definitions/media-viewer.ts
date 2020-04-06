@@ -11,6 +11,8 @@ import {RotatePage} from '../pages/rotate.po';
 import {CommentPage} from '../pages/comment.po';
 import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
+import {CommentsPanelPage} from '../pages/commentspanel.po';
+
 
 
 const page = new AppPage();
@@ -23,6 +25,8 @@ const rotatePage = new RotatePage();
 const commentsPage = new CommentPage();
 const zoomPage = new ZoomPage();
 const outlinePage = new OutlinePage();
+const commentsPanelPage = new CommentsPanelPage();
+
 
 const comment_ellipsis = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
 const comment_1 = 'This is comment number 1';
@@ -451,4 +455,99 @@ Then('I expect custom toolbar button should be enabled', async () => {
 
 Then('I expect custom toolbar should be enabled', async () => {
   await page.waitForElement(by.className('customToolbar'));
+});
+
+When(/^The user clicks on the show comments panel toggle icon$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickShowCommentsToggleIcon();
+  await genericMethods.sleep(3000);
+
+  // await commentsPanelPage.clickOnSearchTab();
+
+});
+
+//I expect to see the comments filter and search tabs
+When(/^I expect to be able to click on the Filter Search And Comments Tab$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnCommentsTab();
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnFilterTab();
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnSearchTab();
+});
+
+
+When(/^I do a invalid search of the Comments Tab$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.performSearch();
+
+});
+
+
+
+When(/^The user enters a random search string$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickShowCommentsToggleIcon();
+
+  console.log('media viewer comments tab is  found');
+  const viewableDoc = await browser.takeScreenshot();
+  this.attach(viewableDoc, 'image/png');
+
+});
+
+When(/^The user clicks on the search button of the comments panel$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickShowCommentsToggleIcon();
+
+  console.log('media viewer comments tab is  found');
+  const viewableDoc = await browser.takeScreenshot();
+  this.attach(viewableDoc, 'image/png');
+
+});
+
+When(/^The search results are empty$/, async function () {
+
+  //TODO Logic
+  let noMatchText ="No matches have been found".trim();
+  await commentsPanelPage.assertSearchResultText(noMatchText);
+  const viewableDoc = await browser.takeScreenshot();
+
+  this.attach(viewableDoc, 'image/png');
+
+});
+
+Then(/^The user should see that comments panel is visible$/, async function () {
+  await genericMethods.sleep(1000);
+  await commentsPanelPage.hideCommentsToggle();
+  const viewableDoc = await browser.takeScreenshot();
+  this.attach(viewableDoc, 'image/png');
+});
+
+When(/^The user clicks on the Comments Tab And Then clicks on Collate Summary$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnCommentsTab();
+  await genericMethods.sleep(3000);
+
+  await commentsPanelPage.clickOnCollateCommentsButton();
+
+});
+
+When(/^There are no comment rows present$/, async function () {
+  await genericMethods.sleep(2000);
+  //  await commentsPanelPage.assertNoCommentRowsPresent();
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.closeOverlayPanel()
+
+});
+
+When(/^The user closes the overlay panel$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.closeOverlayPanel()
+
+});
+
+
+Then(/^The user clicks to hide the toggle icon$/, async function () {
+  await genericMethods.sleep(1000);
+  await commentsPanelPage.hideCommentsToggle();
 });
