@@ -169,7 +169,6 @@ describe('AnnotationSetComponent', () => {
       spyOn(highlightService, 'initBoxHighlight');
       component.drawMode = true;
 
-
       expect(highlightService.initBoxHighlight).toHaveBeenCalled();
     })
   );

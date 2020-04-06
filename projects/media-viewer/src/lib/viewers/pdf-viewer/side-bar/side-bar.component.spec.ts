@@ -27,7 +27,7 @@ describe('OutlineViewComponent', () => {
   it('should emit navigation event', () => {
     const navigateSpy = spyOn(component.navigationEvent, 'emit');
 
-    component.goToDestination({});
+    component.goToDestination([]);
 
     expect(navigateSpy).toHaveBeenCalled();
   });

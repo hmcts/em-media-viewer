@@ -44,7 +44,7 @@ describe('HighlightCreateService', () => {
     spyOn(annotationEvents, 'selectAnnotation');
     spyOn(mockHighlightModeSubject, 'next');
 
-    service.createTextHighlight(mockHighlight, mockAnnoSet, mockPageInfo);
+    service.saveAnnotation(mockHighlight, mockAnnoSet, mockPageInfo);
     tick();
 
     expect(annotationApi.postAnnotation).toHaveBeenCalled();
@@ -62,7 +62,7 @@ describe('HighlightCreateService', () => {
     };
     const mockHighlight = { event: { target: mockElement }} as any;
 
-    service.createTextHighlight(mockHighlight, {}, {});
+    service.saveAnnotation(mockHighlight, {}, {});
 
     expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
     expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translate');
@@ -79,7 +79,7 @@ describe('HighlightCreateService', () => {
     };
     const mockHighlight = { event: { target: mockElement }} as any;
 
-    service.createTextHighlight(mockHighlight, {}, {});
+    service.saveAnnotation(mockHighlight, {}, {});
 
     expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
     expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translateX');

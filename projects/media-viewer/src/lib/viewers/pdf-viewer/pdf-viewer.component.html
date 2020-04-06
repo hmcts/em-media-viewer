@@ -3,8 +3,7 @@
              [url]="url"
              [zoom]="zoom"
              [rotate]="rotation"
-             [outline]="documentOutline"
-             (navigationEvent)="goToOutlineDest($event)">
+             [outline]="documentOutline">
 </mv-side-bar>
 <mv-comment-set-toggle *ngIf="enableAnnotations && annotationSet"></mv-comment-set-toggle>
 

@@ -14,21 +14,19 @@
        }">
     <mv-box-highlight-create
       [page]="i + 1"
-      [pageHeight]="height"
-      [pageWidth]="width"
+      [pageHeight]="annotation.styles.height"
+      [pageWidth]="annotation.styles.width"
       [rotate]="rotate"
       [zoom]="zoom"
       [annotationSetId]="annotation.annotationSetId">
     </mv-box-highlight-create>
-    <mv-popup-toolbar *ngIf="rectangle && popupPage -1 === i"
-                      [canBookmark]="true" [canHighlight]="true"
-                      [rectangle]="rectangle"
+    <mv-popup-toolbar [canBookmark]="true" [canHighlight]="true"
+                      [page]="i + 1"
+                      [annoSetId]="annoSet.id"
                       [zoom]="zoom"
                       [rotate]="rotate"
-                      [height]="height"
-                      [width]="width"
-                      (createBookmarkEvent)="createBookmark()"
-                      (createHighlightEvent)="createHighlight()">
+                      [height]="annotation.styles.height"
+                      [width]="annotation.styles.width">
     </mv-popup-toolbar>
     <div class="pageContainer__page-item">
       <ng-container *ngFor="let anno of annotation.anno">
@@ -36,8 +34,8 @@
                        [zoom]="zoom"
                        [rotate]="rotate"
                        [selectedAnnoId]="selectedAnnotation$ | async"
-                       [height]="height"
-                       [width]="width"
+                       [height]="annotation.styles.height"
+                       [width]="annotation.styles.width"
                        (update)="onAnnotationUpdate($event)"
                        (delete)="onAnnotationDelete($event)"
                        (annotationClick)="selectAnnotation($event)">

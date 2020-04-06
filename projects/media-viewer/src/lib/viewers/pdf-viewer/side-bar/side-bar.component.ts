@@ -82,35 +82,31 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   goToBookmark(bookmark: Bookmark) {
-    let xCoordinate, yCoordinate;
+    let top;
     switch (this.rotate) {
       case 90:
-        xCoordinate = bookmark.yCoordinate;
-        yCoordinate = this.height/this.zoom - bookmark.xCoordinate;
+        top = this.height/this.zoom - bookmark.xCoordinate;
         break;
       case 180:
-        xCoordinate = bookmark.xCoordinate;
-        yCoordinate = bookmark.yCoordinate;
+        top = bookmark.yCoordinate;
         break;
       case 270:
-        xCoordinate = this.width/this.zoom - bookmark.yCoordinate;
-        yCoordinate = bookmark.xCoordinate;
+        top = bookmark.xCoordinate;
         break;
       default:
-        xCoordinate = this.width/this.zoom - bookmark.xCoordinate;
-        yCoordinate = this.height/this.zoom - bookmark.yCoordinate;
+        top = this.height/this.zoom - bookmark.yCoordinate;
     }
     this.goToDestination([
       bookmark.pageNumber,
       { 'name': 'XYZ' },
       0,
-      yCoordinate,
+      top,
       this.zoom * 100
     ]);
   }
 
   goToDestination(destination: any[]) {
-    this.navigationEvent.emit(destination);
+    this.pdfWrapperProvider.pdfWrapper().navigateTo(destination);
   }
 
   toggleSidebarView(sidebarView: string) {

@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Rectangle } from '../rectangle/rectangle.model';
+import { Highlight, ViewerEventService } from '../../../../viewers/viewer-event.service';
+import { HighlightCreateService } from '../../annotation-create/highlight-create.service';
+import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-popup-toolbar',
@@ -10,11 +13,11 @@ export class PopupToolbarComponent {
   readonly defaultHeight;
   readonly defaultWidth;
 
-  @Input() rectangle: Rectangle;
   @Input() zoom = 1;
   @Input() rotate = 0;
   @Input() height: number;
   @Input() width: number;
+  @Input() annoSetId: string;
 
   @Input() canHighlight: boolean;
   @Input() canBookmark: boolean;
@@ -26,13 +29,42 @@ export class PopupToolbarComponent {
   @Output() addOrEditCommentEvent = new EventEmitter();
   @Output() createBookmarkEvent = new EventEmitter();
 
-  constructor() {
+  @Input() rectangle: Rectangle;
+  @Input() page: number;
+
+  rectangles: Rectangle[];
+  highlightPage: number;
+
+  constructor(private readonly highlightService: HighlightCreateService,
+              private readonly viewerEvents: ViewerEventService,
+              private readonly toolbarEvents: ToolbarEventService) {
     this.defaultHeight = 70;
     this.defaultWidth = 350;
+      this.viewerEvents.textHighlight
+        .subscribe(highlight => this.onTextHighlight(highlight));
+  }
+
+  onTextHighlight(highlight: Highlight) {
+    this.highlightPage = highlight.page;
+    this.rectangles = this.highlightService.getRectangles(highlight, {
+      zoom: this.zoom,
+      rotate: this.rotate,
+      pageHeight: this.height,
+      pageWidth: this.width
+    });
+    if (this.rectangles) {
+      this.rectangle = this.rectangles
+        .reduce((prev, current) => prev.y < current.y ? prev : current);
+    }
+    this.toolbarEvents.highlightModeSubject.next(false);
   }
 
   createHighlight() {
+    this.highlightService.saveAnnotation(this.rectangles, this.annoSetId, this.page);
+    this.highlightService.resetHighlight();
     this.createHighlightEvent.emit();
+    this.rectangles = undefined;
+    this.rectangle = undefined;
   }
 
   deleteHighlight() {
@@ -44,10 +76,18 @@ export class PopupToolbarComponent {
   }
 
   createBookmark() {
-    this.createBookmarkEvent.emit();
+    const selection = window.getSelection().toString();
+    this.viewerEvents.createBookmarkEvent.next({
+      name: selection.length > 0 ? selection : 'new bookmark',
+      pageNumber: `${this.page - 1}`,
+      xCoordinate: this.rectangle.x,
+      yCoordinate: this.rectangle.y,
+      pageInfo: { height: this.height, width: this.width, zoom: this.zoom, rotate: this.rotate }
+    });
+    this.highlightService.resetHighlight();
+    this.rectangle = undefined;
+    this.rectangles = undefined;
   }
-
-
 
   get transformStyles() {
     switch (this.rotate) {

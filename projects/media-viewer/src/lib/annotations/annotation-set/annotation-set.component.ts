@@ -3,17 +3,14 @@ import { Annotation } from './annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { AnnotationSet } from './annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
+import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { Observable, Subscription } from 'rxjs';
 import { SelectionAnnotation } from '../models/event-select.model';
 import { CommentService } from '../comment-set/comment/comment.service';
-import { HighlightCreateService } from './annotation-create/highlight-create.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
-import { tap } from 'rxjs/operators';
-import { Rectangle } from './annotation-view/rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -34,33 +31,21 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   @Input() height: number;
   selectedAnnotation$: Observable<SelectionAnnotation>;
   drawMode = false;
-  rectangles: Rectangle[];
-  popupPage: number;
 
   private subscriptions: Subscription[] = [];
-  rectangle: Rectangle;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
     private readonly api: AnnotationApiService,
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
-    private readonly commentService: CommentService,
-    private readonly highlightService: HighlightCreateService) {}
+    private readonly commentService: CommentService) {}
 
   ngOnInit(): void {
-    this.annotationsPerPage$ = this.store.select(fromSelectors.getAnnoPerPage)
-      .pipe(tap(annotations => {
-        if (annotations) {
-          this.height = annotations[0].styles.height;
-          this.width = annotations[0].styles.width;
-        }
-    }));
+    this.annotationsPerPage$ = this.store.select(fromSelectors.getAnnoPerPage);
     this.selectedAnnotation$ = this.store.select(fromSelectors.getSelectedAnnotation);
 
     this.subscriptions = [
-      this.viewerEvents.textHighlight
-        .subscribe(highlight => this.onTextHighlight(highlight)),
       this.toolbarEvents.drawModeSubject
         .subscribe(drawMode => this.drawMode = drawMode)
     ];
@@ -68,44 +53,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
-
-  private onTextHighlight(highlight: Highlight) {
-    if (highlight) {
-      this.popupPage = highlight.page;
-      this.rectangles = this.highlightService.getRectangles(highlight, {
-        zoom: this.zoom,
-        rotate: this.rotate,
-        pageHeight: this.height,
-        pageWidth: this.width
-      });
-      if (this.rectangles) {
-        this.rectangle = this.rectangles
-          .reduce((prev, current) => prev.y < current.y ? prev : current);
-      }
-      this.toolbarEvents.highlightModeSubject.next(false);
-    }
-  }
-
-  createHighlight() {
-    this.highlightService.saveAnnotation(this.rectangles, this.annoSet.id, this.popupPage);
-    this.highlightService.resetHighlight();
-    this.rectangle = undefined;
-    this.rectangles = undefined
-  }
-
-  createBookmark() {
-    const selection = window.getSelection().toString();
-    this.viewerEvents.createBookmarkEvent.next({
-      name: selection.length > 0 ? selection : 'new bookmark',
-      pageNumber: `${this.popupPage - 1}`,
-      xCoordinate: this.rectangle.x,
-      yCoordinate: this.rectangle.y,
-      pageInfo: { height: this.height, width: this.width, zoom: this.zoom, rotate: this.rotate }
-    });
-    this.highlightService.resetHighlight();
-    this.rectangle = undefined;
-    this.rectangles = undefined;
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
