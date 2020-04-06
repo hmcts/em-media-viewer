@@ -11,11 +11,14 @@ Feature: CommentsPanelSearch
     And  The user clicks to hide the toggle icon
     Then The user clicks on the show comments panel toggle icon
     Then I expect to be able to click on the Filter Search And Comments Tab
-    And  I do a invalid search of the Comments Tab
+    When I Search for Comments
+    Then No matching results have been found
+
 
   @CommentsPanelCollateComments @ci
   Scenario: Collate Comments Overlay Panel
-    When The user clicks on the show comments panel toggle icon
-    And  The user clicks on the Comments Tab And Then clicks on Collate Summary
-    And  There are no comment rows present
+    When  The user clicks on the show comments panel toggle icon
+    And   The user clicks on the Comments Tab
+    And   The user clicks on Collate Summary
+    Then  There are no comment rows present
 
