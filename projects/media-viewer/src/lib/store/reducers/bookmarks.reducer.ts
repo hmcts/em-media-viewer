@@ -10,7 +10,7 @@ export interface Bookmark {
   id: string;
   documentId: string;
   name: string;
-  pageNumber: string;
+  pageNumber: number;
   xCoordinate: number;
   yCoordinate: number;
   zoom: number

@@ -73,9 +73,10 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  addBookmark(bookmark) {
+  addBookmark(bookmark: Bookmark) {
     const documentId = this.extractDocumentId(this.url);
     const id = uuid();
+    bookmark.name = bookmark.name.substr(0,30);
     this.bookmarksStore.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
     this.toolbarButtons.sidebarOpen.next(true);
     this.selectedView = 'bookmark'
@@ -120,7 +121,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       pageNumber: pdfLocation.pageNumber - 1,
       xCoordinate: pdfLocation.left,
       yCoordinate: pdfLocation.top
-    });
+    } as Bookmark);
   }
 
   private extractDocumentId(url: string): string {
