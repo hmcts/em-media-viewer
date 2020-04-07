@@ -8,9 +8,7 @@ Feature: CommentsPanelSearch
   @CommentsPanelSearch @ci
   Scenario: Show And Hide the Comments Panel
     When The user clicks on the show comments panel toggle icon
-    And  The user clicks to hide the toggle icon
-    Then The user clicks on the show comments panel toggle icon
-    Then I expect to be able to click on the Filter Search And Comments Tab
+    And  I expect to be able to click on the Filter Search And Comments Tab
     When I Search for Comments
     Then No matching results have been found
 
