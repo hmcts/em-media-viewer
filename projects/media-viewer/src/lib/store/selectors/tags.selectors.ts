@@ -17,6 +17,16 @@ export const getTagFilters = createSelector(
   fromTags.getFilters
 );
 
+export const getTagFiltered = createSelector(
+  getTagsRootState,
+  fromTags.getFilteredComments
+);
+
+export const getFilteredPageEntities = createSelector(
+  getTagsRootState,
+  fromTags.getFilteredPageEnt
+);
+
 export const getAllTagsArr = createSelector(
   getTagEntities,
   (tagEnt) => Object.keys(tagEnt).map(key => key)

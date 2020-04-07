@@ -5,7 +5,8 @@ import {Annotation} from '../../annotations/annotation-set/annotation-view/annot
 
 export interface TagsState {
   tagNameEnt: {[id: string]: string[]};
-  filtered: {[id: string]: string[]};
+  filteredComments: {[id: string]: string[]};
+  filteredPageEntities: {[id: string]: Annotation[]};
   annotations: Annotation[];
   filters: string[];
 }
@@ -13,7 +14,8 @@ export interface TagsState {
 export const initialTagState: TagsState = {
   tagNameEnt: {},
   annotations: [],
-  filtered: {},
+  filteredPageEntities: {},
+  filteredComments: {},
   filters: []
 };
 
@@ -51,17 +53,20 @@ export function tagsReducer (
         return payload[key] ? [...arr, key] : arr;
       }, []);
 
-      const filtered = filters.reduce((obj: {[id: string]: string}, f) => {
+      const filteredComments = filters.reduce((obj: {[id: string]: string}, f) => {
         return {
           ...obj,
           ...state.tagNameEnt[f]
         }
       }, {});
 
+      const annotations = Object.keys(filteredComments).map(key => state.annotations.filter(a => a.id === key)[0]);
+      const filteredPageEntities = StoreUtils.groupByKeyEntities(annotations, 'page');
       return {
         ...state,
         filters,
-        filtered
+        filteredComments,
+        filteredPageEntities
       };
     }
 
@@ -71,5 +76,7 @@ export function tagsReducer (
 
 export const getTagNameEnt = (state: TagsState) => state.tagNameEnt;
 export const getFilters = (state: TagsState) => state.filters;
+export const getFilteredComments = (state: TagsState) => state.filteredComments;
+export const getFilteredPageEnt = (state: TagsState) => state.filteredPageEntities;
 
 

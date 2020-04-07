@@ -16,10 +16,14 @@ export class FilterPipe implements PipeTransform {
     // convert the searchText to lower case
     searchText = searchText.toLowerCase();
 
-    // retrun the filtered array
+    // retrun the filteredComments array
     return items.filter(item => {
-      if (item && item[fieldName]) {
-        return item[fieldName].toLowerCase().includes(searchText);
+      if (item) {
+        if (item[fieldName]) {
+          return item[fieldName].toLowerCase().includes(searchText);
+        } else {
+          return item.toLowerCase().includes(searchText);
+        }
       }
       return false;
     });
