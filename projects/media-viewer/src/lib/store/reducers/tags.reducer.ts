@@ -5,13 +5,15 @@ import {Annotation} from '../../annotations/annotation-set/annotation-view/annot
 
 export interface TagsState {
   tagNameEnt: {[id: string]: string[]};
+  filtered: {[id: string]: string[]};
   annotations: Annotation[];
-  filters: string[]
+  filters: string[];
 }
 
 export const initialTagState: TagsState = {
   tagNameEnt: {},
   annotations: [],
+  filtered: {},
   filters: []
 };
 
@@ -44,13 +46,22 @@ export function tagsReducer (
 
     case fromTags.ADD_FILTER_TAGS: {
       const payload = action.payload;
+
       const filters = Object.keys(payload).reduce((arr: string[], key: string) => {
         return payload[key] ? [...arr, key] : arr;
       }, []);
 
+      const filtered = filters.reduce((obj: {[id: string]: string}, f) => {
+        return {
+          ...obj,
+          ...state.tagNameEnt[f]
+        }
+      }, {});
+
       return {
         ...state,
-        filters
+        filters,
+        filtered
       };
     }
 
