@@ -1,14 +1,17 @@
 import * as fromAnnotations from '../actions/annotations.action';
 import * as fromTags from '../actions/tags.actions';
 import {StoreUtils} from '../store-utils';
+import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 
 export interface TagsState {
   tagNameEnt: {[id: string]: string[]};
+  annotations: Annotation[];
   filters: string[]
 }
 
 export const initialTagState: TagsState = {
   tagNameEnt: {},
+  annotations: [],
   filters: []
 };
 
@@ -20,6 +23,19 @@ export function tagsReducer (
     case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS: {
       const annotations = action.payload.annotations;
       const tagNameEnt = StoreUtils.genTagNameEntities(annotations);
+      return {
+        ...state,
+        tagNameEnt,
+        annotations
+      };
+    }
+
+    case fromAnnotations.SAVE_ANNOTATION_SUCCESS: {
+      const payload = action.payload;
+
+      const anno = [...state.annotations].filter(a => a.id !== payload.id);
+      const annotation = [...anno, payload];
+      const tagNameEnt =  StoreUtils.genTagNameEntities(annotation);
       return {
         ...state,
         tagNameEnt

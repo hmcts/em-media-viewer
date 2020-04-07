@@ -6,6 +6,7 @@ import * as fromSelectors from '../../../../store/selectors/tags.selectors';
 import * as fromActions from '../../../../store/actions/tags.actions';
 import {Observable, Subscription} from 'rxjs';
 import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
+import {tap} from 'rxjs/operators';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class CommentFilterComponent implements OnInit, OnDestroy{
   tagGroup: FormGroup;
   $subscriptions: Subscription;
   filter$: Observable<string[]>;
+  allTags$: Observable<any>
   searchValue: string;
   constructor(
     private store: Store<fromStore.State>,
@@ -33,14 +35,13 @@ export class CommentFilterComponent implements OnInit, OnDestroy{
       'tagFilters': this.fb.group({}),
     });
     const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
-    this.$subscriptions = this.store.pipe(select(fromSelectors.getAllTagsArr)).subscribe(tags => {
+    this.allTags$ = this.store.pipe(select(fromSelectors.getAllTagsArr)).pipe(tap(tags => {
       tags.forEach(value => checkboxes.addControl(value, new FormControl(false)));
-    });
-    const formValues = this.tagGroup.valueChanges.subscribe(value => {
+    }));
+    this.$subscriptions = this.tagGroup.valueChanges.subscribe(value => {
       const tagFilters = value['tagFilters'];
       this.store.dispatch(new fromActions.AddFilterTags(tagFilters));
     });
-    this.$subscriptions.add(formValues);
   }
 
   ngOnDestroy(): void {

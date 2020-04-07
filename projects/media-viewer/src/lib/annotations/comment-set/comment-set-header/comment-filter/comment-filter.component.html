@@ -26,10 +26,10 @@
               Tags
             </legend>
             <div class="govuk-checkboxes govuk-checkboxes--small">
-              <div class="govuk-checkboxes__item" *ngFor="let item of tagGroup.get('tagFilters').value | keyvalue | filter: searchValue: 'key'">
-                <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="item.value"  type="checkbox">
+              <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async) | filter: searchValue: 'key'">
+                <input [formControlName]="item" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
                 <label class="govuk-label govuk-checkboxes__label">
-                  {{ item.key }}
+                  {{ item }}
                 </label>
               </div>
             </div>

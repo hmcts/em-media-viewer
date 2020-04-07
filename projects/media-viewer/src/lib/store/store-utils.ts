@@ -54,9 +54,22 @@ export class StoreUtils {
           });
           return tags.filter(a => a !== undefined);
         });
+        const readyAnno = annot.reduce((obj: {[id: string]: string}, anno: string[]) => {
+          const a = anno.length ? anno[0] : null;
+          if (a) {
+            return {
+              ...obj,
+              [a]: a
+            };
+          } else {
+            return {
+              ...obj
+            };
+          }
+        }, {})
         return {
           ...tagNameEnt,
-          [key]: [...annot].filter(a =>  !!a.length)
+          [key]: readyAnno
         }
       }, {});
 

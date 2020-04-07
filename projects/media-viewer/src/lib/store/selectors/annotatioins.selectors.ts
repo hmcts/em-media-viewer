@@ -3,6 +3,7 @@ import {createSelector} from '@ngrx/store';
 import * as fromFeature from '../reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
 import * as fromTags from './tags.selectors';
+import {getTagFilters} from './tags.selectors';
 
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
@@ -95,14 +96,14 @@ export const getCommentsArray = createSelector(
   (comments, pages, annoEnt) => {
     const pageHeight = pages.styles.height;
     if (comments && pageHeight && annoEnt) {
-      return Object.keys(comments).map(key => {
-        const page = annoEnt[key].page;
-        return {
-          ...comments[key],
-          page,
-          pageHeight
-        };
-      });
+        return Object.keys(comments).map(key => {
+          const page = annoEnt[key].page;
+          return {
+            ...comments[key],
+            page,
+            pageHeight
+          };
+        });
     }
   }
 );
