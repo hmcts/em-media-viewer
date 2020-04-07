@@ -6,7 +6,7 @@ import * as fromSelectors from '../../../../store/selectors/tags.selectors';
 import * as fromActions from '../../../../store/actions/tags.actions';
 import {Observable, Subscription} from 'rxjs';
 import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
-import {distinctUntilChanged, tap} from 'rxjs/operators';
+import {distinct, tap, throttleTime} from 'rxjs/operators';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class CommentFilterComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.buildFrom();
     this.filter$ = this.store.pipe(select(fromSelectors.getTagFilters));
-    this.$subscriptions = this.tagGroup.valueChanges.subscribe(value => {
+    this.$subscriptions = this.tagGroup.valueChanges.pipe(throttleTime(500)).subscribe(value => {
       const tagFilters = value['tagFilters'];
       this.store.dispatch(new fromActions.AddFilterTags(tagFilters));
     });
@@ -39,7 +39,7 @@ export class CommentFilterComponent implements OnInit, OnDestroy{
       'tagFilters': this.fb.group({}),
     });
     const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
-    this.allTags$ = this.store.pipe(select(fromSelectors.getAllTagsArr), distinctUntilChanged()).pipe(tap(tags => {
+    this.allTags$ = this.store.pipe(select(fromSelectors.getAllTagsArr), distinct()).pipe(tap(tags => {
       tags.forEach(value => checkboxes.addControl(value, new FormControl(false)));
     }));
   }

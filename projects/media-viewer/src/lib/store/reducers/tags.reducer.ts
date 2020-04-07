@@ -37,14 +37,34 @@ export function tagsReducer (
     case fromAnnotations.SAVE_ANNOTATION_SUCCESS: {
       const payload = action.payload;
 
-      const anno = [...state.annotations].filter(a => a.id !== payload.id);
-      const annotation = [...anno, payload];
-      const tagNameEnt =  StoreUtils.genTagNameEntities(annotation);
+      const anno = [...state.annotations].filter(a => a.id !== payload.id) || [];
+      const annotations = [...anno, payload];
+      const tagNameEnt =  StoreUtils.genTagNameEntities(annotations);
       return {
         ...state,
+        annotations,
         tagNameEnt
       };
     }
+
+    case fromAnnotations.DELETE_ANNOTATION_SUCCESS: {
+      const id = action.payload;
+      const annotations = [...state.annotations].filter(a => a.id !== id);
+      const tagNameEnt =  StoreUtils.genTagNameEntities(annotations);
+      const filteredPageEntities = StoreUtils.groupByKeyEntities(annotations, 'page');
+      const filteredComments = {
+        ...state.filteredComments
+      };
+      delete filteredComments[id];
+      return {
+        ...state,
+        annotations,
+        tagNameEnt,
+        filteredComments,
+        filteredPageEntities
+      };
+    }
+
 
     case fromTags.ADD_FILTER_TAGS: {
       const payload = action.payload;
