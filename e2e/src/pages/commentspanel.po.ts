@@ -33,9 +33,7 @@ export class CommentsPanelPage extends AppPage {
   }
 
   async clickOnSearchTab(){
-    await browser.sleep(2000);
     await this.searchTabButton.click();
-    await browser.sleep(2000);
  }
 
   async performSearch(searchText: string){
