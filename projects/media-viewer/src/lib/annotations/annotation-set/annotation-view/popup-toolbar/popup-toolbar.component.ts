@@ -78,7 +78,7 @@ export class PopupToolbarComponent {
     let popupTop;
     switch (this.rotate) {
       case 90:
-        popupTop = this.rectangle.y * this.zoom + this.rectangle.height / 2 * this.zoom + this.defaultWidth / 2;
+        popupTop = (this.rectangle.y + (this.rectangle.height / 2)) * this.zoom + this.defaultWidth / 2;
         if (popupTop >= this.height) {
           return this.height;
         } else if (popupTop < this.defaultWidth) {
@@ -109,7 +109,7 @@ export class PopupToolbarComponent {
     let popupLeft;
     switch (this.rotate) {
       case 90:
-        popupLeft = (this.rectangle.x * this.zoom) - (this.defaultHeight);
+        popupLeft = (this.rectangle.x * this.zoom) - this.defaultHeight;
         return popupLeft <= 0 ? this.defaultHeight : popupLeft;
       case 270:
         popupLeft = (this.rectangle.x + (this.rectangle.width)) * this.zoom + this.defaultHeight;
