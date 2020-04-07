@@ -11,6 +11,8 @@ import {RotatePage} from '../pages/rotate.po';
 import {CommentPage} from '../pages/comment.po';
 import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
+import {CommentsPanelPage} from '../pages/commentspanel.po';
+
 
 
 const page = new AppPage();
@@ -23,6 +25,8 @@ const rotatePage = new RotatePage();
 const commentsPage = new CommentPage();
 const zoomPage = new ZoomPage();
 const outlinePage = new OutlinePage();
+const commentsPanelPage = new CommentsPanelPage();
+
 
 const comment_ellipsis = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
 const comment_1 = 'This is comment number 1';
@@ -440,7 +444,6 @@ When('I choose to navigate to {string}', async function (link: string) {
   await outlinePage.navigateToLink(link);
 });
 
-
 When('I enable custom toolbar', async () => {
   await page.showCustomToolbarButtons();
 });
@@ -451,4 +454,56 @@ Then('I expect custom toolbar button should be enabled', async () => {
 
 Then('I expect custom toolbar should be enabled', async () => {
   await page.waitForElement(by.className('customToolbar'));
+});
+
+When(/^The user clicks on the show comments panel toggle icon$/, async function () {
+  await commentsPanelPage.clickCommentsToggleIcon();
+});
+
+//I expect to see the comments filter and search tabs
+Then(/^I expect to be able to click on the Filter Search And Comments Tab$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnCommentsTab();
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnFilterTab();
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnSearchTab();
+});
+
+
+When(/^I Search for Comments$/, async function () {
+  await genericMethods.sleep(2000);
+  let searchText = "Some Random to Search";
+  await commentsPanelPage.performSearch(searchText);
+
+  const viewableDoc = await browser.takeScreenshot();
+  this.attach(viewableDoc, 'image/png');
+  // this.hideCommentsToggle();
+
+});
+Then(/^No matching results have been found$/, async function () {
+  let noMatchText ="No matches have been found";
+  await commentsPanelPage.assertSearchResultText(noMatchText);
+});
+
+
+When(/^The user clicks on the Comments Tab$/, async function () {
+  await commentsPanelPage.clickOnCommentsTab();
+});
+
+When(/^The user clicks on Collate Summary$/, async function () {
+  await commentsPanelPage.clickOnCommentsTab();
+});
+
+
+Then(/^There are no comment rows present$/, async function () {
+  await commentsPanelPage.assertNoCommentRowsPresent();
+});
+
+When(/^The user closes the overlay panel$/, async function () {
+  await commentsPanelPage.closeOverlayPanel()
+});
+
+When(/^The user clicks to hide the toggle icon$/, async function () {
+  await commentsPanelPage.hideCommentsToggle();
 });
