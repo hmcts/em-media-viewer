@@ -461,7 +461,7 @@ When(/^The user clicks on the show comments panel toggle icon$/, async function 
 });
 
 //I expect to see the comments filter and search tabs
-When(/^I expect to be able to click on the Filter Search And Comments Tab$/, async function () {
+Then(/^I expect to be able to click on the Filter Search And Comments Tab$/, async function () {
   await genericMethods.sleep(2000);
   await commentsPanelPage.clickOnCommentsTab();
   await genericMethods.sleep(2000);
@@ -500,10 +500,10 @@ Then(/^There are no comment rows present$/, async function () {
   await commentsPanelPage.assertNoCommentRowsPresent();
 });
 
-Then(/^The user closes the overlay panel$/, async function () {
+When(/^The user closes the overlay panel$/, async function () {
   await commentsPanelPage.closeOverlayPanel()
 });
 
-Then(/^The user clicks to hide the toggle icon$/, async function () {
+When(/^The user clicks to hide the toggle icon$/, async function () {
   await commentsPanelPage.hideCommentsToggle();
 });
