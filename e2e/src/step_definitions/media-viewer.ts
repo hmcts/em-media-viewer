@@ -498,16 +498,12 @@ When(/^The user clicks on Collate Summary$/, async function () {
 
 Then(/^There are no comment rows present$/, async function () {
   await commentsPanelPage.assertNoCommentRowsPresent();
-  await genericMethods.sleep(2000);
-  await commentsPanelPage.closeOverlayPanel()
 });
 
 Then(/^The user closes the overlay panel$/, async function () {
-  await genericMethods.sleep(2000);
   await commentsPanelPage.closeOverlayPanel()
 });
 
 Then(/^The user clicks to hide the toggle icon$/, async function () {
-  await genericMethods.sleep(1000);
   await commentsPanelPage.hideCommentsToggle();
 });
