@@ -2,6 +2,7 @@ import {createSelector} from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
+import { AnnoPages } from '../reducers';
 
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
@@ -26,7 +27,6 @@ export const getDocumentIdSetId = createSelector(
       annotationSetId: annoSet.id
     }}
 );
-
 
 export const getAnnotationSet = createSelector(
   getAnnotationEntities,

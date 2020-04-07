@@ -17,7 +17,6 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Input() zoom: number;
   @Input() container: { top: number, left: number };
-  @Input() annotationSetId: number;
 
   @ViewChild('boxHighlight') highlight: ElementRef;
 
@@ -100,7 +99,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
         height: + this.height / this.zoom,
         page: this.page
       } as any;
-      this.highlightService.saveAnnotation([rectangle], this.annotationSetId, this.page);
+      this.highlightService.saveAnnotation([rectangle], this.page);
       this.toolbarEvents.drawModeSubject.next(false);
       this.resetHighlight();
     }

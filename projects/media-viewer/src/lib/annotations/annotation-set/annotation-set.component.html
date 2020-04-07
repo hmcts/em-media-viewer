@@ -17,16 +17,17 @@
       [pageHeight]="annotation.styles.height"
       [pageWidth]="annotation.styles.width"
       [rotate]="rotate"
-      [zoom]="zoom"
-      [annotationSetId]="annotation.annotationSetId">
+      [zoom]="zoom">
     </mv-box-highlight-create>
-    <mv-popup-toolbar [canBookmark]="true" [canHighlight]="true"
-                      [page]="i + 1"
-                      [annoSetId]="annoSet.id"
+    <mv-popup-toolbar *ngIf="highlightPage === i+1"
+                      [rectangles]="rectangles"
+                      [canBookmark]="true" [canHighlight]="true"
                       [zoom]="zoom"
                       [rotate]="rotate"
                       [height]="annotation.styles.height"
-                      [width]="annotation.styles.width">
+                      [width]="annotation.styles.width"
+                      (createBookmarkEvent)="createBookmark($event)"
+                      (createHighlightEvent)="createHighlight()">
     </mv-popup-toolbar>
     <div class="pageContainer__page-item">
       <ng-container *ngFor="let anno of annotation.anno">

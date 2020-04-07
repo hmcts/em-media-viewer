@@ -49,11 +49,11 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   ) {
     this.subscriptions = [
       viewerEvents.createBookmarkEvent.subscribe(bookmark => this.addBookmark(bookmark)),
-      this.annotationsStore.select(annoSelectors.getAnnoPerPage)
-        .subscribe(annotations => {
-          if (annotations) {
-            this.height = annotations[0].styles.height;
-            this.width = annotations[0].styles.width;
+      this.annotationsStore.select(annoSelectors.getAnnoPages)
+        .subscribe(pages => {
+          if (pages) {
+            this.height = pages.styles.height;
+            this.width = pages.styles.width;
           }
         })
     ];

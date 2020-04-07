@@ -18,7 +18,7 @@ export class HighlightCreateService {
               private readonly api: AnnotationApiService,
               private store: Store<fromStore.AnnotationSetState>) {}
 
-  getRectangles(highlight: Highlight, pageInfo) {
+  getRectangles(highlight: Highlight) {
     const selection = window.getSelection();
     if (selection) {
       const localElement = (<HTMLElement>highlight.event.target) || (<HTMLElement>highlight.event.srcElement);
@@ -34,7 +34,7 @@ export class HighlightCreateService {
 
           const selectionRectangles: Rectangle[] = [];
           for (let i = 0; i < clientRects.length; i++) {
-            const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect, pageInfo);
+            const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
             selectionRectangles.push(selectionRectangle);
           }
           return selectionRectangles;
@@ -43,43 +43,52 @@ export class HighlightCreateService {
     }
   }
 
-  private createTextRectangle(rect: any, parentRect: any, { zoom, rotate, pageHeight, pageWidth }) {
-    const height = (rect.bottom - rect.top)/zoom;
-    const width = (rect.right - rect.left)/zoom;
-    const top = (rect.top - parentRect.top)/zoom;
-    const left = (rect.left - parentRect.left)/zoom;
-
+  private createTextRectangle(rect: any, parentRect: any): Rectangle {
+    const height = (rect.bottom - rect.top);
+    const width = (rect.right - rect.left);
+    const top = (rect.top - parentRect.top);
+    const left = (rect.left - parentRect.left);
     const rectangle = { id: uuid(), height: height, width: width, x: 0, y: 0 };
 
-    switch (rotate) {
-      case 90:
-        rectangle.width = height;
-        rectangle.height = width;
-        rectangle.x = top;
-        rectangle.y = (pageWidth/zoom) - left - width;
-        break;
-      case 180:
-        rectangle.x = (pageWidth/zoom) - left - width;
-        rectangle.y = (pageHeight/zoom) - top - height;
-        break;
-      case 270:
-        rectangle.width = height;
-        rectangle.height = width;
-        rectangle.x = (pageHeight/zoom) - top - height;
-        rectangle.y = left;
-        break;
-      default:
-        rectangle.x = left;
-        rectangle.y = top;
-    }
+    this.store.pipe(select(fromSelectors.getAnnoPages), take(1))
+      .subscribe(pages => {
+        const pageHeight = pages.styles.height;
+        const pageWidth = pages.styles.width;
+        const zoom = parseInt(pages.scaleRotation.scale);
+        const rotate = parseInt(pages.scaleRotation.rotation);
+
+        console.log('zoom is ', zoom)
+        console.log('rotation is ', rotate)
+
+        switch (rotate) {
+          case 90:
+            rectangle.width = height/zoom;
+            rectangle.height = width/zoom;
+            rectangle.x = top/zoom;
+            rectangle.y = (pageWidth - left - width)/zoom;
+            break;
+          case 180:
+            rectangle.x = (pageWidth - left - width)/zoom;
+            rectangle.y = (pageHeight - top - height/zoom);
+            break;
+          case 270:
+            rectangle.width = height/zoom;
+            rectangle.height = width/zoom;
+            rectangle.x = (pageHeight - top - height/zoom);
+            rectangle.y = left;
+            break;
+          default:
+            rectangle.x = left;
+            rectangle.y = top;
+        }
+    });
     return rectangle as Rectangle;
   }
 
-  saveAnnotation(rectangles: Rectangle[], annotationSetId, page) {
+  saveAnnotation(rectangles: Rectangle[], page) {
     this.store.pipe(select(fromSelectors.getDocumentIdSetId), take(1)).subscribe(anoSetDocId => {
       const anno = {
         id: uuid(),
-        annotationSetId: annotationSetId,
         color: 'FFFF00',
         comments: [],
         page: page,

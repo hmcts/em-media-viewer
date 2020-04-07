@@ -10,10 +10,16 @@ export interface AnnotationSetState {
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation;
-  pages: { numberOfPages: number; styles: any; scaleRotation: {scale: string; rotation: string} | {}};
+  pages: AnnoPages;
   commentSearchQueries: {commentSearch: string; tags: string[]};
   loaded: boolean;
   loading: boolean;
+}
+
+export interface AnnoPages {
+ numberOfPages: number;
+ styles: { left: number, height: number, width: number };
+ scaleRotation: { scale: string; rotation: string };
 }
 
 export const initialState: AnnotationSetState = {
@@ -24,8 +30,8 @@ export const initialState: AnnotationSetState = {
   selectedAnnotation: null,
   pages: {
     numberOfPages: 0,
-    styles: {},
-    scaleRotation: {}
+    styles: {} as any,
+    scaleRotation: {} as any
   },
   commentSearchQueries: {commentSearch: '', tags: []},
   loading: false,
@@ -43,9 +49,9 @@ export function reducer (
       const  numberOfPages = (state.pages.numberOfPages <= payload.pageNumber) ?
         payload.pageNumber : state.pages.numberOfPages;
       const styles = {
-        'left': payload.div['offsetLeft'],
-        'height': payload.div['offsetHeight'],
-        'width': payload.div['offsetWidth']
+        left: payload.div['offsetLeft'],
+        height: payload.div['offsetHeight'],
+        width: payload.div['offsetWidth']
       };
       const scaleRotation = {
         scale: payload.scale,

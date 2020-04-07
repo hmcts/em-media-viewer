@@ -1,7 +1,7 @@
 <div #container [tabindex]="anno.id">
   <mv-popup-toolbar *ngIf="selected"
                     [canDelete]="true" [canComment]="true"
-                    [rectangle]="topRectangle()"
+                    [rectangles]="anno.rectangles"
                     [zoom]="zoom"
                     [rotate]="rotate"
                     [height]="height"
