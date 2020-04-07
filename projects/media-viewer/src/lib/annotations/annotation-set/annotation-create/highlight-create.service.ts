@@ -14,9 +14,22 @@ import {take} from 'rxjs/operators';
 @Injectable()
 export class HighlightCreateService {
 
+  height: number;
+  width: number;
+  zoom: number;
+  rotate: number;
+
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private store: Store<fromStore.AnnotationSetState>) {}
+              private store: Store<fromStore.AnnotationSetState>) {
+    this.store.select(fromSelectors.getAnnoPages)
+      .subscribe(pages => {
+        this.height = pages.styles.height;
+        this.width = pages.styles.width;
+        this.zoom = parseFloat(pages.scaleRotation.scale);
+        this.rotate = parseInt(pages.scaleRotation.rotation);
+      });
+  }
 
   getRectangles(highlight: Highlight) {
     const selection = window.getSelection();
@@ -31,7 +44,6 @@ export class HighlightCreateService {
 
         if (clientRects) {
           const parentRect = localElement.parentElement.getBoundingClientRect();
-
           const selectionRectangles: Rectangle[] = [];
           for (let i = 0; i < clientRects.length; i++) {
             const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
@@ -44,44 +56,35 @@ export class HighlightCreateService {
   }
 
   private createTextRectangle(rect: any, parentRect: any): Rectangle {
-    const height = (rect.bottom - rect.top);
-    const width = (rect.right - rect.left);
-    const top = (rect.top - parentRect.top);
-    const left = (rect.left - parentRect.left);
+
+    const height = (rect.bottom - rect.top)/this.zoom;
+    const width = (rect.right - rect.left)/this.zoom;
+    const top = (rect.top - parentRect.top)/this.zoom;
+    const left = (rect.left - parentRect.left)/this.zoom;
+
     const rectangle = { id: uuid(), height: height, width: width, x: 0, y: 0 };
 
-    this.store.pipe(select(fromSelectors.getAnnoPages), take(1))
-      .subscribe(pages => {
-        const pageHeight = pages.styles.height;
-        const pageWidth = pages.styles.width;
-        const zoom = parseInt(pages.scaleRotation.scale);
-        const rotate = parseInt(pages.scaleRotation.rotation);
-
-        console.log('zoom is ', zoom)
-        console.log('rotation is ', rotate)
-
-        switch (rotate) {
-          case 90:
-            rectangle.width = height/zoom;
-            rectangle.height = width/zoom;
-            rectangle.x = top/zoom;
-            rectangle.y = (pageWidth - left - width)/zoom;
-            break;
-          case 180:
-            rectangle.x = (pageWidth - left - width)/zoom;
-            rectangle.y = (pageHeight - top - height/zoom);
-            break;
-          case 270:
-            rectangle.width = height/zoom;
-            rectangle.height = width/zoom;
-            rectangle.x = (pageHeight - top - height/zoom);
-            rectangle.y = left;
-            break;
-          default:
-            rectangle.x = left;
-            rectangle.y = top;
-        }
-    });
+    switch (this.rotate) {
+      case 90:
+        rectangle.width = height;
+        rectangle.height = width;
+        rectangle.x = top;
+        rectangle.y = (this.width/this.zoom) - left - width;
+        break;
+      case 180:
+        rectangle.x = (this.width/this.zoom) - left - width;
+        rectangle.y = (this.height/this.zoom) - top - height;
+        break;
+      case 270:
+        rectangle.width = height;
+        rectangle.height = width;
+        rectangle.x = (this.height/this.zoom) - top - height;
+        rectangle.y = left;
+        break;
+      default:
+        rectangle.x = left;
+        rectangle.y = top;
+    }
     return rectangle as Rectangle;
   }
 

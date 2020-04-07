@@ -57,7 +57,6 @@ export function reducer (
         scale: payload.scale,
         rotation: payload.rotation
       };
-
       const page = {
         numberOfPages,
         styles,

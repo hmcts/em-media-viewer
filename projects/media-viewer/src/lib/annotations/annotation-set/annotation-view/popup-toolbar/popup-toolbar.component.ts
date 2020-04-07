@@ -34,7 +34,6 @@ export class PopupToolbarComponent {
   }
 
   @Input() set rectangles(rectangles: Rectangle[]) {
-    console.log('these are the rectangles ', this.rectangles)
     if (rectangles) {
       this._rectangles = rectangles;
       this.rectangle = rectangles
