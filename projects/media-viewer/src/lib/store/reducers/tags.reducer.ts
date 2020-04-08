@@ -90,7 +90,17 @@ export function tagsReducer (
       };
     }
 
+    case fromTags.CLEAR_FILTER_TAGS: {
+      return {
+        ...state,
+        filters: [],
+        filteredComments: {},
+        filteredPageEntities: {},
+      };
+    }
+
   }
+
   return state;
 }
 

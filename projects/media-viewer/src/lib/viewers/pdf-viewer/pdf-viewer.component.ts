@@ -62,7 +62,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @ViewChild('commentPanel') commentPanel: CommentSetComponent;
 
   private pdfWrapper: PdfJsWrapper;
-  private subscriptions: Subscription[] = [];
+  private $subscription: Subscription;
   private viewerException: ViewerException;
   showCommentsPanel: boolean;
   enableGrabNDrag = false;
@@ -97,18 +97,17 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         this.store.dispatch(new fromActions.AddPage(payload));
       }
     });
-    this.subscriptions.push(
-      this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
-      this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)),
-      this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
-      this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
-      this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
-      this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)),
-      this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)),
-      this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)),
-      this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag),
-      this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
-    );
+    this.$subscription = this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url));
+    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)));
+    this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)));
+    this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
+    this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
+    this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
+    this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
+    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
+    this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
+    this.$subscription.add(this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
+
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -126,7 +125,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.$subscription.unsubscribe()
   }
 
 
