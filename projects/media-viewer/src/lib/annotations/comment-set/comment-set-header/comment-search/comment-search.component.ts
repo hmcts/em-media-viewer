@@ -29,7 +29,8 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(new fromActions.SearchComment(''));
+    // TODO workaround for tab error
+    setTimeout(() => {this.store.dispatch(new fromActions.SearchComment(''));}, 250);
   }
 
   searchComments(searchText: string): void {
