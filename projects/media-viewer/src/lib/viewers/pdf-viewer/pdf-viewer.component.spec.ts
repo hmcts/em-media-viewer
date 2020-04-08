@@ -37,7 +37,11 @@ describe('PdfViewerComponent', () => {
         AnnotationSetComponent,
         GrabNDragDirective
       ],
-      imports: [HttpClientTestingModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
+      imports: [
+        HttpClientTestingModule,
+        StoreModule.forFeature('media-viewer', reducers),
+        StoreModule.forRoot({})
+      ],
       providers: [
         AnnotationApiService,
         CommentService,

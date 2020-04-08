@@ -7,17 +7,22 @@ import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../../store/reducers';
+import { HighlightCreateService } from './highlight-create.service';
 
-xdescribe('BoxHighlightCreateComponent', () => {
+describe('BoxHighlightCreateComponent', () => {
   let component: BoxHighlightCreateComponent;
   let fixture: ComponentFixture<BoxHighlightCreateComponent>;
   let nativeElement: HTMLElement;
+  const mockHighlightService = {};
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
+      imports: [HttpClientTestingModule],
       declarations: [BoxHighlightCreateComponent],
-      providers: [AnnotationApiService, ToolbarEventService]
+      providers: [
+        AnnotationApiService,
+        ToolbarEventService,
+        { provide: HighlightCreateService, useValue: mockHighlightService }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(BoxHighlightCreateComponent);
@@ -36,68 +41,68 @@ xdescribe('BoxHighlightCreateComponent', () => {
   });
 
   it('should initialise the box highlight creator', () => {
-    const event = { pageX: 100, pageY: 200 } as MouseEvent;
+    const event = { offsetX: 100, offsetY: 200 } as MouseEvent;
 
     component.initHighlight(event);
 
     expect(component.display).toBe('block');
     expect(component.height).toBe(50);
     expect(component.width).toBe(50);
-    expect(component.top).toBe(100);
-    expect(component.left).toBe(-100);
+    expect(component.top).toBe(200);
+    expect(component.left).toBe(100);
   });
 
   it('should update the box highlight creator, with no rotation', () => {
-    const updateEvent = { pageX: 100, pageY: 100 } as MouseEvent;
+    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
 
     component.updateHighlight(updateEvent);
 
-    expect(component.width).toBe(160);
+    expect(component.width).toBe(40);
     expect(component.height).toBe(50);
-    expect(component.top).toBe(0);
-    expect(component.left).toBe(-100);
+    expect(component.top).toBe(50);
+    expect(component.left).toBe(60);
   });
 
   it('should update the box highlight creator, when rotate is 90', () => {
-    const updateEvent = { pageX: 100, pageY: 100 } as MouseEvent;
+    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.rotate = 90;
 
     component.updateHighlight(updateEvent);
 
-    expect(component.width).toBe(50);
-    expect(component.height).toBe(160);
-    expect(component.top).toBe(340);
-    expect(component.left).toBe(0);
+    expect(component.width).toBe(40);
+    expect(component.height).toBe(50);
+    expect(component.top).toBe(50);
+    expect(component.left).toBe(60);
   });
 
   it('should update the box highlight creator, when rotate is 180', () => {
-    const updateEvent = { pageX: 100, pageY: 100 } as MouseEvent;
+    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.rotate = 180;
 
     component.updateHighlight(updateEvent);
 
-    expect(component.width).toBe(160);
+    expect(component.width).toBe(40);
     expect(component.height).toBe(50);
-    expect(component.top).toBe(350);
-    expect(component.left).toBe(140);
+    expect(component.top).toBe(50);
+    expect(component.left).toBe(60);
   });
 
   it('should update the box highlight creator, when rotate is 270', () => {
-    const updateEvent = { pageX: 100, pageY: 100 } as MouseEvent;
+    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.rotate = 270;
 
     component.updateHighlight(updateEvent);
-    expect(component.width).toBe(50);
-    expect(component.height).toBe(160);
-    expect(component.top).toBe(-100);
-    expect(component.left).toBe(150);
+    expect(component.width).toBe(40);
+    expect(component.height).toBe(50);
+    expect(component.top).toBe(50);
+    expect(component.left).toBe(60);
   });
 });

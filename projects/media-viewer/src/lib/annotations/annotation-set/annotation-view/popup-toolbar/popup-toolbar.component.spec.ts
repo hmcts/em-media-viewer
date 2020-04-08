@@ -51,6 +51,9 @@ describe('PopupToolbarComponent', () => {
   it('should delete highlight', () => {
     const mockDeleteEvent = new EventEmitter();
     spyOn(mockDeleteEvent, 'emit');
+    component.canDelete = true;
+    fixture.detectChanges();
+
     component.deleteHighlightEvent = mockDeleteEvent;
     const deleteBtn = fixture.debugElement.query(By.css('button[title=Delete]'));
     deleteBtn.triggerEventHandler('mousedown', {});
@@ -61,6 +64,9 @@ describe('PopupToolbarComponent', () => {
   it('should create comment', () => {
     const mockCommentEvent = new EventEmitter();
     spyOn(mockCommentEvent, 'emit');
+    component.canComment = true;
+    fixture.detectChanges();
+
     component.addOrEditCommentEvent = mockCommentEvent;
     const commentBtn = fixture.debugElement.query(By.css('button[title=Comment]'));
     commentBtn.triggerEventHandler('mousedown', {});

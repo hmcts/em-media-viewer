@@ -1,9 +1,6 @@
 import { HighlightCreateService } from './highlight-create.service';
-import { AnnotationSet } from '../annotation-set.model';
 import { of } from 'rxjs';
-import {fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {Store, StoreModule} from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
+import { fakeAsync } from '@angular/core/testing';
 
 
 describe('HighlightCreateService', () => {
@@ -11,19 +8,23 @@ describe('HighlightCreateService', () => {
   const mockHighlightModeSubject = { next: () => {} };
   const toolbarEvents = { highlightModeSubject: mockHighlightModeSubject } as any;
   const annotationApi = { postAnnotation: () => {}} as any;
-  const annotationEvents = { selectAnnotation: () => {}} as any;
+  const mockStore = {
+    select: () => of({
+      styles: { height: 100, width: 100 },
+      scaleRotation: { scale: 1, rotation: 1 }
+    }),
+    dispatch: () => {},
+    pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
+  } as any;
 
   let service: HighlightCreateService;
 
   beforeEach(() => {
-    service = new HighlightCreateService(toolbarEvents, annotationApi, annotationEvents,);
-    TestBed.configureTestingModule({
-      imports: [StoreModule.forFeature('meida-viewer', reducers), StoreModule.forRoot({}),],
-    }).compileComponents();
+    service = new HighlightCreateService(toolbarEvents, annotationApi, mockStore);
   });
 
   it('should create text highlight', fakeAsync(() => {
-    const mockClientRects = [{ top: 100, bottom: 80, right: 70, left: 60 }] as any;
+    const mockClientRects = [{ top: 80, left: 60 , bottom: 100, right: 70 }] as any;
     const mockRange = { getClientRects: () => mockClientRects } as any;
     const mockSelection = {
       rangeCount: 1,
@@ -37,17 +38,13 @@ describe('HighlightCreateService', () => {
       parentElement: ({ getBoundingClientRect: () => ({ top: 30, left: 40})})
     };
     const mockHighlight = { event: { target: mockElement }} as any;
-    const page = 1;
 
-    spyOn(annotationApi, 'postAnnotation').and.returnValue(of({ id: 'annoId' }));
-    spyOn(annotationEvents, 'selectAnnotation');
-    spyOn(mockHighlightModeSubject, 'next');
+    const rectangles = service.getRectangles(mockHighlight);
 
-    service.saveAnnotation(mockHighlight, page);
-    tick();
-
-    expect(annotationApi.postAnnotation).toHaveBeenCalled();
-    expect(annotationEvents.selectAnnotation).toHaveBeenCalledWith({ annotationId: 'annoId', editable: false });
+    expect(rectangles[0].x).toBe(20);
+    expect(rectangles[0].y).toBe(50);
+    expect(rectangles[0].height).toBe(20);
+    expect(rectangles[0].width).toBe(10);
   }));
 
   it('should remove extra padding and transform', () => {
@@ -61,7 +58,7 @@ describe('HighlightCreateService', () => {
     };
     const mockHighlight = { event: { target: mockElement }} as any;
 
-    service.saveAnnotation(mockHighlight, 1);
+    service.getRectangles(mockHighlight);
 
     expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
     expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translate');
@@ -78,7 +75,7 @@ describe('HighlightCreateService', () => {
     };
     const mockHighlight = { event: { target: mockElement }} as any;
 
-    service.saveAnnotation(mockHighlight, 1);
+    service.getRectangles(mockHighlight);
 
     expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
     expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translateX');

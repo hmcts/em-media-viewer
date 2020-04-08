@@ -99,7 +99,7 @@ describe('AnnotationSetComponent', () => {
       }
     };
 
-  })
+  });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -144,98 +144,16 @@ describe('AnnotationSetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
-  it('should initialise box-highlight on mousedown', inject([], (highlightService) => {
-    spyOn(highlightService, 'initBoxHighlight');
-    component.drawMode = true;
-
-
-    expect(highlightService.initBoxHighlight).toHaveBeenCalled();
-  }));
-
-  it('should not initialise box-highlight on mousedown if no annotationSet$ exists',
-    inject([], (highlightService) => {
-      spyOn(highlightService, 'initBoxHighlight');
-      component.drawMode = true;
-      component.annotationSet = undefined;
-
-
-      expect(highlightService.initBoxHighlight).toHaveBeenCalled();
-    })
-  );
-
-  it('should not initialise box-highlight on mousedown if drawMode is off',
-    inject([], (highlightService) => {
-      spyOn(highlightService, 'initBoxHighlight');
-      component.drawMode = true;
-
-      expect(highlightService.initBoxHighlight).toHaveBeenCalled();
-    })
-  );
-
-  it('should update box-highlight on mousemove',
-    inject([], (highlightService) => {
-      spyOn(highlightService, 'updateBoxHighlight');
-      component.drawMode = true;
-
-
-      expect(highlightService.updateBoxHighlight).toHaveBeenCalled();
-    })
-  );
-
-  it('should not update box-highlight on mousemove if drawMode is off',
-    inject([], (highlightService) => {
-      spyOn(highlightService, 'updateBoxHighlight');
-
-      expect(highlightService.updateBoxHighlight).not.toHaveBeenCalled();
-    })
-  );
-
-  it('should not update box-highlight on mousemove if no annotationSet$ exists',
-    inject([], (highlightService) => {
-      spyOn(highlightService, 'updateBoxHighlight');
-      component.annotationSet = undefined;
-
-      expect(highlightService.updateBoxHighlight).not.toHaveBeenCalled();
-    })
-  );
-
-
-
-  it('should save box-highlight',
-    inject([], (highlightService) => {
-      spyOn(highlightService, 'saveBoxHighlight');
-
-      expect(highlightService.saveBoxHighlight)
-        .toHaveBeenCalled();
-    })
-  );
-
-  it('should not save box-highlight from a different page',
-    inject([], (highlightService) => {
-      spyOn(highlightService, 'saveBoxHighlight');
-
-      expect(highlightService.saveBoxHighlight)
-        .not.toHaveBeenCalledWith({ page: 1 }, component.annotationSet, 1);
-    })
-  );
-
   it('should create text highlight',
-    inject([HighlightCreateService, ViewerEventService], fakeAsync((highlightService, viewerEvents) => {
-      spyOn(highlightService, 'createTextHighlight');
-      component.ngOnInit();
+    inject([HighlightCreateService, ViewerEventService],
+      fakeAsync((highlightService, viewerEvents) => {
+        spyOn(highlightService, 'getRectangles');
+        component.ngOnInit();
 
-      viewerEvents.textSelected({ page: 1 } as Highlight);
-      tick();
+        viewerEvents.textSelected({ page: 1 } as Highlight);
+        tick();
 
-      expect(highlightService.createTextHighlight)
-        .toHaveBeenCalledWith({ page: 1 }, component.annotationSet,
-        { zoom: component.zoom,
-          rotate: component.rotate,
-          pageHeight: component.height,
-          pageWidth: component.width,
-          number: 1
-        });
+        expect(highlightService.getRectangles).toHaveBeenCalledWith({ page: 1 });
     })
   ));
 
