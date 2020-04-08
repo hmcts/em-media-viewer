@@ -16,7 +16,7 @@ export class CommentsNavigateComponent implements OnChanges {
   @Input() public readonly annotationList: Annotation[];
   @Input() autoSelect = false;
 
-  navigationList: any[];
+  navigationList: any[] = [];
   index = 0;
 
   constructor(private store: Store<fromStore.AnnotationSetState>, public readonly toolbarEvents: ToolbarEventService) {}
@@ -28,7 +28,7 @@ export class CommentsNavigateComponent implements OnChanges {
   }
 
   initNavigationList(): void {
-    this.navigationList = this.annotationList
+    this.navigationList = JSON.parse(JSON.stringify(this.annotationList))
       .map(annotation => ({
         content: annotation.comments[0].content,
         annotationId: annotation.id,
