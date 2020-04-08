@@ -13,7 +13,7 @@ export class CommentSetHeaderComponent implements OnChanges {
   @Input() public showCommentSummary: boolean;
   @Output() public readonly showCommentSummaryDialog = new EventEmitter();
 
-  tabs = ['comments', 'search'];
+  tabs = ['comments', 'filter', 'search'];
   tabSelected: string;
   navigationList: Annotation[];
 

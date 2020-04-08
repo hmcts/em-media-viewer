@@ -27,9 +27,9 @@
             </legend>
             <div class="govuk-checkboxes govuk-checkboxes--small">
               <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async) | filter: searchValue: 'key'">
-                <input [formControlName]="item" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
+                <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
                 <label class="govuk-label govuk-checkboxes__label">
-                  {{ item }}
+                  {{ item.key }} ({{item.length}})
                 </label>
               </div>
             </div>

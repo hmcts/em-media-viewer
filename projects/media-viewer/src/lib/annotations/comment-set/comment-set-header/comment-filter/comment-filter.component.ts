@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterContentChecked, AfterContentInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 
 import {select, Store} from '@ngrx/store';
 import * as fromStore from '../../../../store/reducers';
@@ -6,7 +6,7 @@ import * as fromSelectors from '../../../../store/selectors/tags.selectors';
 import * as fromActions from '../../../../store/actions/tags.actions';
 import {Observable, Subscription} from 'rxjs';
 import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
-import {distinct, tap, throttleTime} from 'rxjs/operators';
+import {auditTime, distinct, sampleTime, tap, throttleTime} from 'rxjs/operators';
 
 
 @Component({
@@ -14,7 +14,7 @@ import {distinct, tap, throttleTime} from 'rxjs/operators';
   templateUrl: './comment-filter.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class CommentFilterComponent implements OnInit, OnDestroy{
+export class CommentFilterComponent implements OnInit, OnDestroy {
   tagGroup: FormGroup;
   $subscriptions: Subscription;
   filter$: Observable<string[]>;
@@ -27,11 +27,10 @@ export class CommentFilterComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.buildFrom();
     this.filter$ = this.store.pipe(select(fromSelectors.getTagFilters));
-    this.$subscriptions = this.tagGroup.valueChanges.pipe(throttleTime(500)).subscribe(value => {
+    this.$subscriptions = this.tagGroup.valueChanges.pipe(auditTime(5)).subscribe(value => {
       const tagFilters = value['tagFilters'];
       this.store.dispatch(new fromActions.AddFilterTags(tagFilters));
     });
-
   }
 
   buildFrom() {
@@ -39,8 +38,8 @@ export class CommentFilterComponent implements OnInit, OnDestroy{
       'tagFilters': this.fb.group({}),
     });
     const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
-    this.allTags$ = this.store.pipe(select(fromSelectors.getAllTagsArr), distinct()).pipe(tap(tags => {
-      tags.forEach(value => checkboxes.addControl(value, new FormControl(false)));
+    this.allTags$ = this.store.pipe(select(fromSelectors.getAllTagsArr)).pipe(tap(tags => {
+      tags.forEach(value => checkboxes.addControl(value.key, new FormControl(false)));
     }));
   }
 

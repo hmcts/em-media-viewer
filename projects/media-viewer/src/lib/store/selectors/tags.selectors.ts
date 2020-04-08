@@ -29,5 +29,10 @@ export const getFilteredPageEntities = createSelector(
 
 export const getAllTagsArr = createSelector(
   getTagEntities,
-  (tagEnt) => Object.keys(tagEnt).map(key => key)
+  (tagEnt) => Object.keys(tagEnt).map(key => {
+    return {
+      key,
+      length: Object.keys(tagEnt[key]).length
+    }
+  })
 );
