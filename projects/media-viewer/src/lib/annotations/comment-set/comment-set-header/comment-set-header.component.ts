@@ -13,13 +13,13 @@ export class CommentSetHeaderComponent implements OnChanges {
   @Input() public showCommentSummary: boolean;
   @Output() public readonly showCommentSummaryDialog = new EventEmitter();
 
-  tabs = ['comments', 'filter', 'search'];
+  tabs = ['comments', 'search'];
   tabSelected: string;
   navigationList: Annotation[];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.annotationSet && this.annotationSet) {
-      this.navigationList = this.annotationSet.annotations
+      this.navigationList = [...this.annotationSet.annotations]
         .filter(annotation => annotation.comments && annotation.comments.length > 0);
     }
   }
