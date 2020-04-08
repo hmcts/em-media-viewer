@@ -15,7 +15,7 @@ add @hmcts/media-viewer as a dependency in package.json
 npm install --save @hmcts/media-viewer
 ```
 
-import MediaViewerModule and declare it in your NgModule imports.
+import MediaViewerModule and declare it in your NgModule imports together with NGRX store if you don't have it already .
 
 ```
 import { MediaViewerModule } from 'media-viewer';
@@ -24,6 +24,8 @@ import { MediaViewerModule } from 'media-viewer';
   imports: [
     ...,
     MediaViewerModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
   ]
 })
 ```
@@ -156,7 +158,7 @@ i.e. if you writing your own toolbar styles then do not import those
 
 ```
 // Import GOV.UK Frontend
-@import "~govuk-frontend/all";
+@import "~govuk-frontend/govuk/all";
 @import "~@hmcts/frontend/all";
 // Import Media Viewer Styles
 @import "~media-viewer/src/assets/all"; // use this to import all the styles 
