@@ -19,7 +19,7 @@ import {
 import {AnnotationSet} from './annotations/annotation-set/annotation-set.model';
 import {ToolbarEventService} from './toolbar/toolbar-event.service';
 import {AnnotationApiService} from './annotations/annotation-api.service';
-import {ResponseType, ViewerException} from './viewers/error-message/viewer-exception.model';
+import {ResponseType, ViewerException} from './viewers/viewer-exception.model';
 import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
 import {select, Store} from '@ngrx/store';

@@ -9,7 +9,6 @@ import { MediaViewerComponent } from './media-viewer.component';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { PdfJsWrapperFactory } from './viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
 import { AnnotationsModule } from './annotations/annotations.module';
-import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
 import { SideBarComponent } from './viewers/pdf-viewer/side-bar/side-bar.component';
@@ -45,14 +44,12 @@ import { effects } from './store/effects/index';
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,
-    ErrorMessageComponent,
     GrabNDragDirective
   ],
   entryComponents: [
     PdfViewerComponent,
     ImageViewerComponent,
-    UnsupportedViewerComponent,
-    ErrorMessageComponent
+    UnsupportedViewerComponent
 ],
   providers: [
     PdfJsWrapperFactory,

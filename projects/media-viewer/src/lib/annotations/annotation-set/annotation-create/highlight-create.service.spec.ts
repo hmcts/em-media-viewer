@@ -37,14 +37,13 @@ describe('HighlightCreateService', () => {
       parentElement: ({ getBoundingClientRect: () => ({ top: 30, left: 40})})
     };
     const mockHighlight = { event: { target: mockElement }} as any;
-    const mockAnnoSet = { annotations: []} as AnnotationSet;
-    const mockPageInfo = { zoom: 1, rotate: 0, pageHeight: 1000, pageWidth: 800};
+    const page = 1;
 
     spyOn(annotationApi, 'postAnnotation').and.returnValue(of({ id: 'annoId' }));
     spyOn(annotationEvents, 'selectAnnotation');
     spyOn(mockHighlightModeSubject, 'next');
 
-    service.saveAnnotation(mockHighlight, mockAnnoSet, mockPageInfo);
+    service.saveAnnotation(mockHighlight, page);
     tick();
 
     expect(annotationApi.postAnnotation).toHaveBeenCalled();
@@ -62,7 +61,7 @@ describe('HighlightCreateService', () => {
     };
     const mockHighlight = { event: { target: mockElement }} as any;
 
-    service.saveAnnotation(mockHighlight, {}, {});
+    service.saveAnnotation(mockHighlight, 1);
 
     expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
     expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translate');
@@ -79,7 +78,7 @@ describe('HighlightCreateService', () => {
     };
     const mockHighlight = { event: { target: mockElement }} as any;
 
-    service.saveAnnotation(mockHighlight, {}, {});
+    service.saveAnnotation(mockHighlight, 1);
 
     expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
     expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translateX');

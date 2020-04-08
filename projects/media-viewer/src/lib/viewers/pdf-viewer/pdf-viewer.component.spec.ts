@@ -5,8 +5,6 @@ import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
 import { PrintService } from '../../print.service';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { ErrorMessageComponent } from '../error-message/error.message.component';
-import { By } from '@angular/platform-browser';
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -30,14 +28,12 @@ describe('PdfViewerComponent', () => {
   let printService: PrintService;
   let viewerEvents: ViewerEventService;
   let wrapperFactory: PdfJsWrapperFactory;
-  let annotationsDestroyed: boolean;
   let mockWrapper: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         PdfViewerComponent,
-        ErrorMessageComponent,
         AnnotationSetComponent,
         GrabNDragDirective
       ],
@@ -77,8 +73,6 @@ describe('PdfViewerComponent', () => {
       setPageNumber: () => {},
       changePageNumber: () => {},
       getPageNumber: () => {},
-      getCurrentPDFZoomValue: () => {},
-      getNormalisedPagesRotation: () => 0,
       getCurrentPDFTitle: () => {},
       documentLoadInit: new Subject<any>(),
       documentLoadProgress: new Subject<DocumentLoadProgress>(),
@@ -140,19 +134,6 @@ describe('PdfViewerComponent', () => {
 
     mockWrapper.documentLoadProgress.next({ loaded: 200, total: 100 });
     expect(component.loadingDocumentProgress).toBe(100);
-  });
-
-  it('should show error message when errorMessage is set', () => {
-    const pdfContainerHtml = fixture.debugElement.query(By.css('.pdfContainer')).nativeElement;
-
-    expect(pdfContainerHtml.className).not.toContain('hidden');
-    expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeNull();
-
-    component.errorMessage = 'errorx';
-    fixture.detectChanges();
-
-    expect(pdfContainerHtml.className).toContain('hidden');
-    expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeTruthy();
   });
 
   it('should show error message on document load failed', () => {

@@ -19,7 +19,7 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
-import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
+import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
