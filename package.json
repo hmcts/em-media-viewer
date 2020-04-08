@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.0.8",
+  "version": "2.0.8-fix-comment-navigation",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
