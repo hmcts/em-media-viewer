@@ -7,7 +7,7 @@ import { AnnotationViewComponent } from './annotation-set/annotation-view/annota
 import { AnnotationSetComponent } from './annotation-set/annotation-set.component';
 import { RectangleComponent } from './annotation-set/annotation-view/rectangle/rectangle.component';
 import { CommentComponent } from './comment-set/comment/comment.component';
-import { PopupToolbarComponent } from './annotation-set/annotation-view/popup-toolbar/popup-toolbar.component';
+import { CtxToolbarComponent } from './annotation-set/ctx-toolbar/ctx-toolbar.component';
 import { CommentSetComponent } from './comment-set/comment-set.component';
 import { TextareaAutoExpandDirective } from './comment-set/comment/textarea-auto-expand.directive';
 import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comment-set-toggle.component';
@@ -45,7 +45,7 @@ import { BookmarksApiService } from './bookmarks-api.service';
     CommentSetHeaderComponent,
     CommentSearchComponent,
     TextHighlightDirective,
-    PopupToolbarComponent,
+    CtxToolbarComponent,
     CommentSetComponent,
     CommentsNavigateComponent,
     TextareaAutoExpandDirective,

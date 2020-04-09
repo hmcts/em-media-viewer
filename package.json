@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:ng": "ng serve --proxy-config proxy.config.js",
     "build": "ng build --prod && ng run media-viewer:serve",
     "copy:license": "cp ./README.md dist/media-viewer",
     "copy:readme": "cp ./LICENSE dist/media-viewer",

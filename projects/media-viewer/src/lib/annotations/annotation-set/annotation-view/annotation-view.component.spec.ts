@@ -2,7 +2,7 @@ import { AnnotationViewComponent } from './annotation-view.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
-import { PopupToolbarComponent } from './popup-toolbar/popup-toolbar.component';
+import { CtxToolbarComponent } from '../ctx-toolbar/ctx-toolbar.component';
 import { Annotation } from './annotation.model';
 import { MutableDivModule } from 'mutable-div';
 import {TagsComponent} from '../../tags/tags.component';
@@ -44,7 +44,7 @@ describe('AnnotationComponent', () => {
       declarations: [
         AnnotationViewComponent,
         RectangleComponent,
-        PopupToolbarComponent,
+        CtxToolbarComponent,
         TagsComponent
       ],
       imports: [

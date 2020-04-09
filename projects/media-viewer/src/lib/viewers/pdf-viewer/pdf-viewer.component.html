@@ -22,7 +22,7 @@
        #pdfViewer
        class="pdfViewer"
        (mouseup)="onMouseUp($event)"
-       (click)="onPdfViewerClick()"
+       (mousedown)="onPdfViewerClick()"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">

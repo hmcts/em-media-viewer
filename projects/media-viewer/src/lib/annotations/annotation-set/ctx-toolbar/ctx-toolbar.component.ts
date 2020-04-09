@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Rectangle } from '../rectangle/rectangle.model';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-popup-toolbar',
-  templateUrl: './popup-toolbar.component.html'
+  templateUrl: './ctx-toolbar.component.html'
 })
-export class PopupToolbarComponent {
+export class CtxToolbarComponent {
 
   readonly defaultHeight;
   readonly defaultWidth;

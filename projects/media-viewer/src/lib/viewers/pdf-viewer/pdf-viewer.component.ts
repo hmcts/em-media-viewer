@@ -171,6 +171,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   onPdfViewerClick() {
     this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
+    this.viewerEvents.clearPopup();
   }
 
   onMouseUp(mouseEvent: MouseEvent) {

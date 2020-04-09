@@ -7,7 +7,8 @@
       <span data-l10n-id="document_outline_label">Document Outline</span>
     </button>
     <button id="viewBookmark"
-            [ngClass]="{ 'toolbarButton bookmark': true, 'toggled': selectedView === 'bookmark' }"
+            class="toolbarButton bookmark"
+            [ngClass]="{ toggled: selectedView === 'bookmark' }"
             (click)="toggleSidebarView('bookmark')"
             title="Show Bookmarks" tabindex="2" data-l10n-id="bookmarks">
       <span data-l10n-id="bookmarks_label">Thumbnails</span>
@@ -31,9 +32,11 @@
                        (navigationEvent)="goToDestination($event)"></mv-outline-item>
     </div>
     <div class="outlineItem" *ngIf="selectedView === 'bookmark'">
-      <a *ngFor="let bookmark of (bookmarks$ | async)"
-         class="outlineItem" (click)="goToBookmark(bookmark)">{{ bookmark.name }}</a>
-      <a *ngIf="(bookmarks$ | async)?.length === 0" class="outlineItem">No bookmarks created yet</a>
+      <ng-container *ngIf="(bookmarks$ | async) as bookmarks">
+        <a *ngFor="let bookmark of bookmarks"
+           class="outlineItem" (click)="goToBookmark(bookmark)">{{ bookmark.name }}</a>
+        <a *ngIf="bookmarks?.length === 0" class="outlineItem">No bookmarks created yet</a>
+      </ng-container>
     </div>
   </div>
 </div>

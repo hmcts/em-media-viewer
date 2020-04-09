@@ -3,7 +3,7 @@ import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/cor
 import { RectangleComponent } from './annotation-view/rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../assets/annotation-set';
-import { PopupToolbarComponent } from './annotation-view/popup-toolbar/popup-toolbar.component';
+import { CtxToolbarComponent } from './ctx-toolbar/ctx-toolbar.component';
 import { AnnotationViewComponent } from './annotation-view/annotation-view.component';
 import { AnnotationApiService } from '../annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -108,7 +108,7 @@ describe('AnnotationSetComponent', () => {
         AnnotationViewComponent,
         BoxHighlightCreateComponent,
         RectangleComponent,
-        PopupToolbarComponent,
+        CtxToolbarComponent,
         TagsComponent
       ],
       imports: [

@@ -54,7 +54,9 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       this.toolbarEvents.drawModeSubject
         .subscribe(drawMode => this.drawMode = drawMode),
       this.viewerEvents.textHighlight
-        .subscribe(highlight => this.showPopup(highlight))
+        .subscribe(highlight => this.showPopup(highlight)),
+      this.viewerEvents.popupCleared
+        .subscribe(() => this.clearPopup())
     ];
   }
 
@@ -68,6 +70,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     if (this.rectangles) {
       this.toolbarEvents.highlightModeSubject.next(false);
     }
+  }
+
+  clearPopup() {
+    this.rectangles = undefined;
   }
 
   createHighlight() {

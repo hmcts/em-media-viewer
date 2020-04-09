@@ -19,7 +19,7 @@
       [rotate]="rotate"
       [zoom]="zoom">
     </mv-box-highlight-create>
-    <mv-popup-toolbar *ngIf="highlightPage === i+1"
+    <mv-popup-toolbar *ngIf="rectangles && highlightPage === i+1"
                       [rectangles]="rectangles"
                       [canBookmark]="true" [canHighlight]="true"
                       [zoom]="zoom"

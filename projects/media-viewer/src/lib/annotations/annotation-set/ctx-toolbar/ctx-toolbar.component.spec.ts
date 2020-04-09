@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PopupToolbarComponent } from './popup-toolbar.component';
+import { CtxToolbarComponent } from './ctx-toolbar.component';
 import { By } from '@angular/platform-browser';
 import { EventEmitter } from '@angular/core';
 
-describe('PopupToolbarComponent', () => {
-  let component: PopupToolbarComponent;
-  let fixture: ComponentFixture<PopupToolbarComponent>;
+describe('CtxToolbarComponent', () => {
+  let component: CtxToolbarComponent;
+  let fixture: ComponentFixture<CtxToolbarComponent>;
   const mockRectangle = {
     x: 100, y: 100, width: 100, height: 20,
     id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
@@ -28,11 +28,11 @@ describe('PopupToolbarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ PopupToolbarComponent ]
+      declarations: [ CtxToolbarComponent ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PopupToolbarComponent);
+    fixture = TestBed.createComponent(CtxToolbarComponent);
     component = fixture.componentInstance;
     component.rectangle = mockRectangle;
 
