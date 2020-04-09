@@ -18,8 +18,8 @@ export class BookmarksEffects {
     exhaustMap((url) =>
       this.bookmarksApiService.getBookmarks(url)
         .pipe(
-          map(res => new bookmarksActions.LoadBookmarksSuccess(res.body)),
-          catchError(error => of(new bookmarksActions.LoadBookmarksFail([])))
+          map(res => new bookmarksActions.LoadBookmarksSuccess(res)),
+          catchError(err => of(new bookmarksActions.LoadBookmarksFail(err)))
         )
     ));
 

@@ -18,12 +18,12 @@ export class LoadBookmarks implements Action {
 
 export class LoadBookmarksSuccess implements Action {
   readonly type = LOAD_BOOKMARKS_SUCCESS;
-  constructor(public payload: Bookmark[]) { }
+  constructor(public payload: { body: Bookmark[], status: string }) { }
 }
 
 export class LoadBookmarksFail implements Action {
   readonly type = LOAD_BOOKMARKS_FAIL;
-  constructor(public payload: Bookmark[]) { }
+  constructor(public payload: { body: Bookmark[], status: string }) { }
 }
 
 export class CreateBookmark implements Action {
