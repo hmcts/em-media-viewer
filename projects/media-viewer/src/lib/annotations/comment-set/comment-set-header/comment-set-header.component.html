@@ -1,11 +1,13 @@
 <div class="govuk-tabs commentSummaryHeader" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
-    <li *ngFor="let tab of tabs"
-        class="govuk-tabs__list-item govuk-tabs__list-item">
+    <li *ngFor="let tab of tabs" class="govuk-tabs__list-item govuk-tabs__list-item"
+        [ngClass]="{'govuk-tabs__list-item--selected': tabSelected === tab }">
+
       <a (click)="selectTab(tab)" [routerLink]=""
-         [ngClass]="{ 'govuk-tabs__tab': true, 'govuk-tabs__tab--selected': tabSelected === tab }">
+         class="govuk-tabs__tab">
         {{ tab | titlecase }}
       </a>
+
     </li>
   </ul>
   <div class="govuk-tabs__panel" *ngIf="tabSelected">

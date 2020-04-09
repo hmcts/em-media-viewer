@@ -1,5 +1,4 @@
 .comment-filter {
-  background-color: govuk-colour("light-grey");
   border: none;
   .hmcts-filter__selected, .hmcts-filter__options {
     padding: 0;
@@ -17,7 +16,10 @@
 
   .hmcts-filter__tag:hover {
     &:after {
-      fill: #FFF;
+      background: url(/assets/images/icon-tag-remove-cross.svg) #DDDDDD;
+      fill: orange;
+      width: 20px;
+      height: 20px;
     }
   }
 

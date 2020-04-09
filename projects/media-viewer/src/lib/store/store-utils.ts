@@ -26,9 +26,9 @@ export class StoreUtils {
       }, {});
   }
 
-  // todo group this by name ['annoid']
   static genTagNameEntities(annotations) {
-    const allTags = annotations.map(anno => this.groupByKeyEntities(anno.tags, 'name'));
+    const filterAnnoWithNoCommentsTags = annotations.filter(a => (a.comments.length && a.tags.length));
+    const allTags = filterAnnoWithNoCommentsTags.map(anno => this.groupByKeyEntities(anno.tags, 'name'));
     console.log(allTags)
     console.log(annotations)
     const groupedByName = allTags.reduce(
