@@ -23,7 +23,11 @@ describe('HighlightCreateService', () => {
     service = new HighlightCreateService(toolbarEvents, annotationApi, mockStore);
   });
 
-  it('should create text highlight', fakeAsync(() => {
+  it('should set the style values from the store', function () {
+
+  });
+
+  it('should create rectangles', fakeAsync(() => {
     const mockClientRects = [{ top: 80, left: 60 , bottom: 100, right: 70 }] as any;
     const mockRange = { getClientRects: () => mockClientRects } as any;
     const mockSelection = {
@@ -38,6 +42,7 @@ describe('HighlightCreateService', () => {
       parentElement: ({ getBoundingClientRect: () => ({ top: 30, left: 40})})
     };
     const mockHighlight = { event: { target: mockElement }} as any;
+    service.zoom = 1;
 
     const rectangles = service.getRectangles(mockHighlight);
 
@@ -79,5 +84,13 @@ describe('HighlightCreateService', () => {
 
     expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
     expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translateX');
+  });
+
+  it('should save annotation', function () {
+
+  });
+
+  it('should reset highlight', function () {
+
   });
 });

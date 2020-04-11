@@ -19,16 +19,16 @@
       [rotate]="rotate"
       [zoom]="zoom">
     </mv-box-highlight-create>
-    <mv-popup-toolbar *ngIf="rectangles && highlightPage === i+1"
-                      [rectangles]="rectangles"
-                      [canBookmark]="true" [canHighlight]="true"
-                      [zoom]="zoom"
-                      [rotate]="rotate"
-                      [height]="annotation.styles.height"
-                      [width]="annotation.styles.width"
-                      (createBookmarkEvent)="createBookmark($event)"
-                      (createHighlightEvent)="createHighlight()">
-    </mv-popup-toolbar>
+    <mv-ctx-toolbar *ngIf="rectangles && highlightPage === i+1"
+                    [rectangles]="rectangles"
+                    [canBookmark]="true" [canHighlight]="true"
+                    [zoom]="zoom"
+                    [rotate]="rotate"
+                    [height]="annotation.styles.height"
+                    [width]="annotation.styles.width"
+                    (createBookmarkEvent)="createBookmark($event)"
+                    (createHighlightEvent)="createHighlight()">
+    </mv-ctx-toolbar>
     <div class="pageContainer__page-item">
       <ng-container *ngFor="let anno of annotation.anno">
         <mv-annotation [annotation]="anno"

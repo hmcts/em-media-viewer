@@ -18,6 +18,7 @@ import { TagsComponent } from '../tags/tags.component';
 import { TagInputModule } from 'ngx-chips';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../store/reducers';
+import { Rectangle } from './annotation-view/rectangle/rectangle.model';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -144,18 +145,49 @@ describe('AnnotationSetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create text highlight',
+  it('should setup subscriptions', function () {
+
+  });
+
+  it('should destroy subscriptions', function () {
+
+  });
+
+  it('should show context toolbar',
     inject([HighlightCreateService, ViewerEventService],
       fakeAsync((highlightService, viewerEvents) => {
-        spyOn(highlightService, 'getRectangles');
+        spyOn(highlightService, 'getRectangles').and.returnValue(['rectangle'])
         component.ngOnInit();
 
         viewerEvents.textSelected({ page: 1 } as Highlight);
         tick();
 
         expect(highlightService.getRectangles).toHaveBeenCalledWith({ page: 1 });
-    })
+        expect(component.rectangles).toEqual(['rectangle'] as any);
+      })
   ));
 
+  it('should clear context toolbar', function () {
 
+  });
+
+  it('should create highlight', () => {
+
+  });
+
+  it('should create bookmark', () => {
+
+  });
+
+  it('should update annotation', function () {
+
+  });
+
+  it('should delete annotation', function () {
+
+  });
+
+  it('should select annotation', function () {
+
+  });
 });

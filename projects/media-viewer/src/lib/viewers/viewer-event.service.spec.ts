@@ -36,4 +36,7 @@ describe('Viewer Events Service', () => {
     expect(commentsToggleSpy).toHaveBeenCalledWith(false);
   });
 
+  it('should clear the context toolbar', function () {
+
+  });
 });

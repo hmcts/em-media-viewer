@@ -14,7 +14,7 @@ export class ViewerEventService {
 
   public readonly textHighlight = new Subject<Highlight>();
   public readonly boxHighlight = new Subject<Highlight>();
-  public readonly popupCleared = new Subject();
+  public readonly ctxToolbarCleared = new Subject();
   public readonly createBookmarkEvent = new Subject<any>();
   public readonly commentsPanelVisible = new BehaviorSubject(false);
 
@@ -28,8 +28,8 @@ export class ViewerEventService {
     this.boxHighlight.next(selectionData);
   }
 
-  public clearPopup(): void {
-    this.popupCleared.next();
+  public clearCtxToolbar(): void {
+    this.ctxToolbarCleared.next();
   }
 
   public toggleCommentsPanel(toggle: boolean) {

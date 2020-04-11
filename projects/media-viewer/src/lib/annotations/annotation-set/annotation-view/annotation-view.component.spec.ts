@@ -69,4 +69,20 @@ describe('AnnotationComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should emit annotataion click event', function () {
+
+  });
+
+  it('should update rectangle', function () {
+
+  });
+
+  it('should delete highlight', function () {
+
+  });
+
+  it('should add or edit comment', function () {
+
+  });
+
 });

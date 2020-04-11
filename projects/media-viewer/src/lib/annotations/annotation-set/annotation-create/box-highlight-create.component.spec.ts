@@ -40,6 +40,14 @@ describe('BoxHighlightCreateComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should subscribe to the drawMode subject', function () {
+
+  });
+
+  it('should destroy subscriptions', function () {
+
+  });
+
   it('should initialise the box highlight creator', () => {
     const event = { offsetX: 100, offsetY: 200 } as MouseEvent;
 
@@ -104,5 +112,13 @@ describe('BoxHighlightCreateComponent', () => {
     expect(component.height).toBe(50);
     expect(component.top).toBe(50);
     expect(component.left).toBe(60);
+  });
+
+  it('should create the highlight', function () {
+
+  });
+
+  it('should reset the highlight', function () {
+
   });
 });

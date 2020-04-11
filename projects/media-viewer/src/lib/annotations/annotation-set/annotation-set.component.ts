@@ -54,9 +54,9 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       this.toolbarEvents.drawModeSubject
         .subscribe(drawMode => this.drawMode = drawMode),
       this.viewerEvents.textHighlight
-        .subscribe(highlight => this.showPopup(highlight)),
-      this.viewerEvents.popupCleared
-        .subscribe(() => this.clearPopup())
+        .subscribe(highlight => this.showContextToolbar(highlight)),
+      this.viewerEvents.ctxToolbarCleared
+        .subscribe(() => this.clearContextToolbar())
     ];
   }
 
@@ -64,7 +64,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  showPopup(highlight: Highlight) {
+  showContextToolbar(highlight: Highlight) {
     this.highlightPage = highlight.page;
     this.rectangles = this.highlightService.getRectangles(highlight);
     if (this.rectangles) {
@@ -72,7 +72,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     }
   }
 
-  clearPopup() {
+  clearContextToolbar() {
     this.rectangles = undefined;
   }
 

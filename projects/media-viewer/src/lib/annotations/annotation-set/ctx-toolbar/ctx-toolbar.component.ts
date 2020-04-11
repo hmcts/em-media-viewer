@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
 @Component({
-  selector: 'mv-popup-toolbar',
+  selector: 'mv-ctx-toolbar',
   templateUrl: './ctx-toolbar.component.html'
 })
 export class CtxToolbarComponent {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Highlight } from '../../../viewers/viewer-event.service';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
@@ -12,7 +12,7 @@ import * as fromActions from '../../../store/actions/annotations.action';
 import {take} from 'rxjs/operators';
 
 @Injectable()
-export class HighlightCreateService {
+export class HighlightCreateService implements OnInit {
 
   height: number;
   width: number;
@@ -21,7 +21,9 @@ export class HighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private store: Store<fromStore.AnnotationSetState>) {
+              private store: Store<fromStore.AnnotationSetState>) {}
+
+  ngOnInit(): void {
     this.store.select(fromSelectors.getAnnoPages)
       .subscribe(pages => {
         this.height = pages.styles.height;
@@ -56,7 +58,6 @@ export class HighlightCreateService {
   }
 
   private createTextRectangle(rect: any, parentRect: any): Rectangle {
-
     const height = (rect.bottom - rect.top)/this.zoom;
     const width = (rect.right - rect.left)/this.zoom;
     const top = (rect.top - parentRect.top)/this.zoom;

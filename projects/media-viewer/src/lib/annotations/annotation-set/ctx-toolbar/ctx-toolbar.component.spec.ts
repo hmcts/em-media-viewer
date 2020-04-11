@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CtxToolbarComponent } from './ctx-toolbar.component';
 import { By } from '@angular/platform-browser';
 import { EventEmitter } from '@angular/core';
+import { summaryFileName } from '@angular/compiler/src/aot/util';
 
 describe('CtxToolbarComponent', () => {
   let component: CtxToolbarComponent;
@@ -46,6 +47,14 @@ describe('CtxToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set rectangle', function () {
+
+  });
+
+  it('should create highlight', function () {
+
   });
 
   it('should delete highlight', () => {
