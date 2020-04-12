@@ -8,12 +8,13 @@ describe('HighlightCreateService', () => {
   const mockHighlightModeSubject = { next: () => {} };
   const toolbarEvents = { highlightModeSubject: mockHighlightModeSubject } as any;
   const annotationApi = { postAnnotation: () => {}} as any;
+  let saveAnnoAction: any;
   const mockStore = {
     select: () => of({
       styles: { height: 100, width: 100 },
-      scaleRotation: { scale: 1, rotation: 1 }
+      scaleRotation: { scale: 1, rotation: 0 }
     }),
-    dispatch: () => {},
+    dispatch: (action) => { saveAnnoAction = action },
     pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
   } as any;
 
@@ -23,8 +24,13 @@ describe('HighlightCreateService', () => {
     service = new HighlightCreateService(toolbarEvents, annotationApi, mockStore);
   });
 
-  it('should set the style values from the store', function () {
+  it('should set the style values from the store', () => {
+    service.ngOnInit();
 
+    expect(service.height).toBe(100);
+    expect(service.width).toBe(100);
+    expect(service.zoom).toBe(1);
+    expect(service.rotate).toBe(0);
   });
 
   it('should create rectangles', fakeAsync(() => {
@@ -86,11 +92,26 @@ describe('HighlightCreateService', () => {
     expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translateX');
   });
 
-  it('should save annotation', function () {
+  it('should save annotation', () => {
+    const mockRectangles = ['rectangles'] as any;
+    spyOn(mockStore, 'dispatch').and.callThrough();
 
+    service.saveAnnotation(mockRectangles,1);
+
+    expect(mockStore.dispatch).toHaveBeenCalled();
+    expect(saveAnnoAction.payload.page).toBe(1);
+    expect(saveAnnoAction.payload.rectangles).toBe(mockRectangles);
+    expect(saveAnnoAction.payload.documentId).toBe('documentId');
+    expect(saveAnnoAction.payload.annotationSetId).toBe('annotationSetId');
   });
 
-  it('should reset highlight', function () {
+  it('should reset highlight', () => {
+    spyOn(window.getSelection(),'removeAllRanges');
+    spyOn(toolbarEvents.highlightModeSubject, 'next');
 
+    service.resetHighlight();
+
+    expect(window.getSelection().removeAllRanges).toHaveBeenCalled();
+    expect(toolbarEvents.highlightModeSubject.next).toHaveBeenCalledWith(false);
   });
 });

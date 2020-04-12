@@ -3,13 +3,13 @@ import { Bookmark } from '../reducers/bookmarks.reducer';
 
 export const LOAD_BOOKMARKS = '[Bookmarks] Load Bookmarks';
 export const LOAD_BOOKMARKS_SUCCESS = '[Bookmarks] Load Bookmarks Success';
-export const LOAD_BOOKMARKS_FAIL = '[Bookmarks] Load Bookmarks Fail';
+export const LOAD_BOOKMARKS_FAIL = '[Bookmarks] Load Bookmarks Failure';
 export const CREATE_BOOKMARK = '[Bookmarks] Create Bookmark';
 export const CREATE_BOOKMARK_SUCCESS = '[Bookmarks] Create Bookmark Success';
-export const CREATE_BOOKMARK_FAIL = '[Bookmarks] Create Bookmark Fail';
+export const CREATE_BOOKMARK_FAIL = '[Bookmarks] Create Bookmark Failure';
 export const DELETE_BOOKMARK = '[Bookmarks] Delete Bookmark';
 export const DELETE_BOOKMARK_SUCCESS = '[Bookmarks] Delete Bookmark Success';
-export const DELETE_BOOKMARK_FAIL = '[Bookmarks] Delete Bookmark Fail';
+export const DELETE_BOOKMARK_FAIL = '[Bookmarks] Delete Bookmark Failure';
 
 export class LoadBookmarks implements Action {
   readonly type = LOAD_BOOKMARKS;
@@ -21,9 +21,9 @@ export class LoadBookmarksSuccess implements Action {
   constructor(public payload: { body: Bookmark[], status: string }) { }
 }
 
-export class LoadBookmarksFail implements Action {
+export class LoadBookmarksFailure implements Action {
   readonly type = LOAD_BOOKMARKS_FAIL;
-  constructor(public payload: { body: Bookmark[], status: string }) { }
+  constructor(public payload: { body: any, status: string }) { }
 }
 
 export class CreateBookmark implements Action {
@@ -36,7 +36,7 @@ export class CreateBookmarkSuccess implements Action {
   constructor(public payload: Bookmark) {}
 }
 
-export class CreateBookmarkFail implements Action {
+export class CreateBookmarkFailure implements Action {
   readonly type = CREATE_BOOKMARK_FAIL;
   constructor(public payload: Bookmark) { }
 }
@@ -51,7 +51,7 @@ export class DeleteBookmarkSuccess implements Action {
   constructor(public payload: string) { }
 }
 
-export class DeleteBookmarkFail implements Action {
+export class DeleteBookmarkFailure implements Action {
   readonly type = DELETE_BOOKMARK_FAIL;
   constructor(public payload: string) { }
 }
@@ -59,7 +59,7 @@ export class DeleteBookmarkFail implements Action {
 export type BookmarksActions =
   | LoadBookmarks
   | LoadBookmarksSuccess
-  | LoadBookmarksFail
+  | LoadBookmarksFailure
   | CreateBookmark
   | CreateBookmarkSuccess
-  | CreateBookmarkFail;
+  | CreateBookmarkFailure;

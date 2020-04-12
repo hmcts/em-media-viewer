@@ -16,14 +16,23 @@ import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-c
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { TagsComponent } from '../tags/tags.component';
 import { TagInputModule } from 'ngx-chips';
-import {StoreModule} from '@ngrx/store';
+import { Action, Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../store/reducers';
-import { Rectangle } from './annotation-view/rectangle/rectangle.model';
+import * as fromActions from '../../store/actions/annotations.action';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
   let fixture: ComponentFixture<AnnotationSetComponent>;
   let mockTextLayerRect, mockElement, mockHighlight, mockClientRect, mockClientRects, mockRange;
+  let expectedAction: Action;
+  const mockStore = {
+    select: () => of([{
+      styles: { height: 100, width: 100 },
+      scaleRotation: { scale: 1, rotation: 0 }
+    }]),
+    dispatch: (actualAction) => { expectedAction = actualAction },
+    pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
+  } as any;
 
   const api = new AnnotationApiService({}  as any);
   const mockCommentService = new CommentService();
@@ -121,6 +130,7 @@ describe('AnnotationSetComponent', () => {
         StoreModule.forFeature('media-viewer' , reducers)
       ],
       providers: [
+        { provide: Store, useValue: mockStore },
         { provide: AnnotationApiService, useValue: api },
         { provide: CommentService, useValue: mockCommentService },
         ToolbarEventService,
@@ -145,13 +155,38 @@ describe('AnnotationSetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should setup subscriptions', function () {
+  it('should setup subscriptions',
+    inject([Store, ViewerEventService, ToolbarEventService],
+    (store, viewerEvents, toolbarEvents) => {
+      const mockSubscription = { unsubscribe: () => {} };
+      spyOn(store, 'select');
+      spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.returnValue(mockSubscription);
+      spyOn(viewerEvents.textHighlight, 'subscribe').and.returnValue(mockSubscription);
+      spyOn(viewerEvents.ctxToolbarCleared, 'subscribe').and.returnValue(mockSubscription);
 
-  });
+      component.ngOnInit();
 
-  it('should destroy subscriptions', function () {
+      expect(store.select).toHaveBeenCalled();
+      expect(toolbarEvents.drawModeSubject.subscribe).toHaveBeenCalled();
+      expect(viewerEvents.textHighlight.subscribe).toHaveBeenCalled();
+      expect(viewerEvents.ctxToolbarCleared.subscribe).toHaveBeenCalled();
+    }
+  ));
 
-  });
+  it('should destroy subscriptions',
+    inject([ViewerEventService, ToolbarEventService],(viewerEvents, toolbarEvents) => {
+      const mockSubscription = { unsubscribe: () => {} };
+      spyOn(mockSubscription, 'unsubscribe');
+      spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.returnValue(mockSubscription);
+      spyOn(viewerEvents.textHighlight, 'subscribe').and.returnValue(mockSubscription);
+      spyOn(viewerEvents.ctxToolbarCleared, 'subscribe').and.returnValue(mockSubscription);
+
+      component.ngOnInit();
+      component.ngOnDestroy();
+
+      expect(mockSubscription.unsubscribe).toHaveBeenCalledTimes(3);
+    }
+  ));
 
   it('should show context toolbar',
     inject([HighlightCreateService, ViewerEventService],
@@ -167,27 +202,76 @@ describe('AnnotationSetComponent', () => {
       })
   ));
 
-  it('should clear context toolbar', function () {
+  it('should clear context toolbar', () => {
+    component.rectangles = ['rectangles'] as any;
 
+    component.clearContextToolbar();
+
+    expect(component.rectangles).toBeUndefined();
   });
 
-  it('should create highlight', () => {
+  it('should create highlight', inject([HighlightCreateService],
+    (highlightService) => {
+      spyOn(highlightService, 'saveAnnotation');
+      spyOn(highlightService, 'resetHighlight');
 
-  });
+      component.createHighlight();
 
-  it('should create bookmark', () => {
+      expect(highlightService.saveAnnotation).toHaveBeenCalled();
+      expect(highlightService.resetHighlight).toHaveBeenCalled();
+      expect(component.rectangles).toBeUndefined();
+    }
+  ));
 
-  });
+  it('should create bookmark', inject([HighlightCreateService, ViewerEventService],
+    (highlightService, viewerEvents) => {
+      const mockSelection = { toString: () => 'bookmark text' } as any;
+      spyOn(window, 'getSelection').and.returnValue(mockSelection);
+      component.highlightPage = 1;
+      spyOn(viewerEvents.createBookmarkEvent, 'next');
+      spyOn(highlightService, 'resetHighlight');
 
-  it('should update annotation', function () {
+      component.createBookmark({ x: 100, y: 200 } as any);
 
-  });
+      expect(viewerEvents.createBookmarkEvent.next).toHaveBeenCalledWith({
+        name: 'bookmark text', pageNumber: '0', xCoordinate: 100, yCoordinate: 200
+      });
+      expect(highlightService.resetHighlight).toHaveBeenCalled();
+      expect(component.rectangles).toBeUndefined();
+    }
+  ));
 
-  it('should delete annotation', function () {
+  it('should update annotation', inject([Store],
+    (store) => {
+      spyOn(store, 'dispatch');
+      const mockAnno = { annotationSetId: 'annotationSetId' } as any;
 
-  });
+      component.onAnnotationUpdate(mockAnno);
 
-  it('should select annotation', function () {
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveAnnotation(mockAnno))
+    }
+  ));
 
-  });
+  it('should delete annotation', inject([Store, CommentService],
+    (store, commentService) => {
+      spyOn(store, 'dispatch');
+      spyOn(commentService, 'updateUnsavedCommentsStatus');
+      const mockAnno = { comments: ['comments'], id: 'id'} as any;
+
+      component.onAnnotationDelete(mockAnno);
+
+      expect(commentService.updateUnsavedCommentsStatus).toHaveBeenCalledWith(mockAnno, false);
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'))
+    }
+  ));
+
+  it('should select annotation', inject([Store],
+    (store) => {
+      spyOn(store, 'dispatch');
+
+      component.selectAnnotation({} as any);
+
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SelectedAnnotation({} as any));
+    }
+  ));
 });

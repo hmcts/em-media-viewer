@@ -51,7 +51,7 @@ export function bookmarksReducer (state = initialBookmarksState,
         ...state,
         bookmarks,
         loading: false,
-        loaded: false
+        loaded: true
       }
     }
   }

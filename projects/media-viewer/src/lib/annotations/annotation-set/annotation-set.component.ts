@@ -105,7 +105,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromActions.DeleteAnnotation(annotation.id));
   }
 
-  selectAnnotation(annotationId) {
-    this.store.dispatch(new fromActions.SelectedAnnotation(annotationId))
+  selectAnnotation(selectedAnnotation) {
+    this.store.dispatch(new fromActions.SelectedAnnotation(selectedAnnotation))
   }
 }

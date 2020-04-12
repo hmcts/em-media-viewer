@@ -19,31 +19,31 @@ export class BookmarksEffects {
       this.bookmarksApiService.getBookmarks(url)
         .pipe(
           map(res => new bookmarksActions.LoadBookmarksSuccess(res)),
-          catchError(err => of(new bookmarksActions.LoadBookmarksFail(err)))
+          catchError(err => of(new bookmarksActions.LoadBookmarksFailure(err)))
         )
     ));
 
   @Effect()
-  postAnnotation$ = this.actions$.pipe(
+  createBookmark$ = this.actions$.pipe(
     ofType(bookmarksActions.CREATE_BOOKMARK),
     map((action: bookmarksActions.CreateBookmark) => action.payload),
     exhaustMap((bookmark) =>
       this.bookmarksApiService.createBookmark(bookmark)
         .pipe(
           map(bookmark => new bookmarksActions.CreateBookmarkSuccess(bookmark)),
-          catchError(error => of(new bookmarksActions.CreateBookmarkFail(error)))
+          catchError(error => of(new bookmarksActions.CreateBookmarkFailure(error)))
         )
     ));
 
   @Effect()
-  deleteAnnotation$ = this.actions$.pipe(
+  deleteBookmark$ = this.actions$.pipe(
     ofType(bookmarksActions.DELETE_BOOKMARK),
     map((action: bookmarksActions.DeleteBookmark) => action.payload),
     exhaustMap((bookmarkId) =>
       this.bookmarksApiService.deleteBookmark(bookmarkId)
         .pipe(
           map(() => new bookmarksActions.DeleteBookmarkSuccess(bookmarkId)),
-          catchError(error => of(new bookmarksActions.DeleteBookmarkFail(error)))
+          catchError(error => of(new bookmarksActions.DeleteBookmarkFailure(error)))
         )
     ));
 }

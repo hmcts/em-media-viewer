@@ -2,7 +2,6 @@ import {createSelector} from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
-import { AnnoPages } from '../reducers';
 
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,

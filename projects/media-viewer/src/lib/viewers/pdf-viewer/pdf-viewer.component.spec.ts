@@ -15,11 +15,11 @@ import { ViewerEventService } from '../viewer-event.service';
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
-import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { Outline } from './side-bar/outline-item/outline.model';
-import {StoreModule} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../store/reducers';
+import { SelectedAnnotation } from '../../store/actions/annotations.action';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -165,14 +165,18 @@ describe('PdfViewerComponent', () => {
     expect(viewerEvents.textSelected).not.toHaveBeenCalled();
   });
 
-  it('should select the page', () => {
-    component.annotationSet = {} as AnnotationSet;
-    spyOn(viewerEvents, 'boxSelected');
-    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+  it('should deselect annotation and context toolbar',
+    inject([Store], (store) => {
+      spyOn(store, 'dispatch');
+      spyOn(viewerEvents, 'clearCtxToolbar');
 
-    const mouseEvent = new MouseEvent('mousedown');
+      component.onPdfViewerClick();
 
-  });
+      expect(store.dispatch).toHaveBeenCalledWith(new SelectedAnnotation({
+        annotationId: '', selected: false, editable: false
+      }));
+      expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled()
+  }));
 
   it('should initialize loading of document', () => {
     mockWrapper.documentLoadInit.next();
