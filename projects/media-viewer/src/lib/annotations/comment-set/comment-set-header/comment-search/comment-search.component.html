@@ -1,16 +1,16 @@
 <input #searchInput type="text"
-       class="govuk-input comment-search"
+       class="govuk-input comment-search__item"
        id="search-comments-input" name="searchString"
        aria-label="search comments input" [ngModel]="searchString">
 <button type="button"
         [class.govuk-button--disabled]="searchInput?.value.length <= 2"
-        class="govuk-button comment-search"
+        class="govuk-button comment-search__item"
         (click)="searchComments(searchInput.value.trim())">Search</button>
 <ng-container *ngIf="searchResults.length > 0">
   <mv-comments-navigate [annotationList]="searchResults"></mv-comments-navigate>
 </ng-container>
 <ng-container *ngIf="searchString && searchResults?.length == 0">
-  <p class="comment-search">
+  <p class="comment-search__item">
     No matches have been found
   </p>
 </ng-container>

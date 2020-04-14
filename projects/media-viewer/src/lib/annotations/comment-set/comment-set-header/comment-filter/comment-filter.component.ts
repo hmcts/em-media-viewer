@@ -20,6 +20,7 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   filter$: Observable<string[]>;
   allTags$: Observable<any>;
   searchValue: string;
+  isPreview = false;
   constructor(
     private store: Store<fromStore.State>,
     private fb: FormBuilder) {}
@@ -59,6 +60,10 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   onRemoveFilter(tagName) {
     const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
     checkboxes.controls[tagName].setValue(false);
+  }
+
+  onToggleFilterView() {
+    this.isPreview = !this.isPreview
   }
 
 
