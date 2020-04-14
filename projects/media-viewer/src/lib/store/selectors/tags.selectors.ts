@@ -22,18 +22,7 @@ export const getTagFiltered = createSelector(
   fromTags.getFilteredComments
 );
 
-export const getFilterForm = createSelector(
-  getTagsRootState,
-  fromTags.getFormFilers
-);
 
-export const getFormData = createSelector(
-  getFilterForm,
-  (formState) => Object.keys(formState).map(key => {
-    return {
-      [key]: formState[key]
-    }})
-);
 
 export const getFilteredPageEntities = createSelector(
   getTagsRootState,

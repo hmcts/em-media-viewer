@@ -22,10 +22,10 @@
       <mv-comments-navigate *ngIf="navigationList?.length > 0"
                             [annotationList]="navigationList"></mv-comments-navigate>
     </ng-container>
-
-    <ng-container *ngIf="tabSelected === 'filter'">
+    <!-- not using *ngIf to preserve state when switching tabs -->
+    <div [ngClass]="{'isVisible': tabSelected === 'filter'}">
       <mv-comment-filter></mv-comment-filter>
-    </ng-container>
+    </div>
 
     <ng-container *ngIf="tabSelected === 'search'">
       <mv-comment-search [annotationSet]="annotationSet"></mv-comment-search>

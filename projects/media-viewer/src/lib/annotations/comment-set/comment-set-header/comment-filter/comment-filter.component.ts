@@ -19,7 +19,6 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   $subscriptions: Subscription;
   filter$: Observable<string[]>;
   allTags$: Observable<any>;
-  formState
   searchValue: string;
   constructor(
     private store: Store<fromStore.State>,
@@ -40,11 +39,9 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
 
   buildFrom() {
     const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
-    this.$subscriptions.add(this.store.pipe(select(fromSelectors.getFormData)).subscribe(formState => this.formState = formState));
     this.allTags$ = this.store.pipe(select(fromSelectors.getAllTagsArr)).pipe(tap(tags => {
       tags.forEach((value, i) => {
-        const val = this.formState.length ? this.formState[i][value.key] : false;
-        checkboxes.addControl(value.key, new FormControl(val));
+        checkboxes.addControl(value.key, new FormControl(false));
       });
     }));
   }

@@ -89,7 +89,6 @@ export function tagsReducer (
         filters,
         filteredComments,
         filteredPageEntities,
-        formFilterState
       };
     }
 
@@ -111,6 +110,6 @@ export const getTagNameEnt = (state: TagsState) => state.tagNameEnt;
 export const getFilters = (state: TagsState) => state.filters;
 export const getFilteredComments = (state: TagsState) => state.filteredComments;
 export const getFilteredPageEnt = (state: TagsState) => state.filteredPageEntities;
-export const getFormFilers = (state: TagsState) => state.formFilterState;
+
 
 

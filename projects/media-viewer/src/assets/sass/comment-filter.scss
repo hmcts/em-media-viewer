@@ -1,4 +1,11 @@
 .comment-filter {
+  .isVisible & {
+    display: block;
+  }
+}
+
+.comment-filter {
+  display: none;
   border: none;
   .hmcts-filter__selected, .hmcts-filter__options {
     padding: 0;
