@@ -8,6 +8,7 @@ export interface TagsState {
   filteredComments: {[id: string]: string[]};
   filteredPageEntities: {[id: string]: Annotation[]};
   annotations: Annotation[];
+  formFilterState: {[id: string]: boolean};
   filters: string[];
 }
 
@@ -16,6 +17,7 @@ export const initialTagState: TagsState = {
   annotations: [],
   filteredPageEntities: {},
   filteredComments: {},
+  formFilterState: {},
   filters: []
 };
 
@@ -67,10 +69,10 @@ export function tagsReducer (
 
 
     case fromTags.ADD_FILTER_TAGS: {
-      const payload = action.payload;
+      const formFilterState = action.payload;
 
-      const filters = Object.keys(payload).reduce((arr: string[], key: string) => {
-        return payload[key] ? [...arr, key] : arr;
+      const filters = Object.keys(formFilterState).reduce((arr: string[], key: string) => {
+        return formFilterState[key] ? [...arr, key] : arr;
       }, []);
 
       const filteredComments = filters.reduce((obj: {[id: string]: string}, f) => {
@@ -86,7 +88,8 @@ export function tagsReducer (
         ...state,
         filters,
         filteredComments,
-        filteredPageEntities
+        filteredPageEntities,
+        formFilterState
       };
     }
 
@@ -108,5 +111,6 @@ export const getTagNameEnt = (state: TagsState) => state.tagNameEnt;
 export const getFilters = (state: TagsState) => state.filters;
 export const getFilteredComments = (state: TagsState) => state.filteredComments;
 export const getFilteredPageEnt = (state: TagsState) => state.filteredPageEntities;
+export const getFormFilers = (state: TagsState) => state.formFilterState;
 
 
