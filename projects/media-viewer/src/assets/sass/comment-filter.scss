@@ -49,3 +49,17 @@
     border: none;
   }
 }
+
+.govuk-tabs__list-item--filtered {
+  position: relative;
+  &:before {
+    background: url(/assets/images/icon-filter.svg) 0 0 no-repeat;
+    filter: invert(23%) sepia(30%) saturate(6654%) hue-rotate(354deg) brightness(97%) contrast(88%);
+    content: '';
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: -10px;
+    left: 31px;
+  }
+}

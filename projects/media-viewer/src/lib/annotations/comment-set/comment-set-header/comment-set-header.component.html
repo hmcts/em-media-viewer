@@ -1,11 +1,11 @@
 <div class="govuk-tabs commentSummaryHeader" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
     <li *ngFor="let tab of tabs" class="govuk-tabs__list-item govuk-tabs__list-item"
-        [ngClass]="{'govuk-tabs__list-item--selected': tabSelected === tab }">
+        [ngClass]="{'govuk-tabs__list-item--selected': tabSelected === tab.label}">
 
-      <a (click)="selectTab(tab)" [routerLink]=""
+      <a (click)="selectTab(tab.label)" [routerLink]="" [ngClass]="{'govuk-tabs__list-item--filtered': tab.isFiltered}"
          class="govuk-tabs__tab">
-        {{ tab | titlecase }}
+        {{ tab.label | titlecase }}
       </a>
 
     </li>
