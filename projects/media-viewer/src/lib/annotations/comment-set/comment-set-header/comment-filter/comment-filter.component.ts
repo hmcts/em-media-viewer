@@ -56,5 +56,10 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
     this.$subscriptions.unsubscribe();
   }
 
+  onRemoveFilter(tagName) {
+    const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
+    checkboxes.controls[tagName].setValue(false);
+  }
+
 
 }

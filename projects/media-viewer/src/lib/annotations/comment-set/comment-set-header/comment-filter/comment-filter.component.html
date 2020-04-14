@@ -7,8 +7,10 @@
     </div>
     <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Tags</h3>
     <ul class="hmcts-filter-tags">
-      <li *ngFor="let tagName of (filter$ | async)"><a class="hmcts-filter__tag" [routerLink]="">
-        <span class="govuk-visually-hidden">Remove this filter</span>{{tagName}}</a></li>
+      <li *ngFor="let tagName of (filter$ | async)">
+        <a class="hmcts-filter__tag" [routerLink]="" (click)="onRemoveFilter(tagName)">
+          <span class="govuk-visually-hidden">Remove this filter</span>{{tagName}}</a>
+      </li>
     </ul>
 
     <div class="hmcts-filter__options">
