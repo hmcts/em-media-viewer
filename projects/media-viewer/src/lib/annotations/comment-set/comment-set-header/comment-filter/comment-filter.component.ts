@@ -40,7 +40,8 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   buildFrom() {
     const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
     this.allTags$ = this.store.pipe(select(fromSelectors.getAllTagsArr)).pipe(tap(tags => {
-      tags.forEach((value, i) => {
+      this.tagGroup.reset();
+      tags.forEach((value) => {
         checkboxes.addControl(value.key, new FormControl(false));
       });
     }));

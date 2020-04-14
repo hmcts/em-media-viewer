@@ -95,6 +95,7 @@ export function tagsReducer (
     case fromTags.CLEAR_FILTER_TAGS: {
       return {
         ...state,
+        tagNameEnt: {...state.tagNameEnt},
         filters: [],
         filteredComments: {},
         filteredPageEntities: {},
