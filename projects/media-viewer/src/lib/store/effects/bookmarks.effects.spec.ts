@@ -1,7 +1,7 @@
 import { BookmarksEffects } from './bookmarks.effects';
 import {
   CreateBookmark, CreateBookmarkFailure,
-  CreateBookmarkSuccess, DeleteBookmark,
+  CreateBookmarkSuccess, DeleteBookmark, DeleteBookmarkFailure, DeleteBookmarkSuccess,
   LoadBookmarks,
   LoadBookmarksFailure,
   LoadBookmarksSuccess
@@ -10,9 +10,8 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { DeleteAnnotationSucess } from '../actions/annotations.action';
 
-fdescribe('BookmarksEffects', () => {
+describe('BookmarksEffects', () => {
 
   let effects: BookmarksEffects;
   let mockActions$: Observable<Action>;
@@ -58,8 +57,7 @@ fdescribe('BookmarksEffects', () => {
   it('should trigger create bookmarks success',  fakeAsync(() => {
     mockActions$ = of(new CreateBookmark(bookmark))
     effects = new BookmarksEffects(mockActions$, mockApiService);
-    const mockRsp = { body: bookmark, status: '201'};
-    spyOn(mockApiService, 'createBookmark').and.returnValue(of(mockRsp))
+    spyOn(mockApiService, 'createBookmark').and.returnValue(of(bookmark))
 
     effects.createBookmark$.subscribe(action => expectedAction = action);
     tick();
@@ -81,12 +79,12 @@ fdescribe('BookmarksEffects', () => {
   it('should trigger delete bookmarks success',  fakeAsync(() => {
     mockActions$ = of(new DeleteBookmark('bookmarkId'))
     effects = new BookmarksEffects(mockActions$, mockApiService);
-    spyOn(mockApiService, 'deleteBookmark')
+    spyOn(mockApiService, 'deleteBookmark').and.returnValue(of('bookmarkId'));
 
     effects.deleteBookmark$.subscribe(action => expectedAction = action);
     tick();
 
-    expect(expectedAction).toEqual(new DeleteAnnotationSucess('bookmarkId'));
+    expect(expectedAction).toEqual(new DeleteBookmarkSuccess('bookmarkId'));
   }));
 
   it('should trigger delete bookmarks failure', fakeAsync(() => {
@@ -97,6 +95,6 @@ fdescribe('BookmarksEffects', () => {
     effects.deleteBookmark$.subscribe(action => expectedAction = action );
     tick();
 
-    expect(expectedAction).toEqual(new LoadBookmarksFailure('error' as any));
+    expect(expectedAction).toEqual(new DeleteBookmarkFailure('error' as any));
   }));
 });
