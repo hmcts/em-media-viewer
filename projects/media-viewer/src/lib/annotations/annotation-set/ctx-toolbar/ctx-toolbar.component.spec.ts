@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CtxToolbarComponent } from './ctx-toolbar.component';
 import { By } from '@angular/platform-browser';
 import { EventEmitter } from '@angular/core';
-import { summaryFileName } from '@angular/compiler/src/aot/util';
 
 describe('CtxToolbarComponent', () => {
   let component: CtxToolbarComponent;
@@ -41,20 +40,32 @@ describe('CtxToolbarComponent', () => {
   });
 
   afterEach(() => {
-    component.rectangle.x = 100;
-    component.rectangle.y = 100;
+    if (component.rectangle) {
+      component.rectangle.x = 100;
+      component.rectangle.y = 100;
+    }
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set rectangle', function () {
+  it('should set rectangle', () => {
+    const rectangles = [{ y: 10 }, { y: 20 }] as any;
+    component.rectangles = rectangles;
 
+    expect(component._rectangles).toEqual(rectangles);
+    expect(component.rectangle).toEqual({ y: 10 } as any);
   });
 
   it('should create highlight', function () {
+    spyOn(component.createHighlightEvent, 'emit');
+    component.rectangle = { id: 'rectId' } as any;
 
+    component.createHighlight();
+
+    expect(component.createHighlightEvent.emit).toHaveBeenCalled();
+    expect(component.rectangle).toBeUndefined();
   });
 
   it('should delete highlight', () => {

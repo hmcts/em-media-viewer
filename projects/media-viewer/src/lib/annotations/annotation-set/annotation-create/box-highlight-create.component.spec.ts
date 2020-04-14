@@ -1,19 +1,18 @@
 import { BoxHighlightCreateComponent } from './box-highlight-create.component';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { AnnotationApiService } from '../../annotation-api.service';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
 import { HighlightCreateService } from './highlight-create.service';
 
 describe('BoxHighlightCreateComponent', () => {
   let component: BoxHighlightCreateComponent;
   let fixture: ComponentFixture<BoxHighlightCreateComponent>;
   let nativeElement: HTMLElement;
-  const mockHighlightService = {};
+  const mockHighlightService = {
+    saveAnnotation: () => {}
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,13 +39,29 @@ describe('BoxHighlightCreateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should subscribe to the drawMode subject', function () {
+  it('should subscribe to the drawMode subject',
+    inject([ToolbarEventService], (toolbarEvents) => {
+      const mockSubscription = { unsubscribe: () => {} };
+      spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.returnValue(mockSubscription);
 
-  });
+      component.ngOnInit();
 
-  it('should destroy subscriptions', function () {
+      expect(toolbarEvents.drawModeSubject.subscribe).toHaveBeenCalled();
+    })
+  );
 
-  });
+  it('should destroy subscriptions',
+    inject([ToolbarEventService], (toolbarEvents) => {
+      const mockSubscription = { unsubscribe: () => {} };
+      spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.returnValue(mockSubscription);
+      spyOn(mockSubscription, 'unsubscribe');
+
+      component.ngOnInit();
+      component.ngOnDestroy();
+
+      expect(mockSubscription.unsubscribe).toHaveBeenCalled();
+    })
+  );
 
   it('should initialise the box highlight creator', () => {
     const event = { offsetX: 100, offsetY: 200 } as MouseEvent;
@@ -114,11 +129,21 @@ describe('BoxHighlightCreateComponent', () => {
     expect(component.left).toBe(60);
   });
 
-  it('should create the highlight', function () {
+  it('should create the highlight',
+    inject([HighlightCreateService, ToolbarEventService], (highlightService, toolbarEvents) => {
+      component.height = 10;
+      spyOn(highlightService, 'saveAnnotation');
+      spyOn(toolbarEvents.drawModeSubject, 'next');
 
-  });
+      component.createHighlight();
 
-  it('should reset the highlight', function () {
-
-  });
+      expect(highlightService.saveAnnotation).toHaveBeenCalled();
+      expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalledWith(false);
+      expect(component.drawStartX).toBe(-1);
+      expect(component.drawStartY).toBe(-1);
+      expect(component.display).toBe('none');
+      expect(component.width).toBe(0);
+      expect(component.height).toBe(0);
+    })
+  );
 });

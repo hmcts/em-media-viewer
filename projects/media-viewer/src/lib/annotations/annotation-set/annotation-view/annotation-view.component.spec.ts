@@ -1,5 +1,5 @@
 import { AnnotationViewComponent } from './annotation-view.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { RectangleComponent } from './rectangle/rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { CtxToolbarComponent } from '../ctx-toolbar/ctx-toolbar.component';
@@ -7,8 +7,9 @@ import { Annotation } from './annotation.model';
 import { MutableDivModule } from 'mutable-div';
 import {TagsComponent} from '../../tags/tags.component';
 import {TagInputModule} from 'ngx-chips';
-import {StoreModule} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../../store/reducers';
+import { ViewerEventService } from '../../../viewers/viewer-event.service';
 
 describe('AnnotationComponent', () => {
   let component: AnnotationViewComponent;
@@ -69,20 +70,49 @@ describe('AnnotationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit annotataion click event', function () {
+  it('should emit annotataion click event', () => {
+    component.anno = { id: 'annoId' } as any;
+    spyOn(component.annotationClick, 'emit');
 
+    component.onSelect();
+
+    expect(component.annotationClick.emit)
+      .toHaveBeenCalledWith({ annotationId: 'annoId', editable: false, selected: true });
   });
 
-  it('should update rectangle', function () {
+  it('should update rectangle', () => {
+    spyOn(component.update, 'emit');
+    component.anno = { rectangles: [{ id: 'rectId' }] } as any;
+    const rectangle = { id: 'rectId', height: 100, width: 100 } as any;
 
+    component.onRectangleUpdate(rectangle);
+
+    expect(component.update.emit).toHaveBeenCalled();
+    expect(component.anno.rectangles[0].width).toBe(100);
+    expect(component.anno.rectangles[0].height).toBe(100);
   });
 
-  it('should delete highlight', function () {
+  it('should delete highlight', () => {
+    spyOn(component.delete, 'emit');
 
+    component.deleteHighlight();
+
+    expect(component.delete.emit).toHaveBeenCalled();
   });
 
-  it('should add or edit comment', function () {
+  it('should add or edit comment',
+    inject([Store, ViewerEventService],(store, viewerEvents) => {
+      spyOn(store, 'dispatch');
+      spyOn(viewerEvents, 'toggleCommentsPanel');
+      spyOn(component.annotationClick, 'emit');
+      component.anno = { comments: [], id: 'annoId', createdBy: 'me' } as any;
 
-  });
+      component.addOrEditComment();
 
+      expect(store.dispatch).toHaveBeenCalled();
+      expect(component.annotationClick.emit)
+        .toHaveBeenCalledWith({ annotationId: 'annoId', editable: true, selected: true });
+      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
+      expect(component.selected).toBeTrue();
+  }));
 });
