@@ -21,7 +21,7 @@ describe('BookmarksReducer', () => {
     const bookmarks = [{
       name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
     }];
-    const res = { body: bookmarks, status: '200' } as any;
+    const res = { body: bookmarks, status: 200 };
     const state = fromBookmarks.bookmarksReducer(initialBookmarksState, new LoadBookmarksSuccess(res));
 
     expect(state.bookmarks).toEqual(bookmarks);
@@ -30,7 +30,7 @@ describe('BookmarksReducer', () => {
   });
 
   it('should load bookmarks on failure', function () {
-    const res = { body: [], status: '404' };
+    const res = { body: [], status: 404 };
     const state = fromBookmarks.bookmarksReducer(initialBookmarksState, new LoadBookmarksFailure(res));
 
     expect(state.bookmarks).toEqual([]);

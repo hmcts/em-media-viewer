@@ -1,24 +1,16 @@
 import { AnnotationSetComponent } from './annotation-set.component';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { RectangleComponent } from './annotation-view/rectangle/rectangle.component';
-import { FormsModule } from '@angular/forms';
 import { annotationSet } from '../../../assets/annotation-set';
-import { CtxToolbarComponent } from './ctx-toolbar/ctx-toolbar.component';
-import { AnnotationViewComponent } from './annotation-view/annotation-view.component';
 import { AnnotationApiService } from '../annotation-api.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable, of } from 'rxjs';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { CommentService } from '../comment-set/comment/comment.service';
-import { MutableDivModule } from 'mutable-div';
 import { HighlightCreateService } from './annotation-create/highlight-create.service';
-import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
-import { TagsComponent } from '../tags/tags.component';
-import { TagInputModule } from 'ngx-chips';
 import { Action, Store, StoreModule } from '@ngrx/store';
-import {reducers} from '../../store/reducers';
+import { reducers } from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -36,6 +28,11 @@ describe('AnnotationSetComponent', () => {
 
   const api = new AnnotationApiService({}  as any);
   const mockCommentService = new CommentService();
+  const mockHighlightService = {
+    getRectangles: () => {},
+    saveAnnotation: () => {},
+    resetHighlight: () => {}
+  } as any;
 
   const fakeApi: any = {
     returnedAnnotation: {
@@ -113,19 +110,8 @@ describe('AnnotationSetComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AnnotationSetComponent,
-        AnnotationViewComponent,
-        BoxHighlightCreateComponent,
-        RectangleComponent,
-        CtxToolbarComponent,
-        TagsComponent
-      ],
+      declarations: [AnnotationSetComponent],
       imports: [
-        FormsModule,
-        HttpClientTestingModule,
-        MutableDivModule,
-        TagInputModule,
         StoreModule.forRoot({}),
         StoreModule.forFeature('media-viewer' , reducers)
       ],
@@ -133,9 +119,10 @@ describe('AnnotationSetComponent', () => {
         { provide: Store, useValue: mockStore },
         { provide: AnnotationApiService, useValue: api },
         { provide: CommentService, useValue: mockCommentService },
-        ToolbarEventService,
-        HighlightCreateService
-      ]
+        { provide: HighlightCreateService, useValue: mockHighlightService },
+        ToolbarEventService
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AnnotationSetComponent);
@@ -189,16 +176,16 @@ describe('AnnotationSetComponent', () => {
   ));
 
   it('should show context toolbar',
-    inject([HighlightCreateService, ViewerEventService],
-      fakeAsync((highlightService, viewerEvents) => {
-        spyOn(highlightService, 'getRectangles').and.returnValue(['rectangle'])
+    inject([ViewerEventService, HighlightCreateService],
+      fakeAsync((viewerEvents, highlightService) => {
+        spyOn(highlightService, 'getRectangles').and.returnValue(['rectangles']);
         component.ngOnInit();
 
         viewerEvents.textSelected({ page: 1 } as Highlight);
         tick();
 
-        expect(highlightService.getRectangles).toHaveBeenCalledWith({ page: 1 });
-        expect(component.rectangles).toEqual(['rectangle'] as any);
+        expect(highlightService.getRectangles).toHaveBeenCalled();
+        expect(component.rectangles).toEqual(['rectangles'] as any);
       })
   ));
 
@@ -210,33 +197,32 @@ describe('AnnotationSetComponent', () => {
     expect(component.rectangles).toBeUndefined();
   });
 
-  it('should create highlight', inject([HighlightCreateService],
-    (highlightService) => {
-      spyOn(highlightService, 'saveAnnotation');
-      spyOn(highlightService, 'resetHighlight');
+  it('should create highlight',
+    inject([HighlightCreateService], (highlightCreateService) => {
+      spyOn(highlightCreateService, 'saveAnnotation');
+      spyOn(highlightCreateService, 'resetHighlight');
 
       component.createHighlight();
 
-      expect(highlightService.saveAnnotation).toHaveBeenCalled();
-      expect(highlightService.resetHighlight).toHaveBeenCalled();
+      expect(highlightCreateService.saveAnnotation).toHaveBeenCalled();
+      expect(highlightCreateService.resetHighlight).toHaveBeenCalled();
       expect(component.rectangles).toBeUndefined();
-    }
-  ));
+  }));
 
-  it('should create bookmark', inject([HighlightCreateService, ViewerEventService],
-    (highlightService, viewerEvents) => {
+  it('should create bookmark',
+    inject([HighlightCreateService, ViewerEventService], (highlightCreateService, viewerEvents) => {
       const mockSelection = { toString: () => 'bookmark text' } as any;
       spyOn(window, 'getSelection').and.returnValue(mockSelection);
       component.highlightPage = 1;
       spyOn(viewerEvents.createBookmarkEvent, 'next');
-      spyOn(highlightService, 'resetHighlight');
+      spyOn(highlightCreateService, 'resetHighlight');
 
       component.createBookmark({ x: 100, y: 200 } as any);
 
       expect(viewerEvents.createBookmarkEvent.next).toHaveBeenCalledWith({
         name: 'bookmark text', pageNumber: '0', xCoordinate: 100, yCoordinate: 200
       });
-      expect(highlightService.resetHighlight).toHaveBeenCalled();
+      expect(highlightCreateService.resetHighlight).toHaveBeenCalled();
       expect(component.rectangles).toBeUndefined();
     }
   ));

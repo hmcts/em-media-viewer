@@ -34,7 +34,7 @@ describe('BookmarksEffects', () => {
   it('should trigger load bookmarks success',  fakeAsync(() => {
     mockActions$ = of(new LoadBookmarks('url'))
     effects = new BookmarksEffects(mockActions$, mockApiService);
-    const mockRsp = { body: [bookmark], status: '200'};
+    const mockRsp = { body: [bookmark], status: 200 };
     spyOn(mockApiService, 'getBookmarks').and.returnValue(of(mockRsp))
 
     effects.loadBookmarks$.subscribe(action => expectedAction = action);

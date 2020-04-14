@@ -25,8 +25,6 @@ describe('HighlightCreateService', () => {
   });
 
   it('should set the style values from the store', () => {
-    service.ngOnInit();
-
     expect(service.height).toBe(100);
     expect(service.width).toBe(100);
     expect(service.zoom).toBe(1);
