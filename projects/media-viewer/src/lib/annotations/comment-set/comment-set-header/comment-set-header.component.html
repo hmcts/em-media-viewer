@@ -19,12 +19,21 @@
                 title="Open collate summary"
                 (click)="toggleCommentsSummary()">Collate comments</button>
       </div>
-      <mv-comments-navigate *ngIf="navigationList?.length > 0"
-                            [annotationList]="navigationList"></mv-comments-navigate>
+      <mv-comments-navigate
+        *ngIf="navigationList?.length > 0"
+        [annotationList]="navigationList">
+      </mv-comments-navigate>
     </ng-container>
+
     <!-- not using *ngIf to preserve state when switching tabs -->
     <div [ngClass]="{'isVisible': tabSelected === 'filter'}">
-      <mv-comment-filter></mv-comment-filter>
+      <div class="govuk-tabs__panel--container">
+        <mv-comment-filter></mv-comment-filter>
+        <mv-comments-navigate
+          *ngIf="navigationList?.length > 0"
+          [annotationList]="navigationList">
+        </mv-comments-navigate>
+      </div>
     </div>
 
     <ng-container *ngIf="tabSelected === 'search'">

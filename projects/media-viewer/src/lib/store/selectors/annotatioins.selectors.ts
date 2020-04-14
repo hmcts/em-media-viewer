@@ -113,3 +113,16 @@ export const getCommentsArray = createSelector(
     }
   }
 );
+
+
+export const getFilteredAnnotations = createSelector(
+  getAnnotationEntities,
+  fromTags.getTagFiltered,
+  (annoEnt, filters) => {
+    const isFiltered: boolean = !!Object.keys(filters).length;
+    const anno = isFiltered ? filters : annoEnt;
+    return Object.keys(anno).map(key => annoEnt[key]);
+  }
+);
+
+

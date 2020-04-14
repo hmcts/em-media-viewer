@@ -22,8 +22,6 @@ export const getTagFiltered = createSelector(
   fromTags.getFilteredComments
 );
 
-
-
 export const getFilteredPageEntities = createSelector(
   getTagsRootState,
   fromTags.getFilteredPageEnt
