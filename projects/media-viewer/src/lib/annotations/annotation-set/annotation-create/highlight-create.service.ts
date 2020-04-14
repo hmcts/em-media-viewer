@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { AfterContentInit, Injectable, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Highlight } from '../../../viewers/viewer-event.service';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
@@ -12,7 +12,7 @@ import * as fromActions from '../../../store/actions/annotations.action';
 import {take} from 'rxjs/operators';
 
 @Injectable()
-export class HighlightCreateService implements OnInit {
+export class HighlightCreateService {
 
   height: number;
   width: number;
@@ -21,9 +21,7 @@ export class HighlightCreateService implements OnInit {
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
-              private store: Store<fromStore.AnnotationSetState>) {}
-
-  ngOnInit(): void {
+              private store: Store<fromStore.AnnotationSetState>) {
     this.store.select(fromSelectors.getAnnoPages)
       .subscribe(pages => {
         this.height = pages.styles.height;

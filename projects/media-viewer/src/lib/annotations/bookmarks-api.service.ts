@@ -15,14 +15,12 @@ export class BookmarksApiService {
 
   public getBookmarks(url: string): Observable<any> {
     const documentId = this.extractDocumentId(url);
-    console.log('[api service] its trying to get the bookmarks: ', documentId);
     return this.httpClient
       .get(`${this.ANNOTATIONS_API}/${documentId}/bookmarks`,
         { observe: 'response' , withCredentials: true });
   }
 
   public createBookmark(bookmark: Partial<Bookmark>): Observable<Bookmark> {
-    console.log('[api service] its trying to create a bookmark: ', bookmark.id);
     return this.httpClient
       .post<Bookmark>(`${this.ANNOTATIONS_API}/bookmarks`,
         bookmark, { observe: 'response' , withCredentials: true })
