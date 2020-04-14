@@ -52,7 +52,8 @@ describe('CommentSearch', () => {
 
 @Component({
   selector: `host-component`,
-  template: `<mv-comment-search [annotationSet]="annotationSet"></mv-comment-search>`
+  template: `
+      <mv-comment-search [annotations]="annotationSet"></mv-comment-search>`
 })
 class TestHostComponent {
   annotationSet = { annotations: [] };

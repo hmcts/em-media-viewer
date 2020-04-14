@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AnnotationSet } from '../../../annotation-set/annotation-set.model';
 import { Annotation } from '../../../annotation-set/annotation-view/annotation.model';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../../../store/reducers';
@@ -12,7 +11,7 @@ import * as fromActions from '../../../../store/actions/annotations.action';
 })
 export class CommentSearchComponent implements AfterViewInit, OnDestroy {
 
-  @Input() public readonly annotationSet: AnnotationSet;
+  @Input() public readonly annotations: Annotation[];
 
   @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
 
@@ -37,7 +36,7 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
     this.clearSearch();
     if (searchText.length > 2) {
       this.searchString = searchText;
-      this.searchResults = this.annotationSet.annotations
+      this.searchResults = this.annotations
         .filter(annotation => annotation.comments.length > 0)
         .filter(annotation => annotation.comments[0].content.toLowerCase().includes(this.searchString.toLowerCase()));
       if (this.searchResults.length > 0) {
