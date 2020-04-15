@@ -1,8 +1,16 @@
-<div #boxHighlight
+<div [style.height]="defaultHeight"
+     [style.width]="defaultWidth"
+     (mousedown)="initHighlight($event)"
+     (mousemove)="updateHighlight($event)"
+     (mouseup)="createHighlight()">
+  <div #boxHighlight
      class="box-highlight"
      [style.display]="display"
-     [style.height]="height + 'px'"
-     [style.width]="width + 'px'"
+     [style.position]="position"
+     [style.background-color]="backgroundColor"
+     [style.height]="height ? height + 'px' : '100%'"
+     [style.width]="width ? width + 'px' : '100%'"
      [style.top]="top + 'px'"
      [style.left]="left + 'px'">
+  </div>
 </div>

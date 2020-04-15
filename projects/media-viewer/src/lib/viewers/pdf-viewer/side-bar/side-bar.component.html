@@ -1,0 +1,42 @@
+<div id="toolbarSidebar">
+  <div class="splitToolbarButton toggled">
+    <button id="viewOutline"
+            [ngClass]="{ 'toolbarButton': true, 'toggled': selectedView === 'outline' }"
+            (click)="toggleSidebarView('outline')"
+            title="Show Document Outline" tabindex="3" data-l10n-id="document_outline">
+      <span data-l10n-id="document_outline_label">Document Outline</span>
+    </button>
+    <button id="viewBookmark"
+            class="toolbarButton bookmark"
+            [ngClass]="{ toggled: selectedView === 'bookmark' }"
+            (click)="toggleSidebarView('bookmark')"
+            title="Show Bookmarks" tabindex="2" data-l10n-id="bookmarks">
+      <span data-l10n-id="bookmarks_label">Thumbnails</span>
+    </button>
+  </div>
+  <div class="splitToolbarButtonSeparator"></div>
+  <div class="splitToolbarButton right">
+    <button id="addBookmark"
+            class="toolbarButton addBookmark toggled"
+            (click)="onClick()"
+            title="Add bookmark" tabindex="3" data-l10n-id="addBookmark">
+      <span data-l10n-id="addBookmark_label">Add bookmark</span>
+    </button>
+  </div>
+</div>
+<div id="sidebarContent">
+  <div id="outlineView" class="outlineWithDeepNesting">
+    <div class="outlineItem" *ngIf="selectedView === 'outline'">
+      <mv-outline-item *ngFor="let outlineItem of outline"
+                       [outline]="outlineItem"
+                       (navigationEvent)="goToDestination($event)"></mv-outline-item>
+    </div>
+    <div class="outlineItem" *ngIf="selectedView === 'bookmark'">
+      <ng-container *ngIf="(bookmarks$ | async) as bookmarks">
+        <a *ngFor="let bookmark of bookmarks"
+           class="outlineItem" (click)="goToBookmark(bookmark)">{{ bookmark.name }}</a>
+        <a *ngIf="bookmarks?.length === 0" class="outlineItem">No bookmarks created yet</a>
+      </ng-container>
+    </div>
+  </div>
+</div>

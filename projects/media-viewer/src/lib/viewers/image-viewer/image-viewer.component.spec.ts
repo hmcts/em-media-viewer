@@ -1,7 +1,6 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
 import { PrintService } from '../../print.service';
-import { ErrorMessageComponent } from '../error-message/error.message.component';
 import { By } from '@angular/platform-browser';
 import { SimpleChange } from '@angular/core';
 import { AnnotationsModule } from '../../annotations/annotations.module';
@@ -22,7 +21,6 @@ describe('ImageViewerComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ErrorMessageComponent,
         ImageViewerComponent,
         GrabNDragDirective
       ],
@@ -108,18 +106,6 @@ describe('ImageViewerComponent', () => {
       expect(anchor.href).toContain(DOCUMENT_URL);
       expect(anchor.download).toBe('download-filename');
   }));
-
-  it('should show errorMessage when set', () => {
-    expect(fixture.debugElement.query(By.css('.image-container')).nativeElement.className)
-      .not.toContain('hidden');
-    expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBe(null);
-
-    component.errorMessage = 'errorx';
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.query(By.css('.image-container'))).toBeNull();
-    expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeTruthy();
-  });
 
   it('when url changes the error message is reset', () => {
     component.errorMessage = 'errox';

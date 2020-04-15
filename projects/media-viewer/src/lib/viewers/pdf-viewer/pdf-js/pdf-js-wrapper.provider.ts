@@ -3,7 +3,7 @@ import { ElementRef, Injectable } from '@angular/core';
 import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
-import { Outline } from '../outline-view/outline.model';
+import { Outline } from '../side-bar/outline-item/outline.model';
 
 @Injectable({providedIn: 'root'})
 export class PdfJsWrapperFactory {

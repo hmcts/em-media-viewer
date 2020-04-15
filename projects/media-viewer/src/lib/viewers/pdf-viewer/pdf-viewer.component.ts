@@ -19,10 +19,10 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
-import { ResponseType, ViewerException } from '../error-message/viewer-exception.model';
+import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
-import { Outline } from './outline-view/outline.model';
+import { Outline } from './side-bar/outline-item/outline.model';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
@@ -59,7 +59,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
-  @ViewChild('commentPanel') commentPanel: CommentSetComponent;
+  @ViewChild('commentsPanel') commentsPanel: CommentSetComponent;
 
   private pdfWrapper: PdfJsWrapper;
   private subscriptions: Subscription[] = [];
@@ -171,12 +171,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   onPdfViewerClick() {
     this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
+    this.viewerEvents.clearCtxToolbar();
   }
 
   onMouseUp(mouseEvent: MouseEvent) {
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
+      const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
       this.viewerEvents.textSelected({
-        page: this.pdfWrapper.getPageNumber(),
+        page: parseInt(pageElement.getAttribute('data-page-number')),
         event: mouseEvent,
         annoSet: this.annotationSet
       });
@@ -197,7 +199,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private setRotation(rotation: number) {
     const pageNumber = this.pdfWrapper.getPageNumber();
-    this.commentPanel.container.nativeElement.style.height = 0;
+    if(this.commentsPanel) {
+      this.commentsPanel.container.nativeElement.style.height = 0;
+    }
     this.pdfWrapper.rotate(rotation);
     this.pdfWrapper.setPageNumber(pageNumber);
     this.rotation = (this.rotation + rotation) % 360;
@@ -233,9 +237,5 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
-  }
-
-  goToOutlineDest(destination: any) {
-    this.pdfWrapper.navigateTo(destination);
   }
 }

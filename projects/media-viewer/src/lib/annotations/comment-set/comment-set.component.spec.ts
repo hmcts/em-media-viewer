@@ -239,16 +239,19 @@ describe('CommentSetComponent', () => {
 
   it('should delete the comment for the annotation', () => {
     spyOn(component, 'onAnnotationUpdate');
+
     component.onCommentDelete(mockComment.comment);
+
     expect(component.onAnnotationUpdate).toHaveBeenCalled();
     expect(component.annotationSet).not.toContain(mockComment);
   });
 
-  xit('should update the comment for the annotation', () => {
+  it('should update the comment for the annotation', () => {
+    const annoId = component.annotationSet.annotations[0].comments[0].annotationId;
     spyOn(component, 'onAnnotationUpdate');
-    mockComment.comment.content = 'Updating the comment 1';
+    const mockPayload = { comment: { content: 'Updating the comment 1', annotationId: annoId }} as any;
 
-    component.onCommentUpdate(mockComment);
+    component.onCommentUpdate(mockPayload);
 
     expect(component.onAnnotationUpdate).toHaveBeenCalled();
     expect(component.annotationSet.annotations[0].comments[0]).toEqual(mockComment.comment);

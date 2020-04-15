@@ -74,8 +74,4 @@ export class AnnotationViewComponent {
     this.annotationClick.emit({ annotationId: this.anno.id, editable: true, selected: true });
     this.viewerEvents.toggleCommentsPanel(true);
   }
-
-  topRectangle() {
-    return this.anno.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
-  }
 }

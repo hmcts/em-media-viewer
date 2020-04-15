@@ -9,11 +9,10 @@ import { MediaViewerComponent } from './media-viewer.component';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { PdfJsWrapperFactory } from './viewers/pdf-viewer/pdf-js/pdf-js-wrapper.provider';
 import { AnnotationsModule } from './annotations/annotations.module';
-import { ErrorMessageComponent } from './viewers/error-message/error.message.component';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { GrabNDragDirective } from './viewers/grab-n-drag.directive';
-import { OutlineViewComponent } from './viewers/pdf-viewer/outline-view/outline-view.component';
-import { OutlineItemComponent } from './viewers/pdf-viewer/outline-view/outline-item/outline-item.component';
+import { SideBarComponent } from './viewers/pdf-viewer/side-bar/side-bar.component';
+import { OutlineItemComponent } from './viewers/pdf-viewer/side-bar/outline-item/outline-item.component';
 import { TagInputModule } from 'ngx-chips';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
@@ -38,19 +37,17 @@ import { effects } from './store/effects/index';
   ],
   declarations: [
     PdfViewerComponent,
-    OutlineViewComponent,
+    SideBarComponent,
     OutlineItemComponent,
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,
-    ErrorMessageComponent,
     GrabNDragDirective
   ],
   entryComponents: [
     PdfViewerComponent,
     ImageViewerComponent,
-    UnsupportedViewerComponent,
-    ErrorMessageComponent
+    UnsupportedViewerComponent
 ],
   providers: [
     PdfJsWrapperFactory,

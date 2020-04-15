@@ -50,11 +50,10 @@ html[dir='rtl'] #outerContainer.sidebarOpen #sidebarContainer {
 }
 
 #sidebarContent {
-  top: 0;
   bottom: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  position: absolute;
+  height: 100%;
   width: 100%;
   background-color: #474747;
 }

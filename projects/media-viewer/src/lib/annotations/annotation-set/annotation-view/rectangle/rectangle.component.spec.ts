@@ -79,13 +79,6 @@ describe('RectangleComponent', () => {
     expect(component.select.emit).toHaveBeenCalledTimes(1);
   });
 
-  xit('should select the rectangle if select is true.', () => {
-    spyOn(component.rectElement.nativeElement, 'focus');
-    component._selected = true;
-    component.ngAfterViewInit();
-    expect(component.rectElement.nativeElement.focus).toHaveBeenCalledTimes(1);
-  });
-
   it('should update the rectangle if moved', () => {
     const oldLeft = rectangleEl.nativeElement.offsetLeft;
     const oldTop = rectangleEl.nativeElement.offsetTop;

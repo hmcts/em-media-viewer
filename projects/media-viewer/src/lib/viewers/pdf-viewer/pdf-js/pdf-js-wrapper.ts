@@ -3,7 +3,7 @@ import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
 import { Subject } from 'rxjs';
 import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
-import { Outline } from '../outline-view/outline.model';
+import { Outline } from '../side-bar/outline-item/outline.model';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
@@ -35,7 +35,6 @@ export class PdfJsWrapper {
     public readonly pageRendered: Subject<PageEvent>
   ) {
 
-    // bind to internal PDF.js event bus
     this.pdfViewer.eventBus.on('pagerendered', e => this.pageRendered.next(e));
     this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPageInputValueSubject.next(e.pageNumber));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
@@ -122,6 +121,10 @@ export class PdfJsWrapper {
       destination[4] = this.zoomValue;
     }
     this.pdfViewer.linkService.navigateTo(destination);
+  }
+
+  public getLocation() {
+    return this.pdfViewer._location;
   }
 
   public setZoom(zoomValue: number): void {

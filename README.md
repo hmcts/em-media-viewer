@@ -132,6 +132,7 @@ this.app.use(proxy(annotation.endpoints, { target: annotation.target }));
 
 ## Viewer Exceptions
 The Media Viewer will return load status and provide exceptions if thrown for the host application to consume.
+It is up to the consuming application whether or not to notify the user of those exceptions, as the Media-Viewer will not  
 ```
     <mv-media-viewer [url]="'assets/example.pdf'"
                      [downloadFileName]="'example.pdf'"

@@ -36,8 +36,8 @@ export class CommentsNavigateComponent implements OnChanges {
         rectangle: this.upperRectangle(annotation.rectangles),
       }))
       .sort(this.sortComments);
-    if (this.autoSelect) {
 
+    if (this.autoSelect) {
       this.toolbarEvents.setPage(Number.parseInt(this.navigationList[0].page, 0));
       this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: this.navigationList[0].annotationId, editable: false, selected: true}));
     }
@@ -63,7 +63,9 @@ export class CommentsNavigateComponent implements OnChanges {
       this.index = 0;
     }
     this.toolbarEvents.setPage(Number.parseInt(this.navigationList[this.index].page, 0));
-    this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true}));
+    this.store.dispatch(new fromActions.SelectedAnnotation({
+      annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true
+    }));
   }
 
 

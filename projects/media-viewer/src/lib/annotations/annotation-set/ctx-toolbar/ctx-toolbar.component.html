@@ -1,0 +1,30 @@
+<div class="toolbar" *ngIf="rectangle"
+     [ngStyle]="transformStyles"
+     [style.top.px]="top"
+     [style.left.px]="left">
+  <button *ngIf="canHighlight"
+          type="button" title="Highlight"
+          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn leftButton"
+          (mousedown)="createHighlight()">
+    <span>Highlight</span>
+  </button>
+  <button *ngIf="canDelete"
+          type="button" title="Delete"
+          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn leftButton"
+          (mousedown)="deleteHighlight()">
+    <span>Remove</span>
+  </button>
+  <button *ngIf="canComment"
+          type="button" title="Comment"
+          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton"
+          (mousedown)="addOrEditComment()">
+    <span>Comment</span></button>
+  <button *ngIf="canBookmark"
+          type="button" title="Bookmark"
+          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton"
+          (mousedown)="createBookmark()">
+    <span>Bookmark</span></button>
+  <div class="arrow-down">
+    <div class="inner-triangle"></div>
+  </div>
+</div>
