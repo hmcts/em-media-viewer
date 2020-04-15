@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PopupToolbarComponent } from './popup-toolbar.component';
+import { CtxToolbarComponent } from './ctx-toolbar.component';
 import { By } from '@angular/platform-browser';
 import { EventEmitter } from '@angular/core';
 
-describe('PopupToolbarComponent', () => {
-  let component: PopupToolbarComponent;
-  let fixture: ComponentFixture<PopupToolbarComponent>;
+describe('CtxToolbarComponent', () => {
+  let component: CtxToolbarComponent;
+  let fixture: ComponentFixture<CtxToolbarComponent>;
   const mockRectangle = {
     x: 100, y: 100, width: 100, height: 20,
     id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
@@ -28,11 +28,11 @@ describe('PopupToolbarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ PopupToolbarComponent ]
+      declarations: [ CtxToolbarComponent ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PopupToolbarComponent);
+    fixture = TestBed.createComponent(CtxToolbarComponent);
     component = fixture.componentInstance;
     component.rectangle = mockRectangle;
 
@@ -40,18 +40,41 @@ describe('PopupToolbarComponent', () => {
   });
 
   afterEach(() => {
-    component.rectangle.x = 100;
-    component.rectangle.y = 100;
+    if (component.rectangle) {
+      component.rectangle.x = 100;
+      component.rectangle.y = 100;
+    }
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should set rectangle', () => {
+    const rectangles = [{ y: 10 }, { y: 20 }] as any;
+    component.rectangles = rectangles;
+
+    expect(component._rectangles).toEqual(rectangles);
+    expect(component.rectangle).toEqual({ y: 10 } as any);
+  });
+
+  it('should create highlight', function () {
+    spyOn(component.createHighlightEvent, 'emit');
+    component.rectangle = { id: 'rectId' } as any;
+
+    component.createHighlight();
+
+    expect(component.createHighlightEvent.emit).toHaveBeenCalled();
+    expect(component.rectangle).toBeUndefined();
+  });
+
   it('should delete highlight', () => {
     const mockDeleteEvent = new EventEmitter();
     spyOn(mockDeleteEvent, 'emit');
-    component.deleteHighlight = mockDeleteEvent;
+    component.canDelete = true;
+    fixture.detectChanges();
+
+    component.deleteHighlightEvent = mockDeleteEvent;
     const deleteBtn = fixture.debugElement.query(By.css('button[title=Delete]'));
     deleteBtn.triggerEventHandler('mousedown', {});
 
@@ -61,7 +84,10 @@ describe('PopupToolbarComponent', () => {
   it('should create comment', () => {
     const mockCommentEvent = new EventEmitter();
     spyOn(mockCommentEvent, 'emit');
-    component.addOrEditComment = mockCommentEvent;
+    component.canComment = true;
+    fixture.detectChanges();
+
+    component.addOrEditCommentEvent = mockCommentEvent;
     const commentBtn = fixture.debugElement.query(By.css('button[title=Comment]'));
     commentBtn.triggerEventHandler('mousedown', {});
 

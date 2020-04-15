@@ -3,7 +3,7 @@ import { MediaViewerComponent } from './media-viewer.component';
 import { ToolbarButtonVisibilityService, ToolbarModule } from './toolbar/toolbar.module';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { ResponseType, ViewerException } from './viewers/error-message/viewer-exception.model';
+import { ResponseType, ViewerException } from './viewers/viewer-exception.model';
 import {
   defaultImageOptions,
   defaultPdfOptions,

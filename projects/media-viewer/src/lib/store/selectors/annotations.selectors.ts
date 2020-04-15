@@ -29,7 +29,6 @@ export const getDocumentIdSetId = createSelector(
     }}
 );
 
-
 export const getAnnotationSet = createSelector(
   getAnnotationEntities,
   getSet,

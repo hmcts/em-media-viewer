@@ -1,48 +1,39 @@
-import { AfterViewChecked, Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { AfterViewChecked, Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({
   selector: '[mvTextHighlight]'
 })
-export class TextHighlightDirective implements AfterViewChecked, OnDestroy {
+export class TextHighlightDirective implements AfterViewChecked {
 
   @Input() textToHighlight: string;
 
-  private subscription: Subscription;
-
-  constructor(private element: ElementRef<HTMLElement>,) {
-    // this.subscription = annotationEvents.resetHighlightEvent.subscribe(() => this.resetHighlight());
-  }
+  constructor(private element: ElementRef<HTMLElement>,) {}
 
   ngAfterViewChecked(): void {
     if (this.textToHighlight) {
-      this.highlightSearchString(this.textToHighlight);
+      this.highlightInputText(this.textToHighlight);
     }
   }
 
-  ngOnDestroy(): void {
-    // this.subscription.unsubscribe();
-  }
-
-  highlightSearchString(searchString: string) {
+  highlightInputText(textToHighlight: string) {
     this.resetHighlight();
-    this.textToHighlight = searchString;
-    const searchPattern = new RegExp(searchString, 'gi');
-    const searchElement = this.element.nativeElement;
-    if (searchElement.innerHTML.match(searchPattern)) {
-      searchElement.innerHTML = searchElement.innerHTML
+    this.textToHighlight = textToHighlight;
+    const searchPattern = new RegExp(textToHighlight, 'gi');
+    const hostElement = this.element.nativeElement;
+    if (hostElement.innerHTML.match(searchPattern)) {
+      hostElement.innerHTML = hostElement.innerHTML
         .replace(searchPattern, this.highlightPattern('$&'));
     }
     this.textToHighlight = undefined;
   }
 
   resetHighlight() {
-    const searchElement = this.element.nativeElement;
+    const hostElement = this.element.nativeElement;
     const searchPattern = new RegExp(this.highlightPattern('(.*?)'), 'gi');
-    while(searchElement.innerHTML.match(searchPattern)) {
-      const matchGroups = searchPattern.exec(searchElement.innerHTML);
+    while(hostElement.innerHTML.match(searchPattern)) {
+      const matchGroups = searchPattern.exec(hostElement.innerHTML);
       if (matchGroups) {
-        searchElement.innerHTML = searchElement.innerHTML.replace(matchGroups[0], matchGroups[1]);
+        hostElement.innerHTML = hostElement.innerHTML.replace(matchGroups[0], matchGroups[1]);
       }
     }
   }

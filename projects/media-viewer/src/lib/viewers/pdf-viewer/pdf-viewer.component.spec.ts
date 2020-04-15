@@ -5,8 +5,6 @@ import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
 import { PrintService } from '../../print.service';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { ErrorMessageComponent } from '../error-message/error.message.component';
-import { By } from '@angular/platform-browser';
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -16,13 +14,12 @@ import { ViewerEventService } from '../viewer-event.service';
 
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { BoxHighlightCreateService } from '../../annotations/annotation-set/annotation-create/box-highlight-create.service';
-import { TextHighlightCreateService } from '../../annotations/annotation-set/annotation-create/text-highlight-create.service';
-
+import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
-import { Outline } from './outline-view/outline.model';
-import {StoreModule} from '@ngrx/store';
+import { Outline } from './side-bar/outline-item/outline.model';
+import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../store/reducers';
+import { SelectedAnnotation } from '../../store/actions/annotations.action';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -31,18 +28,20 @@ describe('PdfViewerComponent', () => {
   let printService: PrintService;
   let viewerEvents: ViewerEventService;
   let wrapperFactory: PdfJsWrapperFactory;
-  let annotationsDestroyed: boolean;
   let mockWrapper: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         PdfViewerComponent,
-        ErrorMessageComponent,
         AnnotationSetComponent,
         GrabNDragDirective
       ],
-      imports: [HttpClientTestingModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
+      imports: [
+        HttpClientTestingModule,
+        StoreModule.forFeature('media-viewer', reducers),
+        StoreModule.forRoot({})
+      ],
       providers: [
         AnnotationApiService,
         CommentService,
@@ -50,8 +49,7 @@ describe('PdfViewerComponent', () => {
         ViewerEventService,
         PrintService,
         PdfJsWrapperFactory,
-        BoxHighlightCreateService,
-        TextHighlightCreateService
+        HighlightCreateService
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -79,8 +77,6 @@ describe('PdfViewerComponent', () => {
       setPageNumber: () => {},
       changePageNumber: () => {},
       getPageNumber: () => {},
-      getCurrentPDFZoomValue: () => {},
-      getNormalisedPagesRotation: () => 0,
       getCurrentPDFTitle: () => {},
       documentLoadInit: new Subject<any>(),
       documentLoadProgress: new Subject<DocumentLoadProgress>(),
@@ -144,19 +140,6 @@ describe('PdfViewerComponent', () => {
     expect(component.loadingDocumentProgress).toBe(100);
   });
 
-  it('should show error message when errorMessage is set', () => {
-    const pdfContainerHtml = fixture.debugElement.query(By.css('.pdfContainer')).nativeElement;
-
-    expect(pdfContainerHtml.className).not.toContain('hidden');
-    expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeNull();
-
-    component.errorMessage = 'errorx';
-    fixture.detectChanges();
-
-    expect(pdfContainerHtml.className).toContain('hidden');
-    expect(fixture.debugElement.query(By.directive(ErrorMessageComponent))).toBeTruthy();
-  });
-
   it('should show error message on document load failed', () => {
     mockWrapper.documentLoadFailed.next({ name: 'error', message: 'Could not load the document' });
 
@@ -181,6 +164,19 @@ describe('PdfViewerComponent', () => {
 
     expect(viewerEvents.textSelected).not.toHaveBeenCalled();
   });
+
+  it('should deselect annotation and context toolbar',
+    inject([Store], (store) => {
+      spyOn(store, 'dispatch');
+      spyOn(viewerEvents, 'clearCtxToolbar');
+
+      component.onPdfViewerClick();
+
+      expect(store.dispatch).toHaveBeenCalledWith(new SelectedAnnotation({
+        annotationId: '', selected: false, editable: false
+      }));
+      expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled()
+  }));
 
   it('should initialize loading of document', () => {
     mockWrapper.documentLoadInit.next();
@@ -223,19 +219,6 @@ describe('PdfViewerComponent', () => {
     expect(documentTitleSpy).toHaveBeenCalled();
   }));
 
-  it('should load new document when annotations enabled', fakeAsync(() => {
-    annotationsDestroyed = false;
-    component.enableAnnotations = true;
-
-    component.ngOnChanges({
-      enableAnnotations: new SimpleChange(false, true, false)
-    });
-    tick();
-
-    expect(annotationsDestroyed).toBeFalsy();
-  }));
-
-
   it('should show comments panel', () => {
     component.showCommentsPanel = false;
 
@@ -260,5 +243,4 @@ describe('PdfViewerComponent', () => {
     component.toggleCommentsSummary();
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
-
 });

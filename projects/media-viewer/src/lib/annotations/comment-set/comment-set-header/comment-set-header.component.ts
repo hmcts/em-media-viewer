@@ -3,7 +3,7 @@ import { Annotation } from '../../annotation-set/annotation-view/annotation.mode
 import {select, Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers';
 import * as fromTagSelectors from '../../../store/selectors/tags.selectors';
-import * as fromAnnoSelector from '../../../store/selectors/annotatioins.selectors';
+import * as fromAnnoSelector from '../../../store/selectors/annotations.selectors';
 
 @Component({
   selector: 'mv-comment-set-header',

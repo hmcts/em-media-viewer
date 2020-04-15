@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers';
-import * as fromSelector from '../../../store/selectors/annotatioins.selectors';
+import * as fromSelector from '../../../store/selectors/annotations.selectors';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -66,7 +66,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
     private readonly commentService: CommentService,
-    private tagsServices: TagsServices // TODO replace this with the FormGroup
+    private tagsServices: TagsServices
   ) {}
 
 

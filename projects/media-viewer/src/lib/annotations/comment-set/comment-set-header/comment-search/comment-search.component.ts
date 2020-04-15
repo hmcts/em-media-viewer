@@ -38,7 +38,8 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
       this.searchString = searchText;
       this.searchResults = this.annotations
         .filter(annotation => annotation.comments.length > 0)
-        .filter(annotation => annotation.comments[0].content.toLowerCase().includes(this.searchString.toLowerCase()));
+        .filter(annotation =>
+          annotation.comments[0].content.toLowerCase().includes(this.searchString.toLowerCase()));
       if (this.searchResults.length > 0) {
         this.store.dispatch(new fromActions.SearchComment(searchText));
       }

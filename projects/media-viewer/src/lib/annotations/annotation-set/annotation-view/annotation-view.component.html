@@ -1,13 +1,14 @@
 <div #container [tabindex]="anno.id">
-  <mv-popup-toolbar *ngIf="selected"
-                    [rectangle]="topRectangle()"
-                    [zoom]="zoom"
-                    [rotate]="rotate"
-                    [height]="height"
-                    [width]="width"
-                    (deleteHighlight)="deleteHighlight()"
-                    (addOrEditComment)="addOrEditComment()">
-  </mv-popup-toolbar>
+  <mv-ctx-toolbar *ngIf="selected"
+                  [canDelete]="true" [canComment]="true"
+                  [rectangles]="anno.rectangles"
+                  [zoom]="zoom"
+                  [rotate]="rotate"
+                  [height]="height"
+                  [width]="width"
+                  (deleteHighlightEvent)="deleteHighlight()"
+                  (addOrEditCommentEvent)="addOrEditComment()">
+  </mv-ctx-toolbar>
   <ng-container *ngFor="let rectangle of anno.rectangles">
     <mv-anno-rectangle
       (select)="onSelect()"
