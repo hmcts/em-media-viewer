@@ -1,8 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import uuid from 'uuid';
 import { Subscription } from 'rxjs';
-import { BoxHighlightCreateService } from './box-highlight-create.service';
-import {distinctUntilChanged, sampleTime} from 'rxjs/operators';
+import { ToolbarEventService } from '../../../toolbar/toolbar.module';
+import { HighlightCreateService } from './highlight-create.service';
 
 
 @Component({
@@ -11,12 +11,12 @@ import {distinctUntilChanged, sampleTime} from 'rxjs/operators';
 })
 export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
+  @Input() page: number;
   @Input() pageHeight: number;
   @Input() pageWidth: number;
   @Input() rotate: number;
   @Input() zoom: number;
   @Input() container: { top: number, left: number };
-  @Output() highlightCreated = new EventEmitter();
 
   @ViewChild('boxHighlight') highlight: ElementRef;
 
@@ -27,17 +27,23 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   height: number;
   width: number;
   display: string;
+  drawMode: boolean;
+  defaultHeight: string;
+  defaultWidth: string;
+  position: string;
+  backgroundColor = 'none';
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private readonly boxHighlightEvents: BoxHighlightCreateService) {}
+  constructor(private readonly highlightService: HighlightCreateService,
+              private readonly toolbarEvents: ToolbarEventService) {}
 
   ngOnInit(): void {
     this.subscriptions = [
-      this.boxHighlightEvents.initHighlight
-        .pipe(distinctUntilChanged()).subscribe(event => this.initHighlight(event)),
-      this.boxHighlightEvents.updateHighlight
-        .pipe(sampleTime(50), distinctUntilChanged()).subscribe(event => this.updateHighlight(event)),
+      this.toolbarEvents.drawModeSubject.subscribe(drawMode => {
+        this.defaultHeight = drawMode ? '100%' : '0px';
+        this.defaultWidth = drawMode ? '100%' : '0px';
+      })
     ];
   }
 
@@ -48,6 +54,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   }
 
   initHighlight(event) {
+    this.position = 'absolute';
+    this.backgroundColor = 'yellow';
     this.drawStartX = event.offsetX;
     this.drawStartY = event.offsetY;
 
@@ -81,16 +89,20 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  createHighlight(highlightPage: number) {
-      this.highlightCreated.emit({
+  createHighlight() {
+    if (this.height / this.zoom > 5 || this.width / this.zoom > 5) {
+      const rectangle = {
         id: uuid(),
         x: + this.left / this.zoom,
         y: + this.top / this.zoom,
         width: + this.width / this.zoom,
         height: + this.height / this.zoom,
-        page: highlightPage
-      });
+        page: this.page
+      } as any;
+      this.highlightService.saveAnnotation([rectangle], this.page);
+      this.toolbarEvents.drawModeSubject.next(false);
       this.resetHighlight();
+    }
   }
 
   private resetHighlight() {

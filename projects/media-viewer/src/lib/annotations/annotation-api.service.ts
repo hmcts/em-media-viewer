@@ -17,13 +17,12 @@ export class AnnotationApiService {
 
   constructor(
     private readonly httpClient: HttpClient
-  ) { }
+  ) {}
 
   public getAnnotationSet(documentId: string): Observable<any> { // todo add model
     const fixedUrl = `${this.annotationSetsFullUrl}/filter?documentId=${documentId}`;
     return this.httpClient
       .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
-
   }
 
   public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
@@ -76,5 +75,4 @@ export class AnnotationApiService {
   get annotationFullsUrl() {
     return this.annotationApiUrl + this.annotationBaseUrl;
   }
-
 }

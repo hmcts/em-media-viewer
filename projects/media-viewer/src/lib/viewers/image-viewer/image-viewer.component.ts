@@ -15,7 +15,7 @@ import {Subscription} from 'rxjs';
 import {PrintService} from '../../print.service';
 import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
 import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
-import {ResponseType, ViewerException} from '../error-message/viewer-exception.model';
+import {ResponseType, ViewerException} from '../viewer-exception.model';
 import {ViewerUtilService} from '../viewer-util.service';
 import {ViewerEventService} from '../viewer-event.service';
 import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visibility.service';

@@ -1,44 +1,47 @@
 <div class="pageContainer">
-
   <div  *ngFor="let annotation of (annotationsPerPage$ | async);  index as i"
-    class="pageContainer__page"
-    [ngStyle]="{
-    'width.px': annotation.styles.width,
-    'height.px': annotation.styles.height
-    }"
-    [ngClass]="{
-     'pageContainer__page--draw' : drawMode,
-     'rotation': true,
-     'rot90': rotate === 90,
-     'rot180': rotate === 180,
-     'rot270': rotate === 270
-    }"
-    (mouseup)="onCreateBoxHighlight( i + 1)"
-    (mousedown)="onInitBoxHighlight($event)"
-    (mousemove)="onMouseMove($event)">
-
+       class="pageContainer__page"
+       [ngStyle]="{
+       'width.px': annotation.styles.width,
+       'height.px': annotation.styles.height
+       }"
+       [ngClass]="{
+         'pageContainer__page--draw' : drawMode,
+         'rotation': true,
+         'rot90': rotate === 90,
+         'rot180': rotate === 180,
+         'rot270': rotate === 270
+       }">
     <mv-box-highlight-create
-      #boxHighlight
-      [pageHeight]="height"
-      [pageWidth]="width"
+      [page]="i + 1"
+      [pageHeight]="annotation.styles.height"
+      [pageWidth]="annotation.styles.width"
       [rotate]="rotate"
-      [zoom]="zoom"
-      (highlightCreated)="saveBoxHighlight($event)">
+      [zoom]="zoom">
     </mv-box-highlight-create>
-
+    <mv-ctx-toolbar *ngIf="rectangles && highlightPage === i+1"
+                    [rectangles]="rectangles"
+                    [canBookmark]="true" [canHighlight]="true"
+                    [zoom]="zoom"
+                    [rotate]="rotate"
+                    [height]="annotation.styles.height"
+                    [width]="annotation.styles.width"
+                    (createBookmarkEvent)="createBookmark($event)"
+                    (createHighlightEvent)="createHighlight()">
+    </mv-ctx-toolbar>
     <div class="pageContainer__page-item">
-    <ng-container *ngFor="let anno of annotation.anno">
-      <mv-annotation [annotation]="anno"
-                     [zoom]="zoom"
-                     [rotate]="rotate"
-                     [selectedAnnoId]="selectedAnnotation$ | async"
-                     [height]="height"
-                     [width]="width"
-                     (update)="onAnnotationUpdate($event)"
-                     (delete)="onAnnotationDelete($event)"
-                     (annotationClick)="selectAnnotation($event)">
-      </mv-annotation>
-    </ng-container>
+      <ng-container *ngFor="let anno of annotation.anno">
+        <mv-annotation [annotation]="anno"
+                       [zoom]="zoom"
+                       [rotate]="rotate"
+                       [selectedAnnoId]="selectedAnnotation$ | async"
+                       [height]="annotation.styles.height"
+                       [width]="annotation.styles.width"
+                       (update)="onAnnotationUpdate($event)"
+                       (delete)="onAnnotationDelete($event)"
+                       (annotationClick)="selectAnnotation($event)">
+        </mv-annotation>
+      </ng-container>
     </div>
   </div>
 </div>

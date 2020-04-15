@@ -1,28 +1,27 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Annotation } from './annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
 import { AnnotationSet } from './annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { ViewerEventService } from '../../viewers/viewer-event.service';
+import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Observable, Subscription } from 'rxjs';
 import { SelectionAnnotation } from '../models/event-select.model';
 import { CommentService } from '../comment-set/comment/comment.service';
-import { TextHighlightCreateService } from './annotation-create/text-highlight-create.service';
-import { BoxHighlightCreateService } from './annotation-create/box-highlight-create.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
-import * as fromSelectors from '../../store/selectors/annotatioins.selectors';
-import { BoxHighlightCreateComponent } from './annotation-create/box-highlight-create.component';
-import {tap} from 'rxjs/operators';
+import * as fromSelectors from '../../store/selectors/annotations.selectors';
+import { HighlightCreateService } from './annotation-create/highlight-create.service';
+import { Rectangle } from './annotation-view/rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-annotation-set',
   templateUrl: './annotation-set.component.html'
 })
 export class AnnotationSetComponent implements OnInit, OnDestroy {
+
   annoSet: AnnotationSet;
-  annotationsPerPage$: Observable<any>; // todo add type
+  annotationsPerPage$: Observable<any[]>; // todo add type
   @Input() set annotationSet(annoSet) {
     if (annoSet) {
       this.annoSet = {...annoSet};
@@ -32,45 +31,67 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Input() width: number;
   @Input() height: number;
-  @ViewChild('boxHighlight') private boxHighlight: BoxHighlightCreateComponent;
-  page: number;
   selectedAnnotation$: Observable<SelectionAnnotation>;
   drawMode = false;
+  highlightPage: number;
+  rectangles: Rectangle[];
 
   private subscriptions: Subscription[] = [];
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
     private readonly api: AnnotationApiService,
+    private readonly highlightService: HighlightCreateService,
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
-    private readonly commentService: CommentService,
-    private readonly boxHighlightService: BoxHighlightCreateService,
-    private readonly textHighlightService: TextHighlightCreateService) {}
+    private readonly commentService: CommentService) {}
 
   ngOnInit(): void {
-    this.annotationsPerPage$ = this.store.select(fromSelectors.getAnnoPerPage)
-      .pipe(tap(annotations => {
-        if (annotations) {
-          this.height = annotations[0].styles.height;
-          this.width = annotations[0].styles.width;
-        }
-    }));
+    this.annotationsPerPage$ = this.store.select(fromSelectors.getAnnoPerPage);
     this.selectedAnnotation$ = this.store.select(fromSelectors.getSelectedAnnotation);
 
     this.subscriptions = [
-      this.viewerEvents.textHighlight
-        .subscribe(highlight => this.createTextHighlight(highlight)),
-      this.viewerEvents.boxHighlight
-        .subscribe(highlight => this.boxHighlightService.initBoxHighlight(highlight.event)),
       this.toolbarEvents.drawModeSubject
-        .subscribe(drawMode => this.drawMode = drawMode)
+        .subscribe(drawMode => this.drawMode = drawMode),
+      this.viewerEvents.textHighlight
+        .subscribe(highlight => this.showContextToolbar(highlight)),
+      this.viewerEvents.ctxToolbarCleared
+        .subscribe(() => this.clearContextToolbar())
     ];
   }
 
-
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  showContextToolbar(highlight: Highlight) {
+    this.highlightPage = highlight.page;
+    this.rectangles = this.highlightService.getRectangles(highlight);
+    if (this.rectangles) {
+      this.toolbarEvents.highlightModeSubject.next(false);
+    }
+  }
+
+  clearContextToolbar() {
+    this.rectangles = undefined;
+  }
+
+  createHighlight() {
+    this.highlightService.saveAnnotation(this.rectangles, this.highlightPage);
+    this.highlightService.resetHighlight();
+    this.rectangles = undefined;
+  }
+
+  createBookmark(rectangle: Rectangle) {
+    const selection = window.getSelection().toString();
+    this.viewerEvents.createBookmarkEvent.next({
+      name: selection.length > 0 ? selection : 'new bookmark',
+      pageNumber: `${this.highlightPage - 1}`,
+      xCoordinate: rectangle.x,
+      yCoordinate: rectangle.y
+    });
+    this.highlightService.resetHighlight();
+    this.rectangles = undefined;
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
@@ -84,48 +105,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromActions.DeleteAnnotation(annotation.id));
   }
 
-  public onInitBoxHighlight(event: MouseEvent) {
-    if (this.annoSet && this.drawMode) {
-      this.boxHighlightService.initBoxHighlight(event);
-    }
-  }
-
-  public onMouseMove(event: MouseEvent) {
-    if (this.annoSet && this.drawMode) {
-      this.boxHighlightService.updateBoxHighlight(event);
-    }
-  }
-
-  public onCreateBoxHighlight(page) {
-    this.page = page;
-    if (this.annoSet && this.drawMode) {
-      this.boxHighlight.createHighlight(this.page);
-    }
-  }
-
-
-  public saveBoxHighlight(rectangle: any) {
-    if (rectangle.page === this.page) {
-      this.boxHighlightService.saveBoxHighlight(rectangle, this.annoSet, rectangle.page);
-    }
-  }
-
-  private createTextHighlight(highlight) {
-      this.textHighlightService.createTextHighlight(highlight, highlight.annoSet,
-        {
-          zoom: this.zoom,
-          rotate: this.rotate,
-          pageHeight: this.height,
-          pageWidth: this.width,
-          number: highlight.page
-        });
-  }
-
-  selectAnnotation(annotationId) {
-    this.store.dispatch(new fromActions.SelectedAnnotation(annotationId))
-  }
-
-  toggleCommentsSummary() {
-    this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
+  selectAnnotation(selectedAnnotation) {
+    this.store.dispatch(new fromActions.SelectedAnnotation(selectedAnnotation))
   }
 }

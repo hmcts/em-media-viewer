@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod && ng run media-viewer:serve",
     "start:ng": "ng serve --proxy-config proxy.config.js",
+    "build": "ng build --prod && ng run media-viewer:serve",
     "copy:license": "cp ./README.md dist/media-viewer",
     "copy:readme": "cp ./LICENSE dist/media-viewer",
     "copy:docs": "npm run copy:readme && npm run copy:license",
@@ -18,7 +18,7 @@
     "build:lib": "npm install && npm run install:js-dependencies && cd projects/media-viewer && ng build --prod",
     "npm-pack": "cd dist/media-viewer && npm pack",
     "package": "npm run build:lib && npm run copy:files && npm run npm-pack",
-    "test": "ng test",
+    "test": "cd projects/media-viewer; ng test",
     "lint": "ng lint",
     "test:codacy-upload": "cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
     "test:coveralls-upload": "cat ./reports/tests/coverage/ng/lcov.info | coveralls",

@@ -1,26 +1,66 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Rectangle } from '../rectangle/rectangle.model';
+import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
 @Component({
-  selector: 'mv-popup-toolbar',
-  templateUrl: './popup-toolbar.component.html'
+  selector: 'mv-ctx-toolbar',
+  templateUrl: './ctx-toolbar.component.html'
 })
-export class PopupToolbarComponent {
+export class CtxToolbarComponent {
 
   readonly defaultHeight;
   readonly defaultWidth;
 
-  @Input() rectangle: Rectangle;
   @Input() zoom = 1;
   @Input() rotate = 0;
   @Input() height: number;
   @Input() width: number;
-  @Output() deleteHighlight = new EventEmitter();
-  @Output() addOrEditComment = new EventEmitter();
+
+  @Input() canHighlight: boolean;
+  @Input() canBookmark: boolean;
+  @Input() canComment: boolean;
+  @Input() canDelete: boolean;
+
+  @Output() createHighlightEvent = new EventEmitter();
+  @Output() deleteHighlightEvent = new EventEmitter();
+  @Output() addOrEditCommentEvent = new EventEmitter();
+  @Output() createBookmarkEvent = new EventEmitter<Rectangle>();
+
+  rectangle: Rectangle;
+  _rectangles: Rectangle[];
 
   constructor() {
     this.defaultHeight = 70;
     this.defaultWidth = 350;
+  }
+
+  @Input() set rectangles(rectangles: Rectangle[]) {
+    if (rectangles) {
+      this._rectangles = rectangles;
+      this.rectangle = rectangles
+        .reduce((prev, current) => prev.y < current.y ? prev : current);
+    }
+  }
+
+  get rectangles() {
+    return this._rectangles;
+  }
+
+  createHighlight() {
+    this.createHighlightEvent.emit();
+    this.rectangle = undefined;
+  }
+
+  deleteHighlight() {
+    this.deleteHighlightEvent.emit();
+  }
+
+  addOrEditComment() {
+    this.addOrEditCommentEvent.emit();
+  }
+
+  createBookmark() {
+    this.createBookmarkEvent.emit(this.rectangle);
+    this.rectangle = undefined;
   }
 
   get transformStyles() {
@@ -38,7 +78,7 @@ export class PopupToolbarComponent {
     let popupTop;
     switch (this.rotate) {
       case 90:
-        popupTop = this.rectangle.y * this.zoom + this.rectangle.height / 2 * this.zoom + this.defaultWidth / 2;
+        popupTop = (this.rectangle.y + (this.rectangle.height / 2)) * this.zoom + this.defaultWidth / 2;
         if (popupTop >= this.height) {
           return this.height;
         } else if (popupTop < this.defaultWidth) {
@@ -69,7 +109,7 @@ export class PopupToolbarComponent {
     let popupLeft;
     switch (this.rotate) {
       case 90:
-        popupLeft = (this.rectangle.x * this.zoom) - (this.defaultHeight);
+        popupLeft = (this.rectangle.x * this.zoom) - this.defaultHeight;
         return popupLeft <= 0 ? this.defaultHeight : popupLeft;
       case 270:
         popupLeft = (this.rectangle.x + (this.rectangle.width)) * this.zoom + this.defaultHeight;

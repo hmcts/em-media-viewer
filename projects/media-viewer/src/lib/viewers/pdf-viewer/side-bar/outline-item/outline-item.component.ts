@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Outline } from '../outline.model';
+import { Outline } from './outline.model';
 
 @Component({
   selector: 'mv-outline-item',

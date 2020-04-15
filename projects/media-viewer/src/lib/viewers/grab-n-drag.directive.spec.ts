@@ -33,7 +33,7 @@ describe('GrabNDragDirective', () => {
     fixture.detectChanges();
   });
 
-  xit('being able to drag the image around', () => {
+  it('being able to drag the image around', () => {
     component.zoom = 5;
     imageElement.nativeElement.scrollLeft = 50;
     imageElement.nativeElement.scrollTop = 50;

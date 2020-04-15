@@ -1,8 +1,10 @@
-<mv-outline-view *ngIf="toolbarButtons.sidebarOpen"
-                 id="sidebarContainer"
-                 [outline]="documentOutline"
-                 (navigationEvent)="goToOutlineDest($event)">
-</mv-outline-view>
+<mv-side-bar *ngIf="toolbarButtons.sidebarOpen"
+             id="sidebarContainer"
+             [url]="url"
+             [zoom]="zoom"
+             [rotate]="rotation"
+             [outline]="documentOutline">
+</mv-side-bar>
 <mv-comment-set-toggle *ngIf="enableAnnotations && annotationSet"></mv-comment-set-toggle>
 
 <mv-comment-set-header [ngClass]="{'show-comments-panel': showCommentsPanel}"
@@ -20,7 +22,7 @@
        #pdfViewer
        class="pdfViewer"
        (mouseup)="onMouseUp($event)"
-       (click)="onPdfViewerClick()"
+       (mousedown)="onPdfViewerClick()"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
@@ -31,7 +33,7 @@
                      [zoom]="zoom"
                      [rotate]="rotation">
   </mv-annotation-set>
-  <mv-comment-set #commentPanel
+  <mv-comment-set #commentsPanel
                   *ngIf="enableAnnotations && annotationSet"
                   [annotationSet]="annotationSet"
                   [zoom]="zoom"
@@ -40,4 +42,3 @@
                   [pageHeights]="pageHeights">
   </mv-comment-set>
 </div>
-<mv-error-message [errorMessage]="errorMessage" *ngIf="errorMessage"></mv-error-message>

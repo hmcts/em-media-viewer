@@ -245,8 +245,8 @@ describe('CommentComponent', () => {
     expect(expectedText.trim()).toBe('short comment');
   });
 
-  xit('should get unselected short comment', () => {
-    component.selected = false;
+  it('should get unselected short comment', () => {
+    component._editable = false;
     component.fullComment = 'short comment';
 
     fixture.detectChanges();

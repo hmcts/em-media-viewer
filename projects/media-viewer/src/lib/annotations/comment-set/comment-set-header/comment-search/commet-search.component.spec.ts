@@ -1,10 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
 import { CommentSearchComponent } from './comment-search.component';
 import { FormsModule } from '@angular/forms';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
-import {StoreModule} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../../../store/reducers';
+import * as fromActions from '../../../../store/actions/annotations.action';
 
 describe('CommentSearch', () => {
   let hostComponent: TestHostComponent;
@@ -13,7 +14,11 @@ describe('CommentSearch', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
+      imports: [
+        FormsModule,
+        StoreModule.forFeature('media-viewer', reducers),
+        StoreModule.forRoot({})
+      ],
       declarations: [CommentSearchComponent, TestHostComponent],
       providers: [ToolbarEventService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -34,20 +39,54 @@ describe('CommentSearch', () => {
   });
 
   it('should focus element', () => {
+    spyOn(component.searchInput.nativeElement, 'focus');
     component.ngAfterViewInit();
+
+    expect(component.searchInput.nativeElement.focus).toHaveBeenCalled();
   });
 
-  it('should reset highlights', () => {
-    component.ngOnDestroy();
-  });
+  it('should reset highlights',
+    inject([Store],(store) => {
+      spyOn(store, 'dispatch');
 
-  it('should search comments', () => {
-    component.searchComments('searchText');
-  });
+      component.ngOnDestroy();
 
-  it('should clear search', () => {
-    component.clearSearch();
-  });
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SearchComment(''));
+  }));
+
+  it('should dispatch search action when search matches',
+    inject([Store],(store) => {
+      hostComponent.annotationSet = { annotations: [{ comments: [{ content: 'searchText' }] }] };
+      fixture.detectChanges();
+      spyOn(store, 'dispatch');
+
+      component.searchComments('searchText');
+
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SearchComment('searchText'));
+  }));
+
+  it('should not dispatch search action when no results found',
+    inject([Store],(store) => {
+      hostComponent.annotationSet = { annotations: [] };
+      fixture.detectChanges();
+      spyOn(store, 'dispatch');
+
+      component.searchComments('searchText');
+
+      expect(store.dispatch).not.toHaveBeenCalledWith(new fromActions.SearchComment('searchText'));
+  }));
+
+  it('should clear search',
+    inject([Store],(store) => {
+      spyOn(store, 'dispatch');
+
+      component.clearSearch();
+
+      expect(component.searchString).toBeUndefined();
+      expect(component.searchResults).toEqual([]);
+      expect(component.searchIndex).toBe(0);
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SearchComment(''));
+  }));
 });
 
 @Component({

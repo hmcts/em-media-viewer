@@ -4,7 +4,7 @@ import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { fakeAsync, tick } from '@angular/core/testing';
-import { Outline } from '../outline-view/outline.model';
+import { Outline } from '../side-bar/outline-item/outline.model';
 
 describe('PdfJsWrapper', () => {
 

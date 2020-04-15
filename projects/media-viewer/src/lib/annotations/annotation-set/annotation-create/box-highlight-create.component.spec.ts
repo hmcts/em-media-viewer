@@ -1,24 +1,27 @@
 import { BoxHighlightCreateComponent } from './box-highlight-create.component';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { BoxHighlightCreateService } from './box-highlight-create.service';
-import { Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { AnnotationApiService } from '../../annotation-api.service';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
+import { HighlightCreateService } from './highlight-create.service';
 
-xdescribe('BoxHighlightCreateComponent', () => {
+describe('BoxHighlightCreateComponent', () => {
   let component: BoxHighlightCreateComponent;
   let fixture: ComponentFixture<BoxHighlightCreateComponent>;
   let nativeElement: HTMLElement;
+  const mockHighlightService = {
+    saveAnnotation: () => {}
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
+      imports: [HttpClientTestingModule],
       declarations: [BoxHighlightCreateComponent],
-      providers: [BoxHighlightCreateService, AnnotationApiService, ToolbarEventService]
+      providers: [
+        AnnotationApiService,
+        ToolbarEventService,
+        { provide: HighlightCreateService, useValue: mockHighlightService }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(BoxHighlightCreateComponent);
@@ -36,20 +39,24 @@ xdescribe('BoxHighlightCreateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialise, then destroy subscriptions',
-    inject([BoxHighlightCreateService], (highlightCreateService) => {
-      const mockSubscription = new Subject();
-      spyOn(highlightCreateService.initHighlight, 'subscribe').and.returnValue(mockSubscription);
-      spyOn(highlightCreateService.updateHighlight, 'subscribe').and.returnValue(mockSubscription);
-      spyOn(highlightCreateService.createHighlight, 'subscribe').and.returnValue(mockSubscription);
-      spyOn(mockSubscription, 'unsubscribe');
+  it('should subscribe to the drawMode subject',
+    inject([ToolbarEventService], (toolbarEvents) => {
+      const mockSubscription = { unsubscribe: () => {} };
+      spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.returnValue(mockSubscription);
 
       component.ngOnInit();
 
-      expect(highlightCreateService.initHighlight.subscribe).toHaveBeenCalled();
-      expect(highlightCreateService.updateHighlight.subscribe).toHaveBeenCalled();
-      expect(highlightCreateService.createHighlight.subscribe).toHaveBeenCalled();
+      expect(toolbarEvents.drawModeSubject.subscribe).toHaveBeenCalled();
+    })
+  );
 
+  it('should destroy subscriptions',
+    inject([ToolbarEventService], (toolbarEvents) => {
+      const mockSubscription = { unsubscribe: () => {} };
+      spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.returnValue(mockSubscription);
+      spyOn(mockSubscription, 'unsubscribe');
+
+      component.ngOnInit();
       component.ngOnDestroy();
 
       expect(mockSubscription.unsubscribe).toHaveBeenCalled();
@@ -57,89 +64,86 @@ xdescribe('BoxHighlightCreateComponent', () => {
   );
 
   it('should initialise the box highlight creator', () => {
-    const event = { pageX: 100, pageY: 200 } as MouseEvent;
+    const event = { offsetX: 100, offsetY: 200 } as MouseEvent;
 
     component.initHighlight(event);
 
     expect(component.display).toBe('block');
     expect(component.height).toBe(50);
     expect(component.width).toBe(50);
-    expect(component.top).toBe(100);
-    expect(component.left).toBe(-100);
+    expect(component.top).toBe(200);
+    expect(component.left).toBe(100);
   });
 
   it('should update the box highlight creator, with no rotation', () => {
-    const updateEvent = { pageX: 100, pageY: 100 } as MouseEvent;
+    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
 
     component.updateHighlight(updateEvent);
 
-    expect(component.width).toBe(160);
+    expect(component.width).toBe(40);
     expect(component.height).toBe(50);
-    expect(component.top).toBe(0);
-    expect(component.left).toBe(-100);
+    expect(component.top).toBe(50);
+    expect(component.left).toBe(60);
   });
 
   it('should update the box highlight creator, when rotate is 90', () => {
-    const updateEvent = { pageX: 100, pageY: 100 } as MouseEvent;
+    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.rotate = 90;
 
     component.updateHighlight(updateEvent);
 
-    expect(component.width).toBe(50);
-    expect(component.height).toBe(160);
-    expect(component.top).toBe(340);
-    expect(component.left).toBe(0);
+    expect(component.width).toBe(40);
+    expect(component.height).toBe(50);
+    expect(component.top).toBe(50);
+    expect(component.left).toBe(60);
   });
 
   it('should update the box highlight creator, when rotate is 180', () => {
-    const updateEvent = { pageX: 100, pageY: 100 } as MouseEvent;
+    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.rotate = 180;
 
     component.updateHighlight(updateEvent);
 
-    expect(component.width).toBe(160);
+    expect(component.width).toBe(40);
     expect(component.height).toBe(50);
-    expect(component.top).toBe(350);
-    expect(component.left).toBe(140);
+    expect(component.top).toBe(50);
+    expect(component.left).toBe(60);
   });
 
   it('should update the box highlight creator, when rotate is 270', () => {
-    const updateEvent = { pageX: 100, pageY: 100 } as MouseEvent;
+    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.rotate = 270;
 
     component.updateHighlight(updateEvent);
-    expect(component.width).toBe(50);
-    expect(component.height).toBe(160);
-    expect(component.top).toBe(-100);
-    expect(component.left).toBe(150);
+    expect(component.width).toBe(40);
+    expect(component.height).toBe(50);
+    expect(component.top).toBe(50);
+    expect(component.left).toBe(60);
   });
 
-  it('should create the highlight', () => {
-    spyOn(component.highlightCreated, 'emit');
-    component.drawStartX = 60;
-    component.drawStartY = 50;
-    component.display = 'block';
-    component.height = 50;
-    component.width = 50;
-    component.top = 50;
-    component.left = 50;
-    const pageNumber = 1;
+  it('should create the highlight',
+    inject([HighlightCreateService, ToolbarEventService], (highlightService, toolbarEvents) => {
+      component.height = 10;
+      spyOn(highlightService, 'saveAnnotation');
+      spyOn(toolbarEvents.drawModeSubject, 'next');
 
-    component.createHighlight(pageNumber);
+      component.createHighlight();
 
-    expect(component.highlightCreated.emit).toHaveBeenCalled();
-    expect(component.drawStartX).toBe(-1);
-    expect(component.drawStartY).toBe(-1);
-    expect(component.display).toBe('none');
-    expect(component.width).toBe(0);
-    expect(component.height).toBe(0);
-  });
+      expect(highlightService.saveAnnotation).toHaveBeenCalled();
+      expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalledWith(false);
+      expect(component.drawStartX).toBe(-1);
+      expect(component.drawStartY).toBe(-1);
+      expect(component.display).toBe('none');
+      expect(component.width).toBe(0);
+      expect(component.height).toBe(0);
+    })
+  );
 });
