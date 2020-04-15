@@ -2,12 +2,10 @@
   p{
     @include govuk-font($size: 16);
   }
-
 }
 
 .govuk-tabs__tab {
   @include govuk-font($size: 16);
-
 }
 
 .govuk-tabs__panel {

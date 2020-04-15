@@ -10,7 +10,7 @@
 
     </li>
   </ul>
-  <div class="govuk-tabs__panel" *ngIf="tabSelected">
+  <div class="govuk-tabs__panel" [hidden]="!tabSelected">
     <ng-container *ngIf="tabSelected === 'comments'">
       <div style="width: 100%">
         <button type="button" class="govuk-button"
@@ -26,7 +26,7 @@
     </ng-container>
 
     <!-- not using *ngIf to preserve state when switching tabs -->
-    <div [ngClass]="{'isVisible': tabSelected === 'filter'}">
+    <div [hidden]="tabSelected !== 'filter'">
       <div class="govuk-tabs__panel--container">
         <mv-comment-filter></mv-comment-filter>
         <mv-comments-navigate
@@ -36,8 +36,8 @@
       </div>
     </div>
 
-    <ng-container *ngIf="tabSelected === 'search'">
+    <div [hidden]="tabSelected !== 'search'">
       <mv-comment-search [annotations]="navigationList"></mv-comment-search>
-    </ng-container>
+    </div>
   </div>
 </div>

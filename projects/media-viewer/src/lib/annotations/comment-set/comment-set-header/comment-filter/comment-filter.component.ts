@@ -49,8 +49,8 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   }
 
   onClearFilters() {
-    this.store.dispatch(new fromActions.ClearFilterTags());
     this.tagGroup.reset();
+    this.store.dispatch(new fromActions.ClearFilterTags());
   }
 
   ngOnDestroy(): void {

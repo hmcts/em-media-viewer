@@ -28,6 +28,7 @@ import { CommentsNavigateComponent } from './comment-set/comment-navigate/commen
 import {CommentFilterComponent} from './comment-set/comment-set-header/comment-filter/comment-filter.component';
 import {MomentDatePipe} from './pipes/date.pipe';
 import {FilterPipe} from './pipes/filter.pipe';
+import {UnsnakePipe} from './pipes/unsnake.pipe';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import {FilterPipe} from './pipes/filter.pipe';
     TagsComponent,
     MomentDatePipe,
     CommentFilterComponent,
-    FilterPipe
+    FilterPipe,
+    UnsnakePipe
   ],
   entryComponents: [
     AnnotationViewComponent,
@@ -83,7 +85,8 @@ import {FilterPipe} from './pipes/filter.pipe';
     TagsComponent,
     CommentFilterComponent,
     MomentDatePipe,
-    FilterPipe
+    FilterPipe,
+    UnsnakePipe
   ]
 })
 export class AnnotationsModule { }
