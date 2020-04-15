@@ -11,5 +11,7 @@
 }
 
 .govuk-tabs__panel {
-  //background-color: govuk-colour("light-grey");
+  .js-enabled & {
+    padding: 20px 20px 10px 20px;
+  }
 }

@@ -11,8 +11,11 @@
   .hmcts-filter__selected, .hmcts-filter__options {
     padding: 0;
   }
-
+  .hmcts-filter__options.isVisible {
+    display: block;
+  }
   .hmcts-filter__options {
+    display: none;
     box-shadow: none;
   }
 

@@ -1,4 +1,5 @@
 import {Annotation} from '../annotations/annotation-set/annotation-view/annotation.model';
+
 // @dynamic
 export class StoreUtils {
 
@@ -29,14 +30,11 @@ export class StoreUtils {
   static genTagNameEntities(annotations) {
     const filterAnnoWithNoCommentsTags = annotations.filter(a => (a.comments.length && a.tags.length));
     const allTags = filterAnnoWithNoCommentsTags.map(anno => this.groupByKeyEntities(anno.tags, 'name'));
-    console.log(allTags)
-    console.log(annotations)
     const groupedByName = allTags.reduce(
       (tagEntitiy: { [id: string]: Annotation }, tagItem) => {
-        const tag = tagItem;
         return {
           ...tagEntitiy,
-          ...tag
+          ...tagItem
         };
       }, {});
 

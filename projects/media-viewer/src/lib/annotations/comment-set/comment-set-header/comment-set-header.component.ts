@@ -26,13 +26,14 @@ export class CommentSetHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.store.pipe(select(fromTagSelectors.getTagFilters)).subscribe(formData => {
      this.isFiltered = !formData.length;
-     this.tabs = [...this.tabs].map((tab, i) => {
+     this.tabs = [...this.tabs].map((tab) => {
        return !this.isFiltered && tab.label === 'filter' ? {...tab, isFiltered: true} : {...tab, isFiltered: false};
      });
     });
 
     this.store.pipe(select(fromAnnoSelector.getFilteredAnnotations)).subscribe(filteredAnno => {
-      this.navigationList = filteredAnno.filter(annotation => annotation.comments && annotation.comments.length > 0);
+      this.navigationList = filteredAnno.length ?
+        filteredAnno.filter(annotation => annotation.comments && annotation.comments.length > 0) : [];
 
     });
   }

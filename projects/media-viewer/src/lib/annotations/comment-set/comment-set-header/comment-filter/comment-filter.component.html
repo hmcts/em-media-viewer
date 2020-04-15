@@ -20,7 +20,7 @@
       </ul>
     </ng-container >
 
-    <div class="hmcts-filter__options" *ngIf="isPreview">
+    <div class="hmcts-filter__options" [ngClass]="{'isVisible': isPreview}">
       <div class="govuk-form-group">
         <label class="govuk-label govuk-label--s" for="keywords">
           Search Tags
