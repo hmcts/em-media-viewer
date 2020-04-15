@@ -3,7 +3,7 @@ mv-ctx-toolbar {
     position: absolute;
     background-color: white;
     height: 52px;
-    width: 350px;
+    width: 300px;
     margin: 0px auto;
     text-shadow: 1px 1px 0 #fff;
     z-index: 1000;
@@ -51,7 +51,7 @@ mv-ctx-toolbar {
 
   .leftButton {
     background-image: url(/assets/images/annotate-highlight.svg);
-    width: 190px;
+    width: 145px;
   }
 
   .arrow-down {
