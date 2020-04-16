@@ -122,11 +122,11 @@ const addComment = async (comment: string) => {
   await page.clickOnSaveButton();
 };
 
-const highLightTextInPdf = async () => {
-  await page.waitForPdfToLoad();
-  await sleep(5000);
-  await toolBar.enableTextHighLightMode();
-  await page.highLightTextOnPdfPage();
+const highLightTextInPdf = async function () {
+   await page.waitForPdfToLoad();
+   await sleep(5000);
+   await toolBar.enableTextHighLightMode();
+   await page.highLightTextOnPdfPage();
 };
 
 const highLightOnImage = async () => {
@@ -195,7 +195,10 @@ Then('I should be able to add comment for the highlight', async() => {
   await addComment(comment_1);
 });
 
-When('I highlight text on a PDF document', highLightTextInPdf);
+When('I highlight text on a PDF document', async() => {
+  await highLightTextInPdf();
+});
+
 
 function sleep(time: number) {
   return new Promise(resolve => setTimeout(resolve, time));
