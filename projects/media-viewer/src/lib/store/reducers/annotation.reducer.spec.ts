@@ -118,7 +118,7 @@ describe('AnnotationReducer', () => {
       const action1 = new fromActions.LoadAnnotationSetSucess(payload1);
       const state = fromAnnotations.reducer(initialState, action1);
       const payload2 = annotation.annotations[0].id;
-      const action = new fromActions.DeleteAnnotationSucess(payload2);
+      const action = new fromActions.DeleteAnnotationSuccess(payload2);
       const state2 = fromAnnotations.reducer(state, action);
       expect(state2.annotationEntities).toEqual({});
       expect(state2.annotationPageEntities).toEqual({1: []});

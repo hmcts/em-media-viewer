@@ -66,7 +66,7 @@ export class DeleteAnnotation implements Action {
   constructor(public payload: string) { }
 }
 
-export class DeleteAnnotationSucess implements Action {
+export class DeleteAnnotationSuccess implements Action {
   readonly type = DELETE_ANNOTATION_SUCCESS;
   constructor(public payload: string) { }
 }
@@ -96,7 +96,7 @@ export type AnnotationsActions =
   | AddOrEditComment
   | AddPage
   | DeleteAnnotation
-  | DeleteAnnotationSucess
+  | DeleteAnnotationSuccess
   | DeleteAnnotationFail
   | SelectedAnnotation
   | SearchComment;

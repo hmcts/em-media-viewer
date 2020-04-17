@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {ToolbarEventService, ToolbarModule} from '../../../toolbar/toolbar.module';
 import {CommentSetHeaderComponent} from './comment-set-header.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
