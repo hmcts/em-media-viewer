@@ -33,6 +33,6 @@ export const getAllTagsArr = createSelector(
     return {
       key,
       length: Object.keys(tagEnt[key]).length
-    }
+    };
   })
 );
