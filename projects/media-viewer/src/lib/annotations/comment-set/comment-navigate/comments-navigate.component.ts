@@ -58,8 +58,7 @@ export class CommentsNavigateComponent implements OnChanges {
     }
   }
 
-  nextItem(event) {
-    event.preventDefault();
+  nextItem() {
     this.index += 1;
     if (this.index === this.annotationList.length) {
       this.index = 0;
@@ -72,8 +71,7 @@ export class CommentsNavigateComponent implements OnChanges {
   }
 
 
-  prevItem(event) {
-    event.preventDefault();
+  prevItem() {
     this.index -= 1;
     if (this.index < 0) {
       this.index = this.navigationList.length - 1;

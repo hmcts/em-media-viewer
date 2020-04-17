@@ -105,7 +105,7 @@ describe('CtxToolbarComponent', () => {
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.left).toEqual('30px');
-    expect(element.styles.top).toEqual('350px');
+    expect(element.styles.top).toEqual('300px');
   });
 
   it('rotate 180 should align to left and horizontally with highlight (accounting for highlight dimensions)', () => {
@@ -137,7 +137,7 @@ describe('CtxToolbarComponent', () => {
     component.rectangle.y = 200;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.top).toEqual('385px');
+    expect(element.styles.top).toEqual('360px');
   });
 
   it('rotate 90 should align top to the height of the page when annotation is at far left of page', () => {
@@ -154,15 +154,15 @@ describe('CtxToolbarComponent', () => {
     component.rectangle.y = 250;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.top).toEqual('85px');
+    expect(element.styles.top).toEqual('110px');
   });
 
-  it('rotate 270 should align top to 735px when annotation is at the far right of the page', () => {
+  it('rotate 270 should align top to 760px when annotation is at the far right of the page', () => {
     component.rotate = 270;
     component.rectangle.y = 900;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.top).toEqual('735px');
+    expect(element.styles.top).toEqual('760px');
   });
 
   it('left should default to 0px when annotation is at the far left of the page', () => {
@@ -173,12 +173,12 @@ describe('CtxToolbarComponent', () => {
     expect(element.styles.left).toEqual('0px');
   });
 
-  it('left should default to 475px when annotation is at the far right of the page', () => {
+  it('left should default to 500px when annotation is at the far right of the page', () => {
     component.rotate = 0;
     component.rectangle.x = 600;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.left).toEqual('475px');
+    expect(element.styles.left).toEqual('500px');
   });
 
   it('left should be set to calculated value when pop-up is not at the edge of the page', () => {
@@ -186,7 +186,7 @@ describe('CtxToolbarComponent', () => {
     component.rectangle.x = 250;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.left).toEqual('125px');
+    expect(element.styles.left).toEqual('150px');
   });
 
   it('rotate 180 should align left to width - defaultWidth when annotation is at the far left of the page', () => {
@@ -195,7 +195,7 @@ describe('CtxToolbarComponent', () => {
     component.width = 350;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.left).toEqual('0px');
+    expect(element.styles.left).toEqual('50px');
   });
 
   it('rotate 180 should set left to calculated value when pop-up is not at the edge of the page', () => {
@@ -203,6 +203,7 @@ describe('CtxToolbarComponent', () => {
     component.rectangle.x = 250;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
-    expect(element.styles.left).toEqual('125px');
+    expect(element.styles.left).toEqual('150px');
   });
 });
+

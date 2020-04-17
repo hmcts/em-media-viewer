@@ -1,27 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToolbarEventService } from '../../../toolbar/toolbar.module';
+import {ToolbarEventService, ToolbarModule} from '../../../toolbar/toolbar.module';
 import {CommentSetHeaderComponent} from './comment-set-header.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../../store/reducers';
 
 describe('CommentSetHeader', () => {
   let component: CommentSetHeaderComponent;
   let fixture: ComponentFixture<CommentSetHeaderComponent>;
   let nativeElement;
-  let toolbarEventService: ToolbarEventService
+  // let toolbarEventService: ToolbarEventService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        StoreModule.forFeature('media-viewer', reducers),
+        StoreModule.forRoot({})],
       declarations: [CommentSetHeaderComponent],
-      providers: [ToolbarEventService],
+      providers: [
+
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CommentSetHeaderComponent);
     nativeElement = fixture.debugElement.nativeElement;
     component = fixture.componentInstance;
-    toolbarEventService = new ToolbarEventService();
+    // toolbarEventService = new ToolbarEventService({});
     component.showCommentSummary = true;
     component.tabSelected = 'comments';
     fixture.detectChanges();

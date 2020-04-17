@@ -26,6 +26,13 @@ export function tagsReducer (
   action: fromAnnotations.AnnotationsActions | fromTags.TagsActions
 ): TagsState {
   switch (action.type) {
+    case fromAnnotations.LOAD_ANNOTATION_SET: {
+
+      return {
+        ...state,
+        ...initialTagState
+      };
+    }
     case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS: {
       const annotations = action.payload.annotations;
       const tagNameEnt = StoreUtils.genTagNameEntities(annotations);

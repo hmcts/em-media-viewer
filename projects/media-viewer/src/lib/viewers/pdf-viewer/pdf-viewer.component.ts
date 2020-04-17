@@ -17,7 +17,7 @@ import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
@@ -26,6 +26,8 @@ import { Outline } from './side-bar/outline-item/outline.model';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
+import {tap} from 'rxjs/operators';
+import * as fromTagActions from '../../store/actions/tags.actions';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -49,7 +51,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   rotation = 0;
   zoom = 1;
 
-  highlightMode: BehaviorSubject<boolean>;
+  highlightMode: Observable<boolean>;
   drawMode: BehaviorSubject<boolean>;
 
   documentOutline: Outline;
@@ -76,7 +78,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     private readonly viewerEvents: ViewerEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
   ) {
-    this.highlightMode = toolbarEvents.highlightModeSubject;
+    this.highlightMode = toolbarEvents.highlightModeSubject.pipe(tap(() => {
+      this.store.dispatch(new fromTagActions.ClearFilterTags());
+    }));
     this.drawMode = toolbarEvents.drawModeSubject;
   }
 

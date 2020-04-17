@@ -45,18 +45,9 @@ describe('CommentSearch', () => {
     expect(component.searchInput.nativeElement.focus).toHaveBeenCalled();
   });
 
-  it('should reset highlights',
-    inject([Store],(store) => {
-      spyOn(store, 'dispatch');
-
-      component.ngOnDestroy();
-
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SearchComment(''));
-  }));
-
   it('should dispatch search action when search matches',
     inject([Store],(store) => {
-      hostComponent.annotationSet = { annotations: [{ comments: [{ content: 'searchText' }] }] };
+      hostComponent.annotations =  [{ comments: [{ content: 'searchText' }] }];
       fixture.detectChanges();
       spyOn(store, 'dispatch');
 
@@ -67,7 +58,7 @@ describe('CommentSearch', () => {
 
   it('should not dispatch search action when no results found',
     inject([Store],(store) => {
-      hostComponent.annotationSet = { annotations: [] };
+      hostComponent.annotations = [] ;
       fixture.detectChanges();
       spyOn(store, 'dispatch');
 
@@ -85,17 +76,17 @@ describe('CommentSearch', () => {
       expect(component.searchString).toBeUndefined();
       expect(component.searchResults).toEqual([]);
       expect(component.searchIndex).toBe(0);
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SearchComment(''));
   }));
 });
 
 @Component({
   selector: `host-component`,
   template: `
-      <mv-comment-search [annotations]="annotationSet"></mv-comment-search>`
+    <mv-comment-search [annotations]="annotations"></mv-comment-search>`
 })
 class TestHostComponent {
-  annotationSet = { annotations: [] };
+  annotations = [] ;
 
   @ViewChild(CommentSearchComponent) commentSearchComponent: CommentSearchComponent;
 }
+

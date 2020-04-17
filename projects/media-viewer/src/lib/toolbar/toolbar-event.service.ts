@@ -37,7 +37,7 @@ export class ToolbarEventService {
   public readonly changePageByDeltaSubject = new Subject<number>();
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
-  constructor(private store: Store<fromStore.State>) {
+  constructor() {
   }
 
   /**
@@ -53,7 +53,6 @@ export class ToolbarEventService {
 
   // Function to inform Observers that highlightMode has been enabled
   public toggleHighlightMode(): void {
-    this.store.dispatch(new fromTagActions.ClearFilterTags());
     // Highlight and Draw states are mutually exclusive
     if (this.highlightModeSubject.getValue() === false) {
       this.drawModeSubject.next(false);
@@ -65,7 +64,6 @@ export class ToolbarEventService {
 
   // Function to inform Observers that ToggleMode has been enabled
   public toggleDrawMode(): void {
-    this.store.dispatch(new fromTagActions.ClearFilterTags());
     if (this.drawModeSubject.getValue() === false) {
       this.highlightModeSubject.next(false);
       this.drawModeSubject.next(true);
