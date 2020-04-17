@@ -143,11 +143,23 @@ const loadPdfForBookmarking = async function() {
 }
 
 const addBookmark = async function() {
-  await sleep(5000);
+  await sleep(2000);
   await page.clickOnBookmarkButton();
   // check bookmarks added on the LHS Panel .
 
 };
+
+const checkCountOfBookmarks = async function() {
+  // await sleep(5000);
+  // await page.clickOnBookmarkButton();
+  // check bookmarks added on the LHS Panel .
+
+  console.log(' TODO :    verify  checkCountOfBookmarks ' );
+
+};
+
+
+
 
 const highLightOnImage = async () => {
   await sleep(5000);
@@ -219,7 +231,7 @@ When('I highlight text on a PDF document', async() => {
   await highLightTextInPdf();
 });
 
-When('I highlight text to be bookmarked on the on a PDF document', async() => {
+When('I highlight text to be bookmarked on the PDF document', async() => {
   await highLightTextForBookmarking();
 });
 
@@ -230,6 +242,11 @@ When('I load the document to do bookmarking on', async() => {
 
 Then('I am able to add a bookmark', async() => {
   await addBookmark();
+});
+
+// I am able to verify listing of the bookmark
+Then('I am able to verify listing of the bookmark', async() => {
+  await checkCountOfBookmarks();
 });
 
 

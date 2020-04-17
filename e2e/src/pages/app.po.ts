@@ -12,7 +12,10 @@ export class AppPage {
   contextToolbar: By = by.css('mv-popup-toolbar .toolbar');
   commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
 
-  bookmarkButton: By = by.css('mv-ctx-toolbar .toolbar button[title=\'Bookmark\']');
+  //bookmarkButton: By = by.css('mv-ctx-toolbar .toolbar button[title=\'Bookmark\']');
+//  bookmarkButton: By = by.id('bookmarkButton');
+  //bookmarkButton: By = by.id('toolbar button[id=\'bookmarkButton\']');
+  bookmarkButton: By = by.xpath('//button[@id=\'bookmarkButton\' and @title=\'Bookmark\']');
 
   changeDocumentUrl : By = by.id('change_document_url')
 
@@ -220,6 +223,7 @@ export class AppPage {
 
       const pageHandle = document.getElementsByClassName('textLayer')[0].children[4];
       pageHandle.dispatchEvent(mouseEvent) ; // ('mouseup', 844,497,937,403)); //mouseUp Event
+      // this.clickOnBookmarkButton();
 
     });
 
@@ -260,9 +264,15 @@ export class AppPage {
   }
 
   async clickOnBookmarkButton() {
-    // await browser.waitForAngular()  // This feature did not work hence adding sleep.
+    await browser.waitForAngular()  // This feature did not work hence adding sleep.
+    await browser.sleep(1000);
+
     await element(this.bookmarkButton).click();
+
     console.log(` bookmark button clicked ${this.bookmarkButton}`);
+
+    await browser.sleep(500);
+
   }
 
   async enterTextInAnnotation(text: string) {
