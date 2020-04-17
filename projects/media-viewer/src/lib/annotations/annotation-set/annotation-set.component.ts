@@ -7,7 +7,7 @@ import { Highlight, ViewerEventService } from '../../viewers/viewer-event.servic
 import { Observable, Subscription } from 'rxjs';
 import { SelectionAnnotation } from '../models/event-select.model';
 import { CommentService } from '../comment-set/comment/comment.service';
-import { Store } from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';

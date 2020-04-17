@@ -11,7 +11,7 @@ export interface AnnotationSetState {
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation;
   pages: AnnoPages;
-  commentSearchQueries: {commentSearch: string; tags: string[]};
+  commentSearchQueries: {commentSearch: string;};
   loaded: boolean;
   loading: boolean;
 }
@@ -33,7 +33,7 @@ export const initialState: AnnotationSetState = {
     styles: {} as any,
     scaleRotation: {} as any
   },
-  commentSearchQueries: {commentSearch: '', tags: []},
+  commentSearchQueries: {commentSearch: ''},
   loading: false,
   loaded: false,
 };
