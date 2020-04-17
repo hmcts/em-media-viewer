@@ -32,9 +32,7 @@ export class CommentSetHeaderComponent implements OnInit {
     });
 
     this.store.pipe(select(fromAnnoSelector.getFilteredAnnotations)).subscribe(filteredAnno => {
-      this.navigationList = filteredAnno.length ?
-        filteredAnno.filter(annotation => annotation.comments && annotation.comments.length > 0) : [];
-
+      this.navigationList = filteredAnno;
     });
   }
 

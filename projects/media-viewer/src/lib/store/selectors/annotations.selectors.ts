@@ -120,7 +120,8 @@ export const getFilteredAnnotations = createSelector(
   (annoEnt, filters) => {
     const isFiltered: boolean = !!Object.keys(filters).length;
     const anno = isFiltered ? filters : annoEnt;
-    return Object.keys(anno).map(key => annoEnt[key]);
+    return Object.keys(anno).map(key => annoEnt[key])
+      .filter(annotation => annotation.comments && annotation.comments.length > 0);
   }
 );
 

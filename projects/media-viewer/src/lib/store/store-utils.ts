@@ -3,7 +3,7 @@ import {Annotation} from '../annotations/annotation-set/annotation-view/annotati
 // @dynamic
 export class StoreUtils {
 
-  static groupByKeyEntities(annotations, key): {[id: string]: Annotation[]} {
+  static groupByKeyEntities(annotations, key): {[id: string]: any[]} {
     return annotations.reduce((h, obj) =>
       Object.assign(h, { [obj[key]]:( h[obj[key]] || [] ).concat(obj) }), {});
   }
@@ -28,8 +28,8 @@ export class StoreUtils {
   }
 
   static genTagNameEntities(annotations) {
-    const filterAnnoWithNoCommentsTags = annotations.filter(a => (a.comments.length && a.tags.length));
-    const allTags = filterAnnoWithNoCommentsTags.map(anno => this.groupByKeyEntities(anno.tags, 'name'));
+    const filterAnnoWithoutCommentsTags = annotations.filter(a => (a.comments.length && a.tags.length));
+    const allTags = filterAnnoWithoutCommentsTags.map(anno => this.groupByKeyEntities(anno.tags, 'name'));
     const groupedByName = allTags.reduce(
       (tagEntitiy: { [id: string]: Annotation }, tagItem) => {
         return {

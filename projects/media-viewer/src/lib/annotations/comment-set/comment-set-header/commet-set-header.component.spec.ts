@@ -9,7 +9,6 @@ describe('CommentSetHeader', () => {
   let component: CommentSetHeaderComponent;
   let fixture: ComponentFixture<CommentSetHeaderComponent>;
   let nativeElement;
-  // let toolbarEventService: ToolbarEventService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -27,7 +26,6 @@ describe('CommentSetHeader', () => {
     fixture = TestBed.createComponent(CommentSetHeaderComponent);
     nativeElement = fixture.debugElement.nativeElement;
     component = fixture.componentInstance;
-    // toolbarEventService = new ToolbarEventService({});
     component.showCommentSummary = true;
     component.tabSelected = 'comments';
     fixture.detectChanges();
