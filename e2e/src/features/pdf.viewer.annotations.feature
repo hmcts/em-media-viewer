@@ -12,12 +12,13 @@ Feature: PDF Viewer Annotations
     When I highlight text on a PDF document
     Then I expect text highlight popup should appear
 
-#
+
 #  @EM-1717 @PDF_Add_Annotation @CreateAnnotation
 #  Scenario: Highlight text and add comment
 #    When I highlight text on a PDF document
 #    Then I should be able to add comment for the highlight
 ##    Then The context toolbar should disappear
+
 #
 #  @EM-1961 @PDF_Delete_Annotation
 #  Scenario: Delete Textual comment

@@ -2,36 +2,24 @@ import {browser, by, element, ElementFinder, Locator, protractor, WebElement} fr
 import {By} from '@angular/platform-browser';
 import {String} from 'typescript-string-operations';
 import {create} from "domain";
+import {GenericMethods} from "../utils/genericMethods";
 
 const until = protractor.ExpectedConditions;
-// const createMouseEvent =  (typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number)  => {
-//   const mouseEvent = document.createEvent('MouseEvents');
-//   mouseEvent.initMouseEvent(
-//     typeArg,
-//     true,
-//     true,
-//     window,
-//     1,
-//     screenX,
-//     screenY,
-//     clientX,
-//     clientY,
-//     false,
-//     false,
-//     false,
-//     false,
-//     0,
-//     null
-//   );
-//   return mouseEvent;
-// }
-
-
+const genericMethods = new GenericMethods();
 
 export class AppPage {
 
   contextToolbar: By = by.css('mv-popup-toolbar .toolbar');
   commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
+
+  bookmarkButton: By = by.css('mv-ctx-toolbar .toolbar button[title=\'Bookmark\']');
+
+  changeDocumentUrl : By = by.id('change_document_url')
+
+  documentUrl: ElementFinder = element(by.css('#documentUrl'));
+
+  loadDocumentButton : By = by.css('#documentUrl  button[type=\'Submit\']');
+
   removeHighLightButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
   annotationTextArea: By = by.css('textarea.expanded');
   comments: By = by.css('textarea');
@@ -103,6 +91,32 @@ export class AppPage {
       'PDF viewer taking too long to load'
     );
   }
+  async loadPdf() {
+    await this.clickElement(by.id('change_document_url'));
+
+    // this will change .
+    const documentUrlToLoad="/documents/fa6b21be-5728-4b66-81c3-a32105e472b7/binary";
+    console.log( 'url we are trying to load is  '+  documentUrlToLoad ) ;
+
+    await this.documentUrl.sendKeys(documentUrlToLoad.toString());
+
+    await this.clickElement(by.id('loadDocumentUrl'));
+
+    console.log('~~~~~~~~~~~~~~~~ load Document by url has Completed ....... ')
+
+    await genericMethods.sleep(10000);
+    await browser.wait(
+      until.presenceOf(element(by.css('div[class="page"'))),
+      30000,
+      'PDF viewer taking too long to load'
+    );
+
+    console.log('~~~~~~~~~~~~~~~~ returning after PDF Load.  ....... ')
+
+    await this.documentUrl.clear();
+
+  }
+
 
   async waitForElement(selector: Locator) {
     await browser.wait(async () => {
@@ -155,6 +169,7 @@ export class AppPage {
     await browser.executeScript(() => {
       // const imageElement = document.getElementsByTagName('mv-annotation-set')[0].childNodes[0];
 
+      // Fix - Kasi
       const imageElement = document.getElementsByClassName('box-highlight')[0];
 
       const mouseDown = this.createMouseEvent('mousedown', 500, 500, 500, 500);
@@ -166,6 +181,8 @@ export class AppPage {
       imageElement.dispatchEvent(mouseUp);
     });
   }
+
+
 
   async highLightTextOnPdfPage() {
     // const self  = this ;
@@ -206,9 +223,6 @@ export class AppPage {
 
     });
 
-    // changed by kasi
-    // this.getHighlightPopUpForKasi();
-    // this.getHighlightPopUp();
   }
 
   async getHighlightPopUp() {
@@ -243,6 +257,12 @@ export class AppPage {
     // await browser.waitForAngular()  // This feature did not work hence adding sleep.
     await browser.sleep(5000);
     await element(this.commentButton).click();
+  }
+
+  async clickOnBookmarkButton() {
+    // await browser.waitForAngular()  // This feature did not work hence adding sleep.
+    await element(this.bookmarkButton).click();
+    console.log(` bookmark button clicked ${this.bookmarkButton}`);
   }
 
   async enterTextInAnnotation(text: string) {
@@ -308,6 +328,43 @@ export class AppPage {
       }
       return false;
     });
+  }
+
+  async highLightTextForBookmarking() {
+
+    await browser.executeScript( () => {
+
+      const range = document.createRange();
+      const matchingElement = document.getElementsByClassName('textLayer')[0].children[4];
+      range.selectNodeContents(matchingElement);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+
+      const mouseUpEvent = document.createEvent('MouseEvents');
+      mouseUpEvent.initMouseEvent(
+        'mouseup',
+        true,
+        true,
+         window,
+        1,
+        844,
+        497,
+        937,
+        403,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+
+      const pageHandle = document.getElementsByClassName('textLayer')[0].children[4];
+      pageHandle.dispatchEvent(mouseUpEvent) ; // ('mouseup', 844,497,937,403)); //mouseUp Event
+
+    });
+
   }
 
   private createMouseEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {

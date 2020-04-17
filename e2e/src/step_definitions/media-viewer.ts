@@ -12,6 +12,7 @@ import {CommentPage} from '../pages/comment.po';
 import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
+import {CanDeactivate} from "@angular/router/src/utils/preactivation";
 
 
 
@@ -129,6 +130,25 @@ const highLightTextInPdf = async function () {
    await page.highLightTextOnPdfPage();
 };
 
+const highLightTextForBookmarking = async function () {
+  await page.waitForPdfToLoad();
+  await sleep(5000);
+  await toolBar.enableTextHighLightMode();
+  await page.highLightTextForBookmarking();
+};
+
+const loadPdfForBookmarking = async function() {
+  await page.loadPdf();
+  await sleep(5000) ;
+}
+
+const addBookmark = async function() {
+  await sleep(5000);
+  await page.clickOnBookmarkButton();
+  // check bookmarks added on the LHS Panel .
+
+};
+
 const highLightOnImage = async () => {
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();
@@ -197,6 +217,19 @@ Then('I should be able to add comment for the highlight', async() => {
 
 When('I highlight text on a PDF document', async() => {
   await highLightTextInPdf();
+});
+
+When('I highlight text to be bookmarked on the on a PDF document', async() => {
+  await highLightTextForBookmarking();
+});
+
+When('I load the document to do bookmarking on', async() => {
+  await loadPdfForBookmarking();
+});
+
+
+Then('I am able to add a bookmark', async() => {
+  await addBookmark();
 });
 
 
