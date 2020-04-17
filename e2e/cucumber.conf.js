@@ -12,7 +12,7 @@ exports.config = {
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   specs: [
-    './src/features/bookmarks.feature',
+    //'./src/features/bookmarks.feature',
   ],
   onPrepare: function () {
     require('ts-node').register({
