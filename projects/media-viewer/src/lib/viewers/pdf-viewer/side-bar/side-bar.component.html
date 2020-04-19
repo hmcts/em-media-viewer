@@ -34,7 +34,9 @@
     <div class="outlineItem" *ngIf="selectedView === 'bookmark'">
       <ng-container *ngIf="(bookmarks$ | async) as bookmarks">
         <a *ngFor="let bookmark of bookmarks"
-           class="outlineItem" (click)="goToBookmark(bookmark)">{{ bookmark.name }}</a>
+           class="outlineItem"
+           (dblclick)="deleteBookmark(bookmark)"
+           (click)="goToBookmark(bookmark)">{{ bookmark.name }}</a>
         <a *ngIf="bookmarks?.length === 0" class="outlineItem">No bookmarks created yet</a>
       </ng-container>
     </div>

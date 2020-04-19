@@ -62,4 +62,7 @@ export type BookmarksActions =
   | LoadBookmarksFailure
   | CreateBookmark
   | CreateBookmarkSuccess
-  | CreateBookmarkFailure;
+  | CreateBookmarkFailure
+  | DeleteBookmark
+  | DeleteBookmarkSuccess
+  | DeleteBookmarkFailure;

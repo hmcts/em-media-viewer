@@ -54,6 +54,15 @@ export function bookmarksReducer (state = initialBookmarksState,
         loaded: true
       }
     }
+
+    case fromBookmarks.DELETE_BOOKMARK_SUCCESS: {
+      const id: String = action.payload;
+      const bookmarks = state.bookmarks.filter(bookmark => bookmark.id !== id);
+      return {
+        ...state,
+        bookmarks
+      }
+    }
   }
 
   return state;

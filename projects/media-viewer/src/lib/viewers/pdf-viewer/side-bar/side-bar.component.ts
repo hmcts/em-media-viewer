@@ -18,7 +18,7 @@ import * as annoSelectors from '../../../store/selectors/annotations.selectors';
 import * as fromAnnotations from '../../../store/reducers/annotatons.reducer';
 import * as fromBookmarks from '../../../store/reducers/bookmarks.reducer';
 import { Bookmark } from '../../../store/reducers/bookmarks.reducer';
-import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
+import { CreateBookmark, LoadBookmarks, DeleteBookmark } from '../../../store/actions/bookmarks.action';
 import uuid from 'uuid';
 
 @Component({
@@ -79,7 +79,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     bookmark.name = bookmark.name.substr(0,30);
     this.bookmarksStore.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
     this.toolbarButtons.sidebarOpen.next(true);
-    this.selectedView = 'bookmark'
+    this.selectedView = 'bookmark ';
   }
 
   goToBookmark(bookmark: Bookmark) {
@@ -104,6 +104,10 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       top,
       this.zoom * 100
     ]);
+  }
+
+  deleteBookmark(bookmark: Bookmark) {
+    this.bookmarksStore.dispatch(new DeleteBookmark(bookmark.id));
   }
 
   goToDestination(destination: any[]) {
