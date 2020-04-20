@@ -3,7 +3,6 @@ import {createSelector} from '@ngrx/store';
 import * as fromFeature from '../reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
 import * as fromTags from './tags.selectors';
-import {getTagFiltered} from './tags.selectors';
 
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
@@ -112,7 +111,6 @@ export const getCommentsArray = createSelector(
     }
   }
 );
-
 
 export const getFilteredAnnotations = createSelector(
   getAnnotationEntities,
