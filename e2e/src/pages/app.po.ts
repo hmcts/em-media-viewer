@@ -1,4 +1,4 @@
-import {browser, by, element, ElementFinder, Locator, protractor, WebElement} from 'protractor';
+import {browser, by, element, ElementArrayFinder, ElementFinder, Locator, protractor, WebElement} from 'protractor';
 import {By} from '@angular/platform-browser';
 import {String} from 'typescript-string-operations';
 import {create} from "domain";
@@ -11,18 +11,7 @@ export class AppPage {
 
   contextToolbar: By = by.css('mv-popup-toolbar .toolbar');
   commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
-
-  //bookmarkButton: By = by.css('mv-ctx-toolbar .toolbar button[title=\'Bookmark\']');
-//  bookmarkButton: By = by.id('bookmarkButton');
-  //bookmarkButton: By = by.id('toolbar button[id=\'bookmarkButton\']');
-  bookmarkButton: By = by.xpath('//button[@id=\'bookmarkButton\' and @title=\'Bookmark\']');
-
-  changeDocumentUrl : By = by.id('change_document_url')
-
-  documentUrl: ElementFinder = element(by.css('#documentUrl'));
-
-  loadDocumentButton : By = by.css('#documentUrl  button[type=\'Submit\']');
-
+  bookmarkButton: By = by.css('#bookmarkButton');
   removeHighLightButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
   annotationTextArea: By = by.css('textarea.expanded');
   comments: By = by.css('textarea');
@@ -94,32 +83,6 @@ export class AppPage {
       'PDF viewer taking too long to load'
     );
   }
-  async loadPdf() {
-    await this.clickElement(by.id('change_document_url'));
-
-    // this will change .
-    const documentUrlToLoad="/documents/fa6b21be-5728-4b66-81c3-a32105e472b7/binary";
-    console.log( 'url we are trying to load is  '+  documentUrlToLoad ) ;
-
-    await this.documentUrl.sendKeys(documentUrlToLoad.toString());
-
-    await this.clickElement(by.id('loadDocumentUrl'));
-
-    console.log('~~~~~~~~~~~~~~~~ load Document by url has Completed ....... ')
-
-    await genericMethods.sleep(10000);
-    await browser.wait(
-      until.presenceOf(element(by.css('div[class="page"'))),
-      30000,
-      'PDF viewer taking too long to load'
-    );
-
-    console.log('~~~~~~~~~~~~~~~~ returning after PDF Load.  ....... ')
-
-    await this.documentUrl.clear();
-
-  }
-
 
   async waitForElement(selector: Locator) {
     await browser.wait(async () => {
@@ -223,7 +186,7 @@ export class AppPage {
 
       const pageHandle = document.getElementsByClassName('textLayer')[0].children[4];
       pageHandle.dispatchEvent(mouseEvent) ; // ('mouseup', 844,497,937,403)); //mouseUp Event
-      // this.clickOnBookmarkButton();
+
 
     });
 
@@ -264,14 +227,17 @@ export class AppPage {
   }
 
   async clickOnBookmarkButton() {
-    await browser.waitForAngular()  // This feature did not work hence adding sleep.
-    await browser.sleep(1000);
+    // await browser.waitForAngular()  // This feature did not work hence adding sleep.
+    console.log(' Entering the  clickOnBookmarkButton() ......');
+    browser.sleep(10000);
 
-    await element(this.bookmarkButton).click();
+    if(element(this.bookmarkButton).isPresent()){
+      console.log('~~~~~~~~~~~~~~~~~~~~~~~~bookmark button is present ')
+      await element(this.bookmarkButton).click();
+    }
+    console.log(` AFTER Clicked bookmark button`);
+    await browser.sleep(120000);
 
-    console.log(` bookmark button clicked ${this.bookmarkButton}`);
-
-    await browser.sleep(500);
 
   }
 
