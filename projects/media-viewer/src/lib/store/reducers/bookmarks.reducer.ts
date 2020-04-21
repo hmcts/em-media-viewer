@@ -63,6 +63,25 @@ export function bookmarksReducer (state = initialBookmarksState,
         bookmarks
       }
     }
+
+    case fromBookmarks.UPDATE_BOOKMARK_SUCCESS: {
+      const bookmark: Bookmark = action.payload;
+      const name = bookmark.name;
+      const bookmarks = state.bookmarks.map(bmark => {
+        if (bmark.id === bookmark.id) {
+          return {
+            ...bmark,
+            name
+          }
+        } else {
+          return bmark;
+        }
+      })
+      return {
+        ...state,
+        bookmarks
+      }
+    }
   }
 
   return state;

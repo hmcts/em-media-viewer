@@ -46,5 +46,17 @@ export class BookmarksEffects {
           catchError(error => of(new bookmarksActions.DeleteBookmarkFailure(error)))
         )
     ));
+
+  @Effect()
+  updateBookmark$ = this.actions$.pipe(
+    ofType(bookmarksActions.UPDATE_BOOKMARK),
+    map((action: bookmarksActions.UpdateBookmark) => action.payload),
+    exhaustMap((bookmark) =>
+      this.bookmarksApiService.updateBookmark(bookmark)
+        .pipe(
+          map(bookmark => new bookmarksActions.UpdateBookmarkSuccess(bookmark)),
+          catchError(error => of(new bookmarksActions.UpdateBookmarkFailure(error)))
+        )
+    ));
 }
 

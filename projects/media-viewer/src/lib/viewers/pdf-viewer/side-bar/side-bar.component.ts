@@ -18,7 +18,7 @@ import * as annoSelectors from '../../../store/selectors/annotations.selectors';
 import * as fromAnnotations from '../../../store/reducers/annotatons.reducer';
 import * as fromBookmarks from '../../../store/reducers/bookmarks.reducer';
 import { Bookmark } from '../../../store/reducers/bookmarks.reducer';
-import { CreateBookmark, LoadBookmarks, DeleteBookmark } from '../../../store/actions/bookmarks.action';
+import {CreateBookmark, LoadBookmarks, DeleteBookmark, UpdateBookmark} from '../../../store/actions/bookmarks.action';
 import uuid from 'uuid';
 
 @Component({
@@ -35,9 +35,11 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   selectedView = 'outline';
   bookmarks$: Observable<Bookmark[]>;
+  BOOKMARK_CHAR_LIMIT = 30;
 
   height: number;
   width: number;
+  editableBookmark: string;
 
   subscriptions: Subscription[];
 
@@ -82,6 +84,10 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedView = 'bookmark ';
   }
 
+  editBookmark(id) {
+    this.editableBookmark = id;
+  }
+
   goToBookmark(bookmark: Bookmark) {
     let top;
     switch (this.rotate) {
@@ -110,6 +116,15 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     this.bookmarksStore.dispatch(new DeleteBookmark(bookmark.id));
   }
 
+  updateBookmark(bookmark: Bookmark, name) {
+    this.editableBookmark = null;
+    const editedBookmark = {
+      ... bookmark,
+      name
+    };
+    this.bookmarksStore.dispatch(new UpdateBookmark(editedBookmark));
+  }
+
   goToDestination(destination: any[]) {
     this.pdfWrapperProvider.pdfWrapper().navigateTo(destination);
   }
@@ -119,6 +134,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onClick() {
+    this.editableBookmark = null;
     const pdfLocation: PdfLocation = this.pdfWrapperProvider.pdfWrapper().getLocation();
     this.addBookmark({
       name: 'new bookmark',
