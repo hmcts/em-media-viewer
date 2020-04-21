@@ -47,8 +47,8 @@
   }
 
   .govuk-checkboxes--scroll {
-    overflow-y: auto;
-    height: 400px;
+    max-height: 200px;
+    overflow-y: scroll;
     padding-left: 10px;
     margin-left: -10px
   }
