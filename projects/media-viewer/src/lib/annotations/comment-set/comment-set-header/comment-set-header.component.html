@@ -1,14 +1,16 @@
 <div class="govuk-tabs commentSummaryHeader" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
-    <li *ngFor="let tab of tabs"
-        class="govuk-tabs__list-item govuk-tabs__list-item">
-      <a (click)="selectTab(tab)" [routerLink]=""
-         [ngClass]="{ 'govuk-tabs__tab': true, 'govuk-tabs__tab--selected': tabSelected === tab }">
-        {{ tab | titlecase }}
+    <li *ngFor="let tab of tabs" class="govuk-tabs__list-item govuk-tabs__list-item"
+        [ngClass]="{'govuk-tabs__list-item--selected': tabSelected === tab.label}">
+
+      <a (click)="selectTab(tab.label)" [routerLink]="" [ngClass]="{'govuk-tabs__list-item--filtered': tab.isFiltered}"
+         class="govuk-tabs__tab">
+        {{ tab.label | titlecase }}
       </a>
+
     </li>
   </ul>
-  <div class="govuk-tabs__panel" *ngIf="tabSelected">
+  <div class="govuk-tabs__panel" [hidden]="!tabSelected">
     <ng-container *ngIf="tabSelected === 'comments'">
       <div style="width: 100%">
         <button type="button" class="govuk-button"
@@ -17,14 +19,25 @@
                 title="Open collate summary"
                 (click)="toggleCommentsSummary()">Collate comments</button>
       </div>
-      <mv-comments-navigate *ngIf="navigationList?.length > 0"
-                            [annotationList]="navigationList"></mv-comments-navigate>
+      <mv-comments-navigate
+        *ngIf="navigationList?.length > 0"
+        [annotationList]="navigationList">
+      </mv-comments-navigate>
     </ng-container>
-    <ng-container *ngIf="tabSelected === 'filter'">
-      <p>Comment filtering not yet implemented</p>
-    </ng-container>
-    <ng-container *ngIf="tabSelected === 'search'">
-      <mv-comment-search [annotationSet]="annotationSet"></mv-comment-search>
-    </ng-container>
+
+    <!-- not using *ngIf to preserve state when switching tabs -->
+    <div [hidden]="tabSelected !== 'filter'">
+      <div class="govuk-tabs__panel--container">
+        <mv-comment-filter></mv-comment-filter>
+        <mv-comments-navigate
+          *ngIf="navigationList?.length > 0"
+          [annotationList]="navigationList">
+        </mv-comments-navigate>
+      </div>
+    </div>
+
+    <div [hidden]="tabSelected !== 'search'">
+      <mv-comment-search [annotations]="navigationList"></mv-comment-search>
+    </div>
   </div>
 </div>

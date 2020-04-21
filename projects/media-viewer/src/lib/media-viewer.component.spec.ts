@@ -95,7 +95,7 @@ describe('MediaViewerComponent', () => {
   });
 
 
-  it('should not set annotationSet$ when annotations disabled', () => {
+  it('should not set annotations$ when annotations disabled', () => {
     component.annotationSet$ = null;
 
     component.enableAnnotations = false;

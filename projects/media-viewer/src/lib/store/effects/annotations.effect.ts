@@ -47,7 +47,7 @@ export class AnnotationEffects {
     exhaustMap((annotation) => {
       return this.annotationApiService.deleteAnnotation(annotation).pipe(
         map(result => {
-          return new annotationsActions.DeleteAnnotationSucess(annotation);
+          return new annotationsActions.DeleteAnnotationSuccess(annotation);
         }),
         catchError(error => {
           return of(new annotationsActions.DeleteAnnotationFail(error));

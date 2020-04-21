@@ -11,7 +11,7 @@ export interface AnnotationSetState {
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation;
   pages: AnnoPages;
-  commentSearchQueries: {commentSearch: string; tags: string[]};
+  commentSearchQueries: {commentSearch: string;};
   loaded: boolean;
   loading: boolean;
 }
@@ -33,7 +33,7 @@ export const initialState: AnnotationSetState = {
     styles: {} as any,
     scaleRotation: {} as any
   },
-  commentSearchQueries: {commentSearch: '', tags: []},
+  commentSearchQueries: {commentSearch: ''},
   loading: false,
   loaded: false,
 };
@@ -92,7 +92,7 @@ export function reducer (
           id: uuid()
         };
       const annotationEntities = StoreUtils.generateAnnotationEntities(annotationSet.annotations);
-      const annotationPageEntities = StoreUtils.generatePageEntities(annotationSet.annotations);
+      const annotationPageEntities = StoreUtils.groupByKeyEntities(annotationSet.annotations, 'page');
       const commentEntities = StoreUtils.generateCommentsEntities(annotationSet.annotations);
       return {
         ...state,
@@ -113,7 +113,7 @@ export function reducer (
       };
       const annotArray = Object.keys(annEntities).map(key => annEntities[key]);
       const annotationEntities = StoreUtils.generateAnnotationEntities(annotArray);
-      const annotationPageEntities = StoreUtils.generatePageEntities(annotArray);
+      const annotationPageEntities = StoreUtils.groupByKeyEntities(annotArray, 'page');
       const commentEntities = StoreUtils.generateCommentsEntities(annotArray);
       const selectedAnnotation = {
         ...state.selectedAnnotation,

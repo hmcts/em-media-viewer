@@ -53,7 +53,7 @@ describe('CommentsNavigateComponent', () => {
       fixture.detectChanges();
 
       expect(component.navigationList).toBeTruthy();
-      expect(component.navigationList[0].rectangle.y).toBe(10);
+      expect(component.navigationList[0].rectangle.y).toBe(20);
       expect(component.navigationList[3].rectangle.y).toBe(10);
       expect(toolbarEvents.setPage).toHaveBeenCalledWith(1);
       expect(store.dispatch).toHaveBeenCalled();

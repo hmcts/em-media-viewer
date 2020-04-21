@@ -1,0 +1,83 @@
+.comment-filter {
+  border: none;
+  margin-bottom: 20px;
+  .hmcts-filter__selected, .hmcts-filter__options {
+    padding: 0;
+  }
+  .hmcts-filter__options.isVisible {
+    display: block;
+  }
+  .hmcts-filter__options {
+    display: none;
+    box-shadow: none;
+  }
+
+  .hmcts-filter__tag {
+    &:after {
+      background-image: url(/assets/images/icon-tag-remove-cross.svg);
+    }
+  }
+
+  .hmcts-filter__tag:hover {
+    &:after {
+      background: url(/assets/images/icon-tag-remove-cross.svg) #DDDDDD;
+    }
+  }
+
+  .govuk-checkboxes__item {
+    label {
+      @include govuk-font($size: 16);
+    }
+  }
+
+  .hmcts-filter__selected-heading {
+    float: right;
+  }
+
+  .hmcts-filter-tags {
+    clear: both;
+  }
+
+  h3 {
+    float: left;
+  }
+
+  fieldset {
+    border: none;
+  }
+
+  .govuk-checkboxes--scroll {
+    max-height: 200px;
+    overflow-y: scroll;
+    padding-left: 10px;
+    margin-left: -10px
+  }
+}
+
+.govuk-tabs__list-item--filtered {
+  position: relative;
+  &:before {
+    background: url(/assets/images/icon-filter.svg) 0 0 no-repeat;
+    filter: invert(23%) sepia(30%) saturate(6654%) hue-rotate(354deg) brightness(97%) contrast(88%);
+    content: '';
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: -10px;
+    left: 31px;
+  }
+}
+
+.hmcts-filter__toggle-filters-link {
+  font-weight: bold;
+  position: relative;
+  @include govuk-font($size: 19);
+  color: govuk-colour("blue");
+  cursor: pointer;
+
+}
+
+
+.hmcts-filter__options {
+  clear: both;
+}

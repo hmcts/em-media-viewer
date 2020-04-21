@@ -79,16 +79,17 @@
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
-
-  &::after {
-    background-color: #DEE0E2;
-    content: "";
-    display: block;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 1px;
+  &:first-child {
+    &::after {
+      background-color: #DEE0E2;
+      content: "";
+      display: block;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 1px;
+    }
   }
 
   // Fix unwanted button padding in Firefox
