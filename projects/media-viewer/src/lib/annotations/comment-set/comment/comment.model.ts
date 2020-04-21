@@ -1,10 +1,10 @@
 import { ApiPersisted } from '../../api-persisted.model';
-import { TagItemModel } from '../../models/tag-item.model';
+import { TagsModel } from '../../models/tags.model';
 
 export interface Comment extends ApiPersisted {
   annotationId: string;
   content: string;
-  tags: TagItemModel[];
+  tags: TagsModel[];
   page: number;
   pageHeight: number;
   selected: boolean;

@@ -1,10 +1,10 @@
 import {
   Component,
   ElementRef,
-  Input, OnChanges,
+  Input,
   OnDestroy,
   OnInit,
-  QueryList, SimpleChanges,
+  QueryList,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
@@ -21,14 +21,14 @@ import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import {select, Store} from '@ngrx/store';
-import { TagsServices } from '../services/tags/tags.services';
-import {TagItemModel} from '../models/tag-item.model';
+import {TagsModel} from '../models/tags.model';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
  })
-export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
+export class CommentSetComponent implements OnInit, OnDestroy {
 
   @Input() annotationSet: AnnotationSet;
   @Input() zoom: number;
@@ -37,6 +37,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @Input() pageHeights = [];
 
   comments: Comment[];
+  tags: TagsModel[]
   private subscriptions: Subscription[] = [];
   public comments$: Observable<Annotation[]>;
 
@@ -49,20 +50,8 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
               private readonly viewerEvents: ViewerEventService,
               private readonly api: AnnotationApiService,
               private readonly commentService: CommentService,
-              private readonly renderService: CommentSetRenderService,
-              private tagsServices: TagsServices) {
+              private readonly renderService: CommentSetRenderService) {
     this.clearSelection();
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    // set the annotation tags state
-    if (changes.annotationSet && this.annotationSet.annotations) {
-      this.annotationSet.annotations.map(annotation => {
-        if (annotation.comments.length) {
-          // todo move this to srore
-          this.tagsServices.updateTagItems(annotation.tags, annotation.id);
-        }
-      });
-    }
   }
 
   ngOnInit() {
@@ -102,9 +91,9 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
       const componentList: CommentComponent[] = this.commentComponents.map(comment => comment);
         this.renderService.redrawComponents(componentList, this.pageHeights, this.rotate, this.zoom);
     }, 0);
-      }
+  }
 
-  public onCommentUpdate(payload: {comment: Comment, tags: TagItemModel[]} ) {
+  public onCommentUpdate(payload: {comment: Comment, tags: TagsModel[]} ) {
     const annotation = this.annotationSet.annotations.find(anno => anno.id === payload.comment.annotationId);
     const comments = [payload.comment];
     const tags = payload.tags;

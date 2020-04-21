@@ -4,20 +4,24 @@ a.disabledLink {
   color: grey;
 }
 
-a.comment-search,
+a.comment-search__item,
 span.comment-search {
-  padding: 5px;
+  padding-right: 10px;
 }
 
-button.comment-search {
+button.comment-search__item {
   width: 24%;
   margin-bottom: 10px;
-  //@include govuk-font($size: 16);
 }
 
-input.comment-search {
+input.comment-search__item {
   width: 74%;
   margin-left: 2px;
   margin-right: 2px;
   @include govuk-font($size: 16);
+}
+
+.comment-search {
+  margin-left: -5px;
+  clear: both;
 }

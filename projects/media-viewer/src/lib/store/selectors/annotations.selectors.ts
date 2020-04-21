@@ -2,6 +2,7 @@ import {createSelector} from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
+import * as fromTags from './tags.selectors';
 
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
@@ -49,7 +50,7 @@ export const getAnnComments = createSelector(
 );
 
 
-export const getAnnoEntities = createSelector(
+export const getPageEntities = createSelector(
   getAnnotationsSetState,
   fromAnnotations.getAnnoPageEnt
 );
@@ -69,16 +70,18 @@ export const getComponentSearchText = createSelector(
   (queries) => queries.commentSearch
 );
 
-
 export const getAnnoPerPage = createSelector(
   getAnnoPages,
-  getAnnoEntities,
-  (pages, annoEnt) => {
+  getPageEntities,
+  fromTags.getFilteredPageEntities,
+  (pages, pageEnt, filteredPageEnt) => {
+    const isFiltered: boolean = !!Object.keys(filteredPageEnt).length;
+    const entities = isFiltered ? filteredPageEnt : pageEnt;
     if (pages && pages.numberOfPages) {
       const arr = [];
       for (let i = 1; i <= pages.numberOfPages; i++) {
           arr.push({
-            anno: annoEnt[i] ? annoEnt[i] : [],
+            anno: entities[i] ? entities[i] : [],
             styles: pages.styles
           });
       }
@@ -91,17 +94,33 @@ export const getCommentsArray = createSelector(
   getAnnComments,
   getAnnoPages,
   getAnnotationEntities,
-  (comments, pages, annoEnt) => {
+  fromTags.getTagFiltered,
+  (comments, pages, annoEnt, filtered) => {
     const pageHeight = pages.styles.height;
     if (comments && pageHeight && annoEnt) {
-      return Object.keys(comments).map(key => {
-        const page = annoEnt[key].page;
-        return {
-          ...comments[key],
-          page,
-          pageHeight
-        }
-      });
+        const isFiltered: boolean = !!Object.keys(filtered).length;
+        const com = isFiltered ? filtered : comments;
+        return Object.keys(com).map(key => {
+          const page = annoEnt[key].page;
+          return {
+            ...comments[key],
+            page,
+            pageHeight
+          };
+        });
     }
   }
 );
+
+export const getFilteredAnnotations = createSelector(
+  getAnnotationEntities,
+  fromTags.getTagFiltered,
+  (annoEnt, filters) => {
+    const isFiltered: boolean = !!Object.keys(filters).length;
+    const anno = isFiltered ? filters : annoEnt;
+    return Object.keys(anno).map(key => annoEnt[key])
+      .filter(annotation => annotation.comments && annotation.comments.length > 0);
+  }
+);
+
+

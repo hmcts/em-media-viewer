@@ -13,7 +13,7 @@ import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
 })
 export class CommentsNavigateComponent implements OnChanges {
 
-  @Input() public readonly annotationList: Annotation[];
+  @Input() public annotationList: Annotation[];
   @Input() autoSelect = false;
 
   navigationList: any[] = [];
@@ -28,7 +28,8 @@ export class CommentsNavigateComponent implements OnChanges {
   }
 
   initNavigationList(): void {
-    this.navigationList = JSON.parse(JSON.stringify(this.annotationList))
+    this.index = 0;
+    this.navigationList = [...this.annotationList || []]
       .map(annotation => ({
         content: annotation.comments[0].content,
         annotationId: annotation.id,
@@ -59,9 +60,10 @@ export class CommentsNavigateComponent implements OnChanges {
 
   nextItem() {
     this.index += 1;
-    if (this.index == this.annotationList.length) {
+    if (this.index === this.annotationList.length) {
       this.index = 0;
     }
+
     this.toolbarEvents.setPage(Number.parseInt(this.navigationList[this.index].page, 0));
     this.store.dispatch(new fromActions.SelectedAnnotation({
       annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true
@@ -79,7 +81,7 @@ export class CommentsNavigateComponent implements OnChanges {
   }
 
   upperRectangle(rectangles: Rectangle[]) {
-    rectangles.sort((rect1, rect2) => rect1.y - rect2.y);
+    [...rectangles].sort((rect1, rect2) => rect1.y - rect2.y);
     return { x: rectangles[0].x, y: rectangles[0].y };
   }
 }

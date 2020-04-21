@@ -93,7 +93,7 @@ describe('CommentsSummaryComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set up comment summary if annotationSet$ is received', () => {
+  it('should set up comment summary if annotations$ is received', () => {
     component.annotationSet = annotationSet;
     spyOn(component, 'generateCommentsSummary');
     spyOn(component, 'orderCommentsSummary');
@@ -103,7 +103,7 @@ describe('CommentsSummaryComponent', () => {
     expect(component.orderCommentsSummary).toHaveBeenCalled();
   });
 
-  it('should not set up comment summary if annotationSet$ is not set', () => {
+  it('should not set up comment summary if annotations$ is not set', () => {
     component.annotationSet = null;
     spyOn(component, 'generateCommentsSummary');
     spyOn(component, 'orderCommentsSummary');

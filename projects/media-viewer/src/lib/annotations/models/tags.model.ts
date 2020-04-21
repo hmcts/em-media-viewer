@@ -1,4 +1,4 @@
-export interface TagItemModel {
+export interface TagsModel {
   name: string;
   label: string;
   color?: string;

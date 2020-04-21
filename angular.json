@@ -88,6 +88,11 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "/assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/pdf",
+                "output": "/"
               }
             ],
             "styles": [],

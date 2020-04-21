@@ -59,7 +59,6 @@ export class ToolbarEventService {
 
   // Function to inform Observers that ToggleMode has been enabled
   public toggleDrawMode(): void {
-    //  Draw and Highlight states are mutually exclusive
     if (this.drawModeSubject.getValue() === false) {
       this.highlightModeSubject.next(false);
       this.drawModeSubject.next(true);

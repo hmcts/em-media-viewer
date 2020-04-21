@@ -51,8 +51,8 @@ describe('TagsService', () => {
     expect(tagsService.updateTagItems).not.toBeNull();
   });
 
-  it('should have getTagItems', () => {
-    expect(tagsService.getTagItems).not.toBeNull();
+  it('should have getNewTags', () => {
+    expect(tagsService.getNewTags).not.toBeNull();
   });
 
 });

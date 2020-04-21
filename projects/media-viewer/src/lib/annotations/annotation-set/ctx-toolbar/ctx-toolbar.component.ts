@@ -30,7 +30,7 @@ export class CtxToolbarComponent {
 
   constructor() {
     this.defaultHeight = 70;
-    this.defaultWidth = 350;
+    this.defaultWidth = 300;
   }
 
   @Input() set rectangles(rectangles: Rectangle[]) {

@@ -1,0 +1,59 @@
+<div class="comment-filter">
+  <div class="hmcts-filter__content">
+    <div class="hmcts-filter__toggle-filters">
+      <p class="hmcts-filter__toggle-filters-link"
+         [ngClass]="{'govuk-accordion__section--expanded': isPreview}"
+         (click)="onToggleFilterView()"><strong >Filter options</strong><span class="govuk-accordion__icon"></span></p>
+    </div>
+
+    <ng-container *ngIf="(filter$ | async) as filters">
+    <div class="hmcts-filter__selected-heading" *ngIf="filters.length">
+      <div class="hmcts-filter__heading-action">
+        <p><a (click)="onClearFilters()"
+              class="govuk-link govuk-link--no-visited-state"
+              [routerLink]="">Clear filters</a></p>
+      </div>
+    </div>
+
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-0" *ngIf="filters.length">Tag filters</h4>
+
+    <ul class="hmcts-filter-tags" *ngIf="filters.length">
+      <li *ngFor="let tagName of filters">
+        <a class="hmcts-filter__tag" [routerLink]="" (click)="onRemoveFilter(tagName)">
+          <span class="govuk-visually-hidden">Remove this filter</span>{{tagName | unsnake}}</a>
+      </li>
+    </ul>
+    </ng-container >
+
+    <div class="hmcts-filter__options" [ngClass]="{'isVisible': isPreview}">
+      <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--s" for="keywords">
+          Search Tags
+        </label>
+        <input class="govuk-input" id="keywords" name="keywords" type="text" [(ngModel)]="searchValue">
+      </div>
+
+      <div class="govuk-form-group">
+        <form [formGroup]="tagGroup">
+          <fieldset class="govuk-fieldset" formGroupName="tagFilters">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+              Tags
+            </legend>
+            <div class="govuk-checkboxes--scroll">
+              <div class="govuk-checkboxes govuk-checkboxes--small">
+                <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async) | filter: searchValue: 'key'">
+                  <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
+                  <label class="govuk-label govuk-checkboxes__label">
+                    {{ item.key | unsnake}} ({{item.length}})
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+
+  </div>
+</div>

@@ -79,7 +79,7 @@ describe('Annotations actions', () => {
     describe('DeleteAnnotationSuccess', () => {
       it('should create an action', () => {
         const payload: any = 'some1234id';
-        const action = new fromAnnotations.DeleteAnnotationSucess(payload);
+        const action = new fromAnnotations.DeleteAnnotationSuccess(payload);
         expect({ ...action }).toEqual({
           type: fromAnnotations.DELETE_ANNOTATION_SUCCESS,
           payload
