@@ -39,12 +39,14 @@
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               Tags
             </legend>
-            <div class="govuk-checkboxes govuk-checkboxes--small">
-              <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async) | filter: searchValue: 'key'">
-                <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
-                <label class="govuk-label govuk-checkboxes__label">
-                  {{ item.key | unsnake}} ({{item.length}})
-                </label>
+            <div class="govuk-checkboxes--scroll">
+              <div class="govuk-checkboxes govuk-checkboxes--small">
+                <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async) | filter: searchValue: 'key'">
+                  <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
+                  <label class="govuk-label govuk-checkboxes__label">
+                    {{ item.key | unsnake}} ({{item.length}})
+                  </label>
+                </div>
               </div>
             </div>
           </fieldset>

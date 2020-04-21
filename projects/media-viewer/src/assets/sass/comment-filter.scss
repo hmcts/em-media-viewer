@@ -45,6 +45,13 @@
   fieldset {
     border: none;
   }
+
+  .govuk-checkboxes--scroll {
+    overflow-y: auto;
+    height: 400px;
+    padding-left: 10px;
+    margin-left: -10px
+  }
 }
 
 .govuk-tabs__list-item--filtered {
