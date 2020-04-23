@@ -60,7 +60,9 @@ export function bookmarksReducer (state = initialBookmarksState,
       const bookmarks = state.bookmarks.filter(bookmark => bookmark.id !== id);
       return {
         ...state,
-        bookmarks
+        bookmarks,
+        loading: false,
+        loaded: true
       }
     }
 
@@ -79,7 +81,9 @@ export function bookmarksReducer (state = initialBookmarksState,
       })
       return {
         ...state,
-        bookmarks
+        bookmarks,
+        loading: false,
+        loaded: true
       }
     }
   }

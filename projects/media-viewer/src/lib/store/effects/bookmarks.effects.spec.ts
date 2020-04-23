@@ -4,7 +4,8 @@ import {
   CreateBookmarkSuccess, DeleteBookmark, DeleteBookmarkFailure, DeleteBookmarkSuccess,
   LoadBookmarks,
   LoadBookmarksFailure,
-  LoadBookmarksSuccess
+  LoadBookmarksSuccess,
+  UpdateBookmark, UpdateBookmarkSuccess, UpdateBookmarkFailure
 } from '../actions/bookmarks.action';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -18,7 +19,8 @@ describe('BookmarksEffects', () => {
   const mockApiService = {
     getBookmarks: () => {},
     createBookmark: () => {},
-    deleteBookmark: () => {}
+    deleteBookmark: () => {},
+    updateBookmark: () => {}
   } as any;
   const bookmark = {
     name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
@@ -96,5 +98,27 @@ describe('BookmarksEffects', () => {
     tick();
 
     expect(expectedAction).toEqual(new DeleteBookmarkFailure('error' as any));
+  }));
+
+  it('should trigger update bookmarks success',  fakeAsync(() => {
+    mockActions$ = of(new UpdateBookmark(bookmark))
+    effects = new BookmarksEffects(mockActions$, mockApiService);
+    spyOn(mockApiService, 'updateBookmark').and.returnValue(of(bookmark));
+
+    effects.updateBookmark$.subscribe(action => expectedAction = action);
+    tick();
+
+    expect(expectedAction).toEqual(new UpdateBookmarkSuccess(bookmark));
+  }));
+
+  it('should trigger update bookmarks failure', fakeAsync(() => {
+    mockActions$ = of(new UpdateBookmark(bookmark))
+    effects = new BookmarksEffects(mockActions$, mockApiService);
+    spyOn(mockApiService, 'updateBookmark').and.returnValue(throwError('error'))
+
+    effects.updateBookmark$.subscribe(action => expectedAction = action );
+    tick();
+
+    expect(expectedAction).toEqual(new UpdateBookmarkFailure('error' as any));
   }));
 });
