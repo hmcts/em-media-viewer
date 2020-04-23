@@ -27,13 +27,12 @@
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
   </div>
-  <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
-                     [annotationSet]="annotationSet"
+  <mv-annotation-set *ngIf="enableAnnotations"
                      [zoom]="zoom"
                      [rotate]="rotation">
   </mv-annotation-set>
   <mv-comment-set #commentsPanel
-                  *ngIf="enableAnnotations && annotationSet"
+                  *ngIf="enableAnnotations"
                   [annotationSet]="annotationSet"
                   [zoom]="zoom"
                   [rotate]="rotation"

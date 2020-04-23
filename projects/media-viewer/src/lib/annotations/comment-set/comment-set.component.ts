@@ -37,7 +37,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
   @Input() pageHeights = [];
 
   comments: Comment[];
-  tags: TagsModel[]
+  tags: TagsModel[];
   private subscriptions: Subscription[] = [];
   public comments$: Observable<Annotation[]>;
 

@@ -127,7 +127,6 @@ describe('AnnotationSetComponent', () => {
 
     fixture = TestBed.createComponent(AnnotationSetComponent);
     component = fixture.componentInstance;
-    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     component.rotate = 0;
     component.height = 400;
     component.width = 200;

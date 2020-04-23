@@ -20,13 +20,7 @@ import { Rectangle } from './annotation-view/rectangle/rectangle.model';
 })
 export class AnnotationSetComponent implements OnInit, OnDestroy {
 
-  annoSet: AnnotationSet;
   annotationsPerPage$: Observable<any[]>; // todo add type
-  @Input() set annotationSet(annoSet) {
-    if (annoSet) {
-      this.annoSet = {...annoSet};
-    }
-  }
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() width: number;

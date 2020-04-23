@@ -19,8 +19,7 @@
            data-hook="dm.viewer.img"
            (error)="onLoadError(url)"
            (load)="onLoad()"/>
-      <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
-                         [annotationSet]="annotationSet"
+      <mv-annotation-set *ngIf="enableAnnotations"
                          [zoom]="zoom"
                          [rotate]="rotation"
                          [height]="img !== undefined ? img.offsetHeight : 0"
