@@ -80,15 +80,19 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     const id = uuid();
     bookmark.name = bookmark.name.substr(0,30);
     this.bookmarksStore.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
-    this.toolbarButtons.sidebarOpen.next(true);
-    this.selectedView = 'bookmark ';
+    this.editBookmark(id);
   }
 
   editBookmark(id) {
     this.editableBookmark = id;
   }
 
+  resetEditBookmark() {
+    this.editableBookmark = null;
+  }
+
   goToBookmark(bookmark: Bookmark) {
+    this.resetEditBookmark();
     let top;
     switch (this.rotate) {
       case 90:
@@ -117,7 +121,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateBookmark(bookmark: Bookmark, name) {
-    this.editableBookmark = null;
+    this.resetEditBookmark();
     const editedBookmark = {
       ... bookmark,
       name
@@ -133,8 +137,10 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedView = sidebarView;
   }
 
-  onClick() {
-    this.editableBookmark = null;
+  onClick(sidebarView: string) {
+    this.toggleSidebarView(sidebarView);
+    this.resetEditBookmark();
+
     const pdfLocation: PdfLocation = this.pdfWrapperProvider.pdfWrapper().getLocation();
     this.addBookmark({
       name: 'new bookmark',
