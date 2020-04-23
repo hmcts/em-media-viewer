@@ -121,12 +121,12 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateBookmark(bookmark: Bookmark, name) {
-    this.resetEditBookmark();
     const editedBookmark = {
       ... bookmark,
       name
     };
     this.bookmarksStore.dispatch(new UpdateBookmark(editedBookmark));
+    this.resetEditBookmark();
   }
 
   goToDestination(destination: any[]) {
