@@ -118,7 +118,7 @@ describe('ImageViewerComponent', () => {
     expect(component.errorMessage).toBeNull();
   });
 
-  it('on load error show error message', () => {
+  it('on load error store error message', () => {
     component.url = 'x';
 
     component.onLoadError(component.url);
