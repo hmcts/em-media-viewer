@@ -1,124 +1,90 @@
-import { BookmarksEffects } from './bookmarks.effects';
-import {
-  CreateBookmark, CreateBookmarkFailure,
-  CreateBookmarkSuccess, DeleteBookmark, DeleteBookmarkFailure, DeleteBookmarkSuccess,
-  LoadBookmarks,
-  LoadBookmarksFailure,
-  LoadBookmarksSuccess,
-  UpdateBookmark, UpdateBookmarkSuccess, UpdateBookmarkFailure
-} from '../actions/bookmarks.action';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { hot, cold } from 'jasmine-marbles';
+import { of } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable, of, throwError } from 'rxjs';
-import { Action } from '@ngrx/store';
+import * as bookmarkActions from '../actions/bookmarks.action';
+import {BookmarksEffects} from './bookmarks.effects';
+import {BookmarksApiService} from '../../annotations/bookmarks-api.service';
 
-describe('BookmarksEffects', () => {
 
+describe('Bookmark Effects', () => {
+  let actions$;
   let effects: BookmarksEffects;
-  let mockActions$: Observable<Action>;
-  const mockApiService = {
-    getBookmarks: () => {},
-    createBookmark: () => {},
-    deleteBookmark: () => {},
-    updateBookmark: () => {}
-  } as any;
-  const bookmark = {
-    name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
-  };
-  let expectedAction: Action;
+  const UserServiceMock = jasmine.createSpyObj('BookmarksApiService', [
+    'getBookmarks',
+    'createBookmark',
+    'updateBookmark',
+    'deleteBookmark'
+  ]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideMockActions(() => mockActions$)],
+      imports: [HttpClientTestingModule],
+      providers: [
+        {
+          provide: BookmarksApiService,
+          useValue: UserServiceMock,
+        },
+        BookmarksEffects,
+        provideMockActions(() => actions$)
+      ]
     });
-  })
 
-  it('should trigger load bookmarks success',  fakeAsync(() => {
-    mockActions$ = of(new LoadBookmarks('url'))
-    effects = new BookmarksEffects(mockActions$, mockApiService);
-    const mockRsp = { body: [bookmark], status: 200 };
-    spyOn(mockApiService, 'getBookmarks').and.returnValue(of(mockRsp))
+    effects = TestBed.get(BookmarksEffects);
+  });
 
-    effects.loadBookmarks$.subscribe(action => expectedAction = action);
-    tick();
+  describe('getBookmarks$', () => {
+    it('should return a LoadBookmarksSuccess', () => {
+      const id = 'id';
+      const bookmarks = [{
+        name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
+      }];
+      const payload = {body: bookmarks, status: 200};
+      const action = new bookmarkActions.LoadBookmarks(id);
+      UserServiceMock.getBookmarks.and.returnValue(of(payload));
+      const completion = new bookmarkActions.LoadBookmarksSuccess(payload);
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.loadBookmarks$).toBeObservable(expected);
+    });
+  });
 
-    expect(expectedAction).toEqual(new LoadBookmarksSuccess(mockRsp));
-  }));
+  describe('createBookmark', () => {
+    it('should return a CreateBookmarkSuccess', () => {
+      const bookmark = {name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1}
+      const action = new bookmarkActions.CreateBookmark(bookmark);
+      UserServiceMock.createBookmark.and.returnValue(of(bookmark));
+      const completion = new bookmarkActions.CreateBookmarkSuccess(bookmark);
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.createBookmark$).toBeObservable(expected);
+    });
+  });
 
-  it('should trigger load bookmarks failure', fakeAsync(() => {
-    mockActions$ = of(new LoadBookmarks('url'))
-    effects = new BookmarksEffects(mockActions$, mockApiService);
-    spyOn(mockApiService, 'getBookmarks').and.returnValue(throwError('error'))
+  describe('deleteBookmark$', () => {
+    it('should return a DeleteBookmarkSuccess', () => {
+      const action = new bookmarkActions.DeleteBookmark('1bee8923-c936-47f6-9186-52581e4901fd');
+      UserServiceMock.deleteBookmark.and.returnValue(of('1bee8923-c936-47f6-9186-52581e4901fd'));
+      const completion = new bookmarkActions.DeleteBookmarkSuccess('1bee8923-c936-47f6-9186-52581e4901fd');
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.deleteBookmark$).toBeObservable(expected);
+    });
+  });
 
-    effects.loadBookmarks$.subscribe(action => expectedAction = action );
-    tick();
+  describe('updateBookmark', () => {
+    it('should return a UpdateBookmarkSuccess', () => {
+      const bookmark = {name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1}
+      const action = new bookmarkActions.UpdateBookmark(bookmark);
+      UserServiceMock.updateBookmark.and.returnValue(of(bookmark));
+      const completion = new bookmarkActions.UpdateBookmarkSuccess(bookmark);
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.updateBookmark$).toBeObservable(expected);
+    });
+  });
 
-    expect(expectedAction).toEqual(new LoadBookmarksFailure('error' as any));
-  }));
 
-  it('should trigger create bookmarks success',  fakeAsync(() => {
-    mockActions$ = of(new CreateBookmark(bookmark))
-    effects = new BookmarksEffects(mockActions$, mockApiService);
-    spyOn(mockApiService, 'createBookmark').and.returnValue(of(bookmark))
-
-    effects.createBookmark$.subscribe(action => expectedAction = action);
-    tick();
-
-    expect(expectedAction).toEqual(new CreateBookmarkSuccess(bookmark));
-  }));
-
-  it('should trigger create bookmarks failure', fakeAsync(() => {
-    mockActions$ = of(new CreateBookmark(bookmark))
-    effects = new BookmarksEffects(mockActions$, mockApiService);
-    spyOn(mockApiService, 'createBookmark').and.returnValue(throwError('error'))
-
-    effects.createBookmark$.subscribe(action => expectedAction = action );
-    tick();
-
-    expect(expectedAction).toEqual(new CreateBookmarkFailure('error' as any));
-  }));
-
-  it('should trigger delete bookmarks success',  fakeAsync(() => {
-    mockActions$ = of(new DeleteBookmark('bookmarkId'))
-    effects = new BookmarksEffects(mockActions$, mockApiService);
-    spyOn(mockApiService, 'deleteBookmark').and.returnValue(of('bookmarkId'));
-
-    effects.deleteBookmark$.subscribe(action => expectedAction = action);
-    tick();
-
-    expect(expectedAction).toEqual(new DeleteBookmarkSuccess('bookmarkId'));
-  }));
-
-  it('should trigger delete bookmarks failure', fakeAsync(() => {
-    mockActions$ = of(new DeleteBookmark('bookmarkId'))
-    effects = new BookmarksEffects(mockActions$, mockApiService);
-    spyOn(mockApiService, 'deleteBookmark').and.returnValue(throwError('error'))
-
-    effects.deleteBookmark$.subscribe(action => expectedAction = action );
-    tick();
-
-    expect(expectedAction).toEqual(new DeleteBookmarkFailure('error' as any));
-  }));
-
-  it('should trigger update bookmarks success',  fakeAsync(() => {
-    mockActions$ = of(new UpdateBookmark(bookmark))
-    effects = new BookmarksEffects(mockActions$, mockApiService);
-    spyOn(mockApiService, 'updateBookmark').and.returnValue(of(bookmark));
-
-    effects.updateBookmark$.subscribe(action => expectedAction = action);
-    tick();
-
-    expect(expectedAction).toEqual(new UpdateBookmarkSuccess(bookmark));
-  }));
-
-  it('should trigger update bookmarks failure', fakeAsync(() => {
-    mockActions$ = of(new UpdateBookmark(bookmark))
-    effects = new BookmarksEffects(mockActions$, mockApiService);
-    spyOn(mockApiService, 'updateBookmark').and.returnValue(throwError('error'))
-
-    effects.updateBookmark$.subscribe(action => expectedAction = action );
-    tick();
-
-    expect(expectedAction).toEqual(new UpdateBookmarkFailure('error' as any));
-  }));
 });
+

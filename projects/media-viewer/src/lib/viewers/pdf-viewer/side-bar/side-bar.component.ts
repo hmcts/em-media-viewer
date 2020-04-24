@@ -46,7 +46,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private viewerEvents: ViewerEventService,
               private toolbarButtons: ToolbarButtonVisibilityService,
               private pdfWrapperProvider: PdfJsWrapperFactory,
-              private bookmarksStore: Store<fromBookmarks.BookmarksState>,
+              private store: Store<fromBookmarks.BookmarksState>,
               private annotationsStore: Store<fromAnnotations.AnnotationSetState>,
   ) {
     this.subscriptions = [
@@ -62,12 +62,12 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.bookmarks$ = this.bookmarksStore.pipe(select(bookmarksSelectors.getAllBookmarks));
+    this.bookmarks$ = this.store.pipe(select(bookmarksSelectors.getAllBookmarks));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.url && this.url) {
-      this.bookmarksStore.dispatch(new LoadBookmarks(this.url));
+      this.store.dispatch(new LoadBookmarks(this.url));
     }
   }
 
@@ -78,8 +78,8 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   addBookmark(bookmark: Bookmark) {
     const documentId = this.extractDocumentId(this.url);
     const id = uuid();
-    bookmark.name = bookmark.name.substr(0,30);
-    this.bookmarksStore.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
+    bookmark.name = bookmark.name.substr(0, 30);
+    this.store.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
     this.editBookmark(id);
   }
 
@@ -96,7 +96,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     let top;
     switch (this.rotate) {
       case 90:
-        top = this.height/this.zoom - bookmark.xCoordinate;
+        top = this.height / this.zoom - bookmark.xCoordinate;
         break;
       case 180:
         top = bookmark.yCoordinate;
@@ -105,7 +105,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
         top = bookmark.xCoordinate;
         break;
       default:
-        top = this.height/this.zoom - bookmark.yCoordinate;
+        top = this.height / this.zoom - bookmark.yCoordinate;
     }
     this.goToDestination([
       bookmark.pageNumber,
@@ -117,7 +117,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   deleteBookmark(bookmark: Bookmark) {
-    this.bookmarksStore.dispatch(new DeleteBookmark(bookmark.id));
+    this.store.dispatch(new DeleteBookmark(bookmark.id));
   }
 
   updateBookmark(bookmark: Bookmark, name) {
@@ -125,7 +125,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       ... bookmark,
       name
     };
-    this.bookmarksStore.dispatch(new UpdateBookmark(editedBookmark));
+    this.store.dispatch(new UpdateBookmark(editedBookmark));
     this.resetEditBookmark();
   }
 
@@ -157,9 +157,9 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 }
 
 interface PdfLocation {
-  pageNumber: number
-  scale: number
-  top: number
-  left: number
-  rotation: number
+  pageNumber: number;
+  scale: number;
+  top: number;
+  left: number;
+  rotation: number;
 }
