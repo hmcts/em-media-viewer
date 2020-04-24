@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { hot, cold } from 'jasmine-marbles';
-import { of } from 'rxjs';
+import {of, throwError} from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as bookmarkActions from '../actions/bookmarks.action';
 import {BookmarksEffects} from './bookmarks.effects';
@@ -48,6 +48,16 @@ describe('Bookmark Effects', () => {
       const expected = cold('-b', { b: completion });
       expect(effects.loadBookmarks$).toBeObservable(expected);
     });
+
+    it('should return a LoadBookmarkFailure', () => {
+      const id = 'id';
+      const action = new bookmarkActions.LoadBookmarks(id);
+      UserServiceMock.getBookmarks.and.returnValue(throwError({body: 'error', status: 400}));
+      const completion = new bookmarkActions.LoadBookmarksFailure({body: 'error', status: 400});
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.loadBookmarks$).toBeObservable(expected);
+    });
   });
 
   describe('createBookmark$', () => {
@@ -60,6 +70,16 @@ describe('Bookmark Effects', () => {
       const expected = cold('-b', { b: completion });
       expect(effects.createBookmark$).toBeObservable(expected);
     });
+
+    it('should return a CreateBookmarkFailure', () => {
+      const bookmark = {name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1}
+      const action = new bookmarkActions.CreateBookmark(bookmark);
+      UserServiceMock.createBookmark.and.returnValue(throwError(bookmark));
+      const completion = new bookmarkActions.CreateBookmarkFailure(bookmark);
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.createBookmark$).toBeObservable(expected);
+    });
   });
 
   describe('deleteBookmark$', () => {
@@ -67,6 +87,15 @@ describe('Bookmark Effects', () => {
       const action = new bookmarkActions.DeleteBookmark('1bee8923-c936-47f6-9186-52581e4901fd');
       UserServiceMock.deleteBookmark.and.returnValue(of('1bee8923-c936-47f6-9186-52581e4901fd'));
       const completion = new bookmarkActions.DeleteBookmarkSuccess('1bee8923-c936-47f6-9186-52581e4901fd');
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.deleteBookmark$).toBeObservable(expected);
+    });
+
+    it('should return a DeleteBookmarkFailure', () => {
+      const action = new bookmarkActions.DeleteBookmark('1bee8923-c936-47f6-9186-52581e4901fd');
+      UserServiceMock.deleteBookmark.and.returnValue(throwError('1bee8923-c936-47f6-9186-52581e4901fd'));
+      const completion = new bookmarkActions.DeleteBookmarkFailure('1bee8923-c936-47f6-9186-52581e4901fd');
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
       expect(effects.deleteBookmark$).toBeObservable(expected);
@@ -83,8 +112,16 @@ describe('Bookmark Effects', () => {
       const expected = cold('-b', { b: completion });
       expect(effects.updateBookmark$).toBeObservable(expected);
     });
+
+    it('should return a UpdateBookmarkFailure', () => {
+      const bookmark = {name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1}
+      const action = new bookmarkActions.UpdateBookmark(bookmark);
+      UserServiceMock.updateBookmark.and.returnValue(throwError(bookmark));
+      const completion = new bookmarkActions.UpdateBookmarkFailure(bookmark);
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.updateBookmark$).toBeObservable(expected);
+    });
   });
-
-
 });
 
