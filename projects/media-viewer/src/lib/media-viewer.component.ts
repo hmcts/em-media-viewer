@@ -136,7 +136,17 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   onLoadException(exception: ViewerException) {
-    this.viewerException.emit(exception);
+    if (exception.exceptionType === null) {
+      this.contentType = null;
+      this.setToolbarButtons();
+    }
+
+    if (exception.exceptionType === 'UnsupportedViewerException') {
+      this.viewerException.emit(exception);
+    } else {
+      this.contentType = null;
+      this.setToolbarButtons();
+    }
   }
 
   onCommentChange(changes: boolean) {
