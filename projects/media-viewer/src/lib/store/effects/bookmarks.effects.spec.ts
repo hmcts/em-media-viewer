@@ -50,7 +50,7 @@ describe('Bookmark Effects', () => {
     });
   });
 
-  describe('createBookmark', () => {
+  describe('createBookmark$', () => {
     it('should return a CreateBookmarkSuccess', () => {
       const bookmark = {name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1}
       const action = new bookmarkActions.CreateBookmark(bookmark);
@@ -73,7 +73,7 @@ describe('Bookmark Effects', () => {
     });
   });
 
-  describe('updateBookmark', () => {
+  describe('updateBookmark$', () => {
     it('should return a UpdateBookmarkSuccess', () => {
       const bookmark = {name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1}
       const action = new bookmarkActions.UpdateBookmark(bookmark);
