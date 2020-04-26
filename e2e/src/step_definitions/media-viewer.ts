@@ -153,21 +153,6 @@ const addBookmarkAndVerify = async function() {
 
 };
 
-// const countOfExistingBookmarks = async function() {
-//   await sleep(1400);
-//   await page.clickSidebarToggle();
-//   // click the viewBookmark button
-//   await page.clickOnViewBookmarkButton();
-//
-//   await sleep(2000);
-//
-//   await element.all(by.css('#bookmarkContainer a')).count().then((count)=>{
-//     console.log('~~~~~~~~~~~~~~~~~~~~~clickOnShowBookmarksIcon() ...... Count is  .... ' +  count);
-//     // TODO Check count = bookmarkCount + 1 ;
-//     //expect(count).toBe(initialBookmarkCount+1);
-//   });
-// };
-
 const highLightOnImage = async () => {
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();

@@ -132,7 +132,6 @@ export class AppPage {
     await browser.executeScript(() => {
       // const imageElement = document.getElementsByTagName('mv-annotation-set')[0].childNodes[0];
 
-      // Fix - Kasi
       const imageElement = document.getElementsByClassName('box-highlight')[0];
 
       const mouseDown = this.createMouseEvent('mousedown', 500, 500, 500, 500);
