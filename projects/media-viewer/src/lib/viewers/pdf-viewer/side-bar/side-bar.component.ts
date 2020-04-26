@@ -117,6 +117,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   deleteBookmark(bookmark: Bookmark) {
+    this.resetEditBookmark();
     this.store.dispatch(new DeleteBookmark(bookmark.id));
   }
 
