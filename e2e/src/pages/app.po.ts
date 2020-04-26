@@ -2,24 +2,21 @@ import {browser, by, element, ElementArrayFinder, ElementFinder, Locator, protra
 import {By} from '@angular/platform-browser';
 import {String} from 'typescript-string-operations';
 import {create} from "domain";
-import {GenericMethods} from "../utils/genericMethods";
 
 const until = protractor.ExpectedConditions;
-const genericMethods = new GenericMethods();
 
 export class AppPage {
 
   contextToolbar: By = by.css('mv-popup-toolbar .toolbar');
   commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
   bookmarkButton: By = by.css('#bookmarkButton');
-  removeHighLightButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
+  sideBarToggleButton :  By = by.css('#sidebarToggle');
   annotationTextArea: By = by.css('textarea.expanded');
   comments: By = by.css('textarea');
   saveButton: By = by.xpath('//button[text()=\' Save \']');
   editButton: By = by.xpath('//button[text()=\' Edit \']');
   commentDeleteButtonXpath = '//textarea[@ng-reflect-model=\'{0}\']/..//button[text()=\' Delete \']';
   page = '.page[data-page-number="{0}"]';
-
 
   async preparePage() {
     await browser.sleep(10000);
@@ -219,26 +216,21 @@ export class AppPage {
     });
   }
 
+  async clickOnShowBookmarksSidePanel()  {
+    await element.all(by.css('#bookmarkContainer a')).count().then((count)=> {
+      console.log('  ~~~~~~~~~~~~~~~~~   Bookmark Count is ' + count);
+    });
+  }
+
+  async createBookmarkUsingOverlay(){
+    // This is the Bookmark button the Popup overlay.
+    await element(this.bookmarkButton).click();
+  }
 
   async clickOnCommentButton() {
     // await browser.waitForAngular()  // This feature did not work hence adding sleep.
     await browser.sleep(5000);
     await element(this.commentButton).click();
-  }
-
-  async clickOnBookmarkButton() {
-    // await browser.waitForAngular()  // This feature did not work hence adding sleep.
-    console.log(' Entering the  clickOnBookmarkButton() ......');
-    browser.sleep(10000);
-
-    if(element(this.bookmarkButton).isPresent()){
-      console.log('~~~~~~~~~~~~~~~~~~~~~~~~bookmark button is present ')
-      await element(this.bookmarkButton).click();
-    }
-    console.log(` AFTER Clicked bookmark button`);
-    await browser.sleep(120000);
-
-
   }
 
   async enterTextInAnnotation(text: string) {
