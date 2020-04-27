@@ -130,9 +130,9 @@ export class AppPage {
     await browser.executeScript(() => {
       const imageElement = document.getElementsByClassName('box-highlight')[0];
 
-      const mouseDown =this.createMouseEvent('mousedown', 500, 500, 500, 500);
-      const mouseMove =this.createMouseEvent('mousemove', 750, 750, 900, 900);
-      const mouseUp   =this.createMouseEvent('mouseup', 750, 800, 750, 800);
+      const mouseDown = this.createMouseEvent('mousedown', 500, 500, 500, 500);
+      const mouseMove = this.createMouseEvent('mousemove', 750, 750, 900, 900);
+      const mouseUp = this.createMouseEvent('mouseup', 750, 800, 750, 800);
 
       imageElement.dispatchEvent(mouseDown);
       imageElement.dispatchEvent(mouseMove);
