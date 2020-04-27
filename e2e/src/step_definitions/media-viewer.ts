@@ -110,7 +110,12 @@ When('I select a text on pdf doc', async () => {
   await toolBar.clickTextIcon();
 });
 
-Then('I expect text highlight popup should appear', async function () {
+Then('I capture the text highlight popup', async function () {
+  const screenshots = await browser.takeScreenshot();
+  this.attach(screenshots, 'image/png');
+});
+
+Then('I expect bookmark to be added to the existing list', async function () {
   await genericMethods.sleep(5000);
   const screenshots = await browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
@@ -122,11 +127,23 @@ const addComment = async (comment: string) => {
   await page.clickOnSaveButton();
 };
 
-const highLightTextInPdf = async () => {
+const highLightTextInPdf = async function () {
+   await page.waitForPdfToLoad();
+   await sleep(5000);
+   await toolBar.enableTextHighLightMode();
+   await page.highLightTextOnPdfPage();
+};
+
+const highLightTextForBookmarking = async function () {
   await page.waitForPdfToLoad();
-  await sleep(5000);
   await toolBar.enableTextHighLightMode();
-  await page.highLightTextOnPdfPage();
+  await page.highLightTextForBookmarking();
+};
+
+
+const addBookmarkAndVerify = async function() {
+  await page.createBookmarkUsingOverlay();
+  await page.clickOnShowBookmarksSidePanel();
 };
 
 const highLightOnImage = async () => {
@@ -195,7 +212,17 @@ Then('I should be able to add comment for the highlight', async() => {
   await addComment(comment_1);
 });
 
-When('I highlight text on a PDF document', highLightTextInPdf);
+When('I highlight text on a PDF document', async() => {
+  await highLightTextInPdf();
+});
+
+When('I highlight text to be bookmarked on the PDF document', async() => {
+  await highLightTextForBookmarking();
+});
+
+Then('I am able to add a bookmark and verify it has been created', async() => {
+  await addBookmarkAndVerify();
+});
 
 function sleep(time: number) {
   return new Promise(resolve => setTimeout(resolve, time));
