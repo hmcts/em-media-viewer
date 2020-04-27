@@ -10,7 +10,6 @@ export class AppPage {
   contextToolbar: By = by.css('mv-popup-toolbar .toolbar');
   commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
   bookmarkButton: By = by.css('#bookmarkButton');
-  sideBarToggleButton :  By = by.css('#sidebarToggle');
   annotationTextArea: By = by.css('textarea.expanded');
   comments: By = by.css('textarea');
   saveButton: By = by.xpath('//button[text()=\' Save \']');
@@ -128,15 +127,12 @@ export class AppPage {
   }
 
   async drawOnImagePage() {
-
     await browser.executeScript(() => {
-      // const imageElement = document.getElementsByTagName('mv-annotation-set')[0].childNodes[0];
-
       const imageElement = document.getElementsByClassName('box-highlight')[0];
 
-      const mouseDown = this.createMouseEvent('mousedown', 500, 500, 500, 500);
-      const mouseMove = this.createMouseEvent('mousemove', 750, 750, 900, 900);
-      const mouseUp =   this.createMouseEvent('mouseup', 750, 800, 750, 800);
+      const mouseDown =this.createMouseEvent('mousedown', 500, 500, 500, 500);
+      const mouseMove =this.createMouseEvent('mousemove', 750, 750, 900, 900);
+      const mouseUp   =this.createMouseEvent('mouseup', 750, 800, 750, 800);
 
       imageElement.dispatchEvent(mouseDown);
       imageElement.dispatchEvent(mouseMove);
@@ -147,9 +143,6 @@ export class AppPage {
 
 
   async highLightTextOnPdfPage() {
-    // const self  = this ;
-    // console.log( '~~~~~~~~~~~~~~ Self ...', self  );
-
     await browser.executeScript( () => {
 
       const range = document.createRange();
@@ -190,28 +183,14 @@ export class AppPage {
 
   async getHighlightPopUp() {
     await browser.executeScript(() => {
-
-      // const mousedown = document.createEvent('Event');
-      // mousedown.initEvent('mousedown', true, true);
-      //
-      // const mousemove = document.createEvent('Event');
-      // mousemove.initEvent('mousemove', true, true);
-      //
-      // const mouseup = document.createEvent('Event');
-      // mouseup.initEvent('mouseup', true, true);
-      //
-
       const mouseDown = this.createMouseEvent('mousedown', 675, 405, 750, 412);
       const mouseMove = this.createMouseEvent('mousemove', 750, 450, 900, 405);
       const mouseUp =  this.createMouseEvent('mouseup', 844, 497, 937, 403);
-
-
       const pageHandle = document.getElementsByClassName('pdfViewer')[2];
 
       pageHandle.dispatchEvent(mouseDown);
       pageHandle.dispatchEvent(mouseMove);
       pageHandle.dispatchEvent(mouseUp);
-
     });
   }
 
@@ -222,7 +201,7 @@ export class AppPage {
   }
 
   async createBookmarkUsingOverlay(){
-    // This is the Bookmark button the Popup overlay.
+    // This is the Bookmark button on the Popup overlay.
     await element(this.bookmarkButton).click();
   }
 

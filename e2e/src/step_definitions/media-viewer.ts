@@ -110,8 +110,7 @@ When('I select a text on pdf doc', async () => {
   await toolBar.clickTextIcon();
 });
 
-Then('I expect text highlight popup should appear', async function () {
-  //await genericMethods.sleep(5000);
+Then('I capture the text highlight popup', async function () {
   const screenshots = await browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
 });
@@ -141,16 +140,10 @@ const highLightTextForBookmarking = async function () {
   await page.highLightTextForBookmarking();
 };
 
-const loadPdfForBookmarking = async function() {
-  //await page.loadPdf();
-  await sleep(5000) ;
-}
 
 const addBookmarkAndVerify = async function() {
-  //await sleep(2000);
   await page.createBookmarkUsingOverlay();
   await page.clickOnShowBookmarksSidePanel();
-
 };
 
 const highLightOnImage = async () => {

@@ -8,9 +8,6 @@ Feature: Bookmarks Features Create , Delete and Rename
   @EM-2710 @Bookmarks @ci
   Scenario: Add a Bookmark to a highlighted phrase on the PDF
      When I highlight text to be bookmarked on the PDF document
-     Then I expect text highlight popup should appear
+     Then I capture the text highlight popup
      And  I am able to add a bookmark and verify it has been created
      Then I expect bookmark to be added to the existing list
-
-
-

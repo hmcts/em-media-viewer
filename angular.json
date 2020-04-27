@@ -91,11 +91,6 @@
               },
               {
                 "glob": "**/*",
-                "input": "src/assets/documents",
-                "output": "/"
-              },
-              {
-                "glob": "**/*",
                 "input": "src/assets/pdf",
                 "output": "/"
               }
