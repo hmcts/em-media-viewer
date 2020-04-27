@@ -18,7 +18,7 @@ import * as annoSelectors from '../../../store/selectors/annotations.selectors';
 import * as fromAnnotations from '../../../store/reducers/annotatons.reducer';
 import * as fromBookmarks from '../../../store/reducers/bookmarks.reducer';
 import { Bookmark } from '../../../store/reducers/bookmarks.reducer';
-import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
+import {CreateBookmark, LoadBookmarks, DeleteBookmark, UpdateBookmark} from '../../../store/actions/bookmarks.action';
 import uuid from 'uuid';
 
 @Component({
@@ -35,16 +35,18 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   selectedView = 'outline';
   bookmarks$: Observable<Bookmark[]>;
+  BOOKMARK_CHAR_LIMIT = 30;
 
   height: number;
   width: number;
+  editableBookmark: string;
 
   subscriptions: Subscription[];
 
   constructor(private viewerEvents: ViewerEventService,
               private toolbarButtons: ToolbarButtonVisibilityService,
               private pdfWrapperProvider: PdfJsWrapperFactory,
-              private bookmarksStore: Store<fromBookmarks.BookmarksState>,
+              private store: Store<fromBookmarks.BookmarksState>,
               private annotationsStore: Store<fromAnnotations.AnnotationSetState>,
   ) {
     this.subscriptions = [
@@ -60,12 +62,12 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.bookmarks$ = this.bookmarksStore.pipe(select(bookmarksSelectors.getAllBookmarks));
+    this.bookmarks$ = this.store.pipe(select(bookmarksSelectors.getAllBookmarks));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.url && this.url) {
-      this.bookmarksStore.dispatch(new LoadBookmarks(this.url));
+      this.store.dispatch(new LoadBookmarks(this.url));
     }
   }
 
@@ -76,17 +78,25 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   addBookmark(bookmark: Bookmark) {
     const documentId = this.extractDocumentId(this.url);
     const id = uuid();
-    bookmark.name = bookmark.name.substr(0,30);
-    this.bookmarksStore.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
-    this.toolbarButtons.sidebarOpen.next(true);
-    this.selectedView = 'bookmark'
+    bookmark.name = bookmark.name.substr(0, 30);
+    this.store.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
+    this.editBookmark(id);
+  }
+
+  editBookmark(id) {
+    this.editableBookmark = id;
+  }
+
+  resetEditBookmark() {
+    this.editableBookmark = null;
   }
 
   goToBookmark(bookmark: Bookmark) {
+    this.resetEditBookmark();
     let top;
     switch (this.rotate) {
       case 90:
-        top = this.height/this.zoom - bookmark.xCoordinate;
+        top = this.height / this.zoom - bookmark.xCoordinate;
         break;
       case 180:
         top = bookmark.yCoordinate;
@@ -95,7 +105,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
         top = bookmark.xCoordinate;
         break;
       default:
-        top = this.height/this.zoom - bookmark.yCoordinate;
+        top = this.height / this.zoom - bookmark.yCoordinate;
     }
     this.goToDestination([
       bookmark.pageNumber,
@@ -106,6 +116,20 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     ]);
   }
 
+  deleteBookmark(bookmark: Bookmark) {
+    this.resetEditBookmark();
+    this.store.dispatch(new DeleteBookmark(bookmark.id));
+  }
+
+  updateBookmark(bookmark: Bookmark, name) {
+    const editedBookmark = {
+      ... bookmark,
+      name
+    };
+    this.store.dispatch(new UpdateBookmark(editedBookmark));
+    this.resetEditBookmark();
+  }
+
   goToDestination(destination: any[]) {
     this.pdfWrapperProvider.pdfWrapper().navigateTo(destination);
   }
@@ -114,7 +138,10 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedView = sidebarView;
   }
 
-  onClick() {
+  onClick(sidebarView: string) {
+    this.toggleSidebarView(sidebarView);
+    this.resetEditBookmark();
+
     const pdfLocation: PdfLocation = this.pdfWrapperProvider.pdfWrapper().getLocation();
     this.addBookmark({
       name: 'new bookmark',
@@ -131,9 +158,9 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 }
 
 interface PdfLocation {
-  pageNumber: number
-  scale: number
-  top: number
-  left: number
-  rotation: number
+  pageNumber: number;
+  scale: number;
+  top: number;
+  left: number;
+  rotation: number;
 }

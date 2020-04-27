@@ -31,10 +31,9 @@ html[dir='rtl'] .outlineItem > .outlineItems {
 .outlineItem > a,
 .attachmentsItem > button {
   text-decoration: none;
-  display: inline-block;
-  min-width: 95%;
-  min-width: calc(100% - 4px); /* Subtract the right padding (left, in RTL mode)
-                                  of the container. */
+  display:inline-block;
+  width: calc(100% - 50px); /* Subtract the right padding (left, in RTL mode)
+                              of the container. */
   height: auto;
   margin-bottom: 1px;
   border-radius: 2px;

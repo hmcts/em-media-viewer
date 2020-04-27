@@ -10,6 +10,9 @@ export const CREATE_BOOKMARK_FAIL = '[Bookmarks] Create Bookmark Failure';
 export const DELETE_BOOKMARK = '[Bookmarks] Delete Bookmark';
 export const DELETE_BOOKMARK_SUCCESS = '[Bookmarks] Delete Bookmark Success';
 export const DELETE_BOOKMARK_FAIL = '[Bookmarks] Delete Bookmark Failure';
+export const UPDATE_BOOKMARK = '[Bookmarks] Update Bookmark';
+export const UPDATE_BOOKMARK_SUCCESS = '[Bookmarks] Update Bookmark Success';
+export const UPDATE_BOOKMARK_FAIL = '[Bookmarks] Update Bookmark Failure';
 
 export class LoadBookmarks implements Action {
   readonly type = LOAD_BOOKMARKS;
@@ -38,7 +41,7 @@ export class CreateBookmarkSuccess implements Action {
 
 export class CreateBookmarkFailure implements Action {
   readonly type = CREATE_BOOKMARK_FAIL;
-  constructor(public payload: Bookmark) { }
+  constructor(public payload: Bookmark) {}
 }
 
 export class DeleteBookmark implements Action {
@@ -48,13 +51,29 @@ export class DeleteBookmark implements Action {
 
 export class DeleteBookmarkSuccess implements Action {
   readonly type = DELETE_BOOKMARK_SUCCESS;
-  constructor(public payload: string) { }
+  constructor(public payload: string) {}
 }
 
 export class DeleteBookmarkFailure implements Action {
   readonly type = DELETE_BOOKMARK_FAIL;
-  constructor(public payload: string) { }
+  constructor(public payload: string) {}
 }
+
+export class UpdateBookmark implements Action {
+  readonly type = UPDATE_BOOKMARK;
+  constructor(public payload: Bookmark) {}
+}
+
+export class UpdateBookmarkSuccess implements Action {
+  readonly type = UPDATE_BOOKMARK_SUCCESS;
+  constructor(public payload: Bookmark) {}
+}
+
+export class UpdateBookmarkFailure implements Action {
+  readonly type = UPDATE_BOOKMARK_FAIL;
+  constructor(public payload: Bookmark) {}
+}
+
 
 export type BookmarksActions =
   | LoadBookmarks
@@ -62,4 +81,10 @@ export type BookmarksActions =
   | LoadBookmarksFailure
   | CreateBookmark
   | CreateBookmarkSuccess
-  | CreateBookmarkFailure;
+  | CreateBookmarkFailure
+  | DeleteBookmark
+  | DeleteBookmarkSuccess
+  | DeleteBookmarkFailure
+  | UpdateBookmark
+  | UpdateBookmarkSuccess
+  | UpdateBookmarkFailure;
