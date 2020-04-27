@@ -1,6 +1,7 @@
-import {browser, by, element, ElementFinder, Locator, protractor, WebElement} from 'protractor';
+import {browser, by, element, ElementArrayFinder, ElementFinder, Locator, protractor, WebElement} from 'protractor';
 import {By} from '@angular/platform-browser';
 import {String} from 'typescript-string-operations';
+import {create} from "domain";
 
 const until = protractor.ExpectedConditions;
 
@@ -8,7 +9,7 @@ export class AppPage {
 
   contextToolbar: By = by.css('mv-popup-toolbar .toolbar');
   commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
-  removeHighLightButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
+  bookmarkButton: By = by.css('#bookmarkButton');
   annotationTextArea: By = by.css('textarea.expanded');
   comments: By = by.css('textarea');
   saveButton: By = by.xpath('//button[text()=\' Save \']');
@@ -126,9 +127,8 @@ export class AppPage {
   }
 
   async drawOnImagePage() {
-
     await browser.executeScript(() => {
-      const imageElement = document.getElementsByTagName('mv-annotation-set')[0].childNodes[0];
+      const imageElement = document.getElementsByClassName('box-highlight')[0];
 
       const mouseDown = this.createMouseEvent('mousedown', 500, 500, 500, 500);
       const mouseMove = this.createMouseEvent('mousemove', 750, 750, 900, 900);
@@ -140,31 +140,70 @@ export class AppPage {
     });
   }
 
+
+
   async highLightTextOnPdfPage() {
-    await browser.executeScript(() => {
+    await browser.executeScript( () => {
+
       const range = document.createRange();
       const matchingElement = document.getElementsByClassName('textLayer')[0].children[4];
       range.selectNodeContents(matchingElement);
       const sel = window.getSelection();
       sel.removeAllRanges();
       sel.addRange(range);
+
+      const mouseEvent = document.createEvent('MouseEvents');
+      mouseEvent.initMouseEvent(
+        'mouseup',
+        true,
+        true,
+        window,
+        1,
+        844,
+        497,
+        937,
+        403,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+
+      //const mouseUp = 	mouseEvent;
+
+      const pageHandle = document.getElementsByClassName('textLayer')[0].children[4];
+      pageHandle.dispatchEvent(mouseEvent) ; // ('mouseup', 844,497,937,403)); //mouseUp Event
+
+
     });
 
-    this.getHighlightPopUp();
   }
 
   async getHighlightPopUp() {
     await browser.executeScript(() => {
-      const mousedown = document.createEvent('Event');
-      mousedown.initEvent('mousedown', true, true);
-      const mouseup = document.createEvent('Event');
-      mouseup.initEvent('mouseup', true, true);
-      const pageHandle = document.getElementsByClassName('pdfViewer')[0];
-      pageHandle.dispatchEvent(mousedown);
-      pageHandle.dispatchEvent(mouseup);
+      const mouseDown = this.createMouseEvent('mousedown', 675, 405, 750, 412);
+      const mouseMove = this.createMouseEvent('mousemove', 750, 450, 900, 405);
+      const mouseUp =  this.createMouseEvent('mouseup', 844, 497, 937, 403);
+      const pageHandle = document.getElementsByClassName('pdfViewer')[2];
+
+      pageHandle.dispatchEvent(mouseDown);
+      pageHandle.dispatchEvent(mouseMove);
+      pageHandle.dispatchEvent(mouseUp);
     });
   }
 
+  async clickOnShowBookmarksSidePanel()  {
+    await element.all(by.css('#bookmarkContainer a')).count().then((count)=> {
+      console.log('  ~~~~~~~~~~~~~~~~~   Bookmark Count is ' + count);
+    });
+  }
+
+  async createBookmarkUsingOverlay(){
+    // This is the Bookmark button on the Popup overlay.
+    await element(this.bookmarkButton).click();
+  }
 
   async clickOnCommentButton() {
     // await browser.waitForAngular()  // This feature did not work hence adding sleep.
@@ -235,6 +274,43 @@ export class AppPage {
       }
       return false;
     });
+  }
+
+  async highLightTextForBookmarking() {
+
+    await browser.executeScript( () => {
+
+      const range = document.createRange();
+      const matchingElement = document.getElementsByClassName('textLayer')[0].children[4];
+      range.selectNodeContents(matchingElement);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+
+      const mouseUpEvent = document.createEvent('MouseEvents');
+      mouseUpEvent.initMouseEvent(
+        'mouseup',
+        true,
+        true,
+         window,
+        1,
+        844,
+        497,
+        937,
+        403,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+
+      const pageHandle = document.getElementsByClassName('textLayer')[0].children[4];
+      pageHandle.dispatchEvent(mouseUpEvent) ; // ('mouseup', 844,497,937,403)); //mouseUp Event
+
+    });
+
   }
 
   private createMouseEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {

@@ -31,7 +31,7 @@
                        [outline]="outlineItem"
                        (navigationEvent)="goToDestination($event)"></mv-outline-item>
     </div>
-    <div class="outlineItem" *ngIf="selectedView === 'bookmark'">
+    <div class="outlineItem" id="bookmarkContainer" *ngIf="selectedView === 'bookmark'">
       <ng-container *ngIf="(bookmarks$ | async) as bookmarks">
         <a *ngFor="let bookmark of bookmarks"
            class="outlineItem" (click)="goToBookmark(bookmark)">{{ bookmark.name }}</a>
