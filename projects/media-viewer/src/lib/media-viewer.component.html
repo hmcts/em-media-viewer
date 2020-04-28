@@ -1,5 +1,5 @@
 <div id="outerContainer"
-     [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async, 'is-windows': isWindows }"
+     [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async, 'has-scroll-bar': hasScrollBar }"
      [ngStyle]="{ width: width }">
 
   <mv-comments-summary *ngIf="showCommentSummary"

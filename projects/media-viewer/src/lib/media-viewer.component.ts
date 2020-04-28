@@ -59,7 +59,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
-  isWindows: boolean;
+  hasScrollBar: boolean;
 
   private subscriptions: Subscription[] = [];
 
@@ -153,6 +153,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   detectOs() {
-    this.isWindows = window.navigator.userAgent.indexOf('Win') !== -1;
+    this.hasScrollBar = window.navigator.userAgent.indexOf('Win') !== -1;
   }
 }
