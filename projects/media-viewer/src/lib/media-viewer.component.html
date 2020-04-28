@@ -12,6 +12,9 @@
     <mv-main-toolbar *ngIf="showToolbar"
                      [enableAnnotations]="enableAnnotations">
     </mv-main-toolbar>
+
+    <mv-reduction-toolbar></mv-reduction-toolbar>
+
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (pdfLoadStatus)="onMediaLoad($event)"
                    (pdfViewerException)="onLoadException($event)"

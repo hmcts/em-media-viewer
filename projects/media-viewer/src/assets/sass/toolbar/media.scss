@@ -95,6 +95,11 @@
     content: url(/assets/images/toolbarButton-openFile@2x.png);
   }
 
+  .toolbarButton.reduce::before,
+  .secondaryToolbarButton.reduce::before {
+    content: url(/assets/images/secondaryToolbarButton-spreadNone@2x.png);
+  }
+
   .toolbarButton.download::before,
   .secondaryToolbarButton.download::before {
     content: url(/assets/images/toolbarButton-download@2x.png);

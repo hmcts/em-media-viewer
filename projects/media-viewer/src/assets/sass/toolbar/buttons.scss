@@ -360,6 +360,11 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
   content: url(/assets/images/toolbarButton-openFile.png);
 }
 
+.toolbarButton.reduce::before,
+.secondaryToolbarButton.reduce::before {
+  content: url(/assets/images/secondaryToolbarButton-spreadNone@2x.png);
+}
+
 .toolbarButton.download::before,
 .secondaryToolbarButton.download::before {
   content: url(/assets/images/toolbarButton-download.png);

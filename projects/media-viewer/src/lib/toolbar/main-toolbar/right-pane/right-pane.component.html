@@ -10,6 +10,11 @@
     <span data-l10n-id="open_file_label">Open</span>
   </button>
   <button *ngIf="toolbarButtons.showDownload"
+          id="download" class="toolbarButton reduce hiddenMediumView" title="Download" tabindex="0"
+          data-l10n-id="download" (click)="onToggleReduceBar()">
+    <span data-l10n-id="reduce_label">Reduce</span>
+  </button>
+  <button *ngIf="toolbarButtons.showDownload"
           id="download" class="toolbarButton download hiddenMediumView" title="Download" tabindex="0"
           data-l10n-id="download" (click)="downloadFile()">
     <span data-l10n-id="download_label">Download</span>

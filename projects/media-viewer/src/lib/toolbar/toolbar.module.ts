@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { SearchBarComponent } from './main-toolbar/search-bar/search-bar.component';
@@ -9,10 +9,10 @@ import { ToolbarMiddlePaneComponent } from './main-toolbar/middle-pane/middle-pa
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 import { ToolbarEventService } from './toolbar-event.service';
+ import {ReductionToolbarComponent} from './reduction-toolbar/reduction-toolbar.component';
 
 export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 export { ToolbarEventService } from './toolbar-event.service';
-
 
 
 @NgModule({
@@ -22,7 +22,8 @@ export { ToolbarEventService } from './toolbar-event.service';
     ToolbarLeftPaneComponent,
     ToolbarRightPaneComponent,
     MainToolbarComponent,
-    ToolbarMiddlePaneComponent
+    ToolbarMiddlePaneComponent,
+    ReductionToolbarComponent
   ],
   providers: [
     ToolbarButtonVisibilityService,
@@ -31,7 +32,8 @@ export { ToolbarEventService } from './toolbar-event.service';
   exports: [
     MainToolbarComponent,
     SearchBarComponent,
-    SubToolbarComponent
+    SubToolbarComponent,
+    ReductionToolbarComponent
   ],
   imports: [
     CommonModule,
