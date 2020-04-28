@@ -18,16 +18,21 @@
            [ngClass]="'rot' + rotation"
            (error)="onLoadError(url)"
            (load)="onLoad()"/>
-      <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
-                         [annotationSet]="annotationSet"
-                         [zoom]="zoom"
-                         [rotate]="rotation"
-                         [height]="img !== undefined ? img.offsetHeight : 0"
-                         [width]="img !== undefined ? img.offsetWidth : 0">
-      </mv-annotation-set>
+      <mv-redactions *ngIf="(toolbarEvents.toggleRedactBarVisibility | async);else annotationTemplate"
+                     [zoom]="zoom"
+                     [rotate]="rotation"
+      ></mv-redactions>
+      <ng-template #annotationTemplate>
+        <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
+                           [zoom]="zoom"
+                           [rotate]="rotation"
+                           [height]="img !== undefined ? img.offsetHeight : 0"
+                           [width]="img !== undefined ? img.offsetWidth : 0">
+        </mv-annotation-set>
+      </ng-template>
     </div>
   </div>
-  <mv-comment-set *ngIf="enableAnnotations && annotationSet"
+  <mv-comment-set *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.toggleRedactBarVisibility | async)"
                   [annotationSet]="annotationSet"
                   [zoom]="zoom"
                   [rotate]="rotation"

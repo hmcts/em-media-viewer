@@ -1,0 +1,13 @@
+mv-redactions {
+
+  .rectangle {
+
+    .is-redaction-preview & {
+      background: #000;
+      outline: none;
+      opacity: 1;
+    }
+
+    outline: 2px solid #fd0303;
+  }
+}

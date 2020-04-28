@@ -6,4 +6,5 @@ import {Component, Input} from '@angular/core';
 })
 export class MainToolbarComponent {
   @Input() enableAnnotations = false;
+  @Input() enableRedactions = false;
 }

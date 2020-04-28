@@ -20,6 +20,7 @@ export interface SearchResultsCount {
 @Injectable({ providedIn: 'root' })
 export class ToolbarEventService {
   public readonly highlightModeSubject = new BehaviorSubject<HighlightMode>(false);
+  public readonly highlightTextRedactionMode = new BehaviorSubject<HighlightMode>(false);
   public readonly drawModeSubject = new BehaviorSubject<DrawMode>(false);
   public readonly rotateSubject = new Subject<number>();
   public readonly searchSubject = new Subject<SearchOperation>();
@@ -34,6 +35,11 @@ export class ToolbarEventService {
   public readonly changePageByDeltaSubject = new Subject<number>();
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
+  public readonly toggleRedactBarVisibility = new BehaviorSubject(false);
+  public readonly toggleRedactionViewMode = new Subject<boolean>();
+  public readonly redactDocument = new Subject();
+  public readonly unmarkAllMarkers = new Subject();
+
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly subToolbarHidden = new BehaviorSubject(true);
   public readonly searchBarHidden = new BehaviorSubject(true);
@@ -129,4 +135,21 @@ export class ToolbarEventService {
   toggleSideBar(toggle: boolean) {
     this.sidebarOpen.next(toggle);
   }
+
+  public toggleRedactBar(): void {
+    this.toggleRedactBarVisibility.next(!this.toggleRedactBarVisibility.getValue());
+  }
+
+  public toggleRedactionPreview(viewMode: boolean): void {
+    this.toggleRedactionViewMode.next(viewMode);
+  }
+
+  public unmarkAll(): void {
+    this.unmarkAllMarkers.next();
+  }
+
+  public redact(): void {
+    this.redactDocument.next();
+  }
+
 }

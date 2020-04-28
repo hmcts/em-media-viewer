@@ -1,6 +1,5 @@
 import { AnnotationSetComponent } from './annotation-set.component';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { annotationSet } from '../../../assets/annotation-set';
 import { AnnotationApiService } from '../annotation-api.service';
 import { Observable, of } from 'rxjs';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
@@ -127,7 +126,6 @@ describe('AnnotationSetComponent', () => {
 
     fixture = TestBed.createComponent(AnnotationSetComponent);
     component = fixture.componentInstance;
-    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     component.rotate = 0;
     component.height = 400;
     component.width = 200;

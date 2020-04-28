@@ -27,14 +27,14 @@ export class HighlightCreateService {
         this.height = pages.styles.height;
         this.width = pages.styles.width;
         this.zoom = parseFloat(pages.scaleRotation.scale);
-        this.rotate = parseInt(pages.scaleRotation.rotation);
+        this.rotate = parseInt(pages.scaleRotation.rotation, 10);
       });
   }
 
-  getRectangles(highlight: Highlight) {
+  getRectangles(event: MouseEvent) {
     const selection = window.getSelection();
     if (selection) {
-      const localElement = (<HTMLElement>highlight.event.target) || (<HTMLElement>highlight.event.srcElement);
+      const localElement = (<HTMLElement>event.target) || (<HTMLElement>event.srcElement);
 
       this.removeEnhancedTextModeStyling(localElement);
 

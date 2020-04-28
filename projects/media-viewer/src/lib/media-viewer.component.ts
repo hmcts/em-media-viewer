@@ -24,8 +24,11 @@ import {CommentService} from './annotations/comment-set/comment/comment.service'
 import 'hammerjs';
 import {select, Store} from '@ngrx/store';
 import * as fromStore from './store/reducers';
-import * as fromSelectors from './store/selectors/annotations.selectors';
-import * as fromActions from './store/actions/annotations.action';
+import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
+import * as fromRedaSelectors from './store/selectors/redaction.selectors';
+import * as fromAnnoActions from './store/actions/annotations.action';
+import * as fromRedaActions from './store/actions/redaction.actions';
+import {take} from 'rxjs/operators';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -56,9 +59,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Input() enableAnnotations = false;
   @Input() annotationApiUrl;
 
+  @Input() enableRedactions = false;
+
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
+  displayRedactionTools;
+  isRedactionPreview = false;
   hasScrollBar: boolean;
   typeException: boolean = false;
 
@@ -77,13 +84,24 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
-    this.annotationSet$ = this.store.pipe(select(fromSelectors.getAnnotationSet));
+    const documentId = this.extractDMStoreDocId(this.url);
+    this.annotationSet$ = this.store.pipe(select(fromAnnoSelectors.getAnnotationSet));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(
       this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)),
       this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes)
     );
+    this.toolbarEvents.toggleRedactBarVisibility.subscribe(toggle => this.displayRedactionTools = toggle);
+    this.toolbarEvents.toggleRedactionViewMode.subscribe((mode: boolean) => {this.isRedactionPreview = mode});
+    this.toolbarEvents.redactDocument.subscribe(() => {
+      this.store.pipe(select(fromRedaSelectors.getRedactionArray), take(1)).subscribe(redactions => {
+        this.store.dispatch(new fromRedaActions.Redact(redactions));
+      });
+    });
+    this.toolbarEvents.unmarkAllMarkers.subscribe(() => {
+      this.store.dispatch(new fromRedaActions.UnmarkAll(documentId));
+    })
   }
 
   contentTypeUnsupported(): boolean {
@@ -99,7 +117,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
         const documentId = this.extractDMStoreDocId(this.url);
-        this.store.dispatch(new fromActions.LoadAnnotationSet(documentId));
+        this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(documentId));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;

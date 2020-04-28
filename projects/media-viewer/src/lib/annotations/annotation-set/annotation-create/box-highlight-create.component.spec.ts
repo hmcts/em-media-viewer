@@ -132,13 +132,11 @@ describe('BoxHighlightCreateComponent', () => {
   it('should create the highlight',
     inject([HighlightCreateService, ToolbarEventService], (highlightService, toolbarEvents) => {
       component.height = 10;
-      spyOn(highlightService, 'saveAnnotation');
-      spyOn(toolbarEvents.drawModeSubject, 'next');
+      spyOn(component.saveSelection, 'emit');
 
       component.createHighlight();
 
-      expect(highlightService.saveAnnotation).toHaveBeenCalled();
-      expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalledWith(false);
+      expect(component.saveSelection.emit).toHaveBeenCalled();
       expect(component.drawStartX).toBe(-1);
       expect(component.drawStartY).toBe(-1);
       expect(component.display).toBe('none');
