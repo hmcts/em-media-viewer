@@ -78,6 +78,16 @@ export class StoreUtils {
       }, {});
   }
 
+  static generateRedactionEntities(redactions): {[id: string]: Annotation} {
+    return redactions.reduce(
+      (annoEntities: { [id: string]: Annotation }, redaction: Annotation) => {
+        return {
+          ...annoEntities,
+          [redaction.redactionId]: redaction
+        };
+      }, {});
+  }
+
 
   static resetCommentEntSelect(ent) {
     return Object.keys(ent).reduce((object, key) => {

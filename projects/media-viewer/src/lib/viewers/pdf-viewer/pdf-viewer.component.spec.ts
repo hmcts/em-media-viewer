@@ -159,7 +159,7 @@ describe('PdfViewerComponent', () => {
   });
 
   it('should not highlight text when in view mode for selected page', () => {
-    const mouseEvent = new MouseEvent('mouseup');
+    const mouseEvent = { target: { offsetParent: { offsetParent: { getAttribute: () => 1 }} } } as any;
     spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(false);
     spyOn(viewerEvents, 'textSelected');
 

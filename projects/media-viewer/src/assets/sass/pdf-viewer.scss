@@ -22,6 +22,10 @@ mv-pdf-viewer {
     z-index: 1000;
   }
 
+  .drawMode > .page > mv-redactions > div {
+    z-index: 1000;
+  }
+
   .linkAnnotation > a:hover {
     opacity: 0.0 !important;
   }
@@ -35,6 +39,9 @@ mv-pdf-viewer {
   }
 
   .commentSummaryHeader {
+    .has-redact-bar & {
+      display: none;
+    }
     top: 28px
   }
 
@@ -45,6 +52,9 @@ mv-pdf-viewer {
 
   .show-comments-panel {
     .pdfViewer, .pageContainer {
+      .has-redact-bar & {
+        width: 100%;
+      }
       width: 75%;
     }
   }
