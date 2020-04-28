@@ -34,7 +34,7 @@ export class ToolbarEventService {
   public readonly changePageByDeltaSubject = new Subject<number>();
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
-  public readonly toggleRecueBar = new Subject();
+  public readonly toggleReduceBarVisibility = new Subject();
 
   /**
    * Reset the stateful behaviour subjects
@@ -125,7 +125,7 @@ export class ToolbarEventService {
   }
 
   public toggleReduceBar(): void {
-    this.toggleRecueBar.next();
+    this.toggleReduceBarVisibility.next();
   }
 
 }

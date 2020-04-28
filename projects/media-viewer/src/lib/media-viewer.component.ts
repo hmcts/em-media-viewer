@@ -59,6 +59,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
+  enableReduction = false;
 
   private subscriptions: Subscription[] = [];
 
@@ -82,6 +83,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)),
       this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes)
     );
+    this.toolbarEvents.toggleReduceBarVisibility.subscribe(() => this.enableReduction = !this.enableReduction);
   }
 
   contentTypeUnsupported(): boolean {

@@ -1,5 +1,5 @@
 <div id="outerContainer"
-     [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async }"
+     [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async, 'has-reduce-bar': enableReduction }"
      [ngStyle]="{ width: width }">
 
   <mv-comments-summary *ngIf="showCommentSummary"
@@ -13,7 +13,7 @@
                      [enableAnnotations]="enableAnnotations">
     </mv-main-toolbar>
 
-    <mv-reduction-toolbar></mv-reduction-toolbar>
+    <mv-reduction-toolbar *ngIf="enableReduction"></mv-reduction-toolbar>
 
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (pdfLoadStatus)="onMediaLoad($event)"

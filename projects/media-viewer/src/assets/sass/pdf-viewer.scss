@@ -43,6 +43,9 @@ mv-pdf-viewer {
   }
 
   .commentSummaryHeader {
+    .has-reduce-bar & {
+      top: 60px;
+    }
     top: 28px
   }
 
