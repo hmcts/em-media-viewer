@@ -24,10 +24,11 @@ import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-vis
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
 import {Store} from '@ngrx/store';
+import {tap} from 'rxjs/operators';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
-import {tap} from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
+import * as fromReductionAction from '../../store/actions/reduction.actions';
 // todo move this to common place for reduction and annotation
 import {HighlightCreateService} from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 
@@ -200,9 +201,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
 
     if (this.toolbarEvents.highlightTextReductionMode.getValue()) {
-      const reductionHighlight = this.highlightService.getRectangles(mouseEvent);
-      console.log(reductionHighlight)
-      // dispatch to store
+      const reductionHighlight = this.highlightService.getRectangles(mouseEvent)[0];
+      const reduction = {...reductionHighlight, page};
+      this.store.dispatch(new fromReductionAction.AddReduction(reduction));
     }
   }
 
