@@ -66,7 +66,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   showContextToolbar(highlight: Highlight) {
     this.highlightPage = highlight.page;
-    this.rectangles = this.highlightService.getRectangles(highlight);
+    this.rectangles = this.highlightService.getRectangles(highlight.event);
     if (this.rectangles) {
       this.toolbarEvents.highlightModeSubject.next(false);
     }

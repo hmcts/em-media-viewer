@@ -28,6 +28,8 @@ import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import {tap} from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
+// todo move this to common place for reduction and annotation
+import {HighlightCreateService} from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -77,6 +79,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    private readonly highlightService: HighlightCreateService,
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject.pipe(tap(() => {
       this.store.dispatch(new fromTagActions.ClearFilterTags());
@@ -178,10 +181,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onMouseUp(mouseEvent: MouseEvent) {
+    const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
+    const page = parseInt(pageElement.getAttribute('data-page-number'), 10)
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
-      const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
       this.viewerEvents.textSelected({
-        page: parseInt(pageElement.getAttribute('data-page-number')),
+        page,
         event: mouseEvent,
         annoSet: this.annotationSet
       });
@@ -193,6 +197,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       if (this.toolbarEvents.drawModeSubject.getValue()) {
         this.toolbarEvents.drawModeSubject.next(false);
       }
+    }
+
+    if (this.toolbarEvents.highlightTextReductionMode.getValue()) {
+      const reductionHighlight = this.highlightService.getRectangles(mouseEvent);
+      console.log(reductionHighlight)
+      // dispatch to store
     }
   }
 
