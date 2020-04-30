@@ -13,6 +13,7 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
   @Input() url: string;
   @Input() originalUrl: string;
   @Input() downloadFileName: string;
+  @Input() typeException: boolean;
 
   @Output() loadStatus = new EventEmitter<ResponseType>();
   @Output() unsupportedViewerException = new EventEmitter<ViewerException>();
