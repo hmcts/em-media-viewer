@@ -35,4 +35,20 @@ describe('UnsupportedViewerComponent', () => {
 
     expect(clickSpy).toHaveBeenCalledWith();
   });
+
+  it('ngOnInit should emit a ViewerException for type exception is false', () => {
+    component.typeException = false;
+    const emitSpy = spyOn(component.unsupportedViewerException, 'emit');
+
+    component.ngOnInit();
+    expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('ngOnInit should not emit a ViewerException for type exception is true', () => {
+    component.typeException = true;
+    const emitSpy = spyOn(component.unsupportedViewerException, 'emit');
+
+    component.ngOnInit();
+    expect(emitSpy).toHaveBeenCalledTimes(0);
+  });
 });
