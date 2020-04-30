@@ -57,6 +57,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   documentOutline: Outline;
   loadingDocument = false;
   loadingDocumentProgress: number;
+  errorMessage: string;
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
@@ -141,6 +142,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private onDocumentLoadInit() {
     this.loadingDocument = true;
     this.loadingDocumentProgress = null;
+    this.errorMessage = null;
   }
 
   private onDocumentLoadProgress(documentLoadProgress: DocumentLoadProgress) {
@@ -157,6 +159,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private onDocumentLoadFailed(error: Error) {
     this.loadingDocument = false;
     this.viewerException = new ViewerException(error.name, {message: error.message});
+    this.errorMessage = `Could not load the document "${this.url}"`;
 
     this.pdfLoadStatus.emit(ResponseType.FAILURE);
     this.pdfViewerException.emit(this.viewerException);
