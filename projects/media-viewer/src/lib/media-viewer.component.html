@@ -31,7 +31,7 @@
                      [downloadFileName]="downloadFileName"
                      [height]="height">
     </mv-image-viewer>
-    <mv-unsupported-viewer *ngIf="contentTypeUnsupported() || typeException"
+    <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
                            [url]="url"
                            [typeException]="typeException"
                            [downloadFileName]="downloadFileName"
