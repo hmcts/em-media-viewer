@@ -215,9 +215,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   onMouseUp(mouseEvent: MouseEvent) {
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
-      setTimeout(() => this.viewerEvents.textSelected({
-        page: this.pdfWrapper.getPageNumber(), event: mouseEvent
-      }), 0);
+      const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
+      this.viewerEvents.textSelected({
+        page: parseInt(pageElement.getAttribute('data-page-number')), event: mouseEvent
+      });
     }
     if (!this.annotationSet) {
       if (this.toolbarEvents.highlightModeSubject.getValue()) {
