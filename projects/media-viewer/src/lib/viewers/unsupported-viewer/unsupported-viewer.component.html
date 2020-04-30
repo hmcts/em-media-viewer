@@ -1,5 +1,10 @@
 <div class="govuk-width-container">
-  <p data-hook="dm.viewer.unsupported" style="padding-top: 100px;">
+  <p data-hook="dm.viewer.unsupported" style="padding-top: 100px;"
+  *ngIf="!typeException">
     This file type is not supported by this viewer. Please <a #downloadLink [href]="url" [download]="downloadFileName">click here to download</a>.
+  </p>
+  <p data-hook="dm.viewer.pdf" style="padding-top: 100px;"
+  *ngIf="typeException">
+    The document could not be displayed, or the file type is unsupported. Please <a #downloadLink [href]="url" [download]="downloadFileName">click here to download</a>.
   </p>
 </div>

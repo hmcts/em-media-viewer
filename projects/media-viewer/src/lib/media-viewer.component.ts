@@ -60,6 +60,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
   hasScrollBar: boolean;
+  typeException: boolean = true;
 
   private subscriptions: Subscription[] = [];
 
@@ -106,6 +107,12 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
     this.setToolbarButtons();
     this.detectOs();
+
+    if (!this.contentTypeUnsupported() && !this.typeException) {
+      this.typeException = true;
+    } else {
+      this.typeException = false;
+    }
   }
 
   ngOnDestroy() {
@@ -136,17 +143,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   onLoadException(exception: ViewerException) {
-    if (exception.exceptionType === null) {
-      this.contentType = null;
-      this.setToolbarButtons();
-    }
-
-    if (exception.exceptionType === 'UnsupportedViewerException') {
-      this.viewerException.emit(exception);
-    } else {
-      this.contentType = null;
-      this.setToolbarButtons();
-    }
+      if (!this.contentTypeUnsupported()) {
+        this.contentType = null;
+        this.typeException = true;
+        this.setToolbarButtons();
+      } else {
+        this.viewerException.emit(exception);
+      }
   }
 
   onCommentChange(changes: boolean) {
