@@ -140,6 +140,13 @@ describe('PdfViewerComponent', () => {
     expect(component.loadingDocumentProgress).toBe(100);
   });
 
+  it('should show error message on document load failed', () => {
+    mockWrapper.documentLoadFailed.next({ name: 'error', message: 'Could not load the document' });
+
+    expect(component.errorMessage).toContain('Could not load the document');
+    expect(component.loadingDocument).toBe(false);
+  });
+
   it('clear the search when the search bar is closed', () => {
     spyOn(mockWrapper, 'clearSearch');
 
@@ -176,6 +183,7 @@ describe('PdfViewerComponent', () => {
 
     expect(component.loadingDocument).toBe(true);
     expect(component.loadingDocumentProgress).toBe(null);
+    expect(component.errorMessage).toBe(null);
   });
 
   it('should set document loading status to false after document has been loaded', () => {
