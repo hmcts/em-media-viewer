@@ -35,6 +35,7 @@ enum SupportedContentTypes {
 export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
 
   @Input() url;
+  @Input() documentFetchHeaders = { 'Cache-Control':'no-cache' };
   @Input() downloadFileName: string;
   @Input() contentType: string;
 

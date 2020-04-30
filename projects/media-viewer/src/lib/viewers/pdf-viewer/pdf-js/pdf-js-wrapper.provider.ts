@@ -49,8 +49,4 @@ export class PdfJsWrapperFactory {
 
     return this.pdfJsWrapper;
   }
-
-  pdfWrapper() {
-    return this.pdfJsWrapper;
-  }
 }

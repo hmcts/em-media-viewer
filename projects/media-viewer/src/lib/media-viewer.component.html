@@ -17,6 +17,7 @@
                    (pdfViewerException)="onLoadException($event)"
                    (documentTitle)="onDocumentTitleChange($event)"
                    [url]="url"
+                   [documentFetchHeaders]="documentFetchHeaders"
                    [enableAnnotations]="enableAnnotations"
                    [annotationSet]="enableAnnotations ? (annotationSet | async) : null"
                    [downloadFileName]="downloadFileName"

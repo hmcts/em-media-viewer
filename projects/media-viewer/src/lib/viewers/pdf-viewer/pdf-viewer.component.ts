@@ -43,6 +43,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @Input() url: string;
   @Input() downloadFileName: string;
+  @Input() documentFetchHeaders: { [id:string]: string };
 
   @Input() enableAnnotations: boolean;
   @Input() annotationSet: AnnotationSet | null;
@@ -158,7 +159,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   private async loadDocument() {
-    await this.pdfWrapper.loadDocument(this.url);
+    await this.pdfWrapper.loadDocument(this.url, this.documentFetchHeaders);
     if (this.enableAnnotations && this.annotationSet) {
       this.annotationService.buildAnnoSetComponents(this.annotationSet);
     }

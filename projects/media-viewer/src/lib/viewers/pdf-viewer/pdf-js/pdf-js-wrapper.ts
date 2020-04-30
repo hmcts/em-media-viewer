@@ -50,12 +50,13 @@ export class PdfJsWrapper {
     this.zoomValue = 1;
   }
 
-  public async loadDocument(documentUrl: string) {
+  public async loadDocument(documentUrl: string, customHttpHeaders: { [id: string]: string }) {
     const loadingTask = pdfjsLib.getDocument({
       url: documentUrl,
       cMapUrl: 'assets/minified/cmaps',
       cMapPacked: true,
-      withCredentials: true
+      withCredentials: true,
+      httpHeaders: customHttpHeaders
     });
 
     loadingTask.onProgress = ({loaded, total}) => {
