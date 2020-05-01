@@ -22,7 +22,7 @@ export function reductionReducer (
       const {payload} =  action;
       const reductionEntities = {
         ...state.reductionEntities,
-        [payload.id]: payload
+        [payload.reductionId]: payload
       };
       const reductionArray = Object.keys(reductionEntities).map(key => reductionEntities[key]);
       const reductionPageEntities = StoreUtils.groupByKeyEntities(reductionArray, 'page');

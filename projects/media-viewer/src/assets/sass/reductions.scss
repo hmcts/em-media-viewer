@@ -1,0 +1,10 @@
+mv-reductions {
+  .rectangle {
+    .has-reduce-bar & {
+      display: block;
+    }
+    display: none;
+    border: 2px solid #f00;
+    margin-top: -2px;
+  }
+}

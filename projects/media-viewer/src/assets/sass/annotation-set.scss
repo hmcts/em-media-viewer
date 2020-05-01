@@ -1,4 +1,4 @@
-mv-annotation-set {
+mv-annotation-set, mv-reductions {
   .rotation {
     -webkit-transform-origin: left bottom;
     -moz-transform-origin: left bottom;
@@ -62,6 +62,14 @@ mv-annotation-set {
   }
   .pageContainer__page--draw {
     z-index: 100;
+  }
+}
+
+mv-annotation-set {
+  .rectangle {
+    .has-reduce-bar & {
+      display: none;
+    }
   }
 }
 

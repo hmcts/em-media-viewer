@@ -31,6 +31,7 @@ import * as fromTagActions from '../../store/actions/tags.actions';
 import * as fromReductionAction from '../../store/actions/reduction.actions';
 // todo move this to common place for reduction and annotation
 import {HighlightCreateService} from '../../annotations/annotation-set/annotation-create/highlight-create.service';
+import uuid from 'uuid';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -201,9 +202,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
 
     if (this.toolbarEvents.highlightTextReductionMode.getValue()) {
-      const reductionHighlight = this.highlightService.getRectangles(mouseEvent)[0];
-      const reduction = {...reductionHighlight, page};
-      this.store.dispatch(new fromReductionAction.AddReduction(reduction));
+      const reductionHighlight = this.highlightService.getRectangles(mouseEvent);
+      const reductionId = uuid();
+      if (reductionHighlight && reductionHighlight.length) {
+        const reduction = {page, rectangles: [...reductionHighlight], reductionId};
+        this.store.dispatch(new fromReductionAction.AddReduction(reduction));
+      }
     }
   }
 

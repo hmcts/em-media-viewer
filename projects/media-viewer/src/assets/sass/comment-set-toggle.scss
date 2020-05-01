@@ -1,4 +1,7 @@
 .comments-toggle {
+  .has-reduce-bar & {
+    display: none;
+  }
   z-index: 10;
   transform: rotate(-90deg);
   position: absolute;

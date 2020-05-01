@@ -26,14 +26,17 @@
        (mousedown)="onPdfViewerClick()"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
-  <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
-    Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
-  </div>
   <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
                      [annotationSet]="annotationSet"
                      [zoom]="zoom"
                      [rotate]="rotation">
   </mv-annotation-set>
+
+  <mv-reductions
+    [zoom]="zoom"
+    [rotate]="rotation"
+  ></mv-reductions>
+
   <mv-comment-set #commentsPanel
                   *ngIf="enableAnnotations && annotationSet"
                   [annotationSet]="annotationSet"
@@ -42,4 +45,7 @@
                   [height]="pdfViewer.offsetHeight"
                   [pageHeights]="pageHeights">
   </mv-comment-set>
+  <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
+    Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
+  </div>
 </div>

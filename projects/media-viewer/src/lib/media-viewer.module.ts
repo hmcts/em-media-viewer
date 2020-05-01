@@ -17,6 +17,7 @@ import { TagInputModule } from 'ngx-chips';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule} from '@ngrx/store';
+import {ReductionsComponent} from './reductions/reductions.component';
 // APP store
 import { reducers} from './store';
 import { effects } from './store/effects/index';
@@ -42,7 +43,8 @@ import { effects } from './store/effects/index';
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,
-    GrabNDragDirective
+    GrabNDragDirective,
+    ReductionsComponent // todo made put this into module
   ],
   entryComponents: [
     PdfViewerComponent,

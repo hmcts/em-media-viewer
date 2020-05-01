@@ -1,0 +1,29 @@
+<div class="pageContainer">
+  <div  *ngFor="let reduction of (reductionsPerPage$ | async);  index as i"
+       class="pageContainer__page"
+       [ngStyle]="{
+       'width.px': reduction.styles.width,
+       'height.px': reduction.styles.height
+       }"
+       [ngClass]="{
+         'rotation': true,
+         'rot90': rotate === 90,
+         'rot180': rotate === 180,
+         'rot270': rotate === 270
+       }">
+
+    <div class="pageContainer__page-item">
+      <ng-container *ngFor="let anno of reduction.anno">
+        <mv-annotation [annotation]="anno"
+                       [zoom]="zoom"
+                       [rotate]="rotate"
+                       [selectedAnnoId]="{}"
+                       [height]="reduction.styles.width"
+                       [width]="reduction.styles.height"
+                       (delete)="onMarkerDelete($event)"
+                       (annotationClick)="selectReduction($event)">
+        </mv-annotation>
+      </ng-container>
+    </div>
+  </div>
+</div>
