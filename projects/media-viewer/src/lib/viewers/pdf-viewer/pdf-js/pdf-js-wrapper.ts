@@ -4,6 +4,7 @@ import 'pdfjs-dist/build/pdf.worker';
 import { Subject } from 'rxjs';
 import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
+import { PdfLocation } from '../side-bar/bookmarks/bookmarks.interfaces';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
@@ -123,7 +124,7 @@ export class PdfJsWrapper {
     this.pdfViewer.linkService.navigateTo(destination);
   }
 
-  public getLocation() {
+  public getLocation(): PdfLocation {
     return this.pdfViewer._location;
   }
 

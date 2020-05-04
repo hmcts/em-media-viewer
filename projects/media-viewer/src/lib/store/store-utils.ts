@@ -1,5 +1,5 @@
 import {Annotation} from '../annotations/annotation-set/annotation-view/annotation.model';
-import { Bookmark } from './reducers';
+import { Bookmark } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 // @dynamic
 export class StoreUtils {

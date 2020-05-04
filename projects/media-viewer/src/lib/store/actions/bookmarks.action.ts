@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Bookmark } from '../reducers/bookmarks.reducer';
+import { Bookmark } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 export const LOAD_BOOKMARKS = '[Bookmarks] Load Bookmarks';
 export const LOAD_BOOKMARKS_SUCCESS = '[Bookmarks] Load Bookmarks Success';

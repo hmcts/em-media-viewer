@@ -1,22 +1,6 @@
 import * as fromBookmarks from '../actions/bookmarks.action';
 import { StoreUtils } from '../store-utils';
-
-export interface BookmarksState {
-  bookmarks: Bookmark[];
-  bookmarkEntities: {},
-  editableBookmark: string,
-  loaded: boolean,
-  loading: boolean
-}
-
-export interface Bookmark {
-  id: string;
-  documentId: string;
-  name: string;
-  pageNumber: number;
-  xCoordinate: number;
-  yCoordinate: number;
-}
+import { Bookmark, BookmarksState } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 export const initialBookmarksState: BookmarksState = {
   bookmarks: [],
