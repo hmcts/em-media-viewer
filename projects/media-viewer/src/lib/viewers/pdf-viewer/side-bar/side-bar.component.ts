@@ -58,7 +58,10 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
           }
         }),
       this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
-        .subscribe(editableId => this.editableBookmark = editableId)
+        .subscribe(editableId => {
+          this.editableBookmark = editableId;
+          this.selectedView = editableId ? 'bookmark' : this.selectedView
+        })
     ];
   }
 
