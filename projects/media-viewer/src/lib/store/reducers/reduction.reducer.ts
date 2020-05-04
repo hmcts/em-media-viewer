@@ -18,7 +18,7 @@ export function reductionReducer (
   action: fromReduction.ReductionActions
 ): ReductionState {
   switch (action.type) {
-    case fromReduction.SAVE_REDUCTION: {
+    case fromReduction.SAVE_REDUCTION_SUCCESS: {
       const {payload} =  action;
       const reductionEntities = {
         ...state.reductionEntities,

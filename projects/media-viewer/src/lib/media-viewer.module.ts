@@ -21,6 +21,7 @@ import {ReductionsComponent} from './reductions/components/reductions.component'
 // APP store
 import { reducers} from './store';
 import { effects } from './store/effects/index';
+import {ReductionApiService} from './reductions/services/reduction-api.service';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { effects } from './store/effects/index';
   providers: [
     PdfJsWrapperFactory,
     CommentService,
+    ReductionApiService
   ],
   exports: [
     MediaViewerComponent

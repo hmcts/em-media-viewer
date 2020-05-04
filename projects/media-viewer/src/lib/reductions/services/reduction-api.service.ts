@@ -1,7 +1,7 @@
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, delay, map} from 'rxjs/operators';
 import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
 
 @Injectable()
@@ -22,13 +22,15 @@ export class ReductionApiService {
       .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
   }
 
-  public saveReduction(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
-    return this.httpClient
-      .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
-      .pipe(
-        map(response => response.body),
-        catchError(() => [])
-      );
+  // @ts-ignore
+  public saveReduction(body): Observable<any> {
+    return of(body).pipe(delay(1000));
+    // return this.httpClient
+    //   .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
+    //   .pipe(
+    //     map(response => response.body),
+    //     catchError(() => [])
+    //   );
   }
 
   public deleteReduction(annotationId: string): Observable<null> {
