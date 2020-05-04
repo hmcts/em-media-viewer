@@ -1,4 +1,5 @@
 import {Annotation} from '../annotations/annotation-set/annotation-view/annotation.model';
+import { Bookmark } from './reducers';
 
 // @dynamic
 export class StoreUtils {
@@ -89,13 +90,10 @@ export class StoreUtils {
     }, {});
   }
 
-  static snakeCase = string => {
-    // transform string_to_snake_case
-    return string.replace(/\W+/g, " ")  // find space
-      .split(/ |\B(?=[A-Z])/) // split it into array
-      .map(word => word.toLowerCase()) // transform to lover case
-      .join('_'); // trun array into sting using _
-  };
-
-
+  static generateBookmarkEntities(bookmarks: Bookmark[]): {[id: string]: Bookmark} {
+    return bookmarks.reduce(
+      (bookmarkEntities, bookmark) =>
+        Object.assign(bookmarkEntities, { [bookmark.id]: bookmark }),
+      {});
+  }
 }

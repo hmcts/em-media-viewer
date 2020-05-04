@@ -16,7 +16,7 @@ export const UPDATE_BOOKMARK_FAIL = '[Bookmarks] Update Bookmark Failure';
 
 export class LoadBookmarks implements Action {
   readonly type = LOAD_BOOKMARKS;
-  constructor(public payload: string) {}
+  constructor() {}
 }
 
 export class LoadBookmarksSuccess implements Action {

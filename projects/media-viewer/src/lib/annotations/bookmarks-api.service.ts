@@ -13,8 +13,7 @@ export class BookmarksApiService {
     private readonly httpClient: HttpClient
   ) {}
 
-  public getBookmarks(url: string): Observable<any> {
-    const documentId = this.extractDocumentId(url);
+  public getBookmarks(documentId: string): Observable<any> {
     return this.httpClient
       .get(`${this.ANNOTATIONS_API}/${documentId}/bookmarks`,
         { observe: 'response' , withCredentials: true });
@@ -39,11 +38,6 @@ export class BookmarksApiService {
       .delete<void>(`${this.ANNOTATIONS_API}/bookmarks/${bookmarkId}`,
         { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
-  }
-
-  private extractDocumentId(url: string): string {
-    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
-    return url.replace('/binary', '');
   }
 }
 

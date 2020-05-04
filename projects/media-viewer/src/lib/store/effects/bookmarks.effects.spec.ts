@@ -41,7 +41,7 @@ describe('Bookmark Effects', () => {
         name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
       }];
       const payload = {body: bookmarks, status: 200};
-      const action = new bookmarkActions.LoadBookmarks(id);
+      const action = new bookmarkActions.LoadBookmarks();
       UserServiceMock.getBookmarks.and.returnValue(of(payload));
       const completion = new bookmarkActions.LoadBookmarksSuccess(payload);
       actions$ = hot('-a', { a: action });
@@ -51,7 +51,7 @@ describe('Bookmark Effects', () => {
 
     it('should return a LoadBookmarkFailure', () => {
       const id = 'id';
-      const action = new bookmarkActions.LoadBookmarks(id);
+      const action = new bookmarkActions.LoadBookmarks();
       UserServiceMock.getBookmarks.and.returnValue(throwError({body: 'error', status: 400}));
       const completion = new bookmarkActions.LoadBookmarksFailure({body: 'error', status: 400});
       actions$ = hot('-a', { a: action });

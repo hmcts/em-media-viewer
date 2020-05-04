@@ -12,9 +12,11 @@ import {BookmarksState, initialBookmarksState} from './bookmarks.reducer';
 describe('BookmarksReducer', () => {
 
   it('should start loading  bookmarks', function () {
-    const state = fromBookmarks.bookmarksReducer(initialBookmarksState, new LoadBookmarks('documentId'));
+    const state = fromBookmarks.bookmarksReducer(initialBookmarksState, new LoadBookmarks());
 
     expect(state.bookmarks).toEqual([]);
+    expect(state.bookmarkEntities).toEqual({});
+    expect(state.editableBookmark).toBeUndefined();
     expect(state.loaded).toBeFalse();
     expect(state.loading).toBeTrue();
   });
@@ -46,7 +48,7 @@ describe('BookmarksReducer', () => {
     };
     const state = fromBookmarks.bookmarksReducer(initialBookmarksState, new CreateBookmarkSuccess(bookmark));
 
-    expect(state.bookmarks).toEqual([bookmark]);
+    expect(state.bookmarkEntities).toEqual({ [bookmark.id]: bookmark });
     expect(state.loaded).toBeTrue();
     expect(state.loading).toBeFalse();
   });
@@ -57,12 +59,14 @@ describe('BookmarksReducer', () => {
     };
     const bookmarksState: BookmarksState = {
       bookmarks: [bookmark],
+      bookmarkEntities: { [bookmark.id]: bookmark },
+      editableBookmark: undefined,
       loaded: true,
       loading: false
     };
 
     const state = fromBookmarks.bookmarksReducer(bookmarksState, new DeleteBookmarkSuccess(bookmark.id));
-    expect(state.bookmarks).toEqual([]);
+    expect(state.bookmarkEntities).toEqual({});
     expect(state.loaded).toBeTrue();
     expect(state.loading).toBeFalse();
   });
@@ -74,6 +78,8 @@ describe('BookmarksReducer', () => {
     };
     const bookmarksState: BookmarksState = {
       bookmarks: [bookmark],
+      bookmarkEntities: { [bookmark.id]: bookmark },
+      editableBookmark: undefined,
       loaded: true,
       loading: false
     };
@@ -81,7 +87,7 @@ describe('BookmarksReducer', () => {
 
     const state = fromBookmarks.bookmarksReducer(bookmarksState, new UpdateBookmarkSuccess(bookmark));
 
-    expect(state.bookmarks).toEqual([bookmark]);
+    expect(state.bookmarkEntities).toEqual({ [bookmark.id]: bookmark });
     expect(state.loaded).toBeTrue();
     expect(state.loading).toBeFalse();
   });

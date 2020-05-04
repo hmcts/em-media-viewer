@@ -15,7 +15,6 @@ export class ViewerEventService {
   public readonly textHighlight = new Subject<Highlight>();
   public readonly boxHighlight = new Subject<Highlight>();
   public readonly ctxToolbarCleared = new Subject();
-  public readonly createBookmarkEvent = new Subject<any>();
   public readonly commentsPanelVisible = new BehaviorSubject(false);
 
   constructor() {}

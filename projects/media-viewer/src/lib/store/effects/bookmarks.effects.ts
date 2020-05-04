@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
+import { catchError, exhaustMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
 import * as bookmarksActions from '../actions/bookmarks.action';
+import * as fromStore from '../reducers';
+import { select, Store } from '@ngrx/store';
+import * as fromAnnotations from '../selectors/annotations.selectors';
+
 
 @Injectable()
 export class BookmarksEffects {
 
   constructor(private actions$: Actions,
+              private store: Store<fromStore.AnnotationSetState>,
               private bookmarksApiService: BookmarksApiService) {}
 
   @Effect()
   loadBookmarks$ = this.actions$.pipe(
     ofType(bookmarksActions.LOAD_BOOKMARKS),
-    map((action: bookmarksActions.LoadBookmarks) => action.payload),
-    exhaustMap((url) =>
-      this.bookmarksApiService.getBookmarks(url)
+    withLatestFrom(this.store.pipe(select(fromAnnotations.getDocumentIdSetId))),
+    map(([,docSetId]) => docSetId.documentId),
+    exhaustMap((documentId) =>
+      this.bookmarksApiService.getBookmarks(documentId)
         .pipe(
           map(res => new bookmarksActions.LoadBookmarksSuccess(res)),
           catchError(err => of(new bookmarksActions.LoadBookmarksFailure(err)))
@@ -27,6 +33,8 @@ export class BookmarksEffects {
   createBookmark$ = this.actions$.pipe(
     ofType(bookmarksActions.CREATE_BOOKMARK),
     map((action: bookmarksActions.CreateBookmark) => action.payload),
+    withLatestFrom(this.store.pipe(select(fromAnnotations.getDocumentIdSetId))),
+    map(([bookmark, docSetId]) => ({ ...bookmark, documentId: docSetId.documentId })),
     exhaustMap((bookmark) =>
       this.bookmarksApiService.createBookmark(bookmark)
         .pipe(

@@ -50,14 +50,15 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
               private annotationsStore: Store<fromAnnotations.AnnotationSetState>,
   ) {
     this.subscriptions = [
-      viewerEvents.createBookmarkEvent.subscribe(bookmark => this.addBookmark(bookmark)),
       this.annotationsStore.select(annoSelectors.getAnnoPages)
         .subscribe(pages => {
           if (pages) {
             this.height = pages.styles.height;
             this.width = pages.styles.width;
           }
-        })
+        }),
+      this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
+        .subscribe(editableId => this.editableBookmark = editableId)
     ];
   }
 
@@ -67,20 +68,12 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.url && this.url) {
-      this.store.dispatch(new LoadBookmarks(this.url));
+      this.store.dispatch(new LoadBookmarks());
     }
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
-
-  addBookmark(bookmark: Bookmark) {
-    const documentId = this.extractDocumentId(this.url);
-    const id = uuid();
-    bookmark.name = bookmark.name.substr(0, 30);
-    this.store.dispatch(new CreateBookmark({ ...bookmark, documentId, id }));
-    this.editBookmark(id);
   }
 
   editBookmark(id) {
@@ -111,7 +104,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       bookmark.pageNumber,
       { 'name': 'XYZ' },
       0,
-      top,
+      bookmark.yCoordinate,
       this.zoom * 100
     ]);
   }
@@ -127,7 +120,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       name
     };
     this.store.dispatch(new UpdateBookmark(editedBookmark));
-    this.resetEditBookmark();
+    this.editableBookmark = undefined;
   }
 
   goToDestination(destination: any[]) {
@@ -143,17 +136,14 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     this.resetEditBookmark();
 
     const pdfLocation: PdfLocation = this.pdfWrapperProvider.pdfWrapper().getLocation();
-    this.addBookmark({
+    this.store.dispatch(new CreateBookmark({
       name: 'new bookmark',
       pageNumber: pdfLocation.pageNumber - 1,
       xCoordinate: pdfLocation.left,
-      yCoordinate: pdfLocation.top
-    } as Bookmark);
-  }
-
-  private extractDocumentId(url: string): string {
-    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
-    return url.replace('/binary', '');
+      yCoordinate: pdfLocation.top,
+      id: uuid(),
+      documentId: null
+    }));
   }
 }
 

@@ -7,12 +7,14 @@ import { Highlight, ViewerEventService } from '../../viewers/viewer-event.servic
 import { Observable, Subscription } from 'rxjs';
 import { SelectionAnnotation } from '../models/event-select.model';
 import { CommentService } from '../comment-set/comment/comment.service';
-import {select, Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import { HighlightCreateService } from './annotation-create/highlight-create.service';
 import { Rectangle } from './annotation-view/rectangle/rectangle.model';
+import { CreateBookmark } from '../../store/actions/bookmarks.action';
+import uuid from 'uuid';
 
 @Component({
   selector: 'mv-annotation-set',
@@ -84,12 +86,14 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   createBookmark(rectangle: Rectangle) {
     const selection = window.getSelection().toString();
-    this.viewerEvents.createBookmarkEvent.next({
-      name: selection.length > 0 ? selection : 'new bookmark',
-      pageNumber: `${this.highlightPage - 1}`,
+    this.store.dispatch(new CreateBookmark({
+      name: selection.length > 0 ? selection.substr(0, 30) : 'new bookmark',
+      pageNumber: this.highlightPage - 1,
       xCoordinate: rectangle.x,
-      yCoordinate: rectangle.y
-    });
+      yCoordinate: rectangle.y,
+      id: uuid(),
+      documentId: null
+    }));
     this.highlightService.resetHighlight();
     this.rectangles = undefined;
   }

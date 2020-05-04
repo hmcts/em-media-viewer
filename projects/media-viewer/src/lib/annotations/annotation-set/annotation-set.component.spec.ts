@@ -11,6 +11,7 @@ import { Action, Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CreateBookmark } from '../../store/actions/bookmarks.action';
 
 describe('AnnotationSetComponent', () => {
   let component: AnnotationSetComponent;
@@ -210,18 +211,18 @@ describe('AnnotationSetComponent', () => {
   }));
 
   it('should create bookmark',
-    inject([HighlightCreateService, ViewerEventService], (highlightCreateService, viewerEvents) => {
+    inject([HighlightCreateService, Store], (highlightCreateService, store) => {
       const mockSelection = { toString: () => 'bookmark text' } as any;
       spyOn(window, 'getSelection').and.returnValue(mockSelection);
       component.highlightPage = 1;
-      spyOn(viewerEvents.createBookmarkEvent, 'next');
+      spyOn(store, 'dispatch');
       spyOn(highlightCreateService, 'resetHighlight');
 
       component.createBookmark({ x: 100, y: 200 } as any);
 
-      expect(viewerEvents.createBookmarkEvent.next).toHaveBeenCalledWith({
-        name: 'bookmark text', pageNumber: '0', xCoordinate: 100, yCoordinate: 200
-      });
+      expect(store.dispatch).toHaveBeenCalledWith(new CreateBookmark({
+        name: 'bookmark text', pageNumber: 0, xCoordinate: 100, yCoordinate: 200, id: 'id', documentId: null
+      }));
       expect(highlightCreateService.resetHighlight).toHaveBeenCalled();
       expect(component.rectangles).toBeUndefined();
     }

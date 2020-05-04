@@ -34,7 +34,7 @@
     <div class="outlineItem" id="bookmarkContainer" *ngIf="selectedView === 'bookmark'">
       <ng-container *ngIf="(bookmarks$ | async) as bookmarks">
         <div *ngFor="let bookmark of bookmarks">
-          <div class="outlineItem" *ngIf="bookmark.id!==editableBookmark; else inputBookmark">
+          <div class="outlineItem" *ngIf="bookmark.id !== editableBookmark; else inputBookmark">
             <a (click)="goToBookmark(bookmark)">
               {{ bookmark.name }}
             </a>
