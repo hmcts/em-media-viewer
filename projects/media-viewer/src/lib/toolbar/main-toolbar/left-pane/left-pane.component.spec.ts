@@ -38,7 +38,7 @@ describe('ToolbarLeftPaneComponent', () => {
   });
 
   it('should not show sidebar', fakeAsync((done) => {
-    component.toolbarButtons.sidebarOpen.asObservable()
+    component.toolbarEvents.sidebarOpen.asObservable()
       .subscribe(
         sidebarOpen => expect(sidebarOpen).toBeFalsy()
         , error => done(error)
@@ -48,7 +48,7 @@ describe('ToolbarLeftPaneComponent', () => {
   it('should toggle sidebar open', fakeAsync((done) => {
     component.toggleSideBar();
 
-    component.toolbarButtons.sidebarOpen.asObservable()
+    component.toolbarEvents.sidebarOpen.asObservable()
       .subscribe(
         sidebarOpen => expect(sidebarOpen).toBeTruthy()
         , error => done(error)
@@ -56,7 +56,7 @@ describe('ToolbarLeftPaneComponent', () => {
   }));
 
   it('should not show searchbar', fakeAsync((done) => {
-    component.toolbarButtons.searchBarHidden.asObservable()
+    component.toolbarEvents.searchBarHidden.asObservable()
       .subscribe(
         searchBarHidden => expect(searchBarHidden).toBeTruthy()
         , error => done(error)
@@ -66,7 +66,7 @@ describe('ToolbarLeftPaneComponent', () => {
   it('should toggle searchbar visible', fakeAsync((done) => {
     component.toggleSearchBar();
 
-    component.toolbarButtons.searchBarHidden.asObservable()
+    component.toolbarEvents.searchBarHidden.asObservable()
       .subscribe(
         searchBarHidden => expect(searchBarHidden).toBeFalsy()
         , error => done(error)

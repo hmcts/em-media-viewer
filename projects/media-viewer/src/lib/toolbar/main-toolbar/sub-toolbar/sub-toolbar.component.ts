@@ -49,7 +49,7 @@ export class SubToolbarComponent {
   }
 
   closeMenu() {
-    this.toolbarButtons.subToolbarHidden.next(true);
+    this.toolbarEvents.subToolbarHidden.next(true);
   }
 
 }

@@ -42,7 +42,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     if (e.code === 'F3' || (e.ctrlKey && e.code === 'KeyF')) {
       e.preventDefault();
 
-      this.toolbarButtons.searchBarHidden.next(false);
+      this.toolbarEvents.searchBarHidden.next(false);
       setTimeout(() => this.findInput.nativeElement.focus(), 200);
     }
   }
@@ -89,7 +89,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   public onInputKeyPress(e: KeyboardEvent): void {
     if (e.key === 'Escape') {
-      this.toolbarButtons.searchBarHidden.next(true);
+      this.toolbarEvents.searchBarHidden.next(true);
     }
   }
 }

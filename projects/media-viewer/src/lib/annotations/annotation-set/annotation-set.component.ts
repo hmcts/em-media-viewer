@@ -94,6 +94,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
       id: uuid(),
       documentId: null
     }));
+    this.toolbarEvents.toggleSideBar(true);
     this.highlightService.resetHighlight();
     this.rectangles = undefined;
   }

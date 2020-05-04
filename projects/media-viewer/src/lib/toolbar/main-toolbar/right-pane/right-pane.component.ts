@@ -15,7 +15,7 @@ export class ToolbarRightPaneComponent {
   ) {}
 
   toggleSecondaryToolbar() {
-    this.toolbarButtons.subToolbarHidden.next(!this.toolbarButtons.subToolbarHidden.getValue());
+    this.toolbarEvents.subToolbarHidden.next(!this.toolbarEvents.subToolbarHidden.getValue());
   }
 
   printFile() {

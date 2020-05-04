@@ -3,9 +3,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 export class ToolbarButtonVisibilityService {
-  public subToolbarHidden = new BehaviorSubject(true);
-  public sidebarOpen = new BehaviorSubject(false);
-  public searchBarHidden = new BehaviorSubject(true);
 
   public showPrint = false;
   public showDownload = false;
@@ -27,9 +24,6 @@ export class ToolbarButtonVisibilityService {
    * Reset the visibility of all buttons to false then set the value from the options
    */
   public setup(options: Partial<ToolbarButtonVisibilityService>): void {
-    this.subToolbarHidden.next(true);
-    this.sidebarOpen.next(false);
-    this.searchBarHidden.next(true);
     this.showPrint = false;
     this.showDownload = false;
     this.showNavigation = false;

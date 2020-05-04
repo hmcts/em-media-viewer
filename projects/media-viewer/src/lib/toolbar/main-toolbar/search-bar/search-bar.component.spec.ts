@@ -33,7 +33,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should not show searchbar', () => {
-    component.toolbarButtons.searchBarHidden.next(true);
+    component.toolbarEvents.searchBarHidden.next(true);
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
@@ -42,7 +42,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should show searchbar after f3 keypress', () => {
-    component.toolbarButtons.searchBarHidden.next(true);
+    component.toolbarEvents.searchBarHidden.next(true);
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
@@ -71,7 +71,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should close the searchbar on escape', () => {
-    component.toolbarButtons.searchBarHidden.next(false);
+    component.toolbarEvents.searchBarHidden.next(false);
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
@@ -85,7 +85,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should not close the searchbar on non-escape keypress)', () => {
-    component.toolbarButtons.searchBarHidden.next(false);
+    component.toolbarEvents.searchBarHidden.next(false);
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
@@ -99,7 +99,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should emit search next event', () => {
-    component.toolbarButtons.searchBarHidden.next(false);
+    component.toolbarEvents.searchBarHidden.next(false);
     const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
     component.searchText = 'searchTerm';
     const searchNextButton = nativeElement.querySelector('button[id=findNext]');
@@ -118,7 +118,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should emit search previous event', () => {
-    component.toolbarButtons.searchBarHidden.next(false);
+    component.toolbarEvents.searchBarHidden.next(false);
     const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
     component.searchText = 'searchTerm';
     const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');
