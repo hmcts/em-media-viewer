@@ -1,9 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import {select, Store} from '@ngrx/store';
-import { Rectangle } from '../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
-import * as fromStore from '../store/reducers';
-import * as fromSelectors from '../store/selectors/reductions.selectors';
+import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
+import * as fromStore from '../../store/reducers';
+import * as fromSelectors from '../../store/selectors/reductions.selectors';
 import {tap} from 'rxjs/operators';
 
 @Component({

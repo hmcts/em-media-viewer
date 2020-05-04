@@ -54,7 +54,7 @@ export class RectangleComponent implements AfterViewInit, OnDestroy {
   }
 
   onClick() {
-    this.select.emit(this.rectangle);
+    this.select.emit(this.rect);
   }
 
   onUpdate() {

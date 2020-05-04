@@ -206,7 +206,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       const reductionId = uuid();
       if (reductionHighlight && reductionHighlight.length) {
         const reduction = {page, rectangles: [...reductionHighlight], reductionId};
-        this.store.dispatch(new fromReductionAction.AddReduction(reduction));
+        this.store.dispatch(new fromReductionAction.SaveReduction(reduction));
       }
     }
   }
