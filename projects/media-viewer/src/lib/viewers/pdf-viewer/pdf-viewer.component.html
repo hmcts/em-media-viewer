@@ -26,10 +26,10 @@
        (mousedown)="onPdfViewerClick()"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
-  <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
-                     [annotationSet]="annotationSet"
-                     [zoom]="zoom"
-                     [rotate]="rotation">
+  <mv-annotation-set
+    *ngIf="enableAnnotations && annotationSet"
+    [zoom]="zoom"
+    [rotate]="rotation">
   </mv-annotation-set>
 
   <mv-reductions

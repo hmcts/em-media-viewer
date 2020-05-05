@@ -32,5 +32,14 @@
         </button>
       </div>
     </div>
+
+    <div id="toolbarViewerMiddle">
+      <div class="splitToolbarButton">
+        <button [ngClass]="{'reduction-preview': !preview, 'reduction-preview-off': preview, 'reduction-preview-btn': true}"
+                id="reduction-preview" tabindex="0" title="Preview" (click)="togglePreview()">
+          <span data-l10n-id="page_rotate_ccw_label">Preview</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

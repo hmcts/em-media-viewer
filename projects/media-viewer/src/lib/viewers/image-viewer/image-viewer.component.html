@@ -20,7 +20,6 @@
            (error)="onLoadError(url)"
            (load)="onLoad()"/>
       <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
-                         [annotationSet]="annotationSet"
                          [zoom]="zoom"
                          [rotate]="rotation"
                          [height]="img !== undefined ? img.offsetHeight : 0"

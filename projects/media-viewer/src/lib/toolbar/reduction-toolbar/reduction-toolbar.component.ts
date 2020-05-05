@@ -6,6 +6,7 @@ import {ToolbarEventService} from '../toolbar-event.service';
   templateUrl: './reduction-toolbar.component.html'
 })
 export class ReductionToolbarComponent {
+  preview = false;
   constructor(
     public readonly toolbarEvents: ToolbarEventService,
     public readonly toolbarEventService: ToolbarEventService
@@ -15,4 +16,7 @@ export class ReductionToolbarComponent {
     this.toolbarEventService.highlightTextReductionMode.next(true);
   }
 
+  togglePreview() {
+    this.preview = !this.preview;
+  }
 }

@@ -147,6 +147,43 @@
     content: url(/assets/images/secondaryToolbarButton-rotateCcw@2x.png);
   }
 
+  .reduction-preview-btn {
+    position: relative;
+    background: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 1px;
+      left: 0;
+      filter: invert(99%) sepia(0%) saturate(861%) hue-rotate(178deg) brightness(116%) contrast(73%);
+      width: 27px;
+      height: 27px;
+    }
+    span {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      display: block;
+    }
+  }
+
+  .reduction-preview {
+    &:before {
+      background: url(/assets/images/icon-preview.svg) 0 0 no-repeat;
+      background-size: 25px 25px;
+    }
+  }
+
+  .reduction-preview-off {
+    &:before {
+      background: url(/assets/images/icon-preview-off.svg) 0 0 no-repeat;
+      background-size: 25px 25px;
+    }
+  }
+
   .toolbarButton.rotateCw::before,
   .secondaryToolbarButton.rotateCw::before {
     content: url(/assets/images/secondaryToolbarButton-rotateCw@2x.png);
