@@ -1,11 +1,10 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { BookmarksComponent } from './bookmarks.component';
-import { OutlineItemComponent } from './outline-item/outline-item.component';
 import { Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../../../store/reducers';
-import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import * as fromActions from 'projects/media-viewer/src/lib/store/actions/bookmarks.action';
+import { reducers } from '../../../../store/reducers';
+import { PdfJsWrapperFactory } from '../../pdf-js/pdf-js-wrapper.provider';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
@@ -20,7 +19,7 @@ describe('BookmarksComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookmarksComponent, OutlineItemComponent ],
+      declarations: [ BookmarksComponent ],
       imports: [
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({})
@@ -44,7 +43,7 @@ describe('BookmarksComponent', () => {
     inject([PdfJsWrapperFactory],(pdfWrapperProvider) => {
       const navigateSpy = spyOn(pdfWrapperProvider.pdfWrapper(), 'navigateTo');
 
-      component.goToDestination([]);
+      component.goToDestination.emit([]);
 
       expect(navigateSpy).toHaveBeenCalled();
   }));

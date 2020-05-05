@@ -7,7 +7,8 @@ import {
   DeleteBookmarkSuccess,
   UpdateBookmarkSuccess
 } from '../actions/bookmarks.action';
-import {BookmarksState, initialBookmarksState} from './bookmarks.reducer';
+import { initialBookmarksState } from './bookmarks.reducer';
+import { BookmarksState } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 describe('BookmarksReducer', () => {
 
@@ -60,6 +61,7 @@ describe('BookmarksReducer', () => {
     const bookmarksState: BookmarksState = {
       bookmarks: [bookmark],
       bookmarkEntities: { [bookmark.id]: bookmark },
+      pdfPosition: undefined,
       editableBookmark: undefined,
       loaded: true,
       loading: false
@@ -79,6 +81,7 @@ describe('BookmarksReducer', () => {
     const bookmarksState: BookmarksState = {
       bookmarks: [bookmark],
       bookmarkEntities: { [bookmark.id]: bookmark },
+      pdfPosition: undefined,
       editableBookmark: undefined,
       loaded: true,
       loading: false

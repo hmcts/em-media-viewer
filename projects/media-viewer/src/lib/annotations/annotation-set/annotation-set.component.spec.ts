@@ -220,9 +220,7 @@ describe('AnnotationSetComponent', () => {
 
       component.createBookmark({ x: 100, y: 200 } as any);
 
-      expect(store.dispatch).toHaveBeenCalledWith(new CreateBookmark({
-        name: 'bookmark text', pageNumber: 0, xCoordinate: 100, yCoordinate: 200, id: 'id', documentId: null
-      }));
+      expect(store.dispatch).toHaveBeenCalledWith(new CreateBookmark('bookmark text'));
       expect(highlightCreateService.resetHighlight).toHaveBeenCalled();
       expect(component.rectangles).toBeUndefined();
     }

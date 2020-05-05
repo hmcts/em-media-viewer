@@ -67,8 +67,10 @@ describe('Bookmark Effects', () => {
 
   describe('createBookmark$', () => {
     it('should return a CreateBookmarkSuccess', () => {
-      const bookmark = {name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1}
-      const action = new bookmarkActions.CreateBookmark(bookmark);
+      const bookmark = {
+        name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
+      }
+      const action = new bookmarkActions.CreateBookmark('bookmark');
       bookmarksApi.createBookmark.and.returnValue(of(bookmark));
       const completion = new bookmarkActions.CreateBookmarkSuccess(bookmark);
       actions$ = hot('-a', { a: action });
@@ -77,8 +79,10 @@ describe('Bookmark Effects', () => {
     });
 
     it('should return a CreateBookmarkFailure', () => {
-      const bookmark = {name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1}
-      const action = new bookmarkActions.CreateBookmark(bookmark);
+      const bookmark = {
+        name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
+      }
+      const action = new bookmarkActions.CreateBookmark('bookmark');
       bookmarksApi.createBookmark.and.returnValue(throwError(bookmark));
       const completion = new bookmarkActions.CreateBookmarkFailure(bookmark);
       actions$ = hot('-a', { a: action });
