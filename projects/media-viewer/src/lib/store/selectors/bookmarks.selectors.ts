@@ -23,3 +23,8 @@ export const getEditableBookmark = createSelector(
   getBookmarkState,
   fromBookmarks.getEditBookmark
 );
+
+export const getPdfPosition = createSelector(
+  getBookmarkState,
+  fromBookmarks.getPdfPos
+);

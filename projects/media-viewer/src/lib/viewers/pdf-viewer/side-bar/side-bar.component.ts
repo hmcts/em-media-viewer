@@ -7,7 +7,6 @@ import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import { select, Store } from '@ngrx/store';
 import * as bookmarksSelectors from '../../../store/selectors/bookmarks.selectors';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
-import uuid from 'uuid';
 import { Bookmark, BookmarksState } from './bookmarks/bookmarks.interfaces';
 
 @Component({
@@ -54,14 +53,6 @@ export class SideBarComponent implements OnInit, OnChanges {
 
   onAddBookmarkClick() {
     this.toggleSidebarView('bookmark');
-    const pdfLocation = this.pdfWrapperProvider.pdfWrapper().getLocation();
-    this.store.dispatch(new CreateBookmark({
-      name: 'new bookmark',
-      pageNumber: pdfLocation.pageNumber - 1,
-      xCoordinate: pdfLocation.left,
-      yCoordinate: pdfLocation.top,
-      id: uuid(),
-      documentId: null
-    }));
+    this.store.dispatch(new CreateBookmark('new bookmark'));
   }
 }

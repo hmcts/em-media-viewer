@@ -26,7 +26,7 @@ describe('Bookmark actions', () => {
         const error: any = 'some error';
         const action = new fromBookmarks.DeleteBookmarkFailure(error);
         expect({ ...action }).toEqual({
-          type: fromBookmarks.DELETE_BOOKMARK_FAIL,
+          type: fromBookmarks.DELETE_BOOKMARK_FAILURE,
           payload: error
         });
       });
@@ -59,7 +59,7 @@ describe('Bookmark actions', () => {
         const error: any = 'some error';
         const action = new fromBookmarks.UpdateBookmarkFailure(error);
         expect({ ...action }).toEqual({
-          type: fromBookmarks.UPDATE_BOOKMARK_FAIL,
+          type: fromBookmarks.UPDATE_BOOKMARK_FAILURE,
           payload: error
         });
       });

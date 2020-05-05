@@ -6,6 +6,7 @@ export const initialBookmarksState: BookmarksState = {
   bookmarks: [],
   bookmarkEntities: {},
   editableBookmark: undefined,
+  pdfPosition: undefined,
   loaded: false,
   loading: false
 };
@@ -15,6 +16,14 @@ export function bookmarksReducer (state = initialBookmarksState,
 
   switch (action.type) {
 
+    case fromBookmarks.UPDATE_PDF_POSITION: {
+      const pdfPosition = action.payload;
+      return {
+        ...state,
+        pdfPosition: pdfPosition
+      }
+    }
+
     case fromBookmarks.LOAD_BOOKMARKS: {
       return {
         ...state,
@@ -23,7 +32,7 @@ export function bookmarksReducer (state = initialBookmarksState,
     }
 
     case fromBookmarks.LOAD_BOOKMARKS_SUCCESS:
-    case fromBookmarks.LOAD_BOOKMARKS_FAIL:{
+    case fromBookmarks.LOAD_BOOKMARKS_FAILURE:{
       const bookmarks = action.payload.status === 200 ? action.payload.body : [];
       const bookmarkEntities = StoreUtils.generateBookmarkEntities(bookmarks);
       return {
@@ -84,3 +93,4 @@ export function bookmarksReducer (state = initialBookmarksState,
 
 export const getBookmarkEnts = (state: BookmarksState) => state.bookmarkEntities;
 export const getEditBookmark = (state: BookmarksState) => state.editableBookmark;
+export const getPdfPos = (state: BookmarksState) => state.pdfPosition;

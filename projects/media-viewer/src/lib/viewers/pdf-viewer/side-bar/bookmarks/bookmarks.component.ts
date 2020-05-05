@@ -53,25 +53,25 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   goToBookmark(bookmark: Bookmark) {
-    let top;
+    let top = 0, left = 0;
     switch (this.rotate) {
       case 90:
-        top = this.height / this.zoom - bookmark.xCoordinate;
+        left = - bookmark.yCoordinate;
         break;
       case 180:
-        top = bookmark.yCoordinate;
+        top = (this.height/this.zoom) - bookmark.yCoordinate;
         break;
       case 270:
-        top = bookmark.xCoordinate;
+        left = bookmark.yCoordinate;
         break;
       default:
-        top = this.height / this.zoom - bookmark.yCoordinate;
+        top = bookmark.yCoordinate;
     }
     this.goToDestination.emit([
       bookmark.pageNumber,
       { 'name': 'XYZ' },
-      0,
-      bookmark.yCoordinate,
+      left,
+      top,
       this.zoom * 100
     ]);
   }

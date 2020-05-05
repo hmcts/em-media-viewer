@@ -86,14 +86,8 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   createBookmark(rectangle: Rectangle) {
     const selection = window.getSelection().toString();
-    this.store.dispatch(new CreateBookmark({
-      name: selection.length > 0 ? selection.substr(0, 30) : 'new bookmark',
-      pageNumber: this.highlightPage - 1,
-      xCoordinate: rectangle.x,
-      yCoordinate: rectangle.y,
-      id: uuid(),
-      documentId: null
-    }));
+    const bookmarkText = selection.length > 0 ? selection.substr(0, 30) : 'new bookmark';
+    this.store.dispatch(new CreateBookmark(bookmarkText));
     this.toolbarEvents.toggleSideBar(true);
     this.highlightService.resetHighlight();
     this.rectangles = undefined;
