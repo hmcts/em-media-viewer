@@ -1,5 +1,8 @@
 <div id="outerContainer"
-     [ngClass]="{ sidebarOpen: toolbarButtons.sidebarOpen | async, 'has-reduce-bar': enableReduction }"
+     [ngClass]="{
+     sidebarOpen: toolbarButtons.sidebarOpen | async,
+     'has-reduce-bar': enableReduction,
+      'is-redaction-preview': isReductionPreview}"
      [ngStyle]="{ width: width }">
 
   <mv-comments-summary *ngIf="showCommentSummary"

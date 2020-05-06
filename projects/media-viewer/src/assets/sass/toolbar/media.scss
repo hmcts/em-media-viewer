@@ -228,6 +228,13 @@
   .secondaryToolbarButton.drawBtn::before {
     content: url(/assets/images/toggleButton-draw@2x.png);
   }
+  mv-main-toolbar {
+    .highlightBtn, .drawBtn {
+      .has-reduce-bar & {
+        display: none;
+      }
+    }
+  }
 
   .toolbarButton.highlightBtn::before {
     content: url(/assets/images/toolbarButton-highlight@2x.png);

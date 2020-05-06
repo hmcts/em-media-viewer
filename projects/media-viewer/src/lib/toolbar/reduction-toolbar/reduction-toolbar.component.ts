@@ -18,5 +18,6 @@ export class ReductionToolbarComponent {
 
   togglePreview() {
     this.preview = !this.preview;
+    this.toolbarEventService.toggleRedactionPreview(this.preview);
   }
 }

@@ -22,6 +22,7 @@ import {ReductionsComponent} from './reductions/components/reductions.component'
 import { reducers} from './store';
 import { effects } from './store/effects/index';
 import {ReductionApiService} from './reductions/services/reduction-api.service';
+import {MutableDivModule} from 'mutable-div';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {ReductionApiService} from './reductions/services/reduction-api.service';
     RouterModule,
     StoreModule.forFeature('media-viewer', reducers),
     EffectsModule.forFeature(effects),
+    MutableDivModule
   ],
   declarations: [
     PdfViewerComponent,

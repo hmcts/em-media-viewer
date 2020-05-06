@@ -25,7 +25,7 @@ export class ReductionsComponent implements OnInit, OnDestroy {
     private store: Store<fromStore.State>) {}
 
   ngOnInit(): void {
-    this.reductionsPerPage$ = this.store.pipe(select(fromSelectors.getAnnoPerPage), tap(console.log));
+    this.reductionsPerPage$ = this.store.pipe(select(fromSelectors.getAnnoPerPage));
 
   }
 

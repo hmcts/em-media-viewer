@@ -36,6 +36,8 @@ export class ToolbarEventService {
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
   public readonly toggleReduceBarVisibility = new Subject();
+  public readonly toggleReductionViewMode = new Subject<boolean>();
+
 
   /**
    * Reset the stateful behaviour subjects
@@ -127,6 +129,10 @@ export class ToolbarEventService {
 
   public toggleReduceBar(): void {
     this.toggleReduceBarVisibility.next();
+  }
+
+  public toggleRedactionPreview(viewMode: boolean): void {
+    this.toggleReductionViewMode.next(viewMode);
   }
 
 }
