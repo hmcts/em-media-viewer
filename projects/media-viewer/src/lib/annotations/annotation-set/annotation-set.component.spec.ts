@@ -210,18 +210,16 @@ describe('AnnotationSetComponent', () => {
   }));
 
   it('should create bookmark',
-    inject([HighlightCreateService, ViewerEventService], (highlightCreateService, viewerEvents) => {
+    inject([HighlightCreateService, Store], (highlightCreateService, store) => {
       const mockSelection = { toString: () => 'bookmark text' } as any;
       spyOn(window, 'getSelection').and.returnValue(mockSelection);
       component.highlightPage = 1;
-      spyOn(viewerEvents.createBookmarkEvent, 'next');
+      spyOn(store, 'dispatch');
       spyOn(highlightCreateService, 'resetHighlight');
 
       component.createBookmark({ x: 100, y: 200 } as any);
 
-      expect(viewerEvents.createBookmarkEvent.next).toHaveBeenCalledWith({
-        name: 'bookmark text', pageNumber: '0', xCoordinate: 100, yCoordinate: 200
-      });
+      expect(store.dispatch).toHaveBeenCalled();
       expect(highlightCreateService.resetHighlight).toHaveBeenCalled();
       expect(component.rectangles).toBeUndefined();
     }

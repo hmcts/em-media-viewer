@@ -1,0 +1,14 @@
+<div *ngFor="let bookmark of bookmarks">
+  <div class="outlineItem" *ngIf="bookmark.id !== editableBookmark; else inputBookmark">
+    <a (click)="goToBookmark(bookmark)">
+      {{ bookmark.name }}
+    </a>
+    <button class="bookmark__rename" (click)="editBookmark(bookmark.id)" ></button>
+    <button class="bookmark__delete" (click)="deleteBookmark(bookmark)"></button>
+  </div>
+  <ng-template #inputBookmark>
+    <input #bookmarkName class="bookmark__input" [value]="bookmark.name" [maxLength]="BOOKMARK_CHAR_LIMIT">
+    <button class="bookmark__save" (click)="updateBookmark(bookmark, bookmarkName.value)"></button>
+  </ng-template>
+  <a *ngIf="bookmarks?.length === 0" class="outlineItem">No bookmarks created yet</a>
+</div>

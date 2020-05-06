@@ -1,5 +1,5 @@
 <div id="secondaryToolbar" class="secondaryToolbar doorHangerRight"
-     [ngClass]="{ hidden: toolbarButtons.subToolbarHidden | async }">
+     [hidden]="toolbarEvents.subToolbarHidden | async">
   <div id="secondaryToolbarButtonContainer">
       <button *ngIf="toolbarButtons.showHighlightButton" (click)="onClickHighlightToggle()"
               [class.toggled]="toolbarEvents.highlightModeSubject | async"

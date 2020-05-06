@@ -31,7 +31,7 @@ describe('ToolbarRightPaneComponent', () => {
   });
 
   it('should not show secondary toolbar', fakeAsync((done) => {
-    component.toolbarButtons.subToolbarHidden.asObservable()
+    component.toolbarEvents.subToolbarHidden.asObservable()
       .subscribe(
         subToolbarHidden => expect(subToolbarHidden).toBeTruthy()
         , error => done(error)
@@ -42,7 +42,7 @@ describe('ToolbarRightPaneComponent', () => {
   it('should toggle secondary toolbar visible', fakeAsync((done) => {
     component.toggleSecondaryToolbar();
 
-    component.toolbarButtons.subToolbarHidden.asObservable()
+    component.toolbarEvents.subToolbarHidden.asObservable()
       .subscribe(
         subToolbarHidden => expect(subToolbarHidden).toBeFalsy(),
           error => done(error)

@@ -1,9 +1,10 @@
-<mv-side-bar *ngIf="toolbarButtons.sidebarOpen"
+<mv-side-bar *ngIf="toolbarEvents.sidebarOpen"
              id="sidebarContainer"
              [url]="url"
              [zoom]="zoom"
              [rotate]="rotation"
-             [outline]="documentOutline">
+             [outline]="documentOutline"
+             [annotationsEnabled]="enableAnnotations">
 </mv-side-bar>
 <mv-comment-set-toggle *ngIf="enableAnnotations && annotationSet"></mv-comment-set-toggle>
 

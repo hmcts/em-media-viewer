@@ -3,7 +3,7 @@ import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 import * as fromAnnotation from './annotatons.reducer';
 import * as fromTags from './tags.reducer';
 import * as fromBookmarks from './bookmarks.reducer';
-import { BookmarksState } from './bookmarks.reducer';
+import { BookmarksState } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 export interface State {
   annotations: fromAnnotation.AnnotationSetState;
