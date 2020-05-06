@@ -32,7 +32,7 @@ export function bookmarksReducer (state = initialBookmarksState,
     }
 
     case fromBookmarks.LOAD_BOOKMARKS_SUCCESS:
-    case fromBookmarks.LOAD_BOOKMARKS_FAILURE:{
+    case fromBookmarks.LOAD_BOOKMARKS_FAIL:{
       const bookmarks = action.payload.status === 200 ? action.payload.body : [];
       const bookmarkEntities = StoreUtils.generateBookmarkEntities(bookmarks);
       return {
