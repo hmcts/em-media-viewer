@@ -1,4 +1,8 @@
 .commentSummaryHeader {
+  .has-scroll-bar & {
+    right: 14px
+  }
+
   width: 24%;
   position: absolute;
   right: 0;

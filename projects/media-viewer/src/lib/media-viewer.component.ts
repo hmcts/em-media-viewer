@@ -59,6 +59,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
+  hasScrollBar: boolean;
 
   private subscriptions: Subscription[] = [];
 
@@ -104,6 +105,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       }
     }
     this.setToolbarButtons();
+    this.detectOs();
   }
 
   ngOnDestroy() {
@@ -148,5 +150,9 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   private extractDMStoreDocId(url: string): string {
     url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
     return url.replace('/binary', '');
+  }
+
+  detectOs() {
+    this.hasScrollBar = window.navigator.userAgent.indexOf('Win') !== -1;
   }
 }
