@@ -41,11 +41,11 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
   }
 
   toggleSideBar() {
-    this.toolbarButtons.sidebarOpen.next(!this.toolbarButtons.sidebarOpen.getValue());
+    this.toolbarEvents.sidebarOpen.next(!this.toolbarEvents.sidebarOpen.getValue());
   }
 
   toggleSearchBar() {
-    this.toolbarButtons.searchBarHidden.next(!this.toolbarButtons.searchBarHidden.getValue());
+    this.toolbarEvents.searchBarHidden.next(!this.toolbarEvents.searchBarHidden.getValue());
   }
 
   increasePageNumber() {

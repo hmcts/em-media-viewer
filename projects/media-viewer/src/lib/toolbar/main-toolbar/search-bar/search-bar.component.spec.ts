@@ -33,26 +33,26 @@ describe('SearchBarComponent', () => {
   });
 
   it('should not show searchbar', () => {
-    component.toolbarButtons.searchBarHidden.next(true);
+    component.toolbarEvents.searchBarHidden.next(true);
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
 
-    expect(searchbar.className).toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeDefined();
   });
 
   it('should show searchbar after f3 keypress', () => {
-    component.toolbarButtons.searchBarHidden.next(true);
+    component.toolbarEvents.searchBarHidden.next(true);
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
-    expect(searchbar.className).toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeDefined();
 
     const event = new KeyboardEvent('keydown', { 'code': 'F3' });
     window.dispatchEvent(event);
     fixture.detectChanges();
 
-    expect(searchbar.className).not.toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
   });
 
   it('should run search event', () => {
@@ -71,35 +71,35 @@ describe('SearchBarComponent', () => {
   });
 
   it('should close the searchbar on escape', () => {
-    component.toolbarButtons.searchBarHidden.next(false);
+    component.toolbarEvents.searchBarHidden.next(false);
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
-    expect(searchbar.className).not.toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
 
     const event = new KeyboardEvent('keydown', { 'key': 'Escape' });
     searchInput.dispatchEvent(event);
     fixture.detectChanges();
 
-    expect(searchbar.className).toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeDefined();
   });
 
   it('should not close the searchbar on non-escape keypress)', () => {
-    component.toolbarButtons.searchBarHidden.next(false);
+    component.toolbarEvents.searchBarHidden.next(false);
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
-    expect(searchbar.className).not.toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
 
     const event = new KeyboardEvent('keydown', { 'key': 'F' });
     searchInput.dispatchEvent(event);
     fixture.detectChanges();
 
-    expect(searchbar.className).not.toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
   });
 
   it('should emit search next event', () => {
-    component.toolbarButtons.searchBarHidden.next(false);
+    component.toolbarEvents.searchBarHidden.next(false);
     const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
     component.searchText = 'searchTerm';
     const searchNextButton = nativeElement.querySelector('button[id=findNext]');
@@ -118,7 +118,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should emit search previous event', () => {
-    component.toolbarButtons.searchBarHidden.next(false);
+    component.toolbarEvents.searchBarHidden.next(false);
     const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
     component.searchText = 'searchTerm';
     const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');
@@ -147,5 +147,4 @@ describe('SearchBarComponent', () => {
     expect(component.haveResults).toBeFalsy();
     expect(component.resultsText).toEqual('Phrase not found');
   });
-
 });

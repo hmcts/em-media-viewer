@@ -1,23 +1,12 @@
 import * as fromBookmarks from '../actions/bookmarks.action';
-
-export interface BookmarksState {
-  bookmarks: Bookmark[];
-  loaded: boolean,
-  loading: boolean
-}
-
-export interface Bookmark {
-  id: string;
-  documentId: string;
-  name: string;
-  pageNumber: number;
-  xCoordinate: number;
-  yCoordinate: number;
-  zoom: number
-}
+import { StoreUtils } from '../store-utils';
+import { Bookmark, BookmarksState } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 export const initialBookmarksState: BookmarksState = {
   bookmarks: [],
+  bookmarkEntities: {},
+  editableBookmark: undefined,
+  pdfPosition: undefined,
   loaded: false,
   loading: false
 };
@@ -26,6 +15,14 @@ export function bookmarksReducer (state = initialBookmarksState,
                                   action: fromBookmarks.BookmarksActions): BookmarksState {
 
   switch (action.type) {
+
+    case fromBookmarks.UPDATE_PDF_POSITION: {
+      const pdfPosition = action.payload;
+      return {
+        ...state,
+        pdfPosition: pdfPosition
+      }
+    }
 
     case fromBookmarks.LOAD_BOOKMARKS: {
       return {
@@ -37,30 +34,38 @@ export function bookmarksReducer (state = initialBookmarksState,
     case fromBookmarks.LOAD_BOOKMARKS_SUCCESS:
     case fromBookmarks.LOAD_BOOKMARKS_FAIL:{
       const bookmarks = action.payload.status === 200 ? action.payload.body : [];
+      const bookmarkEntities = StoreUtils.generateBookmarkEntities(bookmarks);
       return {
         ...state,
         bookmarks,
+        bookmarkEntities,
         loaded: true
       }
     }
 
     case fromBookmarks.CREATE_BOOKMARK_SUCCESS: {
       const bookmark: Bookmark = action.payload;
-      const bookmarks = [...state.bookmarks, bookmark];
+      const bookmarkEntities = {
+        ...state.bookmarkEntities,
+        [bookmark.id]: bookmark,
+      }
+      const editableBookmark = bookmark.id;
       return {
         ...state,
-        bookmarks,
+        bookmarkEntities,
+        editableBookmark,
         loading: false,
         loaded: true
       }
     }
 
     case fromBookmarks.DELETE_BOOKMARK_SUCCESS: {
-      const id: String = action.payload;
-      const bookmarks = state.bookmarks.filter(bookmark => bookmark.id !== id);
+      const bookmarkId: string = action.payload;
+      const bookmarkEntities = { ...state.bookmarkEntities };
+      delete bookmarkEntities[bookmarkId];
       return {
         ...state,
-        bookmarks,
+        bookmarkEntities,
         loading: false,
         loaded: true
       }
@@ -68,20 +73,15 @@ export function bookmarksReducer (state = initialBookmarksState,
 
     case fromBookmarks.UPDATE_BOOKMARK_SUCCESS: {
       const bookmark: Bookmark = action.payload;
-      const name = bookmark.name;
-      const bookmarks = [...state.bookmarks].map(bmark => {
-        if (bmark.id === bookmark.id) {
-          return {
-            ...bmark,
-            name
-          }
-        } else {
-          return bmark;
-        }
-      })
+      const bookmarkEntities = {
+        ...state.bookmarkEntities,
+        [bookmark.id]: { ...bookmark }
+      };
+      const editableBookmark = undefined;
       return {
         ...state,
-        bookmarks,
+        bookmarkEntities,
+        editableBookmark,
         loading: false,
         loaded: true
       }
@@ -91,4 +91,6 @@ export function bookmarksReducer (state = initialBookmarksState,
   return state;
 }
 
-export const getBookmarks = (state: BookmarksState) => state.bookmarks;
+export const getBookmarkEnts = (state: BookmarksState) => state.bookmarkEntities;
+export const getEditBookmark = (state: BookmarksState) => state.editableBookmark;
+export const getPdfPos = (state: BookmarksState) => state.pdfPosition;

@@ -7,7 +7,6 @@ describe('Toolbar Button Visibility Service', () => {
   });
 
   it('setup with values', () => {
-    service.searchBarHidden.next(false);
     const newValues = {
       showPrint: true,
       showDownload: true
@@ -17,7 +16,6 @@ describe('Toolbar Button Visibility Service', () => {
 
     expect(service.showPrint).toBeTruthy();
     expect(service.showDownload).toBeTruthy();
-    expect(service.searchBarHidden.value).toBeTruthy();
   });
 
   it('unset other options', () => {

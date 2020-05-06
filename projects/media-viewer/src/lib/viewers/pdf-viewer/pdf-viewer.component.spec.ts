@@ -95,7 +95,7 @@ describe('PdfViewerComponent', () => {
     component.ngOnChanges({
       url: new SimpleChange(null, component.url, true)
     });
-    component.ngAfterContentInit();
+    // component.ngAfterContentInit();
     fixture.detectChanges();
   });
 
