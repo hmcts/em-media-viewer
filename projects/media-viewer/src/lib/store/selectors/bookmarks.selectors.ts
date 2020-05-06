@@ -3,6 +3,9 @@ import {createSelector} from '@ngrx/store';
 import * as fromFeature from '../reducers';
 import * as fromBookmarks from '../reducers/bookmarks.reducer';
 import { Bookmark } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import * as fromAnnotations from '../selectors/annotations.selectors';
+import uuid from 'uuid';
+
 
 export const getBookmarkState = createSelector(
   fromFeature.getMVState,
@@ -27,4 +30,17 @@ export const getEditableBookmark = createSelector(
 export const getPdfPosition = createSelector(
   getBookmarkState,
   fromBookmarks.getPdfPos
+);
+
+export const getBookmarkInfo = createSelector(
+  fromAnnotations.getDocumentIdSetId,
+  getPdfPosition,
+  (docSetId, pdfPosition) => {
+    return {
+      pageNumber: pdfPosition.pageNumber - 1,
+      xCoordinate: pdfPosition.left,
+      yCoordinate: pdfPosition.top,
+      documentId: docSetId.documentId
+    }
+  }
 );

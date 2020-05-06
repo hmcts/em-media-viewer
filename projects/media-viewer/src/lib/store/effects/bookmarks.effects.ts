@@ -7,8 +7,6 @@ import * as bookmarksActions from '../actions/bookmarks.action';
 import * as fromStore from '../reducers';
 import { select, Store } from '@ngrx/store';
 import * as fromAnnotations from '../selectors/annotations.selectors';
-import * as fromBookmarks from '../selectors/bookmarks.selectors';
-import uuid from 'uuid';
 
 
 @Injectable()
@@ -35,21 +33,6 @@ export class BookmarksEffects {
   createBookmark$ = this.actions$.pipe(
     ofType(bookmarksActions.CREATE_BOOKMARK),
     map((action: bookmarksActions.CreateBookmark) => action.payload),
-    withLatestFrom(
-      this.store.pipe(select(fromAnnotations.getDocumentIdSetId)),
-      this.store.pipe(select(fromBookmarks.getPdfPosition))
-    ),
-    map(([name, docSetId, pdfPosition]) => {
-      console.log('this is the current pdf position ', pdfPosition)
-      return {
-        name,
-        pageNumber: pdfPosition.pageNumber - 1,
-        xCoordinate: pdfPosition.left,
-        yCoordinate: pdfPosition.top,
-        id: uuid(),
-        documentId: docSetId.documentId
-      }
-    }),
     exhaustMap((bookmark) =>
       this.bookmarksApiService.createBookmark(bookmark)
         .pipe(

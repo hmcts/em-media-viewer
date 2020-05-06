@@ -8,6 +8,9 @@ import { select, Store } from '@ngrx/store';
 import * as bookmarksSelectors from '../../../store/selectors/bookmarks.selectors';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
 import { Bookmark, BookmarksState } from './bookmarks/bookmarks.interfaces';
+import * as fromBookmarks from '../../../store/selectors/bookmarks.selectors';
+import { take } from 'rxjs/operators';
+import uuid from 'uuid';
 
 @Component({
   selector: 'mv-side-bar',
@@ -53,6 +56,11 @@ export class SideBarComponent implements OnInit, OnChanges {
 
   onAddBookmarkClick() {
     this.toggleSidebarView('bookmark');
-    this.store.dispatch(new CreateBookmark('new bookmark'));
+    this.store.pipe(select(fromBookmarks.getBookmarkInfo), take(1))
+      .subscribe((bookmarkInfo) => {
+        this.store.dispatch(new CreateBookmark({
+          ...bookmarkInfo, name: 'new bookmark', id: uuid()
+        }));
+      });
   }
 }

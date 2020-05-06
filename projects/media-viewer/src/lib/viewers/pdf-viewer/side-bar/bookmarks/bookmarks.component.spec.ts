@@ -4,18 +4,10 @@ import { BookmarksComponent } from './bookmarks.component';
 import { Store, StoreModule } from '@ngrx/store';
 import * as fromActions from 'projects/media-viewer/src/lib/store/actions/bookmarks.action';
 import { reducers } from '../../../../store/reducers';
-import { PdfJsWrapperFactory } from '../../pdf-js/pdf-js-wrapper.provider';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
   let fixture: ComponentFixture<BookmarksComponent>;
-  const mockPdfWrapper = {
-    navigateTo: () => {},
-    getLocation: () => {}
-  };
-  const mockPdfWrapperProvider = {
-    pdfWrapper: () => mockPdfWrapper
-  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,8 +15,7 @@ describe('BookmarksComponent', () => {
       imports: [
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({})
-      ],
-      providers: [{ provide: PdfJsWrapperFactory, useValue: mockPdfWrapperProvider }]
+      ]
     })
     .compileComponents();
   });
@@ -38,15 +29,6 @@ describe('BookmarksComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should call navigation method on pdfWrapper',
-    inject([PdfJsWrapperFactory],(pdfWrapperProvider) => {
-      const navigateSpy = spyOn(pdfWrapperProvider.pdfWrapper(), 'navigateTo');
-
-      component.goToDestination.emit([]);
-
-      expect(navigateSpy).toHaveBeenCalled();
-  }));
 
   it('should delete bookmark',
     inject([Store],(store) => {

@@ -32,7 +32,7 @@ export class LoadBookmarksFailure implements Action {
 
 export class CreateBookmark implements Action {
   readonly type = CREATE_BOOKMARK;
-  constructor(public payload: string) { }
+  constructor(public payload: Bookmark) { }
 }
 
 export class CreateBookmarkSuccess implements Action {
