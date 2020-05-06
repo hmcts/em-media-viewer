@@ -38,7 +38,7 @@ describe('SearchBarComponent', () => {
 
     const searchbar = nativeElement.querySelector('.findbar');
 
-    expect(searchbar.className).toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeDefined();
   });
 
   it('should show searchbar after f3 keypress', () => {
@@ -46,13 +46,13 @@ describe('SearchBarComponent', () => {
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
-    expect(searchbar.className).toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeDefined();
 
     const event = new KeyboardEvent('keydown', { 'code': 'F3' });
     window.dispatchEvent(event);
     fixture.detectChanges();
 
-    expect(searchbar.className).not.toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
   });
 
   it('should run search event', () => {
@@ -75,13 +75,13 @@ describe('SearchBarComponent', () => {
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
-    expect(searchbar.className).not.toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
 
     const event = new KeyboardEvent('keydown', { 'key': 'Escape' });
     searchInput.dispatchEvent(event);
     fixture.detectChanges();
 
-    expect(searchbar.className).toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeDefined();
   });
 
   it('should not close the searchbar on non-escape keypress)', () => {
@@ -89,13 +89,13 @@ describe('SearchBarComponent', () => {
     fixture.detectChanges();
 
     const searchbar = nativeElement.querySelector('.findbar');
-    expect(searchbar.className).not.toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
 
     const event = new KeyboardEvent('keydown', { 'key': 'F' });
     searchInput.dispatchEvent(event);
     fixture.detectChanges();
 
-    expect(searchbar.className).not.toContain('hidden');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
   });
 
   it('should emit search next event', () => {
@@ -147,5 +147,4 @@ describe('SearchBarComponent', () => {
     expect(component.haveResults).toBeFalsy();
     expect(component.resultsText).toEqual('Phrase not found');
   });
-
 });
