@@ -7,7 +7,7 @@ import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.mod
 @Injectable()
 export class ReductionApiService {
 
-  public annotationApiUrl = '/em-anno';
+  public redactionApiUrl = '/api/markups/';
 
   private annotationSetBaseUrl = '/annotation-sets';
   private annotationBaseUrl = '/annotations';
@@ -17,7 +17,7 @@ export class ReductionApiService {
   ) {}
 
   public getReductions(documentId: string): Observable<any> { // todo add model
-    const fixedUrl = `${this.annotationSetsFullUrl}/filter?documentId=${documentId}`;
+    const fixedUrl = `${this.redactionApiUrl}${documentId}`;
     return this.httpClient
       .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
   }
@@ -26,7 +26,7 @@ export class ReductionApiService {
   public saveReduction(body): Observable<any> {
     return of(body).pipe(delay(1000));
     // return this.httpClient
-    //   .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
+    //   .post<AnnotationSet>(this.redactionApiUrl, body, { observe: 'response' , withCredentials: true })
     //   .pipe(
     //     map(response => response.body),
     //     catchError(() => [])
@@ -34,7 +34,7 @@ export class ReductionApiService {
   }
 
   public deleteReduction(annotationId: string): Observable<null> {
-    const url = `${this.annotationApiUrl}/${annotationId}`;
+    const url = `${this.redactionApiUrl}/${annotationId}`;
 
     return this.httpClient
       .delete<null>(url, { observe: 'response' , withCredentials: true })
@@ -42,7 +42,7 @@ export class ReductionApiService {
   }
 
   get annotationSetsFullUrl() {
-    return this.annotationApiUrl + this.annotationSetBaseUrl;
+    return this.redactionApiUrl + this.annotationSetBaseUrl;
   }
 
 }

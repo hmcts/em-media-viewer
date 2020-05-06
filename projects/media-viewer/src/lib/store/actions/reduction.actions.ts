@@ -12,6 +12,8 @@ export const DELETE_REDUCTION = '[Reduction] Delete Reduction';
 export const DELETE_REDUCTION_SUCCESS = '[Reduction] Delete Reduction Success';
 export const DELETE_REDUCTION_FAIL = '[Reduction] Delete Reduction Fail';
 
+export const SELECT_REDACTION = '[Reduction] Select Redaction';
+
 
 export class LoadReductions implements Action {
   readonly type = LOAD_REDUCTIONS;
@@ -58,6 +60,11 @@ export class DeleteReductionFail implements Action {
   constructor(public payload: any) {}
 }
 
+export class SelectRedaction implements Action {
+  readonly type = SELECT_REDACTION;
+  constructor(public payload: any) {}
+}
+
 export type ReductionActions =
   | LoadReductions
   | LoadReductionSuccess
@@ -67,4 +74,5 @@ export type ReductionActions =
   | SaveReductionFail
   | DeleteReduction
   | DeleteReductionSuccess
-  | DeleteReductionFail;
+  | DeleteReductionFail
+  | SelectRedaction;

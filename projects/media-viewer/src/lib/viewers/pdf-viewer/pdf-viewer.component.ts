@@ -26,9 +26,9 @@ import { Outline } from './side-bar/outline-item/outline.model';
 import {Store} from '@ngrx/store';
 import {tap} from 'rxjs/operators';
 import * as fromStore from '../../store/reducers';
-import * as fromActions from '../../store/actions/annotations.action';
+import * as fromAnnotationActions from '../../store/actions/annotations.action';
+import * as fromRedactionActions from '../../store/actions/reduction.actions';
 import * as fromTagActions from '../../store/actions/tags.actions';
-import * as fromReductionAction from '../../store/actions/reduction.actions';
 // todo move this to common place for reduction and annotation
 import {HighlightCreateService} from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 import uuid from 'uuid';
@@ -90,6 +90,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
+    const documentId = this.extractDMStoreDocId(this.url);
+    this.store.dispatch(new fromRedactionActions.LoadReductions(documentId));
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
@@ -103,7 +105,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
           scale: event.source.scale,
           rotation: event.source.rotation
         };
-        this.store.dispatch(new fromActions.AddPage(payload));
+        this.store.dispatch(new fromAnnotationActions.AddPage(payload));
       }
     });
     this.$subscription = this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url));
@@ -178,7 +180,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onPdfViewerClick() {
-    this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
+    this.store.dispatch(new fromAnnotationActions.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
     this.viewerEvents.clearCtxToolbar();
   }
 
@@ -203,10 +205,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
     if (this.toolbarEvents.highlightTextReductionMode.getValue()) {
       const reductionHighlight = this.highlightService.getRectangles(mouseEvent);
-      const reductionId = uuid();
+      const redactionId = uuid();
       if (reductionHighlight && reductionHighlight.length) {
-        const reduction = {page, rectangles: [...reductionHighlight], reductionId};
-        this.store.dispatch(new fromReductionAction.SaveReduction(reduction));
+        const documentId = this.extractDMStoreDocId(this.url);
+        const reduction = {page, rectangles: [...reductionHighlight], redactionId, documentId};
+        this.store.dispatch(new fromRedactionActions.SaveReduction(reduction));
       }
     }
   }
@@ -255,5 +258,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
+  }
+  // todo move this to common place for media viewer and pdf
+  private extractDMStoreDocId(url: string): string {
+    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
+    return url.replace('/binary', '');
   }
 }

@@ -17,7 +17,7 @@
         <mv-annotation [annotation]="anno"
                        [zoom]="zoom"
                        [rotate]="rotate"
-                       [selectedAnnoId]="{}"
+                       [selectedAnnoId]="selectedRedaction$ | async"
                        [height]="reduction.styles.width"
                        [width]="reduction.styles.height"
                        (delete)="onMarkerDelete($event)"

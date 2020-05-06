@@ -13,6 +13,11 @@ export const getReductionPages = createSelector(
   fromReductions.getPageEnt
 );
 
+export const getSelected = createSelector(
+  getTagsRootState,
+  fromReductions.getSelectedRedaction
+);
+
 export const getAnnoPerPage = createSelector(
   getAnnoPages,
   getReductionPages,

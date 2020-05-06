@@ -4,7 +4,8 @@ import {select, Store} from '@ngrx/store';
 import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
 import * as fromStore from '../../store/reducers';
 import * as fromSelectors from '../../store/selectors/reductions.selectors';
-import {tap} from 'rxjs/operators';
+import * as fromActions from '../../store/actions/reduction.actions';
+import {SelectionAnnotation} from '../../annotations/models/event-select.model';
 
 @Component({
   selector: 'mv-reductions',
@@ -13,7 +14,7 @@ import {tap} from 'rxjs/operators';
 export class ReductionsComponent implements OnInit, OnDestroy {
 
   reductionsPerPage$: Observable<any>; // todo add type
-  selectedAnnotation$
+  selectedRedaction$: Observable<SelectionAnnotation | {}>;
   @Input() zoom: number;
   @Input() rotate: number;
   highlightPage: number;
@@ -26,6 +27,7 @@ export class ReductionsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.reductionsPerPage$ = this.store.pipe(select(fromSelectors.getAnnoPerPage));
+    this.selectedRedaction$ = this.store.pipe(select(fromSelectors.getSelected));
 
   }
 
@@ -35,7 +37,9 @@ export class ReductionsComponent implements OnInit, OnDestroy {
 
   onMarkerDelete(event) {}
 
-  selectReduction(event) {}
+  selectReduction(event) {
+    this.store.dispatch(new fromActions.SelectRedaction(event));
+  }
 
   createHighlight() {
     // this.highlightService.saveAnnotation(this.rectangles, this.highlightPage);

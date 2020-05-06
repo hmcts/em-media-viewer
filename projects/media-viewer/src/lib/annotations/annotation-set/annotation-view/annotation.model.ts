@@ -12,4 +12,5 @@ export interface Annotation extends ApiPersisted {
   rectangles?: Rectangle[];
   type?: string;
   tags: TagsModel[];
+  redactionId?: string;
 }
