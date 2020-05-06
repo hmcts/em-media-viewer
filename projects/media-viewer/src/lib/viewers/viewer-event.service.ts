@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import {AnnotationSet} from '../annotations/annotation-set/annotation-set.model';
-import { Bookmark } from '../store/reducers';
 
 export interface Highlight {
   page: number;
@@ -15,7 +14,6 @@ export class ViewerEventService {
   public readonly textHighlight = new Subject<Highlight>();
   public readonly boxHighlight = new Subject<Highlight>();
   public readonly ctxToolbarCleared = new Subject();
-  public readonly createBookmarkEvent = new Subject<any>();
   public readonly commentsPanelVisible = new BehaviorSubject(false);
 
   constructor() {}

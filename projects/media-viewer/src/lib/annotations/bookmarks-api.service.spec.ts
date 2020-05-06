@@ -21,8 +21,7 @@ describe('BookmarksApiService', () => {
   });
 
   it('should get bookmarks', fakeAsync((done) => {
-    const url = '/documents/documentId/binary'
-    service.getBookmarks(url).subscribe((resp) => {
+    service.getBookmarks('documentId').subscribe((resp) => {
       expect(resp.body).toEqual([bookmark]);
     }, error => done(error));
 

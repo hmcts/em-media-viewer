@@ -11,6 +11,7 @@ describe('PdfJsWrapper', () => {
   let downloadManager;
   let mockViewer;
   let wrapper;
+  let mockStore;
 
   beforeEach(() => {
     downloadManager = new pdfjsViewer.DownloadManager({});
@@ -35,6 +36,10 @@ describe('PdfJsWrapper', () => {
       }
     };
 
+    mockStore = {
+      dispatch: () => {}
+    };
+
     wrapper = new PdfJsWrapper(
       mockViewer,
       downloadManager,
@@ -45,6 +50,7 @@ describe('PdfJsWrapper', () => {
       new Subject<Outline>(),
       new Subject(),
       new Subject<PageEvent>(),
+      mockStore
     );
   });
 

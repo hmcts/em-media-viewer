@@ -20,6 +20,7 @@ import { StoreModule} from '@ngrx/store';
 // APP store
 import { reducers} from './store';
 import { effects } from './store/effects/index';
+import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { effects } from './store/effects/index';
   declarations: [
     PdfViewerComponent,
     SideBarComponent,
+    BookmarksComponent,
     OutlineItemComponent,
     ImageViewerComponent,
     UnsupportedViewerComponent,

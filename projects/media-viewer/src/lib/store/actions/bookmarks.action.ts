@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Bookmark } from '../reducers/bookmarks.reducer';
+import { Bookmark, PdfPosition } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 export const LOAD_BOOKMARKS = '[Bookmarks] Load Bookmarks';
 export const LOAD_BOOKMARKS_SUCCESS = '[Bookmarks] Load Bookmarks Success';
@@ -13,10 +13,11 @@ export const DELETE_BOOKMARK_FAIL = '[Bookmarks] Delete Bookmark Failure';
 export const UPDATE_BOOKMARK = '[Bookmarks] Update Bookmark';
 export const UPDATE_BOOKMARK_SUCCESS = '[Bookmarks] Update Bookmark Success';
 export const UPDATE_BOOKMARK_FAIL = '[Bookmarks] Update Bookmark Failure';
+export const UPDATE_PDF_POSITION = '[Bookmarks] Update PDF Position';
 
 export class LoadBookmarks implements Action {
   readonly type = LOAD_BOOKMARKS;
-  constructor(public payload: string) {}
+  constructor() {}
 }
 
 export class LoadBookmarksSuccess implements Action {
@@ -74,6 +75,11 @@ export class UpdateBookmarkFailure implements Action {
   constructor(public payload: Bookmark) {}
 }
 
+export class UpdatePdfPosition implements Action {
+  readonly type = UPDATE_PDF_POSITION;
+  constructor(public payload: PdfPosition) {}
+}
+
 
 export type BookmarksActions =
   | LoadBookmarks
@@ -87,4 +93,5 @@ export type BookmarksActions =
   | DeleteBookmarkFailure
   | UpdateBookmark
   | UpdateBookmarkSuccess
-  | UpdateBookmarkFailure;
+  | UpdateBookmarkFailure
+  | UpdatePdfPosition;
