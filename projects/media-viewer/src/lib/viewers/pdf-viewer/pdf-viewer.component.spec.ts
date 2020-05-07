@@ -20,6 +20,7 @@ import { Outline } from './side-bar/outline-item/outline.model';
 import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../store/reducers';
 import { SelectedAnnotation } from '../../store/actions/annotations.action';
+import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -83,7 +84,8 @@ describe('PdfViewerComponent', () => {
       documentLoaded: new Subject<any>(),
       outlineLoaded: new Subject<Outline>(),
       documentLoadFailed: new Subject(),
-      pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>()
+      pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>(),
+      positionUpdated: new Subject<{ location: PdfPosition }>()
     };
     component.annotationSet = JSON.parse(JSON.stringify(annotationSet)) ;
     component.url = 'url';
