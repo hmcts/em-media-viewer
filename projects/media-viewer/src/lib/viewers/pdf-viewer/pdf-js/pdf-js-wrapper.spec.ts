@@ -51,7 +51,7 @@ describe('PdfJsWrapper', () => {
       new Subject<Outline>(),
       new Subject(),
       new Subject<PageEvent>(),
-      new Subject<{location: PdfPosition}>()
+      new Subject<{ location: PdfPosition }>()
     );
   });
 

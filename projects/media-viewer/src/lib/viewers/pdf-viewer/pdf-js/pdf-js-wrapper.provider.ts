@@ -14,8 +14,7 @@ export class PdfJsWrapperFactory {
   private eventBus: pdfjsViewer.EventBus;
   private pdfJsWrapper: PdfJsWrapper;
 
-  constructor(private readonly toolbarEvents: ToolbarEventService,
-              private store: Store<BookmarksState>) {
+  constructor(private readonly toolbarEvents: ToolbarEventService) {
     this.linkService = new pdfjsViewer.PDFLinkService();
     this.eventBus = new pdfjsViewer.EventBus();
   }
