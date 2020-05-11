@@ -194,6 +194,14 @@ describe('PdfViewerComponent', () => {
     expect(component.loadingDocument).toBe(false);
   });
 
+  it('should set document loading status to false after document load failed', () => {
+    component.loadingDocument = true;
+
+    mockWrapper.documentLoadFailed.next({ name: 'error', message: 'Could not load the document'});
+
+    expect(component.loadingDocument).toBe(false);
+  });
+
   it('should load new document when URL changes', fakeAsync(() => {
     component.enableAnnotations = true;
     component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
