@@ -79,6 +79,14 @@ describe('MediaViewerComponent', () => {
     expect(component.contentTypeUnsupported()).toBeTruthy();
   });
 
+  it('should reset the type exception when the url is changed', () => {
+    component.typeException = true;
+    component.contentType = 'pdf';
+    component.ngOnChanges({ url: new SimpleChange('file.pdf', 'unsupported.txt', false) });
+
+    expect(component.typeException).toBeFalse();
+  });
+
   it('should reset the event state when the url is changed', () => {
     component.toolbarEvents.zoomValueSubject.next(2);
     component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });
@@ -151,11 +159,33 @@ describe('MediaViewerComponent', () => {
   });
 
   it('onLoadException should emit a ViewerException', () => {
+    component.contentType = 'pdf';
     const viewerException = new ViewerException();
     const emitSpy = spyOn(component.viewerException, 'emit');
 
     component.onLoadException(viewerException);
     expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('onLoadException should set type exception true', () => {
+    component.contentType = 'pdf';
+    component.typeException = false;
+    const viewerException = new ViewerException();
+    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'setup');
+
+    component.onLoadException(viewerException);
+    expect(component.typeException).toBeTrue();
+    expect(component.contentType).toBeNull();
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions, showCommentSummary: false });
+  });
+
+  it('onLoadException should set type exception false', () => {
+    component.contentType = null;
+    component.typeException = true;
+    const viewerException = new ViewerException();
+
+    component.onLoadException(viewerException);
+    expect(component.typeException).toBeFalse();
   });
 
   it('onUnsavedChanges should emit a boolean value', () => {
