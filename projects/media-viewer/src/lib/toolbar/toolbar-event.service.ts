@@ -37,6 +37,7 @@ export class ToolbarEventService {
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
   public readonly toggleReduceBarVisibility = new Subject();
   public readonly toggleReductionViewMode = new Subject<boolean>();
+  public readonly reduceDocument = new Subject();
 
 
   /**
@@ -133,6 +134,10 @@ export class ToolbarEventService {
 
   public toggleRedactionPreview(viewMode: boolean): void {
     this.toggleReductionViewMode.next(viewMode);
+  }
+
+  public reduce(): void {
+    this.reduceDocument.next()
   }
 
 }

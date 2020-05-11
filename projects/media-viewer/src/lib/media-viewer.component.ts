@@ -86,6 +86,9 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     );
     this.toolbarEvents.toggleReduceBarVisibility.subscribe(() => this.enableReduction = !this.enableReduction);
     this.toolbarEvents.toggleReductionViewMode.subscribe((mode: boolean) => {this.isReductionPreview = mode});
+    this.toolbarEvents.reduceDocument.subscribe(() => {
+        window.alert('are you sure');
+    })
   }
 
   contentTypeUnsupported(): boolean {

@@ -184,6 +184,22 @@
     }
   }
 
+  .unmark-all {
+    &:before {
+      top: 3px;
+      background: url(/assets/images/icon-unmark-all.svg) 0 0 no-repeat;
+      background-size: 20px 20px;
+    }
+  }
+
+  .reduction-reduce {
+    margin: 3px 0 0 20px;
+    border: none;
+    color: #DDD;
+    background-color: #474747;
+    font-size: 16px;
+  }
+
   .toolbarButton.rotateCw::before,
   .secondaryToolbarButton.rotateCw::before {
     content: url(/assets/images/secondaryToolbarButton-rotateCw@2x.png);

@@ -20,4 +20,12 @@ export class ReductionToolbarComponent {
     this.preview = !this.preview;
     this.toolbarEventService.toggleRedactionPreview(this.preview);
   }
+
+  unmarkAll() {
+
+  }
+
+  reduce() {
+    this.toolbarEventService.reduce();
+  }
 }
