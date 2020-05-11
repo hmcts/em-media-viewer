@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
 import { Store } from '@ngrx/store';
-import { BookmarksState } from '../side-bar/bookmarks/bookmarks.interfaces';
+import { BookmarksState, PdfPosition } from '../side-bar/bookmarks/bookmarks.interfaces';
 
 @Injectable({providedIn: 'root'})
 export class PdfJsWrapperFactory {
@@ -14,8 +14,7 @@ export class PdfJsWrapperFactory {
   private eventBus: pdfjsViewer.EventBus;
   private pdfJsWrapper: PdfJsWrapper;
 
-  constructor(private readonly toolbarEvents: ToolbarEventService,
-              private store: Store<BookmarksState>) {
+  constructor(private readonly toolbarEvents: ToolbarEventService) {
     this.linkService = new pdfjsViewer.PDFLinkService();
     this.eventBus = new pdfjsViewer.EventBus();
   }
@@ -47,7 +46,7 @@ export class PdfJsWrapperFactory {
       new Subject<Outline>(),
       new Subject(),
       new Subject<{ pageNumber: number, source: { rotation: number, scale: number, div: HTMLDivElement }}>(),
-      this.store
+      new Subject<{location: PdfPosition}>()
     );
 
     return this.pdfJsWrapper;

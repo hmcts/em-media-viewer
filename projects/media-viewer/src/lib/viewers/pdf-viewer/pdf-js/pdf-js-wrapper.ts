@@ -4,9 +4,7 @@ import 'pdfjs-dist/build/pdf.worker';
 import { Subject } from 'rxjs';
 import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
-import { BookmarksState, PdfPosition } from '../side-bar/bookmarks/bookmarks.interfaces';
-import { Store } from '@ngrx/store';
-import { CreateBookmark, UpdatePdfPosition } from '../../../store/actions/bookmarks.action';
+import { PdfPosition } from '../side-bar/bookmarks/bookmarks.interfaces';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
@@ -36,10 +34,9 @@ export class PdfJsWrapper {
     public readonly outlineLoaded: Subject<Outline>,
     public readonly documentLoadFailed: Subject<Error>,
     public readonly pageRendered: Subject<PageEvent>,
-    public readonly store: Store<BookmarksState>
+    public readonly positionUpdated: Subject<{ location: PdfPosition }>,
   ) {
-
-    this.pdfViewer.eventBus.on('updateviewarea', e => store.dispatch(new UpdatePdfPosition(e.location)));
+    this.pdfViewer.eventBus.on('updateviewarea', e => positionUpdated.next(e));
     this.pdfViewer.eventBus.on('pagerendered', e => this.pageRendered.next(e));
     this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPageInputValueSubject.next(e.pageNumber));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');

@@ -1,5 +1,5 @@
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
@@ -7,7 +7,6 @@ import { PrintService } from '../../print.service';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
@@ -18,8 +17,10 @@ import { HighlightCreateService } from '../../annotations/annotation-set/annotat
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { Outline } from './side-bar/outline-item/outline.model';
 import { Store, StoreModule } from '@ngrx/store';
-import {reducers} from '../../store/reducers';
+import { reducers } from '../../store/reducers';
 import { SelectedAnnotation } from '../../store/actions/annotations.action';
+import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
+import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -38,7 +39,6 @@ describe('PdfViewerComponent', () => {
         GrabNDragDirective
       ],
       imports: [
-        HttpClientTestingModule,
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({})
       ],
@@ -83,7 +83,8 @@ describe('PdfViewerComponent', () => {
       documentLoaded: new Subject<any>(),
       outlineLoaded: new Subject<Outline>(),
       documentLoadFailed: new Subject(),
-      pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>()
+      pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>(),
+      positionUpdated: new Subject<{ location: PdfPosition }>()
     };
     component.annotationSet = JSON.parse(JSON.stringify(annotationSet)) ;
     component.url = 'url';
@@ -95,7 +96,6 @@ describe('PdfViewerComponent', () => {
     component.ngOnChanges({
       url: new SimpleChange(null, component.url, true)
     });
-    // component.ngAfterContentInit();
     fixture.detectChanges();
   });
 
@@ -107,10 +107,11 @@ describe('PdfViewerComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('should setup subscriptions', () => {
+  it('should setup subscriptions', inject([Store],(store) => {
     spyOn(printService, 'printDocumentNatively');
     spyOn(viewerEvents, 'toggleCommentsPanel');
     spyOnAllFunctions(mockWrapper);
+    spyOn(store, 'dispatch');
 
     toolbarEvents.printSubject.next();
     toolbarEvents.downloadSubject.next();
@@ -119,6 +120,7 @@ describe('PdfViewerComponent', () => {
     toolbarEvents.searchSubject.next();
     toolbarEvents.setCurrentPageSubject.next();
     toolbarEvents.changePageByDeltaSubject.next();
+    mockWrapper.positionUpdated.next({ location: { pageNumber: 1, top: 10, left: 10 }});
 
     expect(printService.printDocumentNatively).toHaveBeenCalledWith(component.url);
     expect(mockWrapper.downloadFile).toHaveBeenCalled();
@@ -127,7 +129,8 @@ describe('PdfViewerComponent', () => {
     expect(mockWrapper.search).toHaveBeenCalled();
     expect(mockWrapper.setPageNumber).toHaveBeenCalled();
     expect(mockWrapper.changePageNumber).toHaveBeenCalled();
-  });
+    expect(store.dispatch).toHaveBeenCalledWith(new UpdatePdfPosition({ pageNumber: 1, top: 10, left: 10 } as any));
+  }));
 
   it('on DocumentLoadProgress indicate document loading progress', () => {
     mockWrapper.documentLoadProgress.next({ loaded: 10, total: 100 });
