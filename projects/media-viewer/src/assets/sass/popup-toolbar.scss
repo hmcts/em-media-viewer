@@ -12,6 +12,9 @@ mv-ctx-toolbar {
     .has-reduce-bar & {
       width: 150px
     }
+    .is-redaction-preview & {
+      display: none;
+    }
   }
 
   .toolbar .spacer {

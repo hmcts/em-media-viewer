@@ -1,4 +1,5 @@
 import * as fromReduction from '../actions/reduction.actions';
+import * as fromAnnotations from '../actions/annotations.action';
 import {StoreUtils} from '../store-utils';
 import {SelectionAnnotation} from '../../annotations/models/event-select.model'; // todo rename
 
@@ -17,7 +18,7 @@ export const initialReductionState: ReductionState = {
 
 export function reductionReducer (
   state = initialReductionState,
-  action: fromReduction.ReductionActions
+  action: fromReduction.ReductionActions | fromAnnotations.AnnotationsActions
 ): ReductionState {
   switch (action.type) {
     case fromReduction.SAVE_REDUCTION_SUCCESS: {
@@ -35,7 +36,8 @@ export function reductionReducer (
       };
     }
 
-    case fromReduction.SELECT_REDACTION: {
+    case fromReduction.SELECT_REDACTION:
+    case fromAnnotations.SELECT_ANNOTATION: {
       return {
         ...state,
         selectedRedaction: action.payload

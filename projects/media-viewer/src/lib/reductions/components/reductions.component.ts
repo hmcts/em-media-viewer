@@ -17,7 +17,6 @@ export class ReductionsComponent implements OnInit, OnDestroy {
   selectedRedaction$: Observable<SelectionAnnotation | {}>;
   @Input() zoom: number;
   @Input() rotate: number;
-  highlightPage: number;
   rectangles: Rectangle[];
 
   private subscriptions: Subscription[] = [];
@@ -35,16 +34,12 @@ export class ReductionsComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  onMarkerDelete(event) {}
+  onMarkerDelete(event) {
+    this.store.dispatch(new  fromActions.DeleteReduction(event));
+  }
 
   selectReduction(event) {
     this.store.dispatch(new fromActions.SelectRedaction(event));
-  }
-
-  createHighlight() {
-    // this.highlightService.saveAnnotation(this.rectangles, this.highlightPage);
-    // this.highlightService.resetHighlight();
-    this.rectangles = undefined;
   }
 
 }
