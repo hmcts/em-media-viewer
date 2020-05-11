@@ -41,8 +41,30 @@ export function reductionReducer (
       return {
         ...state,
         selectedRedaction: action.payload
-      }
+      };
     }
+    case fromReduction.DELETE_REDUCTION_SUCCESS: {
+      const page = action.payload.page;
+      const id = action.payload.redactionId;
+      const reductionEntities = {
+        ...state.reductionEntities
+      };
+      delete reductionEntities[id];
+      const pageRedactionRemoved = [
+        ...state.reductionPageEntities[page].filter(redaction => redaction.redactionId !== id)
+      ];
+      const reductionPageEntities = {
+        ...state.reductionPageEntities,
+        [page]: pageRedactionRemoved
+      };
+
+      return {
+        ...state,
+        reductionPageEntities,
+        reductionEntities,
+      };
+    }
+
 
   }
 

@@ -24,17 +24,16 @@ export class ReductionApiService {
 
   // @ts-ignore
   public saveReduction(body): Observable<any> {
-    return of(body).pipe(delay(1000));
-    // return this.httpClient
-    //   .post<AnnotationSet>(this.redactionApiUrl, body, { observe: 'response' , withCredentials: true })
-    //   .pipe(
-    //     map(response => response.body),
-    //     catchError(() => [])
-    //   );
+    return this.httpClient
+      .post<AnnotationSet>(this.redactionApiUrl, body, { observe: 'response' , withCredentials: true })
+      .pipe(
+        map(response => response.body),
+        catchError(() => [])
+      );
   }
 
-  public deleteReduction(annotationId: string): Observable<null> {
-    const url = `${this.redactionApiUrl}/${annotationId}`;
+  public deleteReduction(payload): Observable<null> {
+    const url = `${this.redactionApiUrl}/${payload.redactionId}`;
 
     return this.httpClient
       .delete<null>(url, { observe: 'response' , withCredentials: true })

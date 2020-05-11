@@ -44,10 +44,10 @@ export class ReductionEffects {
   deleteReduction$ = this.actions$.pipe(
     ofType(reductionActions.DELETE_REDUCTION),
     map((action: reductionActions.DeleteReduction) => action.payload),
-    exhaustMap((annotation) => {
-      return this.reductionApiService.deleteReduction(annotation).pipe(
+    exhaustMap((redactionPayload) => {
+      return this.reductionApiService.deleteReduction(redactionPayload).pipe(
         map(result => {
-          return new reductionActions.DeleteReductionSuccess(annotation);
+          return new reductionActions.DeleteReductionSuccess(redactionPayload);
         }),
         catchError(error => {
           return of(new reductionActions.DeleteReductionFail(error));

@@ -1,16 +1,14 @@
 <div class="toolbar">
   <div id="toolbarContainer">
     <div class="findbar">
-      <div class="splitToolbarButton hiddenIfLargerThan1000px" >
-        <button class="toolbarButton highlightBtn" title="Highlight Text Mode" (click)="toggleTextReductionMode()"
-                id="toggleHighlightButton" tabindex="0" data-l10n-id="toggleHighlightButton">
-          <span data-l10n-id="next_label">Highlight Text</span>
-        </button>
-        <button class="toolbarButton drawBtn" title="Draw Mode"
-                id="toggleDrawButton" tabindex="0" data-l10n-id="toggleDrawButton">
-          <span data-l10n-id="next_label">Draw</span>
-        </button>
-      </div>
+      <button class="toolbarButton highlightBtn" title="Highlight Text Mode" (click)="toggleTextReductionMode()"
+              id="toggleHighlightButton" tabindex="0" data-l10n-id="toggleHighlightButton">
+        <span data-l10n-id="next_label">Highlight Text</span>
+      </button>
+      <button class="toolbarButton drawBtn" title="Draw Mode"
+              id="toggleDrawButton" tabindex="0" data-l10n-id="toggleDrawButton">
+        <span data-l10n-id="next_label">Draw</span>
+      </button>
 <!--      <div id="findbarInputContainer">-->
 <!--        <input title="Find" class="toolbarField"-->
 <!--               placeholder="Find in document…"-->
