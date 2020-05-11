@@ -108,14 +108,16 @@ export class HighlightCreateService {
   }
 
   private removeEnhancedTextModeStyling(element: HTMLElement) {
-    if (element.parentElement.childNodes) {
-      element.parentElement.childNodes.forEach(child => {
-        child['style']['padding'] = 0;
+    if (element.parentElement.children) {
+      for (let i = 0; i < element.parentElement.children.length; i++) {
+        const child = <HTMLElement>element.parentElement.children[i]
+
+        child.style.padding = '0';
         // regex will be targeting the translate style in string
         // e.g. scaleX(0.969918) translateX(-110.684px) translateY(-105.274px) will become scaleX(0.969918)
         const translateCSSRegex = /translate[XYZ]\(-?\d*(\.\d+)?(px)?\)/g;
-        child['style']['transform'] = child['style']['transform'].replace(translateCSSRegex, '').trim();
-      });
+        child.style.transform = child.style.transform.replace(translateCSSRegex, '').trim();
+      }
     }
   }
 }
