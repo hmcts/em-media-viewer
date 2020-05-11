@@ -107,10 +107,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
     this.setToolbarButtons();
     this.detectOs();
-
-      this.typeException = false;
-    }
     this.setToolbarButtons();
+    this.typeException = false;
   }
 
   ngOnDestroy() {
