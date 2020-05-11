@@ -4,7 +4,7 @@
      [style.left.px]="left">
   <button *ngIf="canHighlight"
           type="button" title="Highlight"
-          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn leftButton"
+          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn leftButton aui__toolbar-button-highlight"
           (mousedown)="createHighlight()">
     <span>Highlight</span>
   </button>
@@ -16,12 +16,12 @@
   </button>
   <button *ngIf="canComment"
           type="button" title="Comment"
-          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton"
+          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton aui__toolbar-button-comment"
           (mousedown)="addOrEditComment()">
     <span>Comment</span></button>
   <button *ngIf="canBookmark"
           type="button" title="Bookmark"
-          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton"
+          class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton aui__toolbar-button-bookmark"
           (mousedown)="createBookmark()">
     <span>Bookmark</span></button>
   <div class="arrow-down">

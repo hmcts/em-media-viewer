@@ -9,17 +9,6 @@
                   (deleteHighlightEvent)="deleteHighlight()"
                   (addOrEditCommentEvent)="addOrEditComment()">
   </mv-ctx-toolbar>
-<!--  <mv-redaction-ctx-toolbar-->
-<!--    *ngIf="selected"-->
-<!--    [canDelete]="true"-->
-<!--    [rectangles]="anno.rectangles"-->
-<!--    [zoom]="zoom"-->
-<!--    [rotate]="rotate"-->
-<!--    [height]="height"-->
-<!--    [width]="width"-->
-<!--    (deleteHighlightEvent)="deleteHighlight()">-->
-<!--  </mv-redaction-ctx-toolbar>-->
-
   <ng-container *ngFor="let rectangle of anno.rectangles">
     <mv-anno-rectangle
       (select)="onSelect()"

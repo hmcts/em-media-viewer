@@ -9,6 +9,9 @@ mv-ctx-toolbar {
     z-index: 1000;
     border: 1px solid #c1c1c1;
     box-shadow: 0px 2px #c1c1c1;
+    .has-reduce-bar & {
+      width: 150px
+    }
   }
 
   .toolbar .spacer {
@@ -74,4 +77,12 @@ mv-ctx-toolbar {
     border-right: 10px solid transparent;
     border-top: 10px solid white;
   }
+
+  .aui__toolbar-button-comment {
+    .has-reduce-bar & {
+      display: none
+    }
+  }
+
+
 }

@@ -24,13 +24,13 @@ export class ReductionApiService {
 
   // @ts-ignore
   public saveReduction(body): Observable<any> {
-    // return of(body).pipe(delay(1000));
-    return this.httpClient
-      .post<AnnotationSet>(this.redactionApiUrl, body, { observe: 'response' , withCredentials: true })
-      .pipe(
-        map(response => response.body),
-        catchError(() => [])
-      );
+    return of(body).pipe(delay(1000));
+    // return this.httpClient
+    //   .post<AnnotationSet>(this.redactionApiUrl, body, { observe: 'response' , withCredentials: true })
+    //   .pipe(
+    //     map(response => response.body),
+    //     catchError(() => [])
+    //   );
   }
 
   public deleteReduction(annotationId: string): Observable<null> {
