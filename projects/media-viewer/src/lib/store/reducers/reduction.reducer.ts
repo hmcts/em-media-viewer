@@ -21,6 +21,18 @@ export function reductionReducer (
   action: fromReduction.ReductionActions | fromAnnotations.AnnotationsActions
 ): ReductionState {
   switch (action.type) {
+
+    case fromReduction.LOAD_REDUCTION_SUCCESS: {
+      const payload = action.payload;
+      const reductionEntities = StoreUtils.generateRedactionEntities(payload);
+      const reductionPageEntities = StoreUtils.groupByKeyEntities(payload, 'page');
+      return {
+        ...state,
+        reductionEntities,
+        reductionPageEntities
+      };
+    }
+
     case fromReduction.SAVE_REDUCTION_SUCCESS: {
       const {payload} =  action;
       const reductionEntities = {
