@@ -1,7 +1,7 @@
 <div id="outerContainer"
      [ngClass]="{
      sidebarOpen: toolbarButtons.sidebarOpen | async,
-     'has-reduce-bar': dispalyRedactionTools,
+     'has-reduce-bar': displayRedactionTools,
       'is-redaction-preview': isReductionPreview}"
      [ngStyle]="{ width: width }">
 
@@ -17,7 +17,7 @@
                      [enableRedactions]="enableRedactions">
     </mv-main-toolbar>
 
-    <mv-reduction-toolbar *ngIf="dispalyRedactionTools"></mv-reduction-toolbar>
+    <mv-reduction-toolbar *ngIf="displayRedactionTools"></mv-reduction-toolbar>
 
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (pdfLoadStatus)="onMediaLoad($event)"

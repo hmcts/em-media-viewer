@@ -31,12 +31,12 @@
     <div id="annotationButtons">
       <div class="splitToolbarButton">
         <button class="unmark-all reduction-preview-btn" id="unmark-all" tabindex="0" title="unmark all" (click)="unmarkAll()">
-          <span data-l10n-id="page_rotate_ccw_label">Preview</span>
+          <span data-l10n-id="page_rotate_ccw_label">Redact All</span>
         </button>
       </div>
     </div>
 
-    <div id="toolbarViewerMiddle">
+    <div id="toolbarViewerMiddle" *ngIf="hasRedactions">
       <div class="splitToolbarButton">
         <button [ngClass]="{'reduction-preview': !preview, 'reduction-preview-off': preview, 'reduction-preview-btn': true}"
                 id="reduction-preview" tabindex="0" title="Preview" (click)="togglePreview()">
