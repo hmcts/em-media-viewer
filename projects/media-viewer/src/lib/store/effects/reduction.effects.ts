@@ -4,6 +4,7 @@ import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
 import { of } from 'rxjs';
 import {ReductionApiService} from '../../reductions/services/reduction-api.service'
 import * as reductionActions from '../actions/reduction.actions';
+import {HttpResponse} from '@angular/common/http';
 
 @Injectable()
 export class ReductionEffects {
@@ -54,18 +55,24 @@ export class ReductionEffects {
         }));
     }));
 
-  @Effect()
+  @Effect({dispatch: false})
   redact$ = this.actions$.pipe(
     ofType(reductionActions.REDACT),
     map((action: reductionActions.Redact) => action.payload),
     exhaustMap((redactionPayload) => {
       return this.reductionApiService.redact(redactionPayload).pipe(
-        map(result => {
-
-          return new reductionActions.DeleteReductionSuccess(result);
+        map((result: HttpResponse<Blob>) => {
+          const objectURL = URL.createObjectURL(result.body);
+          const a = document.createElement('a');
+          document.body.appendChild(a);
+          a.setAttribute('style', 'display: none');
+          a.href = objectURL;
+          a.download = 'test';
+          a.click();
+          a.remove();
         }),
         catchError(error => {
-          return of(new reductionActions.DeleteReductionFail(error));
+          return of(new reductionActions.RedactFail(error));
         }));
     }));
 
@@ -83,3 +90,4 @@ export class ReductionEffects {
         }));
     }));
 }
+

@@ -15,6 +15,7 @@ export const DELETE_REDUCTION_FAIL = '[Reduction] Delete Reduction Fail';
 export const SELECT_REDACTION = '[Reduction] Select Redaction';
 
 export const REDACT = '[Reduction] Redact';
+export const REDACT_FAIL = '[Reduction] Redact Fail';
 
 export const UNMARK_ALL = '[Reduction] Unmark All';
 export const UNMARK_ALL_SUCCESS = '[Reduction] Unmark All Success';
@@ -74,6 +75,12 @@ export class Redact implements Action {
   readonly type = REDACT;
   constructor(public payload: any) {}
 }
+
+export class RedactFail implements Action {
+  readonly type = REDACT_FAIL;
+  constructor(public payload: any) {}
+}
+
 
 export class UnmarkAll implements Action {
   readonly type = UNMARK_ALL;

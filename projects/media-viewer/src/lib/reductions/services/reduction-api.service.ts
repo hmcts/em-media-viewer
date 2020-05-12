@@ -51,9 +51,9 @@ export class ReductionApiService {
 
   public redact(payload): Observable<null> {
     return this.httpClient
-      .post<AnnotationSet>(this.redactApiUrl, payload, { observe: 'response' , withCredentials: true })
+      .post<Blob>(this.redactApiUrl, payload, { observe: 'response' , withCredentials: true, responseType: 'blob' as 'json' })
       .pipe(
-        map(response => response.body),
+        map(response => response),
         catchError(() => [])
       );
   }
