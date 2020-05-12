@@ -22,6 +22,7 @@ export class ToolbarEventService {
   public readonly highlightModeSubject = new BehaviorSubject<HighlightMode>(false);
   public readonly highlightTextReductionMode = new BehaviorSubject<HighlightMode>(false);
   public readonly drawModeSubject = new BehaviorSubject<DrawMode>(false);
+  public readonly redactionDrawModeSubject = new BehaviorSubject<DrawMode>(false);
   public readonly rotateSubject = new Subject<number>();
   public readonly searchSubject = new Subject<SearchOperation>();
   public readonly searchResultsCountSubject = new Subject<SearchResultsCount>();

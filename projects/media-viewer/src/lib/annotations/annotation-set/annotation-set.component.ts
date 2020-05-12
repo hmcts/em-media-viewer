@@ -1,13 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Annotation } from './annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
-import { AnnotationSet } from './annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Observable, Subscription } from 'rxjs';
 import { SelectionAnnotation } from '../models/event-select.model';
 import { CommentService } from '../comment-set/comment/comment.service';
-import {select, Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
@@ -101,5 +100,9 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   selectAnnotation(selectedAnnotation) {
     this.store.dispatch(new fromActions.SelectedAnnotation(selectedAnnotation))
+  }
+
+  saveAnnotation({ rectangles, page }) {
+    this.highlightService.saveAnnotation(rectangles, page);
   }
 }

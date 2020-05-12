@@ -6,12 +6,20 @@
        'height.px': reduction.styles.height
        }"
        [ngClass]="{
+         'pageContainer__page--draw' : drawMode,
          'rotation': true,
          'rot90': rotate === 90,
          'rot180': rotate === 180,
          'rot270': rotate === 270
        }">
-
+    <mv-box-highlight-create
+      [page]="i + 1"
+      [pageHeight]="reduction.styles.height"
+      [pageWidth]="reduction.styles.width"
+      [rotate]="rotate"
+      [zoom]="zoom"
+      (saveSelection)="saveRedaction($event)">
+    </mv-box-highlight-create>
     <div class="pageContainer__page-item">
       <ng-container *ngFor="let anno of reduction.anno">
         <mv-annotation [annotation]="anno"

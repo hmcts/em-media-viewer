@@ -16,7 +16,6 @@ export class ReductionToolbarComponent implements OnInit, OnDestroy {
   hasRedactions = false;
   $ubsctiption: Subscription;
   constructor(
-    public readonly toolbarEvents: ToolbarEventService,
     public readonly toolbarEventService: ToolbarEventService,
     private store: Store<fromStore.AnnotationSetState>
   ) {}
@@ -29,6 +28,10 @@ export class ReductionToolbarComponent implements OnInit, OnDestroy {
 
   toggleTextReductionMode() {
     this.toolbarEventService.highlightTextReductionMode.next(true);
+  }
+
+  toggleDrawMode() {
+    this.toolbarEventService.redactionDrawModeSubject.next(true);
   }
 
   togglePreview() {

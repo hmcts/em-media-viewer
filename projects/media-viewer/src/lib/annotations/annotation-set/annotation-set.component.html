@@ -17,7 +17,8 @@
       [pageHeight]="annotation.styles.height"
       [pageWidth]="annotation.styles.width"
       [rotate]="rotate"
-      [zoom]="zoom">
+      [zoom]="zoom"
+      (saveSelection)="saveAnnotation($event)">
     </mv-box-highlight-create>
     <mv-ctx-toolbar *ngIf="rectangles && highlightPage === i+1"
                     [rectangles]="rectangles"

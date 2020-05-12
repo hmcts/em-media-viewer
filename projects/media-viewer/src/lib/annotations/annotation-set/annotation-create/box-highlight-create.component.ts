@@ -1,8 +1,9 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import uuid from 'uuid';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { HighlightCreateService } from './highlight-create.service';
+import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Input() zoom: number;
   @Input() container: { top: number, left: number };
+
+  @Output() saveSelection = new EventEmitter<{ rectangles: Rectangle[], page: number }>()
 
   @ViewChild('boxHighlight') highlight: ElementRef;
 
@@ -99,7 +102,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
         height: + this.height / this.zoom,
         page: this.page
       } as any;
-      this.highlightService.saveAnnotation([rectangle], this.page);
+      this.saveSelection.emit({ rectangles: [rectangle], page: this.page });
       this.toolbarEvents.drawModeSubject.next(false);
       this.resetHighlight();
     }
