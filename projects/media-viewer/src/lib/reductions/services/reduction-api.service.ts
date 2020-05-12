@@ -33,8 +33,16 @@ export class ReductionApiService {
       );
   }
 
-  public deleteReduction(payload): Observable<null> {
+  public deleteRedaction(payload): Observable<null> {
     const url = `${this.redactionApiUrl}/${payload.redactionId}`;
+
+    return this.httpClient
+      .delete<null>(url, { observe: 'response' , withCredentials: true })
+      .pipe(map(response => response.body));
+  }
+
+  public deleteAllMarkers(payload): Observable<null> {
+    const url = `${this.redactionApiUrl}/${payload}`;
 
     return this.httpClient
       .delete<null>(url, { observe: 'response' , withCredentials: true })

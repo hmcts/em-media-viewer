@@ -80,6 +80,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
+    const documentId = this.extractDMStoreDocId(this.url);
     this.annotationSet$ = this.store.pipe(select(fromAnnoSelectors.getAnnotationSet));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
@@ -91,11 +92,14 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.toolbarEvents.toggleReductionViewMode.subscribe((mode: boolean) => {this.isReductionPreview = mode});
     this.toolbarEvents.reduceDocument.subscribe(() => {
       this.store.pipe(select(fromRedaSelectors.getRedactionArray), take(1)).subscribe(redactions => {
-        const documentId = this.extractDMStoreDocId(this.url);
+
         const payload = {documentId, redactions};
         this.store.dispatch(new fromRedaActions.Redact(payload));
       });
     });
+    this.toolbarEvents.unmarkAllMarkers.subscribe(() => {
+      this.store.dispatch(new fromRedaActions.UnmarkAll(documentId));
+    })
   }
 
   contentTypeUnsupported(): boolean {

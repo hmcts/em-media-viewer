@@ -22,7 +22,7 @@ export class ReductionToolbarComponent {
   }
 
   unmarkAll() {
-
+    this.toolbarEventService.unmarkAll();
   }
 
   reduce() {

@@ -38,6 +38,7 @@ export class ToolbarEventService {
   public readonly toggleReduceBarVisibility = new Subject();
   public readonly toggleReductionViewMode = new Subject<boolean>();
   public readonly reduceDocument = new Subject();
+  public readonly unmarkAllMarkers = new Subject();
 
 
   /**
@@ -136,8 +137,12 @@ export class ToolbarEventService {
     this.toggleReductionViewMode.next(viewMode);
   }
 
+  public unmarkAll(): void {
+    this.unmarkAllMarkers.next();
+  }
+
   public reduce(): void {
-    this.reduceDocument.next()
+    this.reduceDocument.next();
   }
 
 }

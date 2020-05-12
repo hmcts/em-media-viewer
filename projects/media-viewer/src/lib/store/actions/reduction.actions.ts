@@ -16,6 +16,9 @@ export const SELECT_REDACTION = '[Reduction] Select Redaction';
 
 export const REDACT = '[Reduction] Redact';
 
+export const UNMARK_ALL = '[Reduction] Unmark All';
+export const UNMARK_ALL_SUCCESS = '[Reduction] Unmark All Success';
+
 
 export class LoadReductions implements Action {
   readonly type = LOAD_REDUCTIONS;
@@ -72,6 +75,15 @@ export class Redact implements Action {
   constructor(public payload: any) {}
 }
 
+export class UnmarkAll implements Action {
+  readonly type = UNMARK_ALL;
+  constructor(public payload: string) {}
+}
+
+export class UnmarkAllSuccess implements Action {
+  readonly type = UNMARK_ALL_SUCCESS;
+}
+
 export type ReductionActions =
   | LoadReductions
   | LoadReductionSuccess
@@ -83,4 +95,6 @@ export type ReductionActions =
   | DeleteReductionSuccess
   | DeleteReductionFail
   | SelectRedaction
-  | Redact;
+  | Redact
+  | UnmarkAll
+  | UnmarkAllSuccess;

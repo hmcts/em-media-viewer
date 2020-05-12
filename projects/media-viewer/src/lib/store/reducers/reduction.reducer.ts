@@ -43,6 +43,7 @@ export function reductionReducer (
         selectedRedaction: action.payload
       };
     }
+
     case fromReduction.DELETE_REDUCTION_SUCCESS: {
       const page = action.payload.page;
       const id = action.payload.redactionId;
@@ -63,6 +64,13 @@ export function reductionReducer (
         reductionPageEntities,
         reductionEntities,
       };
+    }
+
+    case fromReduction.UNMARK_ALL_SUCCESS: {
+      return {
+        ...state,
+        ...initialReductionState
+      }
     }
 
 

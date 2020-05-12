@@ -45,7 +45,7 @@ export class ReductionEffects {
     ofType(reductionActions.DELETE_REDUCTION),
     map((action: reductionActions.DeleteReduction) => action.payload),
     exhaustMap((redactionPayload) => {
-      return this.reductionApiService.deleteReduction(redactionPayload).pipe(
+      return this.reductionApiService.deleteRedaction(redactionPayload).pipe(
         map(result => {
           return new reductionActions.DeleteReductionSuccess(redactionPayload);
         }),
@@ -63,6 +63,20 @@ export class ReductionEffects {
         map(result => {
 
           return new reductionActions.DeleteReductionSuccess(result);
+        }),
+        catchError(error => {
+          return of(new reductionActions.DeleteReductionFail(error));
+        }));
+    }));
+
+  @Effect()
+  unmarkAll = this.actions$.pipe(
+    ofType(reductionActions.UNMARK_ALL),
+    map((action: reductionActions.Redact) => action.payload),
+    exhaustMap((redactionPayload) => {
+      return this.reductionApiService.deleteAllMarkers(redactionPayload).pipe(
+        map(result => {
+          return new reductionActions.UnmarkAllSuccess();
         }),
         catchError(error => {
           return of(new reductionActions.DeleteReductionFail(error));
