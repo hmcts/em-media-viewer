@@ -23,8 +23,8 @@ import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
-import {Store} from '@ngrx/store';
-import {tap} from 'rxjs/operators';
+import {select, Store} from '@ngrx/store';
+import {take, tap} from 'rxjs/operators';
 import * as fromStore from '../../store/reducers';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
 import * as fromRedactionActions from '../../store/actions/reduction.actions';
@@ -32,6 +32,7 @@ import * as fromTagActions from '../../store/actions/tags.actions';
 // todo move this to common place for reduction and annotation
 import {HighlightCreateService} from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 import uuid from 'uuid';
+import * as fromRedaSelectors from '../../store/selectors/reductions.selectors';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -91,7 +92,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    const documentId = this.extractDMStoreDocId(this.url);
+    let documentId = '';
+    this.store.pipe(select(fromRedaSelectors.getRedactionArray)).subscribe(redactions => {
+      documentId = redactions.documentId;
+    });
     if (this.enableRedactions) {
       this.store.dispatch(new fromRedactionActions.LoadReductions(documentId));
     }

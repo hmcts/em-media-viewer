@@ -94,9 +94,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.toolbarEvents.toggleReductionViewMode.subscribe((mode: boolean) => {this.isReductionPreview = mode});
     this.toolbarEvents.reduceDocument.subscribe(() => {
       this.store.pipe(select(fromRedaSelectors.getRedactionArray), take(1)).subscribe(redactions => {
-
-        const payload = {documentId, redactions};
-        this.store.dispatch(new fromRedaActions.Redact(payload));
+        this.store.dispatch(new fromRedaActions.Redact(redactions));
       });
     });
     this.toolbarEvents.unmarkAllMarkers.subscribe(() => {

@@ -25,6 +25,12 @@
                          [height]="img !== undefined ? img.offsetHeight : 0"
                          [width]="img !== undefined ? img.offsetWidth : 0">
       </mv-annotation-set>
+
+      <mv-reductions
+        [zoom]="zoom"
+        [rotate]="rotation"
+      ></mv-reductions>
+
     </div>
   </div>
   <mv-comment-set *ngIf="enableAnnotations && annotationSet"

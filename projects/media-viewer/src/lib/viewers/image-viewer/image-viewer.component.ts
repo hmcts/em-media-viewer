@@ -23,6 +23,7 @@ import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
+import * as fromRedactionActions from '../../store/actions/reduction.actions';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -34,6 +35,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, After
   @Input() downloadFileName: string;
 
   @Input() enableAnnotations: boolean;
+  @Input() enableRedactions: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
   @Input() height: string;
@@ -65,6 +67,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, After
   ) { }
 
   ngOnInit(): void {
+    if (this.enableRedactions) {
+      this.store.dispatch(new fromRedactionActions.LoadReductions(this.url));
+    }
     this.subscriptions.push(
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
       this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),

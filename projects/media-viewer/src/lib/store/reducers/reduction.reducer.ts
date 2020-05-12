@@ -22,6 +22,13 @@ export function reductionReducer (
 ): ReductionState {
   switch (action.type) {
 
+    case fromReduction.LOAD_REDUCTIONS: {
+      return {
+        ...state,
+        ...initialReductionState
+      };
+    }
+
     case fromReduction.LOAD_REDUCTION_SUCCESS: {
       const payload = action.payload;
       if (payload) {
@@ -35,7 +42,7 @@ export function reductionReducer (
       }
       return {
         ...state
-      }
+      };
     }
 
     case fromReduction.SAVE_REDUCTION_SUCCESS: {

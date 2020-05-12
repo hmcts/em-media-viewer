@@ -1,7 +1,7 @@
 import {createSelector} from '@ngrx/store';
 import * as fromFeature from '../reducers';
 import * as fromReductions from '../reducers/reduction.reducer';
-import {getAnnoPages} from './annotations.selectors';
+import {getAnnoPages, getDocumentIdSetId} from './annotations.selectors';
 
 export const getTagsRootState = createSelector(
   fromFeature.getMVState,
@@ -25,7 +25,13 @@ export const getRedactionEnt = createSelector(
 
 export const getRedactionArray = createSelector(
   getRedactionEnt,
-  (ent) => Object.keys(ent).map(key => ent[key])
+  getDocumentIdSetId,
+  (ent, docSetId) => {
+    return {
+      redactions: Object.keys(ent).map(key => ent[key]),
+      documentId: docSetId.documentId
+    }
+  }
 );
 
 export const getAnnoPerPage = createSelector(

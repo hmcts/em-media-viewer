@@ -23,7 +23,7 @@ export class ReductionToolbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.$ubsctiption = this.store.pipe(select(fromRedaSelectors.getRedactionArray)).subscribe(redactions => {
-      this.hasRedactions = !!redactions.length;
+      this.hasRedactions = !!redactions.redactions.length;
     });
   }
 
