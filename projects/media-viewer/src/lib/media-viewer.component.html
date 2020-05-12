@@ -1,7 +1,7 @@
 <div id="outerContainer"
      [ngClass]="{
      sidebarOpen: toolbarButtons.sidebarOpen | async,
-     'has-reduce-bar': enableReduction,
+     'has-reduce-bar': dispalyRedactionTools,
       'is-redaction-preview': isReductionPreview}"
      [ngStyle]="{ width: width }">
 
@@ -13,10 +13,11 @@
 
   <div id="mainContainer">
     <mv-main-toolbar *ngIf="showToolbar"
-                     [enableAnnotations]="enableAnnotations">
+                     [enableAnnotations]="enableAnnotations"
+                     [enableRedactions]="enableRedactions">
     </mv-main-toolbar>
 
-    <mv-reduction-toolbar *ngIf="enableReduction"></mv-reduction-toolbar>
+    <mv-reduction-toolbar *ngIf="dispalyRedactionTools"></mv-reduction-toolbar>
 
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (pdfLoadStatus)="onMediaLoad($event)"
@@ -24,6 +25,7 @@
                    (documentTitle)="onDocumentTitleChange($event)"
                    [url]="url"
                    [enableAnnotations]="enableAnnotations"
+                   [enableRedactions]="enableRedactions"
                    [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                    [downloadFileName]="downloadFileName"
                    [height]="height">

@@ -24,13 +24,18 @@ export function reductionReducer (
 
     case fromReduction.LOAD_REDUCTION_SUCCESS: {
       const payload = action.payload;
-      const reductionEntities = StoreUtils.generateRedactionEntities(payload);
-      const reductionPageEntities = StoreUtils.groupByKeyEntities(payload, 'page');
+      if (payload) {
+        const reductionEntities = StoreUtils.generateRedactionEntities(payload);
+        const reductionPageEntities = StoreUtils.groupByKeyEntities(payload, 'page');
+        return {
+          ...state,
+          reductionEntities,
+          reductionPageEntities
+        };
+      }
       return {
-        ...state,
-        reductionEntities,
-        reductionPageEntities
-      };
+        ...state
+      }
     }
 
     case fromReduction.SAVE_REDUCTION_SUCCESS: {
@@ -82,10 +87,8 @@ export function reductionReducer (
       return {
         ...state,
         ...initialReductionState
-      }
+      };
     }
-
-
   }
 
   return state;

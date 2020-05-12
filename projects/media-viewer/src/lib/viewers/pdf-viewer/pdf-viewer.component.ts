@@ -48,6 +48,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Input() downloadFileName: string;
 
   @Input() enableAnnotations: boolean;
+  @Input() enableRedactions: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
   @Input() height: string;
@@ -91,7 +92,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   async ngAfterContentInit(): Promise<void> {
     const documentId = this.extractDMStoreDocId(this.url);
-    this.store.dispatch(new fromRedactionActions.LoadReductions(documentId));
+    if (this.enableRedactions) {
+      this.store.dispatch(new fromRedactionActions.LoadReductions(documentId));
+    }
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());

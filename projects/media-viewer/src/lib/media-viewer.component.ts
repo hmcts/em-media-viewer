@@ -59,10 +59,12 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Input() enableAnnotations = false;
   @Input() annotationApiUrl;
 
+  @Input() enableRedactions = false;
+
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
-  enableReduction = false;
+  dispalyRedactionTools = false;
   isReductionPreview = false;
 
   private subscriptions: Subscription[] = [];
@@ -88,7 +90,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)),
       this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes)
     );
-    this.toolbarEvents.toggleReduceBarVisibility.subscribe(() => this.enableReduction = !this.enableReduction);
+    this.toolbarEvents.toggleReduceBarVisibility.subscribe(() => this.dispalyRedactionTools = !this.dispalyRedactionTools);
     this.toolbarEvents.toggleReductionViewMode.subscribe((mode: boolean) => {this.isReductionPreview = mode});
     this.toolbarEvents.reduceDocument.subscribe(() => {
       this.store.pipe(select(fromRedaSelectors.getRedactionArray), take(1)).subscribe(redactions => {

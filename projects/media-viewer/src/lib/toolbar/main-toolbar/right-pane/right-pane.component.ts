@@ -8,6 +8,7 @@ import { ToolbarEventService } from '../../toolbar-event.service';
 })
 export class ToolbarRightPaneComponent {
   @Input() enableAnnotations = false;
+  @Input() enableRedactions = false;
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,

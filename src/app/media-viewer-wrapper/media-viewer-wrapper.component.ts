@@ -27,6 +27,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   showCustomToolbar = false;
   toolbarEvents;
   enableAnnotations = false;
+  enableRedactions = false;
   toolbarButtonOverrides: {};
 
   ngAfterContentInit() {
@@ -62,6 +63,10 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   toggleAnnotations(showAnnotations: boolean) {
     this.enableAnnotations = showAnnotations;
+  }
+
+  toggleRedactions(showReduction: boolean) {
+    this.enableRedactions = showReduction;
   }
 
   setDocumentUrl(newUrl: string) {
