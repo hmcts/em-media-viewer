@@ -24,8 +24,11 @@ import {CommentService} from './annotations/comment-set/comment/comment.service'
 import 'hammerjs';
 import {select, Store} from '@ngrx/store';
 import * as fromStore from './store/reducers';
-import * as fromSelectors from './store/selectors/annotations.selectors';
-import * as fromActions from './store/actions/annotations.action';
+import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
+import * as fromRedaSelectors from './store/selectors/reductions.selectors';
+import * as fromAnnoActions from './store/actions/annotations.action';
+import * as fromRedaActions from './store/actions/reduction.actions';
+import {take} from 'rxjs/operators';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -77,7 +80,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
-    this.annotationSet$ = this.store.pipe(select(fromSelectors.getAnnotationSet));
+    this.annotationSet$ = this.store.pipe(select(fromAnnoSelectors.getAnnotationSet));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(
@@ -87,8 +90,12 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.toolbarEvents.toggleReduceBarVisibility.subscribe(() => this.enableReduction = !this.enableReduction);
     this.toolbarEvents.toggleReductionViewMode.subscribe((mode: boolean) => {this.isReductionPreview = mode});
     this.toolbarEvents.reduceDocument.subscribe(() => {
-        window.alert('are you sure');
-    })
+      this.store.pipe(select(fromRedaSelectors.getRedactionArray), take(1)).subscribe(redactions => {
+        const documentId = this.extractDMStoreDocId(this.url);
+        const payload = {documentId, redactions};
+        this.store.dispatch(new fromRedaActions.Redact(payload));
+      });
+    });
   }
 
   contentTypeUnsupported(): boolean {
@@ -104,7 +111,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
         const documentId = this.extractDMStoreDocId(this.url);
-        this.store.dispatch(new fromActions.LoadAnnotationSet(documentId));
+        this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(documentId));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;

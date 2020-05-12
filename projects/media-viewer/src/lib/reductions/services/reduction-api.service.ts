@@ -8,6 +8,7 @@ import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.mod
 export class ReductionApiService {
 
   public redactionApiUrl = '/api/markups/';
+  public redactApiUrl = '/api/redaction/';
 
   private annotationSetBaseUrl = '/annotation-sets';
   private annotationBaseUrl = '/annotations';
@@ -38,6 +39,15 @@ export class ReductionApiService {
     return this.httpClient
       .delete<null>(url, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
+  }
+
+  public redact(payload): Observable<null> {
+    return this.httpClient
+      .post<AnnotationSet>(this.redactApiUrl, payload, { observe: 'response' , withCredentials: true })
+      .pipe(
+        map(response => response.body),
+        catchError(() => [])
+      );
   }
 
   get annotationSetsFullUrl() {

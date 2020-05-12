@@ -18,6 +18,16 @@ export const getSelected = createSelector(
   fromReductions.getSelectedRedaction
 );
 
+export const getRedactionEnt = createSelector(
+  getTagsRootState,
+  fromReductions.getReductionEnt
+);
+
+export const getRedactionArray = createSelector(
+  getRedactionEnt,
+  (ent) => Object.keys(ent).map(key => ent[key])
+);
+
 export const getAnnoPerPage = createSelector(
   getAnnoPages,
   getReductionPages,

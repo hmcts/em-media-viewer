@@ -53,4 +53,19 @@ export class ReductionEffects {
           return of(new reductionActions.DeleteReductionFail(error));
         }));
     }));
+
+  @Effect()
+  redact$ = this.actions$.pipe(
+    ofType(reductionActions.REDACT),
+    map((action: reductionActions.Redact) => action.payload),
+    exhaustMap((redactionPayload) => {
+      return this.reductionApiService.redact(redactionPayload).pipe(
+        map(result => {
+
+          return new reductionActions.DeleteReductionSuccess(result);
+        }),
+        catchError(error => {
+          return of(new reductionActions.DeleteReductionFail(error));
+        }));
+    }));
 }

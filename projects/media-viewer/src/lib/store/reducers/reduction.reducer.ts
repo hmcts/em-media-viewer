@@ -71,6 +71,8 @@ export function reductionReducer (
   return state;
 }
 
+
+export const getReductionEnt = (state: ReductionState) => state.reductionEntities;
 export const getPageEnt = (state: ReductionState) => state.reductionPageEntities;
 export const getSelectedRedaction = (state: ReductionState) => state.selectedRedaction;
 
