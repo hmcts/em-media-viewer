@@ -23,8 +23,8 @@ import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
-import {select, Store} from '@ngrx/store';
-import {take, tap} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {tap} from 'rxjs/operators';
 import * as fromStore from '../../store/reducers';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
 import * as fromRedactionActions from '../../store/actions/reduction.actions';
@@ -126,13 +126,13 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
     if (!this.pdfWrapper) {
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
     if (changes.url && this.pdfWrapper) {
       this.loadDocument();
       this.clearAnnotationSet();
+      this.store.dispatch(new fromRedactionActions.LoadReductions(this.documentId));
       this.documentId = this.extractDMStoreDocId(this.url);
     }
   }
