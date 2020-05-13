@@ -19,21 +19,21 @@
            data-hook="dm.viewer.img"
            (error)="onLoadError(url)"
            (load)="onLoad()"/>
-      <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
-                         [zoom]="zoom"
-                         [rotate]="rotation"
-                         [height]="img !== undefined ? img.offsetHeight : 0"
-                         [width]="img !== undefined ? img.offsetWidth : 0">
-      </mv-annotation-set>
-
-      <mv-reductions
+      <mv-reductions *ngIf="(toolbarEvents.toggleReduceBarVisibility | async);else annotationTemplate"
         [zoom]="zoom"
         [rotate]="rotation"
       ></mv-reductions>
-
+      <ng-template #annotationTemplate>
+        <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
+                           [zoom]="zoom"
+                           [rotate]="rotation"
+                           [height]="img !== undefined ? img.offsetHeight : 0"
+                           [width]="img !== undefined ? img.offsetWidth : 0">
+        </mv-annotation-set>
+      </ng-template>
     </div>
   </div>
-  <mv-comment-set *ngIf="enableAnnotations && annotationSet"
+  <mv-comment-set *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.toggleReduceBarVisibility | async)"
                   [annotationSet]="annotationSet"
                   [zoom]="zoom"
                   [rotate]="rotation"
