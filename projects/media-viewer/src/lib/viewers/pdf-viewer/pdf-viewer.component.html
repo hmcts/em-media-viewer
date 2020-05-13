@@ -26,27 +26,28 @@
        (mousedown)="onPdfViewerClick()"
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
-  <ng-template #annotationTemplate>
-    <mv-annotation-set
-      *ngIf="enableAnnotations && annotationSet"
-      [zoom]="zoom"
-      [rotate]="rotation">
-    </mv-annotation-set>
-  </ng-template>
 
   <mv-reductions *ngIf="(toolbarEvents.toggleReduceBarVisibility | async);else annotationTemplate"
     [zoom]="zoom"
     [rotate]="rotation"
   ></mv-reductions>
 
-  <mv-comment-set #commentsPanel
-                  *ngIf="enableAnnotations && annotationSet"
-                  [annotationSet]="annotationSet"
-                  [zoom]="zoom"
-                  [rotate]="rotation"
-                  [height]="pdfViewer.offsetHeight"
-                  [pageHeights]="pageHeights">
-  </mv-comment-set>
+  <ng-template #annotationTemplate>
+    <mv-annotation-set
+      *ngIf="enableAnnotations && annotationSet"
+      [zoom]="zoom"
+      [rotate]="rotation">
+    </mv-annotation-set>
+    <mv-comment-set #commentsPanel
+                    *ngIf="enableAnnotations && annotationSet"
+                    [annotationSet]="annotationSet"
+                    [zoom]="zoom"
+                    [rotate]="rotation"
+                    [height]="pdfViewer.offsetHeight"
+                    [pageHeights]="pageHeights">
+    </mv-comment-set>
+  </ng-template>
+
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
   </div>

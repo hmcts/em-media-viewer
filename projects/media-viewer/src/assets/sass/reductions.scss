@@ -1,15 +1,11 @@
 mv-reductions {
   .rectangle {
-    .has-reduce-bar & {
-      display: block;
-
-    }
     .is-redaction-preview & {
       background: #000;
       border: none;
       opacity: 1;
     }
-    display: none;
+    //display: none;
     border: 2px solid #f00;
     margin-top: -2px;
   }
