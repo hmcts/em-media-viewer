@@ -55,7 +55,7 @@ export class ReductionEffects {
         }));
     }));
 
-  @Effect({dispatch: false})
+  @Effect()
   redact$ = this.actions$.pipe(
     ofType(reductionActions.REDACT),
     map((action: reductionActions.Redact) => action.payload),
@@ -63,13 +63,8 @@ export class ReductionEffects {
       return this.reductionApiService.redact(redactionPayload).pipe(
         map((result: HttpResponse<Blob>) => {
           const objectURL = URL.createObjectURL(result.body);
-          const a = document.createElement('a');
-          document.body.appendChild(a);
-          a.setAttribute('style', 'display: none');
-          a.href = objectURL;
-          a.download = 'test';
-          a.click();
-          a.remove();
+          this.downloadDocument(objectURL);
+          return new reductionActions.UnmarkAllSuccess();
         }),
         catchError(error => {
           return of(new reductionActions.RedactFail(error));
@@ -89,5 +84,15 @@ export class ReductionEffects {
           return of(new reductionActions.DeleteReductionFail(error));
         }));
     }));
+
+  downloadDocument(objectURL) {
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    a.href = objectURL;
+    a.download = 'redacted-document';
+    a.click();
+    a.remove();
+  }
 }
 

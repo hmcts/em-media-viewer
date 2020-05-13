@@ -1,7 +1,7 @@
-import {Observable, of} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {catchError, delay, map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
 
 @Injectable()
@@ -9,9 +9,6 @@ export class ReductionApiService {
 
   public redactionApiUrl = '/api/markups/';
   public redactApiUrl = '/api/redaction/';
-
-  private annotationSetBaseUrl = '/annotation-sets';
-  private annotationBaseUrl = '/annotations';
 
   constructor(
     private readonly httpClient: HttpClient
@@ -23,7 +20,6 @@ export class ReductionApiService {
       .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
   }
 
-  // @ts-ignore
   public saveReduction(body): Observable<any> {
     return this.httpClient
       .post<AnnotationSet>(this.redactionApiUrl, body, { observe: 'response' , withCredentials: true })
@@ -49,17 +45,13 @@ export class ReductionApiService {
       .pipe(map(response => response.body));
   }
 
-  public redact(payload): Observable<null> {
+  public redact(payload): Observable<HttpResponse<Blob>> {
     return this.httpClient
       .post<Blob>(this.redactApiUrl, payload, { observe: 'response' , withCredentials: true, responseType: 'blob' as 'json' })
       .pipe(
         map(response => response),
         catchError(() => [])
       );
-  }
-
-  get annotationSetsFullUrl() {
-    return this.redactionApiUrl + this.annotationSetBaseUrl;
   }
 
 }

@@ -64,6 +64,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   loadingDocument = false;
   loadingDocumentProgress: number;
   errorMessage: string;
+  documentId: string;
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
@@ -92,12 +93,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    let documentId = '';
-    this.store.pipe(select(fromRedaSelectors.getRedactionArray)).subscribe(redactions => {
-      documentId = redactions.documentId;
-    });
     if (this.enableRedactions) {
-      this.store.dispatch(new fromRedactionActions.LoadReductions(documentId));
+      this.store.dispatch(new fromRedactionActions.LoadReductions(this.documentId));
     }
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
@@ -129,12 +126,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngOnChanges(changes: SimpleChanges) {
+    console.log(changes)
     if (!this.pdfWrapper) {
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
     if (changes.url && this.pdfWrapper) {
       this.loadDocument();
       this.clearAnnotationSet();
+      this.documentId = this.extractDMStoreDocId(this.url);
     }
   }
 
@@ -214,7 +213,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       const reductionHighlight = this.highlightService.getRectangles(mouseEvent);
       const redactionId = uuid();
       if (reductionHighlight && reductionHighlight.length) {
-        const documentId = this.extractDMStoreDocId(this.url);
+        const documentId = this.documentId;
         const reduction = {page, rectangles: [...reductionHighlight], redactionId, documentId};
         this.store.dispatch(new fromRedactionActions.SaveReduction(reduction));
       }
