@@ -1,5 +1,5 @@
 <div class="pageContainer">
-  <div  *ngFor="let reduction of (reductionsPerPage$ | async);  index as i"
+  <div *ngFor="let reduction of (reductionsPerPage$ | async);  index as i"
        class="pageContainer__page"
        [ngStyle]="{
        'width.px': reduction.styles.width,
@@ -26,8 +26,8 @@
                        [zoom]="zoom"
                        [rotate]="rotate"
                        [selectedAnnoId]="selectedRedaction$ | async"
-                       [height]="reduction.styles.width"
-                       [width]="reduction.styles.height"
+                       [height]="reduction.styles.height"
+                       [width]="reduction.styles.width"
                        (delete)="onMarkerDelete($event)"
                        (annotationClick)="selectReduction($event)">
         </mv-annotation>
