@@ -31,7 +31,7 @@ export class ReductionToolbarComponent implements OnInit, OnDestroy {
   }
 
   toggleDrawMode() {
-    this.toolbarEventService.redactionDrawModeSubject.next(true);
+    this.toolbarEventService.drawModeSubject.next(true);
   }
 
   togglePreview() {

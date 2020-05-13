@@ -22,7 +22,6 @@ export class ToolbarEventService {
   public readonly highlightModeSubject = new BehaviorSubject<HighlightMode>(false);
   public readonly highlightTextReductionMode = new BehaviorSubject<HighlightMode>(false);
   public readonly drawModeSubject = new BehaviorSubject<DrawMode>(false);
-  public readonly redactionDrawModeSubject = new BehaviorSubject<DrawMode>(false);
   public readonly rotateSubject = new Subject<number>();
   public readonly searchSubject = new Subject<SearchOperation>();
   public readonly searchResultsCountSubject = new Subject<SearchResultsCount>();
@@ -36,7 +35,7 @@ export class ToolbarEventService {
   public readonly changePageByDeltaSubject = new Subject<number>();
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
-  public readonly toggleReduceBarVisibility = new Subject();
+  public readonly toggleReduceBarVisibility = new BehaviorSubject(false);
   public readonly toggleReductionViewMode = new Subject<boolean>();
   public readonly reduceDocument = new Subject();
   public readonly unmarkAllMarkers = new Subject();
@@ -131,7 +130,7 @@ export class ToolbarEventService {
   }
 
   public toggleReduceBar(): void {
-    this.toggleReduceBarVisibility.next();
+    this.toggleReduceBarVisibility.next(!this.toggleReduceBarVisibility.getValue());
   }
 
   public toggleRedactionPreview(viewMode: boolean): void {

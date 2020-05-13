@@ -34,7 +34,7 @@ export class ReductionsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.reductionsPerPage$ = this.store.pipe(select(fromSelectors.getAnnoPerPage));
     this.selectedRedaction$ = this.store.pipe(select(fromSelectors.getSelected));
-    this.$subscription = this.toolbarEvents.redactionDrawModeSubject
+    this.$subscription = this.toolbarEvents.drawModeSubject
       .subscribe(drawMode => this.drawMode = drawMode);
   }
 
@@ -60,5 +60,6 @@ export class ReductionsComponent implements OnInit, OnDestroy {
       const redaction = {page, rectangles, redactionId, documentId};
       this.store.dispatch(new fromRedactionActions.SaveReduction(redaction));
     });
+    this.toolbarEvents.drawModeSubject.next(false);
   }
 }

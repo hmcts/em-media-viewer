@@ -104,5 +104,6 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   saveAnnotation({ rectangles, page }) {
     this.highlightService.saveAnnotation(rectangles, page);
+    this.toolbarEvents.drawModeSubject.next(false);
   }
 }

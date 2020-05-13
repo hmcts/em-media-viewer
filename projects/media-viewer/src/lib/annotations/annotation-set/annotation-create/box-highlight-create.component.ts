@@ -103,7 +103,6 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
         page: this.page
       } as any;
       this.saveSelection.emit({ rectangles: [rectangle], page: this.page });
-      this.toolbarEvents.drawModeSubject.next(false);
       this.resetHighlight();
     }
   }
