@@ -1,15 +1,15 @@
  import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
-import { SearchBarComponent } from './main-toolbar/search-bar/search-bar.component';
-import { SubToolbarComponent } from './main-toolbar/sub-toolbar/sub-toolbar.component';
-import { ToolbarLeftPaneComponent } from './main-toolbar/left-pane/left-pane.component';
-import { ToolbarRightPaneComponent } from './main-toolbar/right-pane/right-pane.component';
-import { ToolbarMiddlePaneComponent } from './main-toolbar/middle-pane/middle-pane.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SubToolbarComponent } from './sub-toolbar/sub-toolbar.component';
+import { ToolbarLeftPaneComponent } from './left-pane/left-pane.component';
+import { ToolbarRightPaneComponent } from './right-pane/right-pane.component';
+import { ToolbarMiddlePaneComponent } from './middle-pane/middle-pane.component';
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 import { ToolbarEventService } from './toolbar-event.service';
- import {ReductionToolbarComponent} from './reduction-toolbar/reduction-toolbar.component';
+ import {RedactionToolbarComponent} from './redaction-toolbar/redaction-toolbar.component';
 
 export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 export { ToolbarEventService } from './toolbar-event.service';
@@ -23,7 +23,7 @@ export { ToolbarEventService } from './toolbar-event.service';
     ToolbarRightPaneComponent,
     MainToolbarComponent,
     ToolbarMiddlePaneComponent,
-    ReductionToolbarComponent
+    RedactionToolbarComponent
   ],
   providers: [
     ToolbarButtonVisibilityService,
@@ -33,7 +33,7 @@ export { ToolbarEventService } from './toolbar-event.service';
     MainToolbarComponent,
     SearchBarComponent,
     SubToolbarComponent,
-    ReductionToolbarComponent
+    RedactionToolbarComponent
   ],
   imports: [
     CommonModule,

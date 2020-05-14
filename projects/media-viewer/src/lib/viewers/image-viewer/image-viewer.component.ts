@@ -23,7 +23,7 @@ import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
-import * as fromRedactionActions from '../../store/actions/reduction.actions';
+import * as fromRedactionActions from '../../store/actions/redaction.actions';
 
 @Component({
     selector: 'mv-image-viewer',

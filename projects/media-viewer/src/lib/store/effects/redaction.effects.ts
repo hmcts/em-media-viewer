@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
 import { of } from 'rxjs';
-import {ReductionApiService} from '../../reductions/services/reduction-api.service'
-import * as reductionActions from '../actions/reduction.actions';
+import {RedactionApiService} from '../../redaction/services/redaction-api.service'
+import * as reductionActions from '../actions/redaction.actions';
 import {HttpResponse} from '@angular/common/http';
 
 @Injectable()
-export class ReductionEffects {
+export class RedactionEffects {
   constructor(
     private actions$: Actions,
-    private reductionApiService: ReductionApiService,
+    private reductionApiService: RedactionApiService,
   ) { }
 
   @Effect()

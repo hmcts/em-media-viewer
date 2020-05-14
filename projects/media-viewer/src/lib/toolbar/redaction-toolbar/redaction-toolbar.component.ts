@@ -1,17 +1,17 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ToolbarEventService} from '../toolbar-event.service';
 import {select, Store} from '@ngrx/store';
-import * as fromRedaSelectors from '../../store/selectors/reductions.selectors';
+import * as fromRedaSelectors from '../../store/selectors/redaction.selectors';
 import {take} from 'rxjs/operators';
-import * as fromRedaActions from '../../store/actions/reduction.actions';
+import * as fromRedaActions from '../../store/actions/redaction.actions';
 import * as fromStore from '../../store/reducers';
 import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'mv-reduction-toolbar',
-  templateUrl: './reduction-toolbar.component.html'
+  templateUrl: './redaction-toolbar.component.html'
 })
-export class ReductionToolbarComponent implements OnInit, OnDestroy {
+export class RedactionToolbarComponent implements OnInit, OnDestroy {
   preview = false;
   hasRedactions = false;
   $ubsctiption: Subscription;

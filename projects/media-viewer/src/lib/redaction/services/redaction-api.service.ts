@@ -5,7 +5,7 @@ import {catchError, map} from 'rxjs/operators';
 import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
 
 @Injectable()
-export class ReductionApiService {
+export class RedactionApiService {
 
   public redactionApiUrl = '/api/markups/';
   public redactApiUrl = '/api/redaction/';

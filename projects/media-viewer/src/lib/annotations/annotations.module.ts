@@ -29,7 +29,6 @@ import {MomentDatePipe} from './pipes/date.pipe';
 import { BookmarksApiService } from './bookmarks-api.service';
 import {FilterPipe} from './pipes/filter.pipe';
 import {UnsnakePipe} from './pipes/unsnake.pipe';
-import {ContextToolbarComponent} from '../reductions/context-toolbar/context-toolbar.component';
 
 @NgModule({
   imports: [
@@ -60,8 +59,7 @@ import {ContextToolbarComponent} from '../reductions/context-toolbar/context-too
     MomentDatePipe,
     CommentFilterComponent,
     FilterPipe,
-    UnsnakePipe,
-    ContextToolbarComponent
+    UnsnakePipe
   ],
   entryComponents: [
     AnnotationViewComponent,
@@ -88,8 +86,7 @@ import {ContextToolbarComponent} from '../reductions/context-toolbar/context-too
     CommentFilterComponent,
     MomentDatePipe,
     FilterPipe,
-    UnsnakePipe,
-    ContextToolbarComponent
+    UnsnakePipe
   ]
 })
 export class AnnotationsModule { }

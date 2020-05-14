@@ -1,4 +1,4 @@
-import * as fromReduction from '../actions/reduction.actions';
+import * as fromReduction from '../actions/redaction.actions';
 import * as fromAnnotations from '../actions/annotations.action';
 import {StoreUtils} from '../store-utils';
 import {SelectionAnnotation} from '../../annotations/models/event-select.model'; // todo rename
@@ -16,9 +16,9 @@ export const initialReductionState: ReductionState = {
   selectedRedaction: {}
 };
 
-export function reductionReducer (
+export function redactionReducer (
   state = initialReductionState,
-  action: fromReduction.ReductionActions | fromAnnotations.AnnotationsActions
+  action: fromReduction.RedactionActions | fromAnnotations.AnnotationsActions
 ): ReductionState {
   switch (action.type) {
 

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarMiddlePaneComponent } from './middle-pane.component';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
-import { ToolbarEventService } from '../../toolbar-event.service';
+import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ToolbarEventService } from '../toolbar-event.service';
 
 describe('ToolbarMiddlePaneComponent', () => {
   let component: ToolbarMiddlePaneComponent;

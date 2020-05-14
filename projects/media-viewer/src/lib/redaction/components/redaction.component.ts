@@ -1,23 +1,22 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import {select, Store} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
 import * as fromStore from '../../store/reducers';
-import * as fromSelectors from '../../store/selectors/reductions.selectors';
+import * as fromSelectors from '../../store/selectors/redaction.selectors';
 import * as fromAnnotations from '../../store/selectors/annotations.selectors';
-import * as fromActions from '../../store/actions/reduction.actions';
-import {SelectionAnnotation} from '../../annotations/models/event-select.model';
+import * as fromActions from '../../store/actions/redaction.actions';
+import * as fromRedactionActions from '../../store/actions/redaction.actions';
+import { SelectionAnnotation } from '../../annotations/models/event-select.model';
 import uuid from 'uuid';
-import * as fromRedactionActions from '../../store/actions/reduction.actions';
 import { map, take } from 'rxjs/operators';
 import { ToolbarEventService } from '../../toolbar/toolbar.module';
-import { Annotation } from '../../annotations/annotation-set/annotation-view/annotation.model';
 
 @Component({
-  selector: 'mv-reductions',
-  templateUrl: './reductions.component.html'
+  selector: 'mv-redactions',
+  templateUrl: './redaction.component.html'
 })
-export class ReductionsComponent implements OnInit, OnDestroy {
+export class RedactionComponent implements OnInit, OnDestroy {
 
   @Input() zoom: number;
   @Input() rotate: number;

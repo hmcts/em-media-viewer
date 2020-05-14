@@ -91,7 +91,7 @@ export class UnmarkAllSuccess implements Action {
   readonly type = UNMARK_ALL_SUCCESS;
 }
 
-export type ReductionActions =
+export type RedactionActions =
   | LoadReductions
   | LoadReductionSuccess
   | LoadReductionFail

@@ -1,6 +1,6 @@
 import {createSelector} from '@ngrx/store';
 import * as fromFeature from '../reducers';
-import * as fromReductions from '../reducers/reduction.reducer';
+import * as fromReductions from '../reducers/redaction.reducer';
 import {getAnnoPages, getDocumentIdSetId} from './annotations.selectors';
 
 export const getTagsRootState = createSelector(

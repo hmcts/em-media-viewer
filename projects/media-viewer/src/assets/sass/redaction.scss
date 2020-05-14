@@ -1,10 +1,10 @@
-mv-reductions {
+mv-redactions {
 
   .rectangle {
 
     .is-redaction-preview & {
       background: #000;
-      border: none;
+      outline: none;
       opacity: 1;
     }
 

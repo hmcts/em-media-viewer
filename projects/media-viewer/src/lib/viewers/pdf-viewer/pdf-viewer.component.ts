@@ -27,12 +27,12 @@ import {Store} from '@ngrx/store';
 import {tap} from 'rxjs/operators';
 import * as fromStore from '../../store/reducers';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
-import * as fromRedactionActions from '../../store/actions/reduction.actions';
+import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import * as fromTagActions from '../../store/actions/tags.actions';
 // todo move this to common place for reduction and annotation
 import {HighlightCreateService} from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 import uuid from 'uuid';
-import * as fromRedaSelectors from '../../store/selectors/reductions.selectors';
+import * as fromRedaSelectors from '../../store/selectors/redaction.selectors';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -201,12 +201,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       });
     }
     if (!this.annotationSet) {
-      if (this.toolbarEvents.highlightModeSubject.getValue()) {
-        this.toolbarEvents.highlightModeSubject.next(false);
-      }
-      if (this.toolbarEvents.drawModeSubject.getValue()) {
-        this.toolbarEvents.drawModeSubject.next(false);
-      }
+      this.toolbarEvents.highlightModeSubject.next(false);
+      this.toolbarEvents.drawModeSubject.next(false);
     }
 
     if (this.toolbarEvents.highlightTextReductionMode.getValue()) {
@@ -217,6 +213,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         const reduction = {page, rectangles: [...reductionHighlight], redactionId, documentId};
         this.store.dispatch(new fromRedactionActions.SaveReduction(reduction));
       }
+      this.toolbarEvents.highlightTextReductionMode.next(false);
     }
   }
 

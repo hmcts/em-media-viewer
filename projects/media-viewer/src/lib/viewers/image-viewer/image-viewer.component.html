@@ -18,10 +18,10 @@
            [ngClass]="'rot' + rotation"
            (error)="onLoadError(url)"
            (load)="onLoad()"/>
-      <mv-reductions *ngIf="(toolbarEvents.toggleReduceBarVisibility | async);else annotationTemplate"
-        [zoom]="zoom"
-        [rotate]="rotation"
-      ></mv-reductions>
+      <mv-redactions *ngIf="(toolbarEvents.toggleReduceBarVisibility | async);else annotationTemplate"
+                     [zoom]="zoom"
+                     [rotate]="rotation"
+      ></mv-redactions>
       <ng-template #annotationTemplate>
         <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
                            [zoom]="zoom"
