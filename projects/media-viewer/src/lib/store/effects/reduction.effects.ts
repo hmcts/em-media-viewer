@@ -62,8 +62,7 @@ export class ReductionEffects {
     exhaustMap((redactionPayload) => {
       return this.reductionApiService.redact(redactionPayload).pipe(
         map((result: HttpResponse<Blob>) => {
-          const objectURL = URL.createObjectURL(result.body);
-          this.downloadDocument(objectURL);
+          this.downloadDocument(result, redactionPayload.documentId);
           return new reductionActions.UnmarkAllSuccess();
         }),
         catchError(error => {
@@ -85,12 +84,14 @@ export class ReductionEffects {
         }));
     }));
 
-  downloadDocument(objectURL) {
+  downloadDocument(result, documentId) {
+    const attachmentHeader = result.headers.get('content-disposition').split('filename=');
+    const objectURL = URL.createObjectURL(result.body);
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
     a.href = objectURL;
-    a.download = 'redacted-document';
+    a.download = attachmentHeader.length > 1 ? attachmentHeader[1].replace('"','') : `redacted-document-${documentId}`;
     a.click();
     a.remove();
   }
