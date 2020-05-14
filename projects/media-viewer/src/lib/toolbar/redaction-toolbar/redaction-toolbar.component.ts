@@ -1,33 +1,33 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ToolbarEventService} from '../toolbar-event.service';
-import {select, Store} from '@ngrx/store';
-import * as fromRedaSelectors from '../../store/selectors/redaction.selectors';
-import {take} from 'rxjs/operators';
-import * as fromRedaActions from '../../store/actions/redaction.actions';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ToolbarEventService } from '../toolbar-event.service';
+import { select, Store } from '@ngrx/store';
+import * as fromRedactSelectors from '../../store/selectors/redaction.selectors';
 import * as fromStore from '../../store/reducers';
-import {Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'mv-reduction-toolbar',
+  selector: 'mv-redaction-toolbar',
   templateUrl: './redaction-toolbar.component.html'
 })
 export class RedactionToolbarComponent implements OnInit, OnDestroy {
+
   preview = false;
   hasRedactions = false;
-  $ubsctiption: Subscription;
+  $subscription: Subscription;
+
   constructor(
     public readonly toolbarEventService: ToolbarEventService,
     private store: Store<fromStore.AnnotationSetState>
   ) {}
 
   ngOnInit(): void {
-    this.$ubsctiption = this.store.pipe(select(fromRedaSelectors.getRedactionArray)).subscribe(redactions => {
+    this.$subscription = this.store.pipe(select(fromRedactSelectors.getRedactionArray)).subscribe(redactions => {
       this.hasRedactions = !!redactions.redactions.length;
     });
   }
 
-  toggleTextReductionMode() {
-    this.toolbarEventService.highlightTextReductionMode.next(true);
+  toggleTextRedactionMode() {
+    this.toolbarEventService.highlightTextRedactionMode.next(true);
   }
 
   toggleDrawMode() {
@@ -43,11 +43,11 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
     this.toolbarEventService.unmarkAll();
   }
 
-  reduce() {
-    this.toolbarEventService.reduce();
+  redact() {
+    this.toolbarEventService.redact();
   }
 
   ngOnDestroy(): void {
-    this.$ubsctiption.unsubscribe();
+    this.$subscription.unsubscribe();
   }
 }

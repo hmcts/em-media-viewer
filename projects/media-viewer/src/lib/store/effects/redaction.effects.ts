@@ -3,84 +3,84 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
 import { of } from 'rxjs';
 import {RedactionApiService} from '../../redaction/services/redaction-api.service'
-import * as reductionActions from '../actions/redaction.actions';
+import * as redactionActions from '../actions/redaction.actions';
 import {HttpResponse} from '@angular/common/http';
 
 @Injectable()
 export class RedactionEffects {
   constructor(
     private actions$: Actions,
-    private reductionApiService: RedactionApiService,
+    private redactionApiService: RedactionApiService,
   ) { }
 
   @Effect()
-  loadReductions$ = this.actions$.pipe(
-    ofType(reductionActions.LOAD_REDUCTIONS),
-    map((action: reductionActions.LoadReductions) => action.payload),
+  loadRedactions$ = this.actions$.pipe(
+    ofType(redactionActions.LOAD_REDUCTIONS),
+    map((action: redactionActions.LoadRedactions) => action.payload),
     switchMap((documentId) => {
-      return this.reductionApiService.getReductions(documentId).pipe(
+      return this.redactionApiService.getRedactions(documentId).pipe(
         map(annotations => {
-          return new reductionActions.LoadReductionSuccess(annotations.body);
+          return new redactionActions.LoadRedactionSuccess(annotations.body);
         }),
         catchError(error => {
-          return of(new reductionActions.LoadReductionFail(error));
+          return of(new redactionActions.LoadRedactionFail(error));
         }));
     }));
 
   @Effect()
-  saveReduction = this.actions$.pipe(
-    ofType(reductionActions.SAVE_REDUCTION),
-    map((action: reductionActions.SaveReduction) => action.payload),
+  saveRedaction = this.actions$.pipe(
+    ofType(redactionActions.SAVE_REDUCTION),
+    map((action: redactionActions.SaveRedaction) => action.payload),
     exhaustMap((annotation) => {
-      return this.reductionApiService.saveReduction(annotation).pipe(
+      return this.redactionApiService.saveRedaction(annotation).pipe(
         map(annotations => {
-          return new reductionActions.SaveReductionSuccess(annotations);
+          return new redactionActions.SaveRedactionSuccess(annotations);
         }),
         catchError(error => {
-          return of(new reductionActions.SaveReductionFail(error));
+          return of(new redactionActions.SaveRedactionFail(error));
         }));
     }));
 
   @Effect()
-  deleteReduction$ = this.actions$.pipe(
-    ofType(reductionActions.DELETE_REDUCTION),
-    map((action: reductionActions.DeleteReduction) => action.payload),
+  deleteRedaction$ = this.actions$.pipe(
+    ofType(redactionActions.DELETE_REDUCTION),
+    map((action: redactionActions.DeleteRedaction) => action.payload),
     exhaustMap((redactionPayload) => {
-      return this.reductionApiService.deleteRedaction(redactionPayload).pipe(
+      return this.redactionApiService.deleteRedaction(redactionPayload).pipe(
         map(result => {
-          return new reductionActions.DeleteReductionSuccess(redactionPayload);
+          return new redactionActions.DeleteRedactionSuccess(redactionPayload);
         }),
         catchError(error => {
-          return of(new reductionActions.DeleteReductionFail(error));
+          return of(new redactionActions.DeleteRedactionFail(error));
         }));
     }));
 
   @Effect()
   redact$ = this.actions$.pipe(
-    ofType(reductionActions.REDACT),
-    map((action: reductionActions.Redact) => action.payload),
+    ofType(redactionActions.REDACT),
+    map((action: redactionActions.Redact) => action.payload),
     exhaustMap((redactionPayload) => {
-      return this.reductionApiService.redact(redactionPayload).pipe(
+      return this.redactionApiService.redact(redactionPayload).pipe(
         map((result: HttpResponse<Blob>) => {
           this.downloadDocument(result, redactionPayload.documentId);
-          return new reductionActions.UnmarkAllSuccess();
+          return new redactionActions.UnmarkAllSuccess();
         }),
         catchError(error => {
-          return of(new reductionActions.RedactFail(error));
+          return of(new redactionActions.RedactFail(error));
         }));
     }));
 
   @Effect()
   unmarkAll = this.actions$.pipe(
-    ofType(reductionActions.UNMARK_ALL),
-    map((action: reductionActions.Redact) => action.payload),
+    ofType(redactionActions.UNMARK_ALL),
+    map((action: redactionActions.Redact) => action.payload),
     exhaustMap((redactionPayload) => {
-      return this.reductionApiService.deleteAllMarkers(redactionPayload).pipe(
+      return this.redactionApiService.deleteAllMarkers(redactionPayload).pipe(
         map(result => {
-          return new reductionActions.UnmarkAllSuccess();
+          return new redactionActions.UnmarkAllSuccess();
         }),
         catchError(error => {
-          return of(new reductionActions.DeleteReductionFail(error));
+          return of(new redactionActions.DeleteRedactionFail(error));
         }));
     }));
 

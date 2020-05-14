@@ -1,34 +1,34 @@
 <div class="toolbar">
   <div id="toolbarContainer">
     <div class="findbar">
-      <button class="toolbarButton highlightBtn" title="Highlight Text Mode" (click)="toggleTextReductionMode()"
+      <button class="toolbarButton highlightBtn" title="Highlight Text Mode" (click)="toggleTextRedactionMode()"
               id="toggleHighlightButton" tabindex="0" data-l10n-id="toggleHighlightButton">
-        <span data-l10n-id="next_label">Highlight Text</span>
+        <span data-l10n-id="toggleHighlightButton_label">Highlight Text</span>
       </button>
       <button class="toolbarButton drawBtn" title="Draw Mode" (click)="toggleDrawMode()"
               id="toggleDrawButton" tabindex="0" data-l10n-id="toggleDrawButton">
-        <span data-l10n-id="next_label">Draw</span>
+        <span data-l10n-id="toggleDrawButton_label">Draw</span>
       </button>
     </div>
 
     <div id="annotationButtons">
       <div class="splitToolbarButton">
-        <button class="unmark-all reduction-preview-btn" id="unmark-all" tabindex="0" title="unmark all" (click)="unmarkAll()">
-          <span data-l10n-id="page_rotate_ccw_label">Redact All</span>
+        <button class="unmark-all redaction-preview-btn" id="unmark-all" tabindex="0" title="unmark all" (click)="unmarkAll()">
+          <span data-l10n-id="unmark-all_label">Redact All</span>
         </button>
       </div>
     </div>
 
     <div id="toolbarViewerMiddle" *ngIf="hasRedactions">
       <div class="splitToolbarButton">
-        <button [ngClass]="{'reduction-preview': !preview, 'reduction-preview-off': preview, 'reduction-preview-btn': true}"
-                id="reduction-preview" tabindex="0" title="Preview" (click)="togglePreview()">
-          <span data-l10n-id="page_rotate_ccw_label">Preview</span>
+        <button [ngClass]="{'redaction-preview': !preview, 'redaction-preview-off': preview, 'redaction-preview-btn': true}"
+                id="redaction-preview" tabindex="0" title="Preview" (click)="togglePreview()">
+          <span data-l10n-id="redaction-preview_label">Preview</span>
         </button>
       </div>
       <div class="splitToolbarButton">
-        <button id="reduction-reduce" tabindex="0" title="Preview" class="reduction-reduce" (click)="reduce()">
-          <span data-l10n-id="page_rotate_ccw_label">Redact</span>
+        <button id="redaction-redact" tabindex="0" title="Preview" class="redaction-redact" (click)="redact()">
+          <span data-l10n-id="redaction-redact_label">Redact</span>
         </button>
       </div>
     </div>

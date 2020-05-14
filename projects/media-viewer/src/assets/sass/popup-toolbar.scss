@@ -9,7 +9,7 @@ mv-ctx-toolbar {
     z-index: 1000;
     border: 1px solid #c1c1c1;
     box-shadow: 0px 2px #c1c1c1;
-    .has-reduce-bar & {
+    .has-redact-bar & {
       width: 150px
     }
     .is-redaction-preview & {
@@ -82,7 +82,7 @@ mv-ctx-toolbar {
   }
 
   .aui__toolbar-button-comment {
-    .has-reduce-bar & {
+    .has-redact-bar & {
       display: none
     }
   }

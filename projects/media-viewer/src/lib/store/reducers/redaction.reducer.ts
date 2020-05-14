@@ -1,43 +1,43 @@
-import * as fromReduction from '../actions/redaction.actions';
+import * as fromRedaction from '../actions/redaction.actions';
 import * as fromAnnotations from '../actions/annotations.action';
 import {StoreUtils} from '../store-utils';
 import {SelectionAnnotation} from '../../annotations/models/event-select.model'; // todo rename
 
 
-export interface ReductionState {
-  reductionEntities: {[id: string]: any};
-  reductionPageEntities: {[id: string]: any};
+export interface RedactionState {
+  redactionEntities: {[id: string]: any};
+  redactionPageEntities: {[id: string]: any};
   selectedRedaction: SelectionAnnotation | {};
 }
 
-export const initialReductionState: ReductionState = {
-  reductionEntities: {},
-  reductionPageEntities: {},
+export const initialRedactionState: RedactionState = {
+  redactionEntities: {},
+  redactionPageEntities: {},
   selectedRedaction: {}
 };
 
 export function redactionReducer (
-  state = initialReductionState,
-  action: fromReduction.RedactionActions | fromAnnotations.AnnotationsActions
-): ReductionState {
+  state = initialRedactionState,
+  action: fromRedaction.RedactionActions | fromAnnotations.AnnotationsActions
+): RedactionState {
   switch (action.type) {
 
-    case fromReduction.LOAD_REDUCTIONS: {
+    case fromRedaction.LOAD_REDUCTIONS: {
       return {
         ...state,
-        ...initialReductionState
+        ...initialRedactionState
       };
     }
 
-    case fromReduction.LOAD_REDUCTION_SUCCESS: {
+    case fromRedaction.LOAD_REDUCTION_SUCCESS: {
       const payload = action.payload;
       if (payload) {
-        const reductionEntities = StoreUtils.generateRedactionEntities(payload);
-        const reductionPageEntities = StoreUtils.groupByKeyEntities(payload, 'page');
+        const redactionEntities = StoreUtils.generateRedactionEntities(payload);
+        const redactionPageEntities = StoreUtils.groupByKeyEntities(payload, 'page');
         return {
           ...state,
-          reductionEntities,
-          reductionPageEntities
+          redactionEntities,
+          redactionPageEntities
         };
       }
       return {
@@ -45,22 +45,22 @@ export function redactionReducer (
       };
     }
 
-    case fromReduction.SAVE_REDUCTION_SUCCESS: {
+    case fromRedaction.SAVE_REDUCTION_SUCCESS: {
       const {payload} =  action;
-      const reductionEntities = {
-        ...state.reductionEntities,
+      const redactionEntities = {
+        ...state.redactionEntities,
         [payload.redactionId]: payload
       };
-      const reductionArray = Object.keys(reductionEntities).map(key => reductionEntities[key]);
-      const reductionPageEntities = StoreUtils.groupByKeyEntities(reductionArray, 'page');
+      const redactionArray = Object.keys(redactionEntities).map(key => redactionEntities[key]);
+      const redactionPageEntities = StoreUtils.groupByKeyEntities(redactionArray, 'page');
       return {
         ...state,
-        reductionEntities,
-        reductionPageEntities
+        redactionEntities,
+        redactionPageEntities
       };
     }
 
-    case fromReduction.SELECT_REDACTION:
+    case fromRedaction.SELECT_REDACTION:
     case fromAnnotations.SELECT_ANNOTATION: {
       return {
         ...state,
@@ -68,32 +68,32 @@ export function redactionReducer (
       };
     }
 
-    case fromReduction.DELETE_REDUCTION_SUCCESS: {
+    case fromRedaction.DELETE_REDUCTION_SUCCESS: {
       const page = action.payload.page;
       const id = action.payload.redactionId;
-      const reductionEntities = {
-        ...state.reductionEntities
+      const redactionEntities = {
+        ...state.redactionEntities
       };
-      delete reductionEntities[id];
+      delete redactionEntities[id];
       const pageRedactionRemoved = [
-        ...state.reductionPageEntities[page].filter(redaction => redaction.redactionId !== id)
+        ...state.redactionPageEntities[page].filter(redaction => redaction.redactionId !== id)
       ];
-      const reductionPageEntities = {
-        ...state.reductionPageEntities,
+      const redactionPageEntities = {
+        ...state.redactionPageEntities,
         [page]: pageRedactionRemoved
       };
 
       return {
         ...state,
-        reductionPageEntities,
-        reductionEntities,
+        redactionPageEntities,
+        redactionEntities,
       };
     }
 
-    case fromReduction.UNMARK_ALL_SUCCESS: {
+    case fromRedaction.UNMARK_ALL_SUCCESS: {
       return {
         ...state,
-        ...initialReductionState
+        ...initialRedactionState
       };
     }
   }
@@ -102,9 +102,9 @@ export function redactionReducer (
 }
 
 
-export const getReductionEnt = (state: ReductionState) => state.reductionEntities;
-export const getPageEnt = (state: ReductionState) => state.reductionPageEntities;
-export const getSelectedRedaction = (state: ReductionState) => state.selectedRedaction;
+export const getRedactionEnt = (state: RedactionState) => state.redactionEntities;
+export const getPageEnt = (state: RedactionState) => state.redactionPageEntities;
+export const getSelectedRedaction = (state: RedactionState) => state.selectedRedaction;
 
 
 

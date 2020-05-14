@@ -21,7 +21,7 @@ export class RedactionComponent implements OnInit, OnDestroy {
   @Input() zoom: number;
   @Input() rotate: number;
 
-  reductionsPerPage$: Observable<any>; // todo add type
+  redactionsPerPage$: Observable<any>; // todo add type
   selectedRedaction$: Observable<SelectionAnnotation | {}>;
   rectangles: Rectangle[];
   drawMode: boolean;
@@ -32,7 +32,7 @@ export class RedactionComponent implements OnInit, OnDestroy {
               private toolbarEvents: ToolbarEventService) {}
 
   ngOnInit(): void {
-    this.reductionsPerPage$ = this.store.pipe(select(fromSelectors.getAnnoPerPage));
+    this.redactionsPerPage$ = this.store.pipe(select(fromSelectors.getAnnoPerPage));
     this.selectedRedaction$ = this.store.pipe(select(fromSelectors.getSelected));
     this.$subscription = this.toolbarEvents.drawModeSubject
       .subscribe(drawMode => this.drawMode = drawMode);
@@ -43,10 +43,10 @@ export class RedactionComponent implements OnInit, OnDestroy {
   }
 
   onMarkerDelete(event) {
-    this.store.dispatch(new  fromActions.DeleteReduction(event));
+    this.store.dispatch(new  fromActions.DeleteRedaction(event));
   }
 
-  selectReduction(event) {
+  selectRedaction(event) {
     this.store.dispatch(new fromActions.SelectRedaction(event));
   }
 
@@ -58,12 +58,12 @@ export class RedactionComponent implements OnInit, OnDestroy {
     ).subscribe(documentId => {
       const redactionId = uuid();
       const redaction = {page, rectangles, redactionId, documentId};
-      this.store.dispatch(new fromRedactionActions.SaveReduction(redaction));
+      this.store.dispatch(new fromRedactionActions.SaveRedaction(redaction));
     });
     this.toolbarEvents.drawModeSubject.next(false);
   }
 
   public onMarkerUpdate(redaction: any) {
-    this.store.dispatch(new fromActions.SaveReduction(redaction));
+    this.store.dispatch(new fromActions.SaveRedaction(redaction));
   }
 }

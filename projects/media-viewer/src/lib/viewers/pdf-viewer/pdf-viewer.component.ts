@@ -29,7 +29,7 @@ import * as fromStore from '../../store/reducers';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import * as fromTagActions from '../../store/actions/tags.actions';
-// todo move this to common place for reduction and annotation
+// todo move this to common place for redaction and annotation
 import {HighlightCreateService} from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 import uuid from 'uuid';
 import * as fromRedaSelectors from '../../store/selectors/redaction.selectors';
@@ -94,7 +94,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   async ngAfterContentInit(): Promise<void> {
     if (this.enableRedactions) {
-      this.store.dispatch(new fromRedactionActions.LoadReductions(this.documentId));
+      this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
     }
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
@@ -132,7 +132,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (changes.url && this.pdfWrapper) {
       this.loadDocument();
       this.clearAnnotationSet();
-      this.store.dispatch(new fromRedactionActions.LoadReductions(this.documentId));
+      this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
       this.documentId = this.extractDMStoreDocId(this.url);
     }
   }
@@ -205,15 +205,15 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.toolbarEvents.drawModeSubject.next(false);
     }
 
-    if (this.toolbarEvents.highlightTextReductionMode.getValue()) {
-      const reductionHighlight = this.highlightService.getRectangles(mouseEvent);
+    if (this.toolbarEvents.highlightTextRedactionMode.getValue()) {
+      const redactionHighlight = this.highlightService.getRectangles(mouseEvent);
       const redactionId = uuid();
-      if (reductionHighlight && reductionHighlight.length) {
+      if (redactionHighlight && redactionHighlight.length) {
         const documentId = this.documentId;
-        const reduction = {page, rectangles: [...reductionHighlight], redactionId, documentId};
-        this.store.dispatch(new fromRedactionActions.SaveReduction(reduction));
+        const redaction = {page, rectangles: [...redactionHighlight], redactionId, documentId};
+        this.store.dispatch(new fromRedactionActions.SaveRedaction(redaction));
       }
-      this.toolbarEvents.highlightTextReductionMode.next(false);
+      this.toolbarEvents.highlightTextRedactionMode.next(false);
     }
   }
 

@@ -47,7 +47,7 @@ mv-pdf-viewer {
   }
 
   .commentSummaryHeader {
-    .has-reduce-bar & {
+    .has-redact-bar & {
       display: none;
     }
     top: 28px
@@ -60,7 +60,7 @@ mv-pdf-viewer {
 
   .show-comments-panel {
     .pdfViewer, .pageContainer {
-      .has-reduce-bar & {
+      .has-redact-bar & {
         width: 100%;
       }
       width: 75%;

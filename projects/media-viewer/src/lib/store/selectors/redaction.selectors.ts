@@ -1,26 +1,26 @@
 import {createSelector} from '@ngrx/store';
 import * as fromFeature from '../reducers';
-import * as fromReductions from '../reducers/redaction.reducer';
+import * as fromRedactions from '../reducers/redaction.reducer';
 import {getAnnoPages, getDocumentIdSetId} from './annotations.selectors';
 
 export const getTagsRootState = createSelector(
   fromFeature.getMVState,
-  (state: fromFeature.State) =>  state.reductions
+  (state: fromFeature.State) =>  state.redactions
 );
 
-export const getReductionPages = createSelector(
+export const getRedactionPages = createSelector(
   getTagsRootState,
-  fromReductions.getPageEnt
+  fromRedactions.getPageEnt
 );
 
 export const getSelected = createSelector(
   getTagsRootState,
-  fromReductions.getSelectedRedaction
+  fromRedactions.getSelectedRedaction
 );
 
 export const getRedactionEnt = createSelector(
   getTagsRootState,
-  fromReductions.getReductionEnt
+  fromRedactions.getRedactionEnt
 );
 
 export const getRedactionArray = createSelector(
@@ -36,7 +36,7 @@ export const getRedactionArray = createSelector(
 
 export const getAnnoPerPage = createSelector(
   getAnnoPages,
-  getReductionPages,
+  getRedactionPages,
   (pages, pageEnt) => {
     if (pages && pages.numberOfPages && pageEnt) {
       const arr = [];

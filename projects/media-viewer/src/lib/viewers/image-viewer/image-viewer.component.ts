@@ -68,7 +68,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     if (this.enableRedactions) {
-      this.store.dispatch(new fromRedactionActions.LoadReductions(this.url));
+      this.store.dispatch(new fromRedactionActions.LoadRedactions(this.url));
     }
     this.subscriptions.push(
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),

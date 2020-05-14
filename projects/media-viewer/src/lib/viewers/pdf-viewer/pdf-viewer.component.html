@@ -27,7 +27,7 @@
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
 
-  <mv-redactions *ngIf="(toolbarEvents.toggleReduceBarVisibility | async);else annotationTemplate"
+  <mv-redactions *ngIf="(toolbarEvents.toggleRedactBarVisibility | async);else annotationTemplate"
                  [zoom]="zoom"
                  [rotate]="rotation"
   ></mv-redactions>

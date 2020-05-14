@@ -1,67 +1,67 @@
 import { Action } from '@ngrx/store';
 
-export const LOAD_REDUCTIONS = '[Reduction] Load Reduction';
-export const LOAD_REDUCTION_SUCCESS = '[Reduction] Load Reduction Success';
-export const LOAD_REDUCTION_FAIL = '[Reduction] Load Reduction Fail';
+export const LOAD_REDUCTIONS = '[Redaction] Load Redaction';
+export const LOAD_REDUCTION_SUCCESS = '[Redaction] Load Redaction Success';
+export const LOAD_REDUCTION_FAIL = '[Redaction] Load Redaction Fail';
 
-export const SAVE_REDUCTION = '[Reduction] Save Reduction';
-export const SAVE_REDUCTION_SUCCESS = '[Reduction] Save Reduction Success';
-export const SAVE_REDUCTION_FAIL = '[Reduction] Save Reduction Fail';
+export const SAVE_REDUCTION = '[Redaction] Save Redaction';
+export const SAVE_REDUCTION_SUCCESS = '[Redaction] Save Redaction Success';
+export const SAVE_REDUCTION_FAIL = '[Redaction] Save Redaction Fail';
 
-export const DELETE_REDUCTION = '[Reduction] Delete Reduction';
-export const DELETE_REDUCTION_SUCCESS = '[Reduction] Delete Reduction Success';
-export const DELETE_REDUCTION_FAIL = '[Reduction] Delete Reduction Fail';
+export const DELETE_REDUCTION = '[Redaction] Delete Redaction';
+export const DELETE_REDUCTION_SUCCESS = '[Redaction] Delete Redaction Success';
+export const DELETE_REDUCTION_FAIL = '[Redaction] Delete Redaction Fail';
 
-export const SELECT_REDACTION = '[Reduction] Select Redaction';
+export const SELECT_REDACTION = '[Redaction] Select Redaction';
 
-export const REDACT = '[Reduction] Redact';
-export const REDACT_FAIL = '[Reduction] Redact Fail';
+export const REDACT = '[Redaction] Redact';
+export const REDACT_FAIL = '[Redaction] Redact Fail';
 
-export const UNMARK_ALL = '[Reduction] Unmark All';
-export const UNMARK_ALL_SUCCESS = '[Reduction] Unmark All Success';
+export const UNMARK_ALL = '[Redaction] Unmark All';
+export const UNMARK_ALL_SUCCESS = '[Redaction] Unmark All Success';
 
 
-export class LoadReductions implements Action {
+export class LoadRedactions implements Action {
   readonly type = LOAD_REDUCTIONS;
   constructor(public payload: any) {}
 }
 
-export class LoadReductionSuccess implements Action {
+export class LoadRedactionSuccess implements Action {
   readonly type = LOAD_REDUCTION_SUCCESS;
   constructor(public payload: any) {}
 }
 
-export class LoadReductionFail implements Action {
+export class LoadRedactionFail implements Action {
   readonly type = LOAD_REDUCTION_FAIL;
   constructor(public payload: any) {}
 }
 
-export class SaveReduction implements Action {
+export class SaveRedaction implements Action {
   readonly type = SAVE_REDUCTION;
   constructor(public payload: any) {}
 }
 
-export class SaveReductionSuccess implements Action {
+export class SaveRedactionSuccess implements Action {
   readonly type = SAVE_REDUCTION_SUCCESS;
   constructor(public payload: any) {}
 }
 
-export class SaveReductionFail implements Action {
+export class SaveRedactionFail implements Action {
   readonly type = SAVE_REDUCTION_FAIL;
   constructor(public payload: any) {}
 }
 
-export class DeleteReduction implements Action {
+export class DeleteRedaction implements Action {
   readonly type = DELETE_REDUCTION;
   constructor(public payload: any) {}
 }
 
-export class DeleteReductionSuccess implements Action {
+export class DeleteRedactionSuccess implements Action {
   readonly type = DELETE_REDUCTION_SUCCESS;
   constructor(public payload: any) {}
 }
 
-export class DeleteReductionFail implements Action {
+export class DeleteRedactionFail implements Action {
   readonly type = DELETE_REDUCTION_FAIL;
   constructor(public payload: any) {}
 }
@@ -92,15 +92,15 @@ export class UnmarkAllSuccess implements Action {
 }
 
 export type RedactionActions =
-  | LoadReductions
-  | LoadReductionSuccess
-  | LoadReductionFail
-  | SaveReduction
-  | SaveReductionSuccess
-  | SaveReductionFail
-  | DeleteReduction
-  | DeleteReductionSuccess
-  | DeleteReductionFail
+  | LoadRedactions
+  | LoadRedactionSuccess
+  | LoadRedactionFail
+  | SaveRedaction
+  | SaveRedactionSuccess
+  | SaveRedactionFail
+  | DeleteRedaction
+  | DeleteRedactionSuccess
+  | DeleteRedactionFail
   | SelectRedaction
   | Redact
   | UnmarkAll

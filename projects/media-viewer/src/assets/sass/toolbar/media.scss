@@ -95,8 +95,8 @@
     content: url(/assets/images/toolbarButton-openFile@2x.png);
   }
 
-  .toolbarButton.reduce::before,
-  .secondaryToolbarButton.reduce::before {
+  .toolbarButton.redact::before,
+  .secondaryToolbarButton.redact::before {
     content: url(/assets/images/secondaryToolbarButton-spreadNone@2x.png);
   }
 
@@ -147,7 +147,7 @@
     content: url(/assets/images/secondaryToolbarButton-rotateCcw@2x.png);
   }
 
-  .reduction-preview-btn {
+  .redaction-preview-btn {
     position: relative;
     background: none;
     border: none;
@@ -170,14 +170,14 @@
     }
   }
 
-  .reduction-preview {
+  .redaction-preview {
     &:before {
       background: url(/assets/images/icon-preview.svg) 0 0 no-repeat;
       background-size: 25px 25px;
     }
   }
 
-  .reduction-preview-off {
+  .redaction-preview-off {
     &:before {
       background: url(/assets/images/icon-preview-off.svg) 0 0 no-repeat;
       background-size: 25px 25px;
@@ -192,7 +192,7 @@
     }
   }
 
-  .reduction-reduce {
+  .redaction-redact {
     margin: 3px 0 0 20px;
     border: none;
     color: #DDD;
@@ -246,7 +246,7 @@
   }
   mv-main-toolbar {
     .highlightBtn, .drawBtn {
-      .has-reduce-bar & {
+      .has-redact-bar & {
         display: none;
       }
     }

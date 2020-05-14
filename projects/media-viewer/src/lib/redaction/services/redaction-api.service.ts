@@ -14,13 +14,13 @@ export class RedactionApiService {
     private readonly httpClient: HttpClient
   ) {}
 
-  public getReductions(documentId: string): Observable<any> { // todo add model
+  public getRedactions(documentId: string): Observable<any> { // todo add model
     const fixedUrl = `${this.redactionApiUrl}${documentId}`;
     return this.httpClient
       .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
   }
 
-  public saveReduction(body): Observable<any> {
+  public saveRedaction(body): Observable<any> {
     return this.httpClient
       .post<AnnotationSet>(this.redactionApiUrl, body, { observe: 'response' , withCredentials: true })
       .pipe(
