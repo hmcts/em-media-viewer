@@ -29,7 +29,7 @@ import * as fromRedactionActions from '../../store/actions/reduction.actions';
     selector: 'mv-image-viewer',
     templateUrl: './image-viewer.component.html'
 })
-export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
@@ -96,17 +96,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, After
     }
   }
 
-  ngAfterViewInit() {
-    const payload: any = {
-      div: {offsetHeight: 1122}, // todo add dynamic height
-      pageNumber: 1,
-      scale: 1,
-      rotation: 1
-    };
-    this.store.dispatch(new fromActions.AddPage(payload));
-
-  }
-
   private setRotation(rotation: number) {
     this.rotation = (this.rotation + rotation) % 360;
   }
@@ -167,6 +156,17 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, After
 
   onLoad() {
     this.imageLoadStatus.emit(ResponseType.SUCCESS);
+    this.initAnnoPage();
+  }
+
+  initAnnoPage() {
+    const payload: any = {
+      div: {offsetHeight: 1122}, // todo add dynamic height
+      pageNumber: 1,
+      scale: 1,
+      rotation: 1
+    };
+    this.store.dispatch(new fromActions.AddPage(payload));
   }
 
   getImageHeight(img) {
