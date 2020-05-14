@@ -1,12 +1,13 @@
 mv-reductions {
+
   .rectangle {
+
     .is-redaction-preview & {
       background: #000;
       border: none;
       opacity: 1;
     }
 
-    background: #BEBEBE;
-    opacity: 0.3;
+    outline: 2px solid #fd0303;
   }
 }

@@ -27,7 +27,7 @@ export class ToolbarRightPaneComponent {
     this.toolbarEvents.download();
   }
 
-  onToggleReduceBar() {
+  toggleRedactionBar() {
     this.toolbarEvents.toggleReduceBar();
   }
 

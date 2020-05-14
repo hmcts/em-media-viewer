@@ -10,8 +10,8 @@
     <span data-l10n-id="open_file_label">Open</span>
   </button>
   <button *ngIf="enableRedactions"
-          id="download" class="toolbarButton reduce hiddenMediumView" title="Download" tabindex="0"
-          data-l10n-id="download" (click)="onToggleReduceBar()">
+          id="redact" class="toolbarButton reduce hiddenMediumView" title="Redact" tabindex="0"
+          data-l10n-id="redact" (click)="toggleRedactionBar()">
     <span data-l10n-id="reduce_label">Redact</span>
   </button>
   <button *ngIf="toolbarButtons.showDownload"
