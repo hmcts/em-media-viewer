@@ -28,6 +28,7 @@
                        [selectedAnnoId]="selectedRedaction$ | async"
                        [height]="reduction.styles.height"
                        [width]="reduction.styles.width"
+                       (update)="onMarkerUpdate($event)"
                        (delete)="onMarkerDelete($event)"
                        (annotationClick)="selectReduction($event)">
         </mv-annotation>

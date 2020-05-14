@@ -11,6 +11,7 @@ import uuid from 'uuid';
 import * as fromRedactionActions from '../../store/actions/reduction.actions';
 import { map, take } from 'rxjs/operators';
 import { ToolbarEventService } from '../../toolbar/toolbar.module';
+import { Annotation } from '../../annotations/annotation-set/annotation-view/annotation.model';
 
 @Component({
   selector: 'mv-reductions',
@@ -61,5 +62,9 @@ export class ReductionsComponent implements OnInit, OnDestroy {
       this.store.dispatch(new fromRedactionActions.SaveReduction(redaction));
     });
     this.toolbarEvents.drawModeSubject.next(false);
+  }
+
+  public onMarkerUpdate(redaction: any) {
+    this.store.dispatch(new fromActions.SaveReduction(redaction));
   }
 }
