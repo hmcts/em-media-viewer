@@ -3,12 +3,10 @@ import { PdfViewerComponent } from '../pdf-viewer.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommentService } from '../../../annotations/comment-set/comment/comment.service';
-import { AnnotationApiService } from '../../../annotations/annotation-api.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GrabNDragDirective } from '../../grab-n-drag.directive';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../../store/reducers';
+import { HighlightCreateService } from '../../../annotations/annotation-set/annotation-create/highlight-create.service';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
@@ -20,12 +18,11 @@ describe('PdfJsWrapperFactory', () => {
         PdfViewerComponent,
         GrabNDragDirective
       ],
-      providers: [
-        ToolbarEventService,
-        CommentService,
-        AnnotationApiService
+      providers: [ToolbarEventService, { provide: HighlightCreateService, useValue: {} }],
+      imports: [
+        StoreModule.forFeature('media-viewer', reducers),
+        StoreModule.forRoot({})
       ],
-      imports: [HttpClientTestingModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
       ]

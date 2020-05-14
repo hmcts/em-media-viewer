@@ -2,7 +2,7 @@ import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
 import { PrintService } from '../../print.service';
 import { By } from '@angular/platform-browser';
-import { SimpleChange } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AnnotationsModule } from '../../annotations/annotations.module';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewer-event.service';
@@ -30,7 +30,8 @@ describe('ImageViewerComponent', () => {
         StoreModule.forRoot({}),
         StoreModule.forFeature('media-viewer', reducers),
         RouterTestingModule
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   });

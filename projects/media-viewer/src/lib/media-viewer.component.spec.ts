@@ -53,6 +53,7 @@ describe('MediaViewerComponent', () => {
     inject([ToolbarButtonVisibilityService], (toolbarButtons) => {
       spyOn(toolbarButtons, 'setup').and.callThrough();
       component.contentType = 'pdf';
+      component.url = 'url'
 
       component.ngAfterContentInit();
       fixture.detectChanges();
