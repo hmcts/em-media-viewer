@@ -21,6 +21,7 @@ import { reducers } from '../../store/reducers';
 import { SelectedAnnotation } from '../../store/actions/annotations.action';
 import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
 import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -40,7 +41,8 @@ describe('PdfViewerComponent', () => {
       ],
       imports: [
         StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({})
+        StoreModule.forRoot({}),
+        HttpClientTestingModule
       ],
       providers: [
         AnnotationApiService,
