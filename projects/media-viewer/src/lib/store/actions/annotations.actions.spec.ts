@@ -98,17 +98,6 @@ describe('Annotations actions', () => {
     });
   });
 
-  describe('AddPage', () => {
-    it('should create an action', () => {
-      const payload = {div: {}, pageNumber:1,  scale: '', rotation: ''};
-      const action = new fromAnnotations.AddPage(payload);
-      expect({ ...action }).toEqual({
-        type: fromAnnotations.ADD_PAGE,
-        payload
-      });
-    });
-  });
-
   describe('Search Comment', () => {
     it('should create an action', () => {
       const payload = 'query text';

@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -11,18 +10,18 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {Subscription} from 'rxjs';
-import {PrintService} from '../../print.service';
-import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
-import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
-import {ResponseType, ViewerException} from '../viewer-exception.model';
-import {ViewerUtilService} from '../viewer-util.service';
-import {ViewerEventService} from '../viewer-event.service';
-import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visibility.service';
+import { Subscription } from 'rxjs';
+import { PrintService } from '../../print.service';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { ResponseType, ViewerException } from '../viewer-exception.model';
+import { ViewerUtilService } from '../viewer-util.service';
+import { ViewerEventService } from '../viewer-event.service';
+import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
-import * as fromActions from '../../store/actions/annotations.action';
+import * as fromDocument from '../../store/actions/document.action';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 
 @Component({
@@ -166,7 +165,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       scale: 1,
       rotation: 1
     };
-    this.store.dispatch(new fromActions.AddPage(payload));
+    this.store.dispatch(new fromDocument.AddPage(payload));
   }
 
   getImageHeight(img) {

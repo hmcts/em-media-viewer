@@ -1,15 +1,15 @@
-import { AfterContentInit, Injectable, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Highlight } from '../../../viewers/viewer-event.service';
+import { Injectable } from '@angular/core';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { AnnotationApiService } from '../../annotation-api.service';
 
-import {select, Store} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../../store/reducers';
 import * as fromSelectors from '../../../store/selectors/annotations.selectors';
+import * as fromDocument from '../../../store/selectors/document.selectors';
 import * as fromActions from '../../../store/actions/annotations.action';
-import {take} from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 @Injectable()
 export class HighlightCreateService {
@@ -22,7 +22,7 @@ export class HighlightCreateService {
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
               private store: Store<fromStore.AnnotationSetState>) {
-    this.store.select(fromSelectors.getAnnoPages)
+    this.store.select(fromDocument.getPages)
       .subscribe(pages => {
         this.height = pages.styles.height;
         this.width = pages.styles.width;

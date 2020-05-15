@@ -23,11 +23,12 @@ import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
-import {Store} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
+import * as fromDocumentActions from '../../store/actions/document.action';
+import * as fromDocumentSelectors from '../../store/selectors/document.selectors';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
-import * as fromActions from '../../store/actions/annotations.action';
 import { tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
@@ -111,7 +112,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
           scale: event.source.scale,
           rotation: event.source.rotation
         };
-        this.store.dispatch(new fromAnnotationActions.AddPage(payload));
+        this.store.dispatch(new fromDocumentActions.AddPage(payload));
       }
     });
     this.$subscription = this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url));
@@ -128,6 +129,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.pdfWrapper.positionUpdated.asObservable().pipe(throttleTime(1000))
       .subscribe(event => this.store.dispatch(new UpdatePdfPosition(event.location)))
     );
+    this.$subscription.add(
+      this.store.pipe(select(fromDocumentSelectors.getDocumentId)).subscribe(docId => this.documentId = docId)
+    );
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -138,7 +142,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.loadDocument();
       this.clearAnnotationSet();
       this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
-      this.documentId = this.extractDMStoreDocId(this.url);
     }
   }
 
@@ -172,6 +175,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private onDocumentLoaded() {
     this.loadingDocument = false;
     this.pdfLoadStatus.emit(ResponseType.SUCCESS);
+    this.store.dispatch(new fromDocumentActions.SetDocumentId(this.url));
   }
 
   private onDocumentLoadFailed(error: Error) {
@@ -208,17 +212,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (!this.annotationSet) {
       this.toolbarEvents.highlightModeSubject.next(false);
       this.toolbarEvents.drawModeSubject.next(false);
-    }
-
-    if (this.toolbarEvents.highlightTextRedactionMode.getValue()) {
-      const redactionHighlight = this.highlightService.getRectangles(mouseEvent);
-      const redactionId = uuid();
-      if (redactionHighlight && redactionHighlight.length) {
-        const documentId = this.documentId;
-        const redaction = {page, rectangles: [...redactionHighlight], redactionId, documentId};
-        this.store.dispatch(new fromRedactionActions.SaveRedaction(redaction));
-      }
-      this.toolbarEvents.highlightTextRedactionMode.next(false);
     }
   }
 
@@ -266,10 +259,5 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
-  }
-  // todo move this to common place for media viewer and pdf
-  private extractDMStoreDocId(url: string): string {
-    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
-    return url.replace('/binary', '');
   }
 }

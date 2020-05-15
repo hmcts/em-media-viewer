@@ -11,7 +11,7 @@
   </button>
   <button *ngIf="enableRedactions"
           id="redact" class="toolbarButton redact hiddenMediumView" title="Redact" tabindex="0"
-          data-l10n-id="redact" (click)="toggleRedactionBar()">
+          data-l10n-id="redact" (click)="toggleRedactionMode()">
     <span data-l10n-id="redact_label">Redact</span>
   </button>
   <button *ngIf="toolbarButtons.showDownload"

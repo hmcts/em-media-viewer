@@ -4,6 +4,7 @@ import {initialState, reducers, State} from '../index';
 
 import * as fromSelectors from './annotations.selectors';
 import * as fromActions from '../actions/annotations.action';
+import * as fromDocument from '../actions/document.action';
 import * as fromTags from '../actions/tags.actions';
   const comment = {
     createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
@@ -160,139 +161,6 @@ describe('Annotations selectors', () => {
     spyOn(store, 'dispatch').and.callThrough();
   });
 
-  describe('getAnnotationsSetState', () => {
-    it('should return initial state', () => {
-      let result;
-      store.pipe(select(fromSelectors.getAnnotationsSetState)).subscribe(value => {
-        result = value;
-      });
-      expect(result).toEqual(initialState);
-    });
-  });
-
-
-  describe('getAnnotationEntities', () => {
-    it('should return Annotations Entities', () => {
-      let result;
-      store.pipe(select(fromSelectors.getAnnotationEntities)).subscribe(value => {
-        result = value;
-      });
-      expect(result).toEqual({});
-      store.dispatch(new fromActions.SaveAnnotationSuccess(anno));
-      expect(result).toEqual(annotationEntities);
-    });
-  });
-
-  describe('getSet', () => {
-    it('should return AnnotationsSet', () => {
-      let result;
-      store.pipe(select(fromSelectors.getSet)).subscribe(value => {
-        result = value;
-      });
-      expect(result).toEqual({});
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      expect(result).toEqual(annoSet);
-    });
-  });
-
-  describe('getDocumentIdSetId', () => {
-    it('should return document and annoSet id', () => {
-      let result;
-      store.pipe(select(fromSelectors.getDocumentIdSetId)).subscribe(value => {
-        result = value;
-      });
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      const expected = {
-        documentId: 'assets/example4.pdf',
-        annotationSetId: '200bcec6-d9cf-4866-b208-f2cc5db77279'
-      }
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('getAnnotationSet', () => {
-    it('should return should return Annotation Set', () => {
-      let result;
-      store.pipe(select(fromSelectors.getAnnotationSet)).subscribe(value => {
-        result = value;
-      });
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      const expected = {
-        ...annoSet,
-        annotations: Object.keys(annotationEntities).map(key => annotationEntities[key])
-      };
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('getSelectedAnnotation', () => {
-    it('should return selected annotation obj', () => {
-      let result;
-      store.pipe(select(fromSelectors.getSelectedAnnotation)).subscribe(value => {
-        result = value;
-      });
-      expect(result).toEqual(initialState.selectedAnnotation);
-      const payload = {
-        annotationId: 'c3adf070-353b-45d2-9a84-c912851cf34d',
-        editable: false,
-        selected: true
-      };
-      store.dispatch(new fromActions.SelectedAnnotation(payload));
-      expect(result).toEqual(payload);
-    });
-  });
-
-  describe('getAnnCommentsEntities', () => {
-    it('should return selected comment entities', () => {
-      let result;
-      store.pipe(select(fromSelectors.getAnnComments)).subscribe(value => {
-        result = value;
-      });
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      expect(result).toEqual(commentEntities);
-    });
-  });
-
-  describe('getPageEntities', () => {
-    it('should return selected annotation obj', () => {
-      let result;
-      store.pipe(select(fromSelectors.getPageEntities)).subscribe(value => {
-        result = value;
-      });
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      expect(result).toEqual(annotationPageEntities);
-    });
-  });
-
-  describe('getAnnoPages', () => {
-    it('should return selected annotation obj', () => {
-      let result;
-      store.pipe(select(fromSelectors.getAnnoPages)).subscribe(value => {
-        result = value;
-      });
-      const payload: any = {
-        div: {},
-        pageNumber: 1,
-          scale: 1,
-          rotation: 0
-      };
-      store.dispatch(new fromActions.AddPage(payload));
-      const expected = {
-        numberOfPages: 1,
-        styles: {
-          left: undefined,
-          height: undefined,
-          width: undefined
-        },
-        scaleRotation: {
-          scale: 1,
-          rotation: 0
-        }
-      };
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('getComponentSearchQueries', () => {
     it('should return search query', () => {
       let result;
@@ -328,7 +196,7 @@ describe('Annotations selectors', () => {
         rotation: 0
       };
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      store.dispatch(new fromActions.AddPage(payload));
+      store.dispatch(new fromDocument.AddPage(payload));
       const expected = [
         {
           anno: [anno],
@@ -353,7 +221,7 @@ describe('Annotations selectors', () => {
         rotation: 0
       };
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      store.dispatch(new fromActions.AddPage(payload));
+      store.dispatch(new fromDocument.AddPage(payload));
       store.dispatch(new fromTags.AddFilterTags({important: false}));
       const expected = [
         {...comment, tags}
@@ -376,7 +244,7 @@ describe('Annotations selectors', () => {
         rotation: 0
       };
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      store.dispatch(new fromActions.AddPage(payload));
+      store.dispatch(new fromDocument.AddPage(payload));
       store.dispatch(new fromTags.AddFilterTags({important: false}));
       expect(result).toEqual([anno]);
     });

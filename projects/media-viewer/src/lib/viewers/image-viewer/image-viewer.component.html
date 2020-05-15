@@ -18,7 +18,7 @@
            [ngClass]="'rot' + rotation"
            (error)="onLoadError(url)"
            (load)="onLoad()"/>
-      <mv-redactions *ngIf="(toolbarEvents.toggleRedactBarVisibility | async);else annotationTemplate"
+      <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
                      [zoom]="zoom"
                      [rotate]="rotation"
       ></mv-redactions>
@@ -32,7 +32,7 @@
       </ng-template>
     </div>
   </div>
-  <mv-comment-set *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.toggleRedactBarVisibility | async)"
+  <mv-comment-set *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
                   [annotationSet]="annotationSet"
                   [zoom]="zoom"
                   [rotate]="rotation"

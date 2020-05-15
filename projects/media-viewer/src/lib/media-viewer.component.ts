@@ -64,8 +64,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
-  displayRedactionTools;
-  isRedactionPreview = false;
   hasScrollBar: boolean;
   typeException: boolean = false;
 
@@ -84,7 +82,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
-    const documentId = this.extractDMStoreDocId(this.url);
     this.annotationSet$ = this.store.pipe(select(fromAnnoSelectors.getAnnotationSet));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
@@ -92,16 +89,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)),
       this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes)
     );
-    this.toolbarEvents.toggleRedactBarVisibility.subscribe(toggle => this.displayRedactionTools = toggle);
-    this.toolbarEvents.toggleRedactionViewMode.subscribe((mode: boolean) => {this.isRedactionPreview = mode});
-    this.toolbarEvents.redactDocument.subscribe(() => {
-      this.store.pipe(select(fromRedaSelectors.getRedactionArray), take(1)).subscribe(redactions => {
-        this.store.dispatch(new fromRedaActions.Redact(redactions));
-      });
-    });
-    this.toolbarEvents.unmarkAllMarkers.subscribe(() => {
-      this.store.dispatch(new fromRedaActions.UnmarkAll(documentId));
-    })
   }
 
   contentTypeUnsupported(): boolean {

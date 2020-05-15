@@ -12,8 +12,6 @@ export const SAVE_ANNOTATION_SUCCESS = '[Annotations] Save Annotation Success';
 export const SAVE_ANNOTATION_FAIL = '[Annotations] Save Annotation Fail';
 export const ADD_OR_EDIT_COMMENT = '[Annotations] Add or Edit Comment';
 
-export const ADD_PAGE = '[Annotations] Add Page';
-
 export const DELETE_ANNOTATION = '[Annotations] Delete Annotation';
 export const DELETE_ANNOTATION_SUCCESS = '[Annotations] Delete Annotation Success';
 export const DELETE_ANNOTATION_FAIL = '[Annotations] Delete Annotation Fail';
@@ -56,11 +54,6 @@ export class AddOrEditComment implements Action {
   constructor(public payload: Annotation) { }
 }
 
-export class AddPage implements Action {
-  readonly type = ADD_PAGE;
-  constructor(public payload: { div: any; pageNumber: number; scale: string; rotation: string }) { }
-}
-
 export class DeleteAnnotation implements Action {
   readonly type = DELETE_ANNOTATION;
   constructor(public payload: string) { }
@@ -94,7 +87,6 @@ export type AnnotationsActions =
   | SaveAnnotationSuccess
   | SaveAnnotationFail
   | AddOrEditComment
-  | AddPage
   | DeleteAnnotation
   | DeleteAnnotationSuccess
   | DeleteAnnotationFail

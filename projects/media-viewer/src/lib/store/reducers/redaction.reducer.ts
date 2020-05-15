@@ -8,12 +8,16 @@ export interface RedactionState {
   redactionEntities: {[id: string]: any};
   redactionPageEntities: {[id: string]: any};
   selectedRedaction: SelectionAnnotation | {};
+  redactedDocumentInfo: { url: string, filename: string };
+  documentId: undefined;
 }
 
 export const initialRedactionState: RedactionState = {
   redactionEntities: {},
   redactionPageEntities: {},
-  selectedRedaction: {}
+  selectedRedaction: {},
+  redactedDocumentInfo: undefined,
+  documentId: undefined
 };
 
 export function redactionReducer (
@@ -22,14 +26,14 @@ export function redactionReducer (
 ): RedactionState {
   switch (action.type) {
 
-    case fromRedaction.LOAD_REDUCTIONS: {
+    case fromRedaction.LOAD_REDACTIONS: {
       return {
         ...state,
         ...initialRedactionState
       };
     }
 
-    case fromRedaction.LOAD_REDUCTION_SUCCESS: {
+    case fromRedaction.LOAD_REDACTION_SUCCESS: {
       const payload = action.payload;
       if (payload) {
         const redactionEntities = StoreUtils.generateRedactionEntities(payload);
@@ -45,7 +49,7 @@ export function redactionReducer (
       };
     }
 
-    case fromRedaction.SAVE_REDUCTION_SUCCESS: {
+    case fromRedaction.SAVE_REDACTION_SUCCESS: {
       const {payload} =  action;
       const redactionEntities = {
         ...state.redactionEntities,
@@ -68,7 +72,7 @@ export function redactionReducer (
       };
     }
 
-    case fromRedaction.DELETE_REDUCTION_SUCCESS: {
+    case fromRedaction.DELETE_REDACTION_SUCCESS: {
       const page = action.payload.page;
       const id = action.payload.redactionId;
       const redactionEntities = {
@@ -90,6 +94,22 @@ export function redactionReducer (
       };
     }
 
+    case fromRedaction.REDACT_SUCCESS: {
+      const redactedDocumentInfo = action.payload;
+      return {
+        ...state,
+        ...initialRedactionState,
+        redactedDocumentInfo
+      };
+    }
+
+    case fromRedaction.CLEAR_REDACT_DOC_URL: {
+      return {
+        ...state,
+        redactedDocumentInfo: undefined
+      };
+    }
+
     case fromRedaction.UNMARK_ALL_SUCCESS: {
       return {
         ...state,
@@ -105,6 +125,7 @@ export function redactionReducer (
 export const getRedactionEnt = (state: RedactionState) => state.redactionEntities;
 export const getPageEnt = (state: RedactionState) => state.redactionPageEntities;
 export const getSelectedRedaction = (state: RedactionState) => state.selectedRedaction;
+export const getRedactedDocInfo = (state: RedactionState) => state.redactedDocumentInfo;
 
 
 

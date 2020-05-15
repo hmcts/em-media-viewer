@@ -1,5 +1,6 @@
 import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 
+import * as fromDocument from './document.reducer';
 import * as fromAnnotation from './annotatons.reducer';
 import * as fromTags from './tags.reducer';
 import * as fromBookmarks from './bookmarks.reducer';
@@ -7,6 +8,7 @@ import { BookmarksState } from '../../viewers/pdf-viewer/side-bar/bookmarks/book
 import * as fromRedaction from './redaction.reducer';
 
 export interface State {
+  document: fromDocument.DocumentState;
   annotations: fromAnnotation.AnnotationSetState;
   tags: fromTags.TagsState;
   bookmarks: BookmarksState;
@@ -14,14 +16,16 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
+  document: fromDocument.docReducer,
   annotations: fromAnnotation.reducer,
   tags: fromTags.tagsReducer,
   bookmarks: fromBookmarks.bookmarksReducer,
-  redactions: fromRedaction.redactionReducer
+  redactions: fromRedaction.redactionReducer,
 };
 
 export const getMVState = createFeatureSelector<State>('media-viewer');
 
+export * from './document.reducer';
 export * from './annotatons.reducer';
 export * from './tags.reducer';
 export * from './bookmarks.reducer';

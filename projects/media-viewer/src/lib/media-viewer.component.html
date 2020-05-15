@@ -1,7 +1,7 @@
 <div id="outerContainer"
      [ngClass]="{
-       'has-redact-bar': displayRedactionTools,
-       'is-redaction-preview': isRedactionPreview,
+       'has-redact-bar': toolbarEvents.redactionMode | async,
+       'is-redaction-preview': toolbarEvents.redactionPreview | async,
        sidebarOpen: toolbarEvents.sidebarOpen | async,
        'has-scroll-bar': hasScrollBar
      }"
@@ -19,7 +19,7 @@
                      [enableRedactions]="enableRedactions">
     </mv-main-toolbar>
 
-    <mv-redaction-toolbar *ngIf="displayRedactionTools"></mv-redaction-toolbar>
+    <mv-redaction-toolbar *ngIf="toolbarEvents.redactionMode | async"></mv-redaction-toolbar>
 
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (pdfLoadStatus)="onMediaLoad($event)"

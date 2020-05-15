@@ -27,7 +27,7 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
   }
 
   toggleTextRedactionMode() {
-    this.toolbarEventService.highlightTextRedactionMode.next(true);
+    this.toolbarEventService.highlightModeSubject.next(true);
   }
 
   toggleDrawMode() {
@@ -44,7 +44,7 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
   }
 
   redact() {
-    this.toolbarEventService.redact();
+    this.toolbarEventService.applyRedactionToDocument();
   }
 
   ngOnDestroy(): void {
