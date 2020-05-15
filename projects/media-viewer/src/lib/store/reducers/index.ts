@@ -9,7 +9,7 @@ import * as fromRedaction from './redaction.reducer';
 export interface State {
   annotations: fromAnnotation.AnnotationSetState;
   tags: fromTags.TagsState;
-  bookmarks: fromBookmarks.BookmarksState;
+  bookmarks: BookmarksState;
   redactions: fromRedaction.RedactionState;
 }
 
