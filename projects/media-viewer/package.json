@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.1.2",
+  "version": "2.1.2-aot-fix",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
