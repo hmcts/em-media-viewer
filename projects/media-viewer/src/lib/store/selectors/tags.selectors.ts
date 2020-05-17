@@ -1,5 +1,5 @@
 import {createSelector} from '@ngrx/store';
-import * as fromFeature from '../reducers';
+import * as fromFeature from '../reducers/reducers';
 import * as fromTags from '../reducers/tags.reducer';
 
 export const getTagsRootState = createSelector(

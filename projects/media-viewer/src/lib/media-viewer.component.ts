@@ -23,7 +23,7 @@ import {ResponseType, ViewerException} from './viewers/viewer-exception.model';
 import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
 import {select, Store} from '@ngrx/store';
-import * as fromStore from './store/reducers';
+import * as fromStore from './store/reducers/reducers';
 import * as fromSelectors from './store/selectors/annotations.selectors';
 import * as fromActions from './store/actions/annotations.action';
 

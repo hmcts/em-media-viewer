@@ -19,7 +19,7 @@ import {TagsServices} from '../../services/tags/tags.services';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../../../store/reducers';
+import * as fromStore from '../../../store/reducers/reducers';
 import * as fromSelector from '../../../store/selectors/annotations.selectors';
 
 @Component({
