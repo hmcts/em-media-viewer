@@ -1,11 +1,12 @@
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 
 import { SideBarComponent } from './side-bar.component';
 import { OutlineItemComponent } from './outline-item/outline-item.component';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../../store/reducers/reducers';
 import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { UpdatePdfPosition } from '../../../store/actions/bookmarks.action';
 
 describe('SideBarComponent', () => {
   let component: SideBarComponent;
@@ -49,4 +50,25 @@ describe('SideBarComponent', () => {
 
       expect(navigateSpy).toHaveBeenCalled();
   }));
+
+  it('should toggle sidebar view', () => {
+    component.selectedView = 'bookmarks';
+
+    component.toggleSidebarView('outline');
+
+    expect(component.selectedView).toBe('outline');
+  });
+
+  it('should dispatch CreateBookmark action',
+    inject([Store], fakeAsync((store) => {
+      store.dispatch(new UpdatePdfPosition({ pageNumber: 1, top: 50, left: 30 } as any));
+      spyOn(store, 'dispatch');
+
+      component.onAddBookmarkClick();
+      tick();
+
+      expect(store.dispatch).toHaveBeenCalled();
+      expect(component.selectedView).toBe('bookmarks')
+    }))
+  );
 });

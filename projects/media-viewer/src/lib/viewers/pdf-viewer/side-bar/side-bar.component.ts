@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Outline } from './outline-item/outline.model';
 import { ViewerEventService } from '../../viewer-event.service';
 import { ToolbarButtonVisibilityService } from '../../../toolbar/toolbar.module';
@@ -16,7 +16,7 @@ import uuid from 'uuid';
   selector: 'mv-side-bar',
   templateUrl: './side-bar.component.html'
 })
-export class SideBarComponent implements OnInit, OnChanges {
+export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() annotationsEnabled: boolean;
   @Input() outline: Outline;
@@ -28,7 +28,7 @@ export class SideBarComponent implements OnInit, OnChanges {
   selectedView = 'outline';
   bookmarks$: Observable<Bookmark[]>;
 
-  subscriptions: Subscription[];
+  $subscription: Subscription;
 
   constructor(private viewerEvents: ViewerEventService,
               private toolbarButtons: ToolbarButtonVisibilityService,
@@ -38,12 +38,18 @@ export class SideBarComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.bookmarks$ = this.store.pipe(select(bookmarksSelectors.getAllBookmarks));
+    this.$subscription = this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
+      .subscribe(editable => this.selectedView = editable ? 'bookmarks' : this.selectedView);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.url && this.url) {
       this.store.dispatch(new LoadBookmarks());
     }
+  }
+
+  ngOnDestroy() {
+    this.$subscription.unsubscribe();
   }
 
   goToDestination(destination: any[]) {
@@ -55,7 +61,7 @@ export class SideBarComponent implements OnInit, OnChanges {
   }
 
   onAddBookmarkClick() {
-    this.toggleSidebarView('bookmark');
+    this.toggleSidebarView('bookmarks');
     this.store.pipe(select(fromBookmarks.getBookmarkInfo), take(1))
       .subscribe((bookmarkInfo) => {
         this.store.dispatch(new CreateBookmark({

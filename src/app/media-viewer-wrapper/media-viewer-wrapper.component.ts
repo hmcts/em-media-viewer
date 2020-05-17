@@ -37,13 +37,12 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
     this.documentType = newTab;
 
     if (newTab === 'pdf') {
-      this.url = this.pdfUrl;
+      this.setDocumentUrl(this.pdfUrl);
     } else if (newTab === 'image') {
-      this.url = this.imageUrl;
+      this.setDocumentUrl(this.imageUrl);
     } else {
-      this.url = this.unsupportedUrl;
+      this.setDocumentUrl(this.unsupportedUrl);
     }
-    this.setDocumentUrl(this.url);
   }
 
   toggleToolbar(showToolbar: boolean) {

@@ -16,7 +16,6 @@
       <img #img
            [src]="url"
            [ngClass]="'rot' + rotation"
-           data-hook="dm.viewer.img"
            (error)="onLoadError(url)"
            (load)="onLoad()"/>
       <mv-annotation-set *ngIf="enableAnnotations && annotationSet"

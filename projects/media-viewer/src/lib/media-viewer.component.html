@@ -33,6 +33,7 @@
     </mv-image-viewer>
     <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
                            [url]="url"
+                           [typeException]="typeException"
                            [downloadFileName]="downloadFileName"
                            (loadStatus)="onMediaLoad($event)"
                            (unsupportedViewerException)="onLoadException($event)">

@@ -13,6 +13,7 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
   @Input() url: string;
   @Input() originalUrl: string;
   @Input() downloadFileName: string;
+  @Input() typeException: boolean;
 
   @Output() loadStatus = new EventEmitter<ResponseType>();
   @Output() unsupportedViewerException = new EventEmitter<ViewerException>();
@@ -40,7 +41,10 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
     );
 
     this.loadStatus.emit(ResponseType.UNSUPPORTED);
-    this.unsupportedViewerException.emit(this.viewerException);
+
+    if (!this.typeException) {
+      this.unsupportedViewerException.emit(this.viewerException);
+    }
   }
 
   ngOnDestroy(): void {
