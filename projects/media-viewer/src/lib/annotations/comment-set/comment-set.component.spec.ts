@@ -15,7 +15,7 @@ import {TagInputModule} from 'ngx-chips';
 import { TextHighlightDirective } from './comment/text-highlight.directive';
 import { MomentDatePipe } from '../pipes/date.pipe';
 import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../store/reducers';
+import {reducers} from '../../store/reducers/reducers';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;

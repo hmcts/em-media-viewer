@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { select, Store, StoreModule } from '@ngrx/store';
-import { initialTagState, reducers, State} from '../index';
+
 
 import * as fromSelectors from './tags.selectors';
 import * as fromActions from '../actions/annotations.action';
 import * as fromTags from '../actions/tags.actions';
+import {initialTagState, reducers, State} from '../reducers/reducers';
 const comment = {
   createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
   createdByDetails: {

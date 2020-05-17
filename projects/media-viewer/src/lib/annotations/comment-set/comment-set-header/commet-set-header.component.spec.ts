@@ -3,7 +3,7 @@ import {CommentSetHeaderComponent} from './comment-set-header.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
+import {reducers} from '../../../store/reducers/reducers';
 
 describe('CommentSetHeader', () => {
   let component: CommentSetHeaderComponent;
