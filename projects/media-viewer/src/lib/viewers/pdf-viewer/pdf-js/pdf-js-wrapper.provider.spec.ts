@@ -1,51 +1,43 @@
 import { PdfJsWrapperFactory } from './pdf-js-wrapper.provider';
 import { PdfViewerComponent } from '../pdf-viewer.component';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Subject } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommentService } from '../../../annotations/comment-set/comment/comment.service';
-import { AnnotationApiService } from '../../../annotations/annotation-api.service';
 import { GrabNDragDirective } from '../../grab-n-drag.directive';
-import { Store, StoreModule } from '@ngrx/store';
-import {reducers} from '../../../store/reducers/reducers';
+import { ToolbarEventService } from '../../../toolbar/toolbar.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../../store/reducers/reducers';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
   let fixture: ComponentFixture<PdfViewerComponent>;
 
   beforeEach(() => {
-    return TestBed.configureTestingModule({
-      declarations: [
-        PdfViewerComponent,
-        GrabNDragDirective
-      ],
-      providers: [
-        ToolbarEventService,
-        CommentService,
-        AnnotationApiService
-      ],
+    TestBed.configureTestingModule({
+      declarations: [PdfViewerComponent, GrabNDragDirective],
+      providers: [ToolbarEventService],
       imports: [
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({})
       ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-      ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA,]
     })
     .compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
-
   });
 
-  it('creates a wrapper', inject([Store], (store) => {
-    const factory = new PdfJsWrapperFactory(new ToolbarEventService(), store);
+  it('creates a wrapper', () => {
+    const factory = new PdfJsWrapperFactory(new ToolbarEventService());
     const wrapper = factory.create(component.viewerContainer);
 
     expect(wrapper).not.toBeNull();
-  }));
-
+    expect(wrapper.documentLoadInit).toBeInstanceOf(Subject);
+    expect(wrapper.documentLoadProgress).toBeInstanceOf(Subject);
+    expect(wrapper.documentLoaded).toBeInstanceOf(Subject);
+    expect(wrapper.outlineLoaded).toBeInstanceOf(Subject);
+    expect(wrapper.documentLoadFailed).toBeInstanceOf(Subject);
+    expect(wrapper.pageRendered).toBeInstanceOf(Subject);
+    expect(wrapper.positionUpdated).toBeInstanceOf(Subject);
+  });
 });

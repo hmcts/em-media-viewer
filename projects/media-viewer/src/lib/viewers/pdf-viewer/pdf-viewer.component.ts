@@ -26,8 +26,9 @@ import { Outline } from './side-bar/outline-item/outline.model';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
-import {tap} from 'rxjs/operators';
+import { tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
+import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -111,7 +112,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
-
+    this.$subscription.add(
+      this.pdfWrapper.positionUpdated.asObservable().pipe(throttleTime(1000))
+      .subscribe(event => this.store.dispatch(new UpdatePdfPosition(event.location)))
+    );
   }
 
   async ngOnChanges(changes: SimpleChanges) {

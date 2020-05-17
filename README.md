@@ -40,15 +40,6 @@ import assets to your angular.json
 }
 ```
 
-and styles
-
-```
-"styles": [
-  "node_modules/@hmcts/media-viewer/assets/aui-styles.scss",
-  ...
-],
-```
-
 component entry point:
 
 ```
@@ -58,6 +49,20 @@ component entry point:
                  [contentType]="'pdf'">
 </mv-media-viewer>  
 ```
+### Media Viewer Styles
+Add these styles to your component.scss if you need them.
+If you're writing your own toolbar styles then do not import those
+
+```
+// Import GOV.UK Frontend
+@import "~govuk-frontend/govuk/all";
+@import "~@hmcts/frontend/all";
+// Import Media Viewer Styles
+@import "~media-viewer/src/assets/all"; // use this to import all the styles 
+```
+Alternatively, it is possible to import file by file as required from ```assets/sass``` directory 
+
+eg. ```~media-viewer/assets/sass/toolbar/main```
 
 ## Customisations
 ### Toolbar
@@ -153,20 +158,6 @@ The structure of the `ViewerException` exception class can be seen below:
       message: error.message
     }
     
-## Media Viewer Styles
-Add these styles to your component.scss if you need them
-i.e. if you writing your own toolbar styles then do not import those
-
-```
-// Import GOV.UK Frontend
-@import "~govuk-frontend/govuk/all";
-@import "~@hmcts/frontend/all";
-// Import Media Viewer Styles
-@import "~media-viewer/src/assets/all"; // use this to import all the styles 
-alternatevly it is possible to import file by file from assets/scss directory 
-i.e. "~media-viewer/src/assets/toolbar/main"
-```
-
 The list of exceptions thrown by the Media Viewer are as follows:
 - UnknownErrorException
 - MissingPdfException

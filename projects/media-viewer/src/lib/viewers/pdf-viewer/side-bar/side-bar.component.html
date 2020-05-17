@@ -8,8 +8,8 @@
     </button>
     <button *ngIf="annotationsEnabled"
             id="viewBookmark" class="toolbarButton bookmark"
-            [ngClass]="{ toggled: selectedView === 'bookmark' }"
-            (click)="toggleSidebarView('bookmark')"
+            [ngClass]="{ toggled: selectedView === 'bookmarks' }"
+            (click)="toggleSidebarView('bookmarks')"
             title="Show Bookmarks" tabindex="2" data-l10n-id="bookmarks">
       <span data-l10n-id="bookmarks_label">Thumbnails</span>
     </button>
@@ -32,7 +32,7 @@
                        [outline]="outlineItem"
                        (navigationEvent)="goToDestination($event)"></mv-outline-item>
     </div>
-    <div *ngIf="annotationsEnabled && selectedView === 'bookmark'"
+    <div *ngIf="annotationsEnabled && selectedView === 'bookmarks'"
          id="bookmarkContainer">
       <mv-bookmarks [bookmarks]="bookmarks$ | async"
                     [zoom]="zoom" [rotate]="rotate"
