@@ -5,10 +5,9 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommentService } from '../../../annotations/comment-set/comment/comment.service';
 import { AnnotationApiService } from '../../../annotations/annotation-api.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GrabNDragDirective } from '../../grab-n-drag.directive';
 import { Store, StoreModule } from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
+import {reducers} from '../../../store/reducers/reducers';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;

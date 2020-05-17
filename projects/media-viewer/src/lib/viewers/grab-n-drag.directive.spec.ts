@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { AnnotationApiService } from '../annotations/annotation-api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
  import {StoreModule} from '@ngrx/store';
- import {reducers} from '../store/reducers';
+ import {reducers} from '../store/reducers/reducers';
 
 describe('GrabNDragDirective', () => {
   let component: ImageViewerComponent;

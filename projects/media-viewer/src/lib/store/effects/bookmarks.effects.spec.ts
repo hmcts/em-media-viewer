@@ -6,7 +6,7 @@ import * as bookmarkActions from '../actions/bookmarks.action';
 import { BookmarksEffects } from './bookmarks.effects';
 import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
 import { Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../reducers';
+import { reducers } from '../reducers/reducers';
 import { UpdatePdfPosition } from '../actions/bookmarks.action';
 
 describe('Bookmark Effects', () => {
