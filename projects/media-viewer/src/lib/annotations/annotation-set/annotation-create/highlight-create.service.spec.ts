@@ -2,7 +2,6 @@ import { HighlightCreateService } from './highlight-create.service';
 import { of } from 'rxjs';
 import { fakeAsync } from '@angular/core/testing';
 
-
 describe('HighlightCreateService', () => {
 
   const mockHighlightModeSubject = { next: () => {} };
@@ -42,9 +41,7 @@ describe('HighlightCreateService', () => {
     } as any;
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
 
-    const mockElement = {
-      parentElement: ({ getBoundingClientRect: () => ({ top: 30, left: 40})})
-    };
+    const mockElement = getMockElement('');
     const mockHighlight = { event: { target: mockElement }} as any;
     service.zoom = 1;
 
@@ -59,35 +56,25 @@ describe('HighlightCreateService', () => {
   it('should remove extra padding and transform', () => {
     spyOn(window, 'getSelection').and.returnValue({} as any);
 
-    const mockElement = {
-      parentElement: ({
-        getBoundingClientRect: () => ({ top: 30, left: 40}),
-        childNodes: [{ style: { padding: 20, transform: 'scaleX(0.969918) translateX(-110.684px)' }}]
-      })
-    };
+    const mockElement = getMockElement('scaleX(0.969918) translateX(-110.684px)');
     const mockHighlight = { event: { target: mockElement }} as any;
 
     service.getRectangles(mockHighlight);
 
-    expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
-    expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translate');
+    expect(mockElement.parentElement.children[0].style.padding).toBe('0');
+    expect(mockElement.parentElement.children[0].style.transform).not.toContain('translate');
   });
 
   it('should remove extra padding and transform with just only translate', () => {
     spyOn(window, 'getSelection').and.returnValue({} as any);
 
-    const mockElement = {
-      parentElement: ({
-        getBoundingClientRect: () => ({ top: 30, left: 40}),
-        childNodes: [{ style: { padding: 20, transform: 'translateX(-110.684px) translateY(12px)' }}]
-      })
-    };
+    const mockElement = getMockElement('translateX(-110.684px) translateY(12px)');
     const mockHighlight = { event: { target: mockElement }} as any;
 
     service.getRectangles(mockHighlight);
 
-    expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
-    expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translateX');
+    expect(mockElement.parentElement.children[0].style.padding).toBe('0');
+    expect(mockElement.parentElement.children[0].style.transform).not.toContain('translateX');
   });
 
   it('should save annotation', () => {
@@ -112,4 +99,13 @@ describe('HighlightCreateService', () => {
     expect(window.getSelection().removeAllRanges).toHaveBeenCalled();
     expect(toolbarEvents.highlightModeSubject.next).toHaveBeenCalledWith(false);
   });
+
+  const getMockElement = (transform: string) => {
+    return {
+      parentElement: ({
+        getBoundingClientRect: () => ({ top: 30, left: 40}),
+        children: [{ style: { padding: '20', transform: transform }}]
+      })
+    };
+  }
 });
