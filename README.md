@@ -143,6 +143,8 @@ It is up to the consuming application whether or not to notify the user of those
                      [downloadFileName]="'example.pdf'"
                      [showToolbar]="true"
                      [contentType]="'pdf'"
+                     [enableAnnotations]="true"
+                     [enableRedactions]="true"
                      (mediaLoadStatus)="onMediaLoadStatus($event)"
                      (viewerException)="onMediaLoadException($event)">
     </mv-media-viewer>  
