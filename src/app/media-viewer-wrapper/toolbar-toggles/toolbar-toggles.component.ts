@@ -15,6 +15,7 @@ export class ToolbarTogglesComponent {
   @Output() toggleToolbarBtns = new EventEmitter();
   @Output() toggleCustomToolbar = new BehaviorSubject(false);
   @Output() toggleAnnotations = new BehaviorSubject(true);
+  @Output() toggleRedactions = new BehaviorSubject(true);
   @Output() showCommentSummary = new BehaviorSubject(false);
 
   toolbarButtonOverrides = {};

@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { DeleteBookmark, UpdateBookmark } from '../../../../store/actions/bookmarks.action';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmarks.selectors';
 import { Subscription } from 'rxjs';
-import * as annoSelectors from '../../../../store/selectors/annotations.selectors';
+import * as fromDocument from '../../../../store/selectors/document.selectors';
 import { AnnotationSetState } from '../../../../store/reducers/reducers';
 import { Bookmark, BookmarksState } from './bookmarks.interfaces';
 
@@ -35,7 +35,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.$subscription = this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
       .subscribe(editableId => this.editableBookmark = editableId);
-    this.$subscription.add(this.store.select(annoSelectors.getAnnoPages)
+    this.$subscription.add(this.store.select(fromDocument.getPages)
       .subscribe(pages => {
         if (pages) {
           this.height = pages.styles.height;

@@ -1,7 +1,7 @@
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToolbarRightPaneComponent } from './right-pane.component';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
-import { ToolbarEventService } from '../../toolbar-event.service';
+import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ToolbarEventService } from '../toolbar-event.service';
 
 describe('ToolbarRightPaneComponent', () => {
   let component: ToolbarRightPaneComponent;

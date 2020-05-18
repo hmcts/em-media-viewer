@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
-import { ToolbarEventService } from '../../toolbar-event.service';
+import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ToolbarEventService } from '../toolbar-event.service';
 
 @Component({
   selector: 'mv-sub-toolbar',

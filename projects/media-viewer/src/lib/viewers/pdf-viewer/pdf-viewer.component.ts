@@ -23,9 +23,11 @@ import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromActions from '../../store/actions/annotations.action';
+import * as fromDocumentActions from '../../store/actions/document.action';
+import * as fromAnnotationActions from '../../store/actions/annotations.action';
+import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import { tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
@@ -45,6 +47,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Input() downloadFileName: string;
 
   @Input() enableAnnotations: boolean;
+  @Input() enableRedactions: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
   @Input() height: string;
@@ -59,6 +62,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   loadingDocument = false;
   loadingDocumentProgress: number;
   errorMessage: string;
+  documentId: string;
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
@@ -99,17 +103,19 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
           scale: event.source.scale,
           rotation: event.source.rotation
         };
-        this.store.dispatch(new fromActions.AddPage(payload));
+        this.store.dispatch(new fromDocumentActions.AddPage(payload));
       }
     });
     this.$subscription = this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url));
-    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)));
+    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() =>
+      this.pdfWrapper.downloadFile(this.url, this.downloadFileName)));
     this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)));
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
     this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
-    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
+    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber =>
+      this.pdfWrapper.changePageNumber(pageNumber)));
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
     this.$subscription.add(
@@ -125,6 +131,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (changes.url && this.pdfWrapper) {
       this.loadDocument();
       this.clearAnnotationSet();
+      this.documentId = this.extractDMStoreDocId(this.url);
+      if (this.enableRedactions) {
+        this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
+      }
     }
   }
 
@@ -133,7 +143,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   ngOnDestroy(): void {
-    this.$subscription.unsubscribe()
+    this.$subscription.unsubscribe();
   }
 
 
@@ -158,6 +168,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private onDocumentLoaded() {
     this.loadingDocument = false;
     this.pdfLoadStatus.emit(ResponseType.SUCCESS);
+    this.store.dispatch(new fromDocumentActions.SetDocumentId(this.url));
   }
 
   private onDocumentLoadFailed(error: Error) {
@@ -177,26 +188,23 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onPdfViewerClick() {
-    this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
+    this.store.dispatch(new fromAnnotationActions.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
     this.viewerEvents.clearCtxToolbar();
   }
 
   onMouseUp(mouseEvent: MouseEvent) {
+    const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
+    const page = parseInt(pageElement.getAttribute('data-page-number'), 10);
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
-      const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
       this.viewerEvents.textSelected({
-        page: parseInt(pageElement.getAttribute('data-page-number')),
+        page,
         event: mouseEvent,
         annoSet: this.annotationSet
       });
     }
     if (!this.annotationSet) {
-      if (this.toolbarEvents.highlightModeSubject.getValue()) {
-        this.toolbarEvents.highlightModeSubject.next(false);
-      }
-      if (this.toolbarEvents.drawModeSubject.getValue()) {
-        this.toolbarEvents.drawModeSubject.next(false);
-      }
+      this.toolbarEvents.highlightModeSubject.next(false);
+      this.toolbarEvents.drawModeSubject.next(false);
     }
   }
 
@@ -206,7 +214,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private setRotation(rotation: number) {
     const pageNumber = this.pdfWrapper.getPageNumber();
-    if(this.commentsPanel) {
+    if (this.commentsPanel) {
       this.commentsPanel.container.nativeElement.style.height = 0;
     }
     this.pdfWrapper.rotate(rotation);
@@ -244,5 +252,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
+  }
+  // todo move this to common place for media viewer and pdf
+  private extractDMStoreDocId(url: string): string {
+    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
+    return url.replace('/binary', '');
   }
 }

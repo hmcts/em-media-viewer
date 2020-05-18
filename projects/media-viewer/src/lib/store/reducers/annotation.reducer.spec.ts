@@ -62,34 +62,6 @@ describe('AnnotationReducer', () => {
     });
   });
 
-  describe('ADD PAGE action', () => {
-    it('should set pages', () => {
-      const payload = {
-          div: {},
-          pageNumber: 3,
-          scale: '1',
-          rotation: '0'
-        }
-      const { initialState } = fromAnnotations;
-      const action = new fromActions.AddPage(payload);
-      const state = fromAnnotations.reducer(initialState, action);
-      const pages = {
-        numberOfPages: 3,
-        styles: {
-          left: undefined,
-          height: undefined,
-          width: undefined
-        },
-        scaleRotation: {
-          scale: '1',
-          rotation: '0'
-        }
-      }
-
-      expect(state.pages).toEqual(pages);
-    });
-  });
-
   describe('LOAD_ANNOTATION_SET action', () => {
     it('should set loading to true', () => {
       const { initialState } = fromAnnotations;

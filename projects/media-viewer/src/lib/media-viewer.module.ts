@@ -17,10 +17,13 @@ import { TagInputModule } from 'ngx-chips';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule} from '@ngrx/store';
+import { RedactionComponent } from './redaction/components/redaction.component';
 // APP store
 import { reducers} from './store/reducers/reducers';
 import { effects } from './store/effects/index';
 import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
+import { RedactionApiService } from './redaction/services/redaction-api.service';
+import { MutableDivModule } from 'mutable-div';
 
 
 @NgModule({
@@ -35,6 +38,7 @@ import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/book
     RouterModule,
     StoreModule.forFeature('media-viewer', reducers),
     EffectsModule.forFeature(effects),
+    MutableDivModule
   ],
   declarations: [
     PdfViewerComponent,
@@ -44,7 +48,8 @@ import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/book
     ImageViewerComponent,
     UnsupportedViewerComponent,
     MediaViewerComponent,
-    GrabNDragDirective
+    GrabNDragDirective,
+    RedactionComponent // todo made put this into module
   ],
   entryComponents: [
     PdfViewerComponent,
@@ -54,6 +59,7 @@ import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/book
   providers: [
     PdfJsWrapperFactory,
     CommentService,
+    RedactionApiService
   ],
   exports: [
     MediaViewerComponent

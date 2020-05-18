@@ -1,5 +1,8 @@
 $--sidebar-width: 20%;
 #sidebarContainer {
+  .has-redact-bar & {
+    top: 65px;
+  }
   position: absolute;
   top: 32px;
   bottom: 0;

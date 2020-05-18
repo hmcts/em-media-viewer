@@ -42,10 +42,10 @@ describe('HighlightCreateService', () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
 
     const mockElement = getMockElement('');
-    const mockHighlight = { event: { target: mockElement }} as any;
+    const mockEvent = { target: mockElement } as any;
     service.zoom = 1;
 
-    const rectangles = service.getRectangles(mockHighlight);
+    const rectangles = service.getRectangles(mockEvent);
 
     expect(rectangles[0].x).toBe(20);
     expect(rectangles[0].y).toBe(50);
@@ -57,9 +57,9 @@ describe('HighlightCreateService', () => {
     spyOn(window, 'getSelection').and.returnValue({} as any);
 
     const mockElement = getMockElement('scaleX(0.969918) translateX(-110.684px)');
-    const mockHighlight = { event: { target: mockElement }} as any;
+    const mockEvent = { target: mockElement } as any;
 
-    service.getRectangles(mockHighlight);
+    service.getRectangles(mockEvent);
 
     expect(mockElement.parentElement.children[0].style.padding).toBe('0');
     expect(mockElement.parentElement.children[0].style.transform).not.toContain('translate');
@@ -69,9 +69,9 @@ describe('HighlightCreateService', () => {
     spyOn(window, 'getSelection').and.returnValue({} as any);
 
     const mockElement = getMockElement('translateX(-110.684px) translateY(12px)');
-    const mockHighlight = { event: { target: mockElement }} as any;
+    const mockEvent = { target: mockElement } as any;
 
-    service.getRectangles(mockHighlight);
+    service.getRectangles(mockEvent);
 
     expect(mockElement.parentElement.children[0].style.padding).toBe('0');
     expect(mockElement.parentElement.children[0].style.transform).not.toContain('translateX');

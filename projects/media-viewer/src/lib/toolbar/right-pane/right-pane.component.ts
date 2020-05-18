@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
-import { ToolbarEventService } from '../../toolbar-event.service';
+import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ToolbarEventService } from '../toolbar-event.service';
 
 @Component({
   selector: 'mv-tb-right-pane',
@@ -8,6 +8,7 @@ import { ToolbarEventService } from '../../toolbar-event.service';
 })
 export class ToolbarRightPaneComponent {
   @Input() enableAnnotations = false;
+  @Input() enableRedactions = false;
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
@@ -25,5 +26,10 @@ export class ToolbarRightPaneComponent {
   downloadFile() {
     this.toolbarEvents.download();
   }
+
+  toggleRedactionMode() {
+    this.toolbarEvents.toggleRedactionMode();
+  }
+
 
 }

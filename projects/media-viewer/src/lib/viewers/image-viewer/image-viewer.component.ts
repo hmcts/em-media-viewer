@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -11,29 +10,31 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {Subscription} from 'rxjs';
-import {PrintService} from '../../print.service';
-import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
-import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
-import {ResponseType, ViewerException} from '../viewer-exception.model';
-import {ViewerUtilService} from '../viewer-util.service';
-import {ViewerEventService} from '../viewer-event.service';
-import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visibility.service';
+import { Subscription } from 'rxjs';
+import { PrintService } from '../../print.service';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { ResponseType, ViewerException } from '../viewer-exception.model';
+import { ViewerUtilService } from '../viewer-util.service';
+import { ViewerEventService } from '../viewer-event.service';
+import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromActions from '../../store/actions/annotations.action';
+import * as fromDocument from '../../store/actions/document.action';
+import * as fromRedactionActions from '../../store/actions/redaction.actions';
 
 @Component({
     selector: 'mv-image-viewer',
     templateUrl: './image-viewer.component.html'
 })
-export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() url: string;
   @Input() downloadFileName: string;
 
   @Input() enableAnnotations: boolean;
+  @Input() enableRedactions: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
   @Input() height: string;
@@ -65,6 +66,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, After
   ) { }
 
   ngOnInit(): void {
+    if (this.enableRedactions) {
+      this.store.dispatch(new fromRedactionActions.LoadRedactions(this.url));
+    }
     this.subscriptions.push(
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
       this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
@@ -89,17 +93,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, After
       this.errorMessage = null;
       this.toolbarEvents.reset();
     }
-  }
-
-  ngAfterViewInit() {
-    const payload: any = {
-      div: {offsetHeight: 1122}, // todo add dynamic height
-      pageNumber: 1,
-      scale: 1,
-      rotation: 1
-    };
-    this.store.dispatch(new fromActions.AddPage(payload));
-
   }
 
   private setRotation(rotation: number) {
@@ -162,6 +155,17 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges, After
 
   onLoad() {
     this.imageLoadStatus.emit(ResponseType.SUCCESS);
+    this.initAnnoPage();
+  }
+
+  initAnnoPage() {
+    const payload: any = {
+      div: {offsetHeight: 1122}, // todo add dynamic height
+      pageNumber: 1,
+      scale: 1,
+      rotation: 1
+    };
+    this.store.dispatch(new fromDocument.AddPage(payload));
   }
 
   getImageHeight(img) {
