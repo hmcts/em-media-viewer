@@ -5,7 +5,7 @@ import { Rectangle } from './rectangle/rectangle.model';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
 import * as moment_ from 'moment-timezone';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../../../store/reducers';
+import * as fromStore from '../../../store/reducers/reducers';
 import * as fromActions from '../../../store/actions/annotations.action';
 import {SelectionAnnotation} from '../../models/event-select.model';
 

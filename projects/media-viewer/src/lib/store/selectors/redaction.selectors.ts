@@ -1,5 +1,5 @@
 import {createSelector} from '@ngrx/store';
-import * as fromFeature from '../reducers';
+import * as fromFeature from '../reducers/reducers';
 import * as fromRedactions from '../reducers/redaction.reducer';
 import { getDocumentIdSetId} from './annotations.selectors';
 import * as fromDocument from './document.selectors';

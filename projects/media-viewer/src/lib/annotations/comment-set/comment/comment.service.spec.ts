@@ -11,7 +11,7 @@ import { CommentSetRenderService } from '../comment-set-render.service';
 import { annotationSet } from '../../../../assets/annotation-set';
 import {TagsServices} from '../../services/tags/tags.services';
 import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
+import {reducers} from '../../../store/reducers/reducers';
 
 describe('CommentService', () => {
   let component: CommentSetComponent;

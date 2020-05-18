@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import {select, Store} from '@ngrx/store';
-import * as fromStore from '../../../store/reducers';
+import * as fromStore from '../../../store/reducers/reducers';
 import * as fromTagSelectors from '../../../store/selectors/tags.selectors';
 import * as fromAnnoSelector from '../../../store/selectors/annotations.selectors';
 import {combineLatest, Subscription} from 'rxjs';

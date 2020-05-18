@@ -3,7 +3,7 @@ import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/cor
 import { SideBarComponent } from './side-bar.component';
 import { OutlineItemComponent } from './outline-item/outline-item.component';
 import { Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../../../store/reducers';
+import { reducers } from '../../../store/reducers/reducers';
 import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UpdatePdfPosition } from '../../../store/actions/bookmarks.action';

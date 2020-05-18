@@ -23,12 +23,9 @@ import {ResponseType, ViewerException} from './viewers/viewer-exception.model';
 import {CommentService} from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
 import {select, Store} from '@ngrx/store';
-import * as fromStore from './store/reducers';
+import * as fromStore from './store/reducers/reducers';
 import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
-import * as fromRedaSelectors from './store/selectors/redaction.selectors';
 import * as fromAnnoActions from './store/actions/annotations.action';
-import * as fromRedaActions from './store/actions/redaction.actions';
-import {take} from 'rxjs/operators';
 
 enum SupportedContentTypes {
   PDF = 'pdf',

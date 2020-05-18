@@ -7,7 +7,7 @@ import { CommentService } from '../comment-set/comment/comment.service';
 import { HighlightCreateService } from './annotation-create/highlight-create.service';
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Action, Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../../store/reducers';
+import { reducers } from '../../store/reducers/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 

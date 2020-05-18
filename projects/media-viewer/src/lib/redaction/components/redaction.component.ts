@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
-import * as fromStore from '../../store/reducers';
+import * as fromStore from '../../store/reducers/reducers';
 import * as fromSelectors from '../../store/selectors/redaction.selectors';
 import * as fromRedaSelectors from '../../store/selectors/redaction.selectors';
 import * as fromDocument from '../../store/selectors/document.selectors';

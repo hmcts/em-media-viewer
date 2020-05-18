@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { select, Store } from '@ngrx/store';
 import * as fromRedactSelectors from '../../store/selectors/redaction.selectors';
-import * as fromStore from '../../store/reducers';
+import * as fromStore from '../../store/reducers/reducers';
 import { Subscription } from 'rxjs';
 
 @Component({

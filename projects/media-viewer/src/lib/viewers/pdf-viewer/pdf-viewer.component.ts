@@ -24,9 +24,9 @@ import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-vis
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
 import { select, Store } from '@ngrx/store';
-import * as fromStore from '../../store/reducers';
-import * as fromAnnotationActions from '../../store/actions/annotations.action';
+import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocumentActions from '../../store/actions/document.action';
+import * as fromAnnotationActions from '../../store/actions/annotations.action';
 import * as fromDocumentSelectors from '../../store/selectors/document.selectors';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import { tap, throttleTime } from 'rxjs/operators';
@@ -34,8 +34,7 @@ import * as fromTagActions from '../../store/actions/tags.actions';
 import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
 // todo move this to common place for redaction and annotation
 import {HighlightCreateService} from '../../annotations/annotation-set/annotation-create/highlight-create.service';
-import uuid from 'uuid';
-import * as fromRedaSelectors from '../../store/selectors/redaction.selectors';
+
 
 @Component({
   selector: 'mv-pdf-viewer',

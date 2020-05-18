@@ -5,7 +5,7 @@ import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { AnnotationApiService } from '../../annotation-api.service';
 
 import { select, Store } from '@ngrx/store';
-import * as fromStore from '../../../store/reducers';
+import * as fromStore from '../../../store/reducers/reducers';
 import * as fromSelectors from '../../../store/selectors/annotations.selectors';
 import * as fromDocument from '../../../store/selectors/document.selectors';
 import * as fromActions from '../../../store/actions/annotations.action';

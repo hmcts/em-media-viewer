@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import * as fromFeature from '../reducers';
+import * as fromFeature from '../reducers/reducers';
 import * as fromDocument from '../reducers/document.reducer';
 
 export const getDocumentState = createSelector(

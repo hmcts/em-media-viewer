@@ -19,7 +19,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule} from '@ngrx/store';
 import { RedactionComponent } from './redaction/components/redaction.component';
 // APP store
-import { reducers} from './store';
+import { reducers} from './store/reducers/reducers';
 import { effects } from './store/effects/index';
 import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
 import { RedactionApiService } from './redaction/services/redaction-api.service';

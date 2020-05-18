@@ -3,7 +3,7 @@ import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { BookmarksComponent } from './bookmarks.component';
 import { Store, StoreModule } from '@ngrx/store';
 import * as fromActions from 'projects/media-viewer/src/lib/store/actions/bookmarks.action';
-import { reducers } from '../../../../store/reducers';
+import { reducers } from '../../../../store/reducers/reducers';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
