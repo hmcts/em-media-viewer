@@ -61,8 +61,8 @@ describe('HighlightCreateService', () => {
 
     service.getRectangles(mockEvent);
 
-    expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
-    expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translate');
+    expect(mockElement.parentElement.children[0].style.padding).toBe('0');
+    expect(mockElement.parentElement.children[0].style.transform).not.toContain('translate');
   });
 
   it('should remove extra padding and transform with just only translate', () => {
@@ -73,8 +73,8 @@ describe('HighlightCreateService', () => {
 
     service.getRectangles(mockEvent);
 
-    expect(mockElement.parentElement.childNodes[0].style.padding).toBe(0);
-    expect(mockElement.parentElement.childNodes[0].style.transform).not.toContain('translateX');
+    expect(mockElement.parentElement.children[0].style.padding).toBe('0');
+    expect(mockElement.parentElement.children[0].style.transform).not.toContain('translateX');
   });
 
   it('should save annotation', () => {
@@ -101,10 +101,10 @@ describe('HighlightCreateService', () => {
   });
 
   const getMockElement = (transform: string) => {
-    return  {
+    return {
       parentElement: ({
         getBoundingClientRect: () => ({ top: 30, left: 40}),
-        childNodes: [{ style: { padding: 20, transform: transform }}]
+        children: [{ style: { padding: '20', transform: transform }}]
       })
     };
   }
