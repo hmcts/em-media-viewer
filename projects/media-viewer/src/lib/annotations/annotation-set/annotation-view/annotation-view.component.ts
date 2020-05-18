@@ -13,7 +13,7 @@ import {SelectionAnnotation} from '../../models/event-select.model';
   selector: 'mv-annotation',
   templateUrl: './annotation-view.component.html'
 })
-export class AnnotationViewComponent {
+export class AnnotationViewComponent {  // todo rename this to selection vew c
 
   @Input() set annotation(value) {
       this.anno = {...value};
@@ -23,7 +23,8 @@ export class AnnotationViewComponent {
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() set selectedAnnoId(selectedId) {
-    this.selected = selectedId.annotationId ? (selectedId.annotationId === this.anno.id) : false;
+    const id = this.anno.id || this.anno.redactionId // todo make it unique
+    this.selected = selectedId.annotationId ? (selectedId.annotationId === id) : false;
   };
   @Input() height: number;
   @Input() width: number;
@@ -38,7 +39,8 @@ export class AnnotationViewComponent {
     private store: Store<fromStore.AnnotationSetState>) {}
 
   public onSelect() {
-    this.annotationClick.emit({ annotationId: this.anno.id, editable: false, selected: true });
+    const annotationId = this.anno.id || this.anno.redactionId;
+    this.annotationClick.emit({annotationId, editable: false, selected: true });
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
@@ -67,7 +69,7 @@ export class AnnotationViewComponent {
         lastModifiedDate: '',
         tags: []
       };
-      this.store.dispatch(new fromActions.AddOrEditComment(comment))
+      this.store.dispatch(new fromActions.AddOrEditComment(comment));
 
     }
     this.selected = true;

@@ -7,6 +7,7 @@ import { GrabNDragDirective } from '../../grab-n-drag.directive';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../../store/reducers/reducers';
+import { HighlightCreateService } from '../../../annotations/annotation-set/annotation-create/highlight-create.service';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;
@@ -15,12 +16,14 @@ describe('PdfJsWrapperFactory', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [PdfViewerComponent, GrabNDragDirective],
-      providers: [ToolbarEventService],
       imports: [
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({})
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA,]
+      providers: [ToolbarEventService, { provide: HighlightCreateService, useValue: {} }],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+      ]
     })
     .compileComponents();
     fixture = TestBed.createComponent(PdfViewerComponent);

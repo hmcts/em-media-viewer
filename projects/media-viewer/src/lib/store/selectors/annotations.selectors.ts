@@ -3,6 +3,7 @@ import {createSelector} from '@ngrx/store';
 import * as fromFeature from '../reducers/reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
 import * as fromTags from './tags.selectors';
+import * as fromDocument from './document.selectors';
 
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
@@ -55,11 +56,6 @@ export const getPageEntities = createSelector(
   fromAnnotations.getAnnoPageEnt
 );
 
-export const getAnnoPages = createSelector(
-  getAnnotationsSetState,
-  fromAnnotations.getPages
-);
-
 export const getComponentSearchQueries = createSelector(
   getAnnotationsSetState,
   fromAnnotations.commentSearchQ
@@ -71,7 +67,7 @@ export const getComponentSearchText = createSelector(
 );
 
 export const getAnnoPerPage = createSelector(
-  getAnnoPages,
+  fromDocument.getPages,
   getPageEntities,
   fromTags.getFilteredPageEntities,
   (pages, pageEnt, filteredPageEnt) => {
@@ -92,7 +88,7 @@ export const getAnnoPerPage = createSelector(
 
 export const getCommentsArray = createSelector(
   getAnnComments,
-  getAnnoPages,
+  fromDocument.getPages,
   getAnnotationEntities,
   fromTags.getTagFiltered,
   (comments, pages, annoEnt, filtered) => {

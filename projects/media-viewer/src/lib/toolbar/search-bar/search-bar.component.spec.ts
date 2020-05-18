@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
 import { FormsModule } from '@angular/forms';
-import { ToolbarButtonVisibilityService } from '../../toolbar-button-visibility.service';
-import { ToolbarEventService } from '../../toolbar-event.service';
+import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ToolbarEventService } from '../toolbar-event.service';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;

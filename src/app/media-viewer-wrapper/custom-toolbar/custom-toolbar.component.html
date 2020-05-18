@@ -1,16 +1,16 @@
 <div class="customToolbar">
   <div class="toolbarContainer">
     <div *ngIf="contentType === 'pdf'" class="column left-pane">
-      <button class="govuk-button" id="viewFind" data-module="govuk-button" (click)="search = !search">
+      <button class="govuk-button" id="custom-toolbar-viewFind" data-module="govuk-button" (click)="search = !search">
         search
       </button>
-      <button class="govuk-button" id="toggleHighlightButton" data-module="govuk-button" (click)="highlight()">
+      <button class="govuk-button" id="custom-toolbar-toggleHighlightButton" data-module="govuk-button" (click)="highlight()">
         Highlight
       </button>
-      <button class="govuk-button" id="previous" data-module="govuk-button" (click)="prevPage()">
+      <button class="govuk-button" id="custom-toolbar-previous" data-module="govuk-button" (click)="prevPage()">
         Prev Page
       </button>
-      <button class="govuk-button" id="next" data-module="govuk-button" (click)="nextPage()">
+      <button class="govuk-button" id="custom-toolbar-next" data-module="govuk-button" (click)="nextPage()">
         Next Page
       </button>
       <div class="govuk-form-group page-input-form">
@@ -26,21 +26,21 @@
                       [toolbarEvents]="toolbarEvents"></app-search-bar>
     </div>
     <div *ngIf="contentType === 'pdf' || contentType === 'image'" class="left-pane">
-      <button class="govuk-button" id="toggleDrawButton" data-module="govuk-button" (click)="draw()">
+      <button class="govuk-button" id="custom-toolbar-toggleDrawButton" data-module="govuk-button" (click)="draw()">
         Draw
       </button>
     </div>
     <div *ngIf="contentType === 'pdf' || contentType === 'image'" class="column middle-pane">
-      <button class="govuk-button" id="pageRotateCcw" data-module="govuk-button" (click)="rotate(270)">
+      <button class="govuk-button" id="custom-toolbar-pageRotateCcw" data-module="govuk-button" (click)="rotate(270)">
         rot -90
       </button>
-      <button class="govuk-button" id="pageRotateCw" data-module="govuk-button" (click)="rotate(90)">
+      <button class="govuk-button" id="custom-toolbar-pageRotateCw" data-module="govuk-button" (click)="rotate(90)">
         rot 90
       </button>
-      <button class="govuk-button" id="zoomOut" data-module="govuk-button" (click)="stepZoom(-0.1)">
+      <button class="govuk-button" id="custom-toolbar-zoomOut" data-module="govuk-button" (click)="stepZoom(-0.1)">
         -
       </button>
-      <select class="govuk-select" id="scaleSelect" data-module="govuk-select" (change)="zoom($event.target.value)">
+      <select class="govuk-select" id="custom-toolbar-scaleSelect" data-module="govuk-select" (change)="zoom($event.target.value)">
         <option #zoomSelect id="customScaleOption" title="" [value]="zoomValue">{{(zoomValue) * 100 | number: '1.0-0'}}%</option>
         <option title="" value="0.1" data-l10n-id="page_scale_percent"
                 data-l10n-args='{ "scale": 10 }'>10%</option>

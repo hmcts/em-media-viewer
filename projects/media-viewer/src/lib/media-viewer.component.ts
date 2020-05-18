@@ -24,8 +24,8 @@ import {CommentService} from './annotations/comment-set/comment/comment.service'
 import 'hammerjs';
 import {select, Store} from '@ngrx/store';
 import * as fromStore from './store/reducers/reducers';
-import * as fromSelectors from './store/selectors/annotations.selectors';
-import * as fromActions from './store/actions/annotations.action';
+import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
+import * as fromAnnoActions from './store/actions/annotations.action';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -56,6 +56,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Input() enableAnnotations = false;
   @Input() annotationApiUrl;
 
+  @Input() enableRedactions = false;
+
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
@@ -77,7 +79,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngAfterContentInit() {
-    this.annotationSet$ = this.store.pipe(select(fromSelectors.getAnnotationSet));
+    this.annotationSet$ = this.store.pipe(select(fromAnnoSelectors.getAnnotationSet));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(
@@ -99,7 +101,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.commentService.resetCommentSet();
       if (this.enableAnnotations) {
         const documentId = this.extractDMStoreDocId(this.url);
-        this.store.dispatch(new fromActions.LoadAnnotationSet(documentId));
+        this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(documentId));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;

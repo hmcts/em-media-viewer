@@ -19,6 +19,7 @@ export interface SearchResultsCount {
 
 @Injectable({ providedIn: 'root' })
 export class ToolbarEventService {
+
   public readonly highlightModeSubject = new BehaviorSubject<HighlightMode>(false);
   public readonly drawModeSubject = new BehaviorSubject<DrawMode>(false);
   public readonly rotateSubject = new Subject<number>();
@@ -34,6 +35,12 @@ export class ToolbarEventService {
   public readonly changePageByDeltaSubject = new Subject<number>();
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
+
+  public readonly redactionMode = new BehaviorSubject(false);
+  public readonly redactionPreview = new Subject<boolean>();
+  public readonly applyRedactToDocument = new Subject();
+  public readonly clearAllRedactMarkers = new Subject();
+
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly subToolbarHidden = new BehaviorSubject(true);
   public readonly searchBarHidden = new BehaviorSubject(true);
@@ -129,4 +136,21 @@ export class ToolbarEventService {
   toggleSideBar(toggle: boolean) {
     this.sidebarOpen.next(toggle);
   }
+
+  public toggleRedactionMode(): void {
+    this.redactionMode.next(!this.redactionMode.getValue());
+  }
+
+  public toggleRedactionPreview(viewMode: boolean): void {
+    this.redactionPreview.next(viewMode);
+  }
+
+  public unmarkAll(): void {
+    this.clearAllRedactMarkers.next();
+  }
+
+  public applyRedactionToDocument(): void {
+    this.applyRedactToDocument.next();
+  }
+
 }

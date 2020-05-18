@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Annotation } from './annotation-view/annotation.model';
 import { AnnotationApiService } from '../annotation-api.service';
-import { AnnotationSet } from './annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Observable, Subscription } from 'rxjs';
@@ -25,13 +24,7 @@ import uuid from 'uuid';
 })
 export class AnnotationSetComponent implements OnInit, OnDestroy {
 
-  annoSet: AnnotationSet;
   annotationsPerPage$: Observable<any[]>; // todo add type
-  @Input() set annotationSet(annoSet) {
-    if (annoSet) {
-      this.annoSet = {...annoSet};
-    }
-  }
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() width: number;
@@ -71,7 +64,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   showContextToolbar(highlight: Highlight) {
     this.highlightPage = highlight.page;
-    this.rectangles = this.highlightService.getRectangles(highlight);
+    this.rectangles = this.highlightService.getRectangles(highlight.event);
     if (this.rectangles) {
       this.toolbarEvents.highlightModeSubject.next(false);
     }
@@ -116,5 +109,10 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   selectAnnotation(selectedAnnotation) {
     this.store.dispatch(new fromActions.SelectedAnnotation(selectedAnnotation))
+  }
+
+  saveAnnotation({ rectangles, page }) {
+    this.highlightService.saveAnnotation(rectangles, page);
+    this.toolbarEvents.drawModeSubject.next(false);
   }
 }
