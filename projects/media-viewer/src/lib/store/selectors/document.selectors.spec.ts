@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { select, Store, StoreModule } from '@ngrx/store';
-import { reducers, State } from '../index';
+import { reducers, State } from '../reducers/reducers';
 
 import * as fromSelectors from './document.selectors';
 import * as fromActions from '../actions/document.action';
