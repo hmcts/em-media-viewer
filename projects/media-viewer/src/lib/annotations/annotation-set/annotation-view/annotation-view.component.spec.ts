@@ -8,7 +8,7 @@ import { MutableDivModule } from 'mutable-div';
 import {TagsComponent} from '../../tags/tags.component';
 import {TagInputModule} from 'ngx-chips';
 import { Store, StoreModule } from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
+import {reducers} from '../../../store/reducers/reducers';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
 
 describe('AnnotationComponent', () => {

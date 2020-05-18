@@ -24,7 +24,7 @@ import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-vis
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../../store/reducers';
+import * as fromStore from '../../store/reducers/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import { tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';

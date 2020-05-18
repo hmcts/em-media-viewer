@@ -21,7 +21,7 @@ import {ViewerEventService} from '../viewer-event.service';
 import {ToolbarButtonVisibilityService} from '../../toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import {Store} from '@ngrx/store';
-import * as fromStore from '../../store/reducers';
+import * as fromStore from '../../store/reducers/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 
 @Component({

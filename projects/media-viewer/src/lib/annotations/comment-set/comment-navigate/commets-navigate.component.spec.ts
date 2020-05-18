@@ -3,7 +3,7 @@ import { CommentsNavigateComponent } from './comments-navigate.component';
 import { FormsModule } from '@angular/forms';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
+import {reducers} from '../../../store/reducers/reducers';
 import {RouterTestingModule} from '@angular/router/testing';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 

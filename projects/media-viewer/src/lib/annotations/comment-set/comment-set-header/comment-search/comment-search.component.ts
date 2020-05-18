@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Annotation } from '../../../annotation-set/annotation-view/annotation.model';
 import { Store } from '@ngrx/store';
-import * as fromStore from '../../../../store/reducers';
+import * as fromStore from '../../../../store/reducers/reducers';
 import * as fromActions from '../../../../store/actions/annotations.action';
 
 @Component({

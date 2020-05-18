@@ -1,6 +1,6 @@
 import {createSelector} from '@ngrx/store';
 
-import * as fromFeature from '../reducers';
+import * as fromFeature from '../reducers/reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
 import * as fromTags from './tags.selectors';
 

@@ -17,12 +17,11 @@ import {Observable, Subscription} from 'rxjs';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
-import * as fromStore from '../../store/reducers';
+import * as fromStore from '../../store/reducers/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import {select, Store} from '@ngrx/store';
 import {TagsModel} from '../models/tags.model';
-import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-comment-set',

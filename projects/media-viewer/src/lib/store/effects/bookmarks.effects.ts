@@ -4,7 +4,7 @@ import { catchError, exhaustMap, map, switchMap, withLatestFrom } from 'rxjs/ope
 import { of } from 'rxjs';
 import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
 import * as bookmarksActions from '../actions/bookmarks.action';
-import * as fromStore from '../reducers';
+import * as fromStore from '../reducers/reducers';
 import { select, Store } from '@ngrx/store';
 import * as fromAnnotations from '../selectors/annotations.selectors';
 

@@ -9,7 +9,7 @@ import { ViewerEventService } from '../viewer-event.service';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../store/reducers';
+import {reducers} from '../../store/reducers/reducers';
 import {RouterTestingModule} from '@angular/router/testing';
 
 describe('ImageViewerComponent', () => {
