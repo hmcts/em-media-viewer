@@ -12,7 +12,7 @@ import {
 import { AnnotationApiService } from './annotations/annotation-api.service';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { By } from '@angular/platform-browser';
-import {reducers} from './store/reducers';
+import {reducers} from './store/reducers/reducers';
 import {StoreModule} from '@ngrx/store';
 
 describe('MediaViewerComponent', () => {

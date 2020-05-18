@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 
 import {select, Store} from '@ngrx/store';
-import * as fromStore from '../../../../store/reducers';
+import * as fromStore from '../../../../store/reducers/reducers';
 import * as fromSelectors from '../../../../store/selectors/tags.selectors';
 import * as fromActions from '../../../../store/actions/tags.actions';
 import {Observable, Subscription} from 'rxjs';

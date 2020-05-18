@@ -13,7 +13,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentDatePipe } from '../../pipes/date.pipe';
 import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../../store/reducers';
+import {reducers} from '../../../store/reducers/reducers';
 
 describe('TextareaAutoExpandDirective', () => {
   let component: CommentComponent;

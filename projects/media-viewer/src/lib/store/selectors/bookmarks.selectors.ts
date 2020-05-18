@@ -1,6 +1,6 @@
 import {createSelector} from '@ngrx/store';
 
-import * as fromFeature from '../reducers';
+import * as fromFeature from '../reducers/reducers';
 import * as fromBookmarks from '../reducers/bookmarks.reducer';
 import { Bookmark } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import * as fromAnnotations from '../selectors/annotations.selectors';

@@ -6,7 +6,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { GrabNDragDirective } from '../../grab-n-drag.directive';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { StoreModule } from '@ngrx/store';
-import { reducers } from '../../../store/reducers';
+import { reducers } from '../../../store/reducers/reducers';
 
 describe('PdfJsWrapperFactory', () => {
   let component: PdfViewerComponent;

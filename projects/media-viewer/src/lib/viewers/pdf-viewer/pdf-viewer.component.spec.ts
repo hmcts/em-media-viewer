@@ -17,7 +17,7 @@ import { HighlightCreateService } from '../../annotations/annotation-set/annotat
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { Outline } from './side-bar/outline-item/outline.model';
 import { Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../../store/reducers';
+import {reducers} from '../../store/reducers/reducers';
 import { SelectedAnnotation } from '../../store/actions/annotations.action';
 import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
 import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
