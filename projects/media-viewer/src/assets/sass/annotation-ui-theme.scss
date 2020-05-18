@@ -40,7 +40,7 @@
 
   .textLayer > div {
     color: transparent;
-    position: absolute;
+    position: relative;
     white-space: pre;
     cursor: text;
     -webkit-transform-origin: 0% 0%;
@@ -48,6 +48,10 @@
     -o-transform-origin: 0% 0%;
     -ms-transform-origin: 0% 0%;
     transform-origin: 0% 0%;
+    display: block;  /* <-- added */
+    float: left;  /* <-- added */
+    margin-bottom: -100%;  /* <-- added */
+    margin-right: -100%;  /* <-- added */
   }
 
   .textLayer .highlight {
