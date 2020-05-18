@@ -23,18 +23,14 @@ import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocumentActions from '../../store/actions/document.action';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
-import * as fromDocumentSelectors from '../../store/selectors/document.selectors';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import { tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
-// todo move this to common place for redaction and annotation
-import {HighlightCreateService} from '../../annotations/annotation-set/annotation-create/highlight-create.service';
-
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -86,7 +82,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
-    private readonly highlightService: HighlightCreateService,
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject.pipe(tap(() => {
       this.store.dispatch(new fromTagActions.ClearFilterTags());
@@ -95,9 +90,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    if (this.enableRedactions) {
-      this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
-    }
     this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
@@ -115,21 +107,20 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       }
     });
     this.$subscription = this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url));
-    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() => this.pdfWrapper.downloadFile(this.url, this.downloadFileName)));
+    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() =>
+      this.pdfWrapper.downloadFile(this.url, this.downloadFileName)));
     this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)));
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
     this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
-    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
+    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber =>
+      this.pdfWrapper.changePageNumber(pageNumber)));
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
     this.$subscription.add(
       this.pdfWrapper.positionUpdated.asObservable().pipe(throttleTime(1000))
       .subscribe(event => this.store.dispatch(new UpdatePdfPosition(event.location)))
-    );
-    this.$subscription.add(
-      this.store.pipe(select(fromDocumentSelectors.getDocumentId)).subscribe(docId => this.documentId = docId)
     );
   }
 
@@ -140,7 +131,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (changes.url && this.pdfWrapper) {
       this.loadDocument();
       this.clearAnnotationSet();
-      this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
+      this.documentId = this.extractDMStoreDocId(this.url);
+      if (this.enableRedactions) {
+        this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
+      }
     }
   }
 
@@ -149,7 +143,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   ngOnDestroy(): void {
-    this.$subscription.unsubscribe()
+    this.$subscription.unsubscribe();
   }
 
 
@@ -200,7 +194,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   onMouseUp(mouseEvent: MouseEvent) {
     const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
-    const page = parseInt(pageElement.getAttribute('data-page-number'), 10)
+    const page = parseInt(pageElement.getAttribute('data-page-number'), 10);
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
       this.viewerEvents.textSelected({
         page,
@@ -220,7 +214,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private setRotation(rotation: number) {
     const pageNumber = this.pdfWrapper.getPageNumber();
-    if(this.commentsPanel) {
+    if (this.commentsPanel) {
       this.commentsPanel.container.nativeElement.style.height = 0;
     }
     this.pdfWrapper.rotate(rotation);
@@ -258,5 +252,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
     return newZoomValue;
+  }
+  // todo move this to common place for media viewer and pdf
+  private extractDMStoreDocId(url: string): string {
+    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
+    return url.replace('/binary', '');
   }
 }

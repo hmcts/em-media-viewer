@@ -41,16 +41,11 @@ export class RedactionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.redactionsPerPage$ = this.store.pipe(select(fromSelectors.getAnnoPerPage));
     this.selectedRedaction$ = this.store.pipe(select(fromSelectors.getSelected));
-    this.$subscription = this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode)
-      .add(
-        this.store.pipe(select(fromSelectors.getRedactedDocumentInfo), filter(value => !!value))
-          .subscribe(redactedDocInfo => this.downloadDocument(redactedDocInfo))
-      ).add(
-        this.store.pipe(select(fromDocument.getDocumentId)).subscribe(docId => this.documentId = docId)
-      ).add(
-        this.viewerEvents.textHighlight
-          .subscribe(highlight => this.markTextRedaction(highlight))
-      );
+    this.$subscription = this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode);
+    this.$subscription.add(this.store.pipe(select(fromSelectors.getRedactedDocumentInfo), filter(value => !!value))
+          .subscribe(redactedDocInfo => this.downloadDocument(redactedDocInfo)));
+    this.$subscription.add(this.store.pipe(select(fromDocument.getDocumentId)).subscribe(docId => this.documentId = docId));
+    this.$subscription.add(this.viewerEvents.textHighlight.subscribe(highlight => this.markTextRedaction(highlight)));
     this.toolbarEvents.applyRedactToDocument.subscribe(() => {
       this.store.pipe(select(fromRedaSelectors.getRedactionArray), take(1)).subscribe(redactions => {
         this.store.dispatch(new fromRedaActions.Redact(redactions));
@@ -58,7 +53,7 @@ export class RedactionComponent implements OnInit, OnDestroy {
     });
     this.toolbarEvents.clearAllRedactMarkers.subscribe(() => {
       this.store.dispatch(new fromRedaActions.UnmarkAll(this.documentId));
-    })
+    });
   }
 
   markTextRedaction(highlight) {

@@ -13,7 +13,7 @@ import {SelectionAnnotation} from '../../models/event-select.model';
   selector: 'mv-annotation',
   templateUrl: './annotation-view.component.html'
 })
-export class AnnotationViewComponent {
+export class AnnotationViewComponent {  // todo rename this to selection vew c
 
   @Input() set annotation(value) {
       this.anno = {...value};

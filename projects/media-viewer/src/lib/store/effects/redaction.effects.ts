@@ -64,7 +64,7 @@ export class RedactionEffects {
         map((result: HttpResponse<Blob>) => {
           const url = URL.createObjectURL(result.body);
           const header = result.headers.get('content-disposition').split('filename=');
-          const filename = header.length > 1 ? header[1].replace('"','')
+          const filename = header.length > 1 ? header[1].replace(/"/g, '')
             : `redacted-document-${redactionPayload.documentId}`;
           return new redactionActions.RedactSuccess({ url, filename });
         }),
