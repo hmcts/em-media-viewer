@@ -7,7 +7,7 @@ import { BookmarksEffects } from './bookmarks.effects';
 import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
 import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../reducers/reducers';
-import { UpdatePdfPosition } from '../actions/bookmarks.action';
+import { PdfPositionUpdate } from '../actions/document.action';
 
 describe('Bookmark Effects', () => {
   let actions$;
@@ -63,7 +63,7 @@ describe('Bookmark Effects', () => {
 
   describe('createBookmark$', () => {
     it('should return a CreateBookmarkSuccess', inject([Store], (store) => {
-      store.dispatch(new UpdatePdfPosition(pdfPosition));
+      store.dispatch(new PdfPositionUpdate(pdfPosition));
       const action = new bookmarkActions.CreateBookmark({ ...bookmarkInfo, name: 'new bookmark' } as any);
       bookmarksApi.createBookmark.and.returnValue(of(bookmark));
       const completion = new bookmarkActions.CreateBookmarkSuccess(bookmark);
@@ -74,7 +74,7 @@ describe('Bookmark Effects', () => {
 
     it('should return a CreateBookmarkFailure', inject([Store],(store) => {
       const action = new bookmarkActions.CreateBookmark({ ...bookmarkInfo, name: 'new bookmark' } as any);
-      store.dispatch(new UpdatePdfPosition(pdfPosition));
+      store.dispatch(new PdfPositionUpdate(pdfPosition));
       bookmarksApi.createBookmark.and.returnValue(throwError(bookmark));
       const completion = new bookmarkActions.CreateBookmarkFailure(bookmark);
       actions$ = hot('-a', { a: action });

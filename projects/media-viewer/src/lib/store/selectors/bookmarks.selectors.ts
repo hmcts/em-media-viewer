@@ -4,7 +4,7 @@ import * as fromFeature from '../reducers/reducers';
 import * as fromBookmarks from '../reducers/bookmarks.reducer';
 import { Bookmark } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import * as fromAnnotations from '../selectors/annotations.selectors';
-import uuid from 'uuid';
+import * as fromDocument from './document.selectors';
 
 
 export const getBookmarkState = createSelector(
@@ -27,14 +27,9 @@ export const getEditableBookmark = createSelector(
   fromBookmarks.getEditBookmark
 );
 
-export const getPdfPosition = createSelector(
-  getBookmarkState,
-  fromBookmarks.getPdfPos
-);
-
 export const getBookmarkInfo = createSelector(
   fromAnnotations.getDocumentIdSetId,
-  getPdfPosition,
+  fromDocument.getPdfPosition,
   (docSetId, pdfPosition) => {
     return {
       pageNumber: pdfPosition.pageNumber - 1,

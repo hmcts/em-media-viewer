@@ -105,6 +105,11 @@
     content: url(/assets/images/toolbarButton-download@2x.png);
   }
 
+  .toolbarButton.icpCreateSession::before,
+  .secondaryToolbarButton.icpCreateSession::before {
+    content: url(/assets/images/treeitem-collapsed@2x.png);
+  }
+
   .toolbarButton.bookmark::before,
   .secondaryToolbarButton.bookmark::before {
     content: url(/assets/images/toolbarButton-bookmark@2x.png);

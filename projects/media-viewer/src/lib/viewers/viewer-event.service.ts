@@ -15,6 +15,7 @@ export class ViewerEventService {
   public readonly boxHighlight = new Subject<Highlight>();
   public readonly ctxToolbarCleared = new Subject();
   public readonly commentsPanelVisible = new BehaviorSubject(false);
+  public readonly navigationEvent = new Subject<any[]>();
 
   constructor() {}
 
@@ -32,5 +33,9 @@ export class ViewerEventService {
 
   public toggleCommentsPanel(toggle: boolean) {
     this.commentsPanelVisible.next(toggle);
+  }
+
+  public goToDestination(destination: any[]) {
+    this.navigationEvent.next(destination);
   }
 }

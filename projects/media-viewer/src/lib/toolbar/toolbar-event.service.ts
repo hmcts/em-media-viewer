@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import * as icpEvents from './icp-event.service';
 
 // Toolbar Custom-Event Types
 export type HighlightMode = boolean;
@@ -44,6 +45,9 @@ export class ToolbarEventService {
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly subToolbarHidden = new BehaviorSubject(true);
   public readonly searchBarHidden = new BehaviorSubject(true);
+
+  public readonly icp = icpEvents;
+
 
   /**
    * Reset the stateful behaviour subjects
@@ -152,5 +156,4 @@ export class ToolbarEventService {
   public applyRedactionToDocument(): void {
     this.applyRedactToDocument.next();
   }
-
 }

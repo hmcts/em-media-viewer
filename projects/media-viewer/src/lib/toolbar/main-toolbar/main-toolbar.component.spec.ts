@@ -4,9 +4,11 @@ import {ToolbarLeftPaneComponent} from '../left-pane/left-pane.component';
 import {ToolbarRightPaneComponent} from '../right-pane/right-pane.component';
 import {ToolbarMiddlePaneComponent} from '../middle-pane/middle-pane.component';
 import {FormsModule} from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { SubToolbarComponent } from '../sub-toolbar/sub-toolbar.component';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import {reducers} from '../../store/reducers/reducers';
 
 describe('MainToolbarComponent', () => {
   let component: MainToolbarComponent;
@@ -23,7 +25,7 @@ describe('MainToolbarComponent', () => {
         ToolbarRightPaneComponent,
         ToolbarMiddlePaneComponent,
       ],
-      imports: [FormsModule],
+      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({})],
       providers: [ ToolbarButtonVisibilityService ]
     })
     .compileComponents();

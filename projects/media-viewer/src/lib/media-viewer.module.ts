@@ -18,12 +18,19 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule} from '@ngrx/store';
 import { RedactionComponent } from './redaction/components/redaction.component';
+import { IcpSessionService } from './icp/icp-session.service';
+import { IcpUpdateService } from './icp/icp-update.service';
+import { SocketService } from './icp/socket.service';
 // APP store
 import { reducers} from './store/reducers/reducers';
 import { effects } from './store/effects/index';
 import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
 import { RedactionApiService } from './redaction/services/redaction-api.service';
 import { MutableDivModule } from 'mutable-div';
+import { IcpDirective } from './icp/icp.directive';
+import { IcpPresenterService } from './icp/icp-presenter.service';
+import { IcpFollowerService } from './icp/icp-follower.service';
+import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
 
 
 @NgModule({
@@ -49,20 +56,27 @@ import { MutableDivModule } from 'mutable-div';
     UnsupportedViewerComponent,
     MediaViewerComponent,
     GrabNDragDirective,
+    IcpDirective,
+    ConfirmActionDialogComponent,
     RedactionComponent // todo made put this into module
   ],
   entryComponents: [
     PdfViewerComponent,
     ImageViewerComponent,
     UnsupportedViewerComponent
-],
+  ],
   providers: [
     PdfJsWrapperFactory,
     CommentService,
-    RedactionApiService
+    RedactionApiService,
+    IcpSessionService,
+    IcpUpdateService,
+    SocketService,
+    IcpPresenterService,
+    IcpFollowerService
   ],
   exports: [
     MediaViewerComponent
-]
+  ]
 })
 export class MediaViewerModule { }
