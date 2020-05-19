@@ -1,0 +1,51 @@
+.icpMode {
+
+  #toolbarViewerLeft {
+    left: 20px;
+    position: absolute;
+  }
+
+  #toolbarViewerMiddle {
+    right: 0;
+    left: unset;
+  }
+
+  .toolbarButton,
+  &.toolbarButton {
+    width: auto;
+    height: auto;
+    font-size: small;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    margin-top: 6px;
+
+    &.info {
+      background: none;
+      color: white;
+    }
+
+    &.present {
+      background: green;
+      color: white;
+    }
+  }
+
+  .toolbarButton > span,
+  &.toolbarButton > span {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .splitToolbarButton {
+    padding: 3px;
+  }
+
+  .splitToolbarButton > span {
+    padding: 3px;
+    color: white;
+  }
+}

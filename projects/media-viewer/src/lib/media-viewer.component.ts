@@ -58,6 +58,9 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Input() annotationApiUrl;
 
   @Input() enableRedactions = false;
+  @Input() enableICP = false;
+
+  @Input() caseId: string;
 
   documentTitle: string;
   showCommentSummary: boolean;

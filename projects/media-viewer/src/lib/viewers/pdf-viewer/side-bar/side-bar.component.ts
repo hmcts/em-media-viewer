@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Outline } from './outline-item/outline.model';
 import { ViewerEventService } from '../../viewer-event.service';
 import { ToolbarButtonVisibilityService } from '../../../toolbar/toolbar.module';
 import { Observable, Subscription } from 'rxjs';
-import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import { select, Store } from '@ngrx/store';
 import * as bookmarksSelectors from '../../../store/selectors/bookmarks.selectors';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
@@ -23,7 +22,6 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() url: string;
   @Input() zoom: number;
   @Input() rotate: number;
-  @Output() navigationEvent = new EventEmitter();
 
   selectedView = 'outline';
   bookmarks$: Observable<Bookmark[]>;
@@ -32,7 +30,6 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private viewerEvents: ViewerEventService,
               private toolbarButtons: ToolbarButtonVisibilityService,
-              private pdfWrapperProvider: PdfJsWrapperFactory,
               private store: Store<BookmarksState>
   ) {}
 
@@ -53,7 +50,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   goToDestination(destination: any[]) {
-    this.pdfWrapperProvider.pdfWrapper().navigateTo(destination);
+    this.viewerEvents.goToDestination(destination);
   }
 
   toggleSidebarView(sidebarView: string) {

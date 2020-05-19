@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SubToolbarComponent } from './sub-toolbar.component';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
-import { By } from '@angular/platform-browser';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../store/reducers/reducers';
 
 describe('SubToolbarComponent', () => {
   let component: SubToolbarComponent;
@@ -12,6 +13,7 @@ describe('SubToolbarComponent', () => {
   beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [ SubToolbarComponent ],
+      imports: [ StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({})],
       providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
     })
     .compileComponents();

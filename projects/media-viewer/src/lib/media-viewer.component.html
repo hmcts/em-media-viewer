@@ -14,24 +14,32 @@
                        [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null">
   </mv-comments-summary>
 
+  <mv-confirm-action *ngIf="toolbarEvents.icp.leavingSession | async"></mv-confirm-action>
+
   <div id="mainContainer">
     <mv-main-toolbar *ngIf="showToolbar"
                      [enableAnnotations]="enableAnnotations"
+                     [enableICP]="enableICP"
                      [enableRedactions]="enableRedactions">
     </mv-main-toolbar>
 
     <mv-redaction-toolbar *ngIf="toolbarEvents.redactionMode | async"></mv-redaction-toolbar>
 
+    <mv-icp-toolbar *ngIf="toolbarEvents.icp.enabled | async"></mv-icp-toolbar>
+
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
+                   inCourtPresentation
                    (pdfLoadStatus)="onMediaLoad($event)"
                    (pdfViewerException)="onLoadException($event)"
                    (documentTitle)="onDocumentTitleChange($event)"
                    [url]="url"
                    [enableAnnotations]="enableAnnotations"
                    [enableRedactions]="enableRedactions"
+                   [enableICP]="enableICP"
                    [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                    [downloadFileName]="downloadFileName"
-                   [height]="height">
+                   [height]="height"
+                   [caseId]="caseId">
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      (imageLoadStatus)="onMediaLoad($event)"

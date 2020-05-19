@@ -61,7 +61,6 @@ describe('BookmarksReducer', () => {
     const bookmarksState: BookmarksState = {
       bookmarks: [bookmark],
       bookmarkEntities: { [bookmark.id]: bookmark },
-      pdfPosition: undefined,
       editableBookmark: undefined,
       loaded: true,
       loading: false
@@ -81,7 +80,6 @@ describe('BookmarksReducer', () => {
     const bookmarksState: BookmarksState = {
       bookmarks: [bookmark],
       bookmarkEntities: { [bookmark.id]: bookmark },
-      pdfPosition: undefined,
       editableBookmark: undefined,
       loaded: true,
       loading: false
