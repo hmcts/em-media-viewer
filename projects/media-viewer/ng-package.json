@@ -10,6 +10,7 @@
     "uuid",
     "mutable-div",
     "hammerjs",
-    "ngx-chips"
+    "ngx-chips",
+    "ng2-material-dropdown"
   ]
 }
