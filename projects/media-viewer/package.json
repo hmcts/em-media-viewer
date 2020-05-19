@@ -2,6 +2,9 @@
   "name": "@hmcts/media-viewer",
   "version": "2.2.3",
   "description": "Media Viewer",
+  "scripts": {
+    "preinstall": "npx npm-force-resolutions"
+  },
   "keywords": [
     "Angular",
     "PDF",
@@ -15,10 +18,11 @@
   },
   "dependencies": {
     "hammerjs": "^2.0.8",
-    "ngx-chips": "^2.1.0",
+    "ngx-chips": "^1.9.8",
     "mutable-div": "0.0.11",
     "pdfjs-dist": "2.0.943",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "ng2-material-dropdown": "0.10.1"
   },
   "peerDependencies": {
     "@angular/animations": "^7.2.15",
@@ -36,5 +40,8 @@
   },
   "devDependencies": {
     "@types/uuid": "^3.4.4"
+  },
+  "resolutions": {
+    "ng2-material-dropdown": "0.10.1"
   }
 }
