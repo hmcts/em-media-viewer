@@ -1,8 +1,9 @@
 import * as fromActions from '../actions/document.action';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 
+import { PdfPosition } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 export interface DocumentState {
   documentId: string;
+  pdfPosition: PdfPosition;
   pages: {[id: string]: DocumentPages};
   hasDifferentPageSize: boolean;
   loaded: boolean;
@@ -17,6 +18,7 @@ export interface DocumentPages {
 
 export const initialDocumentState: DocumentState = {
   documentId: undefined,
+  pdfPosition: undefined,
   pages: {},
   hasDifferentPageSize: false,
   loading: false,
@@ -79,10 +81,19 @@ export function docReducer (state = initialDocumentState,
         hasDifferentPageSize
       };
     }
+
+    case fromActions.POSITION_UPDATED: {
+      const pdfPosition = action.payload;
+      return {
+        ...state,
+        pdfPosition: pdfPosition
+      }
+    }
   }
   return state;
 }
 export const getDocPages = (state: DocumentState) => state.pages;
 export const getDocId = (state: DocumentState) => state.documentId;
 export const getHasDifferentPageSizes = (state: DocumentState) => state.hasDifferentPageSize;
+export const getPdfPos = (state: DocumentState) => state.pdfPosition;
 

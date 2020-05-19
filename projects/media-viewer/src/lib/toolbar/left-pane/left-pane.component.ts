@@ -8,8 +8,10 @@ import { Subscription } from 'rxjs';
   templateUrl: './left-pane.component.html',
 })
 export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
+
   public pageNumber = 1;
   private subscriptions: Subscription[] = [];
+  icpSimplifiedToolbar = false;
 
   constructor(
     public readonly toolbarEvents: ToolbarEventService,
@@ -21,6 +23,11 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
       this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pageNumber = pageNumber),
       this.toolbarEvents.setCurrentPageInputValueSubject.subscribe(pageNumber => this.pageNumber = pageNumber)
     );
+
+    this.subscriptions.push(this.toolbarEvents.icp.enabled.subscribe(simplify => {
+      this.icpSimplifiedToolbar = simplify;
+      if (this.icpSimplifiedToolbar) { this.toolbarEvents.sidebarOpen.next(false); }
+    }));
   }
 
   ngOnDestroy(): void {

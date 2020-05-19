@@ -28,7 +28,9 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   toolbarEvents;
   enableAnnotations = false;
   enableRedactions = false;
+  enableICP = false;
   toolbarButtonOverrides: {};
+  showHeader = true;
 
   ngAfterContentInit() {
     this.setDocumentType(this.documentType);
@@ -64,8 +66,12 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
     this.enableAnnotations = showAnnotations;
   }
 
-  toggleRedactions(showReduction: boolean) {
-    this.enableRedactions = showReduction;
+  toggleRedaction(showRedaction: boolean) {
+    this.enableRedactions = showRedaction;
+  }
+
+  toggleICP(showICP: boolean) {
+    this.enableICP = showICP;
   }
 
   setDocumentUrl(newUrl: string) {
@@ -87,5 +93,9 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   getToolbarFunctions(toolbarEvent: ToolbarEventService) {
     this.toolbarEvents = toolbarEvent;
+  }
+
+  toggleHeader() {
+    this.showHeader = !this.showHeader;
   }
 }

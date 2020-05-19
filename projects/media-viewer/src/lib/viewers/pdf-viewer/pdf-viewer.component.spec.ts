@@ -20,7 +20,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../store/reducers/reducers';
 import { SelectedAnnotation } from '../../store/actions/annotations.action';
 import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
-import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
+import { PdfPositionUpdate } from '../../store/actions/document.action';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PdfViewerComponent', () => {
@@ -122,7 +122,7 @@ describe('PdfViewerComponent', () => {
     toolbarEvents.searchSubject.next();
     toolbarEvents.setCurrentPageSubject.next();
     toolbarEvents.changePageByDeltaSubject.next();
-    mockWrapper.positionUpdated.next({ location: { pageNumber: 1, top: 10, left: 10 }});
+    mockWrapper.positionUpdated.next({ location: { pageNumber: 1, top: 10, left: 10, rotation: 0 }});
 
     expect(printService.printDocumentNatively).toHaveBeenCalledWith(component.url);
     expect(mockWrapper.downloadFile).toHaveBeenCalled();
@@ -131,7 +131,7 @@ describe('PdfViewerComponent', () => {
     expect(mockWrapper.search).toHaveBeenCalled();
     expect(mockWrapper.setPageNumber).toHaveBeenCalled();
     expect(mockWrapper.changePageNumber).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(new UpdatePdfPosition({ pageNumber: 1, top: 10, left: 10 } as any));
+    expect(store.dispatch).toHaveBeenCalledWith(new PdfPositionUpdate({ pageNumber: 1, top: 10, left: 10, rotation: 0 }));
   }));
 
   it('on DocumentLoadProgress indicate document loading progress', () => {

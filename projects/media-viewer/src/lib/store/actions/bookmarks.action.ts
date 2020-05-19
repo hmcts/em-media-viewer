@@ -75,11 +75,6 @@ export class UpdateBookmarkFailure implements Action {
   constructor(public payload: Bookmark) {}
 }
 
-export class UpdatePdfPosition implements Action {
-  readonly type = UPDATE_PDF_POSITION;
-  constructor(public payload: PdfPosition) {}
-}
-
 
 export type BookmarksActions =
   | LoadBookmarks
@@ -93,5 +88,4 @@ export type BookmarksActions =
   | DeleteBookmarkFailure
   | UpdateBookmark
   | UpdateBookmarkSuccess
-  | UpdateBookmarkFailure
-  | UpdatePdfPosition;
+  | UpdateBookmarkFailure;

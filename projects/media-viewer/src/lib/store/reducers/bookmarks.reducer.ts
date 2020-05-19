@@ -6,7 +6,6 @@ export const initialBookmarksState: BookmarksState = {
   bookmarks: [],
   bookmarkEntities: {},
   editableBookmark: undefined,
-  pdfPosition: undefined,
   loaded: false,
   loading: false
 };
@@ -15,14 +14,6 @@ export function bookmarksReducer (state = initialBookmarksState,
                                   action: fromBookmarks.BookmarksActions): BookmarksState {
 
   switch (action.type) {
-
-    case fromBookmarks.UPDATE_PDF_POSITION: {
-      const pdfPosition = action.payload;
-      return {
-        ...state,
-        pdfPosition: pdfPosition
-      }
-    }
 
     case fromBookmarks.LOAD_BOOKMARKS: {
       return {
@@ -93,4 +84,3 @@ export function bookmarksReducer (state = initialBookmarksState,
 
 export const getBookmarkEnts = (state: BookmarksState) => state.bookmarkEntities;
 export const getEditBookmark = (state: BookmarksState) => state.editableBookmark;
-export const getPdfPos = (state: BookmarksState) => state.pdfPosition;
