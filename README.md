@@ -112,9 +112,11 @@ To override the default Annotation API path (or URL for cross domain calls) use 
 - the media-viewer expects calls to the backend to be proxied by the consuming application. This includes the following APIs:
   - '/documents', endpoint to be proxied to the 'document-store'
   - '/em-anno', endpoint to be proxied to the 'annotations-api', if annotations are turned on
+  - '/api/markups', endpoint to be proxied to the 'em-native-pdf-annotator-app', if redaction is turned on
+  - '/api/redaction', endpoint to be proxied to the 'em-native-pdf-annotator-app', if redaction is turned on
 
-### Proxying the Annotation Api
-In order to use annotations on the media viewer, you need to proxy the calls.
+### Proxying backend Api calls
+In order to use annotations/redactions on the media viewer, you need to proxy backend calls.
 
 Example:
 ```
