@@ -40,7 +40,7 @@ export const getRedactionArray = createSelector(
   }
 );
 
-export const getAnnoPerPage = createSelector(
+export const getRedactionsPerPage = createSelector(
   fromDocument.getPages,
   getRedactionPages,
   (pages, pageEnt) => {

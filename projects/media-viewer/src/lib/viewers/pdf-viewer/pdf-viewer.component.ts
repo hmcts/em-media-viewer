@@ -133,7 +133,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.clearAnnotationSet();
       this.documentId = this.extractDMStoreDocId(this.url);
       if (this.enableRedactions) {
-        this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
+        this.toolbarEvents.redactionMode.subscribe(redaMode => {
+          if (redaMode) {
+            this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
+          }
+        });
       }
     }
   }
