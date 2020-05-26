@@ -30,8 +30,7 @@ export class RedactionApiService {
   }
 
   public deleteRedaction(payload): Observable<null> {
-    const url = `${this.redactionApiUrl}/${payload.redactionId}`;
-
+    const url = `${this.redactionApiUrl}${payload.documentId}/${payload.redactionId}`;
     return this.httpClient
       .delete<null>(url, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
