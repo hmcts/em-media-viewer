@@ -45,7 +45,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly commentService: CommentService) {}
 
   ngOnInit(): void {
-    this.annotationsPerPage$ = this.store.select(fromSelectors.getAnnoPerPage).pipe(tap(console.log));
+    this.annotationsPerPage$ = this.store.select(fromSelectors.getAnnoPerPage);
     this.selectedAnnotation$ = this.store.select(fromSelectors.getSelectedAnnotation);
 
     this.subscriptions = [

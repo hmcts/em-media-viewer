@@ -76,12 +76,10 @@ export const getAnnoPerPage = createSelector(
     if (pages) {
       const arr = [];
       Object.keys(pages).forEach(key => {
-        if (key > '0') {
-          arr.push({
-            anno: entities[key] ? entities[key] : [],
-            styles: pages[key].styles
-          });
-        }
+        arr.push({
+          anno: entities[key] ? entities[key] : [],
+          styles: pages[key].styles
+        });
       });
       return arr;
     }
@@ -94,16 +92,15 @@ export const getCommentsArray = createSelector(
   getAnnotationEntities,
   fromTags.getTagFiltered,
   (comments, pages, annoEnt, filtered) => {
-    if (comments && annoEnt && pages) {
+    if (comments && annoEnt && pages[1]) {
         const isFiltered: boolean = !!Object.keys(filtered).length;
         const com = isFiltered ? filtered : comments;
         return Object.keys(com).map(key => {
           const page = annoEnt[key].page;
-          const pageHeight = pages[page] ? pages[page].styles.height : 0;
           return {
             ...comments[key],
             page,
-            pageHeight
+            pages
           };
         });
     }

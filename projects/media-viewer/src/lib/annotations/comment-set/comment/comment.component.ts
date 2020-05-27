@@ -90,7 +90,6 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   set comment(comment: Comment) {
     this._comment = {...comment};
     this.page = this._comment.page;
-    this.pageHeight = this._comment.pageHeight;
     this.lastUpdate = comment.lastModifiedDate ? comment.lastModifiedDate : comment.createdDate;
     this.author = comment.createdByDetails;
     this.createdBy = comment.createdBy;
@@ -102,8 +101,11 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
     this.tagItems = this._comment.tags;
     const pageMarginBottom = 10;
     this.totalPreviousPagesHeight = 0;
-    for (let i = 0; i < this.page - 1; i++) {
-      this.totalPreviousPagesHeight += this.pageHeight + pageMarginBottom;
+    for (let i = 0; i < this.page -1; i++) {
+      const height = this._comment.pages[i + 1] ? this._comment.pages[i + 1].styles.height : undefined;
+      if (height) {
+        this.totalPreviousPagesHeight += height + pageMarginBottom;
+      }
     }
 
   }

@@ -39,11 +39,7 @@ export class RedactionComponent implements OnInit, OnDestroy {
               private toolbarEvents: ToolbarEventService) {}
 
   ngOnInit(): void {
-<<<<<<< Updated upstream
     this.redactionsPerPage$ = this.store.pipe(select(fromSelectors.getRedactionsPerPage));
-=======
-    this.redactionsPerPage$ = this.store.pipe(select(fromSelectors.getAnnoPerPage), tap(console.log));
->>>>>>> Stashed changes
     this.selectedRedaction$ = this.store.pipe(select(fromSelectors.getSelected));
     this.$subscription = this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode);
     this.$subscription.add(this.store.pipe(select(fromSelectors.getRedactedDocumentInfo), filter(value => !!value))

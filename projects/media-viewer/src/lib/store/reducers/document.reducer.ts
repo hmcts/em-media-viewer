@@ -15,13 +15,7 @@ export interface DocumentPages {
 
 export const initialDocumentState: DocumentState = {
   documentId: undefined,
-  pages: {
-    '0': {
-      numberOfPages: 0,
-      styles: {} as any,
-      scaleRotation: {} as any
-    }
-  },
+  pages: {},
   loading: false,
   loaded: false,
 };
@@ -32,7 +26,7 @@ export function docReducer (state = initialDocumentState,
   switch (action.type) {
 
     case fromActions.SET_DOCUMENT_ID : {
-      let url = action.payload.split('/documents/');
+      const url = action.payload.split('/documents/');
       const documentId = (url.length > 1 ? url[1] : url[0]).replace('/binary', '');
       return {
         ...state,
