@@ -2,7 +2,7 @@ import * as fromActions from '../actions/document.action';
 
 export interface DocumentState {
   documentId: string;
-  pages: DocumentPages;
+  pages: {[id: string]: DocumentPages};
   loaded: boolean;
   loading: boolean;
 }
@@ -16,9 +16,11 @@ export interface DocumentPages {
 export const initialDocumentState: DocumentState = {
   documentId: undefined,
   pages: {
-    numberOfPages: 0,
-    styles: {} as any,
-    scaleRotation: {} as any
+    '0': {
+      numberOfPages: 0,
+      styles: {} as any,
+      scaleRotation: {} as any
+    }
   },
   loading: false,
   loaded: false,
@@ -40,8 +42,6 @@ export function docReducer (state = initialDocumentState,
 
     case fromActions.ADD_PAGE: {
       const payload = action.payload;
-      const  numberOfPages = (state.pages.numberOfPages <= payload.pageNumber) ?
-        payload.pageNumber : state.pages.numberOfPages;
       const styles = {
         left: payload.div['offsetLeft'],
         height: payload.div['offsetHeight'],
@@ -52,12 +52,15 @@ export function docReducer (state = initialDocumentState,
         rotation: payload.rotation
       };
       const page = {
-        numberOfPages,
         styles,
         scaleRotation
       };
 
-      const pages = { ...page };
+      const pages = {
+        ...state.pages,
+        [payload.pageNumber]: page
+      };
+
       return {
         ...state,
         pages

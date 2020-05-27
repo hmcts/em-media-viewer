@@ -14,7 +14,7 @@ import { HighlightCreateService } from './annotation-create/highlight-create.ser
 import { Rectangle } from './annotation-view/rectangle/rectangle.model';
 import { CreateBookmark } from '../../store/actions/bookmarks.action';
 import * as fromBookmarks from '../../store/selectors/bookmarks.selectors';
-import { take } from 'rxjs/operators';
+import {take, tap} from 'rxjs/operators';
 import uuid from 'uuid';
 
 
@@ -45,7 +45,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
     private readonly commentService: CommentService) {}
 
   ngOnInit(): void {
-    this.annotationsPerPage$ = this.store.select(fromSelectors.getAnnoPerPage);
+    this.annotationsPerPage$ = this.store.select(fromSelectors.getAnnoPerPage).pipe(tap(console.log));
     this.selectedAnnotation$ = this.store.select(fromSelectors.getSelectedAnnotation);
 
     this.subscriptions = [

@@ -11,7 +11,7 @@ import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import * as fromRedaActions from '../../store/actions/redaction.actions';
 import { SelectionAnnotation } from '../../annotations/models/event-select.model';
 import uuid from 'uuid';
-import { filter, take } from 'rxjs/operators';
+import {filter, take, tap} from 'rxjs/operators';
 import { ToolbarEventService } from '../../toolbar/toolbar.module';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
@@ -39,7 +39,11 @@ export class RedactionComponent implements OnInit, OnDestroy {
               private toolbarEvents: ToolbarEventService) {}
 
   ngOnInit(): void {
+<<<<<<< Updated upstream
     this.redactionsPerPage$ = this.store.pipe(select(fromSelectors.getRedactionsPerPage));
+=======
+    this.redactionsPerPage$ = this.store.pipe(select(fromSelectors.getAnnoPerPage), tap(console.log));
+>>>>>>> Stashed changes
     this.selectedRedaction$ = this.store.pipe(select(fromSelectors.getSelected));
     this.$subscription = this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode);
     this.$subscription.add(this.store.pipe(select(fromSelectors.getRedactedDocumentInfo), filter(value => !!value))

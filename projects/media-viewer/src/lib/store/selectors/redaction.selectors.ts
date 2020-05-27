@@ -46,12 +46,13 @@ export const getRedactionsPerPage = createSelector(
   (pages, pageEnt) => {
     if (pages && pages.numberOfPages && pageEnt) {
       const arr = [];
-      for (let i = 1; i <= pages.numberOfPages; i++) {
+      Object.keys(pages).forEach(key => {
         arr.push({
-          anno: pageEnt[i] ? pageEnt[i] : [],
-          styles: pages.styles
+          anno: pageEnt[key] ? pageEnt[key] : [],
+          styles: pages[key].styles
         });
-      }
+      });
+
       return arr;
     }
   }

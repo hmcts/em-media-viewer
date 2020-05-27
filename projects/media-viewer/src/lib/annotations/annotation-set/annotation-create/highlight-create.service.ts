@@ -24,10 +24,12 @@ export class HighlightCreateService {
               private store: Store<fromStore.AnnotationSetState>) {
     this.store.select(fromDocument.getPages)
       .subscribe(pages => {
-        this.height = pages.styles.height;
-        this.width = pages.styles.width;
-        this.zoom = parseFloat(pages.scaleRotation.scale);
-        this.rotate = parseInt(pages.scaleRotation.rotation, 10);
+        if (pages[1]) {
+          this.height = pages[1].styles.height;
+          this.width = pages[1].styles.width;
+          this.zoom = parseFloat(pages[1].scaleRotation.scale);
+          this.rotate = parseInt(pages[1].scaleRotation.rotation, 10);
+        }
       });
   }
 
