@@ -18,6 +18,7 @@ export class HighlightCreateService {
   width: number;
   zoom: number;
   rotate: number;
+  allPages: object;
 
   constructor(private toolBarEvents: ToolbarEventService,
               private readonly api: AnnotationApiService,
@@ -25,15 +26,16 @@ export class HighlightCreateService {
     this.store.select(fromDocument.getPages)
       .subscribe(pages => {
         if (pages[1]) {
-          this.height = pages[1].styles.height;
-          this.width = pages[1].styles.width;
-          this.zoom = parseFloat(pages[1].scaleRotation.scale);
-          this.rotate = parseInt(pages[1].scaleRotation.rotation, 10);
+          this.allPages = pages;
         }
       });
   }
 
-  getRectangles(event: MouseEvent) {
+  getRectangles(event: MouseEvent, page) {
+    this.height = this.allPages[page].styles.height;
+    this.width = this.allPages[page].styles.width;
+    this.zoom = parseFloat(this.allPages[page].scaleRotation.scale);
+    this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
     const selection = window.getSelection();
     if (selection) {
       const localElement = (<HTMLElement>event.target) || (<HTMLElement>event.srcElement);
