@@ -18,5 +18,10 @@ export const getDocumentId = createSelector(
   fromDocument.getDocId
 );
 
+export const getPageDifference = createSelector(
+  getDocumentState,
+  fromDocument.getHasDifferentPageSizes
+);
+
 
 

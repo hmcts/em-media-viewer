@@ -34,7 +34,8 @@ describe('AnnotationApiService', () => {
       pageHeight: 1122,
       selected: false,
       editable: false,
-      tags: []
+      tags: [],
+      pages: []
     },
     {
       id: '2',
@@ -50,7 +51,8 @@ describe('AnnotationApiService', () => {
       pageHeight: 1122,
       selected: false,
       editable: false,
-      tags: []
+      tags: [],
+      pages: []
     },
     {
       id: '3',
@@ -66,7 +68,8 @@ describe('AnnotationApiService', () => {
       pageHeight: 1122,
       selected: false,
       editable: false,
-      tags: []
+      tags: [],
+      pages: []
     },
   ];
 

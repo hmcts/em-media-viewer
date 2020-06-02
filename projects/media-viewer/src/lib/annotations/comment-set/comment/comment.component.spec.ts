@@ -36,7 +36,8 @@ describe('CommentComponent', () => {
     selected: true,
     editable: true,
     page: 1,
-    pageHeight: 1122
+    pageHeight: 1122,
+    pages: []
   };
 
   const mockRectangle = {

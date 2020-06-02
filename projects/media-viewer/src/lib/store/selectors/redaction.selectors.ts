@@ -36,22 +36,23 @@ export const getRedactionArray = createSelector(
     return {
       redactions: Object.keys(ent).map(key => ent[key]),
       documentId: docSetId.documentId
-    }
+    };
   }
 );
 
-export const getAnnoPerPage = createSelector(
+export const getRedactionsPerPage = createSelector(
   fromDocument.getPages,
   getRedactionPages,
   (pages, pageEnt) => {
-    if (pages && pages.numberOfPages && pageEnt) {
+    if (pages && pageEnt) {
       const arr = [];
-      for (let i = 1; i <= pages.numberOfPages; i++) {
+      Object.keys(pages).forEach(key => {
         arr.push({
-          anno: pageEnt[i] ? pageEnt[i] : [],
-          styles: pages.styles
+          anno: pageEnt[key] ? pageEnt[key] : [],
+          styles: pages[key].styles
         });
-      }
+      });
+
       return arr;
     }
   }

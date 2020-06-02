@@ -25,6 +25,7 @@ import 'hammerjs';
 import {select, Store} from '@ngrx/store';
 import * as fromStore from './store/reducers/reducers';
 import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
+import * as fromDocumentsSelector from './store/selectors/document.selectors';
 import * as fromAnnoActions from './store/actions/annotations.action';
 
 enum SupportedContentTypes {
@@ -62,7 +63,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
   hasScrollBar: boolean;
-  typeException: boolean = false;
+  typeException = false;
+  hasDifferentPageSize$: Observable<boolean>;
 
   private subscriptions: Subscription[] = [];
 
@@ -80,6 +82,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   ngAfterContentInit() {
     this.annotationSet$ = this.store.pipe(select(fromAnnoSelectors.getAnnotationSet));
+    this.hasDifferentPageSize$ = this.store.pipe(select(fromDocumentsSelector.getPageDifference));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
     this.subscriptions.push(

@@ -14,7 +14,7 @@ import { HighlightCreateService } from './annotation-create/highlight-create.ser
 import { Rectangle } from './annotation-view/rectangle/rectangle.model';
 import { CreateBookmark } from '../../store/actions/bookmarks.action';
 import * as fromBookmarks from '../../store/selectors/bookmarks.selectors';
-import { take } from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 import uuid from 'uuid';
 
 
@@ -64,7 +64,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
 
   showContextToolbar(highlight: Highlight) {
     this.highlightPage = highlight.page;
-    this.rectangles = this.highlightService.getRectangles(highlight.event);
+    this.rectangles = this.highlightService.getRectangles(highlight.event, highlight.page);
     if (this.rectangles) {
       this.toolbarEvents.highlightModeSubject.next(false);
     }

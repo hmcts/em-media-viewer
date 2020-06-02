@@ -23,13 +23,6 @@ describe('HighlightCreateService', () => {
     service = new HighlightCreateService(toolbarEvents, annotationApi, mockStore);
   });
 
-  it('should set the style values from the store', () => {
-    expect(service.height).toBe(100);
-    expect(service.width).toBe(100);
-    expect(service.zoom).toBe(1);
-    expect(service.rotate).toBe(0);
-  });
-
   it('should create rectangles', fakeAsync(() => {
     const mockClientRects = [{ top: 80, left: 60 , bottom: 100, right: 70 }] as any;
     const mockRange = { getClientRects: () => mockClientRects } as any;
@@ -44,8 +37,21 @@ describe('HighlightCreateService', () => {
     const mockElement = getMockElement('');
     const mockEvent = { target: mockElement } as any;
     service.zoom = 1;
+    service.allPages = {
+      '1': {
+        scaleRotation: {
+          rotation: 0,
+          scale: 1
+        },
+        styles: {
+          height: 1122,
+          left: 341,
+          width: 793
+        }
+      }
+    };
 
-    const rectangles = service.getRectangles(mockEvent);
+    const rectangles = service.getRectangles(mockEvent, 1);
 
     expect(rectangles[0].x).toBe(20);
     expect(rectangles[0].y).toBe(50);
@@ -58,8 +64,20 @@ describe('HighlightCreateService', () => {
 
     const mockElement = getMockElement('scaleX(0.969918) translateX(-110.684px)');
     const mockEvent = { target: mockElement } as any;
-
-    service.getRectangles(mockEvent);
+    service.allPages = {
+      '1': {
+        scaleRotation: {
+          rotation: 0,
+          scale: 1
+        },
+        styles: {
+          height: 1122,
+          left: 341,
+          width: 793
+        }
+      }
+    }
+    service.getRectangles(mockEvent, 1);
 
     expect(mockElement.parentElement.children[0].style.padding).toBe('0');
     expect(mockElement.parentElement.children[0].style.transform).not.toContain('translate');
@@ -70,8 +88,20 @@ describe('HighlightCreateService', () => {
 
     const mockElement = getMockElement('translateX(-110.684px) translateY(12px)');
     const mockEvent = { target: mockElement } as any;
-
-    service.getRectangles(mockEvent);
+    service.allPages = {
+      '1': {
+        scaleRotation: {
+          rotation: 0,
+          scale: 1
+        },
+        styles: {
+          height: 1122,
+          left: 341,
+          width: 793
+        }
+      }
+    }
+    service.getRectangles(mockEvent, 1);
 
     expect(mockElement.parentElement.children[0].style.padding).toBe('0');
     expect(mockElement.parentElement.children[0].style.transform).not.toContain('translateX');
@@ -91,7 +121,7 @@ describe('HighlightCreateService', () => {
   });
 
   it('should reset highlight', () => {
-    spyOn(window.getSelection(),'removeAllRanges');
+    spyOn(window.getSelection(), 'removeAllRanges');
     spyOn(toolbarEvents.highlightModeSubject, 'next');
 
     service.resetHighlight();

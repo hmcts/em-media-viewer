@@ -3,7 +3,8 @@
        'has-redact-bar': toolbarEvents.redactionMode | async,
        'is-redaction-preview': toolbarEvents.redactionPreview | async,
        sidebarOpen: toolbarEvents.sidebarOpen | async,
-       'has-scroll-bar': hasScrollBar
+       'has-scroll-bar': hasScrollBar,
+       'has-different-page-size': hasDifferentPageSize$ | async
      }"
      [ngStyle]="{ width: width }">
 
