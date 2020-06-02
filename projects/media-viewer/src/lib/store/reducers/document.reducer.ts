@@ -3,6 +3,7 @@ import * as fromActions from '../actions/document.action';
 export interface DocumentState {
   documentId: string;
   pages: {[id: string]: DocumentPages};
+  hasDifferentPageSize: boolean;
   loaded: boolean;
   loading: boolean;
 }
@@ -16,6 +17,7 @@ export interface DocumentPages {
 export const initialDocumentState: DocumentState = {
   documentId: undefined,
   pages: {},
+  hasDifferentPageSize: false,
   loading: false,
   loaded: false,
 };
@@ -37,7 +39,17 @@ export function docReducer (state = initialDocumentState,
     case fromActions.ADD_PAGES: {
       const payload = action.payload;
       let pages = {};
+      let pageHeight;
+      let pageWidth;
+      let hasDifferentPageSize = state.hasDifferentPageSize
       payload.forEach(page => {
+        if (pageHeight && pageWidth &&
+          (pageHeight !== page.div['offsetHeight'] || pageWidth !== page.div['offsetWidth']) &&
+          !hasDifferentPageSize) {
+            hasDifferentPageSize = true;
+        }
+        pageHeight = page.div['offsetHeight'];
+        pageWidth = page.div['offsetWidth'];
         const styles = {
           left: page.div['offsetLeft'],
           height: page.div['offsetHeight'],
@@ -62,7 +74,8 @@ export function docReducer (state = initialDocumentState,
       });
       return {
         ...state,
-        pages
+        pages,
+        hasDifferentPageSize
       };
     }
   }
@@ -70,4 +83,5 @@ export function docReducer (state = initialDocumentState,
 }
 export const getDocPages = (state: DocumentState) => state.pages;
 export const getDocId = (state: DocumentState) => state.documentId;
+export const getHasDifferentPageSizes = (state: DocumentState) => state.hasDifferentPageSize;
 
