@@ -189,11 +189,12 @@ describe('Annotations selectors', () => {
       store.pipe(select(fromSelectors.getAnnoPerPage)).subscribe(value => {
         result = value;
       });
-      const payload: any = {
+      const payload: any = [{
         div: {},
         scale: 1,
-        rotation: 0
-      };
+        rotation: 0,
+        id: '1'
+      }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
       store.dispatch(new fromDocument.AddPages(payload));
       const expected = [
@@ -202,7 +203,7 @@ describe('Annotations selectors', () => {
           styles: {left: undefined, height: undefined, width: undefined}
         }
       ]
-      expect(result).toEqual([]);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -213,12 +214,12 @@ describe('Annotations selectors', () => {
         result = value;
       });
 
-      const payload: any = {
+      const payload: any = [{
         div: {},
-        pageNumber: 1,
+        id: '1',
         scale: 1,
         rotation: 0
-      };
+      }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
       store.dispatch(new fromDocument.AddPages(payload));
       store.dispatch(new fromTags.AddFilterTags({important: false}));
@@ -236,12 +237,12 @@ describe('Annotations selectors', () => {
         result = value;
       });
 
-      const payload: any = {
+      const payload: any = [{
         div: {},
-        pageNumber: 1,
+        id: '1',
         scale: 1,
         rotation: 0
-      };
+      }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
       store.dispatch(new fromDocument.AddPages(payload));
       store.dispatch(new fromTags.AddFilterTags({important: false}));
