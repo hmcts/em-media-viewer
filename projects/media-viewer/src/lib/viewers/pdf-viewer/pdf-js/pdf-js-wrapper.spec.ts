@@ -50,7 +50,7 @@ describe('PdfJsWrapper', () => {
       new Subject<any>(),
       new Subject<Outline>(),
       new Subject(),
-      new Subject<PageEvent>(),
+      new Subject<PageEvent[]>(),
       new Subject<{ location: PdfPosition }>()
     );
   });

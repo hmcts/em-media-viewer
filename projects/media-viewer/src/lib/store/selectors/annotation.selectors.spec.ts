@@ -191,7 +191,6 @@ describe('Annotations selectors', () => {
       });
       const payload: any = {
         div: {},
-        pageNumber: 1,
         scale: 1,
         rotation: 0
       };
@@ -203,7 +202,7 @@ describe('Annotations selectors', () => {
           styles: {left: undefined, height: undefined, width: undefined}
         }
       ]
-      expect(result).toEqual(expected);
+      expect(result).toEqual([]);
     });
   });
 

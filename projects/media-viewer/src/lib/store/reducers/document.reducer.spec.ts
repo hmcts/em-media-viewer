@@ -12,28 +12,29 @@ describe('DocumentReducer', () => {
     });
 
     it('should set pages after ADD PAGE action', () => {
-      const payload = {
+      const payload = [{
           div: {},
           pageNumber: 3,
           scale: '1',
-          rotation: '0'
-        }
+          rotation: '0',
+          id: 1
+        }]
       const { initialDocumentState } = fromDocument;
       const action = new fromActions.AddPages(payload);
       const state = fromDocument.docReducer(initialDocumentState, action);
       const pages: any = {
-        numberOfPages: 3,
-        styles: {
-          left: undefined,
-          height: undefined,
-          width: undefined
-        },
-        scaleRotation: {
-          scale: '1',
-          rotation: '0'
+        '1' : {
+          styles: {
+            left: undefined,
+            height: undefined,
+            width: undefined
+          },
+          scaleRotation: {
+            scale: '1',
+            rotation: '0'
+          }
         }
       }
-
       expect(state.pages).toEqual(pages);
     });
 });

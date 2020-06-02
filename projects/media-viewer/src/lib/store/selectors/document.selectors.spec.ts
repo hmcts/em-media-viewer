@@ -26,23 +26,11 @@ describe('Document selectors', () => {
       });
       const payload: any = {
         div: {},
-        pageNumber: 1,
         scale: 1,
         rotation: 0
       };
       store.dispatch(new fromActions.AddPages(payload));
-      const expected = {
-        numberOfPages: 1,
-        styles: {
-          left: undefined,
-          height: undefined,
-          width: undefined
-        },
-        scaleRotation: {
-          scale: 1,
-          rotation: 0
-        }
-      };
+      const expected = {};
       expect(result).toEqual(expected);
     });
   });
