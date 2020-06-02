@@ -28,7 +28,7 @@ import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocumentActions from '../../store/actions/document.action';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
-import { tap, throttleTime } from 'rxjs/operators';
+import {take, tap, throttleTime} from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
 
@@ -95,15 +95,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
     this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
-    this.pdfWrapper.pageRendered.subscribe((event) => {
+    this.pdfWrapper.pageRendered.pipe().subscribe((event) => {
       if (this.enableAnnotations) {
-        const payload: any  = {
-          div: event.source.div,
-          pageNumber: event.pageNumber,
-          scale: event.source.scale,
-          rotation: event.source.rotation
-        };
-        this.store.dispatch(new fromDocumentActions.AddPage(payload));
+        this.store.dispatch(new fromDocumentActions.AddPages(event));
       }
     });
     this.$subscription = this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url));

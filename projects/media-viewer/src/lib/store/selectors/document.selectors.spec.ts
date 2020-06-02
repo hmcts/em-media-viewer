@@ -30,7 +30,7 @@ describe('Document selectors', () => {
         scale: 1,
         rotation: 0
       };
-      store.dispatch(new fromActions.AddPage(payload));
+      store.dispatch(new fromActions.AddPages(payload));
       const expected = {
         numberOfPages: 1,
         styles: {

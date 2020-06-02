@@ -34,27 +34,32 @@ export function docReducer (state = initialDocumentState,
       }
     }
 
-    case fromActions.ADD_PAGE: {
+    case fromActions.ADD_PAGES: {
       const payload = action.payload;
-      const styles = {
-        left: payload.div['offsetLeft'],
-        height: payload.div['offsetHeight'],
-        width: payload.div['offsetWidth']
-      };
-      const scaleRotation = {
-        scale: payload.scale,
-        rotation: payload.rotation
-      };
-      const page = {
-        styles,
-        scaleRotation
-      };
+      let pages = {};
+      payload.forEach(page => {
+        const styles = {
+          left: page.div['offsetLeft'],
+          height: page.div['offsetHeight'],
+          width: page.div['offsetWidth']
+        };
 
-      const pages = {
-        ...state.pages,
-        [payload.pageNumber]: page
-      };
+        const scaleRotation = {
+          scale: page.scale,
+          rotation: page.rotation
+        };
 
+        const p = {
+          styles,
+          scaleRotation
+        };
+
+        pages = {
+          ...pages,
+          [page.id]: p
+        };
+
+      });
       return {
         ...state,
         pages

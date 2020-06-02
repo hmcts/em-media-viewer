@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
 import { PdfPosition } from '../side-bar/bookmarks/bookmarks.interfaces';
+import {debug} from 'ng-packagr/lib/util/log';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
@@ -33,13 +34,19 @@ export class PdfJsWrapper {
     public readonly documentLoaded: Subject<any>,
     public readonly outlineLoaded: Subject<Outline>,
     public readonly documentLoadFailed: Subject<Error>,
-    public readonly pageRendered: Subject<PageEvent>,
+    public readonly pageRendered: Subject<PageEvent[]>,
     public readonly positionUpdated: Subject<{ location: PdfPosition }>,
   ) {
     this.pdfViewer.eventBus.on('updateviewarea', e => positionUpdated.next(e));
-    this.pdfViewer.eventBus.on('pagerendered', e => this.pageRendered.next(e));
     this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPageInputValueSubject.next(e.pageNumber));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
+
+    this.pdfViewer.eventBus.on('pagerendered', e => {}); // not used left for future convenience
+    this.pdfViewer.eventBus.on('pagesloaded', (e) => this.emitDocumentInfo(e));
+    this.pdfViewer.eventBus.on('scalechanging', (e) =>  this.emitDocumentInfo(e));
+    this.pdfViewer.eventBus.on('rotationchanging', (e) => this.emitDocumentInfo(e));
+
+    console.log('these are the pages ', this.pdfViewer._pages)
     this.pdfViewer.eventBus.on('updatefindcontrolstate', event => {
       if (event.state !== FindState.PENDING) {
         this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
@@ -49,6 +56,19 @@ export class PdfJsWrapper {
       this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
     });
     this.zoomValue = 1;
+  }
+
+  private emitDocumentInfo(e) {
+    const allPages: PageEvent[] = [...this.pdfViewer._pages].map(page => {
+      return {
+        div: page.div,
+        scale: page.scale,
+        rotation: page.rotation,
+        id: page.id
+      };
+    });
+
+    this.pageRendered.next(allPages);
   }
 
   public async loadDocument(documentUrl: string) {
@@ -172,11 +192,9 @@ export interface DocumentLoadProgress {
 }
 
 export interface PageEvent {
-  pageNumber: number;
-  source: {
-    rotation: number,
-    scale: number,
-    div: HTMLDivElement
-  };
+  div: object;
+  scale: number;
+  rotation: number;
+  id: string;
 }
 

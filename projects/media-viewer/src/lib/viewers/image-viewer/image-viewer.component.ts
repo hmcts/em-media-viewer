@@ -165,7 +165,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       scale: 1,
       rotation: 1
     };
-    this.store.dispatch(new fromDocument.AddPage(payload));
+    this.store.dispatch(new fromDocument.AddPages(payload));
   }
 
   getImageHeight(img) {

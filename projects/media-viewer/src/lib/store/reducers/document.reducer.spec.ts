@@ -19,9 +19,9 @@ describe('DocumentReducer', () => {
           rotation: '0'
         }
       const { initialDocumentState } = fromDocument;
-      const action = new fromActions.AddPage(payload);
+      const action = new fromActions.AddPages(payload);
       const state = fromDocument.docReducer(initialDocumentState, action);
-      const pages = {
+      const pages: any = {
         numberOfPages: 3,
         styles: {
           left: undefined,
