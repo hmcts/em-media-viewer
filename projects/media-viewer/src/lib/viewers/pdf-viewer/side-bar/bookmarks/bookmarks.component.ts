@@ -37,9 +37,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       .subscribe(editableId => this.editableBookmark = editableId);
     this.$subscription.add(this.store.select(fromDocument.getPages)
       .subscribe(pages => {
-        if (pages) {
-          this.height = pages.styles.height;
-          this.width = pages.styles.width;
+        if (pages[1]) {
+          this.height = pages[1].styles.height;
+          this.width = pages[1].styles.width;
         }
       }));
   }

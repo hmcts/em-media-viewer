@@ -1,8 +1,10 @@
 import * as fromActions from '../actions/document.action';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 export interface DocumentState {
   documentId: string;
-  pages: DocumentPages;
+  pages: {[id: string]: DocumentPages};
+  hasDifferentPageSize: boolean;
   loaded: boolean;
   loading: boolean;
 }
@@ -15,11 +17,8 @@ export interface DocumentPages {
 
 export const initialDocumentState: DocumentState = {
   documentId: undefined,
-  pages: {
-    numberOfPages: 0,
-    styles: {} as any,
-    scaleRotation: {} as any
-  },
+  pages: {},
+  hasDifferentPageSize: false,
   loading: false,
   loaded: false,
 };
@@ -30,7 +29,7 @@ export function docReducer (state = initialDocumentState,
   switch (action.type) {
 
     case fromActions.SET_DOCUMENT_ID : {
-      let url = action.payload.split('/documents/');
+      const url = action.payload.split('/documents/');
       const documentId = (url.length > 1 ? url[1] : url[0]).replace('/binary', '');
       return {
         ...state,
@@ -38,29 +37,46 @@ export function docReducer (state = initialDocumentState,
       }
     }
 
-    case fromActions.ADD_PAGE: {
+    case fromActions.ADD_PAGES: {
       const payload = action.payload;
-      const  numberOfPages = (state.pages.numberOfPages <= payload.pageNumber) ?
-        payload.pageNumber : state.pages.numberOfPages;
-      const styles = {
-        left: payload.div['offsetLeft'],
-        height: payload.div['offsetHeight'],
-        width: payload.div['offsetWidth']
-      };
-      const scaleRotation = {
-        scale: payload.scale,
-        rotation: payload.rotation
-      };
-      const page = {
-        numberOfPages,
-        styles,
-        scaleRotation
-      };
+      let pages = {};
+      let pageHeight;
+      let pageWidth;
+      let hasDifferentPageSize = state.hasDifferentPageSize
+      payload.forEach(page => {
+        if (!hasDifferentPageSize && pageHeight && pageWidth &&
+          (pageHeight !== page.div['offsetHeight'] || pageWidth !== page.div['offsetWidth'])) {
+            hasDifferentPageSize = true;
+        } else {
+          pageHeight = page.div['offsetHeight'];
+          pageWidth = page.div['offsetWidth'];
+        }
+        const styles = {
+          left: page.div['offsetLeft'],
+          height: page.div['offsetHeight'],
+          width: page.div['offsetWidth']
+        };
 
-      const pages = { ...page };
+        const scaleRotation = {
+          scale: page.scale,
+          rotation: page.rotation
+        };
+
+        const p = {
+          styles,
+          scaleRotation
+        };
+
+        pages = {
+          ...pages,
+          [page.id]: p
+        };
+
+      });
       return {
         ...state,
-        pages
+        pages,
+        hasDifferentPageSize
       };
     }
   }
@@ -68,4 +84,5 @@ export function docReducer (state = initialDocumentState,
 }
 export const getDocPages = (state: DocumentState) => state.pages;
 export const getDocId = (state: DocumentState) => state.documentId;
+export const getHasDifferentPageSizes = (state: DocumentState) => state.hasDifferentPageSize;
 

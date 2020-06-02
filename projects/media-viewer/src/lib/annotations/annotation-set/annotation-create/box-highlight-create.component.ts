@@ -2,7 +2,6 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
 import uuid from 'uuid';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
-import { HighlightCreateService } from './highlight-create.service';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
 
@@ -38,8 +37,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private readonly highlightService: HighlightCreateService,
-              private readonly toolbarEvents: ToolbarEventService) {}
+  constructor(private readonly toolbarEvents: ToolbarEventService) {}
 
   ngOnInit(): void {
     this.subscriptions = [

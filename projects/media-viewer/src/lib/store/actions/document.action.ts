@@ -1,17 +1,18 @@
 import { Action } from '@ngrx/store';
+import {PageEvent} from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 
 
 export const SET_DOCUMENT_ID = '[Document] Set Document Id';
-export const ADD_PAGE = '[Document] Add Page';
+export const ADD_PAGES = '[Document] Add Pages';
 
 export class SetDocumentId implements Action {
   readonly type = SET_DOCUMENT_ID;
   constructor(public payload: string) { }
 }
 
-export class AddPage implements Action {
-  readonly type = ADD_PAGE;
-  constructor(public payload: { div: any; pageNumber: number; scale: string; rotation: string }) { }
+export class AddPages implements Action {
+  readonly type = ADD_PAGES;
+  constructor(public payload: PageEvent[]) { }
 }
 
-export type DocumentActions = AddPage | SetDocumentId;
+export type DocumentActions = AddPages | SetDocumentId;

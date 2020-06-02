@@ -189,14 +189,14 @@ describe('Annotations selectors', () => {
       store.pipe(select(fromSelectors.getAnnoPerPage)).subscribe(value => {
         result = value;
       });
-      const payload: any = {
+      const payload: any = [{
         div: {},
-        pageNumber: 1,
         scale: 1,
-        rotation: 0
-      };
+        rotation: 0,
+        id: '1'
+      }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      store.dispatch(new fromDocument.AddPage(payload));
+      store.dispatch(new fromDocument.AddPages(payload));
       const expected = [
         {
           anno: [anno],
@@ -214,14 +214,14 @@ describe('Annotations selectors', () => {
         result = value;
       });
 
-      const payload: any = {
+      const payload: any = [{
         div: {},
-        pageNumber: 1,
+        id: '1',
         scale: 1,
         rotation: 0
-      };
+      }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      store.dispatch(new fromDocument.AddPage(payload));
+      store.dispatch(new fromDocument.AddPages(payload));
       store.dispatch(new fromTags.AddFilterTags({important: false}));
       const expected = [
         {...comment, tags}
@@ -237,14 +237,14 @@ describe('Annotations selectors', () => {
         result = value;
       });
 
-      const payload: any = {
+      const payload: any = [{
         div: {},
-        pageNumber: 1,
+        id: '1',
         scale: 1,
         rotation: 0
-      };
+      }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
-      store.dispatch(new fromDocument.AddPage(payload));
+      store.dispatch(new fromDocument.AddPages(payload));
       store.dispatch(new fromTags.AddFilterTags({important: false}));
       expect(result).toEqual([anno]);
     });

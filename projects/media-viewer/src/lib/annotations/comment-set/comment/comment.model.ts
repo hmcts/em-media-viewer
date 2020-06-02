@@ -6,6 +6,7 @@ export interface Comment extends ApiPersisted {
   content: string;
   tags: TagsModel[];
   page: number;
+  pages: object;
   pageHeight: number;
   selected: boolean;
   editable: boolean;

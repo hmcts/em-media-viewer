@@ -214,3 +214,9 @@ html[dir='rtl'] .verticalToolbarSeparator {
 #printContainer {
   display: none;
 }
+
+.has-redact-bar.has-different-page-size {
+  .rotateCcw, .rotateCw {
+    display: none;
+  }
+}

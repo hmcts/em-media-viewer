@@ -1,6 +1,6 @@
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import { ElementRef, Injectable } from '@angular/core';
-import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js-wrapper';
+import {DocumentLoadProgress, PageEvent, PdfJsWrapper} from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
@@ -45,7 +45,7 @@ export class PdfJsWrapperFactory {
       new Subject<any>(),
       new Subject<Outline>(),
       new Subject(),
-      new Subject<{ pageNumber: number, source: { rotation: number, scale: number, div: HTMLDivElement }}>(),
+      new Subject<PageEvent[]>(),
       new Subject<{location: PdfPosition}>()
     );
 
