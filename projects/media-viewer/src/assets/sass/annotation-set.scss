@@ -50,7 +50,7 @@ mv-annotation-set, mv-redactions {
     position: absolute;
     top: 0;
     &__page {
-      border: 1px solid red; // fix for text-highlight mispositioned
+      border: 1px solid transparent; // fix for text-highlight mispositioned
       background-color: transparent;
       margin: 0 auto 8px auto;
       position: relative;
