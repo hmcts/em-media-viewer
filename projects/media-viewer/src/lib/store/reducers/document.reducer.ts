@@ -1,4 +1,5 @@
 import * as fromActions from '../actions/document.action';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 export interface DocumentState {
   documentId: string;
@@ -43,13 +44,13 @@ export function docReducer (state = initialDocumentState,
       let pageWidth;
       let hasDifferentPageSize = state.hasDifferentPageSize
       payload.forEach(page => {
-        if (pageHeight && pageWidth &&
-          (pageHeight !== page.div['offsetHeight'] || pageWidth !== page.div['offsetWidth']) &&
-          !hasDifferentPageSize) {
+        if (!hasDifferentPageSize && pageHeight && pageWidth &&
+          (pageHeight !== page.div['offsetHeight'] || pageWidth !== page.div['offsetWidth'])) {
             hasDifferentPageSize = true;
+        } else {
+          pageHeight = page.div['offsetHeight'];
+          pageWidth = page.div['offsetWidth'];
         }
-        pageHeight = page.div['offsetHeight'];
-        pageWidth = page.div['offsetWidth'];
         const styles = {
           left: page.div['offsetLeft'],
           height: page.div['offsetHeight'],

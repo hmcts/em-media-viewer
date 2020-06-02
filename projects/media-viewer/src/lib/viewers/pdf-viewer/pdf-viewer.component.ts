@@ -95,7 +95,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
     this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
-    this.pdfWrapper.pageRendered.pipe().subscribe((event) => {
+    this.pdfWrapper.pageRendered.subscribe((event) => {
       if (this.enableAnnotations) {
         this.store.dispatch(new fromDocumentActions.AddPages(event));
       }
@@ -127,8 +127,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.clearAnnotationSet();
       this.documentId = this.extractDMStoreDocId(this.url);
       if (this.enableRedactions) {
-        this.toolbarEvents.redactionMode.subscribe(redaMode => {
-          if (redaMode) {
+        this.toolbarEvents.redactionMode.subscribe(redactMode => {
+          if (redactMode) {
             this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
           }
         });

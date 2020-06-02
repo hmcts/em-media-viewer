@@ -11,7 +11,7 @@ export class SetDocumentId implements Action {
 
 export class AddPages implements Action {
   readonly type = ADD_PAGES;
-  constructor(public payload: any) { }
+  constructor(public payload: {scale: number, id: string, div: object, rotation: number}[]) { }
 }
 
 export type DocumentActions = AddPages | SetDocumentId;

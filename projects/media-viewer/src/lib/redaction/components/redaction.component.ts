@@ -11,7 +11,7 @@ import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import * as fromRedaActions from '../../store/actions/redaction.actions';
 import { SelectionAnnotation } from '../../annotations/models/event-select.model';
 import uuid from 'uuid';
-import {filter, take, tap} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 import { ToolbarEventService } from '../../toolbar/toolbar.module';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
