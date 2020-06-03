@@ -23,14 +23,15 @@ import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
-import { Store } from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocumentActions from '../../store/actions/document.action';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
-import {take, tap, throttleTime} from 'rxjs/operators';
+import {tap, throttleTime} from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
+import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -63,6 +64,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   loadingDocumentProgress: number;
   errorMessage: string;
   documentId: string;
+  hasDifferentPageSize = false;
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
@@ -130,9 +132,17 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         this.toolbarEvents.redactionMode.subscribe(redactMode => {
           if (redactMode) {
             this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
+            this.resetRotation();
           }
         });
       }
+    }
+  }
+
+  resetRotation() {
+    if (this.hasDifferentPageSize) {
+      this.pdfWrapper.resetRotation(0);
+      this.rotation = 0;
     }
   }
 
@@ -149,6 +159,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     await this.pdfWrapper.loadDocument(this.url);
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
     this.setPageHeights();
+    this.$subscription.add(this.store.pipe(select(fromDocumentsSelector.getPageDifference))
+      .subscribe(hasDifferentPageSie => this.hasDifferentPageSize = hasDifferentPageSie));
   }
 
   private onDocumentLoadInit() {
