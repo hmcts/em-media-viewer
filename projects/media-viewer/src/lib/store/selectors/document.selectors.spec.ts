@@ -24,13 +24,26 @@ describe('Document selectors', () => {
       store.pipe(select(fromSelectors.getPages)).subscribe(value => {
         result = value;
       });
-      const payload: any = {
+      const payload: any = [{
         div: {},
         scale: 1,
-        rotation: 0
-      };
+        rotation: 0,
+        id: '1'
+      }];
       store.dispatch(new fromActions.AddPages(payload));
-      const expected = {};
+      const expected = {
+        '1': {
+          styles: {
+            left: undefined,
+            height: undefined,
+            width: undefined
+          },
+          scaleRotation: {
+            scale: 1,
+            rotation: 0
+          }
+        }
+      };
       expect(result).toEqual(expected);
     });
   });
