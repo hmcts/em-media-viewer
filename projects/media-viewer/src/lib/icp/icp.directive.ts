@@ -8,8 +8,8 @@ import { IcpUpdateService } from './icp-update.service';
 import { ViewerEventService } from '../viewers/viewer-event.service';
 import { IcpPresenterService } from './icp-presenter.service';
 import { IcpFollowerService } from './icp-follower.service';
-import { IcpParticipant, IcpState } from '../store/reducers/icp.reducer';
 import { filter, take } from 'rxjs/operators';
+import { IcpParticipant, IcpState } from './icp.interfaces';
 
 
 @Directive({

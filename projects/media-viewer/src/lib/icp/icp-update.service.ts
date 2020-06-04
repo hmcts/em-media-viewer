@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IcpParticipant, IcpScreenUpdate, IcpSession } from '../store/reducers/icp.reducer';
 import { SocketService } from './socket.service';
+import { IcpParticipant, IcpScreenUpdate, IcpSession } from './icp.interfaces';
 
 @Injectable()
 export class IcpUpdateService {
