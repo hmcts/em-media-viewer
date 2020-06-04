@@ -42,11 +42,11 @@
         <div class="govuk-grid-column-one-quarter">
           <details class="govuk-details">
             <summary class="govuk-details__summary">
-              <span class="govuk-details__summary-text">Change download file</span>
+              <span class="govuk-details__summary-text">Change case ID</span>
             </summary>
             <div class="govuk-details__text">
               <input *ngIf="documentType === 'pdf'" class="govuk-input" type="text" name="pdfFileName"
-                     aria-label="pdf file name" [(ngModel)]="filename">
+                     aria-label="pdf file name" [(ngModel)]="caseId">
             </div>
           </details>
         </div>
@@ -97,7 +97,7 @@
                       [toolbarEvents]="toolbarEvents"
                       [contentType]="documentType"></app-custom-toolbar>
   <mv-media-viewer [url]="url"
-                   caseId="dummyCaseId"
+                   [caseId]="caseId"
                    [downloadFileName]="filename"
                    [contentType]="documentType"
                    [enableAnnotations]="enableAnnotations"

@@ -14,6 +14,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   imageUrl = 'assets/example.jpg';
   unsupportedUrl = 'assets/unsupported.txt';
   filename = 'filename';
+  caseId = 'dummyCaseId'
   unsupportedType = null;
 
   documentType = 'pdf';
