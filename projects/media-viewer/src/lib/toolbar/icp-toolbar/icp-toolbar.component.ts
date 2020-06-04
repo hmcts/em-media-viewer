@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { select, Store } from '@ngrx/store';
-import * as fromStore from '../../store/reducers/icp.reducer';
 import * as fromIcpSelectors from '../../store/selectors/icp.selectors';
 import { Subscription } from 'rxjs';
+import { IcpState } from '../../icp/icp.interfaces';
 
 @Component({
   selector: 'mv-icp-toolbar',
@@ -17,7 +17,7 @@ export class IcpToolbarComponent implements OnInit, OnDestroy {
   private $subscription: Subscription;
 
   constructor(public readonly toolbarEventService: ToolbarEventService,
-              private store: Store<fromStore.IcpState>) {}
+              private store: Store<IcpState>) {}
 
   ngOnInit() {
     this.$subscription = this.store.pipe(select(fromIcpSelectors.isPresenter))

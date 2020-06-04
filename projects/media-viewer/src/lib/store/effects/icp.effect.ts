@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { IcpSessionService } from '../../icp/icp-session.service';
 import { IcpUpdateService } from '../../icp/icp-update.service';
 import * as icpActions from '../actions/icp.action' ;
-import { IcpSession } from '../reducers/icp.reducer';
+import { IcpSession } from '../../icp/icp.interfaces';
 
 @Injectable()
 export class IcpEffects {

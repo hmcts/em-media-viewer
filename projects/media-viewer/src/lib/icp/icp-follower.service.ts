@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { select, Store } from '@ngrx/store';
-import * as fromStore from '../store/reducers/reducers';
-import { IcpSession } from '../store/reducers/reducers';
 import { Subscription } from 'rxjs';
 import { IcpUpdateService } from './icp-update.service';
 import { ViewerEventService } from '../viewers/viewer-event.service';
-import * as fromDocSelectors from '../store/selectors/document.selectors';
 import { take } from 'rxjs/operators';
+import { IcpState, IcpSession } from './icp.interfaces';
+import * as fromDocSelectors from '../store/selectors/document.selectors';
 
 @Injectable()
 export class IcpFollowerService {
@@ -19,7 +18,7 @@ export class IcpFollowerService {
   constructor(private readonly toolbarEvents: ToolbarEventService,
               private readonly viewerEvents: ViewerEventService,
               private readonly socketService: IcpUpdateService,
-              private store: Store<fromStore.IcpState>) {}
+              private store: Store<IcpState>) {}
 
 
   update(isFollower: boolean) {

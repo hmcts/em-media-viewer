@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { select, Store } from '@ngrx/store';
-import * as fromStore from '../store/reducers/reducers';
-import { IcpScreenUpdate, IcpSession } from '../store/reducers/reducers';
 import * as fromDocSelectors from '../store/selectors/document.selectors';
 import { Subscription } from 'rxjs';
 import { PdfPosition } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import { IcpUpdateService } from './icp-update.service';
+import { IcpState, IcpScreenUpdate, IcpSession } from './icp.interfaces';
 
 @Injectable()
 export class IcpPresenterService {
@@ -17,7 +16,7 @@ export class IcpPresenterService {
 
   constructor(private readonly toolbarEvents: ToolbarEventService,
               private readonly socketService: IcpUpdateService,
-              private store: Store<fromStore.IcpState>) {}
+              private store: Store<IcpState>) {}
 
 
   update(isPresenter: boolean) {

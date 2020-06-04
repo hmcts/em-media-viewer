@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { Observable } from 'rxjs';
-import { IcpSession } from '../../store/reducers/icp.reducer';
 import { select, Store } from '@ngrx/store';
-import * as fromReducers from '../../store/reducers/icp.reducer';
 import * as fromSelectors from '../../store/selectors/icp.selectors';
+import { IcpSession, IcpState } from '../../icp/icp.interfaces';
 
 @Component({
   selector: 'mv-sub-toolbar',
@@ -18,7 +17,7 @@ export class SubToolbarComponent implements OnInit {
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
-    private store: Store<fromReducers.IcpState>
+    private store: Store<IcpState>
   ) {}
 
   ngOnInit() {

@@ -1,32 +1,8 @@
 import * as fromIcpActions from '../actions/icp.action';
-import { PdfPosition } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
-
-export interface IcpState {
-  session: IcpSession;
-  screen: IcpScreenUpdate;
-  presenter: IcpParticipant;
-  client: IcpParticipant;
-}
-
-export interface IcpSession {
-  sessionId: string;
-  caseId: string;
-  dateOfHearing: Date;
-}
-
-export interface IcpParticipant {
-  id: string;
-  username: string;
-}
-
-export interface IcpScreenUpdate {
-  pdfPosition: PdfPosition;
-  document: string;
-}
+import { IcpSession, IcpState } from '../../icp/icp.interfaces';
 
 export const initialIcpSessionState: IcpState = {
   session: null,
-  screen: null,
   presenter: null,
   client: null
 };
@@ -58,7 +34,6 @@ export function icpReducer (state = initialIcpSessionState,
       return {
         ...state,
         session: null,
-        screen: null,
         presenter: null,
         client: null
       };

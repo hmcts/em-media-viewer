@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IcpParticipant, IcpSession } from '../reducers/icp.reducer';
+import { IcpParticipant, IcpSession } from '../../icp/icp.interfaces';
 
 export const LOAD_ICP_SESSION = '[Icp] Load Session';
 export const LOAD_ICP_SESSION_FAIL = '[Icp] Load Session Failure';

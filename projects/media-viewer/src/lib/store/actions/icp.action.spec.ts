@@ -1,5 +1,5 @@
 import * as fromIcp from './icp.action';
-import {IcpParticipant} from '../reducers/icp.reducer';
+import { IcpParticipant } from '../../icp/icp.interfaces';
 
 describe('Icp actions', () => {
   describe('Load Session', () => {
