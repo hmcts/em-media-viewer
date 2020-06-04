@@ -33,6 +33,14 @@ enum SupportedContentTypes {
   IMAGE = 'image'
 }
 
+enum ConvertibleContentTypes {
+  EXCEL = 'excel',
+  WORD = 'word',
+  POWERPOINT = 'powerpoint',
+  TXT = 'txt',
+  RTF = 'rtf'
+}
+
 @Component({
   selector: 'mv-media-viewer',
   templateUrl: './media-viewer.component.html',
@@ -94,8 +102,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     );
   }
 
+  contentTypeConvertible(): boolean {
+    return this.contentType !== null && Object.keys(ConvertibleContentTypes).includes(this.contentType.toUpperCase());
+  }
+
   contentTypeUnsupported(): boolean {
-    return this.contentType === null || !Object.keys(SupportedContentTypes).includes(this.contentType.toUpperCase());
+    const supportedTypes = Object.keys(SupportedContentTypes).concat(Object.keys(ConvertibleContentTypes));
+    return this.contentType === null || !supportedTypes.includes(this.contentType.toUpperCase());
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -128,7 +141,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   setToolbarButtons() {
-    if (this.contentType === SupportedContentTypes.PDF) {
+    if (this.contentType === SupportedContentTypes.PDF || this.contentTypeConvertible()) {
       this.toolbarButtons.setup({
         ...defaultPdfOptions, showHighlightButton: this.enableAnnotations, showDrawButton: this.enableAnnotations,
         ...this.toolbarButtonOverrides
