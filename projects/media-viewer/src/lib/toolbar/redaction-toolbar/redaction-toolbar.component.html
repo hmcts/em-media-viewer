@@ -1,7 +1,7 @@
 <div class="toolbar">
   <div id="toolbarContainer">
     <div class="findbar">
-      <button class="toolbarButton highlightBtn" title="Highlight Text Mode" (click)="toggleTextRedactionMode()"
+      <button *ngIf="false" class="toolbarButton highlightBtn" title="Highlight Text Mode" (click)="toggleTextRedactionMode()"
               id="toggleHighlightButton" tabindex="0" data-l10n-id="toggleHighlightButton">
         <span data-l10n-id="toggleHighlightButton_label">Highlight Text</span>
       </button>
@@ -10,7 +10,6 @@
         <span data-l10n-id="toggleDrawButton_label">Draw</span>
       </button>
     </div>
-
     <div id="annotationButtons">
       <div class="splitToolbarButton">
         <button class="unmark-all redaction-preview-btn" id="unmark-all" tabindex="0" title="unmark all" (click)="unmarkAll()">
@@ -18,7 +17,6 @@
         </button>
       </div>
     </div>
-
     <div id="toolbarViewerMiddle" *ngIf="hasRedactions">
       <div class="splitToolbarButton">
         <button [ngClass]="{'redaction-preview': !preview, 'redaction-preview-off': preview, 'redaction-preview-btn': true}"
