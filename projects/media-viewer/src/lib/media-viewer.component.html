@@ -21,11 +21,20 @@
                      [enableICP]="enableICP"
                      [enableRedactions]="enableRedactions">
     </mv-main-toolbar>
-
     <mv-redaction-toolbar *ngIf="toolbarEvents.redactionMode | async"></mv-redaction-toolbar>
-
     <mv-icp-toolbar *ngIf="toolbarEvents.icp.enabled | async"></mv-icp-toolbar>
 
+    <mv-conversion-viewer *ngIf="contentTypeConvertible()"
+                          (documentTitle)="onDocumentTitleChange($event)"
+                          (mediaLoadStatus)="onMediaLoad($event)"
+                          (viewerException)="onLoadException($event)"
+                          [enableAnnotations]="enableAnnotations"
+                          [enableRedactions]="enableRedactions"
+                          [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
+                          [originalUrl]="url"
+                          [downloadFileName]="downloadFileName"
+                          [height]="height">
+    </mv-conversion-viewer>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    inCourtPresentation
                    (pdfLoadStatus)="onMediaLoad($event)"

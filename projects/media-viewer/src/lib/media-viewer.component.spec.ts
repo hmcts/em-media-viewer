@@ -89,6 +89,7 @@ describe('MediaViewerComponent', () => {
   });
 
   it('should reset the event state when the url is changed', () => {
+    component.contentType = 'pdf';
     component.toolbarEvents.zoomValueSubject.next(2);
     component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });
 
@@ -105,6 +106,7 @@ describe('MediaViewerComponent', () => {
 
 
   it('should not set annotations$ when annotations disabled', () => {
+    component.contentType = 'pdf';
     component.annotationSet$ = null;
 
     component.enableAnnotations = false;
@@ -116,6 +118,7 @@ describe('MediaViewerComponent', () => {
   });
 
   it('should set annotationApiUrl', () => {
+    component.contentType = 'pdf';
     const ANNOTATION_API_URL = 'annotation-api-url';
     component.annotationApiUrl = ANNOTATION_API_URL;
 

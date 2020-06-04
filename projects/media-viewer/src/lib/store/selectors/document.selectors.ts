@@ -28,5 +28,10 @@ export const getPageDifference = createSelector(
   fromDocument.getHasDifferentPageSizes
 );
 
+export const getConvertedDocument = createSelector(
+  getDocumentState,
+  fromDocument.getConvertedDocument
+);
+
 
 
