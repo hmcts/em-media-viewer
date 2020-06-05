@@ -7,6 +7,7 @@ export class IcpUpdateService {
 
   SESSION_JOINED = '[Icp] Client Joined Session';
   CLIENT_DISCONNECTED = '[Icp] Client Disconnected From Session';
+  NEW_PARTICIPANT_JOINED = '[Icp] New Participant Joined Session';
   UPDATE_PRESENTER = '[Icp] New Presenter Starts Presenting';
   PRESENTER_UPDATED =  '[Icp] Presenter Updated';
   UPDATE_SCREEN = '[Icp] Update Screen';
@@ -25,6 +26,10 @@ export class IcpUpdateService {
 
   leaveSession() {
     this.socket.leave(this.session);
+  }
+
+  newParticipantJoined() {
+    return this.socket.listen(this.NEW_PARTICIPANT_JOINED);
   }
 
   clientDisconnected() {

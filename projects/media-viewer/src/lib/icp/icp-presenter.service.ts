@@ -5,12 +5,15 @@ import * as fromDocSelectors from '../store/selectors/document.selectors';
 import { Subscription } from 'rxjs';
 import { PdfPosition } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import { IcpUpdateService } from './icp-update.service';
-import { IcpState, IcpScreenUpdate, IcpSession } from './icp.interfaces';
+import { IcpState, IcpScreenUpdate, IcpSession, IcpParticipant } from './icp.interfaces';
+import * as fromIcpSelectors from '../store/selectors/icp.selectors';
 
 @Injectable()
 export class IcpPresenterService {
 
   session: IcpSession;
+  presenter: IcpParticipant;
+  pdfPosition: PdfPosition;
 
   $subscription: Subscription;
 
@@ -29,8 +32,16 @@ export class IcpPresenterService {
 
   subscribe() {
     if (!this.$subscription) {
-      this.$subscription = this.store.pipe(select(fromDocSelectors.getPdfPosition))
-        .subscribe(pdfPosition => this.onPositionUpdate(pdfPosition));
+      this.$subscription = this.store.pipe(select(fromDocSelectors.getPdfPosition)).subscribe(pdfPosition => {
+          this.pdfPosition = pdfPosition;
+          this.onPositionUpdate(pdfPosition);
+        });
+      this.$subscription.add(this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => {
+        this.presenter = presenter;
+      }));
+      this.$subscription.add(this.socketService.newParticipantJoined().subscribe(() => {
+        this.onNewParticipantJoined();
+      }));
     }
   }
 
@@ -44,5 +55,10 @@ export class IcpPresenterService {
   onPositionUpdate(pdfPosition: PdfPosition) {
     const screen: IcpScreenUpdate = { pdfPosition, document: undefined };
     this.socketService.updateScreen(screen);
+  }
+
+  onNewParticipantJoined() {
+    this.onPositionUpdate(this.pdfPosition);
+    this.socketService.updatePresenter(this.presenter);
   }
 }
