@@ -16,11 +16,11 @@ describe('Bookmark Effects', () => {
     'getBookmarks',
     'createBookmark',
     'updateBookmark',
-    'deleteBookmark'
+    'deleteMultipleBookmarks'
   ]);
   const bookmark = {
     name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
-  };
+  } as any;
   const pdfPosition = { pageNumber: 0, scale: 1, top: 100, left: 100, rotation: 0 };
   const bookmarkInfo = { xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', pageNumber: 1 };
 
@@ -41,8 +41,8 @@ describe('Bookmark Effects', () => {
 
   describe('getBookmarks$', () => {
     it('should return a LoadBookmarksSuccess', () => {
-      const bookmarks = [bookmark];
-      const payload = {body: bookmarks, status: 200};
+      const bookmarks = [bookmark as any];
+      const payload = { body: bookmarks, status: 200 };
       const action = new bookmarkActions.LoadBookmarks();
       bookmarksApi.getBookmarks.and.returnValue(of(payload));
       const completion = new bookmarkActions.LoadBookmarksSuccess(payload);
@@ -85,18 +85,18 @@ describe('Bookmark Effects', () => {
 
   describe('deleteBookmark$', () => {
     it('should return a DeleteBookmarkSuccess', () => {
-      const action = new bookmarkActions.DeleteBookmark('1bee8923-c936-47f6-9186-52581e4901fd');
-      bookmarksApi.deleteBookmark.and.returnValue(of('1bee8923-c936-47f6-9186-52581e4901fd'));
-      const completion = new bookmarkActions.DeleteBookmarkSuccess('1bee8923-c936-47f6-9186-52581e4901fd');
+      bookmarksApi.deleteMultipleBookmarks.and.returnValue(of({}));
+      const action = new bookmarkActions.DeleteBookmark({ id : 'bookmarkId' } as any);
+      const completion = new bookmarkActions.DeleteBookmarkSuccess(['bookmarkId']);
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
       expect(effects.deleteBookmark$).toBeObservable(expected);
     });
 
     it('should return a DeleteBookmarkFailure', () => {
-      const action = new bookmarkActions.DeleteBookmark('1bee8923-c936-47f6-9186-52581e4901fd');
-      bookmarksApi.deleteBookmark.and.returnValue(throwError('1bee8923-c936-47f6-9186-52581e4901fd'));
-      const completion = new bookmarkActions.DeleteBookmarkFailure('1bee8923-c936-47f6-9186-52581e4901fd');
+      bookmarksApi.deleteMultipleBookmarks.and.returnValue(throwError('failure'));
+      const action = new bookmarkActions.DeleteBookmark({ id : 'bookmarkId' } as any);
+      const completion = new bookmarkActions.DeleteBookmarkFailure('failure');
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
       expect(effects.deleteBookmark$).toBeObservable(expected);

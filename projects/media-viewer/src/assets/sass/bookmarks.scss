@@ -1,4 +1,4 @@
-mv-side-bar {
+mv-bookmarks {
   .bookmark__delete {
     background: url(/assets/images/icon-tag-remove-cross.svg) center center  no-repeat;
     filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg) brightness(107%) contrast(101%);
@@ -49,6 +49,15 @@ mv-side-bar {
     border-width: 1px;
     border-style: solid;
     margin-bottom: 1px;
+  }
+
+
+  .bookmarks-tree {
+    .node-content-wrapper {
+      &:hover { background: rgba(153, 153, 102, 0.2) }
+    }
+    .node-content-wrapper-focused { background: rgba(255, 0, 0, 0.2) }
+    .tree-children { padding-left: 10px }
   }
 }
 

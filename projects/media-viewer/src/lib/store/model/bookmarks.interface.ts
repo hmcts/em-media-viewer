@@ -1,3 +1,4 @@
+
 export interface BookmarksState {
   bookmarks: Bookmark[],
   bookmarkEntities: { [id: string]: Bookmark },
@@ -13,9 +14,17 @@ export interface Bookmark {
   pageNumber: number;
   xCoordinate: number;
   yCoordinate: number;
-  children: any[];
-  previous: string;
-  index: number;
+  zoom: number
+  parent: string,
+  previous: string,
+  children: Bookmark[],
+  index: number
+}
+
+export interface BookmarkNode {
+  id: string;
+  name: string;
+  children: string[]
 }
 
 export interface BookmarkMoveEvent {
@@ -29,11 +38,4 @@ export interface BookmarkMoveEvent {
     previous: string,
     next: Bookmark
   };
-}
-
-export interface PdfPosition {
-  pageNumber: number;
-  top: number;
-  left: number;
-  rotation: number;
 }

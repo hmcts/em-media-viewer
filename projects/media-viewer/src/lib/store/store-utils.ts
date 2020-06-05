@@ -2,7 +2,11 @@ import {Annotation} from '../annotations/annotation-set/annotation-view/annotati
 import { Bookmark } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import * as moment_ from 'moment-timezone';
 
-// @dynamic
+/*
+  @dynamic
+  marking class as dynamic to stop compiler throwing error for lambda in static function
+  see https://github.com/angular/angular/issues/19698#issuecomment-338340211
+ */
 export class StoreUtils {
 
   static groupByKeyEntities(annotations, key): {[id: string]: any[]} {
@@ -149,6 +153,54 @@ export class StoreUtils {
       return (tagFilterApplied || dateFilterApplied) ? filteredComments : comments;
     } else {
       return comments;
+    }
+  }
+
+  static generateBookmarkNodes(entities: { [id: string]: Bookmark }) {
+    const bookmarkEntities = JSON.parse(JSON.stringify(entities));
+    this.indexEntities(bookmarkEntities);
+    return Object.keys(bookmarkEntities).reduce((nodes, bookmarkId) => {
+      const bookmarkEntity = bookmarkEntities[bookmarkId];
+      if (bookmarkEntity.parent) {
+        const parentEntity = bookmarkEntities[bookmarkEntity.parent];
+        if (!parentEntity.children) {
+          parentEntity.children = [];
+        }
+        parentEntity.children[bookmarkEntity.index] = bookmarkEntity;
+      } else {
+        nodes[bookmarkEntity.index] = bookmarkEntity;
+      }
+      return nodes;
+    }, []);
+  }
+
+  static indexEntities(entities: { [id: string]: Bookmark }) {
+    const entityIds = Object.keys(entities);
+    let index = 0;
+    while (entityIds.length > 0) {
+      let keysToRemove = [];
+      entityIds.forEach(key => {
+        if (!entities[key].previous || !entityIds.includes(entities[key].previous.toString())) {
+          entities[key].index = index;
+          keysToRemove.push(key);
+        }
+      });
+      keysToRemove.forEach(key => entityIds.splice(entityIds.indexOf(key), 1));
+      keysToRemove = [];
+      index++;
+    }
+  }
+
+  static getAllChildren(bookmarks:Bookmark[]) {
+    if (bookmarks) {
+      return bookmarks.reduce((childIds, bookmark) => {
+        if (bookmark.children && bookmark.children.length > 0) {
+          return [...childIds, bookmark.id, ...this.getAllChildren(bookmark.children)]
+        }
+        return [...childIds, bookmark.id]
+      }, []);
+    } else {
+      return []
     }
   }
 }

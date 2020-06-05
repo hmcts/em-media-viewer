@@ -9,7 +9,7 @@ describe('BookmarksApiService', () => {
 
   const bookmark = {
     name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
-  };
+  } as any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

@@ -88,7 +88,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           ...bookmarkInfo,
           name: selection.length > 0 ? selection.substr(0, 30) : 'new bookmark',
           id: uuid()
-        }));
+        } as any));
         this.toolbarEvents.toggleSideBar(true);
         this.highlightService.resetHighlight();
         this.rectangles = undefined;

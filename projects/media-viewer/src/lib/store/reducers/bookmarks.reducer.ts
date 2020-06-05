@@ -50,10 +50,24 @@ export function bookmarksReducer (state = initialBookmarksState,
       }
     }
 
+    case fromBookmarks.MOVE_BOOKMARK_SUCCESS: {
+      const movedBookmarks = StoreUtils.generateBookmarkEntities(action.payload);
+      const bookmarkEntities = {
+        ...state.bookmarkEntities,
+        ...movedBookmarks
+      }
+      return {
+        ...state,
+        bookmarkEntities,
+        loading: false,
+        loaded: true
+      }
+    }
+
     case fromBookmarks.DELETE_BOOKMARK_SUCCESS: {
-      const bookmarkId: string = action.payload;
+      const bookmarkIds: string[] = action.payload;
       const bookmarkEntities = { ...state.bookmarkEntities };
-      delete bookmarkEntities[bookmarkId];
+      bookmarkIds.forEach(bookmarkId => delete bookmarkEntities[bookmarkId]);
       return {
         ...state,
         bookmarkEntities,
@@ -78,9 +92,9 @@ export function bookmarksReducer (state = initialBookmarksState,
       }
     }
   }
-
   return state;
 }
 
+export const getBookmarks = (state: BookmarksState) => state.bookmarks;
 export const getBookmarkEnts = (state: BookmarksState) => state.bookmarkEntities;
 export const getEditBookmark = (state: BookmarksState) => state.editableBookmark;

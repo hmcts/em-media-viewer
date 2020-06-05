@@ -33,8 +33,10 @@ import { IcpDirective } from './icp/icp.directive';
 import { IcpPresenterService } from './icp/icp-presenter.service';
 import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
+import { TreeModule } from 'angular-tree-component';
 
 
+// noinspection AngularInvalidImportedOrDeclaredSymbol
 @NgModule({
   imports: [
     CommonModule,
@@ -47,6 +49,7 @@ import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-
     RouterModule,
     StoreModule.forFeature('media-viewer', reducers),
     EffectsModule.forFeature(effects),
+    TreeModule.forRoot(),
     MutableDivModule
   ],
   declarations: [

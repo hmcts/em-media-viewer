@@ -20,6 +20,14 @@ export interface DocumentPages {
  scaleRotation: { scale: string; rotation: string };
 }
 
+export interface PdfPosition {
+  pageNumber: number;
+  scale: number;
+  top: number;
+  left: number;
+  rotation: number;
+}
+
 export const initialDocumentState: DocumentState = {
   convertedDocument: undefined,
   documentId: undefined,
@@ -129,7 +137,7 @@ export function docReducer (state = initialDocumentState,
 }
 export const getDocPages = (state: DocumentState) => state.pages;
 export const getDocId = (state: DocumentState) => state.documentId;
-export const getHasDifferentPageSizes = (state: DocumentState) => state.hasDifferentPageSize;
 export const getPdfPos = (state: DocumentState) => state.pdfPosition;
+export const getHasDifferentPageSizes = (state: DocumentState) => state.hasDifferentPageSize;
 
 export const getConvertedDocument = (state: DocumentState) => state.convertedDocument;

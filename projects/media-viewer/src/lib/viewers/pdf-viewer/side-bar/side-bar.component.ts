@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Outline } from './outline-item/outline.model';
-import { ViewerEventService } from '../../viewer-event.service';
-import { ToolbarButtonVisibilityService } from '../../../toolbar/toolbar.module';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import * as bookmarksSelectors from '../../../store/selectors/bookmarks.selectors';
+import { BookmarkNode, BookmarksState } from '../../../store/model/bookmarks.interface';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
-import { Bookmark, BookmarksState } from './bookmarks/bookmarks.interfaces';
 import * as fromBookmarks from '../../../store/selectors/bookmarks.selectors';
 import { take } from 'rxjs/operators';
 import uuid from 'uuid';
+import { ViewerEventService } from '../../viewer-event.service';
+import { ToolbarButtonVisibilityService } from '../../../toolbar/toolbar.module';
 
 @Component({
   selector: 'mv-side-bar',
@@ -24,7 +24,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() rotate: number;
 
   selectedView = 'outline';
-  bookmarks$: Observable<Bookmark[]>;
+  bookmarkNodes$: Observable<BookmarkNode[]>;
 
   $subscription: Subscription;
 
@@ -34,7 +34,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.bookmarks$ = this.store.pipe(select(bookmarksSelectors.getAllBookmarks));
+    this.bookmarkNodes$ = this.store.pipe(select(bookmarksSelectors.getBookmarkNodes));
     this.$subscription = this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
       .subscribe(editable => this.selectedView = editable ? 'bookmarks' : this.selectedView);
   }
@@ -45,7 +45,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.$subscription.unsubscribe();
   }
 
@@ -63,7 +63,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe((bookmarkInfo) => {
         this.store.dispatch(new CreateBookmark({
           ...bookmarkInfo, name: 'new bookmark', id: uuid()
-        }));
+        } as any));
       });
   }
 }
