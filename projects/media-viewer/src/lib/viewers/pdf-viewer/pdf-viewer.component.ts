@@ -128,7 +128,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (changes.url && this.pdfWrapper) {
       this.store.dispatch(new fromDocumentActions.SetDocumentId(this.url));
       await this.loadDocument();
-      this.clearAnnotationSet();
       this.documentId = this.extractDMStoreDocId(this.url);
       if (this.enableRedactions) {
         this.toolbarEvents.redactionMode.subscribe(redactMode => {
@@ -146,10 +145,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.pdfWrapper.resetRotation(0);
       this.rotation = 0;
     }
-  }
-
-  clearAnnotationSet() {
-    this.annotationSet = null;
   }
 
   ngOnDestroy(): void {
