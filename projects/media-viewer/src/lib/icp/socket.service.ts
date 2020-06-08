@@ -17,7 +17,9 @@ export class SocketService implements OnDestroy {
   }
 
   connect() {
-    this.socket = socketio('/', { path: '/icp/socket.io'});
+    this.socket = socketio('/', {
+      path: '/icp/socket.io', transports: ['websocket'], secure: true
+    });
     this.socket.on('connect', () => this.connected$.next(true));
     this.socket.on('disconnect', () => this.connected$.next(false));
   }
