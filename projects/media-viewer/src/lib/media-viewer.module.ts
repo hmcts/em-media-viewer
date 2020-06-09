@@ -18,7 +18,7 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule} from '@ngrx/store';
 import { RedactionComponent } from './redaction/components/redaction.component';
-import { IcpSessionService } from './icp/icp-session.service';
+import { IcpSessionApiService } from './icp/icp-session-api.service';
 import { IcpUpdateService } from './icp/icp-update.service';
 import { SocketService } from './icp/socket.service';
 // APP store
@@ -69,7 +69,7 @@ import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-
     PdfJsWrapperFactory,
     CommentService,
     RedactionApiService,
-    IcpSessionService,
+    IcpSessionApiService,
     IcpUpdateService,
     SocketService,
     IcpPresenterService,

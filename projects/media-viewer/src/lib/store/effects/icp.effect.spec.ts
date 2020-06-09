@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../reducers/reducers';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { IcpSessionService } from '../../icp/icp-session.service';
+import { IcpSessionApiService } from '../../icp/icp-session-api.service';
 import { of, throwError } from 'rxjs';
 import { cold, hot } from 'jasmine-marbles';
 import * as icpActions from '../actions/icp.action';
@@ -29,7 +29,7 @@ describe('Icp Effects', () => {
         StoreModule.forRoot({})
       ],
       providers: [
-        { provide: IcpSessionService, useValue: icpApi },
+        { provide: IcpSessionApiService, useValue: icpApi },
         IcpEffects,
         IcpUpdateService,
         SocketService,

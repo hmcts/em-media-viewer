@@ -11,7 +11,7 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
 
   public pageNumber = 1;
   private subscriptions: Subscription[] = [];
-  icpSimplifiedToolbar = false;
+  icpEnabled = false;
 
   constructor(
     public readonly toolbarEvents: ToolbarEventService,
@@ -24,9 +24,9 @@ export class ToolbarLeftPaneComponent implements OnInit, OnDestroy {
       this.toolbarEvents.setCurrentPageInputValueSubject.subscribe(pageNumber => this.pageNumber = pageNumber)
     );
 
-    this.subscriptions.push(this.toolbarEvents.icp.enabled.subscribe(simplify => {
-      this.icpSimplifiedToolbar = simplify;
-      if (this.icpSimplifiedToolbar) { this.toolbarEvents.sidebarOpen.next(false); }
+    this.subscriptions.push(this.toolbarEvents.icp.enabled.subscribe(enabled => {
+      this.icpEnabled = enabled;
+      if (this.icpEnabled) { this.toolbarEvents.sidebarOpen.next(false); }
     }));
   }
 
