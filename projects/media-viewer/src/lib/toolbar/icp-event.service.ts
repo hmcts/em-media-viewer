@@ -10,7 +10,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
   export const enable = () => {
     enabled.next(true);
     launchSession();
-  }
+  };
 
   export const launchSession = () => {
     sessionLaunch.next();

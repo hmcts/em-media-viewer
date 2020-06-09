@@ -1,12 +1,12 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IcpSessionService } from './icp-session.service';
+import { IcpSessionApiService } from './icp-session-api.service';
 import { IcpSession } from './icp.interfaces';
 import { fakeAsync, inject, TestBed } from '@angular/core/testing';
 
-describe('IcpSessionService', () => {
+describe('IcpSessionApiService', () => {
 
   let httpMock: HttpTestingController;
-  let icpSessionService: IcpSessionService;
+  let api: IcpSessionApiService;
 
   const caseId = 'caseId';
   const session: IcpSession = {
@@ -19,24 +19,24 @@ describe('IcpSessionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        IcpSessionService
+        IcpSessionApiService
       ],
       imports: [
         HttpClientTestingModule
       ]
     });
 
-    icpSessionService = TestBed.get(IcpSessionService);
-    icpSessionService.ICP_SESSION_API = '/my-context-path';
+    api = TestBed.get(IcpSessionApiService);
+    api.ICP_SESSION_API = '/my-context-path';
     httpMock = TestBed.get(HttpTestingController);
   });
 
-  it('should be created', inject([IcpSessionService], (service: IcpSessionService) => {
+  it('should be created', inject([IcpSessionApiService], (service: IcpSessionApiService) => {
     expect(service).toBeTruthy();
   }));
 
   it('load icp session', fakeAsync((done) => {
-    icpSessionService.loadSession(caseId)
+    api.loadSession(caseId)
       .subscribe(response => {
         expect(response.username).toBe(username);
         expect(response.session).toBe(session);

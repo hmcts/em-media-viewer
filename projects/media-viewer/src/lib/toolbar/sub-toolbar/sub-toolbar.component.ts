@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
-import { Observable } from 'rxjs';
-import { select, Store } from '@ngrx/store';
-import * as fromSelectors from '../../store/selectors/icp.selectors';
-import { IcpSession, IcpState } from '../../icp/icp.interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-sub-toolbar',
   templateUrl: './sub-toolbar.component.html'
 })
-export class SubToolbarComponent implements OnInit {
+export class SubToolbarComponent implements OnInit, OnDestroy {
 
-  icpSession$: Observable<IcpSession>;
+  icpEnabled = false;
+
+  subscription: Subscription;
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
-    public readonly toolbarEvents: ToolbarEventService,
-    private store: Store<IcpState>
+    public readonly toolbarEvents: ToolbarEventService
   ) {}
 
   ngOnInit() {
-    this.icpSession$ = this.store.pipe(select(fromSelectors.getIcpSession));
+    this.subscription = this.toolbarEvents.icp.enabled.subscribe(enabled => {
+      this.icpEnabled = enabled;
+      if (this.icpEnabled) { this.toolbarEvents.subToolbarHidden.next(true); }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onClickHighlightToggle() {
@@ -44,8 +49,8 @@ export class SubToolbarComponent implements OnInit {
     this.closeMenu();
   }
 
-  launchIcpSession() {
-    this.toolbarEvents.icp.launchSession();
+  enterIcpMode() {
+    this.toolbarEvents.icp.enable();
   }
 
   rotateCcw() {

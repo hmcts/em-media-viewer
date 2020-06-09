@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { IcpSessionService } from '../../icp/icp-session.service';
+import { IcpSessionApiService } from '../../icp/icp-session-api.service';
 import { IcpUpdateService } from '../../icp/icp-update.service';
 import * as icpActions from '../actions/icp.action' ;
 import { IcpSession } from '../../icp/icp.interfaces';
@@ -11,7 +11,7 @@ import { IcpSession } from '../../icp/icp.interfaces';
 export class IcpEffects {
 
   constructor(private actions$: Actions,
-              private icpApiService: IcpSessionService,
+              private icpApiService: IcpSessionApiService,
               private icpUpdateService: IcpUpdateService) {}
 
   @Effect()
