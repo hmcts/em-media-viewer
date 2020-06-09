@@ -1,5 +1,3 @@
-@import '~@swimlane/ngx-datatable/assets/icons.css';
-
 /* mixin for multiline, credit: http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
 @mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white){
   overflow: hidden;
@@ -26,7 +24,24 @@
   }
 }
 
+%sort-icons {
+  width: 20px;
+  height: 20px;
+  margin: 7px 0 0 2px;
+}
+
 mv-comments-summary {
+  .datatable-icon-up {
+    @extend %sort-icons;
+    background: url(/assets/images/icon-sort-up.svg) 0 1px no-repeat;
+    background-size: 10px;
+  }
+  .datatable-icon-down {
+    @extend %sort-icons;
+    background: url(/assets/images/icon-sort-down.svg) 0 1px no-repeat;
+    background-size: 10px;
+  }
+
   ngx-datatable {
     * {
       font-family: "GDS Transport", Arial, sans-serif;
@@ -34,8 +49,12 @@ mv-comments-summary {
     }
   }
 
-  datatable-header-cell {
+  .datatable-header-cell {
     font-weight: bold;
+  }
+
+  .hmcts-badge {
+    margin-right: 3px;
   }
 
   .datatable-body-row, .datatable-header {

@@ -10,25 +10,18 @@ import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import * as fromStore from '../../store/reducers/reducers';
 import {Observable} from 'rxjs';
 import {Annotation} from '../annotation-set/annotation-view/annotation.model';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-comments-summary',
   templateUrl: './comments-summary.component.html',
 })
-export class CommentsSummaryComponent implements OnChanges, OnInit {
+export class CommentsSummaryComponent implements OnInit {
 
   @Input() title: string;
   @Input() contentType: string;
-  @Input() annotationSet: AnnotationSet | null;
-  public comments$: Observable<Annotation[]>;
+  public comments$
   comments: CommentsSummary[] = [];
-  rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' }
-  ];
-
-  ColumnMode = {ColumnMode: 'flex'};
   @ViewChild('commentContainer') commentsTable: ElementRef;
 
   constructor(
@@ -39,35 +32,7 @@ export class CommentsSummaryComponent implements OnChanges, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.comments$ = this.store.pipe(select(fromSelectors.getCommentsArray));
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.annotationSet) {
-      this.generateCommentsSummary();
-      this.orderCommentsSummary();
-    }
-  }
-
-  generateCommentsSummary() {
-    this.annotationSet.annotations
-      .forEach(annotation => {
-        if (annotation.comments.length) {
-          this.comments.push({
-            page: annotation.page,
-            comment: annotation.comments[0],
-            x: annotation.rectangles[0].x,
-            y: annotation.rectangles[0].y
-          });
-        }
-      });
-  }
-
-  orderCommentsSummary() {
-    this.comments
-      .sort((a, b) => a.x >= b.x ? 1 : -1)
-      .sort((a, b) => a.y >= b.y ? 1 : -1)
-      .sort((a, b) => a.page - b.page);
+    this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary), tap(console.log));
   }
 
   public onClose(): void {
