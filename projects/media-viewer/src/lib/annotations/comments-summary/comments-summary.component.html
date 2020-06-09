@@ -2,6 +2,13 @@
   <div id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
     <div id="comment-container" class="comment-container" #commentContainer>
       <h2 class="govuk-heading-m">{{ title }}</h2>
+
+      <ngx-datatable [rows]="rows" rowHeight="auto" headerHeight="auto">
+        <ngx-datatable-column name="Name"></ngx-datatable-column>
+        <ngx-datatable-column name="Gender"></ngx-datatable-column>
+        <ngx-datatable-column name="Company" width="665px" [cellClass]="'tag'"></ngx-datatable-column>
+      </ngx-datatable>
+
       <table class="govuk-table" *ngIf="comments.length; else noComments">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
