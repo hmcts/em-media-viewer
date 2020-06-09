@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class IcpSessionService {
 
-  private ICP_SESSION_API = '/icp/sessions';
+  public ICP_SESSION_API = '/icp/sessions';
 
   constructor(private readonly httpClient: HttpClient) {}
 
