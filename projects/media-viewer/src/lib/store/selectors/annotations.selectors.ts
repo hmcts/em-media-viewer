@@ -4,7 +4,7 @@ import * as fromFeature from '../reducers/reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
 import * as fromTags from './tags.selectors';
 import * as fromDocument from './document.selectors';
-
+import * as moment_ from 'moment-timezone';
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
   (state: fromFeature.State) =>  state.annotations
@@ -106,6 +106,21 @@ export const getCommentsArray = createSelector(
     }
   }
 );
+
+export const getCommentSummary = createSelector(
+  getCommentsArray,
+  (commentSummary = []) => commentSummary.map((comment) => {
+      const moment = moment_;
+      return {
+        page: comment.page,
+        user: comment.createdByDetails.forename.concat(' ').concat(comment.createdByDetails.surname),
+        date: moment(comment.lastModifiedDate).format('D MMMM YYYY'),
+        tags: comment.tags,
+        comment: comment.content
+      };
+    })
+);
+
 
 export const getFilteredAnnotations = createSelector(
   getAnnotationEntities,

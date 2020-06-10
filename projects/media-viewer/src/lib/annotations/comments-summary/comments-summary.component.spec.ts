@@ -3,78 +3,20 @@ import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { Comment } from '../comment-set/comment/comment.model';
-import { User } from '../models/user.model';
 import {ViewerEventService} from '../../viewers/viewer-event.service';
 import {MomentDatePipe} from '../pipes/date.pipe';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {RouterModule} from '@angular/router';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '../../store/reducers/reducers';
 
 describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
   let fixture: ComponentFixture<CommentsSummaryComponent>;
   let printService: PrintService;
-
-  const annotationSet: any = {
-    documentId: 'id',
-    id: 'id',
-    createdBy: 'user',
-    createdByDetails: {} as User,
-    createdDate: 'date',
-    lastModifiedBy: 'modified user',
-    lastModifiedByDetails: {} as User,
-    lastModifiedDate: 'modified date',
-    annotations: [{
-      tags: [],
-      annotationSetId: 'id',
-      page: 1,
-      color: 'yellow',
-      comments: [{
-        id: 'id',
-        createdBy: 'user',
-        createdByDetails: {} as User,
-        createdDate: 'date',
-        lastModifiedBy: 'modified user',
-        lastModifiedByDetails: {} as User,
-        lastModifiedDate: 'modified date',
-        annotationId: 'id',
-        content: 'a comment'
-      }, {
-        id: 'id',
-        createdBy: 'user',
-        createdByDetails: {} as User,
-        createdDate: 'date',
-        lastModifiedBy: 'modified user',
-        lastModifiedByDetails: {} as User,
-        lastModifiedDate: 'modified date',
-        annotationId: 'id',
-        content: 'a comment'
-      }],
-      rectangles: [{
-        id: 'id',
-        createdBy: 'user',
-        createdByDetails: {} as User,
-        createdDate: 'date',
-        lastModifiedBy: 'modified user',
-        lastModifiedByDetails: {} as User,
-        lastModifiedDate: 'modified date',
-        annotationId: 'id',
-        height: 3,
-        width: 4,
-        x: 12,
-        y: 13
-      }],
-      type: 'comment',
-      id: 'id',
-      createdBy: 'user',
-      createdByDetails: {} as User,
-      createdDate: 'date',
-      lastModifiedBy: 'modified user',
-      lastModifiedByDetails: {} as User,
-      lastModifiedDate: 'modified date'
-    }]
-  };
-
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [NgxDatatableModule, RouterModule, StoreModule.forRoot({}), StoreModule.forFeature('media-viewer', reducers)],
       declarations: [ CommentsSummaryComponent, MomentDatePipe ],
       providers: [ PrintService ]
     })
@@ -91,73 +33,6 @@ describe('CommentsSummaryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should set up comment summary if annotations$ is received', () => {
-    component.annotationSet = annotationSet;
-    spyOn(component, 'generateCommentsSummary');
-    spyOn(component, 'orderCommentsSummary');
-    component.ngOnChanges();
-
-    expect(component.generateCommentsSummary).toHaveBeenCalled();
-    expect(component.orderCommentsSummary).toHaveBeenCalled();
-  });
-
-  it('should not set up comment summary if annotations$ is not set', () => {
-    component.annotationSet = null;
-    spyOn(component, 'generateCommentsSummary');
-    spyOn(component, 'orderCommentsSummary');
-    component.ngOnChanges();
-
-    expect(component.generateCommentsSummary).not.toHaveBeenCalled();
-    expect(component.orderCommentsSummary).toHaveBeenCalledTimes(0);
-  });
-
-  it('should generate comment summary collection', () => {
-    component.annotationSet = annotationSet;
-    component.generateCommentsSummary();
-    expect(component.comments).toEqual([{
-      page: 1,
-        comment: {
-          id: 'id',
-          createdBy: 'user',
-          createdByDetails: {} as User,
-          createdDate: 'date',
-          lastModifiedBy: 'modified user',
-          lastModifiedByDetails: {} as User,
-          lastModifiedDate: 'modified date',
-          annotationId: 'id',
-          content: 'a comment',
-        },
-        x: 12,
-        y: 13
-    }] as any);
-  });
-
-  it('should order the comments', () => {
-    component.comments = [
-      {page: 3, comment: {} as Comment, x: 32, y: 2},
-      {page: 1, comment: {} as Comment, x: 22, y: 8},
-      {page: 4, comment: {} as Comment, x: 11, y: 7},
-      {page: 1, comment: {} as Comment, x: 52, y: 3},
-      {page: 4, comment: {} as Comment, x: 12, y: 4}
-    ];
-    component.orderCommentsSummary();
-
-    expect(component.comments).toEqual([
-      { page: 1, comment: {} as Comment, x: 52, y: 3 },
-      { page: 1, comment: {} as Comment, x: 22, y: 8 },
-      { page: 3, comment: {} as Comment, x: 32, y: 2 },
-      { page: 4, comment: {} as Comment, x: 12, y: 4 },
-      { page: 4, comment: {} as Comment, x: 11, y: 7 }
-    ]);
-  });
-
-  it('should return an empty list when passed an empty list', () => {
-    component.comments = [];
-    component.orderCommentsSummary();
-
-    expect(component.comments).toEqual([]);
   });
 
   it('close',
