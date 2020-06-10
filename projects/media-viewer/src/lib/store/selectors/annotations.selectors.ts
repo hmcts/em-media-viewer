@@ -109,16 +109,16 @@ export const getCommentsArray = createSelector(
 
 export const getCommentSummary = createSelector(
   getCommentsArray,
-  (commentSummary) => commentSummary.map((comment) => {
-    const moment = moment_;
-    return {
-      page: comment.page,
-      user: comment.createdByDetails.forename.concat(' ').concat(comment.createdByDetails.surname),
-      date: moment(comment.lastModifiedDate).format('D MMMM YYYY'),
-      tags: comment.tags.map(tag => (`<span class="hmcts-badge"> ${tag.label}</span>`)).join(''),
-      comment: comment.content
-    };
-  })
+  (commentSummary = []) => commentSummary.map((comment) => {
+      const moment = moment_;
+      return {
+        page: comment.page,
+        user: comment.createdByDetails.forename.concat(' ').concat(comment.createdByDetails.surname),
+        date: moment(comment.lastModifiedDate).format('D MMMM YYYY'),
+        tags: comment.tags,
+        comment: comment.content
+      };
+    })
 );
 
 

@@ -20,8 +20,7 @@ export class CommentsSummaryComponent implements OnInit {
 
   @Input() title: string;
   @Input() contentType: string;
-  public comments$
-  comments: CommentsSummary[] = [];
+  public comments$: Observable<{comment: string; tags: object[]; date: string; user: string; page: string}>
   @ViewChild('commentContainer') commentsTable: ElementRef;
 
   constructor(

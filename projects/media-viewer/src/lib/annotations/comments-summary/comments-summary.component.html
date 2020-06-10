@@ -11,10 +11,18 @@
             [columnMode]="'flex'"
             [sorts]="[{ prop: 'date', dir: 'desc' }]">
             <ngx-datatable-column name="User" [flexGrow]="1" [sortable]="false"></ngx-datatable-column>
-            <ngx-datatable-column name="Page" [flexGrow]="1"></ngx-datatable-column>
+            <ngx-datatable-column name="Page" [flexGrow]="1">
+              <ng-template ngx-datatable-cell-template let-value="value">
+                <a [routerLink]="" class="comment-summary_pages" (click)="navigateToPage(value)">{{value}}</a>
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="Date" [flexGrow]="1"></ngx-datatable-column>
             <ngx-datatable-column name="Comment" [flexGrow]="3" [sortable]="false"></ngx-datatable-column>
-            <ngx-datatable-column name="Tags" [flexGrow]="1" [sortable]="false"></ngx-datatable-column>
+            <ngx-datatable-column name="Tags" [flexGrow]="1" [sortable]="false">
+              <ng-template ngx-datatable-cell-template let-value="value">
+                <span class="hmcts-badge" *ngFor="let tag of value">{{tag.label}}</span>
+              </ng-template>
+            </ngx-datatable-column>
           </ngx-datatable>
         </ng-container>
         <ng-container *ngIf="!comments.length">
