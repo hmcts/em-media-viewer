@@ -13,8 +13,8 @@ export function icpReducer (state = initialIcpSessionState,
   switch (action.type) {
 
     case fromIcpActions.ICP_SOCKET_SESSION_JOINED: {
-      const session: IcpSession = {...action.payload.session};
-      const participantInfo = {...action.payload.participantInfo};
+      const session: IcpSession = action.payload.session;
+      const participantInfo = action.payload.participantInfo;
       return {
         ...state,
         session,
@@ -24,7 +24,7 @@ export function icpReducer (state = initialIcpSessionState,
     }
 
     case fromIcpActions.ICP_PRESENTER_UPDATED: {
-      const presenter = {...action.payload};
+      const presenter = action.payload;
       return {
         ...state, presenter
       };
@@ -33,9 +33,7 @@ export function icpReducer (state = initialIcpSessionState,
     case fromIcpActions.LEAVE_ICP_SOCKET_SESSION: {
       return {
         ...state,
-        session: null,
-        presenter: null,
-        client: null
+        ...initialIcpSessionState
       };
     }
   }

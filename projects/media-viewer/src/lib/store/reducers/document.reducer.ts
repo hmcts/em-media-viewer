@@ -86,7 +86,7 @@ export function docReducer (state = initialDocumentState,
       const pdfPosition = action.payload;
       return {
         ...state,
-        pdfPosition: pdfPosition
+        pdfPosition
       }
     }
   }

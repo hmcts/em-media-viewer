@@ -135,7 +135,6 @@ describe('Icp Directive', () => {
   it('should unsubscribe from session subscriptions', () => {
     spyOn(presenterService, 'update');
     spyOn(followerService, 'update');
-
     directive.sessionSubscription = new Subscription();
     spyOn(directive.sessionSubscription, 'unsubscribe');
 
