@@ -4,12 +4,18 @@ import {GovUkDateComponent} from './gov-uk-date/gov-uk-date.component';
 import {GovUkErrorMessageComponent} from './gov-uk-error-message/gov-uk-error-message.component';
 import {GovUkFieldsetComponent} from './gov-uk-fieldset/gov-uk-fieldset.component';
 import {GovUkLabelComponent} from './gov-uk-label/gov-uk-label.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
 
 
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    RouterModule
 
   ],
   declarations: [

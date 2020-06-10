@@ -11,6 +11,7 @@ import * as fromStore from '../../store/reducers/reducers';
 import {Observable} from 'rxjs';
 import {Annotation} from '../annotation-set/annotation-view/annotation.model';
 import {tap} from 'rxjs/operators';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -20,17 +21,31 @@ export class CommentsSummaryComponent implements OnInit {
 
   @Input() title: string;
   @Input() contentType: string;
-  public comments$: Observable<{comment: string; tags: object[]; date: string; user: string; page: string}>
   @ViewChild('commentContainer') commentsTable: ElementRef;
+  public comments$: Observable<{comment: string; tags: object[]; date: string; user: string; page: string}>
+  public dateRangeFg: FormGroup;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
     private readonly printService: PrintService,
     private readonly toolbarEvents: ToolbarEventService,
-    private readonly viewerEvents: ViewerEventService
+    private readonly viewerEvents: ViewerEventService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.dateRangeFg = this.fb.group({
+      dateRangeFrom: new FormGroup({
+        day: new FormControl(''),
+        month: new FormControl(''),
+        year: new FormControl('')
+      }),
+      dateRangeTo: new FormGroup({
+        day: new FormControl(''),
+        month: new FormControl(''),
+        year: new FormControl('')
+      })
+    });
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary), tap(console.log));
   }
 

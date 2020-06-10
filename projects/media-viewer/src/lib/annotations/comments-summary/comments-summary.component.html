@@ -4,6 +4,30 @@
       <h2 class="govuk-heading-m">{{ title }}</h2>
       <ng-container *ngIf="(comments$ | async) as comments">
         <ng-container *ngIf="comments.length">
+          <form [formGroup]="dateRangeFg" (ngSubmit)="onFilteer()" >
+            <div class="dates">
+              <div class="dates__from">
+                <lib-gov-uk-date
+                  [config]="{id: 'dateRangeFrom', legend: 'From'}"
+                  [formGroup]="dateRangeFg.controls['dateRangeFrom']"
+                  [errorMessage]="'test'"
+                ></lib-gov-uk-date>
+              </div>
+              <div class="dates__to">
+                <lib-gov-uk-date
+                  [config]="{id: 'dateRangeTo', legend: 'To'}"
+                  [formGroup]="dateRangeFg.controls['dateRangeTo']"
+                  [errorMessage]="'test'"
+                ></lib-gov-uk-date>
+              </div>
+              <div class="dates__cta">
+                <button type="submit" class="govuk-button">
+                  Filter comments
+                </button>
+              </div>
+            </div>
+          </form>
+
           <ngx-datatable
             [rows]="comments"
             rowHeight="auto"

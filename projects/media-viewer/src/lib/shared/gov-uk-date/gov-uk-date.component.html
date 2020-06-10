@@ -1,6 +1,6 @@
 <div class="govuk-form-group" [ngClass]="{'govuk-form-group--error': errorMessage?.isInvalid}" [formGroup]="formGroup">
   <lib-gov-uk-fieldset
-    [config]="{legend: 'Date component', classes: 'govuk-label--m', id: config.id, hint: ' For example, 12 11 2007'}"
+    [config]="{legend: config.legend, classes: 'govuk-label--m', id: config.id, hint: ' For example, 12 11 2007'}"
     [isHeading]="false"
     [errorMessage]="errorMessage">
     <lib-gov-uk-error-message

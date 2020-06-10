@@ -31,6 +31,21 @@
 }
 
 mv-comments-summary {
+  .dates {
+    overflow: hidden;
+    clear: both;
+    .dates__from, .dates__to {
+      float: left;
+    }
+
+    .dates__to {
+      padding-left: 20px;
+      border-left: 1px solid #b1b4b6;
+    }
+    .dates__cta {
+      clear: both;
+    }
+  }
   .datatable-icon-up {
     @extend %sort-icons;
     background: url(/assets/images/icon-sort-up.svg) 0 1px no-repeat;

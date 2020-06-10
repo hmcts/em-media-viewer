@@ -11,7 +11,7 @@ templateUrl: './gov-uk-date.component.html'
 })
 export class GovUkDateComponent implements OnInit {
   constructor () { }
-  @Input() config: { id: string };
+  @Input() config: { id: string; legend: string };
   @Input() errorMessage: {isInvalid: boolean; messages: string[]}
   @Input() formGroup;
 
