@@ -5,6 +5,7 @@ import {ViewerEventService} from '../../viewers/viewer-event.service';
 import {select, Store} from '@ngrx/store';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import * as fromStore from '../../store/reducers/reducers';
+import * as fromAnnoActions from  '../../store/actions/annotations.action';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
@@ -62,6 +63,10 @@ export class CommentsSummaryComponent implements OnInit {
   }
 
   onFilter() {
+    const {value} = this.filtersFg;
+    const dateRangeFrom = new Date(value.dateRangeFrom.year, value.dateRangeFrom.month, value.dateRangeFrom.day);
+    const dateRangeTo = new Date(value.dateRangeTo.year, value.dateRangeTo.month, value.dateRangeTo.day);
+    this.store.dispatch(new fromAnnoActions.ApplyCommentSymmaryFilter(value))
     debugger
   }
 
