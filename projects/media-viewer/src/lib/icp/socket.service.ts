@@ -17,9 +17,7 @@ export class SocketService implements OnDestroy {
   }
 
   connect() {
-    this.socket = socketio('/', {
-      path: '/icp/socket.io', agent: true
-    });
+    this.socket = this.getSocketClient();
     this.socket.on('connect', () => this.connected$.next(true));
     this.socket.on('disconnect', () => this.connected$.next(false));
   }
@@ -49,6 +47,12 @@ export class SocketService implements OnDestroy {
       });
       // dispose of the event listener when unsubscribed
       return () => this.socket.off(event);
+    });
+  }
+
+  getSocketClient(): SocketIOClient.Socket {
+    return socketio('/', {
+      path: '/icp/socket.io', agent: true
     });
   }
 }

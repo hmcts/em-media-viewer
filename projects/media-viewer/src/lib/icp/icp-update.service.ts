@@ -37,7 +37,9 @@ export class IcpUpdateService {
   }
 
   updatePresenter(presenter: IcpParticipant) {
-    this.socket.emit(this.UPDATE_PRESENTER, {...this.session, presenterId: presenter.id, presenterName: presenter.username});
+    this.socket.emit(this.UPDATE_PRESENTER, {
+      ...this.session, presenterId: presenter.id, presenterName: presenter.username
+    });
   }
 
   presenterUpdated() {
