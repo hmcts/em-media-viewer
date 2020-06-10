@@ -6,7 +6,7 @@ import {select, Store} from '@ngrx/store';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromAnnoActions from  '../../store/actions/annotations.action';
-import {Observable} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
@@ -54,19 +54,21 @@ export class CommentsSummaryComponent implements OnInit {
 
   buildCheckBoxFrom() {
     const checkboxes = <FormGroup>this.filtersFg.get('tagFilters');
-    this.allTags$ = this.store.pipe(select(fromTagSelectors.getAllTagsArr)).pipe(tap(tags => {
-      this.filtersFg.reset();
-      tags.forEach((value) => {
-        checkboxes.addControl(value.key, new FormControl(false));
+    this.allTags$ = this.store.pipe(select(fromTagSelectors.getAllTagsArr));
+    const filters$ = this.store.pipe(select(fromSelectors.getCommentSummaryFilters));
+    combineLatest([this.allTags$, filters$]).subscribe(([tags, filters]) => {
+      tags.forEach((val) => {
+        const checkBoxValue = filters.hasOwnProperty(val.key) ? filters.tagFilters[val.key] : false;
+        checkboxes.addControl(val.key, new FormControl(checkBoxValue));
       });
-    }));
+    });
   }
 
   onFilter() {
     const {value} = this.filtersFg;
     const dateRangeFrom = new Date(value.dateRangeFrom.year, value.dateRangeFrom.month, value.dateRangeFrom.day);
     const dateRangeTo = new Date(value.dateRangeTo.year, value.dateRangeTo.month, value.dateRangeTo.day);
-    this.store.dispatch(new fromAnnoActions.ApplyCommentSymmaryFilter({...value, dateRangeFrom, dateRangeTo}))
+    this.store.dispatch(new fromAnnoActions.ApplyCommentSymmaryFilter({...value, dateRangeFrom, dateRangeTo}));
   }
 
   onFiltersToggle() {

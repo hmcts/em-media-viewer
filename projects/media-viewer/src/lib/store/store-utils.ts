@@ -116,7 +116,7 @@ export class StoreUtils {
           const label = filters.tagFilters[filter];
           if (label) {
             return comment.tags.forEach(tag => {
-              if (tag.label === filter && !hasTag) {
+              if (tag.name === filter && !hasTag) {
                 hasTag = true;
               }
             });
