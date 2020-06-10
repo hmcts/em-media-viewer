@@ -1,17 +1,15 @@
-import {Component, Input, ViewChild, ElementRef, OnChanges, SimpleChanges, OnInit} from '@angular/core';
+import {Component, Input, ViewChild, ElementRef, OnInit} from '@angular/core';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { AnnotationSet } from '../annotation-set/annotation-set.model';
-import { CommentsSummary } from './comments-summary.model';
 import {ViewerEventService} from '../../viewers/viewer-event.service';
-import {debug} from 'ng-packagr/lib/util/log';
 import {select, Store} from '@ngrx/store';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import * as fromStore from '../../store/reducers/reducers';
 import {Observable} from 'rxjs';
-import {Annotation} from '../annotation-set/annotation-view/annotation.model';
 import {tap} from 'rxjs/operators';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+
+import * as fromTagSelectors from '../../store/selectors/tags.selectors';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -22,8 +20,10 @@ export class CommentsSummaryComponent implements OnInit {
   @Input() title: string;
   @Input() contentType: string;
   @ViewChild('commentContainer') commentsTable: ElementRef;
-  public comments$: Observable<{comment: string; tags: object[]; date: string; user: string; page: string}>
-  public dateRangeFg: FormGroup;
+  public comments$: Observable<any>;
+  public filtersFg: FormGroup;
+  allTags$: Observable<{key: string; length: number}[]>;
+  showFilters = false;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -34,7 +34,7 @@ export class CommentsSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dateRangeFg = this.fb.group({
+    this.filtersFg = this.fb.group({
       dateRangeFrom: new FormGroup({
         day: new FormControl(''),
         month: new FormControl(''),
@@ -44,9 +44,29 @@ export class CommentsSummaryComponent implements OnInit {
         day: new FormControl(''),
         month: new FormControl(''),
         year: new FormControl('')
-      })
+      }),
+      tagFilters: this.fb.group({}),
     });
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary), tap(console.log));
+    this.buildCheckBoxFrom();
+  }
+
+  buildCheckBoxFrom() {
+    const checkboxes = <FormGroup>this.filtersFg.get('tagFilters');
+    this.allTags$ = this.store.pipe(select(fromTagSelectors.getAllTagsArr)).pipe(tap(tags => {
+      this.filtersFg.reset();
+      tags.forEach((value) => {
+        checkboxes.addControl(value.key, new FormControl(false));
+      });
+    }));
+  }
+
+  onFilter() {
+    debugger
+  }
+
+  onFiltersToggle() {
+    this.showFilters = !this.showFilters;
   }
 
   public onClose(): void {

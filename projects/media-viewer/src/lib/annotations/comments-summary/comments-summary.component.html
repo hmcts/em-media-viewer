@@ -4,29 +4,46 @@
       <h2 class="govuk-heading-m">{{ title }}</h2>
       <ng-container *ngIf="(comments$ | async) as comments">
         <ng-container *ngIf="comments.length">
-          <form [formGroup]="dateRangeFg" (ngSubmit)="onFilteer()" >
-            <div class="dates">
-              <div class="dates__from">
-                <lib-gov-uk-date
-                  [config]="{id: 'dateRangeFrom', legend: 'From'}"
-                  [formGroup]="dateRangeFg.controls['dateRangeFrom']"
-                  [errorMessage]="'test'"
-                ></lib-gov-uk-date>
+          <button type="submit" class="govuk-button" (click)="onFiltersToggle()">
+            {{ !showFilters ? 'Show Filters' : 'Hide Filters'}}
+          </button>
+          <ng-container *ngIf="showFilters">
+            <form [formGroup]="filtersFg" (ngSubmit)="onFilter()" >
+              <div class="dates">
+                <div class="dates__from">
+                  <lib-gov-uk-date
+                    [config]="{id: 'dateRangeFrom', legend: 'From'}"
+                    [formGroup]="filtersFg.controls['dateRangeFrom']"
+                    [errorMessage]="'test'"
+                  ></lib-gov-uk-date>
+                </div>
+                <div class="dates__to">
+                  <lib-gov-uk-date
+                    [config]="{id: 'dateRangeTo', legend: 'To'}"
+                    [formGroup]="filtersFg.controls['dateRangeTo']"
+                    [errorMessage]="'test'"
+                  ></lib-gov-uk-date>
+                </div>
+                <div class="dates__tags">
+                  <div class="govuk-checkboxes--scroll" [formGroup]="filtersFg.controls['tagFilters']">
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async)">
+                        <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
+                        <label class="govuk-label govuk-checkboxes__label">
+                          {{ item.key | unsnake}} ({{item.length}})
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dates__cta">
+                  <button type="submit" class="govuk-button">
+                    Filter comments
+                  </button>
+                </div>
               </div>
-              <div class="dates__to">
-                <lib-gov-uk-date
-                  [config]="{id: 'dateRangeTo', legend: 'To'}"
-                  [formGroup]="dateRangeFg.controls['dateRangeTo']"
-                  [errorMessage]="'test'"
-                ></lib-gov-uk-date>
-              </div>
-              <div class="dates__cta">
-                <button type="submit" class="govuk-button">
-                  Filter comments
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </ng-container>
 
           <ngx-datatable
             [rows]="comments"
