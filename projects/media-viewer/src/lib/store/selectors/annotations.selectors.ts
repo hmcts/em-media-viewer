@@ -4,6 +4,7 @@ import * as fromFeature from '../reducers/reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
 import * as fromTags from './tags.selectors';
 import * as fromDocument from './document.selectors';
+import {StoreUtils} from '../store-utils';
 import * as moment_ from 'moment-timezone';
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
@@ -66,6 +67,11 @@ export const getComponentSearchText = createSelector(
   (queries) => queries.commentSearch
 );
 
+export const getCommentSummaryFilters = createSelector(
+  getAnnotationsSetState,
+  fromAnnotations.getSummaryFilters
+);
+
 export const getAnnoPerPage = createSelector(
   fromDocument.getPages,
   getPageEntities,
@@ -109,7 +115,10 @@ export const getCommentsArray = createSelector(
 
 export const getCommentSummary = createSelector(
   getCommentsArray,
-  (commentSummary = []) => commentSummary.map((comment) => {
+  getCommentSummaryFilters,
+  (commentSummary = [], filters) => {
+    const comments = StoreUtils.filterCommentsSummary(commentSummary, filters)
+    return commentSummary.map((comment) => {
       const moment = moment_;
       return {
         page: comment.page,
@@ -119,6 +128,7 @@ export const getCommentSummary = createSelector(
         comment: comment.content
       };
     })
+  }
 );
 
 

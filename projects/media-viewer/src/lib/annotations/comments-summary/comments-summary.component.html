@@ -25,16 +25,21 @@
                   ></lib-gov-uk-date>
                 </div>
                 <div class="dates__tags">
-                  <div class="govuk-checkboxes--scroll" [formGroup]="filtersFg.controls['tagFilters']">
-                    <div class="govuk-checkboxes govuk-checkboxes--small">
-                      <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async)">
-                        <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
-                        <label class="govuk-label govuk-checkboxes__label">
-                          {{ item.key | unsnake}} ({{item.length}})
-                        </label>
+                  <lib-gov-uk-fieldset
+                    [config]="{legend: 'Tags', classes: 'govuk-label--m', id: 'filters'}"
+                    [isHeading]="false"
+                    [errorMessage]="">
+                    <div class="govuk-checkboxes--scroll" [formGroup]="filtersFg.controls['tagFilters']">
+                      <div class="govuk-checkboxes govuk-checkboxes--small">
+                        <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async)">
+                          <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
+                          <label class="govuk-label govuk-checkboxes__label">
+                            {{ item.key | unsnake}} ({{item.length}})
+                          </label>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </lib-gov-uk-fieldset>
                 </div>
                 <div class="dates__cta">
                   <button type="submit" class="govuk-button">

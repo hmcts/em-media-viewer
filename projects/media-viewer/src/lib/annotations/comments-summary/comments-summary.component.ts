@@ -66,8 +66,7 @@ export class CommentsSummaryComponent implements OnInit {
     const {value} = this.filtersFg;
     const dateRangeFrom = new Date(value.dateRangeFrom.year, value.dateRangeFrom.month, value.dateRangeFrom.day);
     const dateRangeTo = new Date(value.dateRangeTo.year, value.dateRangeTo.month, value.dateRangeTo.day);
-    this.store.dispatch(new fromAnnoActions.ApplyCommentSymmaryFilter(value))
-    debugger
+    this.store.dispatch(new fromAnnoActions.ApplyCommentSymmaryFilter({...value, dateRangeFrom, dateRangeTo}))
   }
 
   onFiltersToggle() {

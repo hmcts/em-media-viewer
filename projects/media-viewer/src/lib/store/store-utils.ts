@@ -106,4 +106,8 @@ export class StoreUtils {
         Object.assign(bookmarkEntities, { [bookmark.id]: bookmark }),
       {});
   }
+
+  static filterCommentsSummary(comments, filters) {
+
+  }
 }

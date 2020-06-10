@@ -97,4 +97,5 @@ export type AnnotationsActions =
   | DeleteAnnotationSuccess
   | DeleteAnnotationFail
   | SelectedAnnotation
-  | SearchComment;
+  | SearchComment
+  | ApplyCommentSymmaryFilter;
