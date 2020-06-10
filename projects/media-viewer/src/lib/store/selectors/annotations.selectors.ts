@@ -117,8 +117,8 @@ export const getCommentSummary = createSelector(
   getCommentsArray,
   getCommentSummaryFilters,
   (commentSummary = [], filters) => {
-    const comments = StoreUtils.filterCommentsSummary(commentSummary, filters)
-    return commentSummary.map((comment) => {
+    const comments = StoreUtils.filterCommentsSummary(commentSummary, filters);
+    return comments.map((comment) => {
       const moment = moment_;
       return {
         page: comment.page,

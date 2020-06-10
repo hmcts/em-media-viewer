@@ -109,5 +109,26 @@ export class StoreUtils {
 
   static filterCommentsSummary(comments, filters) {
 
+    if (filters.hasOwnProperty('tagFilters')) {
+      const filteredComments = comments.filter(comment => {
+       let hasTag = false;
+         Object.keys(filters.tagFilters).forEach(filter => {
+          const label = filters.tagFilters[filter];
+          if (label) {
+            return comment.tags.forEach(tag => {
+              if (tag.label === filter && !hasTag) {
+                hasTag = true;
+              }
+            });
+          }
+       });
+       return hasTag;
+      });
+      console.log(filteredComments);
+      return filteredComments.length ? filteredComments : comments;
+    } else {
+      return comments;
+    }
+
   }
 }
