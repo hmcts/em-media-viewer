@@ -29,6 +29,7 @@ import {MomentDatePipe} from './pipes/date.pipe';
 import { BookmarksApiService } from './bookmarks-api.service';
 import {FilterPipe} from './pipes/filter.pipe';
 import {UnsnakePipe} from './pipes/unsnake.pipe';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import {UnsnakePipe} from './pipes/unsnake.pipe';
     MutableDivModule,
     TagInputModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDatatableModule
   ],
   declarations: [
     AnnotationViewComponent,

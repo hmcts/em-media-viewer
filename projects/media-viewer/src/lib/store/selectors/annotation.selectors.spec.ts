@@ -207,7 +207,7 @@ describe('Annotations selectors', () => {
     });
   });
 
-  xdescribe('getCommentsArray', () => {
+  describe('getCommentsArray', () => {
     it('should return array of comments', () => {
       let result;
       store.pipe(select(fromSelectors.getCommentsArray)).subscribe(value => {
@@ -223,9 +223,49 @@ describe('Annotations selectors', () => {
       store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
       store.dispatch(new fromDocument.AddPages(payload));
       store.dispatch(new fromTags.AddFilterTags({important: false}));
+      const pages =  {
+        '1': {
+          scaleRotation: {scale: 1, rotation: 0,},
+          styles: {left: undefined, height: undefined, width: undefined}
+        }
+      }
       const expected = [
-        {...comment, tags}
+        {...comment, tags, page: 1, pages}
       ];
+      expect(result).toEqual(expected);
+    });
+  });
+
+
+  describe('getCommentsSummaryArray', () => {
+    it('should return array of comments', () => {
+      let result;
+      store.pipe(select(fromSelectors.getCommentSummary)).subscribe(value => {
+        result = value;
+      });
+
+      const payload: any = [{
+        div: {},
+        id: '1',
+        scale: 1,
+        rotation: 0
+      }];
+      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
+      store.dispatch(new fromDocument.AddPages(payload));
+      store.dispatch(new fromTags.AddFilterTags({important: false}));
+
+      const expected = [{
+        comment: 'this is my comment',
+        date: '17 April 2020',
+        page: 1,
+        tags: [{
+          color: null,
+          createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
+          label: 'important',
+          name: 'important'
+        }],
+        user: 'EM showcase'
+      }];
       expect(result).toEqual(expected);
     });
   });

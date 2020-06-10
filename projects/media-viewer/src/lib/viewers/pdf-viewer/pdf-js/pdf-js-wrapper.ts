@@ -46,7 +46,6 @@ export class PdfJsWrapper {
     this.pdfViewer.eventBus.on('scalechanging', (e) =>  this.emitDocumentInfo(e));
     this.pdfViewer.eventBus.on('rotationchanging', (e) => this.emitDocumentInfo(e));
 
-    console.log('these are the pages ', this.pdfViewer._pages)
     this.pdfViewer.eventBus.on('updatefindcontrolstate', event => {
       if (event.state !== FindState.PENDING) {
         this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);

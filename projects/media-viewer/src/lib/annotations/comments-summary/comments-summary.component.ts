@@ -1,56 +1,37 @@
-import { Component, Input, ViewChild, ElementRef, OnChanges } from '@angular/core';
+import {Component, Input, ViewChild, ElementRef, OnChanges, SimpleChanges, OnInit} from '@angular/core';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { CommentsSummary } from './comments-summary.model';
 import {ViewerEventService} from '../../viewers/viewer-event.service';
+import {debug} from 'ng-packagr/lib/util/log';
+import {select, Store} from '@ngrx/store';
+import * as fromSelectors from '../../store/selectors/annotations.selectors';
+import * as fromStore from '../../store/reducers/reducers';
+import {Observable} from 'rxjs';
+import {Annotation} from '../annotation-set/annotation-view/annotation.model';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'mv-comments-summary',
   templateUrl: './comments-summary.component.html',
 })
-export class CommentsSummaryComponent implements OnChanges {
+export class CommentsSummaryComponent implements OnInit {
 
   @Input() title: string;
   @Input() contentType: string;
-  @Input() annotationSet: AnnotationSet | null;
-
-  comments: CommentsSummary[] = [];
-
+  public comments$: Observable<{comment: string; tags: object[]; date: string; user: string; page: string}>
   @ViewChild('commentContainer') commentsTable: ElementRef;
 
   constructor(
+    private store: Store<fromStore.AnnotationSetState>,
     private readonly printService: PrintService,
     private readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService
   ) {}
 
-  ngOnChanges() {
-    if (this.annotationSet) {
-      this.generateCommentsSummary();
-      this.orderCommentsSummary();
-    }
-  }
-
-  generateCommentsSummary() {
-    this.annotationSet.annotations
-      .forEach(annotation => {
-        if (annotation.comments.length) {
-          this.comments.push({
-            page: annotation.page,
-            comment: annotation.comments[0],
-            x: annotation.rectangles[0].x,
-            y: annotation.rectangles[0].y
-          });
-        }
-      });
-  }
-
-  orderCommentsSummary() {
-    this.comments
-      .sort((a, b) => a.x >= b.x ? 1 : -1)
-      .sort((a, b) => a.y >= b.y ? 1 : -1)
-      .sort((a, b) => a.page - b.page);
+  ngOnInit(): void {
+    this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary), tap(console.log));
   }
 
   public onClose(): void {

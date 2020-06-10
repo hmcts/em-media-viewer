@@ -6,11 +6,11 @@
     "entryFile": "src/public_api.ts"
   },
   "whitelistedNonPeerDependencies": [
+    "@swimlane/ngx-datatable",
     "pdfjs-dist",
     "uuid",
     "mutable-div",
     "hammerjs",
-    "ngx-chips",
     "ng2-material-dropdown"
   ]
 }
