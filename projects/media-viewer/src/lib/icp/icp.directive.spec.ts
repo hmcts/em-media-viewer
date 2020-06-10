@@ -17,6 +17,18 @@ describe('Icp Directive', () => {
   let updateService: IcpUpdateService;
   let presenterService: IcpPresenterService;
   let followerService: IcpFollowerService;
+  const mockParticipantService = {
+    update: () => {
+    }
+  } as any;
+  const mockUpdateService = {
+    clientDisconnected: () => of('client'),
+    presenterUpdated: () => of(),
+    leaveSession: () => {},
+    updatePresenter: () => {},
+    screenUpdated: () => {}
+  } as any;
+
   const session: IcpSession = {
     caseId: 'caseId',
     sessionId: 'sessionId',
@@ -26,20 +38,6 @@ describe('Icp Directive', () => {
     id: 'id',
     username: 'name'
   };
-  const mockParticipantService = {
-    update: () => {
-    }
-  } as any;
-  const mockUpdateService = {
-    clientDisconnected: () => of('client'),
-    presenterUpdated: () => of(),
-    leaveSession: () => {
-    },
-    updatePresenter: () => {
-    },
-    screenUpdated: () => {
-    }
-  } as any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -91,7 +89,6 @@ describe('Icp Directive', () => {
       spyOn(directive, 'setUpSessionSubscriptions');
 
       directive.caseId = 'caseId';
-      directive.ngOnInit();
       directive.launchSession();
 
       const payload = {session: session, participantInfo: {client: participant, presenter: participant}};
@@ -133,10 +130,11 @@ describe('Icp Directive', () => {
   );
 
   it('should unsubscribe from session subscriptions', () => {
+    directive.sessionSubscription = new Subscription();
+
+    spyOn(directive.sessionSubscription, 'unsubscribe');
     spyOn(presenterService, 'update');
     spyOn(followerService, 'update');
-    directive.sessionSubscription = new Subscription();
-    spyOn(directive.sessionSubscription, 'unsubscribe');
 
     directive.unsubscribeSession();
 
@@ -145,6 +143,18 @@ describe('Icp Directive', () => {
     expect(directive.sessionSubscription.unsubscribe).toHaveBeenCalled();
   });
 
+  it('should destroy subscriptions', () => {
+    directive.subscription = new Subscription();
+    directive.sessionSubscription = new Subscription();
+
+    spyOn(directive.subscription, 'unsubscribe');
+    spyOn(directive, 'unsubscribeSession');
+
+    directive.ngOnDestroy();
+
+    expect(directive.unsubscribeSession).toHaveBeenCalled();
+    expect(directive.subscription.unsubscribe).toHaveBeenCalled();
+  });
 
   it('should leave presentation',
     inject([Store], fakeAsync((store) => {
