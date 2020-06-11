@@ -51,7 +51,6 @@ mv-bookmarks {
     margin-bottom: 1px;
   }
 
-
   .bookmarks-tree {
     .node-content-wrapper {
       width: 100%;
@@ -59,6 +58,12 @@ mv-bookmarks {
     }
     .node-content-wrapper-focused { background: rgba(255, 0, 0, 0.2) }
     .tree-children { padding-left: 10px }
+  }
+
+  .bookmark__here {
+    background: url(/assets/images/bookmark-save.svg) center center  no-repeat;
+    width: 17px;
+    height: 17px;
   }
 }
 
