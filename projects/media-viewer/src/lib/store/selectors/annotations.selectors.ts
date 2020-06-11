@@ -118,16 +118,19 @@ export const getCommentSummary = createSelector(
   getCommentSummaryFilters,
   (commentSummary = [], filters) => {
     const comments = StoreUtils.filterCommentsSummary(commentSummary, filters.filters);
-    return comments.map((comment) => {
-      const moment = moment_;
-      return {
-        page: comment.page,
-        user: comment.createdByDetails.forename.concat(' ').concat(comment.createdByDetails.surname),
-        date: moment(comment.lastModifiedDate).format('D MMMM YYYY'),
-        tags: comment.tags,
-        comment: comment.content
-      };
-    });
+    if (comments.length) {
+      return comments.map((comment) => {
+        const moment = moment_;
+        return {
+          page: comment.page,
+          user: comment.createdByDetails.forename.concat(' ').concat(comment.createdByDetails.surname),
+          date: moment(comment.lastModifiedDate).format('D MMMM YYYY'),
+          tags: comment.tags,
+          comment: comment.content
+        };
+      });
+    }
+    return [''];
   }
 );
 

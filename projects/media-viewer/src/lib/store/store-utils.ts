@@ -1,5 +1,6 @@
 import {Annotation} from '../annotations/annotation-set/annotation-view/annotation.model';
 import { Bookmark } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import * as moment_ from 'moment-timezone';
 
 // @dynamic
 export class StoreUtils {
@@ -108,26 +109,50 @@ export class StoreUtils {
   }
 
   static filterCommentsSummary(comments, filters) {
-
-    if (filters.hasOwnProperty('tagFilters')) {
-      const filteredComments = comments.filter(comment => {
-       let hasTag = false;
-         Object.keys(filters.tagFilters).forEach(filter => {
-          const label = filters.tagFilters[filter];
-          if (label) {
-            return comment.tags.forEach(tag => {
-              if (tag.name === filter && !hasTag) {
-                hasTag = true;
-              }
-            });
+      if(Object.keys(filters).length) {
+        const filteredComments = comments.filter(comment => {
+          let hasTagFilter = false;
+          let hasDateFilter = false;
+          // check tags
+          if (filters.hasOwnProperty('tagFilters')) {
+            Object.keys(filters.tagFilters).forEach(filter => {
+              const label = filters.tagFilters[filter];
+              if (label) {
+                return comment.tags.forEach(tag => {
+                  if (tag.name === filter && !hasTagFilter) {
+                    hasTagFilter = true;
+                  }
+                });
+              }});
           }
-       });
-       return hasTag;
-      });
-      return filteredComments.length ? filteredComments : comments;
-    } else {
-      return comments;
-    }
+          // check for dates
+          if (filters.dateRangeFrom || filters.dateRangeTo) {
+            const moment = moment_;
+            const commentDate = moment(comment.lastModifiedDate);
+            const dateFrom =  filters.dateRangeFrom !== null ? moment(filters.dateRangeFrom) : undefined;
+            const dateTo = filters.dateRangeTo !== null ? moment(filters.dateRangeTo) : undefined;
 
+            if (dateTo && dateFrom) {
+              if (commentDate > dateFrom && commentDate < dateTo) {
+                hasDateFilter = true;
+              }
+            }
+            if (dateTo && !dateFrom) {
+              if (commentDate <= dateTo) {
+                hasDateFilter = true;
+              }
+            }
+            if (dateFrom && !dateTo) {
+              if (commentDate > dateFrom) {
+                hasDateFilter = true;
+              }
+            }
+          }
+          return (hasTagFilter || hasDateFilter);
+        });
+        return filteredComments;
+      } else {
+        return comments;
+      }
   }
 }

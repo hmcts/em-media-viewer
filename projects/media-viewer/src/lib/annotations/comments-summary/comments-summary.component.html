@@ -4,6 +4,7 @@
       <h2 class="govuk-heading-m">{{ title }}</h2>
       <ng-container *ngIf="(comments$ | async) as comments">
         <ng-container *ngIf="comments.length">
+
           <button type="submit" class="govuk-button govuk-!-margin-right-1" (click)="onFiltersToggle()">
             {{ !showFilters ? 'Show Filters' : 'Hide Filters'}}
           </button>
@@ -52,27 +53,28 @@
               </div>
             </form>
           </ng-container>
-
-          <ngx-datatable
-            [rows]="comments"
-            rowHeight="auto"
-            headerHeight="auto"
-            [columnMode]="'flex'"
-            [sorts]="[{ prop: 'date', dir: 'desc' }]">
-            <ngx-datatable-column name="User" [flexGrow]="1" [sortable]="false"></ngx-datatable-column>
-            <ngx-datatable-column name="Page" [flexGrow]="1">
-              <ng-template ngx-datatable-cell-template let-value="value">
-                <a [routerLink]="" class="comment-summary_pages" (click)="navigateToPage(value)">{{value}}</a>
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Date" [flexGrow]="1"></ngx-datatable-column>
-            <ngx-datatable-column name="Comment" [flexGrow]="3" [sortable]="false"></ngx-datatable-column>
-            <ngx-datatable-column name="Tags" [flexGrow]="1" [sortable]="false">
-              <ng-template ngx-datatable-cell-template let-value="value">
-                <span class="hmcts-badge" *ngFor="let tag of value">{{tag.label}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable>
+          <ng-container *ngIf="comments[0]">
+            <ngx-datatable
+              [rows]="comments"
+              rowHeight="auto"
+              headerHeight="auto"
+              [columnMode]="'flex'"
+              [sorts]="[{ prop: 'date', dir: 'desc' }]">
+              <ngx-datatable-column name="User" [flexGrow]="1" [sortable]="false"></ngx-datatable-column>
+              <ngx-datatable-column name="Page" [flexGrow]="1">
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  <a [routerLink]="" class="comment-summary_pages" (click)="navigateToPage(value)">{{value}}</a>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Date" [flexGrow]="1"></ngx-datatable-column>
+              <ngx-datatable-column name="Comment" [flexGrow]="3" [sortable]="false"></ngx-datatable-column>
+              <ngx-datatable-column name="Tags" [flexGrow]="1" [sortable]="false">
+                <ng-template ngx-datatable-cell-template let-value="value">
+                  <span class="hmcts-badge" *ngFor="let tag of value">{{tag.label}}</span>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </ng-container>
         </ng-container>
         <ng-container *ngIf="!comments.length">
           <h3 class="govuk-heading-s" >No comments available</h3>

@@ -173,7 +173,7 @@ export function reducer (
 
     case fromAnnotations.APPLY_COMMENT_SUMMARY_FILTER: {
       const payload = action.payload;
-      const hasFiler = () => {
+      const hasTagFilter = () => {
         let isFiltered = false;
         if (payload.tagFilters) {
           Object.keys(payload.tagFilters).map(filter => {
@@ -183,9 +183,10 @@ export function reducer (
           });
         }
         return isFiltered;
-      }
+      };
+      const hasFilter = (hasTagFilter() || payload.dateRangeFrom || payload.dateRangeTo);
       const commentSummaryFilers = {
-        hasFilter: hasFiler(),
+        hasFilter,
         filters: payload
       };
       return {
