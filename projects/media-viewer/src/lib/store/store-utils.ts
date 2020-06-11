@@ -124,7 +124,6 @@ export class StoreUtils {
        });
        return hasTag;
       });
-      console.log(filteredComments);
       return filteredComments.length ? filteredComments : comments;
     } else {
       return comments;

@@ -117,7 +117,7 @@ export const getCommentSummary = createSelector(
   getCommentsArray,
   getCommentSummaryFilters,
   (commentSummary = [], filters) => {
-    const comments = StoreUtils.filterCommentsSummary(commentSummary, filters);
+    const comments = StoreUtils.filterCommentsSummary(commentSummary, filters.filters);
     return comments.map((comment) => {
       const moment = moment_;
       return {
@@ -127,7 +127,7 @@ export const getCommentSummary = createSelector(
         tags: comment.tags,
         comment: comment.content
       };
-    })
+    });
   }
 );
 

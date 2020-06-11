@@ -19,6 +19,7 @@ export const DELETE_ANNOTATION_FAIL = '[Annotations] Delete Annotation Fail';
 export const SELECT_ANNOTATION  = '[Annotations] Select Annotation';
 export const SEARCH_COMMENT  = '[Comments] Search Comments';
 export const APPLY_COMMENT_SUMMARY_FILTER  = '[Comments] Apply Comment Summary Filter';
+export const CLEAR_COMMENT_SUMMARY_FILTER  = '[Comments] Clear Comment Summary Filter';
 
 export class LoadAnnotationSet implements Action {
   readonly type = LOAD_ANNOTATION_SET;
@@ -85,6 +86,10 @@ export class ApplyCommentSymmaryFilter implements Action {
   constructor(public payload) {}
 }
 
+export class ClearCommentSummaryFilters implements Action {
+  readonly type = CLEAR_COMMENT_SUMMARY_FILTER;
+}
+
 export type AnnotationsActions =
   | LoadAnnotationSet
   | LoadAnnotationSetSucess
@@ -98,4 +103,5 @@ export type AnnotationsActions =
   | DeleteAnnotationFail
   | SelectedAnnotation
   | SearchComment
-  | ApplyCommentSymmaryFilter;
+  | ApplyCommentSymmaryFilter
+  | ClearCommentSummaryFilters;

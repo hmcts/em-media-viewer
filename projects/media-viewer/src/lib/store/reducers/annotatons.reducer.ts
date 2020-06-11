@@ -11,7 +11,7 @@ export interface AnnotationSetState {
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation;
   commentSearchQueries: {commentSearch: string;};
-  commentSummaryFilers: any
+  commentSummaryFilers: {hasFilter: boolean; filters: any};
   loaded: boolean;
   loading: boolean;
 }
@@ -23,7 +23,7 @@ export const initialState: AnnotationSetState = {
   annotationPageEntities: {},
   selectedAnnotation: null,
   commentSearchQueries: {commentSearch: ''},
-  commentSummaryFilers: {},
+  commentSummaryFilers: {hasFilter: false, filters: {}},
   loading: false,
   loaded: false,
 };
@@ -172,11 +172,34 @@ export function reducer (
     }
 
     case fromAnnotations.APPLY_COMMENT_SUMMARY_FILTER: {
-      const commentSummaryFilers = action.payload;
+      const payload = action.payload;
+      const hasFiler = () => {
+        let isFiltered = false;
+        if (payload.tagFilters) {
+          Object.keys(payload.tagFilters).map(filter => {
+            if (payload.tagFilters[filter] && !isFiltered) {
+              isFiltered = true;
+            }
+          });
+        }
+        return isFiltered;
+      }
+      const commentSummaryFilers = {
+        hasFilter: hasFiler(),
+        filters: payload
+      };
       return {
         ...state,
         commentSummaryFilers
-      }
+      };
+    }
+
+    case fromAnnotations.CLEAR_COMMENT_SUMMARY_FILTER: {
+
+      return {
+        ...state,
+        commentSummaryFilers : {...initialState.commentSummaryFilers}
+      };
     }
   }
 

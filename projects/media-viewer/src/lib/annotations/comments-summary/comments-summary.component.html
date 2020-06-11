@@ -4,8 +4,11 @@
       <h2 class="govuk-heading-m">{{ title }}</h2>
       <ng-container *ngIf="(comments$ | async) as comments">
         <ng-container *ngIf="comments.length">
-          <button type="submit" class="govuk-button" (click)="onFiltersToggle()">
+          <button type="submit" class="govuk-button govuk-!-margin-right-1" (click)="onFiltersToggle()">
             {{ !showFilters ? 'Show Filters' : 'Hide Filters'}}
+          </button>
+          <button type="submit" class="govuk-button govuk-button--secondary" (click)="onClearFilters()" *ngIf="hasFilter">
+            Clear Filters
           </button>
           <ng-container *ngIf="showFilters">
             <form [formGroup]="filtersFg" (ngSubmit)="onFilter()" >

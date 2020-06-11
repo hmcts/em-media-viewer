@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, ElementRef, OnInit} from '@angular/core';
+import {Component, Input, ViewChild, ElementRef, OnInit, OnDestroy} from '@angular/core';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import {ViewerEventService} from '../../viewers/viewer-event.service';
@@ -6,7 +6,7 @@ import {select, Store} from '@ngrx/store';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromAnnoActions from  '../../store/actions/annotations.action';
-import {combineLatest, Observable} from 'rxjs';
+import {combineLatest, Observable, Subscription} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
@@ -16,15 +16,17 @@ import * as fromTagSelectors from '../../store/selectors/tags.selectors';
   selector: 'mv-comments-summary',
   templateUrl: './comments-summary.component.html',
 })
-export class CommentsSummaryComponent implements OnInit {
+export class CommentsSummaryComponent implements OnInit, OnDestroy {
 
   @Input() title: string;
   @Input() contentType: string;
   @ViewChild('commentContainer') commentsTable: ElementRef;
   public comments$: Observable<any>;
   public filtersFg: FormGroup;
+  private $subscriptions: Subscription;
   allTags$: Observable<{key: string; length: number}[]>;
   showFilters = false;
+  hasFilter = false;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -48,20 +50,30 @@ export class CommentsSummaryComponent implements OnInit {
       }),
       tagFilters: this.fb.group({}),
     });
-    this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary), tap(console.log));
+    this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary));
     this.buildCheckBoxFrom();
   }
 
   buildCheckBoxFrom() {
+    this.filtersFg.reset();
     const checkboxes = <FormGroup>this.filtersFg.get('tagFilters');
-    this.allTags$ = this.store.pipe(select(fromTagSelectors.getAllTagsArr));
     const filters$ = this.store.pipe(select(fromSelectors.getCommentSummaryFilters));
-    combineLatest([this.allTags$, filters$]).subscribe(([tags, filters]) => {
+    this.allTags$ = this.store.pipe(select(fromTagSelectors.getAllTagsArr));
+    this.$subscriptions = combineLatest([this.allTags$, filters$]).subscribe(([tags, filters]) => {
+      this.hasFilter = filters.hasFilter;
       tags.forEach((val) => {
-        const checkBoxValue = filters.hasOwnProperty(val.key) ? filters.tagFilters[val.key] : false;
+        const checkBoxValue = (filters.filters.tagFilters &&
+          filters.filters.tagFilters.hasOwnProperty(val.key)) ?
+          filters.filters.tagFilters[val.key] : false;
         checkboxes.addControl(val.key, new FormControl(checkBoxValue));
       });
+      this.filtersFg.updateValueAndValidity();
     });
+  }
+
+  onClearFilters() {
+    this.store.dispatch(new fromAnnoActions.ClearCommentSummaryFilters());
+    this.buildCheckBoxFrom();
   }
 
   onFilter() {
@@ -89,5 +101,9 @@ export class CommentsSummaryComponent implements OnInit {
     }
     this.toolbarEvents.toggleCommentsSummary(false);
     this.viewerEvents.toggleCommentsPanel(true);
+  }
+
+  ngOnDestroy(): void {
+    this.$subscriptions.unsubscribe();
   }
 }
