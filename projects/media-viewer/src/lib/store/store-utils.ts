@@ -109,50 +109,53 @@ export class StoreUtils {
   }
 
   static filterCommentsSummary(comments, filters) {
-      if(Object.keys(filters).length) {
-        const filteredComments = comments.filter(comment => {
-          let hasTagFilter = false;
-          let hasDateFilter = false;
-          // check tags
-          if (filters.hasOwnProperty('tagFilters')) {
-            Object.keys(filters.tagFilters).forEach(filter => {
-              const label = filters.tagFilters[filter];
-              if (label) {
-                return comment.tags.forEach(tag => {
-                  if (tag.name === filter && !hasTagFilter) {
-                    hasTagFilter = true;
-                  }
-                });
-              }});
-          }
-          // check for dates
-          if (filters.dateRangeFrom || filters.dateRangeTo) {
-            const moment = moment_;
-            const commentDate = moment(comment.lastModifiedDate);
-            const dateFrom =  filters.dateRangeFrom !== null ? moment(filters.dateRangeFrom) : undefined;
-            const dateTo = filters.dateRangeTo !== null ? moment(filters.dateRangeTo) : undefined;
+    if(Object.keys(filters).length) {
+      const tagFilterApplied = Object.keys(filters.tagFilters)
+        .filter(key => filters.tagFilters[key] === true).length;
+      const dateFilterApplied = (filters.dateRangeFrom || filters.dateRangeTo);
+      const filteredComments = comments.filter(comment => {
+        let hasTagFilter = false;
+        let hasDateFilter = false;
+        // check tags
+        if (filters.hasOwnProperty('tagFilters')) {
+          Object.keys(filters.tagFilters).forEach(filter => {
+            const label = filters.tagFilters[filter];
+            if (label) {
+              return comment.tags.forEach(tag => {
+                if (tag.name === filter && !hasTagFilter) {
+                  hasTagFilter = true;
+                }
+              });
+            }});
+        }
+        // check for dates
+        if (dateFilterApplied) {
+          const moment = moment_;
+          const commentDate = moment(comment.lastModifiedDate);
+          const dateFrom =  filters.dateRangeFrom !== null ? moment(filters.dateRangeFrom) : undefined;
+          const dateTo = filters.dateRangeTo !== null ? moment(filters.dateRangeTo) : undefined;
 
-            if (dateTo && dateFrom) {
-              if (commentDate > dateFrom && commentDate < dateTo) {
-                hasDateFilter = true;
-              }
-            }
-            if (dateTo && !dateFrom) {
-              if (commentDate <= dateTo) {
-                hasDateFilter = true;
-              }
-            }
-            if (dateFrom && !dateTo) {
-              if (commentDate > dateFrom) {
-                hasDateFilter = true;
-              }
+          if (dateTo && dateFrom) {
+            if (commentDate > dateFrom && commentDate < dateTo) {
+              hasDateFilter = true;
             }
           }
-          return (hasTagFilter || hasDateFilter);
-        });
-        return filteredComments;
-      } else {
-        return comments;
-      }
+          if (dateTo && !dateFrom) {
+            if (commentDate <= dateTo) {
+              hasDateFilter = true;
+            }
+          }
+          if (dateFrom && !dateTo) {
+            if (commentDate > dateFrom) {
+              hasDateFilter = true;
+            }
+          }
+        }
+        return (hasTagFilter || hasDateFilter);
+      });
+      return (tagFilterApplied || dateFilterApplied) ? filteredComments : comments;
+    } else {
+      return comments;
+    }
   }
 }

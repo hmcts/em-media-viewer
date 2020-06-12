@@ -4,7 +4,6 @@
       <h2 class="govuk-heading-m">{{ title }}</h2>
       <ng-container *ngIf="(comments$ | async) as comments">
         <ng-container *ngIf="comments.length">
-
           <button type="submit" class="govuk-button govuk-!-margin-right-1" (click)="onFiltersToggle()">
             {{ !showFilters ? 'Show Filters' : 'Hide Filters'}}
           </button>
@@ -31,8 +30,7 @@
                 <div class="dates__tags">
                   <lib-gov-uk-fieldset
                     [config]="{legend: 'Tags', classes: 'govuk-label--m', id: 'filters'}"
-                    [isHeading]="false"
-                    [errorMessage]="">
+                    [isHeading]="false">
                     <div class="govuk-checkboxes--scroll" [formGroup]="filtersFg.controls['tagFilters']">
                       <div class="govuk-checkboxes govuk-checkboxes--small">
                         <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async)">
@@ -76,7 +74,7 @@
             </ngx-datatable>
           </ng-container>
         </ng-container>
-        <ng-container *ngIf="!comments.length">
+        <ng-container *ngIf="!comments[0]">
           <h3 class="govuk-heading-s" >No comments available</h3>
         </ng-container>
       </ng-container>
