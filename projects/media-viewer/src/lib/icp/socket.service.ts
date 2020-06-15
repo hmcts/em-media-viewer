@@ -50,7 +50,7 @@ export class SocketService implements OnDestroy {
     });
   }
 
-  getSocketClient(): SocketIOClient.Socket {
+  getSocketClient(): any {
     return socketio('/', {
       path: '/icp/socket.io', agent: true
     });
