@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { BookmarksComponent } from './components/bookmarks.component';
+import { BookmarkComponent } from './components/bookmark.component';
 import { RouterModule } from '@angular/router';
-import { BookmarksApiService } from './services/bookmarks-api.service';
+import { BookmarkApiService } from './services/bookmark-api.service';
 
 @NgModule({
   imports: [
@@ -12,15 +12,15 @@ import { BookmarksApiService } from './services/bookmarks-api.service';
     RouterModule
   ],
   declarations: [
-    BookmarksComponent,
+    BookmarkComponent,
   ],
   entryComponents: [
   ],
   providers: [
-    BookmarksApiService
+    BookmarkApiService
   ],
   exports: [
-    BookmarksComponent
+    BookmarkComponent
   ]
 })
-export class BookmarksModule { }
+export class BookmarkModule { }

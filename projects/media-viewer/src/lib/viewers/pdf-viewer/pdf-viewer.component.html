@@ -46,6 +46,10 @@
                     [height]="pdfViewer.offsetHeight"
                     [pageHeights]="pageHeights">
     </mv-comment-set>
+    <mv-bookmark #bookmarkComponent
+                 [zoom]="zoom"
+                 [rotate]="rotation">
+    </mv-bookmark>
   </ng-template>
 
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">

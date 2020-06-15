@@ -7,9 +7,9 @@ import {Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'mv-bookmark',
-  templateUrl: './bookmarks.component.html'
+  templateUrl: './bookmark.component.html'
 })
-export class BookmarksComponent implements OnInit, OnDestroy {
+export class BookmarkComponent implements OnInit, OnDestroy {
 
   @Input() zoom: number;
   @Input() rotate: number;

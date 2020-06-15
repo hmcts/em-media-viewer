@@ -1,6 +1,10 @@
 <div class="pageContainer">
   <div *ngFor="let bookmarks of (bookmarksPerPage$ | async);  index as i"
        class="pageContainer__page"
+       [ngStyle]="{
+       'width.px': bookmarks.styles.width,
+       'height.px': bookmarks.styles.height
+       }"
        [ngClass]="{
          'rotation': true,
          'rot90': rotate === 90,
@@ -8,12 +12,10 @@
          'rot270': rotate === 270
        }">
     <div class="pageContainer__page-item">
-      <ng-container *ngFor="let bMrk of bookmarks">
-        <div class="bookmark__here">
-          <mv-bookmark [zoom]="zoom"
-                       [rotate]="rotate"
-                       >
-          </mv-bookmark>
+      <ng-container *ngFor="let bMrk of bookmarks.bookmark">
+        <div class="bookmark__here"
+          [style.top]="bMrk.yCoordinate * zoom + 'px'"
+          [title]="bMrk.name">
         </div>
       </ng-container>
     </div>

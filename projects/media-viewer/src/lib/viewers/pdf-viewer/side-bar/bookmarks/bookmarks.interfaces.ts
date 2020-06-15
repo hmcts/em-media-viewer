@@ -2,6 +2,7 @@
 export interface BookmarksState {
   bookmarks: Bookmark[];
   bookmarkEntities: { [id: string]: Bookmark };
+  bookmarkPageEntities: {[id: string]: any};
   editableBookmark: string;
   pdfPosition: PdfPosition;
   loaded: boolean;

@@ -5,7 +5,6 @@ import * as fromBookmarks from '../reducers/bookmarks.reducer';
 import { generateBookmarkNodes } from '../bookmarks-store-utils';
 import * as fromDocument from './document.selectors';
 
-
 export const getBookmarkState = createSelector(
   fromFeature.getMVState,
   (state: fromFeature.State) =>  state.bookmarks
@@ -64,4 +63,5 @@ export const getBookmarksPerPage = createSelector(
       return arr;
     }
   }
-};
+);
+

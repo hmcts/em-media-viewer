@@ -27,13 +27,15 @@ import { effects } from './store/effects/index';
 import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
 import { RedactionApiService } from './redaction/services/redaction-api.service';
 import { MutableDivModule } from 'mutable-div';
-import { ConvertibleContentViewerComponent } from "./viewers/convertible-content-viewer/convertible-content-viewer.component";
-import { DocumentConversionApiService } from "./viewers/convertible-content-viewer/document-conversion-api.service";
+import { ConvertibleContentViewerComponent } from './viewers/convertible-content-viewer/convertible-content-viewer.component';
+import { DocumentConversionApiService } from './viewers/convertible-content-viewer/document-conversion-api.service';
 import { IcpDirective } from './icp/icp.directive';
 import { IcpPresenterService } from './icp/icp-presenter.service';
 import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
 import { TreeModule } from 'angular-tree-component';
+import {BookmarkApiService} from './bookmark/services/bookmark-api.service';
+import {BookmarkModule} from './bookmark/bookmark.module';
 
 @NgModule({
   imports: [
@@ -48,7 +50,8 @@ import { TreeModule } from 'angular-tree-component';
     StoreModule.forFeature('media-viewer', reducers),
     EffectsModule.forFeature(effects),
     TreeModule.forRoot(),
-    MutableDivModule
+    MutableDivModule,
+    BookmarkModule
   ],
   declarations: [
     PdfViewerComponent,
@@ -79,7 +82,8 @@ import { TreeModule } from 'angular-tree-component';
     IcpPresenterService,
     IcpFollowerService,
     RedactionApiService,
-    DocumentConversionApiService
+    DocumentConversionApiService,
+    BookmarkApiService
   ],
   exports: [
     MediaViewerComponent
