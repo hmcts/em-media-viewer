@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.3.8",
+  "version": "2.3.9",
   "description": "Media Viewer",
   "scripts": {
     "preinstall": "npx npm-force-resolutions"
