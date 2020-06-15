@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.3.10",
+  "version": "2.3.11",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -60,6 +60,7 @@
     "govuk-frontend": "^3.1.0",
     "moment-timezone": "^0.5.28",
     "nodemon": "^1.19.0",
+    "ngx-chips": "^1.9.8",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
     "scss-bundle": "~2.4.0",
