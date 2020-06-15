@@ -14,6 +14,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   imageUrl = 'assets/example.jpg';
   unsupportedUrl = 'assets/unsupported.txt';
   filename = 'filename';
+  caseId = 'dummyCaseId'
   unsupportedType = null;
 
   documentType = 'pdf';
@@ -28,7 +29,9 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   toolbarEvents;
   enableAnnotations = false;
   enableRedactions = false;
+  enableICP = false;
   toolbarButtonOverrides: {};
+  showHeader = true;
 
   ngAfterContentInit() {
     this.setDocumentType(this.documentType);
@@ -44,6 +47,16 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
     } else {
       this.setDocumentUrl(this.unsupportedUrl);
     }
+  }
+
+  setDocumentUrl(newUrl: string) {
+    this.url = newUrl;
+  }
+
+  setFormData({ documentType, documentUrl, caseId }) {
+    this.documentType = documentType;
+    this.url = documentUrl;
+    this.caseId = caseId;
   }
 
   toggleToolbar(showToolbar: boolean) {
@@ -64,12 +77,12 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
     this.enableAnnotations = showAnnotations;
   }
 
-  toggleRedactions(showReduction: boolean) {
-    this.enableRedactions = showReduction;
+  toggleRedaction(showRedaction: boolean) {
+    this.enableRedactions = showRedaction;
   }
 
-  setDocumentUrl(newUrl: string) {
-    this.url = newUrl;
+  toggleICP(showICP: boolean) {
+    this.enableICP = showICP;
   }
 
   onMediaLoad(loadStatus: ResponseType) {
@@ -87,5 +100,9 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   getToolbarFunctions(toolbarEvent: ToolbarEventService) {
     this.toolbarEvents = toolbarEvent;
+  }
+
+  toggleHeader() {
+    this.showHeader = !this.showHeader;
   }
 }

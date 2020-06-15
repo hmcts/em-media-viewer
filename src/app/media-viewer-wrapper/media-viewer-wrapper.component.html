@@ -1,55 +1,67 @@
 <div>
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-third">
-        <h2 class="govuk-heading-m  govuk-!-margin-top-4">Media Viewer Demo</h2>
-      </div>
-      <div class="govuk-grid-column-two-thirds">
+      <a class="govuk-tag govuk-tag--grey" style="cursor: pointer" (click)="toggleHeader()">Media Viewer Demo</a>
+    </div>
+    <ng-container *ngIf="showHeader">
+      <div class="govuk-grid-row">
         <app-toolbar-toggles [showToolbar]="showToolbar"
                              [showCustomToolbar]="showCustomToolbar"
                              (toggleAnnotations)="toggleAnnotations($event)"
-                             (toggleRedactions)="toggleRedactions($event)"
+                             (toggleRedaction)="toggleRedaction($event)"
+                             (toggleICP)="toggleICP($event)"
                              (toggleToolbar)="toggleToolbar($event)"
                              (toggleToolbarBtns)="toggleToolbarBtns($event)"
                              (toggleCustomToolbar)="toggleCustomToolbar($event)"
                              (showCommentSummary)="toggleCustomToolbar($event)"></app-toolbar-toggles>
       </div>
-    </div>
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half">
-        <details class="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Change document URL</span>
-          </summary>
-          <form #form="ngForm">
-            <input class="govuk-input govuk-!-width-two-thirds" id="documentUrl" name="documentUrl" type="text"
-                   aria-label="document url" ngModel [value]="url">
-            <button class="govuk-button" type="submit"
-                    (click)="setDocumentUrl(form.value.documentUrl)">Load document</button>
-          </form>
-        </details>
-      </div>
-      <div *ngIf="documentType === 'unsupported'" class="govuk-grid-column-one-quarter">
-        <details class="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Change document type</span>
-          </summary>
-          <div class="govuk-details__text">
-            <input class="govuk-input" type="text" name="unsupportedType" [(ngModel)]="unsupportedType">
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">Change document details</span>
+        </summary>
+        <form #form="ngForm">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="url-and-type-group">
+              <div class="govuk-date-input" id="url-and-type">
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="documentUrl">
+                      Url
+                    </label>
+                    <input class="govuk-input" id="documentUrl" name="documentUrl" type="text"
+                           aria-label="document url" [ngModel]="url">
+                  </div>
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="documentType">
+                      Content type
+                    </label>
+                    <input class="govuk-input govuk-input--width-4" id="documentType" name="documentType" type="text"
+                           aria-label="document type" ngModel [ngModel]="documentType">
+                  </div>
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="documentType">
+                      Case ID
+                    </label>
+                    <input class="govuk-input" id="caseId" name="caseId" type="text"
+                           aria-label="case id" ngModel [ngModel]="caseId">
+                  </div>
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <button class="govuk-button" style="vertical-align: unset" type="submit"
+                            (click)="setFormData(form.value)">Load document</button>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
           </div>
-        </details>
-      </div>
-      <div class="govuk-grid-column-one-quarter">
-        <details class="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Change download file</span>
-          </summary>
-          <div class="govuk-details__text">
-            <input *ngIf="documentType === 'pdf'" class="govuk-input" type="text" name="pdfFileName"
-                   aria-label="pdf file name" [(ngModel)]="filename">
-          </div>
-        </details>
-      </div>
+        </form>
+      </details>
     </div>
     <div class="govuk-grid-row">
       <div *ngIf="mediaLoadStatus && mediaLoadStatus ==='SUCCESS'" class="govuk-panel--confirmation">
@@ -58,7 +70,7 @@
         </div>
       </div>
         <div *ngIf="mediaLoadStatus && ['FAILURE', 'UNSUPPORTED'].includes(mediaLoadStatus)"
-          class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+             class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
           <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
               <li>
@@ -67,41 +79,42 @@
             </ul>
           </div>
         </div>
-    </div>
-
-    <div *ngIf="unsavedChanges" class="hmcts-banner hmcts-banner--warning">
-      <svg class="hmcts-banner__icon" height="25" width="25">
-        <path d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z"></path>
-      </svg>
-      <div class="hmcts-banner__message">
-        <span class="hmcts-banner__assistive">Warning</span>
-        You have unsaved comments. Please save before closing the document.
       </div>
-    </div>
-
-    <div class="govuk-grid-row govuk-!-width-two-thirds">
+      <div *ngIf="unsavedChanges" class="hmcts-banner hmcts-banner--warning">
+        <svg class="hmcts-banner__icon" height="25" width="25">
+          <path d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z"></path>
+        </svg>
+        <div class="hmcts-banner__message">
+          <span class="hmcts-banner__assistive">Warning</span>
+          You have unsaved comments. Please save before closing the document.
+        </div>
+      </div>
+      <div class="govuk-grid-row govuk-!-width-two-thirds">
         <button class="govuk-button govuk-!-margin-right-1 govuk-!-width-one-quarter" data-module="govuk-button"
                 [ngClass]="{ 'govuk-button--secondary': documentType !== 'pdf' }" id="pdf-button"
                 (click)="setDocumentType('pdf')">PDF
         </button>
-      <button class="govuk-button govuk-!-margin-right-1 govuk-!-width-one-quarter"
-              [ngClass]="{ 'govuk-button--secondary': documentType !== 'image' }" id="image-button"
-              data-module="govuk-button" (click)="setDocumentType('image')">Image
-      </button>
-      <button class="govuk-button govuk-!-width-one-third" data-module="govuk-button" id="unsupported-button"
-              [ngClass]="{ 'govuk-button--secondary': documentType !== null }"
-              (click)="setDocumentType(null)">Unsupported content
-      </button>
-    </div>
+        <button class="govuk-button govuk-!-margin-right-1 govuk-!-width-one-quarter"
+                [ngClass]="{ 'govuk-button--secondary': documentType !== 'image' }" id="image-button"
+                data-module="govuk-button" (click)="setDocumentType('image')">Image
+        </button>
+        <button class="govuk-button govuk-!-width-one-third" data-module="govuk-button" id="unsupported-button"
+                [ngClass]="{ 'govuk-button--secondary': documentType !== null }"
+                (click)="setDocumentType(null)">Unsupported content
+        </button>
+      </div>
+    </ng-container>
   </div>
   <app-custom-toolbar *ngIf="showCustomToolbar"
                       [toolbarEvents]="toolbarEvents"
                       [contentType]="documentType"></app-custom-toolbar>
   <mv-media-viewer [url]="url"
+                   [caseId]="caseId"
                    [downloadFileName]="filename"
                    [contentType]="documentType"
                    [enableAnnotations]="enableAnnotations"
                    [enableRedactions]="enableRedactions"
+                   [enableICP]="enableICP"
                    [showToolbar]="showToolbar"
                    [toolbarButtonOverrides]="toolbarButtonOverrides"
                    (mediaLoadStatus)="onMediaLoad($event)"

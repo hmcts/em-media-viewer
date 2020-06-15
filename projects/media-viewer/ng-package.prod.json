@@ -10,6 +10,6 @@
     "uuid",
     "mutable-div",
     "hammerjs",
-    "ng2-material-dropdown"
+    "socket.io-client"
   ]
 }

@@ -1,0 +1,9 @@
+<div id="modal-background" class="modal" (click)="onCancel()">
+  <div id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
+    <h2 class="govuk-heading-s">Are you sure you want to leave the presentation?</h2>
+    <div class="button-container">
+      <button id="modal-close-button" (click)="onConfirm()" class="govuk-button">Confirm</button>
+      <button (click)="onCancel()" class="govuk-button govuk-button--secondary">Cancel</button>
+    </div>
+  </div>
+</div>

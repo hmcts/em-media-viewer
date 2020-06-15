@@ -10,10 +10,13 @@ export class ToolbarMiddlePaneComponent {
 
   @ViewChild('zoomSelect') zoomSelect: ElementRef;
 
+  icpEnabled = false;
+
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
-    public readonly toolbarEvents: ToolbarEventService
-  ) {}
+    public readonly toolbarEvents: ToolbarEventService) {
+    this.toolbarEvents.icp.enabled.subscribe(enabled => this.icpEnabled = enabled);
+  }
 
   zoom(zoomFactor: string) {
     this.toolbarEvents.zoom(+zoomFactor);

@@ -12,25 +12,25 @@ import {
   ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
-import { DocumentLoadProgress, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
+import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import { asyncScheduler, BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ViewerEventService } from '../viewer-event.service';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
-import {select, Store} from '@ngrx/store';
+import { select, Store} from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocumentActions from '../../store/actions/document.action';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
-import {tap, throttleTime} from 'rxjs/operators';
+import { tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
-import { UpdatePdfPosition } from '../../store/actions/bookmarks.action';
+import { PdfPositionUpdate } from '../../store/actions/document.action';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
 
 @Component({
@@ -44,17 +44,21 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Output() pdfViewerException = new EventEmitter<ViewerException>();
   @Output() documentTitle = new EventEmitter<string>();
 
+  @Input() downloadUrl: string;
   @Input() url: string;
   @Input() downloadFileName: string;
 
   @Input() enableAnnotations: boolean;
   @Input() enableRedactions: boolean;
+  @Input() enableICP: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
   @Input() height: string;
   pageHeights = [];
   rotation = 0;
   zoom = 1;
+
+  @Input() caseId: string;
 
   highlightMode: Observable<boolean>;
   drawMode: BehaviorSubject<boolean>;
@@ -97,14 +101,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
     this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
-    this.pdfWrapper.pageRendered.subscribe((event) => {
-      if (this.enableAnnotations) {
-        this.store.dispatch(new fromDocumentActions.AddPages(event));
-      }
-    });
+    this.pdfWrapper.pageRendered.subscribe((event) => this.updatePages(event));
     this.$subscription = this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url));
-    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() =>
-      this.pdfWrapper.downloadFile(this.url, this.downloadFileName)));
+    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() => {
+        this.pdfWrapper.downloadFile(this.downloadUrl || this.url, this.downloadFileName)
+    }));
     this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)));
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
@@ -114,9 +115,11 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.pdfWrapper.changePageNumber(pageNumber)));
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
+    this.$subscription.add(this.viewerEvents.navigationEvent
+      .subscribe(dest => this.goToDestination(dest)));
     this.$subscription.add(
-      this.pdfWrapper.positionUpdated.asObservable().pipe(throttleTime(1000))
-      .subscribe(event => this.store.dispatch(new UpdatePdfPosition(event.location)))
+      this.pdfWrapper.positionUpdated.asObservable().pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
+      .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
     );
   }
 
@@ -125,8 +128,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
     if (changes.url && this.pdfWrapper) {
-      this.loadDocument();
-      this.clearAnnotationSet();
+      this.store.dispatch(new fromDocumentActions.SetDocumentId(this.url));
+      await this.loadDocument();
       this.documentId = this.extractDMStoreDocId(this.url);
       if (this.enableRedactions) {
         this.toolbarEvents.redactionMode.subscribe(redactMode => {
@@ -144,10 +147,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.pdfWrapper.resetRotation(0);
       this.rotation = 0;
     }
-  }
-
-  clearAnnotationSet() {
-    this.annotationSet = null;
   }
 
   ngOnDestroy(): void {
@@ -178,7 +177,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private onDocumentLoaded() {
     this.loadingDocument = false;
     this.pdfLoadStatus.emit(ResponseType.SUCCESS);
-    this.store.dispatch(new fromDocumentActions.SetDocumentId(this.url));
   }
 
   private onDocumentLoadFailed(error: Error) {
@@ -190,6 +188,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfViewerException.emit(this.viewerException);
   }
 
+  private updatePages(event: PageEvent[]) {
+    if (this.enableAnnotations) {
+      this.store.dispatch(new fromDocumentActions.AddPages(event));
+    }
+  }
+
   @Input()
   set searchBarHidden(hidden: boolean) {
     if (this.pdfWrapper && hidden) {
@@ -198,7 +202,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onPdfViewerClick() {
-    this.store.dispatch(new fromAnnotationActions.SelectedAnnotation({annotationId: '', selected: false, editable: false}));
+    this.store.dispatch(new fromAnnotationActions.SelectedAnnotation({
+      annotationId: '', selected: false, editable: false
+    }));
     this.viewerEvents.clearCtxToolbar();
   }
 
@@ -267,5 +273,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private extractDMStoreDocId(url: string): string {
     url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
     return url.replace('/binary', '');
+  }
+
+  private goToDestination(destination: any[]) {
+    this.pdfWrapper.navigateTo(destination);
   }
 }

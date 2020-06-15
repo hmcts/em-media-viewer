@@ -1,8 +1,13 @@
 import * as fromActions from '../actions/document.action';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 
+import { PdfPosition } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 export interface DocumentState {
+  convertedDocument: {
+    url: string;
+    error: string;
+  };
   documentId: string;
+  pdfPosition: PdfPosition;
   pages: {[id: string]: DocumentPages};
   hasDifferentPageSize: boolean;
   loaded: boolean;
@@ -16,17 +21,49 @@ export interface DocumentPages {
 }
 
 export const initialDocumentState: DocumentState = {
+  convertedDocument: undefined,
   documentId: undefined,
+  pdfPosition: undefined,
   pages: {},
   hasDifferentPageSize: false,
   loading: false,
-  loaded: false,
+  loaded: false
 };
 
 export function docReducer (state = initialDocumentState,
                             action: fromActions.DocumentActions): DocumentState {
 
   switch (action.type) {
+
+    case fromActions.CONVERT_SUCCESS: {
+      const convertedDocument = {
+        url: action.payload,
+        error: undefined
+      };
+      return {
+        ...state,
+        convertedDocument
+      };
+    }
+
+    case fromActions.CONVERT_FAIL: {
+      const convertedDocument = {
+        url: undefined,
+        error: action.payload
+      };
+      return {
+        ...state,
+        convertedDocument
+      };
+    }
+
+    case fromActions.CLEAR_CONVERT_DOC_URL: {
+      const convertedDocument = undefined;
+      return {
+        ...state,
+        convertedDocument
+      };
+    }
 
     case fromActions.SET_DOCUMENT_ID : {
       const url = action.payload.split('/documents/');
@@ -79,10 +116,20 @@ export function docReducer (state = initialDocumentState,
         hasDifferentPageSize
       };
     }
+
+    case fromActions.POSITION_UPDATED: {
+      const pdfPosition = action.payload;
+      return {
+        ...state,
+        pdfPosition
+      }
+    }
   }
   return state;
 }
 export const getDocPages = (state: DocumentState) => state.pages;
 export const getDocId = (state: DocumentState) => state.documentId;
 export const getHasDifferentPageSizes = (state: DocumentState) => state.hasDifferentPageSize;
+export const getPdfPos = (state: DocumentState) => state.pdfPosition;
 
+export const getConvertedDocument = (state: DocumentState) => state.convertedDocument;
