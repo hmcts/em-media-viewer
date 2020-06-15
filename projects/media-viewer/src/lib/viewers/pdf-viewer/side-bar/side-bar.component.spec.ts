@@ -6,7 +6,8 @@ import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../../store/reducers/reducers';
 import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { UpdatePdfPosition } from '../../../store/actions/bookmarks.action';
+import { PdfPositionUpdate } from '../../../store/actions/document.action';
+import { ViewerEventService } from '../../viewer-event.service';
 
 describe('SideBarComponent', () => {
   let component: SideBarComponent;
@@ -42,13 +43,13 @@ describe('SideBarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call navigation method on pdfWrapper',
-    inject([PdfJsWrapperFactory],(pdfWrapperProvider) => {
-      const navigateSpy = spyOn(pdfWrapperProvider.pdfWrapper(), 'navigateTo');
+  it('should trigger goToDestination event on viewerEvents',
+    inject([ViewerEventService],(viewerEvents) => {
+      spyOn(viewerEvents, 'goToDestination');
 
       component.goToDestination([]);
 
-      expect(navigateSpy).toHaveBeenCalled();
+      expect(viewerEvents.goToDestination).toHaveBeenCalledWith([]);
   }));
 
   it('should toggle sidebar view', () => {
@@ -61,7 +62,7 @@ describe('SideBarComponent', () => {
 
   it('should dispatch CreateBookmark action',
     inject([Store], fakeAsync((store) => {
-      store.dispatch(new UpdatePdfPosition({ pageNumber: 1, top: 50, left: 30 } as any));
+      store.dispatch(new PdfPositionUpdate({ pageNumber: 1, top: 50, left: 30, rotation: 0 }));
       spyOn(store, 'dispatch');
 
       component.onAddBookmarkClick();

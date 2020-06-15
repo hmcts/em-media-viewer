@@ -9,7 +9,8 @@ import { ToolbarMiddlePaneComponent } from './middle-pane/middle-pane.component'
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 import { ToolbarEventService } from './toolbar-event.service';
- import {RedactionToolbarComponent} from './redaction-toolbar/redaction-toolbar.component';
+import { RedactionToolbarComponent } from './redaction-toolbar/redaction-toolbar.component';
+ import { IcpToolbarComponent } from './icp-toolbar/icp-toolbar.component';
 
 export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 export { ToolbarEventService } from './toolbar-event.service';
@@ -23,7 +24,8 @@ export { ToolbarEventService } from './toolbar-event.service';
     ToolbarRightPaneComponent,
     MainToolbarComponent,
     ToolbarMiddlePaneComponent,
-    RedactionToolbarComponent
+    RedactionToolbarComponent,
+    IcpToolbarComponent
   ],
   providers: [
     ToolbarButtonVisibilityService,
@@ -33,7 +35,8 @@ export { ToolbarEventService } from './toolbar-event.service';
     MainToolbarComponent,
     SearchBarComponent,
     SubToolbarComponent,
-    RedactionToolbarComponent
+    RedactionToolbarComponent,
+    IcpToolbarComponent
   ],
   imports: [
     CommonModule,

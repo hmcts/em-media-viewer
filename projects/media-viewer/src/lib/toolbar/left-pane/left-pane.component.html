@@ -1,11 +1,11 @@
 <div id="toolbarViewerLeft">
-  <button *ngIf="toolbarButtons.showSidebar"
+  <button *ngIf="toolbarButtons.showSidebar && !icpEnabled"
           id="sidebarToggle" class="toolbarButton" title="Toggle Sidebar" tabindex="0"
           data-l10n-id="toggle_sidebar" (click)="toggleSideBar()">
     <span data-l10n-id="toggle_sidebar_label">Toggle Sidebar</span>
   </button>
   <div class="toolbarButtonSpacer"></div>
-  <button *ngIf="toolbarButtons.showSearchBar"
+  <button *ngIf="toolbarButtons.showSearchBar && !icpEnabled"
           id="viewFind" class="toolbarButton" title="Find in Document" tabindex="0" data-l10n-id="findbar"
           (click)="toggleSearchBar()">
     <span data-l10n-id="findbar_label">Find</span>
@@ -32,7 +32,7 @@
   </ng-container>
   <div class="toolbarButtonSpacer"></div>
 </div>
-<div id="annotationButtons">
+<div id="annotationButtons" *ngIf="!icpEnabled">
   <div class="splitToolbarButton hiddenIfLargerThan1000px" >
     <button *ngIf="toolbarButtons.showHighlightButton"
             (click)="onClickHighlightToggle()" [class.toggled]="toolbarEvents.highlightModeSubject | async"
