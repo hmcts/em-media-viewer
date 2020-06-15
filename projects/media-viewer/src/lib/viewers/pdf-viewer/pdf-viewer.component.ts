@@ -44,6 +44,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Output() pdfViewerException = new EventEmitter<ViewerException>();
   @Output() documentTitle = new EventEmitter<string>();
 
+  @Input() downloadUrl: string;
   @Input() url: string;
   @Input() downloadFileName: string;
 
@@ -102,8 +103,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
     this.pdfWrapper.pageRendered.subscribe((event) => this.updatePages(event));
     this.$subscription = this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url));
-    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() =>
-      this.pdfWrapper.downloadFile(this.url, this.downloadFileName)));
+    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() => {
+        this.pdfWrapper.downloadFile(this.downloadUrl || this.url, this.downloadFileName)
+    }));
     this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)));
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));

@@ -1,0 +1,12 @@
+<mv-pdf-viewer *ngIf="convertedUrl"
+               (pdfLoadStatus)="onMediaLoad($event)"
+               (pdfViewerException)="onLoadException($event)"
+               (documentTitle)="onDocumentTitleChange($event)"
+               [url]="convertedUrl"
+               [downloadUrl]="originalUrl"
+               [enableAnnotations]="enableAnnotations"
+               [enableRedactions]="enableRedactions"
+               [annotationSet]="enableAnnotations ? annotationSet : null"
+               [downloadFileName]="downloadFileName"
+               [height]="height">
+</mv-pdf-viewer>
