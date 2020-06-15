@@ -1,19 +1,37 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-tb-right-pane',
   templateUrl: './right-pane.component.html',
 })
-export class ToolbarRightPaneComponent {
+export class ToolbarRightPaneComponent implements OnInit, OnDestroy {
+
   @Input() enableAnnotations = false;
-  @Input() enableRedactions = false;
+  @Input() enableRedaction = false;
+  @Input() enableICP = false;
+
+  icpEnabled = false;
+
+  subscription: Subscription;
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService
   ) {}
+
+  ngOnInit() {
+    this.subscription = this.toolbarEvents.icp.enabled.subscribe(enabled => {
+      this.icpEnabled = enabled;
+      if (this.icpEnabled) { this.toolbarEvents.subToolbarHidden.next(true); }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   toggleSecondaryToolbar() {
     this.toolbarEvents.subToolbarHidden.next(!this.toolbarEvents.subToolbarHidden.getValue());
@@ -31,5 +49,7 @@ export class ToolbarRightPaneComponent {
     this.toolbarEvents.toggleRedactionMode();
   }
 
-
+  enterIcpMode() {
+    this.toolbarEvents.icp.enable();
+  }
 }

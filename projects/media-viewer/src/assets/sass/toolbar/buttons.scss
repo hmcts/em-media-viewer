@@ -345,6 +345,13 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
   content: url(/assets/images/toolbarButton-zoomIn.png);
 }
 
+.toolbarButton.icpMode,
+.secondaryToolbarButton.icpMode {
+  :before & {
+    width: auto;
+  }
+}
+
 .toolbarButton.presentationMode::before,
 .secondaryToolbarButton.presentationMode::before {
   content: url(/assets/images/toolbarButton-presentationMode.png);
@@ -368,6 +375,11 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
 .toolbarButton.download::before,
 .secondaryToolbarButton.download::before {
   content: url(/assets/images/toolbarButton-download.png);
+}
+
+.toolbarButton.icpCreateSession::before,
+.secondaryToolbarButton.icpCreateSession::before {
+  content: url(/assets/images/treeitem-collapsed@2x.png);
 }
 
 .secondaryToolbarButton.grabNDrag::before {

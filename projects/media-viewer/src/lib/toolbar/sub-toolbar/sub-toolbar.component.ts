@@ -1,17 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'mv-sub-toolbar',
   templateUrl: './sub-toolbar.component.html'
 })
-export class SubToolbarComponent {
+export class SubToolbarComponent implements OnInit, OnDestroy {
+
+  icpEnabled = false;
+
+  subscription: Subscription;
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService
   ) {}
+
+  ngOnInit() {
+    this.subscription = this.toolbarEvents.icp.enabled.subscribe(enabled => {
+      this.icpEnabled = enabled;
+      if (this.icpEnabled) { this.toolbarEvents.subToolbarHidden.next(true); }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   onClickHighlightToggle() {
     this.toolbarEvents.toggleHighlightMode();
@@ -33,6 +49,10 @@ export class SubToolbarComponent {
     this.closeMenu();
   }
 
+  enterIcpMode() {
+    this.toolbarEvents.icp.enable();
+  }
+
   rotateCcw() {
     this.toolbarEvents.rotate(270);
     this.closeMenu();
@@ -51,5 +71,4 @@ export class SubToolbarComponent {
   closeMenu() {
     this.toolbarEvents.subToolbarHidden.next(true);
   }
-
 }

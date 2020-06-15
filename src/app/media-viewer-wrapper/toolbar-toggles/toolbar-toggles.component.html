@@ -53,7 +53,20 @@
         </div>
         <div class="govuk-grid-column-full">
           <label for="toggleRedact" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleRedact" [checked]="toggleRedactions.getValue()" (change)="toggleRedactions.next($event.target.checked)" aria-label="redact">
+            <input type="checkbox" id="toggleRedact" [checked]="toggleRedaction.getValue()" (change)="toggleRedaction.next($event.target.checked)" aria-label="redact">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <span class="govuk-!-font-weight-bold">ICP</span>
+        </div>
+        <div class="govuk-grid-column-full">
+          <label for="toggleICP" class="switch govuk-!-margin-right-2">
+            <input type="checkbox" id="toggleICP" [checked]="toggleICP.getValue()" (change)="toggleICP.next($event.target.checked)" aria-label="redact">
             <span class="slider round"></span>
           </label>
         </div>

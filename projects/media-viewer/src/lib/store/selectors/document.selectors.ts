@@ -18,6 +18,11 @@ export const getDocumentId = createSelector(
   fromDocument.getDocId
 );
 
+export const getPdfPosition = createSelector(
+  getDocumentState,
+  fromDocument.getPdfPos
+);
+
 export const getPageDifference = createSelector(
   getDocumentState,
   fromDocument.getHasDifferentPageSizes

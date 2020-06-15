@@ -46,5 +46,13 @@
       <span data-l10n-id="download_label">Download</span>
       </button>
     <div class="horizontalToolbarSeparator"></div>
+    <div  *ngIf="!icpEnabled">
+      <button id="icpCreateSession"
+              class="secondaryToolbarButton" title="IcpCreateSession"
+              data-l10n-id="create_icp_session" (click)="enterIcpMode()">
+        <span data-l10n-id="create_icp_session">Launch Presentation</span>
+      </button>
+    </div>
+    <div class="horizontalToolbarSeparator"></div>
   </div>
 </div>

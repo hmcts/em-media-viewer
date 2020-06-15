@@ -71,8 +71,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       bookmark.pageNumber,
       { 'name': 'XYZ' },
       left,
-      top,
-      this.zoom * 100
+      top
     ]);
   }
 

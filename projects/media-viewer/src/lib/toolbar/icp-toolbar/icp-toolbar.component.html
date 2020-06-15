@@ -1,0 +1,38 @@
+<div id="toolbarContainer" class="icpMode">
+  <div id="toolbarViewerLeft">
+    <div class="splitToolbarButton">
+      <button class="toolbarButton info">
+        <span data-l10n-id="icpInfo_label">You are in presentation mode</span>
+      </button>
+    </div>
+    <div class="splitToolbarButton">
+      <button class="toolbarButton" tabindex="0" title="Leave Presentation"
+              (click)="leaveIcpSession()">
+        <span data-l10n-id="icp-leave-presentation_label">Leave Presentation</span>
+      </button>
+    </div>
+  </div>
+  <div id="toolbarViewerMiddle">
+    <div class="splitToolbarButton">
+      <button class="toolbarButton info">
+        <span *ngIf="!presenterName" data-l10n-id="noPresenter_label">Waiting for presenter</span>
+        <span *ngIf="presenterName && isPresenter" data-l10n-id="isPresenter_label">You are presenting</span>
+        <span *ngIf="presenterName && !isPresenter"
+              data-l10n-id="otherPresenter_label">{{ presenterName | titlecase }} is presenting</span>
+      </button>
+    </div>
+    <div class="splitToolbarButton">
+      <button *ngIf="!presenterName"
+              class="toolbarButton present" id="icp-present" tabindex="0" title="Present"
+              (click)="present()">
+        <span data-l10n-id="icp-present_label">Present</span>
+      </button>
+      <button *ngIf="isPresenter"
+              class="toolbarButton"
+              id="icp-stop-presenting" tabindex="0" title="Stop presenting"
+              (click)="stopPresenting()">
+        <span data-l10n-id="icp-stop-presenting_label">Stop Presenting</span>
+      </button>
+    </div>
+  </div>
+</div>
