@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.3.10",
+  "version": "2.3.11",
   "description": "Media Viewer",
   "scripts": {
     "preinstall": "npx npm-force-resolutions"
@@ -22,8 +22,6 @@
     "mutable-div": "0.0.11",
     "pdfjs-dist": "2.0.943",
     "uuid": "^3.3.2",
-    "ng2-material-dropdown": "0.10.1",
-    "ngx-chips": "^2.1.0",
     "socket.io-client": "^2.3.0"
   },
   "peerDependencies": {

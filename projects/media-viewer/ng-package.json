@@ -11,8 +11,6 @@
     "uuid",
     "mutable-div",
     "hammerjs",
-    "ng2-material-dropdown",
-    "ngx-chips",
     "socket.io-client"
   ]
 }
