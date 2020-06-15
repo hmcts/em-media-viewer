@@ -49,6 +49,16 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
     }
   }
 
+  setDocumentUrl(newUrl: string) {
+    this.url = newUrl;
+  }
+
+  setFormData({ documentType, documentUrl, caseId }) {
+    this.documentType = documentType;
+    this.url = documentUrl;
+    this.caseId = caseId;
+  }
+
   toggleToolbar(showToolbar: boolean) {
     this.showToolbar = showToolbar;
     if (showToolbar) {
@@ -73,10 +83,6 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   toggleICP(showICP: boolean) {
     this.enableICP = showICP;
-  }
-
-  setDocumentUrl(newUrl: string) {
-    this.url = newUrl;
   }
 
   onMediaLoad(loadStatus: ResponseType) {
