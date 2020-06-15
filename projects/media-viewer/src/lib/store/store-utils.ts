@@ -40,23 +40,16 @@ export class StoreUtils {
         };
       }, {});
 
-    return this.genNameEnt(annotations, groupedByName)
+    return this.genNameEnt(annotations, groupedByName);
   };
 
   static genNameEnt(annos, groupedByName) {
      return Object.keys(groupedByName).reduce(
       (tagNameEnt, key) => {
-        const annot = annos.map(anno => {
-          const tags = anno.tags.map(tag => {
-            if (tag.name === key) {
-              return anno.id;
-            }
-          });
-          return tags.filter(a => a !== undefined);
-        });
         const readyAnno = annos.filter(anno => anno.tags.find(tag => tag.name === key))
           .map(anno => anno.id)
           .reduce((obj: {[id: string]: string}, anno: string) => ({ ...obj, [anno]: anno }), {});
+
         return {
           ...tagNameEnt,
           [key]: readyAnno

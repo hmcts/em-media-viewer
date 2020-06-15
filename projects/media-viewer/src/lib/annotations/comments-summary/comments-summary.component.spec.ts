@@ -9,6 +9,9 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {RouterModule} from '@angular/router';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../store/reducers/reducers';
+import {ReactiveFormsModule} from '@angular/forms';
+import {SharedModule} from '../../shared/shared.module';
+import {UnsnakePipe} from '../pipes/unsnake.pipe';
 
 describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
@@ -16,8 +19,15 @@ describe('CommentsSummaryComponent', () => {
   let printService: PrintService;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NgxDatatableModule, RouterModule, StoreModule.forRoot({}), StoreModule.forFeature('media-viewer', reducers)],
-      declarations: [ CommentsSummaryComponent, MomentDatePipe ],
+      imports: [
+        NgxDatatableModule,
+        ReactiveFormsModule,
+        RouterModule,
+        StoreModule.forRoot({}),
+        StoreModule.forFeature('media-viewer', reducers),
+        SharedModule
+      ],
+      declarations: [ CommentsSummaryComponent, MomentDatePipe, UnsnakePipe ],
       providers: [ PrintService ]
     })
     .compileComponents();
