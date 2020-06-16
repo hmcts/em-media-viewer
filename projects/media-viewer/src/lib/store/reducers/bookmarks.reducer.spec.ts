@@ -55,6 +55,7 @@ describe('BookmarksReducer', () => {
     const bookmarksState: fromBookmarks.BookmarksState = {
       bookmarks: [bookmark],
       bookmarkEntities: { [bookmark.id]: bookmark },
+      bookmarkPageEntities: { [bookmark.pageNumber]: [bookmark] },
       editableBookmark: undefined,
       loaded: true,
       loading: false
@@ -68,9 +69,14 @@ describe('BookmarksReducer', () => {
 
 
   it('should update bookmark', () => {
-    const bookmarksState: fromBookmarks.BookmarksState = {
-      bookmarks: [{ ...bookmark }],
-      bookmarkEntities: { [bookmark.id]: { ...bookmark } },
+    const bookmark = {
+      name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
+    };
+    const bookmarksState: BookmarksState = {
+      bookmarks: [bookmark],
+      bookmarkEntities: { [bookmark.id]: bookmark },
+      bookmarkPageEntities: { [bookmark.pageNumber]: [bookmark] },
+
       editableBookmark: undefined,
       loaded: true,
       loading: false

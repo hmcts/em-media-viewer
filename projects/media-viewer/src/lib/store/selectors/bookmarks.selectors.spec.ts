@@ -7,13 +7,12 @@ import * as fromActions from '../actions/bookmarks.action';
 import * as fromDocActions from '../actions/document.action';
 import { take } from 'rxjs/operators';
 
-describe('Bookmarks selectors', () => {
 
+describe('Bookmark selectors', () => {
   let store: Store<State>;
   const bookmark = {
     name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
   } as any;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -40,4 +39,32 @@ describe('Bookmarks selectors', () => {
     const expected = { pageNumber: 0, xCoordinate: 100, yCoordinate: 200, previous: 'id2', documentId: 'documentId' };
     expect(result).toEqual(expected);
   });
+
+  describe('getBookmarksPerPage', () => {
+    it('should return pages of bookmarks', () => {
+      store.dispatch(new fromDocActions.AddPages([{
+        div: {},
+        scale: 1,
+        rotation: 0,
+        id: '1'
+      }]));
+
+      let result;
+      store.pipe(select(fromSelectors.getBookmarksPerPage)).subscribe(value => {
+        result = value;
+      });
+      const payload: any = {
+        id: '1',
+        documentId: 'uuid',
+        name: 'bookmark1',
+        pageNumber: 0,
+        xCoordinate: 100,
+        yCoordinate: -120
+      };
+      store.dispatch(new fromActions.CreateBookmark(payload));
+      const expected = [ { bookmark: [  ], styles: { left: undefined, height: undefined, width: undefined } } ];
+      expect(result).toEqual(expected);
+    });
+  });
+
 });

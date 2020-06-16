@@ -24,14 +24,6 @@ export function bookmarksReducer (state = initialBookmarksState,
 
   switch (action.type) {
 
-    case fromBookmarks.UPDATE_PDF_POSITION: {
-      const pdfPosition = action.payload;
-      return {
-        ...state,
-        pdfPosition: pdfPosition
-      };
-    }
-
     case fromBookmarks.LOAD_BOOKMARKS: {
       return {
         ...state,
@@ -60,7 +52,12 @@ export function bookmarksReducer (state = initialBookmarksState,
         ...state.bookmarkEntities,
         [bookmark.id]: bookmark,
       };
+      console.log('Create Bookmark');
+      console.log('=============');
+      console.log(bookmark);
       const bookmarkArray = Object.keys(bookmarkEntities).map(key => bookmarkEntities[key]);
+      console.log('=============');
+      console.log(bookmarkArray);
       const bookmarkPageEntities = StoreUtils.groupByKeyEntities(bookmarkArray, 'pageNumber');
       const editableBookmark = bookmark.id;
       return {

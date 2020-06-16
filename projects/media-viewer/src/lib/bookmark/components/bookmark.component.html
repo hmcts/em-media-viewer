@@ -2,8 +2,8 @@
   <div *ngFor="let bookmarks of (bookmarksPerPage$ | async);  index as i"
        class="pageContainer__page"
        [ngStyle]="{
-       'width.px': bookmarks.styles.width,
-       'height.px': bookmarks.styles.height
+         'width.px': bookmarks.styles.width,
+         'height.px': bookmarks.styles.height
        }"
        [ngClass]="{
          'rotation': true,
