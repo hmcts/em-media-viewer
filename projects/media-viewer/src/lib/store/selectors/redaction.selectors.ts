@@ -44,7 +44,6 @@ export const getRedactionsPerPage = createSelector(
   fromDocument.getPages,
   getRedactionPages,
   (pages, pageEnt) => {
-    console.log(pageEnt);
     if (pages && pageEnt) {
       const arr = [];
       Object.keys(pages).forEach(key => {
