@@ -1,4 +1,4 @@
-import {Bookmark} from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import {Bookmark, BookmarksPerPage} from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
@@ -13,7 +13,7 @@ export class BookmarkComponent implements OnInit, OnDestroy {
 
   @Input() zoom: number;
   @Input() rotate: number;
-  bookmarksPerPage$: Observable<any>; // todo add type
+  bookmarksPerPage$: Observable<BookmarksPerPage[]>;
   bookmarks: Bookmark[];
   documentId: string;
 
