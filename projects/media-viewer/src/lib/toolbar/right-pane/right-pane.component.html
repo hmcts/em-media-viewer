@@ -10,12 +10,6 @@
           title="Switch to Presentation Mode" tabindex="0" data-l10n-id="presentation_mode">
     <span data-l10n-id="presentation_mode_label">Presentation Mode</span>
   </button>
-  <div class="toolbarButtonSpacer"></div>
-  <button *ngIf="toolbarButtons.showSidebar && !icpEnabled"
-          id="sidebarToggle" class="toolbarButton" title="Toggle Sidebar" tabindex="0"
-          data-l10n-id="toggle_sidebar" (click)="toggleCommentsPanel()">
-    <span data-l10n-id="toggle_sidebar_label">Toggle Comments Sidebar</span>
-  </button>
   <button *ngIf="toolbarButtons.showOpenFile"
           id="openFile" class="toolbarButton openFile hiddenLargeView" title="Open File" tabindex="0"
           data-l10n-id="open_file">
@@ -50,4 +44,8 @@
       <span data-l10n-id="tools_label">Tools</span>
     </button>
   </ng-container>
+  <button id="sidebarToggle" class="toolbarButton" title="Toggle Comments Sidebar" tabindex="0"
+          data-l10n-id="toggle_sidebar" (click)="toggleCommentsPanel()">
+    <span data-l10n-id="toggle_sidebar_label">Toggle Comments Sidebar</span>
+  </button>
 </div>
