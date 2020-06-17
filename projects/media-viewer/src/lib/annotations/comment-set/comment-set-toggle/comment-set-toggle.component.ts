@@ -14,15 +14,14 @@ export class CommentSetToggleComponent implements AfterContentInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    private readonly viewerEvents: ViewerEventService,
     private readonly toolbarEvents: ToolbarEventService
   ) {
   }
 
   async ngAfterContentInit(): Promise<void> {
-    this.subscription = this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle);
+    this.subscription = this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle);
     this.subscription.add(this.toolbarEvents.icp.enabled.subscribe(simplify => {
-      if (simplify) { this.viewerEvents.toggleCommentsPanel(false); }
+      if (simplify) { this.toolbarEvents.toggleCommentsPanel(false); }
     }));
   }
 
@@ -31,6 +30,6 @@ export class CommentSetToggleComponent implements AfterContentInit, OnDestroy {
   }
 
   toggleCommentsPanel() {
-    this.viewerEvents.toggleCommentsPanel(!this.showCommentsPanel);
+    this.toolbarEvents.toggleCommentsPanel(!this.showCommentsPanel);
   }
 }

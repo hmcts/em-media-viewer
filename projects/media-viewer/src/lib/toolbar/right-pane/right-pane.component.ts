@@ -14,7 +14,7 @@ export class ToolbarRightPaneComponent implements OnInit, OnDestroy {
   @Input() enableICP = false;
 
   icpEnabled = false;
-
+  showCommentsPanel: boolean;
   subscription: Subscription;
 
   constructor(
@@ -27,6 +27,7 @@ export class ToolbarRightPaneComponent implements OnInit, OnDestroy {
       this.icpEnabled = enabled;
       if (this.icpEnabled) { this.toolbarEvents.subToolbarHidden.next(true); }
     });
+    this.subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
   }
 
   ngOnDestroy(): void {
@@ -52,4 +53,9 @@ export class ToolbarRightPaneComponent implements OnInit, OnDestroy {
   enterIcpMode() {
     this.toolbarEvents.icp.enable();
   }
+
+  toggleCommentsPanel() {
+    this.toolbarEvents.toggleCommentsPanel(!this.showCommentsPanel);
+  }
+
 }
