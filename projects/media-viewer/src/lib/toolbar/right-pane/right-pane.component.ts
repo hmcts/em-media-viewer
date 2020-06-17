@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class ToolbarRightPaneComponent implements OnInit, OnDestroy {
 
-  @Input() enableAnnotations = false;
+  @Input() enableAnnotations = true;
   @Input() enableRedaction = false;
   @Input() enableICP = false;
 
