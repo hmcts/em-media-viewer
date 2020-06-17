@@ -254,7 +254,7 @@
     content: url(/assets/images/toggleButton-draw@2x.png);
   }
   mv-main-toolbar {
-    .highlightBtn, .drawBtn {
+    .highlightBtn, .drawBtn, .commentsBar {
       .has-redact-bar & {
         display: none;
       }
