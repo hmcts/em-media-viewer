@@ -16,6 +16,7 @@ import { CreateBookmark } from '../../store/actions/bookmarks.action';
 import * as fromBookmarks from '../../store/selectors/bookmarks.selectors';
 import {take} from 'rxjs/operators';
 import uuid from 'uuid';
+import * as fromAnnotations from '../../store/selectors/annotations.selectors';
 
 
 @Component({
@@ -81,19 +82,25 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   createBookmark(rectangle: Rectangle) {
-    this.store.pipe(select(fromBookmarks.getBookmarkInfo), take(1))
-      .subscribe((bookmarkInfo) => {
-        const selection = window.getSelection().toString();
+    const selection = window.getSelection().toString();
+    this.store.pipe(select(fromAnnotations.getDocumentIdSetId))
+      .subscribe((docSetId) => {
         this.store.dispatch(new CreateBookmark({
           ...bookmarkInfo,
           name: selection.length > 0 ? selection.substr(0, 30) : 'new bookmark',
-          id: uuid()
-        } as any));
-        this.toolbarEvents.toggleSideBar(true);
-        this.highlightService.resetHighlight();
-        this.rectangles = undefined;
+          id: uuid(),
+          documentId: docSetId.documentId,
+          name: selection.length > 0 ? selection : 'new bookmark',
+          pageNumber: this.highlightPage - 1,
+          xCoordinate: rectangle.x,
+          yCoordinate: rectangle.y
+        }));
 
-      })
+        this.highlightService.resetHighlight();
+        this.toolbarEvents.toggleSideBar(true);
+        this.rectangles = undefined;
+    });
+
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
@@ -108,7 +115,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   selectAnnotation(selectedAnnotation) {
-    this.store.dispatch(new fromActions.SelectedAnnotation(selectedAnnotation))
+    this.store.dispatch(new fromActions.SelectedAnnotation(selectedAnnotation));
   }
 
   saveAnnotation({ rectangles, page }) {
