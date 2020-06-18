@@ -114,6 +114,12 @@ export class PdfJsWrapper {
   public changePageNumber(numPages: number): void {
     this.pdfViewer.currentPageNumber += numPages;
   }
+  public getViewportScale(pageIndex: number): number {
+    return this.pdfViewer._pages[pageIndex].viewport.scale;
+  }
+  public getPage(pageIndex: number) {
+    return this.pdfViewer._pages[pageIndex];
+  }
 
   public search(operation: SearchOperation): void {
     const command = operation.reset ? 'find' : 'findagain';
