@@ -11,6 +11,7 @@ export interface AnnotationSetState {
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation;
   commentSearchQueries: {commentSearch: string;};
+  commentSummaryFilters: {hasFilter: boolean; filters: any};
   loaded: boolean;
   loading: boolean;
 }
@@ -22,6 +23,7 @@ export const initialState: AnnotationSetState = {
   annotationPageEntities: {},
   selectedAnnotation: null,
   commentSearchQueries: {commentSearch: ''},
+  commentSummaryFilters: {hasFilter: false, filters: {}},
   loading: false,
   loaded: false,
 };
@@ -168,6 +170,38 @@ export function reducer (
         commentSearchQueries
       };
     }
+
+    case fromAnnotations.APPLY_COMMENT_SUMMARY_FILTER: {
+      const payload = action.payload;
+      const hasTagFilter = () => {
+        let isFiltered = false;
+        if (payload.tagFilters) {
+          Object.keys(payload.tagFilters).map(filter => {
+            if (payload.tagFilters[filter] && !isFiltered) {
+              isFiltered = true;
+            }
+          });
+        }
+        return isFiltered;
+      };
+      const hasFilter = (hasTagFilter() || payload.dateRangeFrom || payload.dateRangeTo);
+      const commentSummaryFilters = {
+        hasFilter,
+        filters: payload
+      };
+      return {
+        ...state,
+        commentSummaryFilters: commentSummaryFilters
+      };
+    }
+
+    case fromAnnotations.CLEAR_COMMENT_SUMMARY_FILTER: {
+
+      return {
+        ...state,
+        commentSummaryFilters : {...initialState.commentSummaryFilters}
+      };
+    }
   }
 
 
@@ -180,4 +214,5 @@ export const getAnnoPageEnt = (state: AnnotationSetState) => state.annotationPag
 export const getAnnoEnt = (state: AnnotationSetState) => state.annotationEntities;
 export const getSelectedAnno = (state: AnnotationSetState) => state.selectedAnnotation;
 export const commentSearchQ = (state: AnnotationSetState) => state.commentSearchQueries;
+export const getSummaryFilters = (state: AnnotationSetState) => state.commentSummaryFilters;
 

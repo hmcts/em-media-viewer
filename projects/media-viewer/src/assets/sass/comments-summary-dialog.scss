@@ -32,6 +32,32 @@
 
 mv-confirm-action,
 mv-comments-summary {
+  .dates {
+    * {
+      font-size: 16px;
+    }
+    overflow: hidden;
+    clear: both;
+    .dates__from, .dates__to, .dates__tags {
+      float: left;
+    }
+
+    .dates__to, .dates__tags {
+      padding-left: 20px;
+      border-left: 1px solid #b1b4b6;
+    }
+
+    .dates__tags {
+      width: 400px;
+      .govuk-checkboxes__item {
+        float: left;
+        clear: none;
+      }
+    }
+    .dates__cta {
+      clear: both;
+    }
+  }
   .datatable-icon-up {
     @extend %sort-icons;
     background: url(/assets/images/icon-sort-up.svg) 0 1px no-repeat;

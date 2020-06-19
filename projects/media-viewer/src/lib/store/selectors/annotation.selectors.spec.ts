@@ -290,4 +290,37 @@ describe('Annotations selectors', () => {
     });
   });
 
+  describe('getCommentSummary', () => {
+    it('should return array of comment summary', () => {
+      let result;
+      store.pipe(select(fromSelectors.getCommentSummary)).subscribe(value => {
+        result = value;
+      });
+
+      const payload: any = [{
+        div: {},
+        id: '1',
+        scale: 1,
+        rotation: 0
+      }];
+      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
+      store.dispatch(new fromDocument.AddPages(payload));
+      const cm = {
+        comment: 'this is my comment',
+        date: '17 April 2020',
+        page: 1,
+        tags: [{
+          color: null,
+          createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
+          label: 'important',
+           name: 'important'
+        }],
+        user: 'EM showcase'
+      };
+      store.dispatch(new fromTags.AddFilterTags({important: false}));
+
+      expect(result).toEqual([cm]);
+    });
+  });
+
 });
