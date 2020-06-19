@@ -10,6 +10,7 @@ import {TagInputModule} from 'ngx-chips';
 import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../../store/reducers/reducers';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
+import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
 
 describe('AnnotationComponent', () => {
   let component: AnnotationViewComponent;
@@ -100,10 +101,10 @@ describe('AnnotationComponent', () => {
     expect(component.delete.emit).toHaveBeenCalled();
   });
 
-  xit('should add or edit comment',
-    inject([Store, ViewerEventService],(store, viewerEvents) => {
+  it('should add or edit comment',
+    inject([Store, ToolbarEventService],(store, toolbarEvents) => {
       spyOn(store, 'dispatch');
-      spyOn(viewerEvents, 'toggleCommentsPanel');
+      spyOn(toolbarEvents, 'toggleCommentsPanel');
       spyOn(component.annotationClick, 'emit');
       component.anno = { comments: [], id: 'annoId', createdBy: 'me' } as any;
 
@@ -112,7 +113,7 @@ describe('AnnotationComponent', () => {
       expect(store.dispatch).toHaveBeenCalled();
       expect(component.annotationClick.emit)
         .toHaveBeenCalledWith({ annotationId: 'annoId', editable: true, selected: true });
-      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
+      expect(toolbarEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
       expect(component.selected).toBeTrue();
   }));
 });
