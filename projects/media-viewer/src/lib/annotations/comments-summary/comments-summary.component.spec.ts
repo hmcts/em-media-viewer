@@ -77,14 +77,14 @@ describe('CommentsSummaryComponent', () => {
       (toolbarEvents: ToolbarEventService, viewerEvents: ViewerEventService) => {
       spyOn(toolbarEvents, 'setPage');
       spyOn(toolbarEvents, 'toggleCommentsSummary');
-      spyOn(viewerEvents, 'toggleCommentsPanel');
+      spyOn(toolbarEvents, 'toggleCommentsPanel');
       component.contentType = 'pdf';
 
       component.navigateToPage(4);
 
       expect(toolbarEvents.setPage).toHaveBeenCalled();
       expect(toolbarEvents.toggleCommentsSummary).toHaveBeenCalledWith(false);
-      expect(viewerEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
+      expect(toolbarEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
     })
   );
 });

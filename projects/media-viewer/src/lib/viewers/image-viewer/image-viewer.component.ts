@@ -60,7 +60,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     private readonly annotationsApi: AnnotationApiService,
     private readonly printService: PrintService,
     private readonly viewerUtilService: ViewerUtilService,
-    private readonly viewerEvents: ViewerEventService,
     public readonly toolbarEvents: ToolbarEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService
   ) { }
@@ -76,7 +75,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.download()),
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag),
-      this.viewerEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
+      this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
   }
 
