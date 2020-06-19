@@ -50,10 +50,10 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
       tagFilters: this.fb.group({}),
     });
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary));
-    this.buildCheckBoxFrom();
+    this.buildCheckBoxForm();
   }
 
-  buildCheckBoxFrom() {
+  buildCheckBoxForm() {
     this.filtersFg.reset();
     const checkboxes = <FormGroup>this.filtersFg.get('tagFilters');
     const filters$ = this.store.pipe(select(fromSelectors.getCommentSummaryFilters));
@@ -72,7 +72,7 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
 
   onClearFilters() {
     this.store.dispatch(new fromAnnoActions.ClearCommentSummaryFilters());
-    this.buildCheckBoxFrom();
+    this.buildCheckBoxForm();
   }
 
   onFilter() {

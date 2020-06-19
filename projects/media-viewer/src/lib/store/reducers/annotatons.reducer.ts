@@ -11,7 +11,7 @@ export interface AnnotationSetState {
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation;
   commentSearchQueries: {commentSearch: string;};
-  commentSummaryFilers: {hasFilter: boolean; filters: any};
+  commentSummaryFilters: {hasFilter: boolean; filters: any};
   loaded: boolean;
   loading: boolean;
 }
@@ -23,7 +23,7 @@ export const initialState: AnnotationSetState = {
   annotationPageEntities: {},
   selectedAnnotation: null,
   commentSearchQueries: {commentSearch: ''},
-  commentSummaryFilers: {hasFilter: false, filters: {}},
+  commentSummaryFilters: {hasFilter: false, filters: {}},
   loading: false,
   loaded: false,
 };
@@ -191,7 +191,7 @@ export function reducer (
       };
       return {
         ...state,
-        commentSummaryFilers
+        commentSummaryFilters: commentSummaryFilers
       };
     }
 
@@ -199,7 +199,7 @@ export function reducer (
 
       return {
         ...state,
-        commentSummaryFilers : {...initialState.commentSummaryFilers}
+        commentSummaryFilters : {...initialState.commentSummaryFilters}
       };
     }
   }
@@ -214,5 +214,5 @@ export const getAnnoPageEnt = (state: AnnotationSetState) => state.annotationPag
 export const getAnnoEnt = (state: AnnotationSetState) => state.annotationEntities;
 export const getSelectedAnno = (state: AnnotationSetState) => state.selectedAnnotation;
 export const commentSearchQ = (state: AnnotationSetState) => state.commentSearchQueries;
-export const getSummaryFilters = (state: AnnotationSetState) => state.commentSummaryFilers;
+export const getSummaryFilters = (state: AnnotationSetState) => state.commentSummaryFilters;
 

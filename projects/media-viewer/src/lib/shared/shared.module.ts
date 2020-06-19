@@ -25,12 +25,6 @@ import {RouterModule} from '@angular/router';
     GovUkLabelComponent
 
   ],
-  entryComponents: [
-
-  ],
-  providers: [
-
-  ],
   exports: [
     GovUkDateComponent,
     GovUkErrorMessageComponent,
