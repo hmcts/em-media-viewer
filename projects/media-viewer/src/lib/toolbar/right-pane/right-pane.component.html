@@ -44,4 +44,9 @@
       <span data-l10n-id="tools_label">Tools</span>
     </button>
   </ng-container>
+  <button *ngIf="enableAnnotations"
+    id="sidebarToggle" class="toolbarButton commentsBar" title="Toggle Comments Sidebar" tabindex="0"
+          data-l10n-id="toggle_sidebar" (click)="toggleCommentsPanel()">
+    <span data-l10n-id="toggle_sidebar_label">Toggle Comments Sidebar</span>
+  </button>
 </div>

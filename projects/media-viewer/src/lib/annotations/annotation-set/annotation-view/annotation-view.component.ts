@@ -8,6 +8,7 @@ import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
 import * as fromActions from '../../../store/actions/annotations.action';
 import {SelectionAnnotation} from '../../models/event-select.model';
+import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-annotation',
@@ -35,7 +36,7 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   @ViewChild('container') container: ElementRef;
 
   constructor(
-    private viewerEvents: ViewerEventService,
+    private readonly toolbarEvents: ToolbarEventService,
     private store: Store<fromStore.AnnotationSetState>) {}
 
   public onSelect() {
@@ -74,6 +75,6 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
     }
     this.selected = true;
     this.annotationClick.emit({ annotationId: this.anno.id, editable: true, selected: true });
-    this.viewerEvents.toggleCommentsPanel(true);
+    this.toolbarEvents.toggleCommentsPanel(true);
   }
 }

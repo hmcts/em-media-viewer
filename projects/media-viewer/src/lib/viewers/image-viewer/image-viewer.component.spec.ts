@@ -128,11 +128,11 @@ describe('ImageViewerComponent', () => {
   });
 
   it('should show comments panel',
-    inject([ViewerEventService], (viewerEvents: ViewerEventService) => {
+    inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
       component.showCommentsPanel = false;
       const imageContainer = fixture.debugElement.query(By.css('.image-container'));
 
-      viewerEvents.commentsPanelVisible.next(true);
+      toolbarEvents.commentsPanelVisible.next(true);
       fixture.detectChanges();
 
       expect(component.showCommentsPanel).toBeTruthy();
@@ -140,11 +140,11 @@ describe('ImageViewerComponent', () => {
   }));
 
   it('should hide comments panel',
-    inject([ViewerEventService], (viewerEvents: ViewerEventService) => {
+    inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
       component.showCommentsPanel = true;
       const imageContainer = fixture.debugElement.query(By.css('.image-container'));
 
-      viewerEvents.commentsPanelVisible.next(false);
+      toolbarEvents.commentsPanelVisible.next(false);
       fixture.detectChanges();
 
       expect(component.showCommentsPanel).toBeFalsy();

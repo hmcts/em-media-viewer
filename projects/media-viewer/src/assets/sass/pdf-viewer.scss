@@ -48,6 +48,8 @@ mv-pdf-viewer {
   .pdfViewer {
     width: 100%;
     overflow-x: auto;
+    transition-duration: 600ms;
+    transition-timing-function: ease;
   }
 
   .show-comments-panel {

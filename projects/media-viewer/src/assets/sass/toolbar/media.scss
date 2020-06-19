@@ -33,6 +33,10 @@
   .toolbarButton#sidebarToggle::before {
     content: url(/assets/images/toolbarButton-sidebarToggle@2x.png);
   }
+  .toolbarButton.commentsBar {
+   transform: rotate(180deg);
+  }
+
   html[dir='rtl'] .toolbarButton#sidebarToggle::before {
     content: url(/assets/images/toolbarButton-sidebarToggle-rtl@2x.png);
   }
@@ -250,7 +254,7 @@
     content: url(/assets/images/toggleButton-draw@2x.png);
   }
   mv-main-toolbar {
-    .highlightBtn, .drawBtn {
+    .highlightBtn, .drawBtn, .commentsBar {
       .has-redact-bar & {
         display: none;
       }

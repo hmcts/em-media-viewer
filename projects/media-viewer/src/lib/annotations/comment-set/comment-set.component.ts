@@ -22,6 +22,7 @@ import * as fromActions from '../../store/actions/annotations.action';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import {select, Store} from '@ngrx/store';
 import {TagsModel} from '../models/tags.model';
+import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-comment-set',
@@ -49,7 +50,8 @@ export class CommentSetComponent implements OnInit, OnDestroy {
               private readonly viewerEvents: ViewerEventService,
               private readonly api: AnnotationApiService,
               private readonly commentService: CommentService,
-              private readonly renderService: CommentSetRenderService) {
+              private readonly renderService: CommentSetRenderService,
+              private readonly toolbarEvents: ToolbarEventService) {
     this.clearSelection();
   }
 
@@ -57,7 +59,7 @@ export class CommentSetComponent implements OnInit, OnDestroy {
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentsArray));
     this.commentService.setCommentSet(this);
     this.subscriptions.push(
-      this.viewerEvents.commentsPanelVisible.subscribe(toggle => {
+      this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
         this.redrawComments();
         this.showCommentsPanel = toggle;
       })

@@ -56,4 +56,11 @@ describe('Toolbar Event Service', () => {
     expect(service.drawModeSubject.getValue()).toBeFalsy();
   });
 
+  it('should toggle comments panel', () => {
+    const commentsToggleSpy = spyOn(service.commentsPanelVisible, 'next');
+    service.toggleCommentsPanel(false);
+
+    expect(commentsToggleSpy).toHaveBeenCalledWith(false);
+  });
+
 });

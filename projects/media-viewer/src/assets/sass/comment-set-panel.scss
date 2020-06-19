@@ -2,17 +2,20 @@
   position: absolute;
   overflow-y: auto;
   top: 0;
-  right: 0;
+  right: 0%;
+  width: 0%;
   z-index: 1;
-  width: 2%;
-}
-
-.comments-panel.expanded {
-  width: 24%;
+  padding-top: -10px;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
   background-color: white;
   border-block: #0B0C0C;
   border-style: solid;
   border-color: #969494;
   border-width: thin;
-  padding-top: -10px;
 }
+
+.comments-panel.expanded {
+  width: 24%;
+}
+
