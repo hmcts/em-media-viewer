@@ -159,6 +159,6 @@ export class ToolbarEventService {
   }
 
   public toggleCommentsPanel(isVisible) {
-    this.commentsPanelVisible.next(isVisible)
+    this.commentsPanelVisible.next(isVisible);
   }
 }

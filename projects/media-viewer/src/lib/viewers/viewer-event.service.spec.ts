@@ -29,13 +29,6 @@ describe('Viewer Events Service', () => {
     expect(shapeSelectSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should toggle comments panel', () => {
-    const commentsToggleSpy = spyOn(service.commentsPanelVisible, 'next');
-    service.toggleCommentsPanel(false);
-
-    expect(commentsToggleSpy).toHaveBeenCalledWith(false);
-  });
-
   it('should clear the context toolbar', () => {
     spyOn(service.ctxToolbarCleared, 'next');
 

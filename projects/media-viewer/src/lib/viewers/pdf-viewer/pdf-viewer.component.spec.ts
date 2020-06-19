@@ -111,7 +111,7 @@ describe('PdfViewerComponent', () => {
 
   it('should setup subscriptions', inject([Store],(store) => {
     spyOn(printService, 'printDocumentNatively');
-    spyOn(viewerEvents, 'toggleCommentsPanel');
+    spyOn(toolbarEvents, 'toggleCommentsPanel');
     spyOnAllFunctions(mockWrapper);
     spyOn(store, 'dispatch');
 
@@ -235,7 +235,7 @@ describe('PdfViewerComponent', () => {
   it('should show comments panel', () => {
     component.showCommentsPanel = false;
 
-    viewerEvents.commentsPanelVisible.next(true);
+    toolbarEvents.commentsPanelVisible.next(true);
     fixture.detectChanges();
 
     expect(component.showCommentsPanel).toBeTruthy();
@@ -245,7 +245,7 @@ describe('PdfViewerComponent', () => {
   it('should hide comments panel', () => {
     component.showCommentsPanel = true;
 
-    viewerEvents.commentsPanelVisible.next(false);
+    toolbarEvents.commentsPanelVisible.next(false);
 
     expect(component.showCommentsPanel).toBeFalsy();
     expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');

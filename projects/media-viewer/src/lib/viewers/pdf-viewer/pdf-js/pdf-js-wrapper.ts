@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
 import { PdfPosition } from '../side-bar/bookmarks/bookmarks.interfaces';
-import {debug} from 'ng-packagr/lib/util/log';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
