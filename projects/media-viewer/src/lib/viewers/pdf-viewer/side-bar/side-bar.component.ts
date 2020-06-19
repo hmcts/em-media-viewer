@@ -31,8 +31,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private viewerEvents: ViewerEventService,
               private toolbarButtons: ToolbarButtonVisibilityService,
-              private store: Store<BookmarksState>,
-              private pdfJsWrapper: PdfJsWrapperFactory
+              private store: Store<BookmarksState>
   ) {}
 
   ngOnInit(): void {
@@ -63,10 +62,6 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     this.toggleSidebarView('bookmarks');
     this.store.pipe(select(bookmarksSelectors.getBookmarkInfo), take(1))
       .subscribe((bookmarkInfo) => {
-        // translate the bookmark coordinates using the viewportScale
-        const scale = this.pdfJsWrapper.pdfWrapper().getViewportScale(bookmarkInfo.pageNumber);
-        bookmarkInfo.yCoordinate *= scale;
-        bookmarkInfo.yCoordinate = this.pdfJsWrapper.pdfWrapper().getPage(bookmarkInfo.pageNumber).height - bookmarkInfo.yCoordinate;
         this.store.dispatch(new CreateBookmark({
           ...bookmarkInfo, name: 'new bookmark', id: uuid()
         } as any));

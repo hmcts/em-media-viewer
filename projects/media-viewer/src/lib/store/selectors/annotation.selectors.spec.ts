@@ -161,7 +161,7 @@ describe('Annotations selectors', () => {
           anno: [anno],
           styles: {left: undefined, height: undefined, width: undefined}
         }
-      ]
+      ];
       expect(result).toEqual(expected);
     });
   });
@@ -177,7 +177,8 @@ describe('Annotations selectors', () => {
         div: {},
         id: '1',
         scale: 1,
-        rotation: 0
+        rotation: 0,
+        viewportScale: 1.3333
       }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess({ status: 200, body: annoSet }));
       store.dispatch(new fromDocument.AddPages(payload));
@@ -185,9 +186,10 @@ describe('Annotations selectors', () => {
       const pages =  {
         '1': {
           scaleRotation: { scale: 1, rotation: 0 },
-          styles: { left: undefined, height: undefined, width: undefined }
+          styles: { left: undefined, height: undefined, width: undefined },
+          viewportScale: 1.3333
         }
-      }
+      };
       const expected = [
         {...comment, tags, page: 1, pages}
       ];

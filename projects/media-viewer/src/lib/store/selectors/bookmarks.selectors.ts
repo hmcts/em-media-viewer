@@ -34,13 +34,12 @@ export const getBookmarkInfo = createSelector(
   getBookmarkNodes,
   fromDocument.getDocumentId,
   fromDocument.getPdfPosition,
-  (bookmarkNodes, documentId, pdfPosition) => {
+  (docSetId, pdfPosition, pages) => {
     return {
       pageNumber: pdfPosition.pageNumber - 1,
       xCoordinate: pdfPosition.left,
-      yCoordinate: pdfPosition.top,
-      previous: bookmarkNodes.length > 0 ? bookmarkNodes[bookmarkNodes.length - 1].id : undefined,
-      documentId: documentId
+      yCoordinate: pages[pdfPosition.pageNumber].styles.height - (pdfPosition.top * pages[pdfPosition.pageNumber].viewportScale),
+      documentId: docSetId.documentId
     };
   }
 );

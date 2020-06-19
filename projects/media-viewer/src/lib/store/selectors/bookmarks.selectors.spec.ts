@@ -46,7 +46,8 @@ describe('Bookmark selectors', () => {
         div: {},
         scale: 1,
         rotation: 0,
-        id: '1'
+        id: '1',
+        viewportScale: 1.33333
       }]));
 
       let result;

@@ -44,7 +44,7 @@ describe('SideBarComponent', () => {
   });
 
   it('should trigger goToDestination event on viewerEvents',
-    inject([ViewerEventService],(viewerEvents) => {
+    inject([ViewerEventService], (viewerEvents) => {
       spyOn(viewerEvents, 'goToDestination');
 
       component.goToDestination([]);
@@ -69,7 +69,7 @@ describe('SideBarComponent', () => {
       tick();
 
       expect(store.dispatch).toHaveBeenCalled();
-      expect(component.selectedView).toBe('bookmarks')
+      expect(component.selectedView).toBe('bookmarks');
     }))
   );
 });
