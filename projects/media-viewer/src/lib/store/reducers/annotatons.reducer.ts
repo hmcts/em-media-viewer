@@ -185,13 +185,13 @@ export function reducer (
         return isFiltered;
       };
       const hasFilter = (hasTagFilter() || payload.dateRangeFrom || payload.dateRangeTo);
-      const commentSummaryFilers = {
+      const commentSummaryFilters = {
         hasFilter,
         filters: payload
       };
       return {
         ...state,
-        commentSummaryFilters: commentSummaryFilers
+        commentSummaryFilters: commentSummaryFilters
       };
     }
 
