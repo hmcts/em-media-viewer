@@ -45,6 +45,7 @@ export class ToolbarEventService {
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly subToolbarHidden = new BehaviorSubject(true);
   public readonly searchBarHidden = new BehaviorSubject(true);
+  public readonly commentsPanelVisible = new BehaviorSubject(false);
 
   public readonly icp = icpEvents;
 
@@ -155,5 +156,9 @@ export class ToolbarEventService {
 
   public applyRedactionToDocument(): void {
     this.applyRedactToDocument.next();
+  }
+
+  public toggleCommentsPanel(isVisible) {
+    this.commentsPanelVisible.next(isVisible);
   }
 }

@@ -9,12 +9,12 @@ import { Subscription } from 'rxjs';
 })
 export class ToolbarRightPaneComponent implements OnInit, OnDestroy {
 
-  @Input() enableAnnotations = false;
+  @Input() enableAnnotations = true;
   @Input() enableRedaction = false;
   @Input() enableICP = false;
 
   icpEnabled = false;
-
+  showCommentsPanel: boolean;
   subscription: Subscription;
 
   constructor(
@@ -25,8 +25,12 @@ export class ToolbarRightPaneComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.toolbarEvents.icp.enabled.subscribe(enabled => {
       this.icpEnabled = enabled;
-      if (this.icpEnabled) { this.toolbarEvents.subToolbarHidden.next(true); }
+      if (this.icpEnabled) {
+        this.toolbarEvents.toggleCommentsPanel(!enabled);
+        this.toolbarEvents.subToolbarHidden.next(true);
+      }
     });
+    this.subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
   }
 
   ngOnDestroy(): void {
@@ -52,4 +56,9 @@ export class ToolbarRightPaneComponent implements OnInit, OnDestroy {
   enterIcpMode() {
     this.toolbarEvents.icp.enable();
   }
+
+  toggleCommentsPanel() {
+    this.toolbarEvents.toggleCommentsPanel(!this.showCommentsPanel);
+  }
+
 }

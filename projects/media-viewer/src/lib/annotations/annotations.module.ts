@@ -10,7 +10,6 @@ import { CommentComponent } from './comment-set/comment/comment.component';
 import { CtxToolbarComponent } from './annotation-set/ctx-toolbar/ctx-toolbar.component';
 import { CommentSetComponent } from './comment-set/comment-set.component';
 import { TextareaAutoExpandDirective } from './comment-set/comment/textarea-auto-expand.directive';
-import { CommentSetToggleComponent } from './comment-set/comment-set-toggle/comment-set-toggle.component';
 import { CommentsSummaryComponent } from './comments-summary/comments-summary.component';
 import { CommentSetRenderService } from './comment-set/comment-set-render.service';
 import { MutableDivModule } from 'mutable-div';
@@ -57,7 +56,6 @@ import {SharedModule} from '../shared/shared.module';
     CommentSetComponent,
     CommentsNavigateComponent,
     TextareaAutoExpandDirective,
-    CommentSetToggleComponent,
     CommentsSummaryComponent,
     TagsComponent,
     MomentDatePipe,
@@ -84,7 +82,6 @@ import {SharedModule} from '../shared/shared.module';
     CommentSetComponent,
     CommentSetHeaderComponent,
     CommentSearchComponent,
-    CommentSetToggleComponent,
     CommentsSummaryComponent,
     TagsComponent,
     CommentFilterComponent,

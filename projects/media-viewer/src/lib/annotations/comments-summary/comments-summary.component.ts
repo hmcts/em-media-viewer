@@ -103,7 +103,7 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
       this.toolbarEvents.setPage(pageNumber);
     }
     this.toolbarEvents.toggleCommentsSummary(false);
-    this.viewerEvents.toggleCommentsPanel(true);
+    this.toolbarEvents.toggleCommentsPanel(true);
   }
 
   ngOnDestroy(): void {

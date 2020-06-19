@@ -49,6 +49,8 @@ mv-annotation-set, mv-redactions {
     width: 100%;
     position: absolute;
     top: 0;
+    transition-duration: 600ms;
+    transition-timing-function: ease;
     &__page {
       border: 1px solid transparent; // fix for text-highlight mispositioned
       background-color: transparent;
