@@ -29,6 +29,7 @@ import { BookmarksApiService } from './bookmarks-api.service';
 import {FilterPipe} from './pipes/filter.pipe';
 import {UnsnakePipe} from './pipes/unsnake.pipe';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
     TagInputModule,
     RouterModule,
     ReactiveFormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    SharedModule
   ],
   declarations: [
     AnnotationViewComponent,

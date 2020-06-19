@@ -4,6 +4,7 @@ import * as fromFeature from '../reducers/reducers';
 import * as fromAnnotations from '../reducers/annotatons.reducer';
 import * as fromTags from './tags.selectors';
 import * as fromDocument from './document.selectors';
+import {StoreUtils} from '../store-utils';
 import * as moment_ from 'moment-timezone';
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
@@ -66,6 +67,11 @@ export const getComponentSearchText = createSelector(
   (queries) => queries.commentSearch
 );
 
+export const getCommentSummaryFilters = createSelector(
+  getAnnotationsSetState,
+  fromAnnotations.getSummaryFilters
+);
+
 export const getAnnoPerPage = createSelector(
   fromDocument.getPages,
   getPageEntities,
@@ -109,16 +115,23 @@ export const getCommentsArray = createSelector(
 
 export const getCommentSummary = createSelector(
   getCommentsArray,
-  (commentSummary = []) => commentSummary.map((comment) => {
-      const moment = moment_;
-      return {
-        page: comment.page,
-        user: comment.createdByDetails.forename.concat(' ').concat(comment.createdByDetails.surname),
-        date: moment(comment.lastModifiedDate).format('D MMMM YYYY'),
-        tags: comment.tags,
-        comment: comment.content
-      };
-    })
+  getCommentSummaryFilters,
+  (commentSummary = [], filters) => {
+    const comments = StoreUtils.filterCommentsSummary(commentSummary, filters.filters);
+    if (comments.length) {
+      return comments.map((comment) => {
+        const moment = moment_;
+        return {
+          page: comment.page,
+          user: comment.createdByDetails.forename.concat(' ').concat(comment.createdByDetails.surname),
+          date: moment(comment.lastModifiedDate).format('D MMMM YYYY'),
+          tags: comment.tags,
+          comment: comment.content
+        };
+      });
+    }
+    return [''];
+  }
 );
 
 
