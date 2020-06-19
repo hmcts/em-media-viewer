@@ -25,8 +25,8 @@ export class ToolbarRightPaneComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.toolbarEvents.icp.enabled.subscribe(enabled => {
       this.icpEnabled = enabled;
-      this.toolbarEvents.toggleCommentsPanel(!enabled);
       if (this.icpEnabled) {
+        this.toolbarEvents.toggleCommentsPanel(!enabled);
         this.toolbarEvents.subToolbarHidden.next(true);
       }
     });

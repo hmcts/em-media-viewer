@@ -2,8 +2,8 @@
   position: absolute;
   overflow-y: auto;
   top: 0;
-  right: -24%;
-  width: 24%;
+  right: 0%;
+  width: 0%;
   z-index: 1;
   padding-top: -10px;
   transition-duration: 600ms;
@@ -16,5 +16,6 @@
 }
 
 .comments-panel.expanded {
-  right: 0;
+  width: 24%;
 }
+

@@ -3,10 +3,10 @@
     right: 14px
   }
 
-  width: 24%;
+  width: 0;
   opacity: 0;
   position: absolute;
-  right: -25%;
+  right: 0;
   z-index: 5;
   border-width: 0 1px 1px 0;
   border-color: #888888;
@@ -18,7 +18,7 @@
   transition-duration: 600ms;
   transition-timing-function: ease;
   .show-comments-panel & {
-    right: 0;
+    width: 24%;
     opacity: 1;
   }
 
