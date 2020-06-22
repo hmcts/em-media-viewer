@@ -18,19 +18,6 @@ export interface Bookmark {
   index: number;
 }
 
-export interface BookmarkMoveEvent {
-  node: Bookmark,
-  from: {
-    parent: string,
-    next: Bookmark
-  };
-  to: {
-    parent: string,
-    previous: string,
-    next: Bookmark
-  };
-}
-
 export interface PdfPosition {
   pageNumber: number;
   top: number;

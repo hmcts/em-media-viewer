@@ -3,7 +3,6 @@ import {createSelector} from '@ngrx/store';
 import * as fromFeature from '../reducers/reducers';
 import * as fromBookmarks from '../reducers/bookmarks.reducer';
 import { StoreUtils } from '../store-utils';
-import { Bookmark } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import * as fromDocument from '../selectors/document.selectors';
 
 
@@ -18,9 +17,9 @@ export const getBookmarkEntities = createSelector(
   fromBookmarks.getBookmarkEnts
 );
 
-export const getAllBookmarks = createSelector(
+export const getBookmarkNodes = createSelector(
   getBookmarkEntities,
-  (entities: { [id: string]: Bookmark }) => Object.keys(entities).map(id => entities[id])
+  (entities) => StoreUtils.generateBookmarkNodes(entities)
 );
 
 export const getEditableBookmark = createSelector(
@@ -29,19 +28,16 @@ export const getEditableBookmark = createSelector(
 );
 
 export const getBookmarkInfo = createSelector(
+  getBookmarkNodes,
   fromDocument.getDocumentId,
   fromDocument.getPdfPosition,
-  (documentId, pdfPosition) => {
+  (bookmarkNodes, documentId, pdfPosition) => {
     return {
       pageNumber: pdfPosition.pageNumber - 1,
       xCoordinate: pdfPosition.left,
       yCoordinate: pdfPosition.top,
+      previous: bookmarkNodes.length > 0 ? bookmarkNodes[bookmarkNodes.length - 1].id : undefined,
       documentId
     }
   }
-);
-
-export const getBookmarkNodes = createSelector(
-  getBookmarkEntities,
-  (entities) => StoreUtils.generateBookmarkNodes(entities)
 );

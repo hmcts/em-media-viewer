@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Bookmark, BookmarkMoveEvent } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import { Bookmark } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 export const LOAD_BOOKMARKS = '[Bookmarks] Load Bookmarks';
 export const LOAD_BOOKMARKS_SUCCESS = '[Bookmarks] Load Bookmarks Success';
@@ -50,7 +50,7 @@ export class CreateBookmarkFailure implements Action {
 
 export class DeleteBookmark implements Action {
   readonly type = DELETE_BOOKMARK;
-  constructor(public payload: Bookmark) {}
+  constructor(public payload: { deleted: string[], updated: Bookmark }) {}
 }
 
 export class DeleteBookmarkSuccess implements Action {
@@ -65,7 +65,7 @@ export class DeleteBookmarkFailure implements Action {
 
 export class MoveBookmark implements Action {
   readonly type = MOVE_BOOKMARK;
-  constructor(public payload: BookmarkMoveEvent) {}
+  constructor(public payload: Bookmark[]) {}
 }
 
 export class MoveBookmarkSuccess implements Action {

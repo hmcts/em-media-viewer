@@ -6,11 +6,8 @@ import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
 import * as bookmarksActions from '../actions/bookmarks.action';
 import { select, Store } from '@ngrx/store';
 import { BookmarksState } from '../model/bookmarks.interface';
-import * as fromBookmarks from '../selectors/bookmarks.selectors';
 import * as fromAnnotations from '../selectors/annotations.selectors';
-import uuid from 'uuid';
 import * as fromStore from '../reducers/reducers';
-import { StoreUtils } from '../store-utils';
 
 @Injectable()
 export class BookmarksEffects {
@@ -36,19 +33,6 @@ export class BookmarksEffects {
   createBookmark$ = this.actions$.pipe(
     ofType(bookmarksActions.CREATE_BOOKMARK),
     map((action: bookmarksActions.CreateBookmark) => action.payload),
-    withLatestFrom(
-      this.store.pipe(select(fromBookmarks.getBookmarkNodes)),
-      this.store.pipe(select(fromAnnotations.getDocumentIdSetId))
-    ),
-    map(([bookmark, bookmarkNodes, docSetId])   => {
-      return {
-        ...bookmark,
-        id: uuid(),
-        name: bookmark.name.substr(0, 30),
-        previous: bookmarkNodes.length > 0 ? bookmarkNodes[bookmarkNodes.length - 1].id : undefined,
-        documentId: docSetId.documentId
-      };
-    }),
     exhaustMap((bookmark) =>
       this.bookmarksApiService.createBookmark(bookmark)
         .pipe(
@@ -61,22 +45,6 @@ export class BookmarksEffects {
   moveBookmark$ = this.actions$.pipe(
     ofType(bookmarksActions.MOVE_BOOKMARK),
     map((action: bookmarksActions.MoveBookmark) => action.payload),
-    withLatestFrom(this.store.pipe(select(fromBookmarks.getBookmarkEntities))),
-    map(([{ node, from, to }, entities]) => {
-      let movedBookmarks = [];
-      if (from.next) {
-        movedBookmarks.push({ ...from.next, previous: node.previous })
-      }
-      if (to.next) {
-        movedBookmarks.push({ ...to.next, previous: node.id });
-      }
-      movedBookmarks.push({
-        ...node,
-        previous: to.previous,
-        parent: Object.keys(entities).includes(to.parent) ? to.parent : undefined
-      });
-      return movedBookmarks;
-    }),
     exhaustMap((bookmarks) =>
       this.bookmarksApiService.updateMultipleBookmarks(bookmarks)
         .pipe(
@@ -89,11 +57,16 @@ export class BookmarksEffects {
   deleteBookmark$ = this.actions$.pipe(
     ofType(bookmarksActions.DELETE_BOOKMARK),
     map((action: bookmarksActions.DeleteBookmark) => action.payload),
-    map(bookmark => [bookmark.id, ...StoreUtils.getAllChildren(bookmark.children)]),
-    exhaustMap((bookmarkIds) =>
-      this.bookmarksApiService.deleteMultipleBookmarks(bookmarkIds)
+    exhaustMap(({ deleted, updated }) =>
+      this.bookmarksApiService.deleteMultipleBookmarks({ deleted, updated })
         .pipe(
-          map(() => new bookmarksActions.DeleteBookmarkSuccess(bookmarkIds)),
+          switchMap(() => {
+            const success: any[] = [new bookmarksActions.DeleteBookmarkSuccess(deleted)];
+            if (updated) {
+              success.push(new bookmarksActions.UpdateBookmarkSuccess(updated));
+            }
+            return success;
+          }),
           catchError(error => of(new bookmarksActions.DeleteBookmarkFailure(error)))
         )
     ));

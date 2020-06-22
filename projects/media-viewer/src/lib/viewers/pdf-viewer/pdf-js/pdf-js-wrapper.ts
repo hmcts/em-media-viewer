@@ -87,6 +87,7 @@ export class PdfJsWrapper {
       const pdfDocument = await loadingTask;
       this.documentLoaded.next(pdfDocument);
 
+
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
 
