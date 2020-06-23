@@ -31,15 +31,15 @@ export const getEditableBookmark = createSelector(
 );
 
 export const getBookmarkInfo = createSelector(
-  getBookmarkNodes,
   fromDocument.getDocumentId,
   fromDocument.getPdfPosition,
-  (docSetId, pdfPosition, pages) => {
+  fromDocument.getPages,
+  (docId, pdfPosition, pages) => {
     return {
       pageNumber: pdfPosition.pageNumber - 1,
       xCoordinate: pdfPosition.left,
       yCoordinate: pages[pdfPosition.pageNumber].styles.height - (pdfPosition.top * pages[pdfPosition.pageNumber].viewportScale),
-      documentId: docSetId.documentId
+      documentId: docId
     };
   }
 );

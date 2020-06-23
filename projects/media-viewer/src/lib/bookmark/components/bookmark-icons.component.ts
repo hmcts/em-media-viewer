@@ -1,15 +1,15 @@
 import {Bookmark, BookmarksPerPage} from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromSelectors from '../../store/selectors/bookmarks.selectors';
-import {Observable, Subscription} from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'mv-bookmark',
-  templateUrl: './bookmark.component.html'
+  selector: 'mv-bookmark-icons',
+  templateUrl: './bookmark-icons.component.html'
 })
-export class BookmarkComponent implements OnInit, OnDestroy {
+export class BookmarkIconsComponent implements OnInit {
 
   @Input() zoom: number;
   @Input() rotate: number;
@@ -17,16 +17,10 @@ export class BookmarkComponent implements OnInit, OnDestroy {
   bookmarks: Bookmark[];
   documentId: string;
 
-  private $subscription: Subscription;
-
   constructor(private store: Store<fromStore.State>) {}
 
   ngOnInit(): void {
     this.bookmarksPerPage$ = this.store.pipe(select(fromSelectors.getBookmarksPerPage));
-  }
-
-  ngOnDestroy(): void {
-    this.$subscription.unsubscribe();
   }
 
 }

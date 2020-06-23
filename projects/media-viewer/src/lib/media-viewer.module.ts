@@ -36,6 +36,7 @@ import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-
 import { TreeModule } from 'angular-tree-component';
 import {BookmarkApiService} from './bookmark/services/bookmark-api.service';
 import {BookmarkModule} from './bookmark/bookmark.module';
+import {BookmarkIconsComponent} from './bookmark/components/bookmark-icons.component';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import {BookmarkModule} from './bookmark/bookmark.module';
     GrabNDragDirective,
     IcpDirective,
     ConfirmActionDialogComponent,
-    RedactionComponent // todo made put this into module
+    RedactionComponent, // todo made put this into module
+    BookmarkIconsComponent
   ],
   entryComponents: [
     PdfViewerComponent,
@@ -82,8 +84,7 @@ import {BookmarkModule} from './bookmark/bookmark.module';
     IcpPresenterService,
     IcpFollowerService,
     RedactionApiService,
-    DocumentConversionApiService,
-    BookmarkApiService
+    DocumentConversionApiService
   ],
   exports: [
     MediaViewerComponent

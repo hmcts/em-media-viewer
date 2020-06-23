@@ -62,7 +62,6 @@ describe('Bookmark selectors', () => {
         xCoordinate: 100,
         yCoordinate: -120
       };
-      store.dispatch(new fromActions.CreateBookmark(payload));
       const expected = [ { bookmark: [  ], styles: { left: undefined, height: undefined, width: undefined } } ];
       expect(result).toEqual(expected);
     });
