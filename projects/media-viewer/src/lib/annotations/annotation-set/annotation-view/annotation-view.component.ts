@@ -24,8 +24,10 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() set selectedAnnoId(selectedId) {
-    const id = this.anno.id || this.anno.redactionId // todo make it unique
-    this.selected = selectedId.annotationId ? (selectedId.annotationId === id) : false;
+    if (selectedId) {
+      const id = this.anno.id || this.anno.redactionId // todo make it unique
+      this.selected = selectedId.annotationId ? (selectedId.annotationId === id) : false;
+    }
   };
   @Input() height: number;
   @Input() width: number;
