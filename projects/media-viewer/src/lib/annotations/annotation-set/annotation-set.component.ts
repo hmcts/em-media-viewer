@@ -90,7 +90,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
           name: selection.length > 0 ? selection.substr(0, 30) : 'new bookmark',
           id: uuid(),
           documentId: docSetId.documentId,
-          name: selection.length > 0 ? selection : 'new bookmark',
+          name: selection.length > 0 ? selection.substr(0, 30) : 'new bookmark',
           pageNumber: this.highlightPage - 1,
           xCoordinate: rectangle.x,
           yCoordinate: rectangle.y
