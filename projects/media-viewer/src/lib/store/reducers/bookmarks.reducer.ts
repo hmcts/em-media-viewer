@@ -86,12 +86,9 @@ export function bookmarksReducer (state = initialBookmarksState,
 
       const page = bookmarkEntities[bookmarkId].pageNumber;
       delete bookmarkEntities[bookmarkId];
-      const pageBookmarkRemoved = [
-        ...state.bookmarkPageEntities[page].filter(bookmark => bookmark.bookmarkId !== bookmarkId)
-      ];
       const bookmarkPageEntities = {
         ...state.bookmarkPageEntities,
-        [page]: pageBookmarkRemoved
+        [page]: state.bookmarkPageEntities[page].filter(bookmark => bookmark.id !== bookmarkId)
       };
       return {
         ...state,
