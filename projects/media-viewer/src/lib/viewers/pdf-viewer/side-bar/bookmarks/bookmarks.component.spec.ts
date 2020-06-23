@@ -46,9 +46,15 @@ describe('BookmarksComponent', () => {
   it('should delete bookmark',
     inject([Store],(store) => {
       spyOn(store, 'dispatch');
-      const mockBookmark = { name: 'Bookmark name', id: 'id' } as any;
-      component.deleteBookmark(mockBookmark);
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark(mockBookmark));
+      const bookmarkNode = {
+        parent: { children: [{}]},
+        index: 0,
+        data: { id: 'bookmarkId', children: [] }
+      } as any;
+      component.deleteBookmark(bookmarkNode);
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
+        deleted: ['bookmarkId'], updated: undefined
+      }));
     })
   );
 

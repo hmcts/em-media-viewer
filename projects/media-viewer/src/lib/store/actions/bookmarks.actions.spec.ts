@@ -4,11 +4,9 @@ describe('Bookmark actions', () => {
   describe('Delete Bookmark', () => {
     describe('Delete Bookmark', () => {
       it('should create an action', () => {
-        const action = new fromBookmarks.DeleteBookmark('1234567');
-        expect({ ...action }).toEqual({
-          type: fromBookmarks.DELETE_BOOKMARK,
-          payload: '1234567'
-        });
+        const payload = { deleted: ['1234567'], updated: undefined };
+        const action = new fromBookmarks.DeleteBookmark(payload);
+        expect({ ...action }).toEqual({ type: fromBookmarks.DELETE_BOOKMARK, payload });
       });
     });
     describe('DeleteBookmarkSuccess', () => {

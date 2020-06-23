@@ -86,7 +86,7 @@ describe('Bookmark Effects', () => {
   describe('deleteBookmark$', () => {
     it('should return a DeleteBookmarkSuccess', () => {
       bookmarksApi.deleteMultipleBookmarks.and.returnValue(of({}));
-      const action = new bookmarkActions.DeleteBookmark({ id : 'bookmarkId' } as any);
+      const action = new bookmarkActions.DeleteBookmark({ deleted: ['bookmarkId'], updated: undefined });
       const completion = new bookmarkActions.DeleteBookmarkSuccess(['bookmarkId']);
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });

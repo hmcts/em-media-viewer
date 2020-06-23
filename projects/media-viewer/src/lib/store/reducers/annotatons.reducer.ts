@@ -47,7 +47,7 @@ export function reducer (
     }
     case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS:
     case fromAnnotations.LOAD_ANNOTATION_SET_FAIL: {
-      const annotationSet = action.payload.status === 200 ? action.payload :
+      const annotationSet = action.payload.status === 200 ? action.payload.body :
         {
           ...state.annotationSet,
           annotations: [],
