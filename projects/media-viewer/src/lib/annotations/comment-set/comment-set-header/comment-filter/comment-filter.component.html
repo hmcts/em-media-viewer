@@ -34,7 +34,7 @@
       </div>
 
       <div class="govuk-form-group">
-        <form [formGroup]="tagGroup">
+        <div [formGroup]="tagGroup">
           <fieldset class="govuk-fieldset" formGroupName="tagFilters">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               Tags
@@ -42,15 +42,16 @@
             <div class="govuk-checkboxes--scroll">
               <div class="govuk-checkboxes govuk-checkboxes--small">
                 <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async) | filter: searchValue: 'key'">
-                  <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
-                  <label class="govuk-label govuk-checkboxes__label">
+                  <input [formControlName]="item.key" [id]="item.key" class="govuk-checkboxes__input" [value]="false"
+                         [attr.aria-describedby]="item.key" type="checkbox">
+                  <label class="govuk-label govuk-checkboxes__label" [for]="item.key">
                     {{ item.key | unsnake}} ({{item.length}})
                   </label>
                 </div>
               </div>
             </div>
           </fieldset>
-        </form>
+        </div>
       </div>
     </div>
 
