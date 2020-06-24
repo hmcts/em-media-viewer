@@ -287,10 +287,10 @@ html[dir="rtl"] .secondaryToolbarButton::before {
   right: 4px;
 }
 
-.toolbarButton#sidebarToggle::before {
+.toolbarButton#sidebarCommentsToggle::before, .toolbarButton#sidebarToggle::before {
   content: url(/assets/images/toolbarButton-sidebarToggle.png);
 }
-html[dir='rtl'] .toolbarButton#sidebarToggle::before {
+html[dir='rtl'] .toolbarButton#sidebarCommentsToggle::before, html[dir='rtl'] .toolbarButton#sidebarCommentsToggle::before {
   content: url(/assets/images/toolbarButton-sidebarToggle-rtl.png);
 }
 
