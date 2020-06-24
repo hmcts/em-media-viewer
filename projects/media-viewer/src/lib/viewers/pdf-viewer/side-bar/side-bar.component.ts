@@ -3,9 +3,9 @@ import { Outline } from './outline-item/outline.model';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import * as bookmarksSelectors from '../../../store/selectors/bookmarks.selectors';
-import { BookmarkNode, BookmarksState } from '../../../store/model/bookmarks.interface';
+import { BookmarkNode } from '../../../store/model/bookmarks.interface';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
-import * as fromBookmarks from '../../../store/selectors/bookmarks.selectors';
+import * as fromBookmarks from '../../../store/reducers/bookmarks.reducer';
 import { take } from 'rxjs/operators';
 import uuid from 'uuid';
 import { ViewerEventService } from '../../viewer-event.service';
@@ -30,7 +30,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private viewerEvents: ViewerEventService,
               private toolbarButtons: ToolbarButtonVisibilityService,
-              private store: Store<BookmarksState>
+              private store: Store<fromBookmarks.BookmarksState>
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   onAddBookmarkClick() {
     this.toggleSidebarView('bookmarks');
-    this.store.pipe(select(fromBookmarks.getBookmarkInfo), take(1))
+    this.store.pipe(select(bookmarksSelectors.getBookmarkInfo), take(1))
       .subscribe((bookmarkInfo) => {
         this.store.dispatch(new CreateBookmark({
           ...bookmarkInfo, name: 'new bookmark', id: uuid()

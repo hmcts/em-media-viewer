@@ -1,4 +1,3 @@
-import * as fromBookmarks from './bookmarks.reducer';
 import {
   CreateBookmarkSuccess,
   LoadBookmarks,
@@ -7,8 +6,7 @@ import {
   DeleteBookmarkSuccess,
   UpdateBookmarkSuccess
 } from '../actions/bookmarks.action';
-import { initialBookmarksState } from './bookmarks.reducer';
-import { BookmarksState } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import * as fromBookmarks from './bookmarks.reducer';
 
 describe('BookmarksReducer', () => {
 
@@ -17,7 +15,7 @@ describe('BookmarksReducer', () => {
   } as any;
 
   it('should start loading  bookmarks', function () {
-    const state = fromBookmarks.bookmarksReducer(initialBookmarksState, new LoadBookmarks());
+    const state = fromBookmarks.bookmarksReducer(fromBookmarks.initialBookmarksState, new LoadBookmarks());
 
     expect(state.bookmarks).toEqual([]);
     expect(state.bookmarkEntities).toEqual({});
@@ -29,7 +27,7 @@ describe('BookmarksReducer', () => {
   it('should load bookmarks on success', function () {
     const bookmarks = [bookmark];
     const res = { body: bookmarks, status: 200 };
-    const state = fromBookmarks.bookmarksReducer(initialBookmarksState, new LoadBookmarksSuccess(res));
+    const state = fromBookmarks.bookmarksReducer(fromBookmarks.initialBookmarksState, new LoadBookmarksSuccess(res));
 
     expect(state.bookmarks).toEqual(bookmarks);
     expect(state.loaded).toBeTrue();
@@ -38,7 +36,7 @@ describe('BookmarksReducer', () => {
 
   it('should load bookmarks on failure', function () {
     const res = { body: [], status: 404 };
-    const state = fromBookmarks.bookmarksReducer(initialBookmarksState, new LoadBookmarksFailure(res));
+    const state = fromBookmarks.bookmarksReducer(fromBookmarks.initialBookmarksState, new LoadBookmarksFailure(res));
 
     expect(state.bookmarks).toEqual([]);
     expect(state.loaded).toBeTrue();
@@ -46,7 +44,7 @@ describe('BookmarksReducer', () => {
   });
 
   it('should load created bookmark', function () {
-    const state = fromBookmarks.bookmarksReducer(initialBookmarksState, new CreateBookmarkSuccess(bookmark));
+    const state = fromBookmarks.bookmarksReducer(fromBookmarks.initialBookmarksState, new CreateBookmarkSuccess(bookmark));
 
     expect(state.bookmarkEntities).toEqual({ [bookmark.id]: bookmark });
     expect(state.loaded).toBeTrue();
@@ -54,7 +52,7 @@ describe('BookmarksReducer', () => {
   });
 
   it('should delete bookmark', function () {
-    const bookmarksState: BookmarksState = {
+    const bookmarksState: fromBookmarks.BookmarksState = {
       bookmarks: [bookmark],
       bookmarkEntities: { [bookmark.id]: bookmark },
       editableBookmark: undefined,
@@ -70,7 +68,7 @@ describe('BookmarksReducer', () => {
 
 
   it('should update bookmark', function () {
-    const bookmarksState: BookmarksState = {
+    const bookmarksState: fromBookmarks.BookmarksState = {
       bookmarks: [{ ...bookmark }],
       bookmarkEntities: { [bookmark.id]: { ...bookmark } },
       editableBookmark: undefined,

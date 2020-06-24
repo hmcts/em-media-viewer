@@ -2,10 +2,9 @@ import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { BookmarksComponent } from './bookmarks.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
-import { StoreUtils } from '../../../../store/store-utils';
-
 import * as fromActions from '../../../../store/actions/bookmarks.action';
 import { reducers } from '../../../../store/reducers/reducers';
+import { generateBookmarkEntities, generateBookmarkNodes } from '../../../../store/bookmarks-store-utils';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
@@ -70,8 +69,8 @@ describe('BookmarksComponent', () => {
   );
 
   it('should generate nodes from bookmarks', () => {
-    const entities = StoreUtils.generateBookmarkEntities(bookmarks);
-    const nodes = StoreUtils.generateBookmarkNodes(entities)
+    const entities = generateBookmarkEntities(bookmarks);
+    const nodes = generateBookmarkNodes(entities)
 
     expect(nodes[0].children[0].name).toBe('child1');
   });

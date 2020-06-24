@@ -35,8 +35,6 @@ import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
 import { TreeModule } from 'angular-tree-component';
 
-
-// noinspection AngularInvalidImportedOrDeclaredSymbol
 @NgModule({
   imports: [
     CommonModule,

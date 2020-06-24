@@ -4,6 +4,7 @@ import * as fromFeature from '../reducers/reducers';
 import * as fromBookmarks from '../reducers/bookmarks.reducer';
 import { StoreUtils } from '../store-utils';
 import * as fromDocument from '../selectors/document.selectors';
+import { generateBookmarkNodes } from '../bookmarks-store-utils';
 
 
 export const getBookmarkState = createSelector(
@@ -19,7 +20,7 @@ export const getBookmarkEntities = createSelector(
 
 export const getBookmarkNodes = createSelector(
   getBookmarkEntities,
-  (entities) => StoreUtils.generateBookmarkNodes(entities)
+  (entities) => generateBookmarkNodes(entities)
 );
 
 export const getEditableBookmark = createSelector(

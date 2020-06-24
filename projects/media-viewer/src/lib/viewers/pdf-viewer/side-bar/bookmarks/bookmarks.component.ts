@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmarks.action';
-import { Bookmark, BookmarkNode, BookmarksState } from '../../../../store/model/bookmarks.interface';
+import { Bookmark, BookmarkNode } from '../../../../store/model/bookmarks.interface';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmarks.selectors';
 import { Subscription } from 'rxjs';
 import { AnnotationSetState } from '../../../../store/reducers/annotatons.reducer';
 import * as fromDocument from '../../../../store/selectors/document.selectors';
 import { TreeNode } from 'angular-tree-component';
-import { StoreUtils } from '../../../../store/store-utils';
+import * as fromBookmarks from '../../../../store/reducers/bookmarks.reducer';
+import { getAllChildren } from '../../../../store/bookmarks-store-utils';
 
 @Component({
   selector: 'mv-bookmarks',
@@ -32,7 +33,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   $subscription: Subscription;
 
-  constructor(private store: Store<BookmarksState|AnnotationSetState>) {}
+  constructor(private store: Store<fromBookmarks.BookmarksState|AnnotationSetState>) {}
 
   ngOnInit(): void {
     this.$subscription = this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
@@ -55,21 +56,20 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   onBookmarkMove({ node, from, to }: any) {
-    let movedBookmarks = [];
-    let fromNext = this.getSibling(from, from.index);
-    fromNext = fromNext && fromNext.id === node.previous ? this.getSibling(from, from.index + 1) : fromNext;
-    if (fromNext) {
-      movedBookmarks.push({ ...fromNext, previous: node.previous })
-    }
-    const toNext = this.getSibling(to, to.index + 1);
-    if (toNext) {
-      movedBookmarks.push({ ...toNext, previous: node.id });
-    }
-    movedBookmarks.push({
+    let movedBookmarks = [{
       ...node,
       previous: to.index > 0 ? to.parent.children[to.index - 1].id : undefined,
       parent: to.parent.documentId ? to.parent.id : undefined
-    });
+    }];
+    let fromNext = this.getSibling(from, from.index);
+    fromNext = fromNext && fromNext.id === node.previous ? this.getSibling(from, from.index + 1) : fromNext;
+    if (fromNext) {
+      movedBookmarks = [...movedBookmarks, { ...fromNext, previous: node.previous }];
+    }
+    const toNext = this.getSibling(to, to.index + 1);
+    if (toNext) {
+      movedBookmarks = [ ...movedBookmarks, { ...toNext, previous: node.id }];
+    }
     this.store.dispatch(new MoveBookmark(movedBookmarks));
   }
 
@@ -81,7 +81,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       next.previous = node.data.previous;
     }
     this.store.dispatch(new DeleteBookmark({
-      deleted: [node.data.id, ...StoreUtils.getAllChildren(node.data.children)], updated: next
+      deleted: [node.data.id, ...getAllChildren(node.data.children)], updated: next
     }));
   }
 

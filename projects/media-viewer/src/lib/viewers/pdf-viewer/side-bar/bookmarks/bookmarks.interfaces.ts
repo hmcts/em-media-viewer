@@ -1,11 +1,3 @@
-export interface BookmarksState {
-  bookmarks: Bookmark[],
-  bookmarkEntities: { [id: string]: Bookmark },
-  editableBookmark: string,
-  loaded: boolean,
-  loading: boolean
-}
-
 export interface Bookmark {
   id: string;
   documentId: string;

@@ -5,15 +5,15 @@ import { of } from 'rxjs';
 import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
 import * as bookmarksActions from '../actions/bookmarks.action';
 import { select, Store } from '@ngrx/store';
-import { BookmarksState } from '../model/bookmarks.interface';
 import * as fromAnnotations from '../selectors/annotations.selectors';
+import * as fromBookmarks from '../reducers/bookmarks.reducer';
 import * as fromStore from '../reducers/reducers';
 
 @Injectable()
 export class BookmarksEffects {
 
   constructor(private actions$: Actions,
-              private store: Store<fromStore.AnnotationSetState|BookmarksState>,
+              private store: Store<fromStore.AnnotationSetState|fromBookmarks.BookmarksState>,
               private bookmarksApiService: BookmarksApiService) {}
 
   @Effect()
@@ -61,11 +61,14 @@ export class BookmarksEffects {
       this.bookmarksApiService.deleteMultipleBookmarks({ deleted, updated })
         .pipe(
           switchMap(() => {
-            const success: any[] = [new bookmarksActions.DeleteBookmarkSuccess(deleted)];
             if (updated) {
-              success.push(new bookmarksActions.UpdateBookmarkSuccess(updated));
+              return [
+                new bookmarksActions.DeleteBookmarkSuccess(deleted),
+                new bookmarksActions.UpdateBookmarkSuccess(updated)
+              ]
+            } else {
+              return [new bookmarksActions.DeleteBookmarkSuccess(deleted)];
             }
-            return success;
           }),
           catchError(error => of(new bookmarksActions.DeleteBookmarkFailure(error)))
         )
