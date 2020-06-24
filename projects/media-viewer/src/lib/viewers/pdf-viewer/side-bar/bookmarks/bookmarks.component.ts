@@ -21,9 +21,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Output() goToDestination = new EventEmitter<any[]>();
 
-  height: number;
-  width: number;
-  viewportScaleLookup: {[pageId: number]: number} = {};
+  pageLookup:  {[pageId: number]: DocumentPages } = {};
   editableBookmark: string;
   BOOKMARK_CHAR_LIMIT = 30;
 
@@ -41,14 +39,11 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       .subscribe(editableId => this.editableBookmark = editableId);
     this.$subscription.add(this.store.select(fromDocument.getPages)
       .subscribe(pages => {
-        if (pages[1]) {
-          this.height = pages[1].styles.height;
-          this.width = pages[1].styles.width;
-        }
 
         Object.keys(pages).map(key => {
-          this.viewportScaleLookup[key] = pages[key].viewportScale;
+          this.pageLookup[key] = pages[key];
         });
+
       }));
   }
 
@@ -101,21 +96,23 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   goToBookmark(bookmark: Bookmark) {
 
-    const viewportScale = this.viewportScaleLookup[bookmark.pageNumber + 1];
+    const viewportScale = this.pageLookup[bookmark.pageNumber + 1].viewportScale;
+    const height = this.pageLookup[bookmark.pageNumber + 1].styles.height / this.zoom;
+    const scaledY = (height - bookmark.yCoordinate) / viewportScale;
 
     let top = 0, left = 0;
     switch (this.rotate) {
       case 90:
-        left = - (bookmark.yCoordinate / viewportScale);
+        left = - scaledY;
         break;
       case 180:
-        top = (this.height / this.zoom) - (bookmark.yCoordinate / viewportScale);
+        top = scaledY;
         break;
       case 270:
-        left = bookmark.yCoordinate / viewportScale;
+        left = scaledY;
         break;
       default:
-        top = bookmark.yCoordinate / viewportScale;
+        top = scaledY;
     }
 
     this.goToDestination.emit([
