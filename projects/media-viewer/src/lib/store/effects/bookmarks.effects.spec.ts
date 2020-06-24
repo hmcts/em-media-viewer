@@ -16,6 +16,7 @@ describe('Bookmark Effects', () => {
     'getBookmarks',
     'createBookmark',
     'updateBookmark',
+    'updateMultipleBookmarks',
     'deleteMultipleBookmarks'
   ]);
   const bookmark = {
@@ -83,6 +84,25 @@ describe('Bookmark Effects', () => {
     }));
   });
 
+  describe('moveBookmark$', () => {
+    it('should return MoveBookmarkSuccess', () => {
+      bookmarksApi.updateMultipleBookmarks.and.returnValue(of([{ id: 'bookmarkId'}]));
+      const action = new bookmarkActions.MoveBookmark([{ id: 'bookmarkId'} as any]);
+      const completion = new bookmarkActions.MoveBookmarkSuccess([{ id: 'bookmarkId'} as any]);
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.moveBookmark$).toBeObservable(expected);
+    });
+
+    it('should return MoveBookmarkFailure', () => {
+      bookmarksApi.updateMultipleBookmarks.and.returnValue(throwError('failure'));
+      const action = new bookmarkActions.MoveBookmark([{}] as any);
+      const completion = new bookmarkActions.MoveBookmarkFailure('failure');
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.moveBookmark$).toBeObservable(expected);
+    });
+  });
   describe('deleteBookmark$', () => {
     it('should return a DeleteBookmarkSuccess', () => {
       bookmarksApi.deleteMultipleBookmarks.and.returnValue(of({}));

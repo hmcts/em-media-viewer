@@ -12,11 +12,10 @@ export const DELETE_BOOKMARK_SUCCESS = '[Bookmarks] Delete Bookmark Success';
 export const DELETE_BOOKMARK_FAIL = '[Bookmarks] Delete Bookmark Failure';
 export const MOVE_BOOKMARK = '[Bookmarks] Move Bookmark';
 export const MOVE_BOOKMARK_SUCCESS = '[Bookmarks] Move Bookmark Success';
-export const MOVE_BOOKMARK_FAILURE = '[Bookmarks] Move Bookmark Failure';
+export const MOVE_BOOKMARK_FAIL = '[Bookmarks] Move Bookmark Failure';
 export const UPDATE_BOOKMARK = '[Bookmarks] Update Bookmark';
 export const UPDATE_BOOKMARK_SUCCESS = '[Bookmarks] Update Bookmark Success';
 export const UPDATE_BOOKMARK_FAIL = '[Bookmarks] Update Bookmark Failure';
-export const UPDATE_PDF_POSITION = '[Bookmarks] Update PDF Position';
 
 export class LoadBookmarks implements Action {
   readonly type = LOAD_BOOKMARKS;
@@ -74,7 +73,7 @@ export class MoveBookmarkSuccess implements Action {
 }
 
 export class MoveBookmarkFailure implements Action {
-  readonly type = MOVE_BOOKMARK_FAILURE;
+  readonly type = MOVE_BOOKMARK_FAIL;
   constructor(public payload: string) {}
 }
 

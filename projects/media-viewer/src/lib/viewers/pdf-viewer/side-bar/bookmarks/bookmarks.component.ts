@@ -8,7 +8,7 @@ import { AnnotationSetState } from '../../../../store/reducers/annotatons.reduce
 import * as fromDocument from '../../../../store/selectors/document.selectors';
 import { TreeNode } from 'angular-tree-component';
 import * as fromBookmarks from '../../../../store/reducers/bookmarks.reducer';
-import { getAllChildren } from '../../../../store/bookmarks-store-utils';
+import { getBookmarkChildren } from '../../../../store/bookmarks-store-utils';
 
 @Component({
   selector: 'mv-bookmarks',
@@ -81,7 +81,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       next.previous = node.data.previous;
     }
     this.store.dispatch(new DeleteBookmark({
-      deleted: [node.data.id, ...getAllChildren(node.data.children)], updated: next
+      deleted: [node.data.id, ...getBookmarkChildren(node.data.children)], updated: next
     }));
   }
 

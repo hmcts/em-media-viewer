@@ -59,4 +59,12 @@ describe('BookmarksApiService', () => {
     expect(req.request.method).toBe('DELETE');
     req.flush(null);
   }));
+
+  it('should update multiple bookmarks', function () {
+    service.updateMultipleBookmarks([{} as any]);
+  });
+
+  it('should delete multiple bookmarks', function () {
+    service.deleteMultipleBookmarks({ deleted: ['bookmarkId'], updated: undefined })
+  });
 });

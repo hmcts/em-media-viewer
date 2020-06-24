@@ -4,7 +4,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import * as fromActions from '../../../../store/actions/bookmarks.action';
 import { reducers } from '../../../../store/reducers/reducers';
-import { generateBookmarkEntities, generateBookmarkNodes } from '../../../../store/bookmarks-store-utils';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
@@ -68,11 +67,25 @@ describe('BookmarksComponent', () => {
     })
   );
 
-  it('should generate nodes from bookmarks', () => {
-    const entities = generateBookmarkEntities(bookmarks);
-    const nodes = generateBookmarkNodes(entities)
+  it('should move bookmarks',
+    inject([Store],(store) => {
+      spyOn(store, 'dispatch');
+      const node = {
+        documentId: "86dc297a-0153-44c0-b996-f563c1ff112a",
+        id: "id1",
+        index: 0,
+        name: "new bookmark",
+        parent: undefined,
+        previous: undefined
+    }
+      const from = { index: 0, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
+      const to = { index: 1, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
+      const movedBookmarks = [{ ...node, previous: 'id2' }, { id: 'id2', index: 1, previous: undefined } as any];
 
-    expect(nodes[0].children[0].name).toBe('child1');
-  });
+      component.onBookmarkMove({ node, to, from });
+
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.MoveBookmark(movedBookmarks));
+    })
+  );
 });
 

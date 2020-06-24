@@ -64,4 +64,37 @@ describe('Bookmark actions', () => {
     });
   });
 
+  describe('Move Bookmark', () => {
+    describe('Move Bookmark', () => {
+      it('should create an action', () => {
+        const payload: any = [{ name: 'bookmark name', id: 'id' }];
+        const action = new fromBookmarks.MoveBookmark(payload);
+        expect({ ...action }).toEqual({
+          type: fromBookmarks.MOVE_BOOKMARK,
+          payload: payload
+        });
+      });
+    });
+    describe('MoveBookmarkSuccess', () => {
+      it('should create an action', () => {
+        const payload: any = [{ name: 'bookmark name', id: 'id' }];
+        const action = new fromBookmarks.MoveBookmarkSuccess(payload);
+        expect({ ...action }).toEqual({
+          type: fromBookmarks.MOVE_BOOKMARK_SUCCESS,
+          payload: payload
+        });
+      });
+    });
+    describe('MoveBookmarkFail', () => {
+      it('should create an action', () => {
+        const error: any = 'some error';
+        const action = new fromBookmarks.MoveBookmarkFailure(error);
+        expect({ ...action }).toEqual({
+          type: fromBookmarks.MOVE_BOOKMARK_FAIL,
+          payload: error
+        });
+      });
+    });
+  });
+
 });

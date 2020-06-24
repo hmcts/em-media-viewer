@@ -2,7 +2,6 @@ import {createSelector} from '@ngrx/store';
 
 import * as fromFeature from '../reducers/reducers';
 import * as fromBookmarks from '../reducers/bookmarks.reducer';
-import { StoreUtils } from '../store-utils';
 import * as fromDocument from '../selectors/document.selectors';
 import { generateBookmarkNodes } from '../bookmarks-store-utils';
 

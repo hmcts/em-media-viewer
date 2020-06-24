@@ -68,6 +68,8 @@ tree-viewport {
   user-select: none;           /* non-prefixed version, currently not supported by any browser */
 }
 
+.tree-node-loading { display: none }
+
 tree-root .angular-tree-component-rtl {
   direction: rtl;
 }
