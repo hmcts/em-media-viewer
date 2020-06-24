@@ -14,8 +14,10 @@
     <div class="pageContainer__page-item">
       <ng-container *ngFor="let bMrk of bookmarks.bookmark">
         <div class="bookmark__here"
-          [style.top]="bMrk.yCoordinate * zoom + 'px'"
-          [title]="bMrk.name">
+           [style.width]="16 * zoom + 'px'"
+           [style.height]="24 * zoom + 'px'"
+           [style.top]="bMrk.yCoordinate * zoom + 'px'"
+           [title]="bMrk.name">
         </div>
       </ng-container>
     </div>
