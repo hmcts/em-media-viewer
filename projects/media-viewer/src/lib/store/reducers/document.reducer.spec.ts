@@ -1,5 +1,7 @@
 import * as fromDocument from './document.reducer';
 import * as fromActions from '../actions/document.action';
+import { ClearConvertDocUrl, ConvertFail, ConvertSuccess } from '../actions/document.action';
+import { DocumentState } from './document.reducer';
 
 describe('DocumentReducer', () => {
 
@@ -37,4 +39,63 @@ describe('DocumentReducer', () => {
       }
       expect(state.pages).toEqual(pages);
     });
+
+  it('should convert document', function () {
+    let url = 'url';
+    const documentState: DocumentState = {
+      convertedDocument: { url: url, error: undefined },
+      documentId: '',
+      pdfPosition: undefined,
+      pages: undefined,
+      hasDifferentPageSize: false,
+      loaded: true,
+      loading: false
+    };
+    url = 'new url';
+
+    const state = fromDocument.docReducer(documentState, new ConvertSuccess(url));
+
+    expect(state.convertedDocument).toEqual({ url: url, error: undefined });
+    expect(state.loaded).toBeTrue();
+    expect(state.loading).toBeFalse();
+  });
+
+  it('should fail to convert document', function () {
+    let url = 'url';
+    const error = 'error';
+    const documentState: DocumentState = {
+      convertedDocument: { url: url, error: undefined },
+      documentId: '',
+      pdfPosition: undefined,
+      pages: undefined,
+      hasDifferentPageSize: false,
+      loaded: true,
+      loading: false
+    };
+
+    const state = fromDocument.docReducer(documentState, new ConvertFail(error));
+
+    expect(state.convertedDocument).toEqual({ url: undefined, error: error });
+    expect(state.loaded).toBeTrue();
+    expect(state.loading).toBeFalse();
+  });
+
+  it('should clear doc url', function () {
+    let url = 'url';
+    const documentState: DocumentState = {
+      convertedDocument: { url: url, error: undefined },
+      documentId: '',
+      pdfPosition: undefined,
+      pages: undefined,
+      hasDifferentPageSize: false,
+      loaded: true,
+      loading: false
+    };
+
+    const state = fromDocument.docReducer(documentState, new ClearConvertDocUrl());
+
+    expect(state.convertedDocument).toEqual(undefined);
+    expect(state.loaded).toBeTrue();
+    expect(state.loading).toBeFalse();
+  });
 });

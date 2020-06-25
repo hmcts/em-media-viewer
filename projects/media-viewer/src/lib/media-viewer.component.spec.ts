@@ -74,10 +74,17 @@ describe('MediaViewerComponent', () => {
     expect(component.contentTypeUnsupported()).toBeTruthy();
   });
 
+  it('should be convertible', () => {
+    component.contentType = 'excel';
+
+    expect(component.contentTypeConvertible()).toBeTruthy();
+  });
+
   it('should not support content when content type is null', () => {
     component.contentType = null;
 
     expect(component.contentTypeUnsupported()).toBeTruthy();
+    expect(component.contentTypeConvertible()).toBeFalsy();
   });
 
   it('should reset the type exception when the url is changed', () => {
@@ -135,6 +142,15 @@ describe('MediaViewerComponent', () => {
     component.onMediaLoad(ResponseType.SUCCESS);
     expect(emitSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('should set the default toolbar behaviour for convertible type', () => {
+    const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'setup');
+    component.contentType = 'excel';
+    component.enableAnnotations = true;
+
+    component.setToolbarButtons();
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultPdfOptions, showHighlightButton: true, showDrawButton: true });
+  })
 
   it('should set the default toolbar behaviour for pdf viewer', () => {
     const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'setup');
