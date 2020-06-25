@@ -17,11 +17,12 @@ import { HighlightCreateService } from '../../annotations/annotation-set/annotat
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { Outline } from './side-bar/outline-item/outline.model';
 import { Store, StoreModule } from '@ngrx/store';
-import {reducers} from '../../store/reducers/reducers';
+import { reducers } from '../../store/reducers/reducers';
 import { SelectedAnnotation } from '../../store/actions/annotations.action';
 import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { IcpService } from '../../icp/icp.service';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -30,7 +31,13 @@ describe('PdfViewerComponent', () => {
   let printService: PrintService;
   let viewerEvents: ViewerEventService;
   let wrapperFactory: PdfJsWrapperFactory;
+  let icpService: IcpService;
   let mockWrapper: any;
+
+  const mockIcpService = {
+    setUp: () => {
+    }
+  } as any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -51,7 +58,8 @@ describe('PdfViewerComponent', () => {
         ViewerEventService,
         PrintService,
         PdfJsWrapperFactory,
-        HighlightCreateService
+        HighlightCreateService,
+        { provide: IcpService, useValue: mockIcpService },
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -94,6 +102,7 @@ describe('PdfViewerComponent', () => {
     printService = fixture.debugElement.injector.get(PrintService);
     viewerEvents = fixture.debugElement.injector.get(ViewerEventService);
     wrapperFactory = fixture.debugElement.injector.get(PdfJsWrapperFactory);
+    icpService = TestBed.get(IcpService);
     spyOn(wrapperFactory, 'create').and.returnValue(mockWrapper);
     component.ngOnChanges({
       url: new SimpleChange(null, component.url, true)
@@ -255,5 +264,15 @@ describe('PdfViewerComponent', () => {
     const commentSummarySpy = spyOn(component.toolbarEvents.showCommentSummary, 'next');
     component.toggleCommentsSummary();
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
+  });
+
+  it('should set up icp service if icp enabled', () => {
+    spyOn(icpService, 'setUp');
+
+    component.enableICP = true;
+    component.caseId = 'caseId';
+    component.ngAfterContentInit();
+
+    expect(icpService.setUp).toHaveBeenCalledWith('caseId');
   });
 });

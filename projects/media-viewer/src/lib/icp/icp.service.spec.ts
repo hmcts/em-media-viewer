@@ -1,4 +1,4 @@
-import { IcpDirective } from './icp.directive';
+import { IcpService } from './icp.service';
 import { fakeAsync, inject, TestBed } from '@angular/core/testing';
 import { IcpUpdateService } from './icp-update.service';
 import { SocketService } from './socket.service';
@@ -11,9 +11,9 @@ import { IcpParticipant, IcpSession } from './icp.interfaces';
 import * as fromIcpActions from '../store/actions/icp.action';
 import { of, Subscription } from 'rxjs';
 
-describe('Icp Directive', () => {
+describe('Icp Service', () => {
 
-  let directive: IcpDirective;
+  let service: IcpService;
   let updateService: IcpUpdateService;
   let presenterService: IcpPresenterService;
   let followerService: IcpFollowerService;
@@ -45,21 +45,21 @@ describe('Icp Directive', () => {
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({})
       ],
-      providers: [IcpDirective,
+      providers: [IcpService,
         SocketService,
         {provide: IcpUpdateService, useValue: mockUpdateService},
         {provide: IcpPresenterService, useValue: mockParticipantService},
         {provide: IcpFollowerService, useValue: mockParticipantService},
       ]
     });
-    directive = TestBed.get(IcpDirective);
+    service = TestBed.get(IcpService);
     updateService = TestBed.get(IcpUpdateService);
     presenterService = TestBed.get(IcpPresenterService);
     followerService = TestBed.get(IcpFollowerService);
   });
 
   it('should be created', () => {
-    expect(directive).toBeTruthy();
+    expect(service).toBeTruthy();
   });
 
   it('should subscribe to the sessionLaunch event',
@@ -67,7 +67,7 @@ describe('Icp Directive', () => {
       const mockSubscription = { unsubscribe: () => {} };
       spyOn(toolbarEvents.icp.sessionLaunch, 'subscribe').and.returnValue(mockSubscription);
 
-      directive.ngOnInit();
+      service.setUp('caseId');
       expect(toolbarEvents.icp.sessionLaunch.subscribe).toHaveBeenCalled();
     })
   );
@@ -76,9 +76,8 @@ describe('Icp Directive', () => {
     inject([Store], fakeAsync((store) => {
       spyOn(store, 'dispatch');
 
-      directive.caseId = 'caseId';
-      directive.ngOnInit();
-      directive.launchSession();
+      service.setUp('caseId');
+      service.launchSession();
 
       expect(store.dispatch).toHaveBeenCalledWith(new fromIcpActions.LoadIcpSession('caseId'));
     }))
@@ -86,29 +85,29 @@ describe('Icp Directive', () => {
 
   it('should subscribe to icp session store',
     inject([Store], fakeAsync((store) => {
-      spyOn(directive, 'setUpSessionSubscriptions');
+      spyOn(service, 'setUpSessionSubscriptions');
 
-      directive.caseId = 'caseId';
-      directive.launchSession();
+      service.caseId = 'caseId';
+      service.launchSession();
 
       const payload = {session: session, participantInfo: {client: participant, presenter: participant}};
       const action = new fromIcpActions.IcpSocketSessionJoined(payload);
       store.dispatch(action);
 
-      expect(directive.setUpSessionSubscriptions).toHaveBeenCalled();
+      expect(service.setUpSessionSubscriptions).toHaveBeenCalled();
     }))
   );
 
   it('should set up session subscriptions',
     inject([ToolbarEventService, Store], fakeAsync((toolbarEvents, store) => {
-      spyOn(directive, 'becomePresenter');
-      spyOn(directive, 'stopPresenting');
-      spyOn(directive, 'leavePresentation');
+      spyOn(service, 'becomePresenter');
+      spyOn(service, 'stopPresenting');
+      spyOn(service, 'leavePresentation');
       spyOn(presenterService, 'update');
       spyOn(followerService, 'update');
-      spyOn(directive, 'clientDisconnected');
+      spyOn(service, 'clientDisconnected');
 
-      directive.setUpSessionSubscriptions();
+      service.setUpSessionSubscriptions();
       toolbarEvents.icp.becomingPresenter.next();
       toolbarEvents.icp.stoppingPresenting.next();
       toolbarEvents.icp.sessionExitConfirmed.next();
@@ -117,58 +116,58 @@ describe('Icp Directive', () => {
       store.dispatch(action);
       mockUpdateService.clientDisconnected();
 
-      expect(directive.becomePresenter).toHaveBeenCalled();
-      expect(directive.stopPresenting).toHaveBeenCalled();
-      expect(directive.leavePresentation).toHaveBeenCalled();
-      expect(directive.presenter).toEqual(participant);
-      expect(directive.client).toEqual(participant);
-      expect(directive.isPresenter).toEqual(true);
+      expect(service.becomePresenter).toHaveBeenCalled();
+      expect(service.stopPresenting).toHaveBeenCalled();
+      expect(service.leavePresentation).toHaveBeenCalled();
+      expect(service.presenter).toEqual(participant);
+      expect(service.client).toEqual(participant);
+      expect(service.isPresenter).toEqual(true);
       expect(presenterService.update).toHaveBeenCalled();
       expect(followerService.update).toHaveBeenCalled();
-      expect(directive.clientDisconnected).toHaveBeenCalled();
+      expect(service.clientDisconnected).toHaveBeenCalled();
     }))
   );
 
   it('should unsubscribe from session subscriptions', () => {
-    directive.sessionSubscription = new Subscription();
+    service.sessionSubscription = new Subscription();
 
-    spyOn(directive.sessionSubscription, 'unsubscribe');
+    spyOn(service.sessionSubscription, 'unsubscribe');
     spyOn(presenterService, 'update');
     spyOn(followerService, 'update');
 
-    directive.unsubscribeSession();
+    service.unsubscribeSession();
 
     expect(presenterService.update).toHaveBeenCalled();
     expect(followerService.update).toHaveBeenCalled();
-    expect(directive.sessionSubscription.unsubscribe).toHaveBeenCalled();
+    expect(service.sessionSubscription.unsubscribe).toHaveBeenCalled();
   });
 
   it('should destroy subscriptions', () => {
-    directive.subscription = new Subscription();
-    directive.sessionSubscription = new Subscription();
+    service.subscription = new Subscription();
+    service.sessionSubscription = new Subscription();
 
-    spyOn(directive.subscription, 'unsubscribe');
-    spyOn(directive, 'unsubscribeSession');
+    spyOn(service.subscription, 'unsubscribe');
+    spyOn(service, 'unsubscribeSession');
 
-    directive.ngOnDestroy();
+    service.ngOnDestroy();
 
-    expect(directive.unsubscribeSession).toHaveBeenCalled();
-    expect(directive.subscription.unsubscribe).toHaveBeenCalled();
+    expect(service.unsubscribeSession).toHaveBeenCalled();
+    expect(service.subscription.unsubscribe).toHaveBeenCalled();
   });
 
   it('should leave presentation',
     inject([Store], fakeAsync((store) => {
-      spyOn(directive, 'stopPresenting');
-      spyOn(directive, 'unsubscribeSession');
+      spyOn(service, 'stopPresenting');
+      spyOn(service, 'unsubscribeSession');
       spyOn(updateService, 'leaveSession');
       spyOn(store, 'dispatch');
 
-      directive.isPresenter = true;
-      directive.sessionSubscription = new Subscription();
-      directive.leavePresentation();
+      service.isPresenter = true;
+      service.sessionSubscription = new Subscription();
+      service.leavePresentation();
 
-      expect(directive.stopPresenting).toHaveBeenCalled();
-      expect(directive.unsubscribeSession).toHaveBeenCalled();
+      expect(service.stopPresenting).toHaveBeenCalled();
+      expect(service.unsubscribeSession).toHaveBeenCalled();
       expect(updateService.leaveSession).toHaveBeenCalled();
       expect(store.dispatch).toHaveBeenCalledWith(new fromIcpActions.LeaveIcpSocketSession());
     }))
@@ -177,7 +176,7 @@ describe('Icp Directive', () => {
   it('should stop presenting', () => {
     spyOn(updateService, 'updatePresenter');
 
-    directive.stopPresenting();
+    service.stopPresenting();
 
     expect(updateService.updatePresenter).toHaveBeenCalled();
   });
@@ -185,19 +184,19 @@ describe('Icp Directive', () => {
   it('should become presenter', () => {
     spyOn(updateService, 'updatePresenter');
 
-    directive.client = participant;
-    directive.becomePresenter();
+    service.client = participant;
+    service.becomePresenter();
 
     expect(updateService.updatePresenter).toHaveBeenCalled();
   });
 
   it('should call stop presenting if client disconnected is presenter', () => {
-    spyOn(directive, 'stopPresenting');
+    spyOn(service, 'stopPresenting');
 
-    directive.presenter = participant;
-    directive.clientDisconnected(participant.id);
+    service.presenter = participant;
+    service.clientDisconnected(participant.id);
 
-    expect(directive.stopPresenting).toHaveBeenCalled();
+    expect(service.stopPresenting).toHaveBeenCalled();
   });
 
 });

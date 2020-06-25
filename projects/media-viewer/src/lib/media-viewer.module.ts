@@ -20,6 +20,7 @@ import { StoreModule} from '@ngrx/store';
 import { RedactionComponent } from './redaction/components/redaction.component';
 import { IcpSessionApiService } from './icp/icp-session-api.service';
 import { IcpUpdateService } from './icp/icp-update.service';
+import { IcpService } from './icp/icp.service';
 import { SocketService } from './icp/socket.service';
 // APP store
 import { reducers} from './store/reducers/reducers';
@@ -29,7 +30,6 @@ import { RedactionApiService } from './redaction/services/redaction-api.service'
 import { MutableDivModule } from 'mutable-div';
 import { ConvertibleContentViewerComponent } from "./viewers/convertible-content-viewer/convertible-content-viewer.component";
 import { DocumentConversionApiService } from "./viewers/convertible-content-viewer/document-conversion-api.service";
-import { IcpDirective } from './icp/icp.directive';
 import { IcpPresenterService } from './icp/icp-presenter.service';
 import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
@@ -60,7 +60,6 @@ import { TreeModule } from 'angular-tree-component';
     MediaViewerComponent,
     ConvertibleContentViewerComponent,
     GrabNDragDirective,
-    IcpDirective,
     ConfirmActionDialogComponent,
     RedactionComponent // todo made put this into module
   ],
@@ -76,6 +75,7 @@ import { TreeModule } from 'angular-tree-component';
     IcpSessionApiService,
     IcpUpdateService,
     SocketService,
+    IcpService,
     IcpPresenterService,
     IcpFollowerService,
     RedactionApiService,

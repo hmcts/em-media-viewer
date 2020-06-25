@@ -32,6 +32,7 @@ import { tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
+import { IcpService } from '../../icp/icp.service';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -82,6 +83,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
+    private icpService: IcpService,
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
@@ -121,6 +123,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.pdfWrapper.positionUpdated.asObservable().pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
       .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
     );
+
+    if (this.enableICP) { this.icpService.setUp(this.caseId); }
   }
 
   async ngOnChanges(changes: SimpleChanges) {
