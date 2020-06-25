@@ -60,11 +60,23 @@ describe('BookmarksApiService', () => {
     req.flush(null);
   }));
 
-  it('should update multiple bookmarks', function () {
-    service.updateMultipleBookmarks([{} as any]);
-  });
+  it('should update multiple bookmarks', fakeAsync((done) => {
+    service.updateMultipleBookmarks([bookmark]).subscribe((resp) => {
+      expect(resp).toEqual([bookmark]);
+    }, error => done(error));
 
-  it('should delete multiple bookmarks', function () {
+    const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks_multiple'));
+    expect(req.request.method).toBe('PUT');
+    req.flush([bookmark]);
+  }));
+
+  it('should delete multiple bookmarks', fakeAsync((done) => {
     service.deleteMultipleBookmarks({ deleted: ['bookmarkId'], updated: undefined })
-  });
+      .subscribe((resp) => expect(resp).toEqual(null),
+          error => done(error));
+
+    const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks_multiple'));
+    expect(req.request.method).toBe('DELETE');
+    req.flush(null);
+  }));
 });
