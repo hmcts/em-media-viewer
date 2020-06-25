@@ -15,6 +15,8 @@ import { IcpParticipant, IcpState } from './icp.interfaces';
 @Directive({
   selector: '[inCourtPresentation]'
 })
+
+// todo convert directive to service
 export class IcpDirective implements OnInit, OnDestroy {
 
   @Input() caseId: string;
