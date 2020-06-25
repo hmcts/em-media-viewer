@@ -96,23 +96,29 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   goToBookmark(bookmark: Bookmark) {
 
-    const viewportScale = this.pageLookup[bookmark.pageNumber + 1].viewportScale;
-    const height = this.pageLookup[bookmark.pageNumber + 1].styles.height / this.zoom;
-    const scaledY = (height - bookmark.yCoordinate) / viewportScale;
+    const scaledY: (yCoordinate: number, height: number, page: DocumentPages, zoom: number) => number =
+      function(yCoordinate, height, page, zoom) {
+        const viewportScale = page.viewportScale / zoom;
+        return ((height / zoom) - yCoordinate) / viewportScale;
+      };
+
+    const thisPage = this.pageLookup[bookmark.pageNumber + 1];
+    const defaultHeight = thisPage.styles.height;
+    const defaultScaleY = scaledY(bookmark.yCoordinate, defaultHeight, thisPage, this.zoom);
 
     let top = 0, left = 0;
     switch (this.rotate) {
       case 90:
-        left = - scaledY;
+        left = - defaultScaleY;
         break;
       case 180:
-        top = scaledY;
+        top = scaledY(bookmark.yCoordinate, (defaultHeight - (24 * this.zoom)), thisPage, this.zoom);
         break;
       case 270:
-        left = scaledY;
+        left = defaultScaleY;
         break;
       default:
-        top = scaledY;
+        top = defaultScaleY;
     }
 
     this.goToDestination.emit([
