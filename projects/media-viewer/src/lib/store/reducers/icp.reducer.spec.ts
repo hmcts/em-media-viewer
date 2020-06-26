@@ -9,8 +9,7 @@ const icpState = {
     dateOfHearing: new Date()
   },
   client: {id: 'clientId', username: 'name'},
-  presenter: {id: 'presenterId', username: 'name'},
-  caseId: 'caseId'
+  presenter: {id: 'presenterId', username: 'name'}
 };
 
 describe('IcpReducer', () => {
@@ -23,8 +22,8 @@ describe('IcpReducer', () => {
   });
 
   it('should set case id', function () {
-    const state = fromIcp.icpReducer(initialIcpSessionState, new SetCaseId(icpState.caseId));
-    expect(state.caseId).toEqual(icpState.caseId);
+    const state = fromIcp.icpReducer(initialIcpSessionState, new SetCaseId(icpState.session.caseId));
+    expect(state.session.caseId).toEqual(icpState.session.caseId);
   });
 
   it('should join session', function () {

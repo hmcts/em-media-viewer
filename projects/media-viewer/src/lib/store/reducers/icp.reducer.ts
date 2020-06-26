@@ -4,8 +4,7 @@ import { IcpSession, IcpState } from '../../icp/icp.interfaces';
 export const initialIcpSessionState: IcpState = {
   session: null,
   presenter: null,
-  client: null,
-  caseId: null
+  client: null
 };
 
 export function icpReducer (state = initialIcpSessionState,
@@ -15,9 +14,10 @@ export function icpReducer (state = initialIcpSessionState,
 
     case fromIcpActions.SET_CASE_ID: {
       const caseId = action.payload;
+      const session = {...state.session, caseId};
       return {
         ...state,
-        caseId
+        session
       };
     }
 
@@ -49,7 +49,6 @@ export function icpReducer (state = initialIcpSessionState,
   return state;
 }
 
-export const getCaseId = (state: IcpState) => state.caseId;
 export const getIcpSession = (state: IcpState) => state.session;
 export const getPresenter = (state: IcpState) => state.presenter;
 export const getClient = (state: IcpState) => state.client;

@@ -17,8 +17,7 @@ const icpState = {
   presenter: {
     id: 'presenterId',
     username: 'name'
-  },
-  caseId: 'caseId'
+  }
 };
 
 describe('Icp selectors', () => {
@@ -47,7 +46,6 @@ describe('Icp selectors', () => {
         }
       };
       store.dispatch(new fromActions.IcpSocketSessionJoined(payload));
-      store.dispatch(new fromActions.SetCaseId(icpState.caseId));
       expect(result).toEqual(icpState);
     });
   });
@@ -57,8 +55,8 @@ describe('Icp selectors', () => {
       let result;
       store.pipe(select(fromSelectors.getCaseId)).subscribe(value => result = value);
 
-      store.dispatch(new fromActions.SetCaseId(icpState.caseId));
-      expect(result).toEqual(icpState.caseId);
+      store.dispatch(new fromActions.SetCaseId(icpState.session.caseId));
+      expect(result).toEqual(icpState.session.caseId);
     });
   });
 
