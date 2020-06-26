@@ -28,10 +28,12 @@ export class IcpService implements OnDestroy  {
               private readonly presenterSubscriptions: IcpPresenterService,
               private readonly followerSubscriptions: IcpFollowerService,
               private store: Store<IcpState>) {
-    this.store.pipe(select(fromIcpSelectors.getCaseId), filter(value => !!value)).subscribe(caseId => {
+    this.subscription = this.store.pipe(select(fromIcpSelectors.getCaseId), filter(value => !!value)).subscribe(caseId => {
       this.caseId = caseId;
-      this.subscription = this.toolbarEvents.icp.sessionLaunch.subscribe(() => this.launchSession());
     });
+    this.subscription.add(this.toolbarEvents.icp.sessionLaunch.subscribe(() => {
+      if (this.caseId) { this.launchSession(); }
+    }));
   }
 
   ngOnDestroy() {
@@ -41,8 +43,9 @@ export class IcpService implements OnDestroy  {
 
   launchSession() {
     this.store.dispatch(new fromIcpActions.LoadIcpSession(this.caseId));
-    this.store.pipe(select(fromIcpSelectors.getIcpSession), filter(value => !!value), take(1))
-      .subscribe(() => this.setUpSessionSubscriptions());
+    this.subscription.add(this.store.pipe(select(fromIcpSelectors.getIcpSession),
+      filter(value => !!value && Object.keys(value).length > 1 ),
+      take(1)).subscribe(() => { this.setUpSessionSubscriptions(); }));
   }
 
   setUpSessionSubscriptions() {

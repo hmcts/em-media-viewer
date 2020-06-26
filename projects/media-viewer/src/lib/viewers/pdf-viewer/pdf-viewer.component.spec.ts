@@ -267,13 +267,15 @@ describe('PdfViewerComponent', () => {
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
 
-  it('Should call set case id action when case id is input',
+  it('Should call set case id action when case id is set',
     inject([Store], fakeAsync((store) => {
       spyOn(store, 'dispatch');
 
       const caseId = 'caseId';
       component.caseId = caseId;
-      component.ngAfterContentInit();
+      component.ngOnChanges({
+        caseId: new SimpleChange(null, component.caseId, true)
+      });
 
       expect(store.dispatch).toHaveBeenCalledWith(new SetCaseId(caseId));
     }))

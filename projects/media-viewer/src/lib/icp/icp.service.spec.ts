@@ -62,20 +62,27 @@ describe('Icp Service', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should subscribe to the sessionLaunch event when case id is set',
-    inject([Store, ToolbarEventService], fakeAsync((store, toolbarEvents) => {
-      const mockSubscription = { unsubscribe: () => {} };
-      spyOn(toolbarEvents.icp.sessionLaunch, 'subscribe').and.returnValue(mockSubscription);
-
-      const caseId = 'caseId';
-      const action = new fromIcpActions.SetCaseId(caseId);
+  it('should subscribe to case id in store',
+    inject([Store], fakeAsync((store) => {
+      const action = new fromIcpActions.SetCaseId('caseId');
       store.dispatch(action);
 
-      expect(toolbarEvents.icp.sessionLaunch.subscribe).toHaveBeenCalled();
+      expect(service.caseId).toEqual('caseId');
     }))
   );
 
-  it('should load icp session',
+  it('should subscribe to the sessionLaunch event',
+    inject([Store, ToolbarEventService], fakeAsync((store, toolbarEvents) => {
+      spyOn(service, 'launchSession');
+      service.caseId = 'caseId';
+
+      toolbarEvents.icp.sessionLaunch.next();
+
+      expect(service.launchSession).toHaveBeenCalled();
+    }))
+  );
+
+  it('should load icp session on session launch',
     inject([Store], fakeAsync((store) => {
       spyOn(store, 'dispatch');
 
@@ -86,7 +93,7 @@ describe('Icp Service', () => {
     }))
   );
 
-  it('should subscribe to icp session store',
+  it('should subscribe to icp session store when session launched',
     inject([Store], fakeAsync((store) => {
       spyOn(service, 'setUpSessionSubscriptions');
 
@@ -101,7 +108,7 @@ describe('Icp Service', () => {
     }))
   );
 
-  it('should set up session subscriptions',
+  it('should set up session subscriptions when session launched',
     inject([ToolbarEventService, Store], fakeAsync((toolbarEvents, store) => {
       spyOn(service, 'becomePresenter');
       spyOn(service, 'stopPresenting');
@@ -131,7 +138,7 @@ describe('Icp Service', () => {
     }))
   );
 
-  it('should unsubscribe from session subscriptions', () => {
+  it('should unsubscribe from session subscriptions when session destroyed', () => {
     service.sessionSubscription = new Subscription();
 
     spyOn(service.sessionSubscription, 'unsubscribe');

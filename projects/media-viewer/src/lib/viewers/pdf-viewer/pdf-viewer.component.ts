@@ -126,7 +126,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.pdfWrapper.positionUpdated.asObservable().pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
       .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
     );
-    if (this.caseId) { this.icpStore.dispatch(new SetCaseId(this.caseId)); }
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -146,6 +145,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         });
       }
     }
+    if (this.caseId) { this.icpStore.dispatch(new SetCaseId(this.caseId)); }
   }
 
   resetRotation() {
