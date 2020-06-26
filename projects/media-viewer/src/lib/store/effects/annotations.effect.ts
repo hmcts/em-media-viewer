@@ -18,8 +18,8 @@ export class AnnotationEffects {
     map((action: annotationsActions.LoadAnnotationSet) => action.payload),
     switchMap((documentId) => {
       return this.annotationApiService.getAnnotationSet(documentId).pipe(
-        map(annotations => {
-          return new annotationsActions.LoadAnnotationSetSucess(annotations.body);
+        map(res => {
+          return new annotationsActions.LoadAnnotationSetSucess(res);
         }),
         catchError(error => {
           return of(new annotationsActions.LoadAnnotationSetFail(error));

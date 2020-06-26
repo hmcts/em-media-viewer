@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { select, Store, StoreModule } from '@ngrx/store';
-import {initialState, reducers, State} from '../reducers/reducers';
+import { reducers, State } from '../reducers/reducers';
 
 import * as fromSelectors from './annotations.selectors';
 import * as fromActions from '../actions/annotations.action';
@@ -83,11 +83,6 @@ import * as fromTags from '../actions/tags.actions';
     type: 'highlight',
     positionTop: 673
   }
-  const annotationEntities = {
-    'c3adf070-353b-45d2-9a84-c912851cf34d': {
-      ...anno
-    }
-  };
 
   const annoSet: any = {
     createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
@@ -111,42 +106,6 @@ import * as fromTags from '../actions/tags.actions';
     ]
 
   };
-
-const commentEntities = {
-  'c3adf070-353b-45d2-9a84-c912851cf34d': {
-    createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
-      createdByDetails: {
-      forename: 'EM',
-        surname: 'showcase',
-        email: 'emshowcaseuser@hmcts.net'
-    },
-    lastModifiedByDetails: {
-      forename: 'EM',
-        surname: 'showcase',
-        email: 'emshowcaseuser@hmcts.net'
-    },
-    createdDate: '2020-04-17T12:54:26.117Z',
-      lastModifiedBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
-      lastModifiedDate: '2020-04-17T12:54:34.417Z',
-      id: '9f84cb89-8286-4602-a3b9-672c15efc7eb',
-      content: 'this is my comment',
-      annotationId: 'c3adf070-353b-45d2-9a84-c912851cf34d',
-      tags: [
-      {
-        name: 'important',
-        createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
-        label: 'important',
-        color: null
-      }
-    ]
-  }
-};
-
-const annotationPageEntities = {
-  '1': [
-    anno
-  ]
-}
 
 describe('Annotations selectors', () => {
   let store: Store<State>;
@@ -195,7 +154,7 @@ describe('Annotations selectors', () => {
         rotation: 0,
         id: '1'
       }];
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
+      store.dispatch(new fromActions.LoadAnnotationSetSucess({ status: 200, body: annoSet }));
       store.dispatch(new fromDocument.AddPages(payload));
       const expected = [
         {
@@ -220,13 +179,13 @@ describe('Annotations selectors', () => {
         scale: 1,
         rotation: 0
       }];
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
+      store.dispatch(new fromActions.LoadAnnotationSetSucess({ status: 200, body: annoSet }));
       store.dispatch(new fromDocument.AddPages(payload));
-      store.dispatch(new fromTags.AddFilterTags({important: false}));
+      store.dispatch(new fromTags.AddFilterTags({ important: false }));
       const pages =  {
         '1': {
-          scaleRotation: {scale: 1, rotation: 0,},
-          styles: {left: undefined, height: undefined, width: undefined}
+          scaleRotation: { scale: 1, rotation: 0 },
+          styles: { left: undefined, height: undefined, width: undefined }
         }
       }
       const expected = [
@@ -250,9 +209,9 @@ describe('Annotations selectors', () => {
         scale: 1,
         rotation: 0
       }];
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
+      store.dispatch(new fromActions.LoadAnnotationSetSucess({ status: 200, body: annoSet }));
       store.dispatch(new fromDocument.AddPages(payload));
-      store.dispatch(new fromTags.AddFilterTags({important: false}));
+      store.dispatch(new fromTags.AddFilterTags({ important: false }));
 
       const expected = [{
         comment: 'this is my comment',
@@ -283,9 +242,9 @@ describe('Annotations selectors', () => {
         scale: 1,
         rotation: 0
       }];
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
+      store.dispatch(new fromActions.LoadAnnotationSetSucess({ status: 200, body: annoSet }));
       store.dispatch(new fromDocument.AddPages(payload));
-      store.dispatch(new fromTags.AddFilterTags({important: false}));
+      store.dispatch(new fromTags.AddFilterTags({ important: false }));
       expect(result).toEqual([anno]);
     });
   });
@@ -303,7 +262,7 @@ describe('Annotations selectors', () => {
         scale: 1,
         rotation: 0
       }];
-      store.dispatch(new fromActions.LoadAnnotationSetSucess(annoSet));
+      store.dispatch(new fromActions.LoadAnnotationSetSucess({ status: 200, body: annoSet }));
       store.dispatch(new fromDocument.AddPages(payload));
       const cm = {
         comment: 'this is my comment',
@@ -317,7 +276,7 @@ describe('Annotations selectors', () => {
         }],
         user: 'EM showcase'
       };
-      store.dispatch(new fromTags.AddFilterTags({important: false}));
+      store.dispatch(new fromTags.AddFilterTags({ important: false }));
 
       expect(result).toEqual([cm]);
     });

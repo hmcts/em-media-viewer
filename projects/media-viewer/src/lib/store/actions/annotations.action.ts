@@ -28,12 +28,12 @@ export class LoadAnnotationSet implements Action {
 
 export class LoadAnnotationSetSucess implements Action {
   readonly type = LOAD_ANNOTATION_SET_SUCCESS;
-  constructor(public payload: AnnotationSet) { }
+  constructor(public payload: { status: number, body: AnnotationSet }) { }
 }
 
 export class LoadAnnotationSetFail implements Action {
   readonly type = LOAD_ANNOTATION_SET_FAIL;
-  constructor(public payload: any) { }
+  constructor(public payload: { status: number, body: any }) { }
 }
 
 export class SaveAnnotation implements Action {

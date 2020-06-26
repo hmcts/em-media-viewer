@@ -4,7 +4,7 @@ import 'pdfjs-dist/build/pdf.worker';
 import { Subject } from 'rxjs';
 import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
-import { PdfPosition } from '../side-bar/bookmarks/bookmarks.interfaces';
+import { PdfPosition } from '../../../store/reducers/document.reducer';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
 
@@ -86,6 +86,7 @@ export class PdfJsWrapper {
     try {
       const pdfDocument = await loadingTask;
       this.documentLoaded.next(pdfDocument);
+
 
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);

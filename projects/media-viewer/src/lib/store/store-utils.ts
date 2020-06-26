@@ -1,8 +1,11 @@
-import {Annotation} from '../annotations/annotation-set/annotation-view/annotation.model';
-import { Bookmark } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import { Annotation } from '../annotations/annotation-set/annotation-view/annotation.model';
 import * as moment_ from 'moment-timezone';
 
-// @dynamic
+/*
+  @dynamic
+  marking class as dynamic to stop compiler throwing error for lambda in static function
+  see https://github.com/angular/angular/issues/19698#issuecomment-338340211
+ */
 export class StoreUtils {
 
   static groupByKeyEntities(annotations, key): {[id: string]: any[]} {
@@ -92,13 +95,6 @@ export class StoreUtils {
       };
       return object;
     }, {});
-  }
-
-  static generateBookmarkEntities(bookmarks: Bookmark[]): {[id: string]: Bookmark} {
-    return bookmarks.reduce(
-      (bookmarkEntities, bookmark) =>
-        Object.assign(bookmarkEntities, { [bookmark.id]: bookmark }),
-      {});
   }
 
   static filterCommentsSummary(comments, filters) {

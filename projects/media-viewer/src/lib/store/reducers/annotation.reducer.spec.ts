@@ -1,7 +1,7 @@
 import * as fromAnnotations from './annotatons.reducer';
 import * as fromActions from '../actions/annotations.action';
 
-const annotation = {
+const annotationSet = {
   annotations: [{
     createdBy: 'fab3a662-4375-42e8-850c-664b9daaa716',
     annotationId: '1234',
@@ -74,7 +74,7 @@ describe('AnnotationReducer', () => {
   describe('LOAD_ANNOTATION_SET_SUCCESS action', () => {
     it('should set annotation entities page entities and comment entities', () => {
       const { initialState } = fromAnnotations;
-      const payload: any = annotation;
+      const payload: any = annotationSet;
       const action = new fromActions.LoadAnnotationSetSucess(payload);
       const state = fromAnnotations.reducer(initialState, action);
       expect(state.loading).toEqual(false);
@@ -86,10 +86,10 @@ describe('AnnotationReducer', () => {
   describe('DELETE_ANNOTATION_SUCCESS action', () => {
     it('should delete annotations', () => {
       const { initialState } = fromAnnotations;
-      const payload1: any = annotation;
+      const payload1: any = { status: 200, body: annotationSet };
       const action1 = new fromActions.LoadAnnotationSetSucess(payload1);
       const state = fromAnnotations.reducer(initialState, action1);
-      const payload2 = annotation.annotations[0].id;
+      const payload2 = annotationSet.annotations[0].id;
       const action = new fromActions.DeleteAnnotationSuccess(payload2);
       const state2 = fromAnnotations.reducer(state, action);
       expect(state2.annotationEntities).toEqual({});
@@ -100,10 +100,10 @@ describe('AnnotationReducer', () => {
   describe('ADD_OR_EDIT_COMMENT action', () => {
     it('should change comments', () => {
       const { initialState } = fromAnnotations;
-      const payload: any = annotation.annotations[0];
+      const payload: any = annotationSet.annotations[0];
       const action = new fromActions.AddOrEditComment(payload);
       const state = fromAnnotations.reducer(initialState, action);
-      expect(state.commentEntities[annotation.annotations[0].annotationId]).toEqual(annotation.annotations[0]);
+      expect(state.commentEntities[annotationSet.annotations[0].annotationId]).toEqual(annotationSet.annotations[0]);
     });
   });
 

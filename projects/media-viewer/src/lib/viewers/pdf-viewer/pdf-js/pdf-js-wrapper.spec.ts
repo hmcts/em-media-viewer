@@ -5,7 +5,7 @@ import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { Outline } from '../side-bar/outline-item/outline.model';
-import { PdfPosition } from '../side-bar/bookmarks/bookmarks.interfaces';
+import { PdfPosition } from '../../../store/reducers/document.reducer';
 
 describe('PdfJsWrapper', () => {
 

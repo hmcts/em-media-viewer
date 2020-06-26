@@ -5,6 +5,7 @@
     "entryFile": "src/public_api.ts"
   },
   "whitelistedNonPeerDependencies": [
+    "angular-tree-component",
     "@swimlane/ngx-datatable",
     "pdfjs-dist",
     "uuid",
