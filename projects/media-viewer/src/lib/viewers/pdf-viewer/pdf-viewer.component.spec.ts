@@ -23,6 +23,7 @@ import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { IcpService } from '../../icp/icp.service';
+import { SetCaseId } from '../../store/actions/icp.action';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -266,13 +267,15 @@ describe('PdfViewerComponent', () => {
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
 
-  it('should set up icp service if icp enabled', () => {
-    spyOn(icpService, 'setUp');
+  it('Should call set case id action when case id is input',
+    inject([Store], fakeAsync((store) => {
+      spyOn(store, 'dispatch');
 
-    component.enableICP = true;
-    component.caseId = 'caseId';
-    component.ngAfterContentInit();
+      const caseId = 'caseId';
+      component.caseId = caseId;
+      component.ngAfterContentInit();
 
-    expect(icpService.setUp).toHaveBeenCalledWith('caseId');
-  });
+      expect(store.dispatch).toHaveBeenCalledWith(new SetCaseId(caseId));
+    }))
+  );
 });

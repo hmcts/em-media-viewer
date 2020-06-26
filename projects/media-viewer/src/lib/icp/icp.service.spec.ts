@@ -62,21 +62,24 @@ describe('Icp Service', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should subscribe to the sessionLaunch event',
-    inject([ToolbarEventService], (toolbarEvents) => {
+  it('should subscribe to the sessionLaunch event when case id is set',
+    inject([Store, ToolbarEventService], fakeAsync((store, toolbarEvents) => {
       const mockSubscription = { unsubscribe: () => {} };
       spyOn(toolbarEvents.icp.sessionLaunch, 'subscribe').and.returnValue(mockSubscription);
 
-      service.setUp('caseId');
+      const caseId = 'caseId';
+      const action = new fromIcpActions.SetCaseId(caseId);
+      store.dispatch(action);
+
       expect(toolbarEvents.icp.sessionLaunch.subscribe).toHaveBeenCalled();
-    })
+    }))
   );
 
   it('should load icp session',
     inject([Store], fakeAsync((store) => {
       spyOn(store, 'dispatch');
 
-      service.setUp('caseId');
+      service.caseId = 'caseId';
       service.launchSession();
 
       expect(store.dispatch).toHaveBeenCalledWith(new fromIcpActions.LoadIcpSession('caseId'));

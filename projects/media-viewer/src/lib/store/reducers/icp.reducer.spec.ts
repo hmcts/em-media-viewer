@@ -1,6 +1,6 @@
 import * as fromIcp from './icp.reducer';
 import { initialIcpSessionState } from './icp.reducer';
-import { IcpPresenterUpdated, IcpSocketSessionJoined, LeaveIcpSocketSession, LoadIcpSession } from '../actions/icp.action';
+import { IcpPresenterUpdated, IcpSocketSessionJoined, LeaveIcpSocketSession, LoadIcpSession, SetCaseId } from '../actions/icp.action';
 
 const icpState = {
   session: {
@@ -10,6 +10,7 @@ const icpState = {
   },
   client: {id: 'clientId', username: 'name'},
   presenter: {id: 'presenterId', username: 'name'},
+  caseId: 'caseId'
 };
 
 describe('IcpReducer', () => {
@@ -19,6 +20,11 @@ describe('IcpReducer', () => {
     expect(state.session).toEqual(null);
     expect(state.client).toEqual(null);
     expect(state.presenter).toEqual(null);
+  });
+
+  it('should set case id', function () {
+    const state = fromIcp.icpReducer(initialIcpSessionState, new SetCaseId(icpState.caseId));
+    expect(state.caseId).toEqual(icpState.caseId);
   });
 
   it('should join session', function () {

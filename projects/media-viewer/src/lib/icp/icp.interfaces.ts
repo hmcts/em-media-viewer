@@ -4,6 +4,7 @@ export interface IcpState {
   session: IcpSession;
   presenter: IcpParticipant;
   client: IcpParticipant;
+  caseId: string;
 }
 
 export interface IcpSession {

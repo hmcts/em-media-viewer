@@ -27,11 +27,11 @@ export class IcpService implements OnDestroy  {
               private readonly socketService: IcpUpdateService,
               private readonly presenterSubscriptions: IcpPresenterService,
               private readonly followerSubscriptions: IcpFollowerService,
-              private store: Store<IcpState>) {}
-
-  setUp(id: string) {
-    this.caseId = id;
-    this.subscription = this.toolbarEvents.icp.sessionLaunch.subscribe(() => this.launchSession());
+              private store: Store<IcpState>) {
+    this.store.pipe(select(fromIcpSelectors.getCaseId), filter(value => !!value)).subscribe(caseId => {
+      this.caseId = caseId;
+      this.subscription = this.toolbarEvents.icp.sessionLaunch.subscribe(() => this.launchSession());
+    });
   }
 
   ngOnDestroy() {

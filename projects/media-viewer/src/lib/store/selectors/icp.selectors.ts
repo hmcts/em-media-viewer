@@ -7,6 +7,11 @@ export const getIcpState = createSelector(
   (state: fromFeature.State) =>  state.icp
 );
 
+export const getCaseId = createSelector(
+  getIcpState,
+  fromIcp.getCaseId
+);
+
 export const getIcpSession = createSelector(
   getIcpState,
   fromIcp.getIcpSession

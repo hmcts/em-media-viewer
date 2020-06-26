@@ -2,6 +2,17 @@ import * as fromIcp from './icp.action';
 import { IcpParticipant } from '../../icp/icp.interfaces';
 
 describe('Icp actions', () => {
+
+  describe('Set Case Id', () => {
+    it('should create an action', () => {
+      const action = new fromIcp.SetCaseId('caseId');
+      expect({...action}).toEqual({
+        type: fromIcp.SET_CASE_ID,
+        payload: 'caseId'
+      });
+    });
+  });
+
   describe('Load Session', () => {
     describe('Load Session', () => {
       it('should create an action', () => {
