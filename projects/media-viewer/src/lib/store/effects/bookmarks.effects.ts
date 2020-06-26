@@ -4,16 +4,16 @@ import { catchError, exhaustMap, map, switchMap, withLatestFrom } from 'rxjs/ope
 import { of } from 'rxjs';
 import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
 import * as bookmarksActions from '../actions/bookmarks.action';
-import * as fromStore from '../reducers/reducers';
 import { select, Store } from '@ngrx/store';
 import * as fromAnnotations from '../selectors/annotations.selectors';
-
+import * as fromBookmarks from '../reducers/bookmarks.reducer';
+import * as fromStore from '../reducers/reducers';
 
 @Injectable()
 export class BookmarksEffects {
 
   constructor(private actions$: Actions,
-              private store: Store<fromStore.AnnotationSetState>,
+              private store: Store<fromStore.AnnotationSetState|fromBookmarks.BookmarksState>,
               private bookmarksApiService: BookmarksApiService) {}
 
   @Effect()
@@ -42,13 +42,34 @@ export class BookmarksEffects {
     ));
 
   @Effect()
+  moveBookmark$ = this.actions$.pipe(
+    ofType(bookmarksActions.MOVE_BOOKMARK),
+    map((action: bookmarksActions.MoveBookmark) => action.payload),
+    exhaustMap((bookmarks) =>
+      this.bookmarksApiService.updateMultipleBookmarks(bookmarks)
+        .pipe(
+          map(bookmarks => new bookmarksActions.MoveBookmarkSuccess(bookmarks)),
+          catchError(error => of(new bookmarksActions.MoveBookmarkFailure(error)))
+        )
+    ));
+
+  @Effect()
   deleteBookmark$ = this.actions$.pipe(
     ofType(bookmarksActions.DELETE_BOOKMARK),
     map((action: bookmarksActions.DeleteBookmark) => action.payload),
-    exhaustMap((bookmarkId) =>
-      this.bookmarksApiService.deleteBookmark(bookmarkId)
+    exhaustMap(({ deleted, updated }) =>
+      this.bookmarksApiService.deleteMultipleBookmarks({ deleted, updated })
         .pipe(
-          map(() => new bookmarksActions.DeleteBookmarkSuccess(bookmarkId)),
+          switchMap(() => {
+            if (updated) {
+              return [
+                new bookmarksActions.DeleteBookmarkSuccess(deleted),
+                new bookmarksActions.UpdateBookmarkSuccess(updated)
+              ]
+            } else {
+              return [new bookmarksActions.DeleteBookmarkSuccess(deleted)];
+            }
+          }),
           catchError(error => of(new bookmarksActions.DeleteBookmarkFailure(error)))
         )
     ));

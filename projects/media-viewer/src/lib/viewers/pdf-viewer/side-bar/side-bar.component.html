@@ -3,7 +3,7 @@
     <button id="viewOutline"
             [ngClass]="{ 'toolbarButton': true, 'toggled': selectedView === 'outline' }"
             (click)="toggleSidebarView('outline')"
-            title="Show Document Outline" tabindex="3" data-l10n-id="document_outline">
+            title="Show Document Outline" tabindex="1" data-l10n-id="document_outline">
       <span data-l10n-id="document_outline_label">Document Outline</span>
     </button>
     <button *ngIf="annotationsEnabled"
@@ -11,7 +11,7 @@
             [ngClass]="{ toggled: selectedView === 'bookmarks' }"
             (click)="toggleSidebarView('bookmarks')"
             title="Show Bookmarks" tabindex="2" data-l10n-id="bookmarks">
-      <span data-l10n-id="bookmarks_label">Thumbnails</span>
+      <span data-l10n-id="bookmarks_label">Bookmarks</span>
     </button>
   </div>
   <div class="splitToolbarButtonSeparator"></div>
@@ -34,7 +34,7 @@
     </div>
     <div *ngIf="annotationsEnabled && selectedView === 'bookmarks'"
          id="bookmarkContainer">
-      <mv-bookmarks [bookmarks]="bookmarks$ | async"
+      <mv-bookmarks [bookmarkNodes]="bookmarkNodes$ | async"
                     [zoom]="zoom" [rotate]="rotate"
                     (goToDestination)="goToDestination($event)"></mv-bookmarks>
     </div>

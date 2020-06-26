@@ -2,9 +2,8 @@ import {createSelector} from '@ngrx/store';
 
 import * as fromFeature from '../reducers/reducers';
 import * as fromBookmarks from '../reducers/bookmarks.reducer';
-import { Bookmark } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
-import * as fromAnnotations from '../selectors/annotations.selectors';
-import * as fromDocument from './document.selectors';
+import * as fromDocument from '../selectors/document.selectors';
+import { generateBookmarkNodes } from '../bookmarks-store-utils';
 
 
 export const getBookmarkState = createSelector(
@@ -12,14 +11,15 @@ export const getBookmarkState = createSelector(
   (state: fromFeature.State) =>  state.bookmarks
 );
 
+
 export const getBookmarkEntities = createSelector(
   getBookmarkState,
   fromBookmarks.getBookmarkEnts
 );
 
-export const getAllBookmarks = createSelector(
+export const getBookmarkNodes = createSelector(
   getBookmarkEntities,
-  (entities: { [id: string]: Bookmark }) => Object.keys(entities).map(id => entities[id])
+  (entities) => generateBookmarkNodes(entities)
 );
 
 export const getEditableBookmark = createSelector(
@@ -28,14 +28,16 @@ export const getEditableBookmark = createSelector(
 );
 
 export const getBookmarkInfo = createSelector(
-  fromAnnotations.getDocumentIdSetId,
+  getBookmarkNodes,
+  fromDocument.getDocumentId,
   fromDocument.getPdfPosition,
-  (docSetId, pdfPosition) => {
+  (bookmarkNodes, documentId, pdfPosition) => {
     return {
       pageNumber: pdfPosition.pageNumber - 1,
       xCoordinate: pdfPosition.left,
       yCoordinate: pdfPosition.top,
-      documentId: docSetId.documentId
+      previous: bookmarkNodes.length > 0 ? bookmarkNodes[bookmarkNodes.length - 1].id : undefined,
+      documentId
     }
   }
 );

@@ -34,7 +34,7 @@ export function tagsReducer (
       };
     }
     case fromAnnotations.LOAD_ANNOTATION_SET_SUCCESS: {
-      const annotations = action.payload.annotations;
+      const annotations = action.payload.body.annotations;
       const tagNameEnt = StoreUtils.genTagNameEntities(annotations);
       return {
         ...state,

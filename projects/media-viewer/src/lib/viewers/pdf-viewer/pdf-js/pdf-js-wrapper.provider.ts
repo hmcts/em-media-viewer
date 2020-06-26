@@ -4,8 +4,7 @@ import {DocumentLoadProgress, PageEvent, PdfJsWrapper} from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
-import { Store } from '@ngrx/store';
-import { BookmarksState, PdfPosition } from '../side-bar/bookmarks/bookmarks.interfaces';
+import { PdfPosition } from '../../../store/reducers/document.reducer';
 
 @Injectable({providedIn: 'root'})
 export class PdfJsWrapperFactory {
@@ -46,7 +45,7 @@ export class PdfJsWrapperFactory {
       new Subject<Outline>(),
       new Subject(),
       new Subject<PageEvent[]>(),
-      new Subject<{location: PdfPosition}>()
+      new Subject<{ location: PdfPosition }>()
     );
 
     return this.pdfJsWrapper;

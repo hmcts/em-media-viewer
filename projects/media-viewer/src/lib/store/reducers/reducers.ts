@@ -3,7 +3,6 @@ import * as fromDocument from './document.reducer';
 import * as fromAnnotation from './annotatons.reducer';
 import * as fromTags from './tags.reducer';
 import * as fromBookmarks from './bookmarks.reducer';
-import { BookmarksState } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import * as fromRedaction from './redaction.reducer';
 import * as fromIcp from './icp.reducer';
 import { IcpState } from '../../icp/icp.interfaces';
@@ -12,7 +11,7 @@ export interface State {
   document: fromDocument.DocumentState;
   annotations: fromAnnotation.AnnotationSetState;
   tags: fromTags.TagsState;
-  bookmarks: BookmarksState;
+  bookmarks: fromBookmarks.BookmarksState;
   redactions: fromRedaction.RedactionState;
   icp: IcpState;
 }

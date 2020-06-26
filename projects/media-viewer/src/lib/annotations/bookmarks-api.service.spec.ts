@@ -9,7 +9,7 @@ describe('BookmarksApiService', () => {
 
   const bookmark = {
     name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
-  };
+  } as any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -56,6 +56,26 @@ describe('BookmarksApiService', () => {
     }, error => done(error));
 
     const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks/bookmarkId'));
+    expect(req.request.method).toBe('DELETE');
+    req.flush(null);
+  }));
+
+  it('should update multiple bookmarks', fakeAsync((done) => {
+    service.updateMultipleBookmarks([bookmark]).subscribe((resp) => {
+      expect(resp).toEqual([bookmark]);
+    }, error => done(error));
+
+    const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks_multiple'));
+    expect(req.request.method).toBe('PUT');
+    req.flush([bookmark]);
+  }));
+
+  it('should delete multiple bookmarks', fakeAsync((done) => {
+    service.deleteMultipleBookmarks({ deleted: ['bookmarkId'], updated: undefined })
+      .subscribe((resp) => expect(resp).toEqual(null),
+          error => done(error));
+
+    const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks_multiple'));
     expect(req.request.method).toBe('DELETE');
     req.flush(null);
   }));

@@ -3,6 +3,7 @@
 @import "sass/annotation-ui-theme";
 @import 'sass/bookmarks.scss';
 @import "sass/box-highlight";
+@import "sass/bookmarks";
 @import "sass/comment";
 @import "sass/comment-search";
 @import "sass/comment-set-header";
@@ -21,6 +22,7 @@
 @import "sass/toolbar/main";
 @import 'sass/tabs';
 @import 'sass/comment-filter';
+@import 'sass/angular-tree-component';
 @import 'sass/redaction';
 
 div.govuk-prose-scope, p {

@@ -42,10 +42,10 @@ describe('Annotations Effects', () => {
   };
 
   describe('loadAnnotation$', () => {
-    it('should return a LoadAnnotationSetSucess', () => {
+    it('should return a LoadAnnotationSetSuccess', () => {
       const action = new annotationActions.LoadAnnotationSet('assets/example4.pdf');
-      UserServiceMock.getAnnotationSet.and.returnValue(of({body: returnValue}));
-      const completion = new annotationActions.LoadAnnotationSetSucess(returnValue);
+      UserServiceMock.getAnnotationSet.and.returnValue(of({ body: returnValue, status: 200 }));
+      const completion = new annotationActions.LoadAnnotationSetSucess({ body: returnValue, status: 200 });
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
       expect(effects.loadAnnotation$).toBeObservable(expected);
