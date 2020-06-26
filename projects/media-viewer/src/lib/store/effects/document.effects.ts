@@ -14,7 +14,7 @@ export class DocumentEffects {
   ) { }
 
   @Effect()
-  covert$ = this.actions$.pipe(
+  convert$ = this.actions$.pipe(
     ofType(documentActions.CONVERT),
     map((action: documentActions.Convert) => action.payload),
     exhaustMap((docConversionPayload) => {
@@ -28,4 +28,3 @@ export class DocumentEffects {
         }));
     }));
 }
-
