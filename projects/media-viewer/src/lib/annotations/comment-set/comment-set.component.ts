@@ -1,10 +1,10 @@
 import {
   Component,
   ElementRef,
-  Input,
+  Input, OnChanges,
   OnDestroy,
   OnInit,
-  QueryList,
+  QueryList, SimpleChanges,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
@@ -28,7 +28,7 @@ import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
   selector: 'mv-comment-set',
   templateUrl: './comment-set.component.html',
  })
-export class CommentSetComponent implements OnInit, OnDestroy {
+export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() annotationSet: AnnotationSet;
   @Input() zoom: number;
@@ -57,13 +57,18 @@ export class CommentSetComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentsArray));
-    this.commentService.setCommentSet(this);
     this.subscriptions.push(
       this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
         this.redrawComments();
         this.showCommentsPanel = toggle;
       })
     );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.annotationSet) {
+      this.commentService.setCommentSet(this);
+    }
   }
 
   ngOnDestroy() {
