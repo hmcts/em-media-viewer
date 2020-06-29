@@ -31,7 +31,10 @@ import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import { tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
+import { SetCaseId } from '../../store/actions/icp.action';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
+import { IcpService } from '../../icp/icp.service';
+import { IcpState } from '../../icp/icp.interfaces';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -82,6 +85,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
+    private icpStore: Store<IcpState>,
+    private icpService: IcpService,
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
     private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
@@ -139,6 +144,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
           }
         });
       }
+    }
+    if (changes.caseId) {
+      this.icpStore.dispatch(new SetCaseId(this.caseId));
     }
   }
 

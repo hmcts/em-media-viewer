@@ -1,26 +1,20 @@
-import { Directive, Input, OnDestroy, OnInit } from '@angular/core';
-import { ToolbarEventService } from '../toolbar/toolbar-event.service';
-import { select, Store } from '@ngrx/store';
-import * as fromIcpSelectors from '../store/selectors/icp.selectors';
-import * as fromIcpActions from '../store/actions/icp.action';
+import { Injectable, OnDestroy } from '@angular/core';
+import { IcpParticipant, IcpState } from './icp.interfaces';
 import { Subscription } from 'rxjs';
-import { IcpUpdateService } from './icp-update.service';
+import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../viewers/viewer-event.service';
+import { IcpUpdateService } from './icp-update.service';
 import { IcpPresenterService } from './icp-presenter.service';
 import { IcpFollowerService } from './icp-follower.service';
+import { select, Store } from '@ngrx/store';
+import * as fromIcpActions from '../store/actions/icp.action';
+import * as fromIcpSelectors from '../store/selectors/icp.selectors';
 import { filter, take } from 'rxjs/operators';
-import { IcpParticipant, IcpState } from './icp.interfaces';
 
+@Injectable()
+export class IcpService implements OnDestroy  {
 
-@Directive({
-  selector: '[inCourtPresentation]'
-})
-
-// todo convert directive to service
-export class IcpDirective implements OnInit, OnDestroy {
-
-  @Input() caseId: string;
-
+  caseId: string;
   client: IcpParticipant;
   presenter: IcpParticipant;
   isPresenter: boolean;
@@ -33,10 +27,13 @@ export class IcpDirective implements OnInit, OnDestroy {
               private readonly socketService: IcpUpdateService,
               private readonly presenterSubscriptions: IcpPresenterService,
               private readonly followerSubscriptions: IcpFollowerService,
-              private store: Store<IcpState>) {}
-
-  ngOnInit() {
-    this.subscription = this.toolbarEvents.icp.sessionLaunch.subscribe(() => this.launchSession());
+              private store: Store<IcpState>) {
+    this.subscription = this.store.pipe(select(fromIcpSelectors.getCaseId), filter(value => !!value)).subscribe(caseId => {
+      this.caseId = caseId;
+    });
+    this.subscription.add(this.toolbarEvents.icp.sessionLaunch.subscribe(() => {
+      if (this.caseId) { this.launchSession(); }
+    }));
   }
 
   ngOnDestroy() {
@@ -46,8 +43,9 @@ export class IcpDirective implements OnInit, OnDestroy {
 
   launchSession() {
     this.store.dispatch(new fromIcpActions.LoadIcpSession(this.caseId));
-    this.store.pipe(select(fromIcpSelectors.getIcpSession), filter(value => !!value), take(1))
-      .subscribe(() => this.setUpSessionSubscriptions());
+    this.subscription.add(this.store.pipe(select(fromIcpSelectors.getIcpSession),
+      filter(value => !!value && Object.keys(value).length > 1 ),
+      take(1)).subscribe(() => { this.setUpSessionSubscriptions(); }));
   }
 
   setUpSessionSubscriptions() {

@@ -36,7 +36,6 @@
                           [height]="height">
     </mv-conversion-viewer>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
-                   inCourtPresentation
                    (pdfLoadStatus)="onMediaLoad($event)"
                    (pdfViewerException)="onLoadException($event)"
                    (documentTitle)="onDocumentTitleChange($event)"
