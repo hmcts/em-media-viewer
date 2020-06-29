@@ -268,6 +268,7 @@ describe('CommentSetComponent', () => {
   it('should call the comment service to update comments state value',
     inject([CommentService], (commentService: CommentService) => {
       spyOn(commentService, 'onCommentChange');
+      commentService.setCommentSet({commentComponents: []});
       component.allCommentsSaved();
       expect(commentService.onCommentChange).toHaveBeenCalled();
     })
