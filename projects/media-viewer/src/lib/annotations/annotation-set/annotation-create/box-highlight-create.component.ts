@@ -57,8 +57,9 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   initHighlight(event) {
     this.position = 'absolute';
     this.backgroundColor = 'yellow';
-    this.drawStartX = event.offsetX;
-    this.drawStartY = event.offsetY;
+    const [offsetX, offsetY] = this.findOffsetValues(event);
+    this.drawStartX = offsetX;
+    this.drawStartY = offsetY;
 
     this.display = 'block';
     this.height = 50;
@@ -83,10 +84,11 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   updateHighlight(event: MouseEvent) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
-      this.height = Math.abs(event.offsetY - this.drawStartY);
-      this.width = Math.abs(event.offsetX - this.drawStartX);
-      this.top = Math.min(event.offsetY, this.drawStartY);
-      this.left = Math.min(event.offsetX, this.drawStartX);
+      const [offsetX, offsetY] = this.findOffsetValues(event);
+      this.height = Math.abs(offsetY - this.drawStartY);
+      this.width = Math.abs(offsetX - this.drawStartX);
+      this.top = Math.min(offsetY, this.drawStartY);
+      this.left = Math.min(offsetX, this.drawStartX);
     }
   }
 
@@ -111,5 +113,13 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.display = 'none';
     this.width = 0;
     this.height = 0;
+  }
+
+  private findOffsetValues(event: MouseEvent) {
+    const currentTarg = event.currentTarget as HTMLElement;
+    const rect = currentTarg.getBoundingClientRect(),
+      offsetX = event.clientX - rect.left,
+      offsetY = event.clientY - rect.top;
+    return [offsetX, offsetY];
   }
 }
