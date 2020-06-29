@@ -5,12 +5,11 @@ import { select, Store } from '@ngrx/store';
 import * as bookmarksSelectors from '../../../store/selectors/bookmarks.selectors';
 import { BookmarkNode } from '../../../store/model/bookmarks.interface';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
-import * as fromBookmarks from '../../../store/reducers/bookmarks.reducer';
 import { take } from 'rxjs/operators';
 import uuid from 'uuid';
 import { ViewerEventService } from '../../viewer-event.service';
 import { ToolbarButtonVisibilityService } from '../../../toolbar/toolbar.module';
-import {PdfJsWrapperFactory} from '../pdf-js/pdf-js-wrapper.provider';
+import { BookmarksState } from '../../../store/reducers/bookmarks.reducer';
 
 @Component({
   selector: 'mv-side-bar',

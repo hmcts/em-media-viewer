@@ -34,9 +34,7 @@ import { IcpPresenterService } from './icp/icp-presenter.service';
 import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
 import { TreeModule } from 'angular-tree-component';
-import {BookmarkApiService} from './bookmark/services/bookmark-api.service';
-import {BookmarkModule} from './bookmark/bookmark.module';
-import {BookmarkIconsComponent} from './bookmark/components/bookmark-icons.component';
+import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.component';
 
 @NgModule({
   imports: [
@@ -51,8 +49,7 @@ import {BookmarkIconsComponent} from './bookmark/components/bookmark-icons.compo
     StoreModule.forFeature('media-viewer', reducers),
     EffectsModule.forFeature(effects),
     TreeModule.forRoot(),
-    MutableDivModule,
-    BookmarkModule
+    MutableDivModule
   ],
   declarations: [
     PdfViewerComponent,

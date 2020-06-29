@@ -8,11 +8,13 @@ import * as fromDocActions from '../actions/document.action';
 import { take } from 'rxjs/operators';
 
 
-describe('Bookmark selectors', () => {
+describe('Bookmarks selectors', () => {
+
   let store: Store<State>;
   const bookmark = {
     name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
   } as any;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -32,7 +34,17 @@ describe('Bookmark selectors', () => {
     store.dispatch(new fromDocActions.SetDocumentId('documentId'));
     store.dispatch(new fromActions.LoadBookmarksSuccess({ body: [bookmark, bookmark2], status: 200 }));
 
-    store.pipe(select(fromSelectors.getBookmarkInfo), take(1)).subscribe(value => {
+    store.dispatch(new fromDocActions.AddPages([{
+      div: {
+        offsetHeight: 466.666
+      },
+      scale: 1,
+      rotation: 0,
+      id: '1',
+      viewportScale: 1.33333
+    }]));
+
+    store.pipe(select(fromSelectors.getBookmarkInfo)).subscribe(value => {
       result = value;
     });
 
@@ -43,7 +55,9 @@ describe('Bookmark selectors', () => {
   describe('getBookmarksPerPage', () => {
     it('should return pages of bookmarks', () => {
       store.dispatch(new fromDocActions.AddPages([{
-        div: {},
+        div: {
+          offsetHeight: 466.666
+        },
         scale: 1,
         rotation: 0,
         id: '1',
@@ -62,7 +76,7 @@ describe('Bookmark selectors', () => {
         xCoordinate: 100,
         yCoordinate: -120
       };
-      const expected = [ { bookmark: [  ], styles: { left: undefined, height: undefined, width: undefined } } ];
+      const expected = [ { bookmark: [  ], styles: { left: undefined, height: 466.666, width: undefined } } ];
       expect(result).toEqual(expected);
     });
   });

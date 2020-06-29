@@ -209,7 +209,8 @@ describe('Annotations selectors', () => {
         div: {},
         id: '1',
         scale: 1,
-        rotation: 0
+        rotation: 0,
+        viewportScale: 1.3333
       }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess({ status: 200, body: annoSet }));
       store.dispatch(new fromDocument.AddPages(payload));
@@ -242,7 +243,8 @@ describe('Annotations selectors', () => {
         div: {},
         id: '1',
         scale: 1,
-        rotation: 0
+        rotation: 0,
+        viewportScale: 1.3333
       }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess({ status: 200, body: annoSet }));
       store.dispatch(new fromDocument.AddPages(payload));
@@ -262,7 +264,8 @@ describe('Annotations selectors', () => {
         div: {},
         id: '1',
         scale: 1,
-        rotation: 0
+        rotation: 0,
+        viewportScale: 1.3333
       }];
       store.dispatch(new fromActions.LoadAnnotationSetSucess({ status: 200, body: annoSet }));
       store.dispatch(new fromDocument.AddPages(payload));

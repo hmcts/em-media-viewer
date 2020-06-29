@@ -1,13 +1,15 @@
 import * as fromBookmarks from '../actions/bookmarks.action';
 import { Bookmark } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import { StoreUtils } from '../store-utils';
 import { generateBookmarkEntities } from '../bookmarks-store-utils';
 
 export interface BookmarksState {
-  bookmarks: Bookmark[],
-  bookmarkEntities: { [id: string]: Bookmark },
-  editableBookmark: string,
-  loaded: boolean,
-  loading: boolean
+  bookmarks: Bookmark[];
+  bookmarkEntities: { [id: string]: Bookmark };
+  bookmarkPageEntities: {[id: string]: any};
+  editableBookmark: string;
+  loaded: boolean;
+  loading: boolean;
 }
 
 export const initialBookmarksState: BookmarksState = {
@@ -34,7 +36,7 @@ export function bookmarksReducer (state = initialBookmarksState,
     case fromBookmarks.LOAD_BOOKMARKS_SUCCESS:
     case fromBookmarks.LOAD_BOOKMARKS_FAIL: {
       const bookmarks = action.payload.status === 200 ? action.payload.body : [];
-      const bookmarkEntities = StoreUtils.generateBookmarkEntities(bookmarks);
+      const bookmarkEntities = generateBookmarkEntities(bookmarks);
       const bookmarkPageEntities = StoreUtils.groupByKeyEntities(bookmarks, 'pageNumber');
 
       return {
@@ -70,26 +72,36 @@ export function bookmarksReducer (state = initialBookmarksState,
       const bookmarkEntities = {
         ...state.bookmarkEntities,
         ...movedBookmarks
-      }
+      };
       return {
         ...state,
         bookmarkEntities,
         loading: false,
         loaded: true
-      }
+      };
     }
 
     case fromBookmarks.DELETE_BOOKMARK_SUCCESS: {
       const bookmarkIds: string[] = action.payload;
       const bookmarkEntities = { ...state.bookmarkEntities };
-      bookmarkIds.forEach(bookmarkId => delete bookmarkEntities[bookmarkId]);
+      const bookmarkPageEntities = { ...state.bookmarkPageEntities };
+      const removeBookmarksByPage: {[pageNumber: number]: string[]} = {};
+      bookmarkIds.forEach(bookmarkId => {
+        if (removeBookmarksByPage[bookmarkEntities[bookmarkId].pageNumber] !== undefined &&
+          removeBookmarksByPage[bookmarkEntities[bookmarkId].pageNumber].length > 0) {
+          removeBookmarksByPage[bookmarkEntities[bookmarkId].pageNumber].push(bookmarkId);
+        } else {
+          removeBookmarksByPage[bookmarkEntities[bookmarkId].pageNumber] = [bookmarkId];
+        }
+        delete bookmarkEntities[bookmarkId];
+      });
 
-      const page = bookmarkEntities[bookmarkId].pageNumber;
-      delete bookmarkEntities[bookmarkId];
-      const bookmarkPageEntities = {
-        ...state.bookmarkPageEntities,
-        [page]: state.bookmarkPageEntities[page].filter(bookmark => bookmark.id !== bookmarkId)
-      };
+      Object.entries(removeBookmarksByPage).forEach(
+        ([pageNumber, bmrkIds]) => {
+          bookmarkPageEntities[pageNumber] = bookmarkPageEntities[pageNumber].filter(bookmarkId => bmrkIds.includes(bookmarkId));
+        }
+      );
+
       return {
         ...state,
         bookmarkEntities,

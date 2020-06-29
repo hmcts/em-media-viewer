@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmarks.action';
+import { Bookmark, BookmarkNode } from '../../../../store/model/bookmarks.interface';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmarks.selectors';
 import { Subscription } from 'rxjs';
+import { AnnotationSetState} from '../../../../store/reducers/annotatons.reducer';
+import { DocumentPages } from '../../../../store/reducers/document.reducer';
 import * as fromDocument from '../../../../store/selectors/document.selectors';
 import { TreeNode } from 'angular-tree-component';
 import * as fromBookmarks from '../../../../store/reducers/bookmarks.reducer';
 import { getBookmarkChildren } from '../../../../store/bookmarks-store-utils';
-import {AnnotationSetState, DocumentPages} from '../../../../store/reducers/reducers';
-import { Bookmark, BookmarksState, BookmarkNode } from './bookmarks.interfaces';
 
 @Component({
   selector: 'mv-bookmarks',

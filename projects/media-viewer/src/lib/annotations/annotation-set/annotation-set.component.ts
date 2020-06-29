@@ -13,8 +13,9 @@ import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import { HighlightCreateService } from './annotation-create/highlight-create.service';
 import { Rectangle } from './annotation-view/rectangle/rectangle.model';
 import { CreateBookmark } from '../../store/actions/bookmarks.action';
+import * as fromBookmarks from '../../store/selectors/bookmarks.selectors';
+import {take} from 'rxjs/operators';
 import uuid from 'uuid';
-import * as fromDocuments from '../../store/selectors/document.selectors';
 
 
 @Component({
@@ -80,25 +81,22 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   createBookmark(rectangle: Rectangle) {
-    const selection = window.getSelection().toString();
-    this.store.pipe(select(fromDocuments.getDocumentId))
-      .subscribe((docId) => {
+    this.store.pipe(select(fromBookmarks.getBookmarkInfo), take(1))
+      .subscribe((bookmarkInfo) => {
+        const selection = window.getSelection().toString();
         this.store.dispatch(new CreateBookmark({
           ...bookmarkInfo,
           name: selection.length > 0 ? selection.substr(0, 30) : 'new bookmark',
           id: uuid(),
-          documentId: docId,
-          name: selection.length > 0 ? selection.substr(0, 30) : 'new bookmark',
           pageNumber: this.highlightPage - 1,
           xCoordinate: rectangle.x,
           yCoordinate: rectangle.y
-        }));
-
-        this.highlightService.resetHighlight();
+        } as any));
         this.toolbarEvents.toggleSideBar(true);
+        this.highlightService.resetHighlight();
         this.rectangles = undefined;
-    });
 
+      });
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
