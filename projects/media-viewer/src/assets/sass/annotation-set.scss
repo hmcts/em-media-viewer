@@ -67,5 +67,10 @@ mv-annotation-set, mv-redactions, mv-bookmark-icons {
   }
 }
 
+mv-bookmark-icons {
+  .drawMode, .rot90, .rot180, .rot270 {
+    z-index: 3;
+  }
+}
 
 
