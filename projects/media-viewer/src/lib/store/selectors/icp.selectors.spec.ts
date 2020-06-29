@@ -50,6 +50,16 @@ describe('Icp selectors', () => {
     });
   });
 
+  describe('getCaseId', () => {
+    it('should return the case id', () => {
+      let result;
+      store.pipe(select(fromSelectors.getCaseId)).subscribe(value => result = value);
+
+      store.dispatch(new fromActions.SetCaseId(icpState.session.caseId));
+      expect(result).toEqual(icpState.session.caseId);
+    });
+  });
+
   describe('getIcpSession', () => {
     it('should return the session', () => {
       let result;
