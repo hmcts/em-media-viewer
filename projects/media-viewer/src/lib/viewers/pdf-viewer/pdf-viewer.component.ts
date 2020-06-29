@@ -145,7 +145,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         });
       }
     }
-    if (this.caseId) { this.icpStore.dispatch(new SetCaseId(this.caseId)); }
+    if (changes.caseId) {
+      this.icpStore.dispatch(new SetCaseId(this.caseId));
+    }
   }
 
   resetRotation() {
