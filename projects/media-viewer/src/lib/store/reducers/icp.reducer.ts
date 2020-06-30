@@ -12,6 +12,15 @@ export function icpReducer (state = initialIcpSessionState,
 
   switch (action.type) {
 
+    case fromIcpActions.SET_CASE_ID: {
+      const caseId = action.payload;
+      const session = {...state.session, caseId};
+      return {
+        ...state,
+        session
+      };
+    }
+
     case fromIcpActions.ICP_SOCKET_SESSION_JOINED: {
       const session: IcpSession = action.payload.session;
       const participantInfo = action.payload.participantInfo;

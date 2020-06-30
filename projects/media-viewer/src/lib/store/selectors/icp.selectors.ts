@@ -12,6 +12,11 @@ export const getIcpSession = createSelector(
   fromIcp.getIcpSession
 );
 
+export const getCaseId = createSelector(
+  getIcpSession,
+  session => session === null ? null : session.caseId
+);
+
 export const getPresenter = createSelector(
   getIcpState,
   fromIcp.getPresenter
