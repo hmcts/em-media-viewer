@@ -4,7 +4,8 @@ import { DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/
 import { Bookmark, BookmarkNode } from '../../../../store/model/bookmarks.interface';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmarks.selectors';
 import { Subscription } from 'rxjs';
-import { AnnotationSetState } from '../../../../store/reducers/annotatons.reducer';
+import { AnnotationSetState} from '../../../../store/reducers/annotatons.reducer';
+import { DocumentPages } from '../../../../store/reducers/document.reducer';
 import * as fromDocument from '../../../../store/selectors/document.selectors';
 import { TreeNode } from 'angular-tree-component';
 import * as fromBookmarks from '../../../../store/reducers/bookmarks.reducer';
@@ -21,15 +22,14 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Output() goToDestination = new EventEmitter<any[]>();
 
-  height: number;
-  width: number;
+  pageLookup:  {[pageId: number]: DocumentPages } = {};
   editableBookmark: string;
   BOOKMARK_CHAR_LIMIT = 30;
 
   options = {
     allowDrag: true,
     allowDrop: true
-  }
+  };
 
   $subscription: Subscription;
 
@@ -40,10 +40,11 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       .subscribe(editableId => this.editableBookmark = editableId);
     this.$subscription.add(this.store.select(fromDocument.getPages)
       .subscribe(pages => {
-        if (pages[1]) {
-          this.height = pages[1].styles.height;
-          this.width = pages[1].styles.width;
-        }
+
+        Object.keys(pages).map(key => {
+          this.pageLookup[key] = pages[key];
+        });
+
       }));
   }
 
@@ -95,20 +96,32 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   goToBookmark(bookmark: Bookmark) {
+
+    const scaledY: (yCoordinate: number, height: number, page: DocumentPages, zoom: number) => number =
+      function(yCoordinate, height, page, zoom) {
+        const viewportScale = page.viewportScale / zoom;
+        return ((height / zoom) - yCoordinate) / viewportScale;
+      };
+
+    const thisPage = this.pageLookup[bookmark.pageNumber + 1];
+    const defaultHeight = thisPage.styles.height;
+    const defaultScaleY = scaledY(bookmark.yCoordinate, defaultHeight, thisPage, this.zoom);
+
     let top = 0, left = 0;
     switch (this.rotate) {
       case 90:
-        left = - bookmark.yCoordinate;
+        left = - defaultScaleY;
         break;
       case 180:
-        top = (this.height/this.zoom) - bookmark.yCoordinate;
+        top = scaledY(bookmark.yCoordinate, (defaultHeight - (24 * this.zoom)), thisPage, this.zoom);
         break;
       case 270:
-        left = bookmark.yCoordinate;
+        left = defaultScaleY;
         break;
       default:
-        top = bookmark.yCoordinate;
+        top = defaultScaleY;
     }
+
     this.goToDestination.emit([
       bookmark.pageNumber,
       { 'name': 'XYZ' },
@@ -118,6 +131,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   private getSibling(node, index) {
-    return node.parent.children.length > index ? node.parent.children[index] : undefined
+    return node.parent.children.length > index ? node.parent.children[index] : undefined;
   }
 }

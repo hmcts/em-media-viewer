@@ -28,7 +28,8 @@ describe('Document selectors', () => {
         div: {},
         scale: 1,
         rotation: 0,
-        id: '1'
+        id: '1',
+        viewportScale: 1.33333
       }];
       store.dispatch(new fromActions.AddPages(payload));
       const expected = {
@@ -41,7 +42,8 @@ describe('Document selectors', () => {
           scaleRotation: {
             scale: 1,
             rotation: 0
-          }
+          },
+          viewportScale: 1.33333
         }
       };
       expect(result).toEqual(expected);

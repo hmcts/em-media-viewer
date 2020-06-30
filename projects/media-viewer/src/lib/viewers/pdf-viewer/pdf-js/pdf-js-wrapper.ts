@@ -62,7 +62,8 @@ export class PdfJsWrapper {
         div: page.div,
         scale: page.scale,
         rotation: page.rotation,
-        id: page.id
+        id: page.id,
+        viewportScale: page.viewport.scale
       };
     });
 
@@ -199,5 +200,6 @@ export interface PageEvent {
   scale: number;
   rotation: number;
   id: string;
+  viewportScale: number;
 }
 

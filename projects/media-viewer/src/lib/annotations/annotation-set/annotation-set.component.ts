@@ -87,13 +87,16 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
         this.store.dispatch(new CreateBookmark({
           ...bookmarkInfo,
           name: selection.length > 0 ? selection.substr(0, 30) : 'new bookmark',
-          id: uuid()
+          id: uuid(),
+          pageNumber: this.highlightPage - 1,
+          xCoordinate: rectangle.x,
+          yCoordinate: rectangle.y
         } as any));
         this.toolbarEvents.toggleSideBar(true);
         this.highlightService.resetHighlight();
         this.rectangles = undefined;
 
-      })
+      });
   }
 
   public onAnnotationUpdate(annotation: Annotation) {
@@ -108,7 +111,7 @@ export class AnnotationSetComponent implements OnInit, OnDestroy {
   }
 
   selectAnnotation(selectedAnnotation) {
-    this.store.dispatch(new fromActions.SelectedAnnotation(selectedAnnotation))
+    this.store.dispatch(new fromActions.SelectedAnnotation(selectedAnnotation));
   }
 
   saveAnnotation({ rectangles, page }) {

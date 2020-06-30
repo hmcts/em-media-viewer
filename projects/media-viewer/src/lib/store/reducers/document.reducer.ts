@@ -18,6 +18,7 @@ export interface DocumentPages {
  numberOfPages: number;
  styles: { left: number, height: number, width: number };
  scaleRotation: { scale: string; rotation: string };
+ viewportScale: number;
 }
 
 export interface PdfPosition {
@@ -79,7 +80,7 @@ export function docReducer (state = initialDocumentState,
       return {
         ...state,
         documentId
-      }
+      };
     }
 
     case fromActions.ADD_PAGES: {
@@ -87,7 +88,7 @@ export function docReducer (state = initialDocumentState,
       let pages = {};
       let pageHeight;
       let pageWidth;
-      let hasDifferentPageSize = state.hasDifferentPageSize
+      let hasDifferentPageSize = state.hasDifferentPageSize;
       payload.forEach(page => {
         if (!hasDifferentPageSize && pageHeight && pageWidth &&
           (pageHeight !== page.div['offsetHeight'] || pageWidth !== page.div['offsetWidth'])) {
@@ -109,7 +110,8 @@ export function docReducer (state = initialDocumentState,
 
         const p = {
           styles,
-          scaleRotation
+          scaleRotation,
+          viewportScale: page.viewportScale
         };
 
         pages = {
@@ -130,7 +132,7 @@ export function docReducer (state = initialDocumentState,
       return {
         ...state,
         pdfPosition
-      }
+      };
     }
   }
   return state;

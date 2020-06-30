@@ -8,6 +8,7 @@ import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { PdfPositionUpdate } from '../../../store/actions/document.action';
 import { ViewerEventService } from '../../viewer-event.service';
+import * as fromDocument from '../../../store/actions/document.action';
 
 describe('SideBarComponent', () => {
   let component: SideBarComponent;
@@ -44,7 +45,7 @@ describe('SideBarComponent', () => {
   });
 
   it('should trigger goToDestination event on viewerEvents',
-    inject([ViewerEventService],(viewerEvents) => {
+    inject([ViewerEventService], (viewerEvents) => {
       spyOn(viewerEvents, 'goToDestination');
 
       component.goToDestination([]);
@@ -62,6 +63,8 @@ describe('SideBarComponent', () => {
 
   it('should dispatch CreateBookmark action',
     inject([Store], fakeAsync((store) => {
+
+      store.dispatch(new fromDocument.AddPages([{div: {}, scale: 1, rotation: 0, id: '1', viewportScale: 1.333333}]));
       store.dispatch(new PdfPositionUpdate({ pageNumber: 1, top: 50, left: 30, rotation: 0 }));
       spyOn(store, 'dispatch');
 
@@ -69,7 +72,7 @@ describe('SideBarComponent', () => {
       tick();
 
       expect(store.dispatch).toHaveBeenCalled();
-      expect(component.selectedView).toBe('bookmarks')
+      expect(component.selectedView).toBe('bookmarks');
     }))
   );
 });
