@@ -34,6 +34,7 @@ import { IcpPresenterService } from './icp/icp-presenter.service';
 import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
 import { TreeModule } from 'angular-tree-component';
+import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.component';
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { TreeModule } from 'angular-tree-component';
     ConvertibleContentViewerComponent,
     GrabNDragDirective,
     ConfirmActionDialogComponent,
-    RedactionComponent // todo made put this into module
+    RedactionComponent, // todo made put this into module
+    BookmarkIconsComponent
   ],
   entryComponents: [
     PdfViewerComponent,

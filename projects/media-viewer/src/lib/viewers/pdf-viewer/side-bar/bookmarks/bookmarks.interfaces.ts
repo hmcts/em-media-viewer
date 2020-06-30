@@ -16,3 +16,8 @@ export interface PdfPosition {
   left: number;
   rotation: number;
 }
+
+export interface BookmarksPerPage {
+  bookmark: { [id: string]: Bookmark };
+  styles: { left: number, height: number, width: number };
+}

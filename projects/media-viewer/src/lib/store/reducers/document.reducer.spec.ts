@@ -19,7 +19,8 @@ describe('DocumentReducer', () => {
           div: {},
           scale: 1,
           rotation: 0,
-          id: '1'
+          id: '1',
+          viewportScale: 1.33333
         }];
       const { initialDocumentState } = fromDocument;
       const action = new fromActions.AddPages(payload);
@@ -34,9 +35,10 @@ describe('DocumentReducer', () => {
           scaleRotation: {
             scale: 1,
             rotation: 0
-          }
+          },
+          viewportScale: 1.33333
         }
-      }
+      };
       expect(state.pages).toEqual(pages);
     });
 
