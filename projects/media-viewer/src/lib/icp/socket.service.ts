@@ -1,11 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import socketio from 'socket.io-client';
+import socketio from 'socket.io-client/dist/socket.io.slim.js';
 
 @Injectable()
 export class SocketService implements OnDestroy {
 
-  private socket: SocketIOClient.Socket;
+  private socket: any;
   subscription: Subscription;
 
   connected$ = new BehaviorSubject<boolean>(false);
@@ -23,7 +23,6 @@ export class SocketService implements OnDestroy {
   }
 
   join(session) {
-    // auto rejoin after reconnect mechanism
     this.subscription = this.connected$.subscribe(connected => {
       if (connected) {
         this.socket.emit('join', session);
@@ -45,12 +44,11 @@ export class SocketService implements OnDestroy {
       this.socket.on(event, data => {
         observer.next(data);
       });
-      // dispose of the event listener when unsubscribed
       return () => this.socket.off(event);
     });
   }
 
-  getSocketClient(): any {
+  getSocketClient() {
     return socketio('/', {
       path: '/icp/socket.io', agent: true
     });
