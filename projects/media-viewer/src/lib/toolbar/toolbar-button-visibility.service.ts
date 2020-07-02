@@ -19,6 +19,7 @@ export class ToolbarButtonVisibilityService {
   public showSidebar = false;
   public showCommentSummary = false;
   public showGrabNDragButton = false;
+  public showSaveRotationButton = false;
 
   /**
    * Reset the visibility of all buttons to false then set the value from the options
@@ -39,6 +40,7 @@ export class ToolbarButtonVisibilityService {
     this.showSidebar = false;
     this.showCommentSummary = false;
     this.showGrabNDragButton = false;
+    this.showSaveRotationButton = false;
 
     for (const key in options) {
       this[key] = options[key];

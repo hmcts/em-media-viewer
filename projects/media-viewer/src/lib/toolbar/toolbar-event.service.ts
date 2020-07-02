@@ -36,6 +36,7 @@ export class ToolbarEventService {
   public readonly changePageByDeltaSubject = new Subject<number>();
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
+  public readonly saveRotationSubject = new Subject();
 
   public readonly redactionMode = new BehaviorSubject(false);
   public readonly redactionPreview = new Subject<boolean>();
@@ -132,6 +133,10 @@ export class ToolbarEventService {
 
   public toggleCommentsSummary(value: boolean): void {
     this.showCommentSummary.next(value);
+  }
+
+  public saveRotation(): void {
+    this.saveRotationSubject.next();
   }
 
   public toggleGrabNDrag(): void {

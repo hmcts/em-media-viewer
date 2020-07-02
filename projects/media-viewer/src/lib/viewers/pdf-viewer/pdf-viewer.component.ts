@@ -35,6 +35,7 @@ import { SetCaseId } from '../../store/actions/icp.action';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
 import { IcpService } from '../../icp/icp.service';
 import { IcpState } from '../../icp/icp.interfaces';
+import { Rotation } from '../../rotation/rotation.model';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -82,6 +83,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private viewerException: ViewerException;
   showCommentsPanel: boolean;
   enableGrabNDrag = false;
+  lastSavedRotation = 0;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -110,8 +112,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription = this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url));
     this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() => {
         this.pdfWrapper.downloadFile(this.downloadUrl || this.url, this.downloadFileName)
-    }));
-    this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)));
+      }
+    ));
+    this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation, true)));
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
@@ -126,6 +129,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.pdfWrapper.positionUpdated.asObservable().pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
       .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
     );
+    this.$subscription.add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
+
+    this.setInitialRotation();
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -236,7 +242,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
 
-  private setRotation(rotation: number) {
+  private setRotation(rotation: number, showSaveRotation = false) {
     const pageNumber = this.pdfWrapper.getPageNumber();
     if (this.commentsPanel) {
       this.commentsPanel.container.nativeElement.style.height = 0;
@@ -244,7 +250,34 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.rotate(rotation);
     this.pdfWrapper.setPageNumber(pageNumber);
     this.rotation = (this.rotation + rotation) % 360;
+
+    if (this.lastSavedRotation === this.rotation) {
+      this.toolbarButtons.showSaveRotationButton = false;
+    } else if (showSaveRotation) {
+      this.toolbarButtons.showSaveRotationButton = true;
+    }
+
     this.setPageHeights();
+  }
+
+  private saveRotation() {
+    // const payload: Rotation = {
+    //   metadata: {
+    //     [this.documentId]: this.rotation.toString()
+    //   }
+    // }
+    //
+    // this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
+    this.lastSavedRotation = this.rotation;
+    console.log('Last Saved Rotation: ', this.lastSavedRotation);
+  }
+
+  private setInitialRotation() {
+    this.store.dispatch(new fromDocumentActions.LoadRotation(this.documentId));
+
+    this.$subscription.add(this.store.pipe(select(fromDocumentsSelector.getRotation))
+      .subscribe(rotation => this.setRotation(rotation))
+    );
   }
 
   private setZoom(zoomFactor: number) {

@@ -35,6 +35,7 @@ import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
 import { TreeModule } from 'angular-tree-component';
 import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.component';
+import { RotationApiService } from './rotation/rotation-api.service';
 
 @NgModule({
   imports: [
@@ -81,7 +82,8 @@ import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.com
     IcpPresenterService,
     IcpFollowerService,
     RedactionApiService,
-    DocumentConversionApiService
+    DocumentConversionApiService,
+    RotationApiService,
   ],
   exports: [
     MediaViewerComponent

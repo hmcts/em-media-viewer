@@ -33,5 +33,10 @@ export const getConvertedDocument = createSelector(
   fromDocument.getConvertedDocument
 );
 
+export const getRotation = createSelector(
+  getDocumentState,
+  fromDocument.getRotation
+);
+
 
 

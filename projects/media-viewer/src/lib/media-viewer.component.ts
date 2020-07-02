@@ -9,20 +9,20 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   defaultImageOptions,
   defaultPdfOptions,
   defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
 } from './toolbar/toolbar-button-visibility.service';
-import {AnnotationSet} from './annotations/annotation-set/annotation-set.model';
-import {ToolbarEventService} from './toolbar/toolbar-event.service';
-import {AnnotationApiService} from './annotations/annotation-api.service';
-import {ResponseType, ViewerException} from './viewers/viewer-exception.model';
-import {CommentService} from './annotations/comment-set/comment/comment.service';
+import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
+import { ToolbarEventService } from './toolbar/toolbar-event.service';
+import { AnnotationApiService } from './annotations/annotation-api.service';
+import { ResponseType, ViewerException } from './viewers/viewer-exception.model';
+import { CommentService } from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
-import {select, Store} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as fromStore from './store/reducers/reducers';
 import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
 import * as fromDocumentsSelector from './store/selectors/document.selectors';
@@ -128,7 +128,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
     this.setToolbarButtons();
     this.detectOs();
-    this.setToolbarButtons();
     this.typeException = false;
   }
 

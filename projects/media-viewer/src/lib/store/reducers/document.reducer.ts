@@ -10,6 +10,8 @@ export interface DocumentState {
   pdfPosition: PdfPosition;
   pages: {[id: string]: DocumentPages};
   hasDifferentPageSize: boolean;
+  // rotation: {[key: string]: string};
+  rotation: number;
   loaded: boolean;
   loading: boolean;
 }
@@ -35,6 +37,7 @@ export const initialDocumentState: DocumentState = {
   pdfPosition: undefined,
   pages: {},
   hasDifferentPageSize: false,
+  rotation: undefined,
   loading: false,
   loaded: false
 };
@@ -72,6 +75,23 @@ export function docReducer (state = initialDocumentState,
         ...state,
         convertedDocument
       };
+    }
+
+    case fromActions.SAVE_ROTATION_SUCCESS: {
+      const rotation = action.payload;
+      return {
+        ...state,
+        rotation
+      };
+    }
+
+    case fromActions.LOAD_ROTATION_SUCCESS: {
+        const mapping = action.payload;
+        const rotation = mapping.documentId;
+        return {
+          ...state,
+          rotation
+        };
     }
 
     case fromActions.SET_DOCUMENT_ID : {
@@ -141,5 +161,6 @@ export const getDocPages = (state: DocumentState) => state.pages;
 export const getDocId = (state: DocumentState) => state.documentId;
 export const getPdfPos = (state: DocumentState) => state.pdfPosition;
 export const getHasDifferentPageSizes = (state: DocumentState) => state.hasDifferentPageSize;
+export const getRotation = (state: DocumentState) => state.rotation;
 
 export const getConvertedDocument = (state: DocumentState) => state.convertedDocument;

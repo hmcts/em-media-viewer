@@ -19,10 +19,13 @@ import { ViewerUtilService } from '../viewer-util.service';
 import { ViewerEventService } from '../viewer-event.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocument from '../../store/actions/document.action';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
+import * as fromDocumentActions from '../../store/actions/document.action';
+import { Rotation } from '../../rotation/rotation.model';
+import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -54,6 +57,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   showCommentsPanel: boolean;
   enableGrabNDrag = false;
+  lastSavedRotation = 0;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -69,14 +73,17 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       this.store.dispatch(new fromRedactionActions.LoadRedactions(this.url));
     }
     this.subscriptions.push(
-      this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
+      this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation, true)),
       this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
       this.toolbarEvents.downloadSubject.subscribe(() => this.download()),
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag),
+      this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()),
       this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
+
+    this.setInitialRotation();
   }
 
   ngOnDestroy(): void {
@@ -94,8 +101,35 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private setRotation(rotation: number) {
+  private setRotation(rotation: number, showSaveRotation = false) {
     this.rotation = (this.rotation + rotation) % 360;
+
+    if (this.lastSavedRotation === this.rotation) {
+      this.toolbarButtons.showSaveRotationButton = false;
+    } else if (showSaveRotation) {
+      this.toolbarButtons.showSaveRotationButton = true;
+    }
+  }
+
+  private saveRotation() {
+    // const payload: Rotation = {
+    //   metadata: {
+    //     [this.extractDMStoreDocId(this.url)]: this.rotation.toString()
+    //   }
+    // }
+    //
+    // this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
+    this.lastSavedRotation = this.rotation;
+    console.log('Last Saved Rotation: ', this.lastSavedRotation);
+  }
+
+  private setInitialRotation() {
+    const documentId = this.extractDMStoreDocId(this.url);
+    this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
+
+    this.subscriptions.push(this.store.pipe(select(fromDocumentsSelector.getRotation))
+      .subscribe(rotation => this.setRotation(rotation))
+    );
   }
 
   private async setZoom(zoomFactor: number) {
@@ -173,5 +207,10 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
+  }
+
+  private extractDMStoreDocId(url: string): string {
+    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
+    return url.replace('/binary', '');
   }
 }
