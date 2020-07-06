@@ -129,8 +129,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
     );
     this.$subscription.add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
-
-    this.setInitialRotation();
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -173,6 +171,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.setPageHeights();
     this.$subscription.add(this.store.pipe(select(fromDocumentsSelector.getPageDifference))
       .subscribe(hasDifferentPageSie => this.hasDifferentPageSize = hasDifferentPageSie));
+    this.setInitialRotation();
   }
 
   private onDocumentLoadInit() {
@@ -259,15 +258,15 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.store.pipe(select(fromDocumentsSelector.getRotation),
       take(1))
       .subscribe(lastRotation => {
-          lastSavedRotation = lastRotation ? lastRotation : 0
+        lastSavedRotation = lastRotation ? lastRotation : 0
 
-          this.rotateDocument(rotation);
+        this.rotateDocument(rotation);
 
-          if (lastSavedRotation === this.rotation) {
-            this.toolbarButtons.showSaveRotationButton = false;
-          } else {
-            this.toolbarButtons.showSaveRotationButton = true;
-          }
+        if (lastSavedRotation === this.rotation) {
+          this.toolbarButtons.showSaveRotationButton = false;
+        } else {
+          this.toolbarButtons.showSaveRotationButton = true;
+        }
       });
   }
 
