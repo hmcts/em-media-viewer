@@ -28,7 +28,7 @@ import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocumentActions from '../../store/actions/document.action';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
-import { tap, throttleTime } from 'rxjs/operators';
+import { filter, take, tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
 import { SetCaseId } from '../../store/actions/icp.action';
@@ -83,7 +83,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private viewerException: ViewerException;
   showCommentsPanel: boolean;
   enableGrabNDrag = false;
-  lastSavedRotation = 0;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -114,7 +113,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         this.pdfWrapper.downloadFile(this.downloadUrl || this.url, this.downloadFileName)
       }
     ));
-    this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation, true)));
+    this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation)));
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
@@ -242,42 +241,53 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
 
-  private setRotation(rotation: number, showSaveRotation = false) {
+  private rotateDocument(rotation: number) {
     const pageNumber = this.pdfWrapper.getPageNumber();
     if (this.commentsPanel) {
       this.commentsPanel.container.nativeElement.style.height = 0;
     }
+
     this.pdfWrapper.rotate(rotation);
     this.pdfWrapper.setPageNumber(pageNumber);
     this.rotation = (this.rotation + rotation) % 360;
 
-    if (this.lastSavedRotation === this.rotation) {
-      this.toolbarButtons.showSaveRotationButton = false;
-    } else if (showSaveRotation) {
-      this.toolbarButtons.showSaveRotationButton = true;
-    }
-
     this.setPageHeights();
   }
 
-  private saveRotation() {
-    // const payload: Rotation = {
-    //   metadata: {
-    //     [this.documentId]: this.rotation.toString()
-    //   }
-    // }
-    //
-    // this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
-    this.lastSavedRotation = this.rotation;
-    console.log('Last Saved Rotation: ', this.lastSavedRotation);
+  private onRotate(rotation: number) {
+    let lastSavedRotation;
+    this.store.pipe(select(fromDocumentsSelector.getRotation),
+      take(1))
+      .subscribe(lastRotation => {
+          lastSavedRotation = lastRotation ? lastRotation : 0
+
+          this.rotateDocument(rotation);
+
+          if (lastSavedRotation === this.rotation) {
+            this.toolbarButtons.showSaveRotationButton = false;
+          } else {
+            this.toolbarButtons.showSaveRotationButton = true;
+          }
+      });
   }
 
   private setInitialRotation() {
-    this.store.dispatch(new fromDocumentActions.LoadRotation(this.documentId));
-
-    this.$subscription.add(this.store.pipe(select(fromDocumentsSelector.getRotation))
-      .subscribe(rotation => this.setRotation(rotation))
+    const documentId = this.extractDMStoreDocId(this.url);
+    this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
+    this.$subscription.add(this.store.pipe(select(fromDocumentsSelector.getRotation),
+      filter(value => !!value),
+      take(1))
+      .subscribe(rotation => this.rotateDocument(rotation))
     );
+  }
+
+  private saveRotation() {
+    const payload: Rotation = {
+      documentId: this.documentId,
+      rotationAngle: this.rotation
+    }
+
+    this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
   }
 
   private setZoom(zoomFactor: number) {

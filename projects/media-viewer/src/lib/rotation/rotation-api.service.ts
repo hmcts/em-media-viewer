@@ -7,7 +7,7 @@ import { Rotation } from './rotation.model';
 @Injectable()
 export class RotationApiService {
 
-  public rotationApiUrl = '/documents';
+  public rotationApiUrl = '/em-anno/metadata';
 
   constructor(
     private readonly httpClient: HttpClient
@@ -20,12 +20,9 @@ export class RotationApiService {
   }
 
   public saveRotation(payload: Rotation): Observable<any> { // todo add model
-    const documentId = Object.keys(payload.metadata)[0];
-    const body = payload;
-    const fixedUrl = `${this.rotationApiUrl}/${documentId}`;
-
+    const fixedUrl = `${this.rotationApiUrl}/`;
     return this.httpClient
-      .patch<any>(fixedUrl, body, { observe: 'response' , withCredentials: true })
+      .post<any>(fixedUrl, payload, { observe: 'response' , withCredentials: true })
       .pipe(
         map(response => response),
         catchError(() => [])

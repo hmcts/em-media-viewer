@@ -26,6 +26,7 @@ import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import * as fromDocumentActions from '../../store/actions/document.action';
 import { Rotation } from '../../rotation/rotation.model';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -57,7 +58,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   showCommentsPanel: boolean;
   enableGrabNDrag = false;
-  lastSavedRotation = 0;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -73,7 +73,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       this.store.dispatch(new fromRedactionActions.LoadRedactions(this.url));
     }
     this.subscriptions.push(
-      this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation, true)),
+      this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation)),
       this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
@@ -101,35 +101,44 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private setRotation(rotation: number, showSaveRotation = false) {
+  private rotateImage(rotation: number) {
     this.rotation = (this.rotation + rotation) % 360;
-
-    if (this.lastSavedRotation === this.rotation) {
-      this.toolbarButtons.showSaveRotationButton = false;
-    } else if (showSaveRotation) {
-      this.toolbarButtons.showSaveRotationButton = true;
-    }
   }
 
-  private saveRotation() {
-    // const payload: Rotation = {
-    //   metadata: {
-    //     [this.extractDMStoreDocId(this.url)]: this.rotation.toString()
-    //   }
-    // }
-    //
-    // this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
-    this.lastSavedRotation = this.rotation;
-    console.log('Last Saved Rotation: ', this.lastSavedRotation);
+  private onRotate(rotation: number) {
+    let lastSavedRotation;
+    this.store.pipe(select(fromDocumentsSelector.getRotation),
+      take(1))
+      .subscribe(lastRotation => {
+        lastSavedRotation = lastRotation ? lastRotation : 0;
+
+        this.rotateImage(rotation);
+
+        if (lastSavedRotation === this.rotation) {
+          this.toolbarButtons.showSaveRotationButton = false;
+        } else {
+          this.toolbarButtons.showSaveRotationButton = true;
+        }
+      });
   }
 
   private setInitialRotation() {
     const documentId = this.extractDMStoreDocId(this.url);
     this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
-
-    this.subscriptions.push(this.store.pipe(select(fromDocumentsSelector.getRotation))
-      .subscribe(rotation => this.setRotation(rotation))
+    this.subscriptions.push(this.store.pipe(select(fromDocumentsSelector.getRotation),
+      filter(value => !!value),
+      take(1))
+      .subscribe(rotation => this.rotateImage(rotation))
     );
+  }
+
+  private saveRotation() {
+    const payload: Rotation = {
+      documentId: this.extractDMStoreDocId(this.url),
+      rotationAngle: this.rotation
+    }
+
+    this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
   }
 
   private async setZoom(zoomFactor: number) {

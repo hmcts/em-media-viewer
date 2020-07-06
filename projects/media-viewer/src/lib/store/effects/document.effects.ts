@@ -29,7 +29,7 @@ export class DocumentEffects {
           return of(new documentActions.ConvertFail(error));
         }));
     }));
-    
+
   @Effect()
   loadRotation$ = this.actions$.pipe(
     ofType(documentActions.LOAD_ROTATION),
