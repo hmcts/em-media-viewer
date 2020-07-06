@@ -89,14 +89,20 @@ export class RedactionComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromActions.SaveRedaction(redaction));
   }
 
-  downloadDocument({ url, filename }) {
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.setAttribute('style', 'display: none');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    a.remove();
+  downloadDocument({ blob, filename }) {
+    if(navigator && navigator.msSaveBlob) {
+      navigator.msSaveBlob(blob,filename);
+    } else {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
     this.store.dispatch(new fromRedactionActions.ClearRedactDocUrl());
   }
 }

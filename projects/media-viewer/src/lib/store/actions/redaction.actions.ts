@@ -80,7 +80,7 @@ export class Redact implements Action {
 
 export class RedactSuccess implements Action {
   readonly type = REDACT_SUCCESS;
-  constructor(public payload: { url: string, filename: string }) {}
+  constructor(public payload: { blob: Blob, filename: string }) {}
 }
 
 export class RedactFail implements Action {

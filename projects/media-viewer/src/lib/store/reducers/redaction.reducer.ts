@@ -8,7 +8,7 @@ export interface RedactionState {
   redactionEntities: {[id: string]: any};
   redactionPageEntities: {[id: string]: any};
   selectedRedaction: SelectionAnnotation | {};
-  redactedDocumentInfo: { url: string, filename: string };
+  redactedDocumentInfo: { blob: Blob, filename: string };
   documentId: undefined;
 }
 

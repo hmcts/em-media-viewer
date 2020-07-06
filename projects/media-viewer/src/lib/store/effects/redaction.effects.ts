@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
 import { of } from 'rxjs';
-import {RedactionApiService} from '../../redaction/services/redaction-api.service'
+import { RedactionApiService } from '../../redaction/services/redaction-api.service'
 import * as redactionActions from '../actions/redaction.actions';
-import {HttpResponse} from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class RedactionEffects {
@@ -62,11 +62,10 @@ export class RedactionEffects {
     exhaustMap((redactionPayload) => {
       return this.redactionApiService.redact(redactionPayload).pipe(
         map((result: HttpResponse<Blob>) => {
-          const url = URL.createObjectURL(result.body);
           const header = result.headers.get('content-disposition').split('filename=');
           const filename = header.length > 1 ? header[1].replace(/"/g, '')
             : `redacted-document-${redactionPayload.documentId}`;
-          return new redactionActions.RedactSuccess({ url, filename });
+          return new redactionActions.RedactSuccess({ blob: result.body, filename });
         }),
         catchError(error => {
           return of(new redactionActions.RedactFail(error));
