@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
+import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { RedactionApiService } from '../../redaction/services/redaction-api.service'
 import * as redactionActions from '../actions/redaction.actions';
@@ -19,25 +19,25 @@ export class RedactionEffects {
     map((action: redactionActions.LoadRedactions) => action.payload),
     switchMap((documentId) => {
       return this.redactionApiService.getRedactions(documentId).pipe(
-        map(annotations => {
-          return new redactionActions.LoadRedactionSuccess(annotations.body);
+        map(resp => {
+          return new redactionActions.LoadRedactionSuccess(resp.body);
         }),
         catchError(error => {
-          return of(new redactionActions.LoadRedactionFail(error));
+          return of(new redactionActions.LoadRedactionFailure(error));
         }));
     }));
 
   @Effect()
-  saveRedaction = this.actions$.pipe(
+  saveRedaction$ = this.actions$.pipe(
     ofType(redactionActions.SAVE_REDACTION),
     map((action: redactionActions.SaveRedaction) => action.payload),
-    exhaustMap((annotation) => {
-      return this.redactionApiService.saveRedaction(annotation).pipe(
-        map(annotations => {
-          return new redactionActions.SaveRedactionSuccess(annotations);
+    exhaustMap((redaction) => {
+      return this.redactionApiService.saveRedaction(redaction).pipe(
+        map(resp => {
+          return new redactionActions.SaveRedactionSuccess(resp);
         }),
         catchError(error => {
-          return of(new redactionActions.SaveRedactionFail(error));
+          return of(new redactionActions.SaveRedactionFailure(error));
         }));
     }));
 
@@ -47,11 +47,11 @@ export class RedactionEffects {
     map((action: redactionActions.DeleteRedaction) => action.payload),
     exhaustMap((redactionPayload) => {
       return this.redactionApiService.deleteRedaction(redactionPayload).pipe(
-        map(result => {
+        map(() => {
           return new redactionActions.DeleteRedactionSuccess(redactionPayload);
         }),
         catchError(error => {
-          return of(new redactionActions.DeleteRedactionFail(error));
+          return of(new redactionActions.DeleteRedactionFailure(error));
         }));
     }));
 
@@ -68,21 +68,21 @@ export class RedactionEffects {
           return new redactionActions.RedactSuccess({ blob: result.body, filename });
         }),
         catchError(error => {
-          return of(new redactionActions.RedactFail(error));
+          return of(new redactionActions.RedactFailure(error));
         }));
     }));
 
   @Effect()
-  unmarkAll = this.actions$.pipe(
+  unmarkAll$ = this.actions$.pipe(
     ofType(redactionActions.UNMARK_ALL),
-    map((action: redactionActions.Redact) => action.payload),
+    map((action: redactionActions.UnmarkAll) => action.payload),
     exhaustMap((redactionPayload) => {
       return this.redactionApiService.deleteAllMarkers(redactionPayload).pipe(
         map(result => {
           return new redactionActions.UnmarkAllSuccess();
         }),
         catchError(error => {
-          return of(new redactionActions.DeleteRedactionFail(error));
+          return of(new redactionActions.DeleteRedactionFailure(error));
         }));
     }));
 }

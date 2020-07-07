@@ -1,4 +1,6 @@
 import { Action } from '@ngrx/store';
+import { Redaction } from '../../redaction/services/redaction.model';
+import { Annotation } from '../../annotations/annotation-set/annotation-view/annotation.model';
 
 export const LOAD_REDACTIONS = '[Redaction] Load Redaction';
 export const LOAD_REDACTION_SUCCESS = '[Redaction] Load Redaction Success';
@@ -30,32 +32,32 @@ export class LoadRedactions implements Action {
 
 export class LoadRedactionSuccess implements Action {
   readonly type = LOAD_REDACTION_SUCCESS;
-  constructor(public payload: any) {}
+  constructor(public payload: Redaction[]) {}
 }
 
-export class LoadRedactionFail implements Action {
+export class LoadRedactionFailure implements Action {
   readonly type = LOAD_REDACTION_FAIL;
   constructor(public payload: any) {}
 }
 
 export class SaveRedaction implements Action {
   readonly type = SAVE_REDACTION;
-  constructor(public payload: any) {}
+  constructor(public payload: Redaction) {}
 }
 
 export class SaveRedactionSuccess implements Action {
   readonly type = SAVE_REDACTION_SUCCESS;
-  constructor(public payload: any) {}
+  constructor(public payload: Redaction) {}
 }
 
-export class SaveRedactionFail implements Action {
+export class SaveRedactionFailure implements Action {
   readonly type = SAVE_REDACTION_FAIL;
   constructor(public payload: any) {}
 }
 
 export class DeleteRedaction implements Action {
   readonly type = DELETE_REDACTION;
-  constructor(public payload: any) {}
+  constructor(public payload: Annotation) {}
 }
 
 export class DeleteRedactionSuccess implements Action {
@@ -63,7 +65,7 @@ export class DeleteRedactionSuccess implements Action {
   constructor(public payload: any) {}
 }
 
-export class DeleteRedactionFail implements Action {
+export class DeleteRedactionFailure implements Action {
   readonly type = DELETE_REDACTION_FAIL;
   constructor(public payload: any) {}
 }
@@ -75,7 +77,7 @@ export class SelectRedaction implements Action {
 
 export class Redact implements Action {
   readonly type = REDACT;
-  constructor(public payload: any) {}
+  constructor(public payload: { redactions: any[], documentId: string }) {}
 }
 
 export class RedactSuccess implements Action {
@@ -83,7 +85,7 @@ export class RedactSuccess implements Action {
   constructor(public payload: { blob: Blob, filename: string }) {}
 }
 
-export class RedactFail implements Action {
+export class RedactFailure implements Action {
   readonly type = REDACT_FAIL;
   constructor(public payload: any) {}
 }
@@ -103,9 +105,9 @@ export class UnmarkAllSuccess implements Action {
 }
 
 export type RedactionActions =
-  | LoadRedactions | LoadRedactionSuccess | LoadRedactionFail
-  | SaveRedaction | SaveRedactionSuccess | SaveRedactionFail
-  | DeleteRedaction | DeleteRedactionSuccess | DeleteRedactionFail
+  | LoadRedactions | LoadRedactionSuccess | LoadRedactionFailure
+  | SaveRedaction | SaveRedactionSuccess | SaveRedactionFailure
+  | DeleteRedaction | DeleteRedactionSuccess | DeleteRedactionFailure
   | SelectRedaction
-  | Redact | RedactSuccess | RedactFail | ResetRedactedDocument
+  | Redact | RedactSuccess | RedactFailure | ResetRedactedDocument
   | UnmarkAll | UnmarkAllSuccess;

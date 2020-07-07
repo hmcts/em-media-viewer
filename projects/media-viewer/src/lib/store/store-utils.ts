@@ -1,5 +1,6 @@
 import { Annotation } from '../annotations/annotation-set/annotation-view/annotation.model';
 import * as moment_ from 'moment-timezone';
+import { Redaction } from '../redaction/services/redaction.model';
 
 /*
   @dynamic
@@ -75,11 +76,11 @@ export class StoreUtils {
       }, {});
   }
 
-  static generateRedactionEntities(redactions): {[id: string]: Annotation} {
+  static generateRedactionEntities(redactions: Redaction[]): { [id: string]: Redaction } {
     return redactions.reduce(
-      (annoEntities: { [id: string]: Annotation }, redaction: Annotation) => {
+      (redactEntities: { [id: string]: Redaction }, redaction: Redaction) => {
         return {
-          ...annoEntities,
+          ...redactEntities,
           [redaction.redactionId]: redaction
         };
       }, {});

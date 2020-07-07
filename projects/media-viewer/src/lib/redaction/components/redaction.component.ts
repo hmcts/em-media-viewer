@@ -15,6 +15,7 @@ import {filter, take} from 'rxjs/operators';
 import { ToolbarEventService } from '../../toolbar/toolbar.module';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
+import { Redaction } from '../services/redaction.model';
 
 @Component({
   selector: 'mv-redactions',
@@ -56,9 +57,14 @@ export class RedactionComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngOnDestroy(): void {
+    this.$subscription.unsubscribe();
+  }
+
   markTextRedaction(highlight) {
     const redactionHighlight = this.highlightService.getRectangles(highlight.event, highlight.page);
     const redactionId = uuid();
+
     if (redactionHighlight && redactionHighlight.length) {
       const documentId = this.documentId;
       const redaction = { page: highlight.page, rectangles: [...redactionHighlight], redactionId, documentId};
@@ -67,12 +73,8 @@ export class RedactionComponent implements OnInit, OnDestroy {
     this.toolbarEvents.highlightModeSubject.next(false);
   }
 
-  ngOnDestroy(): void {
-    this.$subscription.unsubscribe();
-  }
-
   onMarkerDelete(event) {
-    this.store.dispatch(new  fromActions.DeleteRedaction(event));
+    this.store.dispatch(new fromActions.DeleteRedaction(event));
   }
 
   selectRedaction(event) {
@@ -85,7 +87,7 @@ export class RedactionComponent implements OnInit, OnDestroy {
     this.toolbarEvents.drawModeSubject.next(false);
   }
 
-  public onMarkerUpdate(redaction: any) {
+  onMarkerUpdate(redaction: Redaction) {
     this.store.dispatch(new fromActions.SaveRedaction(redaction));
   }
 

@@ -2,12 +2,12 @@ import {Observable} from 'rxjs';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {catchError, map} from 'rxjs/operators';
-import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
+import { Redaction } from './redaction.model';
 
 @Injectable()
 export class RedactionApiService {
 
-  public redactionApiUrl = '/api/markups/';
+  public markupsApiUrl = '/api/markups/';
   public redactApiUrl = '/api/redaction/';
 
   constructor(
@@ -15,14 +15,14 @@ export class RedactionApiService {
   ) {}
 
   public getRedactions(documentId: string): Observable<any> { // todo add model
-    const fixedUrl = `${this.redactionApiUrl}${documentId}`;
+    const fixedUrl = `${this.markupsApiUrl}${documentId}`;
     return this.httpClient
-      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
+      .get<Redaction[]>(fixedUrl, { observe: 'response' , withCredentials: true });
   }
 
   public saveRedaction(body): Observable<any> {
     return this.httpClient
-      .post<AnnotationSet>(this.redactionApiUrl, body, { observe: 'response' , withCredentials: true })
+      .post<Redaction>(this.markupsApiUrl, body, { observe: 'response' , withCredentials: true })
       .pipe(
         map(response => response.body),
         catchError(() => [])
@@ -30,14 +30,14 @@ export class RedactionApiService {
   }
 
   public deleteRedaction(payload): Observable<null> {
-    const url = `${this.redactionApiUrl}${payload.documentId}/${payload.redactionId}`;
+    const url = `${this.markupsApiUrl}${payload.documentId}/${payload.redactionId}`;
     return this.httpClient
       .delete<null>(url, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
   }
 
   public deleteAllMarkers(payload): Observable<null> {
-    const url = `${this.redactionApiUrl}/${payload}`;
+    const url = `${this.markupsApiUrl}/${payload}`;
 
     return this.httpClient
       .delete<null>(url, { observe: 'response' , withCredentials: true })
