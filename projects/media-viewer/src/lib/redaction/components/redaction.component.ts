@@ -103,6 +103,6 @@ export class RedactionComponent implements OnInit, OnDestroy {
       a.remove();
       URL.revokeObjectURL(url);
     }
-    this.store.dispatch(new fromRedactionActions.ClearRedactDocUrl());
+    this.store.dispatch(new fromRedactionActions.ResetRedactedDocument());
   }
 }

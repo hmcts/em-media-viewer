@@ -88,7 +88,7 @@ export class RedactFail implements Action {
   constructor(public payload: any) {}
 }
 
-export class ClearRedactDocUrl implements Action {
+export class ResetRedactedDocument implements Action {
   readonly type = CLEAR_REDACT_DOC_URL;
 }
 
@@ -107,5 +107,5 @@ export type RedactionActions =
   | SaveRedaction | SaveRedactionSuccess | SaveRedactionFail
   | DeleteRedaction | DeleteRedactionSuccess | DeleteRedactionFail
   | SelectRedaction
-  | Redact | RedactSuccess | RedactFail | ClearRedactDocUrl
+  | Redact | RedactSuccess | RedactFail | ResetRedactedDocument
   | UnmarkAll | UnmarkAllSuccess;
