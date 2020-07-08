@@ -1,14 +1,15 @@
 import * as fromRedaction from '../actions/redaction.actions';
 import * as fromAnnotations from '../actions/annotations.action';
 import {StoreUtils} from '../store-utils';
-import {SelectionAnnotation} from '../../annotations/models/event-select.model'; // todo rename
+import {SelectionAnnotation} from '../../annotations/models/event-select.model';
+import { Redaction } from '../../redaction/services/redaction.model'; // todo rename
 
 
 export interface RedactionState {
-  redactionEntities: {[id: string]: any};
-  redactionPageEntities: {[id: string]: any};
+  redactionEntities: { [id: string]: Redaction };
+  redactionPageEntities: { [id: string]: any };
   selectedRedaction: SelectionAnnotation | {};
-  redactedDocumentInfo: { url: string, filename: string };
+  redactedDocumentInfo: { blob: Blob, filename: string };
   documentId: undefined;
 }
 
@@ -50,7 +51,7 @@ export function redactionReducer (
     }
 
     case fromRedaction.SAVE_REDACTION_SUCCESS: {
-      const {payload} =  action;
+      const { payload } =  action;
       const redactionEntities = {
         ...state.redactionEntities,
         [payload.redactionId]: payload

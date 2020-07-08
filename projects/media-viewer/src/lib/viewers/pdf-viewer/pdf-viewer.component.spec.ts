@@ -49,8 +49,7 @@ describe('PdfViewerComponent', () => {
       ],
       imports: [
         StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({}),
-        HttpClientTestingModule
+        StoreModule.forRoot({})
       ],
       providers: [
         AnnotationApiService,
