@@ -274,7 +274,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     const documentId = this.extractDMStoreDocId(this.url);
     this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
     this.$subscription.add(this.store.pipe(select(fromDocumentsSelector.getRotation),
-      filter(value => !!value),
+      filter(value => !!value || value === 0),
       take(1))
       .subscribe(rotation => this.rotateDocument(rotation))
     );
@@ -284,7 +284,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     const payload: Rotation = {
       documentId: this.documentId,
       rotationAngle: this.rotation
-    }
+    };
 
     this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
   }
