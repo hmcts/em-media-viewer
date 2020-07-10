@@ -91,7 +91,12 @@
               },
               {
                 "glob": "**/*",
-                "input": "src/assets/pdf",
+                "input": "src/assets/documents/pdf",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/documents/image",
                 "output": "/"
               }
             ],

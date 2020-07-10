@@ -126,7 +126,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     const documentId = this.extractDMStoreDocId(this.url);
     this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
     this.subscriptions.push(this.store.pipe(select(fromDocumentsSelector.getRotation),
-      filter(value => !!value),
+      filter(value => !!value || value === 0),
       take(1))
       .subscribe(rotation => this.rotateImage(rotation))
     );
@@ -201,12 +201,12 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   initAnnoPage() {
-    const payload: any = {
+    const payload: any = [{
       div: {offsetHeight: 1122}, // todo add dynamic height
       pageNumber: 1,
       scale: 1,
       rotation: 1
-    };
+    }];
     this.store.dispatch(new fromDocument.AddPages(payload));
   }
 
