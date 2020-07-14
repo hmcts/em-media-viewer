@@ -62,6 +62,9 @@ export class IcpService implements OnDestroy  {
       .add(this.socketService.clientDisconnected().subscribe(cli => this.clientDisconnected(cli)))
       .add(this.socketService.presenterUpdated().subscribe(pres => {
         this.store.dispatch(new fromIcpActions.IcpPresenterUpdated(pres));
+      }))
+      .add(this.socketService.participantListUpdated().subscribe(participants => {
+        this.store.dispatch(new fromIcpActions.IcpParticipantListUpdated(participants));
       }));
   }
 
@@ -75,6 +78,7 @@ export class IcpService implements OnDestroy  {
     if (this.isPresenter) {
       this.stopPresenting();
     }
+    this.removeParticipant(this.client.id);
     this.socketService.leaveSession();
     this.store.dispatch(new fromIcpActions.LeaveIcpSocketSession());
     this.unsubscribeSession();
@@ -93,5 +97,10 @@ export class IcpService implements OnDestroy  {
     if (client === this.presenter.id) {
       this.stopPresenting();
     }
+    this.removeParticipant(client);
+  }
+
+  removeParticipant(participantId) {
+    this.socketService.removeParticipant(participantId);
   }
 }
