@@ -27,6 +27,9 @@ import * as fromStore from './store/reducers/reducers';
 import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
 import * as fromDocumentsSelector from './store/selectors/document.selectors';
 import * as fromAnnoActions from './store/actions/annotations.action';
+import { Rotation } from './viewers/rotation.model';
+import * as fromDocumentActions from './store/actions/document.action';
+import { filter, take } from 'rxjs/operators';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -70,6 +73,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() caseId: string;
 
+  rotation = 0;
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
@@ -77,7 +81,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   typeException = false;
   hasDifferentPageSize$: Observable<boolean>;
 
-  private subscriptions: Subscription[] = [];
+  private subscriptions: Subscription;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -96,10 +100,11 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.hasDifferentPageSize$ = this.store.pipe(select(fromDocumentsSelector.getPageDifference));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
-    this.subscriptions.push(
-      this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)),
-      this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes)
-    );
+    this.subscriptions = this.commentService.getUnsavedChanges()
+      .subscribe(changes => this.onCommentChange(changes))
+      .add(this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes))
+      .add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation)))
+      .add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
   }
 
   contentTypeConvertible(): boolean {
@@ -132,10 +137,11 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.unsubscribe();
   }
 
   onMediaLoad(status: ResponseType) {
+    this.setInitialRotation();
     this.mediaLoadStatus.emit(status);
   }
 
@@ -167,6 +173,37 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.contentType = null;
       this.setToolbarButtons();
     }
+  }
+
+  private setInitialRotation() {
+    const documentId = this.extractDMStoreDocId(this.url);
+    this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
+    this.store.pipe(select(fromDocumentsSelector.getRotation),
+      filter(value => !!value),
+      take(1))
+      .subscribe(rotation => this.toolbarEvents.rotateSubject.next(rotation))
+  }
+
+  private onRotate(rotation: number) {
+    let lastSavedRotation;
+    this.store.pipe(select(fromDocumentsSelector.getRotation), take(1))
+      .subscribe(lastRotation => {
+        lastSavedRotation = lastRotation ? lastRotation : 0
+        this.rotation = (this.rotation + rotation) %360;
+        if (lastSavedRotation === this.rotation) {
+          this.toolbarButtons.showSaveRotationButton = false;
+        } else {
+          this.toolbarButtons.showSaveRotationButton = true;
+        }
+      });
+  }
+
+  private saveRotation() {
+    const payload: Rotation = {
+      documentId: this.extractDMStoreDocId(this.url),
+      rotationAngle: this.rotation
+    }
+    this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
   }
 
   onCommentChange(changes: boolean) {

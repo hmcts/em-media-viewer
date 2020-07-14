@@ -16,7 +16,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   filename = 'filename';
   caseId = 'dummyCaseId';
 
-  documentType = 'image';
+  documentType = 'pdf';
   url;
   comments: Observable<Comment[]>;
 
