@@ -7,6 +7,7 @@ import { PdfPosition } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.
 import { IcpUpdateService } from './icp-update.service';
 import { IcpState, IcpScreenUpdate, IcpSession, IcpParticipant } from './icp.interfaces';
 import * as fromIcpSelectors from '../store/selectors/icp.selectors';
+import { IcpNewParticipantJoined } from '../store/actions/icp.action';
 
 @Injectable()
 export class IcpPresenterService {
@@ -39,8 +40,8 @@ export class IcpPresenterService {
       this.$subscription.add(this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => {
         this.presenter = presenter;
       }));
-      this.$subscription.add(this.socketService.newParticipantJoined().subscribe(() => {
-        this.onNewParticipantJoined();
+      this.$subscription.add(this.socketService.newParticipantJoined().subscribe(participant => {
+        this.onNewParticipantJoined(participant);
       }));
     }
   }
@@ -57,7 +58,8 @@ export class IcpPresenterService {
     this.socketService.updateScreen(screen);
   }
 
-  onNewParticipantJoined() {
+  onNewParticipantJoined(participant: IcpParticipant) {
+    this.store.dispatch(new IcpNewParticipantJoined(participant));
     this.onPositionUpdate(this.pdfPosition);
     this.socketService.updatePresenter(this.presenter);
   }

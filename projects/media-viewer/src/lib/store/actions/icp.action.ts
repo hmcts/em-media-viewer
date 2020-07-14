@@ -8,6 +8,7 @@ export const JOIN_ICP_SOCKET_SESSION = '[Icp] Join Socket Session';
 export const ICP_SOCKET_SESSION_JOINED = '[Icp] Socket Session Joined';
 export const LEAVE_ICP_SOCKET_SESSION = '[Icp] Leave Socket Session';
 export const ICP_PRESENTER_UPDATED = '[Icp] Presenter Updated';
+export const ICP_NEW_PARTICIPANT_JOINED = '[Icp] New Participant Joined Session';
 
 export class SetCaseId implements Action {
   readonly type = SET_CASE_ID;
@@ -31,7 +32,7 @@ export class JoinIcpSocketSession implements Action {
 
 export class IcpSocketSessionJoined implements Action {
   readonly type = ICP_SOCKET_SESSION_JOINED;
-  constructor(public payload: { session: IcpSession, participantInfo: { client: IcpParticipant, presenter: IcpParticipant } }) {}
+  constructor(public payload: { session: IcpSession, participantInfo: { client: IcpParticipant, presenter: IcpParticipant, participants: any } }) {}
 }
 
 export class LeaveIcpSocketSession implements Action {
@@ -44,6 +45,11 @@ export class IcpPresenterUpdated implements Action {
   constructor(public payload: IcpParticipant) {}
 }
 
+export class IcpNewParticipantJoined implements Action {
+  readonly type = ICP_NEW_PARTICIPANT_JOINED;
+  constructor(public payload: IcpParticipant) {}
+}
+
 export type IcpActions =
   | SetCaseId
   | LoadIcpSession
@@ -51,4 +57,5 @@ export type IcpActions =
   | JoinIcpSocketSession
   | IcpSocketSessionJoined
   | LeaveIcpSocketSession
-  | IcpPresenterUpdated;
+  | IcpPresenterUpdated
+  | IcpNewParticipantJoined;

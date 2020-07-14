@@ -1,10 +1,12 @@
 import * as fromIcpActions from '../actions/icp.action';
-import { IcpSession, IcpState } from '../../icp/icp.interfaces';
+import {IcpParticipant, IcpSession, IcpState} from '../../icp/icp.interfaces';
+import {ICP_NEW_PARTICIPANT_JOINED} from '../actions/icp.action';
 
 export const initialIcpSessionState: IcpState = {
   session: null,
   presenter: null,
-  client: null
+  client: null,
+  participants: null
 };
 
 export function icpReducer (state = initialIcpSessionState,
@@ -24,12 +26,29 @@ export function icpReducer (state = initialIcpSessionState,
     case fromIcpActions.ICP_SOCKET_SESSION_JOINED: {
       const session: IcpSession = action.payload.session;
       const participantInfo = action.payload.participantInfo;
+
+      const participants = [];
+      for (const id in participantInfo.participants) {
+        participants.push( {id: id, username: participantInfo.participants[id]} );
+      }
+
       return {
         ...state,
         session,
         client: participantInfo.client,
-        presenter: participantInfo.presenter
+        presenter: participantInfo.presenter,
+        participants
       };
+    }
+
+    case fromIcpActions.ICP_NEW_PARTICIPANT_JOINED: {
+      const participant: IcpParticipant = action.payload;
+      const participants = [...state.participants];
+      participants.push(participant);
+      return {
+        ...state,
+        participants
+      }
     }
 
     case fromIcpActions.ICP_PRESENTER_UPDATED: {
