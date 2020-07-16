@@ -74,6 +74,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Input() caseId: string;
 
   rotation = 0;
+  savedRotation = 0;
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
@@ -103,6 +104,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.subscriptions = this.commentService.getUnsavedChanges()
       .subscribe(changes => this.onCommentChange(changes))
       .add(this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes))
+      .add(this.store.pipe(select(fromDocumentsSelector.getRotation))
+        .subscribe(rotation => this.savedRotation = rotation ))
       .add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation)))
       .add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
   }
@@ -176,22 +179,18 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   private setInitialRotation() {
+    this.rotation = 0;
     const documentId = this.extractDMStoreDocId(this.url);
     this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
-    this.store.pipe(select(fromDocumentsSelector.getRotation),
+    this.store.pipe(select(fromDocumentsSelector.rotationLoaded),
       filter(value => !!value),
       take(1))
-      .subscribe(rotation => this.toolbarEvents.rotateSubject.next(rotation))
+      .subscribe(() => this.toolbarEvents.rotateSubject.next(this.savedRotation))
   }
 
   private onRotate(rotation: number) {
-    let lastSavedRotation;
-    this.store.pipe(select(fromDocumentsSelector.getRotation), take(1))
-      .subscribe(lastRotation => {
-        lastSavedRotation = lastRotation ? lastRotation : 0
-        this.rotation = (this.rotation + rotation) %360;
-        this.toolbarButtons.showSaveRotationButton = lastSavedRotation !== this.rotation;
-      });
+    this.rotation = (this.rotation + rotation) %360;
+    this.toolbarButtons.showSaveRotationButton = this.savedRotation !== this.rotation;
   }
 
   private saveRotation() {

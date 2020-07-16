@@ -1,6 +1,6 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { MediaViewerComponent } from './media-viewer.component';
-import { ToolbarButtonVisibilityService, ToolbarEventService, ToolbarModule } from './toolbar/toolbar.module';
+import { ToolbarButtonVisibilityService, ToolbarModule } from './toolbar/toolbar.module';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ResponseType, ViewerException } from './viewers/viewer-exception.model';

@@ -38,5 +38,10 @@ export const getRotation = createSelector(
   fromDocument.getRotation
 );
 
+export const rotationLoaded = createSelector(
+  getDocumentState,
+  fromDocument.rotationLoaded
+);
+
 
 
