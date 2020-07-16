@@ -36,8 +36,8 @@ export class DocumentEffects {
     map((action: documentActions.LoadRotation) => action.payload),
     switchMap((documentId) => {
       return this.rotationApiService.getRotation(documentId).pipe(
-        map(rotation => {
-          return new documentActions.LoadRotationSuccess(rotation);
+        map(resp => {
+          return new documentActions.LoadRotationSuccess(resp.body);
         }),
         catchError(error => {
           return of(new documentActions.LoadRotationFail(error));
@@ -50,8 +50,8 @@ export class DocumentEffects {
     map((action: documentActions.SaveRotation) => action.payload),
     switchMap((payload) => {
       return this.rotationApiService.saveRotation(payload).pipe(
-        map(response => {
-          return new documentActions.SaveRotationSuccess(response);
+        map(resp => {
+          return new documentActions.SaveRotationSuccess(resp.body);
         }),
         catchError(error => {
           return of(new documentActions.SaveRotationFail(error));

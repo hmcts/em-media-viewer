@@ -190,11 +190,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       .subscribe(lastRotation => {
         lastSavedRotation = lastRotation ? lastRotation : 0
         this.rotation = (this.rotation + rotation) %360;
-        if (lastSavedRotation === this.rotation) {
-          this.toolbarButtons.showSaveRotationButton = false;
-        } else {
-          this.toolbarButtons.showSaveRotationButton = true;
-        }
+        this.toolbarButtons.showSaveRotationButton = lastSavedRotation !== this.rotation;
       });
   }
 

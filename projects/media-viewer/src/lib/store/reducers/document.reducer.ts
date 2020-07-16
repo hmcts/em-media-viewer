@@ -78,7 +78,7 @@ export function docReducer (state = initialDocumentState,
 
     case fromActions.SAVE_ROTATION_SUCCESS: {
       const metadata = action.payload;
-      const rotation = metadata.body.rotationAngle;
+      const rotation = metadata.rotationAngle;
       return {
         ...state,
         rotation
@@ -86,8 +86,8 @@ export function docReducer (state = initialDocumentState,
     }
 
     case fromActions.LOAD_ROTATION_SUCCESS: {
-        const metadata = action.payload;
-        const rotation = metadata.body.rotationAngle;
+      const metadata = action.payload;
+      const rotation = metadata ? metadata.rotationAngle : 0;
         return {
           ...state,
           rotation
