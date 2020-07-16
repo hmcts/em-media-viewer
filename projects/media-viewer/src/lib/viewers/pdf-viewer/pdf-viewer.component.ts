@@ -58,6 +58,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @Input() height: string;
   pageHeights = [];
+  rotation = 0;
   zoom = 1;
 
   @Input() caseId: string;
@@ -150,6 +151,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   resetRotation() {
     if (this.hasDifferentPageSize) {
       this.pdfWrapper.resetRotation(0);
+      this.rotation = 0;
     }
   }
 
@@ -239,6 +241,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
     this.pdfWrapper.rotate(rotation);
     this.pdfWrapper.setPageNumber(pageNumber);
+    this.rotation = (this.rotation + rotation) % 360;
+
     this.setPageHeights();
   }
 

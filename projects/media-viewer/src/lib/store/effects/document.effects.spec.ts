@@ -7,12 +7,16 @@ import { DocumentEffects } from './document.effects';
 import { DocumentConversionApiService } from '../../viewers/convertible-content-viewer/document-conversion-api.service';
 import { HttpResponse } from '@angular/common/http';
 import { hot } from 'jasmine-marbles';
+import { RotationApiService } from '../../viewers/rotation-api.service';
 
 
 describe('Document Effects', () => {
   let actions$;
   let effects: DocumentEffects;
-  const UserServiceMock = jasmine.createSpyObj('DocumentConversionApiService', [
+  const rotationApi = jasmine.createSpyObj('RotationApiService', [
+    'convert'
+  ]);
+  const documentConversionApi = jasmine.createSpyObj('DocumentConversionApiService', [
     'convert'
   ]);
 
@@ -20,10 +24,8 @@ describe('Document Effects', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
-        {
-          provide: DocumentConversionApiService,
-          useValue: UserServiceMock,
-        },
+        { provide: DocumentConversionApiService, useValue: documentConversionApi },
+        { provide: RotationApiService, useValue: rotationApi },
         DocumentEffects,
         provideMockActions(() => actions$)
       ]
@@ -40,7 +42,7 @@ describe('Document Effects', () => {
 
       const originalUrl = '1bee8923-c936-47f6-9186-52581e4901fd';
       const action = new documentActions.Convert(originalUrl);
-      UserServiceMock.convert.and.returnValue(of(returnValue));
+      documentConversionApi.convert.and.returnValue(of(returnValue));
       const url = URL.createObjectURL(returnValue.body);
 
       const completion = new documentActions.ConvertSuccess(url);

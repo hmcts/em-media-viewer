@@ -1,6 +1,6 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { MediaViewerComponent } from './media-viewer.component';
-import { ToolbarButtonVisibilityService, ToolbarModule } from './toolbar/toolbar.module';
+import { ToolbarButtonVisibilityService, ToolbarEventService, ToolbarModule } from './toolbar/toolbar.module';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ResponseType, ViewerException } from './viewers/viewer-exception.model';
@@ -14,19 +14,23 @@ import { CommentService } from './annotations/comment-set/comment/comment.servic
 import { By } from '@angular/platform-browser';
 import {reducers} from './store/reducers/reducers';
 import {StoreModule} from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
   let fixture: ComponentFixture<MediaViewerComponent>;
   let api: AnnotationApiService;
+  const commentService = {
+    getUnsavedChanges: () => new Subject(),
+    resetCommentSet: () => {}
+  };
 
   beforeEach(() => {
     return TestBed.configureTestingModule({
-      declarations: [
-        MediaViewerComponent
-      ],
+      declarations: [MediaViewerComponent],
       providers: [
-        CommentService, ToolbarButtonVisibilityService
+        { provide: CommentService, useValue: commentService },
+        ToolbarButtonVisibilityService
       ],
       imports: [
         ToolbarModule,
@@ -43,6 +47,8 @@ describe('MediaViewerComponent', () => {
     fixture = TestBed.createComponent(MediaViewerComponent);
     component = fixture.componentInstance;
     api = TestBed.get(AnnotationApiService);
+    component.contentType = 'pdf';
+    component.ngAfterContentInit();
   });
 
   it('should create', () => {
@@ -55,7 +61,6 @@ describe('MediaViewerComponent', () => {
       component.contentType = 'pdf';
       component.url = 'url'
 
-      component.ngAfterContentInit();
       fixture.detectChanges();
 
       expect(toolbarButtons.setup).toHaveBeenCalled();
@@ -137,10 +142,11 @@ describe('MediaViewerComponent', () => {
   });
 
   it('onMediaLoad should emit a ResponseType', () => {
-    const emitSpy = spyOn(component.mediaLoadStatus, 'emit');
+    spyOn(component.mediaLoadStatus, 'emit');
+    component.url = 'document-url';
 
     component.onMediaLoad(ResponseType.SUCCESS);
-    expect(emitSpy).toHaveBeenCalledTimes(1);
+    expect(component.mediaLoadStatus.emit).toHaveBeenCalledTimes(1);
   });
 
   it('should set the default toolbar behaviour for convertible type', () => {
