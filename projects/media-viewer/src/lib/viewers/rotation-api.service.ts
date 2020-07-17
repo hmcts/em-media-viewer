@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Rotation } from './rotation.model';
@@ -13,13 +13,13 @@ export class RotationApiService {
     private readonly httpClient: HttpClient
   ) {}
 
-  public getRotation(documentId: string): Observable<any> { // todo add model
+  public getRotation(documentId: string): Observable<HttpResponse<Rotation>> {
     const fixedUrl = `${this.rotationApiUrl}/${documentId}`;
     return this.httpClient
-      .get<any>(fixedUrl, { observe: 'response' , withCredentials: true });
+      .get<Rotation>(fixedUrl, { observe: 'response' , withCredentials: true });
   }
 
-  public saveRotation(payload: Rotation): Observable<any> { // todo add model
+  public saveRotation(payload: Rotation): Observable<HttpResponse<Rotation>> {
     const fixedUrl = `${this.rotationApiUrl}/`;
     return this.httpClient
       .post<any>(fixedUrl, payload, { observe: 'response' , withCredentials: true })

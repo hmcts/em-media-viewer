@@ -19,14 +19,14 @@ export class DocumentEffects {
   convert$ = this.actions$.pipe(
     ofType(documentActions.CONVERT),
     map((action: documentActions.Convert) => action.payload),
-    exhaustMap((docConversionPayload) => {
-      return this.documentConversionService.convert(docConversionPayload).pipe(
+    exhaustMap((documentId) => {
+      return this.documentConversionService.convert(documentId).pipe(
         map((result: HttpResponse<Blob>) => {
           const url = URL.createObjectURL(result.body);
           return new documentActions.ConvertSuccess(url);
         }),
         catchError(error => {
-          return of(new documentActions.ConvertFail(error));
+          return of(new documentActions.ConvertFailure(error));
         }));
     }));
 
@@ -40,7 +40,7 @@ export class DocumentEffects {
           return new documentActions.LoadRotationSuccess(resp.body);
         }),
         catchError(error => {
-          return of(new documentActions.LoadRotationFail(error));
+          return of(new documentActions.LoadRotationFailure(error));
         }));
     }));
 
@@ -54,7 +54,7 @@ export class DocumentEffects {
           return new documentActions.SaveRotationSuccess(resp.body);
         }),
         catchError(error => {
-          return of(new documentActions.SaveRotationFail(error));
+          return of(new documentActions.SaveRotationFailure(error));
         }));
     }));
 }

@@ -1,54 +1,93 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as documentActions from '../actions/document.action';
 import { DocumentEffects } from './document.effects';
 import { DocumentConversionApiService } from '../../viewers/convertible-content-viewer/document-conversion-api.service';
-import { HttpResponse } from '@angular/common/http';
-import { hot } from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 import { RotationApiService } from '../../viewers/rotation-api.service';
 
 
 describe('Document Effects', () => {
   let actions$;
   let effects: DocumentEffects;
-  const rotationApi = jasmine.createSpyObj('RotationApiService', [
-    'convert'
-  ]);
-  const documentConversionApi = jasmine.createSpyObj('DocumentConversionApiService', [
-    'convert'
-  ]);
+  const rotateApi = jasmine.createSpyObj('RotationApiService', ['getRotation', 'saveRotation']);
+  const docConvertApi = jasmine.createSpyObj('DocumentConversionApiService', ['convert']);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
       providers: [
-        { provide: DocumentConversionApiService, useValue: documentConversionApi },
-        { provide: RotationApiService, useValue: rotationApi },
+        { provide: DocumentConversionApiService, useValue: docConvertApi },
+        { provide: RotationApiService, useValue: rotateApi },
         DocumentEffects,
         provideMockActions(() => actions$)
       ]
     });
-
     effects = TestBed.get(DocumentEffects);
-
   });
 
   describe('convert$', () => {
     it('should return a ConvertSuccess', () => {
-      let blob = new Blob(['aaaaa'], { type: 'text/plain' });
-      const returnValue: HttpResponse<Blob> = new HttpResponse<Blob>({body: blob, url: 'test'});
+      const action = new documentActions.Convert('document-id');
+      docConvertApi.convert.and.returnValue(of({ body: 'blob' }));
+      spyOn(URL, 'createObjectURL').and.returnValue('blob-url')
 
-      const originalUrl = '1bee8923-c936-47f6-9186-52581e4901fd';
-      const action = new documentActions.Convert(originalUrl);
-      documentConversionApi.convert.and.returnValue(of(returnValue));
-      const url = URL.createObjectURL(returnValue.body);
-
-      const completion = new documentActions.ConvertSuccess(url);
+      const completion = new documentActions.ConvertSuccess('blob-url');
       actions$ = hot('-a', { a: action });
-      expect(completion.payload).not.toEqual(originalUrl);
+      const expected = cold('-b', { b: completion });
+      expect(effects.convert$).toBeObservable(expected);
+    });
+
+    it('should return a ConvertFailure',() => {
+      const action = new documentActions.Convert('document-url');
+      docConvertApi.convert.and.returnValue(throwError('error converting document'));
+
+      const completion = new documentActions.ConvertFailure('error converting document');
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.convert$).toBeObservable(expected);
     });
   });
 
+  describe('loadRotation$', () => {
+    it('should return a LoadRotationSuccess', () => {
+      const action = new documentActions.LoadRotation('document-id');
+      rotateApi.getRotation.and.returnValue(of({ body: { rotationAngle: 90 } }));
+
+      const completion = new documentActions.LoadRotationSuccess({ rotationAngle: 90 });
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.loadRotation$).toBeObservable(expected);
+    });
+
+    it('should return a LoadRotationFailure', () => {
+      const action = new documentActions.LoadRotation('document-id');
+      rotateApi.getRotation.and.returnValue(throwError(new Error('error loading rotation')));
+      const completion = new documentActions.LoadRotationFailure(new Error('error loading rotation'));
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.loadRotation$).toBeObservable(expected);
+    });
+  });
+
+  describe('saveRotation$', () => {
+    it('should return a SaveRotationSuccess', () => {
+        const action = new documentActions.SaveRotation({ documentId: 'documentId', rotationAngle: 180 });
+        rotateApi.saveRotation.and.returnValue(of({ body: { rotationAngle: 180 } }));
+
+        const completion = new documentActions.SaveRotationSuccess({ rotationAngle: 180 });
+        actions$ = hot('-a', { a: action });
+        const expected = cold('-b', { b: completion });
+        expect(effects.saveRotation$).toBeObservable(expected);
+      });
+
+    it('should return a SaveRotationFailure', () => {
+      const action = new documentActions.SaveRotation({ documentId: 'documentId', rotationAngle: 180 });
+      rotateApi.saveRotation.and.returnValue(throwError(new Error('error saving rotation')));
+      const completion = new documentActions.SaveRotationFailure(new Error('error saving rotation'));
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.saveRotation$).toBeObservable(expected);
+    });
+  });
 });

@@ -1,6 +1,6 @@
 import * as fromDocument from './document.reducer';
 import * as fromActions from '../actions/document.action';
-import { ClearConvertDocUrl, ConvertFail, ConvertSuccess } from '../actions/document.action';
+import { ClearConvertDocUrl, ConvertFailure, ConvertSuccess } from '../actions/document.action';
 import { DocumentState } from './document.reducer';
 
 describe('DocumentReducer', () => {
@@ -67,7 +67,7 @@ describe('DocumentReducer', () => {
   it('should fail to convert document', function () {
     const error = 'error';
 
-    const state = fromDocument.docReducer(documentState, new ConvertFail(error));
+    const state = fromDocument.docReducer(documentState, new ConvertFailure(error));
 
     expect(state.convertedDocument).toEqual({ url: undefined, error: error });
     expect(state.loaded).toBeTrue();

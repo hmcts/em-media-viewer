@@ -43,9 +43,9 @@ export class ConvertSuccess implements Action {
   constructor(public payload: string ) {}
 }
 
-export class ConvertFail implements Action {
+export class ConvertFailure implements Action {
   readonly type = CONVERT_FAIL;
-  constructor(public payload: any) {}
+  constructor(public payload: string) {}
 }
 
 export class ClearConvertDocUrl implements Action {
@@ -60,11 +60,11 @@ export class LoadRotation implements Action {
 
 export class LoadRotationSuccess implements Action {
   readonly type = LOAD_ROTATION_SUCCESS;
-  constructor(public payload: any) {
+  constructor(public payload: { rotationAngle: number }) {
   }
 }
 
-export class LoadRotationFail implements Action {
+export class LoadRotationFailure implements Action {
   readonly type = LOAD_ROTATION_FAIL;
   constructor(public payload: Error) {
   }
@@ -78,11 +78,11 @@ export class SaveRotation implements Action {
 
 export class SaveRotationSuccess implements Action {
   readonly type = SAVE_ROTATION_SUCCESS;
-  constructor(public payload: any) {
+  constructor(public payload: { rotationAngle: number }) {
   }
 }
 
-export class SaveRotationFail implements Action {
+export class SaveRotationFailure implements Action {
   readonly type = SAVE_ROTATION_FAIL;
   constructor(public payload: Error) {
   }
@@ -90,7 +90,7 @@ export class SaveRotationFail implements Action {
 
 export type DocumentActions =
   | AddPages | SetDocumentId | Convert
-  | ConvertSuccess | ConvertFail | ClearConvertDocUrl
+  | ConvertSuccess | ConvertFailure | ClearConvertDocUrl
   | PdfPositionUpdate | LoadRotation | LoadRotationSuccess
-  | LoadRotationFail | SaveRotation | SaveRotationSuccess
-  | SaveRotationFail;
+  | LoadRotationFailure | SaveRotation | SaveRotationSuccess
+  | SaveRotationFailure;
