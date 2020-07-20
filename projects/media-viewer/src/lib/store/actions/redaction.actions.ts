@@ -19,7 +19,7 @@ export const SELECT_REDACTION = '[Redaction] Select Redaction';
 export const REDACT = '[Redaction] Redact';
 export const REDACT_SUCCESS = '[Redaction] Redact Success';
 export const REDACT_FAIL = '[Redaction] Redact Fail';
-export const CLEAR_REDACT_DOC_URL = '[Redaction] Clear Redacted Document Url';
+export const RESET_REDACTED_DOCUMENT = '[Redaction] Reset Redacted Document';
 
 export const UNMARK_ALL = '[Redaction] Unmark All';
 export const UNMARK_ALL_SUCCESS = '[Redaction] Unmark All Success';
@@ -77,7 +77,7 @@ export class SelectRedaction implements Action {
 
 export class Redact implements Action {
   readonly type = REDACT;
-  constructor(public payload: { redactions: any[], documentId: string }) {}
+  constructor(public payload: { redactions: Redaction[], documentId: string }) {}
 }
 
 export class RedactSuccess implements Action {
@@ -91,7 +91,7 @@ export class RedactFailure implements Action {
 }
 
 export class ResetRedactedDocument implements Action {
-  readonly type = CLEAR_REDACT_DOC_URL;
+  readonly type = RESET_REDACTED_DOCUMENT;
 }
 
 

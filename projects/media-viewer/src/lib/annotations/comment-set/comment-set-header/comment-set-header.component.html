@@ -2,7 +2,6 @@
   <ul class="govuk-tabs__list">
     <li *ngFor="let tab of tabs" class="govuk-tabs__list-item govuk-tabs__list-item"
         [ngClass]="{'govuk-tabs__list-item--selected': tabSelected === tab.label}">
-
       <a (click)="selectTab(tab.label)" [routerLink]="" [ngClass]="{'govuk-tabs__list-item--filtered': tab.isFiltered}"
          class="govuk-tabs__tab">
         {{ tab.label | titlecase }}
@@ -38,8 +37,6 @@ C13.7,13.2,13.2,13.7,12.5,13.7z M12.5,0.5c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.
         All comments can only be seen by you
       </p>
     </ng-container>
-
-    <!-- not using *ngIf to preserve state when switching tabs -->
     <div [hidden]="tabSelected !== 'filter'">
       <div class="govuk-tabs__panel--container">
         <mv-comment-filter></mv-comment-filter>
