@@ -1,76 +1,63 @@
- import { GrabNDragDirective } from './grab-n-drag.directive';
-import { ImageViewerComponent } from './image-viewer/image-viewer.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { AnnotationApiService } from '../annotations/annotation-api.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
- import {StoreModule} from '@ngrx/store';
- import {reducers} from '../store/reducers/reducers';
+import { ElementRef } from '@angular/core';
+import { GrabNDragDirective } from './grab-n-drag.directive';
 
 describe('GrabNDragDirective', () => {
-  let component: ImageViewerComponent;
-  let fixture: ComponentFixture<ImageViewerComponent>;
-  let imageElement: DebugElement;
+  let directive: GrabNDragDirective;
+  const hostElement = document.createElement('div');
+  hostElement.scrollLeft = 20;
+  hostElement.scrollTop = 30;
+  const event = { clientX: 50, clientY: 40, preventDefault: () => {} }
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [GrabNDragDirective, ImageViewerComponent],
-      providers: [AnnotationApiService],
-      imports: [HttpClientTestingModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}),],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-    fixture = TestBed.createComponent(ImageViewerComponent);
-    component = fixture.componentInstance;
-    component.rotation = 0;
-    component.enableAnnotations = false;
-    component.height = '100px';
-    component.url = 'https://images6.alphacoders.com/712/thumb-1920-712175.jpg';
-    component.errorMessage = '';
-    component.enableGrabNDrag = true;
-    fixture.detectChanges();
-    imageElement = fixture.debugElement.query(By.css('img'));
-    fixture.detectChanges();
+    directive = new GrabNDragDirective(new ElementRef<HTMLElement>(hostElement));
   });
 
-  it('being able to drag the image around', () => {
-    component.zoom = 5;
-    imageElement.nativeElement.scrollLeft = 50;
-    imageElement.nativeElement.scrollTop = 50;
+  it('should set original position on pointer down', () => {
+    directive.dragX = true;
+    directive.dragY = true;
 
-    const mouseDownEvent = createMouseEvent('mousedown', 500, 500, 500, 500);
-    const mouseMoveEvent = createMouseEvent('mousemove', 250, 250, 250, 250);
-    const mouseUpEvent = createMouseEvent('mouseup', 250, 250, 250, 250);
+    directive.onPointerDown(event as any);
 
-    imageElement.nativeElement.dispatchEvent(new Event('mousedown'));
-    fixture.detectChanges();
-    imageElement.nativeElement.dispatchEvent(mouseDownEvent);
-    imageElement.nativeElement.dispatchEvent(mouseMoveEvent);
-    imageElement.nativeElement.dispatchEvent(mouseUpEvent);
-
-    expect(imageElement.nativeElement.scrollLeft).not.toEqual(50);
-    expect(imageElement.nativeElement.scrollTop).not.toEqual(50);
+    expect(directive.originalPosition).toEqual({ left: 50, top: 40 } as any);
   });
 
-  function createMouseEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
-    const mouseEvent = document.createEvent('MouseEvents');
-    mouseEvent.initMouseEvent(
-      typeArg,
-      true,
-      true,
-      window,
-      1,
-      screenX,
-      screenY,
-      clientX,
-      clientY,
-      false,
-      false,
-      false,
-      false,
-      0,
-      null
-    );
-    return mouseEvent;
-  }
+  it('should set host element on pointer move', () => {
+    directive.dragX = true;
+
+    directive.onPointerMove(event as any);
+
+    expect(hostElement.scrollLeft).toEqual(0);
+    expect(hostElement.scrollTop).toEqual(0);
+  });
+
+  it('should set host element on pointer move, when pointer down', () => {
+    directive.dragX = true;
+
+    directive.onPointerDown(event as any);
+    directive.onPointerMove(event as any);
+
+    expect(hostElement.scrollLeft).toEqual(0);
+    expect(hostElement.scrollTop).toEqual(0);
+  });
+
+  it('should set host element on pointer move, when dragX', () => {
+    directive.dragX = true;
+
+    directive.onPointerDown(event as any);
+    directive.onPointerMove(event as any);
+
+    expect(hostElement.scrollLeft).toEqual(0);
+    expect(hostElement.scrollTop).toEqual(0);
+  });
+
+  it('should set host element on pointer move, when dragY', () => {
+    directive.dragX = false;
+    directive.dragY = true;
+
+    directive.onPointerDown(event as any);
+    directive.onPointerMove(event as any);
+
+    expect(hostElement.scrollLeft).toEqual(0);
+    expect(hostElement.scrollTop).toEqual(0);
+  });
 });
