@@ -16,7 +16,6 @@ import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.m
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ViewerUtilService } from '../viewer-util.service';
-import { ViewerEventService } from '../viewer-event.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { Store } from '@ngrx/store';
@@ -69,7 +68,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       this.store.dispatch(new fromRedactionActions.LoadRedactions(this.url));
     }
     this.subscriptions.push(
-      this.toolbarEvents.rotateSubject.subscribe(rotation => this.setRotation(rotation)),
+      this.toolbarEvents.rotateSubject.subscribe(rotation => this.rotateImage(rotation)),
       this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
       this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)),
       this.toolbarEvents.printSubject.subscribe(() => this.printService.printDocumentNatively(this.url)),
@@ -94,7 +93,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private setRotation(rotation: number) {
+  private rotateImage(rotation: number) {
     this.rotation = (this.rotation + rotation) % 360;
   }
 
@@ -158,12 +157,12 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   initAnnoPage() {
-    const payload: any = {
+    const payload: any = [{
       div: {offsetHeight: 1122}, // todo add dynamic height
       pageNumber: 1,
       scale: 1,
       rotation: 1
-    };
+    }];
     this.store.dispatch(new fromDocument.AddPages(payload));
   }
 
@@ -174,4 +173,5 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
+
 }

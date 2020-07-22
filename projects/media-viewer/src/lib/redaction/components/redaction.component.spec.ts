@@ -116,7 +116,6 @@ describe('RedactionComponent', () => {
   }));
 
   it('should download redacted document', inject([Store],(store) => {
-    console.log('this is the navigator', navigator)
     const anchor = {
       setAttribute: () => {}, click: () => {}, remove: () => {}, href: undefined, download: undefined
     } as any;

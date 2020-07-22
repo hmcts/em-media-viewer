@@ -4,10 +4,7 @@
  * */
 
 export class HtmlTemplatesHelper {
-  /*
-  * Sets described by string depending if
-  * there is an error, error and hit or nothing
-  * */
+
   static setDescribedBy(errorMessage, config) {
     if (!errorMessage) {
       return config.hint ? `${config.id}-hint` : null;
@@ -16,6 +13,5 @@ export class HtmlTemplatesHelper {
     } else {
       return config.hint ? `${config.id}-hint` : null;
     }
-    return null;
   }
 }

@@ -97,15 +97,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   goToBookmark(bookmark: Bookmark) {
 
-    const scaledY: (yCoordinate: number, height: number, page: DocumentPages, zoom: number) => number =
-      function(yCoordinate, height, page, zoom) {
-        const viewportScale = page.viewportScale / zoom;
-        return ((height / zoom) - yCoordinate) / viewportScale;
-      };
-
     const thisPage = this.pageLookup[bookmark.pageNumber + 1];
     const defaultHeight = thisPage.styles.height;
-    const defaultScaleY = scaledY(bookmark.yCoordinate, defaultHeight, thisPage, this.zoom);
+    const defaultScaleY = this.scaledY(bookmark.yCoordinate, defaultHeight, thisPage);
 
     let top = 0, left = 0;
     switch (this.rotate) {
@@ -113,7 +107,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         left = - defaultScaleY;
         break;
       case 180:
-        top = scaledY(bookmark.yCoordinate, (defaultHeight - (24 * this.zoom)), thisPage, this.zoom);
+        top = this.scaledY(bookmark.yCoordinate, (defaultHeight - (24 * this.zoom)), thisPage);
         break;
       case 270:
         left = defaultScaleY;
@@ -133,4 +127,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   private getSibling(node, index) {
     return node.parent.children.length > index ? node.parent.children[index] : undefined;
   }
+
+  private scaledY(yCoordinate: number, height: number, page: DocumentPages): number {
+    const viewportScale = page.viewportScale / this.zoom;
+    return ((height / this.zoom) - yCoordinate) / viewportScale;
+  };
 }

@@ -68,6 +68,12 @@ export class SubToolbarComponent implements OnInit, OnDestroy {
     this.closeMenu();
   }
 
+  saveRotation() {
+    this.toolbarButtons.showSaveRotationButton = false;
+    this.toolbarEvents.saveRotation()
+    this.closeMenu();
+  }
+
   closeMenu() {
     this.toolbarEvents.subToolbarHidden.next(true);
   }

@@ -76,8 +76,8 @@ export class RedactionEffects {
   unmarkAll$ = this.actions$.pipe(
     ofType(redactionActions.UNMARK_ALL),
     map((action: redactionActions.UnmarkAll) => action.payload),
-    exhaustMap((redactionPayload) => {
-      return this.redactionApiService.deleteAllMarkers(redactionPayload).pipe(
+    exhaustMap((documentId) => {
+      return this.redactionApiService.deleteAllMarkers(documentId).pipe(
         map(result => {
           return new redactionActions.UnmarkAllSuccess();
         }),

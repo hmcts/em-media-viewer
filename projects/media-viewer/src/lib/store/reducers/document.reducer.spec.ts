@@ -1,59 +1,61 @@
 import * as fromDocument from './document.reducer';
 import * as fromActions from '../actions/document.action';
-import { ClearConvertDocUrl, ConvertFail, ConvertSuccess } from '../actions/document.action';
+import { ClearConvertDocUrl, ConvertFailure, ConvertSuccess } from '../actions/document.action';
 import { DocumentState } from './document.reducer';
 
 describe('DocumentReducer', () => {
 
-    it('should return the default state', () => {
-      const { initialDocumentState } = fromDocument;
-      const action = {} as any;
-      const state = fromDocument.docReducer(undefined, action);
+  const documentState: DocumentState = {
+    convertedDocument: { url: 'url', error: undefined },
+    documentId: '',
+    pdfPosition: undefined,
+    rotation: undefined,
+    rotationLoaded: undefined,
+    pages: undefined,
+    hasDifferentPageSize: false,
+    loaded: true,
+    loading: false
+  };
 
-      expect(state).toBe(initialDocumentState);
-    });
+  it('should return the default state', () => {
+    const { initialDocumentState } = fromDocument;
+    const action = {} as any;
+    const state = fromDocument.docReducer(undefined, action);
 
-    it('should set pages after ADD PAGE action', () => {
-      const payload = [
-        {
-          div: {},
+    expect(state).toBe(initialDocumentState);
+  });
+
+  it('should set pages after ADD PAGE action', () => {
+    const payload = [
+      {
+        div: {},
+        scale: 1,
+        rotation: 0,
+        id: '1',
+        viewportScale: 1.33333
+      }];
+    const { initialDocumentState } = fromDocument;
+    const action = new fromActions.AddPages(payload);
+    const state = fromDocument.docReducer(initialDocumentState, action);
+    const pages: any = {
+      '1' : {
+        styles: {
+          left: undefined,
+          height: undefined,
+          width: undefined
+        },
+        scaleRotation: {
           scale: 1,
-          rotation: 0,
-          id: '1',
-          viewportScale: 1.33333
-        }];
-      const { initialDocumentState } = fromDocument;
-      const action = new fromActions.AddPages(payload);
-      const state = fromDocument.docReducer(initialDocumentState, action);
-      const pages: any = {
-        '1' : {
-          styles: {
-            left: undefined,
-            height: undefined,
-            width: undefined
-          },
-          scaleRotation: {
-            scale: 1,
-            rotation: 0
-          },
-          viewportScale: 1.33333
-        }
-      };
-      expect(state.pages).toEqual(pages);
-    });
+          rotation: 0
+        },
+        viewportScale: 1.33333
+      }
+    };
+    expect(state.pages).toEqual(pages);
+  });
 
   it('should convert document', function () {
-    let url = 'url';
-    const documentState: DocumentState = {
-      convertedDocument: { url: url, error: undefined },
-      documentId: '',
-      pdfPosition: undefined,
-      pages: undefined,
-      hasDifferentPageSize: false,
-      loaded: true,
-      loading: false
-    };
-    url = 'new url';
+    let url = 'new url';
 
     const state = fromDocument.docReducer(documentState, new ConvertSuccess(url));
 
@@ -63,19 +65,9 @@ describe('DocumentReducer', () => {
   });
 
   it('should fail to convert document', function () {
-    let url = 'url';
     const error = 'error';
-    const documentState: DocumentState = {
-      convertedDocument: { url: url, error: undefined },
-      documentId: '',
-      pdfPosition: undefined,
-      pages: undefined,
-      hasDifferentPageSize: false,
-      loaded: true,
-      loading: false
-    };
 
-    const state = fromDocument.docReducer(documentState, new ConvertFail(error));
+    const state = fromDocument.docReducer(documentState, new ConvertFailure(error));
 
     expect(state.convertedDocument).toEqual({ url: undefined, error: error });
     expect(state.loaded).toBeTrue();
@@ -83,17 +75,6 @@ describe('DocumentReducer', () => {
   });
 
   it('should clear doc url', function () {
-    let url = 'url';
-    const documentState: DocumentState = {
-      convertedDocument: { url: url, error: undefined },
-      documentId: '',
-      pdfPosition: undefined,
-      pages: undefined,
-      hasDifferentPageSize: false,
-      loaded: true,
-      loading: false
-    };
-
     const state = fromDocument.docReducer(documentState, new ClearConvertDocUrl());
 
     expect(state.convertedDocument).toEqual(undefined);

@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
 import { PdfPosition } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import { Rotation } from '../../viewers/rotation.model';
 
 export const SET_DOCUMENT_ID = '[Document] Set Document Id';
 export const POSITION_UPDATED = '[Document] Position Updated';
@@ -10,6 +11,12 @@ export const CONVERT_SUCCESS = '[Document] Convert Success';
 export const CONVERT_FAIL = '[Document] Convert Fail';
 export const CLEAR_CONVERT_DOC_URL = '[Document] Clear Convert Doc Url';
 
+export const LOAD_ROTATION = '[Document] Load Rotation'
+export const LOAD_ROTATION_SUCCESS = '[Document] Load Rotation Success'
+export const LOAD_ROTATION_FAIL = '[Document] Load Rotation Fail'
+export const SAVE_ROTATION = '[Document] Save Rotation'
+export const SAVE_ROTATION_SUCCESS = '[Document] Save Rotation Success'
+export const SAVE_ROTATION_FAIL = '[Document] Save Rotation Fail'
 
 export class SetDocumentId implements Action {
   readonly type = SET_DOCUMENT_ID;
@@ -36,15 +43,54 @@ export class ConvertSuccess implements Action {
   constructor(public payload: string ) {}
 }
 
-export class ConvertFail implements Action {
+export class ConvertFailure implements Action {
   readonly type = CONVERT_FAIL;
-  constructor(public payload: any) {}
+  constructor(public payload: string) {}
 }
 
 export class ClearConvertDocUrl implements Action {
   readonly type = CLEAR_CONVERT_DOC_URL;
 }
 
-export type DocumentActions = AddPages | SetDocumentId |
-  Convert | ConvertSuccess | ConvertFail |
-  ClearConvertDocUrl | PdfPositionUpdate;
+export class LoadRotation implements Action {
+  readonly type = LOAD_ROTATION;
+  constructor(public payload: string) {
+  }
+}
+
+export class LoadRotationSuccess implements Action {
+  readonly type = LOAD_ROTATION_SUCCESS;
+  constructor(public payload: { rotationAngle: number }) {
+  }
+}
+
+export class LoadRotationFailure implements Action {
+  readonly type = LOAD_ROTATION_FAIL;
+  constructor(public payload: Error) {
+  }
+}
+
+export class SaveRotation implements Action {
+  readonly type = SAVE_ROTATION;
+  constructor(public payload: Rotation) {
+  }
+}
+
+export class SaveRotationSuccess implements Action {
+  readonly type = SAVE_ROTATION_SUCCESS;
+  constructor(public payload: { rotationAngle: number }) {
+  }
+}
+
+export class SaveRotationFailure implements Action {
+  readonly type = SAVE_ROTATION_FAIL;
+  constructor(public payload: Error) {
+  }
+}
+
+export type DocumentActions =
+  | AddPages | SetDocumentId | Convert
+  | ConvertSuccess | ConvertFailure | ClearConvertDocUrl
+  | PdfPositionUpdate | LoadRotation | LoadRotationSuccess
+  | LoadRotationFailure | SaveRotation | SaveRotationSuccess
+  | SaveRotationFailure;
