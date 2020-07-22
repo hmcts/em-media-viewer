@@ -86,7 +86,7 @@
     "chai-smoothie": "^0.2.0",
     "circular-dependency-plugin": "^5.0.2",
     "codacy-coverage": "^3.4.0",
-    "codecov": "^3.3.0",
+    "codecov": "^3.7.1",
     "codelyzer": "^5.0.1",
     "coveralls": "^3.0.3",
     "cucumber": "^5.1.0",
