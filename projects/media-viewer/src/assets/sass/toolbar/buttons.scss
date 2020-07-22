@@ -386,6 +386,10 @@ html[dir='rtl'] .toolbarButton.pageDown::before {
   content: url(/assets/images/secondaryToolbarButton-handGrab.png);
 }
 
+.secondaryToolbarButton.saveRotation::before {
+  content: url(/assets/images/secondaryToolbarButton-saveRotation.png);
+}
+
 .toolbarButton.bookmark,
 .secondaryToolbarButton.bookmark {
   box-sizing: border-box;

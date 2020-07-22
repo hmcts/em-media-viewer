@@ -9,24 +9,27 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   defaultImageOptions,
   defaultPdfOptions,
   defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
 } from './toolbar/toolbar-button-visibility.service';
-import {AnnotationSet} from './annotations/annotation-set/annotation-set.model';
-import {ToolbarEventService} from './toolbar/toolbar-event.service';
-import {AnnotationApiService} from './annotations/annotation-api.service';
-import {ResponseType, ViewerException} from './viewers/viewer-exception.model';
-import {CommentService} from './annotations/comment-set/comment/comment.service';
+import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
+import { ToolbarEventService } from './toolbar/toolbar-event.service';
+import { AnnotationApiService } from './annotations/annotation-api.service';
+import { ResponseType, ViewerException } from './viewers/viewer-exception.model';
+import { CommentService } from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
-import {select, Store} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as fromStore from './store/reducers/reducers';
 import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
 import * as fromDocumentsSelector from './store/selectors/document.selectors';
 import * as fromAnnoActions from './store/actions/annotations.action';
+import { Rotation } from './viewers/rotation.model';
+import * as fromDocumentActions from './store/actions/document.action';
+import { filter, take } from 'rxjs/operators';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -70,6 +73,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() caseId: string;
 
+  rotation = 0;
+  savedRotation = 0;
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
@@ -77,7 +82,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   typeException = false;
   hasDifferentPageSize$: Observable<boolean>;
 
-  private subscriptions: Subscription[] = [];
+  private $subscriptions: Subscription;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -96,10 +101,14 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.hasDifferentPageSize$ = this.store.pipe(select(fromDocumentsSelector.getPageDifference));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
-    this.subscriptions.push(
-      this.commentService.getUnsavedChanges().subscribe(changes => this.onCommentChange(changes)),
-      this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes)
-    );
+    this.$subscriptions = this.commentService.getUnsavedChanges()
+      .subscribe(changes => this.onCommentChange(changes));
+    this.$subscriptions.add(this.toolbarEvents.getShowCommentSummary()
+      .subscribe(changes => this.showCommentSummary = changes));
+    this.$subscriptions.add(this.store.pipe(select(fromDocumentsSelector.getRotation))
+        .subscribe(rotation => this.savedRotation = rotation ));
+    this.$subscriptions.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation)));
+    this.$subscriptions.add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
   }
 
   contentTypeConvertible(): boolean {
@@ -128,15 +137,15 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
     this.setToolbarButtons();
     this.detectOs();
-    this.setToolbarButtons();
     this.typeException = false;
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.$subscriptions.unsubscribe();
   }
 
   onMediaLoad(status: ResponseType) {
+    this.setInitialRotation();
     this.mediaLoadStatus.emit(status);
   }
 
@@ -168,6 +177,33 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.contentType = null;
       this.setToolbarButtons();
     }
+  }
+
+  private setInitialRotation() {
+    this.rotation = 0;
+    const documentId = this.extractDMStoreDocId(this.url);
+    this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
+    this.store.pipe(select(fromDocumentsSelector.rotationLoaded),
+      filter(value => !!value),
+      take(1))
+      .subscribe(() => {
+        if (this.savedRotation) {
+          this.toolbarEvents.rotateSubject.next(this.savedRotation);
+        }
+      })
+  }
+
+  private onRotate(rotation: number) {
+    this.rotation = (this.rotation + rotation) %360;
+    this.toolbarButtons.showSaveRotationButton = this.savedRotation !== this.rotation;
+  }
+
+  private saveRotation() {
+    const payload: Rotation = {
+      documentId: this.extractDMStoreDocId(this.url),
+      rotationAngle: this.rotation
+    }
+    this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
   }
 
   onCommentChange(changes: boolean) {

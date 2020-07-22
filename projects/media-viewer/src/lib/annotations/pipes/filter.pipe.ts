@@ -7,22 +7,20 @@ export class FilterPipe implements PipeTransform {
 
   transform(items: any[], searchText: string, fieldName: string): any[] {
 
-    // return empty array if array is falsy
-    if (!items) { return []; }
+    if (!items) {
+      return [];
+    }
 
-    // return the original array if search text is empty
-    if (!searchText) { return items; }
+    if (!searchText) {
+      return items;
+    }
 
-    // convert the searchText to lower case
-    searchText = searchText.toLowerCase();
-
-    // retrun the filteredComments array
     return items.filter(item => {
       if (item) {
         if (item[fieldName]) {
-          return item[fieldName].toLowerCase().includes(searchText);
+          return item[fieldName].toLowerCase().includes(searchText.toLowerCase());
         } else {
-          return item.toLowerCase().includes(searchText);
+          return item.toLowerCase().includes(searchText.toLowerCase());
         }
       }
       return false;

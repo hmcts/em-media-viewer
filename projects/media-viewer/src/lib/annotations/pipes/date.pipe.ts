@@ -12,6 +12,7 @@ import * as moment_ from 'moment-timezone';
   name: 'momentDate'
 })
 export class MomentDatePipe extends DatePipe implements PipeTransform {
+
   transform(
     value: string | Date,
     format: string = 'mediumDate',

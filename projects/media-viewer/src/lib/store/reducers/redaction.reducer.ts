@@ -10,7 +10,7 @@ export interface RedactionState {
   redactionPageEntities: { [id: string]: any };
   selectedRedaction: SelectionAnnotation | {};
   redactedDocumentInfo: { blob: Blob, filename: string };
-  documentId: undefined;
+  documentId: string;
 }
 
 export const initialRedactionState: RedactionState = {
@@ -104,7 +104,7 @@ export function redactionReducer (
       };
     }
 
-    case fromRedaction.CLEAR_REDACT_DOC_URL: {
+    case fromRedaction.RESET_REDACTED_DOCUMENT: {
       return {
         ...state,
         redactedDocumentInfo: undefined

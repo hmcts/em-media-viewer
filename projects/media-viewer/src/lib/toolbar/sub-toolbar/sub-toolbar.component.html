@@ -33,6 +33,12 @@
               data-l10n-id="page_grab_n_drag" (click)="grabNDrag()">
         <span data-l10n-id="page_grab_n_drag_label">Grab N Drag</span>
       </button>
+      <button *ngIf="toolbarButtons.showSaveRotationButton"
+              class="secondaryToolbarButton saveRotation" title="Save Rotation" tabindex="7"
+              id="saveRotation"
+              data-l10n-id="page_save_rotation" (click)="saveRotation()">
+        <span data-l10n-id="page_save_rotation_label">Save Rotation</span>
+      </button>
     <div class="horizontalToolbarSeparator"></div>
       <button id="secondaryPrint" *ngIf="toolbarButtons.showPrint"
               class="secondaryToolbarButton print"

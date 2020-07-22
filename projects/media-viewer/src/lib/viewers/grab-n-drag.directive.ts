@@ -15,7 +15,8 @@ export class GrabNDragDirective {
   constructor(private el: ElementRef) {
   }
 
-  @HostListener('pointerdown', ['$event']) onPointerDown(event: PointerEvent) {
+  @HostListener('pointerdown', ['$event'])
+  onPointerDown(event: PointerEvent) {
     if (this.dragX || this.dragY) {
       event.preventDefault();
       this.pointerDown = true;
@@ -26,7 +27,8 @@ export class GrabNDragDirective {
     }
   }
 
-  @HostListener('window:pointermove', ['$event']) onPointerMove(event: PointerEvent) {
+  @HostListener('window:pointermove', ['$event'])
+  onPointerMove(event: PointerEvent) {
     if (this.pointerDown && (this.dragX || this.dragY)) {
       event.preventDefault();
       const scrollDiff = {

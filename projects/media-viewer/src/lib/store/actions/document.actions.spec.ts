@@ -29,9 +29,9 @@ describe('Document actions', () => {
       });
     });
 
-    it('should create ConvertFail', () => {
+    it('should create ConvertFailure', () => {
       const payload = '';
-      const action = new fromDocument.ConvertFail(payload);
+      const action = new fromDocument.ConvertFailure(payload);
       expect({...action}).toEqual({
         type: fromDocument.CONVERT_FAIL,
         payload

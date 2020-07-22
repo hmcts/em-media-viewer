@@ -7,20 +7,20 @@ import { Redaction } from './redaction.model';
 @Injectable()
 export class RedactionApiService {
 
-  public markupsApiUrl = '/api/markups/';
-  public redactApiUrl = '/api/redaction/';
+  private markupsApiUrl = '/api/markups';
+  private redactApiUrl = '/api/redaction';
 
   constructor(
     private readonly httpClient: HttpClient
   ) {}
 
-  public getRedactions(documentId: string): Observable<any> { // todo add model
-    const fixedUrl = `${this.markupsApiUrl}${documentId}`;
+  public getRedactions(documentId: string): Observable<HttpResponse<Redaction[]>> {
+    const fixedUrl = `${this.markupsApiUrl}/${documentId}`;
     return this.httpClient
       .get<Redaction[]>(fixedUrl, { observe: 'response' , withCredentials: true });
   }
 
-  public saveRedaction(body): Observable<any> {
+  public saveRedaction(body): Observable<Redaction> {
     return this.httpClient
       .post<Redaction>(this.markupsApiUrl, body, { observe: 'response' , withCredentials: true })
       .pipe(
@@ -30,14 +30,14 @@ export class RedactionApiService {
   }
 
   public deleteRedaction(payload): Observable<null> {
-    const url = `${this.markupsApiUrl}${payload.documentId}/${payload.redactionId}`;
+    const url = `${this.markupsApiUrl}/${payload.documentId}/${payload.redactionId}`;
     return this.httpClient
       .delete<null>(url, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
   }
 
-  public deleteAllMarkers(payload): Observable<null> {
-    const url = `${this.markupsApiUrl}/${payload}`;
+  public deleteAllMarkers(documentId): Observable<null> {
+    const url = `${this.markupsApiUrl}/${documentId}`;
 
     return this.httpClient
       .delete<null>(url, { observe: 'response' , withCredentials: true })
