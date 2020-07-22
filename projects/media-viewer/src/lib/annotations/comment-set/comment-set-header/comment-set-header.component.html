@@ -1,4 +1,4 @@
-<div class="govuk-tabs commentSummaryHeader" data-module="govuk-tabs">
+<div class="govuk-tabs commentSummaryHeader" [ngClass]="{'icp-mode': toolbarEvents.icp.enabled | async}" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
     <li *ngFor="let tab of tabs" class="govuk-tabs__list-item govuk-tabs__list-item"
         [ngClass]="{'govuk-tabs__list-item--selected': tabSelected === tab.label}">

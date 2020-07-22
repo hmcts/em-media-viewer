@@ -35,4 +35,14 @@
       </button>
     </div>
   </div>
+  <div id="toolbarViewerRight">
+    <div class="splitToolbarButton">
+      <button class="toolbarButton"
+              id="icp-participants-list" tabindex="0" title="Participants list"
+              (click)="showParticipantsList()">
+        <span *ngIf="!(toolbarEventService.icp.icpParticipantsListVisible | async)" data-l10n-id="icp-stop-presenting_label">Show Participants</span>
+        <span *ngIf="toolbarEventService.icp.icpParticipantsListVisible | async" data-l10n-id="icp-stop-presenting_label">Hide Participants</span>
+      </button>
+    </div>
+  </div>
 </div>

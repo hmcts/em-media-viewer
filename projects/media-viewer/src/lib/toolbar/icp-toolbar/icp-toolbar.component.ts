@@ -41,4 +41,8 @@ export class IcpToolbarComponent implements OnInit, OnDestroy {
   leaveIcpSession() {
     this.toolbarEventService.icp.leaveSession();
   }
+
+  showParticipantsList() {
+    this.toolbarEventService.icp.toggleIcpParticipantsList(!this.toolbarEventService.icp.icpParticipantsListVisible.getValue());
+  }
 }

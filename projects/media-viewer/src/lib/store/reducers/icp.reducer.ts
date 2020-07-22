@@ -65,3 +65,4 @@ export function icpReducer (state = initialIcpSessionState,
 export const getIcpSession = (state: IcpState) => state.session;
 export const getPresenter = (state: IcpState) => state.presenter;
 export const getClient = (state: IcpState) => state.client;
+export const getParticipants = (state: IcpState) => state.participants;

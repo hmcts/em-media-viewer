@@ -37,6 +37,7 @@ import { TreeModule } from 'angular-tree-component';
 import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.component';
 import { RotationApiService } from './viewers/rotation-persist/rotation-api.service';
 import { RotationPersistDirective } from './viewers/rotation-persist/rotation-persist.directive';
+import { ParticipantsListComponent } from './icp/participants-list/participants-list.component';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { RotationPersistDirective } from './viewers/rotation-persist/rotation-pe
     RotationPersistDirective,
     ConfirmActionDialogComponent,
     RedactionComponent, // todo made put this into module
-    BookmarkIconsComponent
+    BookmarkIconsComponent,
+    ParticipantsListComponent
   ],
   entryComponents: [
     PdfViewerComponent,

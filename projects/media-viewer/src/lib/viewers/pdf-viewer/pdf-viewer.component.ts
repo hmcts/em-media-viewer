@@ -80,6 +80,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private $subscription: Subscription;
   private viewerException: ViewerException;
   showCommentsPanel: boolean;
+  showIcpParticipantsList: boolean;
   enableGrabNDrag = false;
 
   constructor(
