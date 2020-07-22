@@ -108,22 +108,22 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
     this.pdfWrapper.pageRendered.subscribe((event) => this.updatePages(event));
     this.$subscription = this.toolbarEvents.printSubject
-      .subscribe(() => this.printService.printDocumentNatively(this.url))
-      .add(this.toolbarEvents.downloadSubject.subscribe(() =>
-        this.pdfWrapper.downloadFile(this.downloadUrl || this.url, this.downloadFileName)
-      ))
-      .add(this.toolbarEvents.rotateSubject.subscribe(rotate => this.rotateDocument(rotate)))
-      .add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)))
-      .add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)))
-      .add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)))
-      .add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)))
-      .add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)))
-      .add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag))
-      .add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle))
-      .add(this.pdfWrapper.positionUpdated.asObservable()
-        .pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
-        .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
-      );
+      .subscribe(() => this.printService.printDocumentNatively(this.url));
+    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() =>
+      this.pdfWrapper.downloadFile(this.downloadUrl || this.url, this.downloadFileName)
+    ));
+    this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotate => this.rotateDocument(rotate)));
+    this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
+    this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
+    this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
+    this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
+    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
+    this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
+    this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
+    this.$subscription.add(this.pdfWrapper.positionUpdated.asObservable()
+      .pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
+      .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
+    );
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -176,7 +176,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private onDocumentLoadProgress(documentLoadProgress: DocumentLoadProgress) {
     if (documentLoadProgress.total) {
-      this.loadingDocumentProgress = Math.min(100, Math.ceil(documentLoadProgress.loaded / documentLoadProgress.total * 100 ));
+      this.loadingDocumentProgress = Math.min(100, Math.ceil(documentLoadProgress.loaded / documentLoadProgress.total * 100));
     }
   }
 
@@ -187,7 +187,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private onDocumentLoadFailed(error: Error) {
     this.loadingDocument = false;
-    this.viewerException = new ViewerException(error.name, {message: error.message});
+    this.viewerException = new ViewerException(error.name, { message: error.message });
     this.errorMessage = `Could not load the document "${this.url}"`;
 
     this.pdfLoadStatus.emit(ResponseType.FAILURE);
@@ -272,10 +272,15 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   calculateZoomValue(zoomValue, increment = 0) {
     const newZoomValue = zoomValue + increment;
-    if (newZoomValue > 5) { return 5; }
-    if (newZoomValue < 0.1) { return 0.1; }
+    if (newZoomValue > 5) {
+      return 5;
+    }
+    if (newZoomValue < 0.1) {
+      return 0.1;
+    }
     return newZoomValue;
   }
+
   // todo move this to common place for media viewer and pdf
   private extractDMStoreDocId(url: string): string {
     url = url.includes('/documents/') ? url.split('/documents/')[1] : url;

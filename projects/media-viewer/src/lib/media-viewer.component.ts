@@ -82,7 +82,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   typeException = false;
   hasDifferentPageSize$: Observable<boolean>;
 
-  private subscriptions: Subscription;
+  private $subscriptions: Subscription;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -101,13 +101,14 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.hasDifferentPageSize$ = this.store.pipe(select(fromDocumentsSelector.getPageDifference));
     this.setToolbarButtons();
     this.toolbarEventsOutput.emit(this.toolbarEvents);
-    this.subscriptions = this.commentService.getUnsavedChanges()
-      .subscribe(changes => this.onCommentChange(changes))
-      .add(this.toolbarEvents.getShowCommentSummary().subscribe(changes => this.showCommentSummary = changes))
-      .add(this.store.pipe(select(fromDocumentsSelector.getRotation))
-        .subscribe(rotation => this.savedRotation = rotation ))
-      .add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation)))
-      .add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
+    this.$subscriptions = this.commentService.getUnsavedChanges()
+      .subscribe(changes => this.onCommentChange(changes));
+    this.$subscriptions.add(this.toolbarEvents.getShowCommentSummary()
+      .subscribe(changes => this.showCommentSummary = changes));
+    this.$subscriptions.add(this.store.pipe(select(fromDocumentsSelector.getRotation))
+        .subscribe(rotation => this.savedRotation = rotation ));
+    this.$subscriptions.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation)));
+    this.$subscriptions.add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
   }
 
   contentTypeConvertible(): boolean {
@@ -140,7 +141,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe();
+    this.$subscriptions.unsubscribe();
   }
 
   onMediaLoad(status: ResponseType) {
@@ -185,7 +186,11 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.store.pipe(select(fromDocumentsSelector.rotationLoaded),
       filter(value => !!value),
       take(1))
-      .subscribe(() => this.toolbarEvents.rotateSubject.next(this.savedRotation))
+      .subscribe(() => {
+        if (this.savedRotation) {
+          this.toolbarEvents.rotateSubject.next(this.savedRotation);
+        }
+      })
   }
 
   private onRotate(rotation: number) {
