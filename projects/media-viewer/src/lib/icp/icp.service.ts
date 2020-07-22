@@ -39,7 +39,6 @@ export class IcpService implements OnDestroy  {
   ngOnDestroy() {
     this.unsubscribeSession();
     this.subscription.unsubscribe();
-    this.subscription = undefined;
   }
 
   launchSession() {
@@ -73,7 +72,6 @@ export class IcpService implements OnDestroy  {
     this.presenterSubscriptions.update(false);
     this.followerSubscriptions.update(false);
     this.sessionSubscription.unsubscribe();
-    this.sessionSubscription = undefined;
   }
 
   leavePresentation() {

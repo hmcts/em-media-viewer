@@ -17,7 +17,11 @@ const icpState = {
   presenter: {
     id: 'presenterId',
     username: 'name'
-  }
+  },
+  participants: [ {
+    id: 'participantId',
+    username: 'name'
+  } ]
 };
 
 describe('Icp selectors', () => {
@@ -38,14 +42,18 @@ describe('Icp selectors', () => {
       let result;
       store.pipe(select(fromSelectors.getIcpState)).subscribe(value => result = value);
 
-      const payload = {
+      const joinPayload = {
         session: icpState.session,
         participantInfo: {
           client: icpState.client,
           presenter: icpState.presenter
         }
       };
-      store.dispatch(new fromActions.IcpSocketSessionJoined(payload));
+      store.dispatch(new fromActions.IcpSocketSessionJoined(joinPayload));
+
+      const participantPayload = { 'participantId': 'name' }
+      store.dispatch(new fromActions.IcpParticipantListUpdated(participantPayload));
+
       expect(result).toEqual(icpState);
     });
   });

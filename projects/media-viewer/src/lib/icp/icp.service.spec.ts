@@ -24,9 +24,11 @@ describe('Icp Service', () => {
   const mockUpdateService = {
     clientDisconnected: () => of('client'),
     presenterUpdated: () => of(),
+    participantListUpdated: () => of(),
     leaveSession: () => {},
     updatePresenter: () => {},
-    screenUpdated: () => {}
+    screenUpdated: () => {},
+    removeParticipant: () => {},
   } as any;
 
   const session: IcpSession = {
@@ -174,6 +176,7 @@ describe('Icp Service', () => {
 
       service.isPresenter = true;
       service.sessionSubscription = new Subscription();
+      service.client = { id: 'clientId', username: 'name' };
       service.leavePresentation();
 
       expect(service.stopPresenting).toHaveBeenCalled();

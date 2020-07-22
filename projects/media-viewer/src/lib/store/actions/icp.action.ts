@@ -32,7 +32,7 @@ export class JoinIcpSocketSession implements Action {
 
 export class IcpSocketSessionJoined implements Action {
   readonly type = ICP_SOCKET_SESSION_JOINED;
-  constructor(public payload: { session: IcpSession, participantInfo: { client: IcpParticipant, presenter: IcpParticipant, participants: any } }) {}
+  constructor(public payload: { session: IcpSession, participantInfo: { client: IcpParticipant, presenter: IcpParticipant } }) {}
 }
 
 export class LeaveIcpSocketSession implements Action {

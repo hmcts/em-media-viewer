@@ -9,7 +9,8 @@ const icpState = {
     dateOfHearing: new Date()
   },
   client: {id: 'clientId', username: 'name'},
-  presenter: {id: 'presenterId', username: 'name'}
+  presenter: {id: 'presenterId', username: 'name'},
+  participants: [{id: 'participantId', username: 'name'}]
 };
 
 describe('IcpReducer', () => {
