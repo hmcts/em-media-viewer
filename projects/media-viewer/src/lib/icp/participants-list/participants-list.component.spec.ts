@@ -46,7 +46,8 @@ describe('ParticipantsListComponent', () => {
   });
 
   it('should subscribe to commentsPanelVisible', () => {
+    spyOn(toolbarEvents.icp, 'toggleIcpParticipantsList');
     toolbarEvents.commentsPanelVisible.next(true);
-    expect(component.showParticipantsList).toBeFalsy();
+    expect(toolbarEvents.icp.toggleIcpParticipantsList).toHaveBeenCalledWith(false);
   });
 });
