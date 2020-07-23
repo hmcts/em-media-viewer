@@ -1,6 +1,13 @@
 import * as fromIcp from './icp.reducer';
 import { initialIcpSessionState } from './icp.reducer';
-import { IcpPresenterUpdated, IcpSocketSessionJoined, LeaveIcpSocketSession, LoadIcpSession, SetCaseId } from '../actions/icp.action';
+import {
+  IcpParticipantListUpdated,
+  IcpPresenterUpdated,
+  IcpSocketSessionJoined,
+  LeaveIcpSocketSession,
+  LoadIcpSession,
+  SetCaseId
+} from '../actions/icp.action';
 
 const icpState = {
   session: {
@@ -20,6 +27,7 @@ describe('IcpReducer', () => {
     expect(state.session).toEqual(null);
     expect(state.client).toEqual(null);
     expect(state.presenter).toEqual(null);
+    expect(state.participants).toEqual([]);
   });
 
   it('should set case id', function () {
@@ -50,5 +58,11 @@ describe('IcpReducer', () => {
     expect(state.presenter).toEqual(null);
     expect(state.client).toEqual(null);
     expect(state.session).toEqual(null);
+  });
+
+  it('should update participants list', function () {
+    const updatedParticipantsList = {'participantId': 'name'};
+    const state = fromIcp.icpReducer(initialIcpSessionState, new IcpParticipantListUpdated(updatedParticipantsList));
+    expect(state.participants).toEqual(icpState.participants);
   });
 });

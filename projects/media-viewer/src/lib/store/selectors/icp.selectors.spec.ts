@@ -125,4 +125,14 @@ describe('Icp selectors', () => {
       expect(result).toEqual(true);
     });
   });
+
+  describe('getIcpParticipantsList', () => {
+    it('should return the participants list', () => {
+      let result;
+      store.pipe(select(fromSelectors.getParticipants)).subscribe(value => result = value);
+      store.dispatch(new fromActions.IcpParticipantListUpdated({'participantId': 'name'}));
+      expect(result).toEqual(icpState.participants);
+    });
+  });
+
 });

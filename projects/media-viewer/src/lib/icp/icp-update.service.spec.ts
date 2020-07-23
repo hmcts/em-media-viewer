@@ -116,4 +116,21 @@ describe('UpdateService', () => {
       updateService.screenUpdated();
       expect(socketService.listen).toHaveBeenCalled();
     }));
+
+  it('emit remove participant event',
+    inject([SocketService], (socketService) => {
+      spyOn(socketService, 'emit');
+
+      updateService.session = session;
+      updateService.removeParticipant('participantId');
+      expect(socketService.emit).toHaveBeenCalled();
+    }));
+
+  it('listen for participant updates',
+    inject([SocketService], (socketService) => {
+      spyOn(socketService, 'listen');
+
+      updateService.participantListUpdated();
+      expect(socketService.listen).toHaveBeenCalled();
+    }));
 });

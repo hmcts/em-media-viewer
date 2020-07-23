@@ -24,7 +24,7 @@ describe('Icp Service', () => {
   const mockUpdateService = {
     clientDisconnected: () => of('client'),
     presenterUpdated: () => of(),
-    participantListUpdated: () => {},
+    participantListUpdated: () => of(),
     leaveSession: () => {},
     updatePresenter: () => {},
     screenUpdated: () => {},
@@ -171,6 +171,7 @@ describe('Icp Service', () => {
     inject([Store], fakeAsync((store) => {
       spyOn(service, 'stopPresenting');
       spyOn(service, 'unsubscribeSession');
+      spyOn(service, 'removeParticipant');
       spyOn(updateService, 'leaveSession');
       spyOn(store, 'dispatch');
 
@@ -181,6 +182,7 @@ describe('Icp Service', () => {
 
       expect(service.stopPresenting).toHaveBeenCalled();
       expect(service.unsubscribeSession).toHaveBeenCalled();
+      expect(service.removeParticipant).toHaveBeenCalledWith(service.client.id);
       expect(updateService.leaveSession).toHaveBeenCalled();
       expect(store.dispatch).toHaveBeenCalledWith(new fromIcpActions.LeaveIcpSocketSession());
     }))
@@ -212,4 +214,11 @@ describe('Icp Service', () => {
     expect(service.stopPresenting).toHaveBeenCalled();
   });
 
+  it('should remove participant', () => {
+    spyOn(updateService, 'removeParticipant');
+
+    service.removeParticipant(participant.id);
+
+    expect(updateService.removeParticipant).toHaveBeenCalled();
+  });
 });

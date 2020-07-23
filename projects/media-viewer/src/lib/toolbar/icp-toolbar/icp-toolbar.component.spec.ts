@@ -3,6 +3,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { IcpToolbarComponent } from './icp-toolbar.component';
 import { ToolbarEventService } from '../toolbar-event.service';
+import { BehaviorSubject } from 'rxjs';
 
 describe('IcpToolbarComponent', () => {
   let component: IcpToolbarComponent;
@@ -12,7 +13,9 @@ describe('IcpToolbarComponent', () => {
     icp: {
       becomePresenter: () => {},
       stopPresenting: () => {},
-      leaveSession: () => {}
+      leaveSession: () => {},
+      toggleIcpParticipantsList: () => {},
+      icpParticipantsListVisible: new BehaviorSubject(false)
     }
   };
 
@@ -61,5 +64,13 @@ describe('IcpToolbarComponent', () => {
     component.leaveIcpSession();
 
     expect(toolbarEvents.icp.leaveSession).toHaveBeenCalled();
+  });
+
+  it('should show participants', () => {
+    spyOn(toolbarEvents.icp, 'toggleIcpParticipantsList');
+
+    component.showParticipantsList();
+
+    expect(toolbarEvents.icp.toggleIcpParticipantsList).toHaveBeenCalledWith(true);
   });
 });

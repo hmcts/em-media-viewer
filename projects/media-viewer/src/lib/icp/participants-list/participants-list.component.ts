@@ -26,8 +26,8 @@ export class ParticipantsListComponent implements OnInit, OnDestroy {
     this.presenter$ = this.store.pipe(select(fromSelectors.getPresenter));
     this.isPresenter$ = this.store.pipe(select(fromSelectors.isPresenter));
 
-    this.subscription = this.toolbarEvents.icp.icpParticipantsListVisible.subscribe(isVisible => this.showParticipantsList = isVisible)
-      .add(this.toolbarEvents.commentsPanelVisible.subscribe(isVisible => {
+    this.subscription = this.toolbarEvents.icp.icpParticipantsListVisible.subscribe(isVisible => this.showParticipantsList = isVisible);
+    this.subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(isVisible => {
         if (isVisible) { this.toolbarEvents.icp.toggleIcpParticipantsList(false); }
       }));
   }
