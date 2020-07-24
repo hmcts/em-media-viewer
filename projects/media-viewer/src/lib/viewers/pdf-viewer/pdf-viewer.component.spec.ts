@@ -256,6 +256,7 @@ describe('PdfViewerComponent', () => {
     component.showIcpParticipantsList = false;
 
     toolbarEvents.commentsPanelVisible.next(false);
+    fixture.detectChanges();
 
     expect(component.showCommentsPanel).toBeFalsy();
     expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');
