@@ -63,14 +63,20 @@ export class RedactionComponent implements OnInit, OnDestroy {
 
   markTextRedaction(highlight) {
     const redactionHighlight = this.highlightService.getRectangles(highlight.event, highlight.page);
-    const redactionId = uuid();
-
     if (redactionHighlight && redactionHighlight.length) {
-      const documentId = this.documentId;
-      const redaction = { page: highlight.page, rectangles: [...redactionHighlight], redactionId, documentId};
-      this.store.dispatch(new fromRedactionActions.SaveRedaction(redaction));
+      this.saveRedaction(highlight.page, [...redactionHighlight])
     }
     this.toolbarEvents.highlightModeSubject.next(false);
+  }
+
+  markBoxRedaction({ rectangles, page }) {
+    this.saveRedaction(page, rectangles)
+    this.toolbarEvents.drawModeSubject.next(false);
+  }
+
+  saveRedaction(page: number, rectangles: Rectangle[]) {
+    const redaction = { page, rectangles, redactionId: uuid(), documentId: this.documentId };
+    this.store.dispatch(new fromRedactionActions.SaveRedaction(redaction));
   }
 
   onMarkerDelete(event) {
@@ -79,12 +85,6 @@ export class RedactionComponent implements OnInit, OnDestroy {
 
   selectRedaction(event) {
     this.store.dispatch(new fromActions.SelectRedaction(event));
-  }
-
-  saveRedaction({ rectangles, page }) {
-    const redaction = { page, rectangles, redactionId: uuid(), documentId: this.documentId };
-    this.store.dispatch(new fromRedactionActions.SaveRedaction(redaction));
-    this.toolbarEvents.drawModeSubject.next(false);
   }
 
   onMarkerUpdate(redaction: Redaction) {

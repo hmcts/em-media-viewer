@@ -27,6 +27,7 @@ import * as fromStore from './store/reducers/reducers';
 import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
 import * as fromDocumentsSelector from './store/selectors/document.selectors';
 import * as fromAnnoActions from './store/actions/annotations.action';
+import * as fromRedactActions from './store/actions/redaction.actions';
 import { Rotation } from './viewers/rotation.model';
 import * as fromDocumentActions from './store/actions/document.action';
 import { filter, take } from 'rxjs/operators';
@@ -127,9 +128,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     if (changes.url) {
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
+      const documentId = this.extractDMStoreDocId(this.url);
+      this.store.dispatch(new fromDocumentActions.SetDocumentId(documentId));
       if (this.enableAnnotations) {
-        const documentId = this.extractDMStoreDocId(this.url);
         this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(documentId));
+      }
+      if (this.enableRedactions) {
+        this.store.dispatch(new fromRedactActions.LoadRedactions(documentId));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;

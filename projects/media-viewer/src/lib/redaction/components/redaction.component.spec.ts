@@ -90,7 +90,7 @@ describe('RedactionComponent', () => {
       const redactionId = any(String) as any;
       const rectangles = ['rectangle' as any];
 
-      component.saveRedaction({ rectangles, page: 1 });
+      component.markBoxRedaction({ rectangles, page: 1 });
 
       expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveRedaction({
         page: 1, rectangles, redactionId, documentId: 'documentId'

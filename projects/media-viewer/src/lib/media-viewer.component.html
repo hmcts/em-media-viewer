@@ -52,7 +52,6 @@
                      (imageLoadStatus)="onMediaLoad($event)"
                      (imageViewerException)="onLoadException($event)"
                      [url]="url"
-                     [enableRedactions]="enableRedactions"
                      [enableAnnotations]="enableAnnotations"
                      [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                      [downloadFileName]="downloadFileName"

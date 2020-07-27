@@ -33,7 +33,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() downloadFileName: string;
 
   @Input() enableAnnotations: boolean;
-  @Input() enableRedactions: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
   @Input() height: string;
@@ -64,9 +63,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    if (this.enableRedactions) {
-      this.store.dispatch(new fromRedactionActions.LoadRedactions(this.url));
-    }
     this.subscriptions.push(
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.rotateImage(rotation)),
       this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
@@ -158,10 +154,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   initAnnoPage() {
     const payload: any = [{
-      div: {offsetHeight: 1122}, // todo add dynamic height
+      div: { offsetHeight: 1122 }, // todo add dynamic height
       pageNumber: 1,
       scale: 1,
-      rotation: 1
+      rotation: 1,
+      id: 1
     }];
     this.store.dispatch(new fromDocument.AddPages(payload));
   }
