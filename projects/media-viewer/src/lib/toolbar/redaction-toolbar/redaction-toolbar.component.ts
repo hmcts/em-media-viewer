@@ -4,6 +4,7 @@ import { select, Store } from '@ngrx/store';
 import * as fromRedactSelectors from '../../store/selectors/redaction.selectors';
 import * as fromStore from '../../store/reducers/reducers';
 import { Subscription } from 'rxjs';
+import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 
 @Component({
   selector: 'mv-redaction-toolbar',
@@ -15,10 +16,9 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
   hasRedactions = false;
   $subscription: Subscription;
 
-  constructor(
-    public readonly toolbarEventService: ToolbarEventService,
-    private store: Store<fromStore.AnnotationSetState>
-  ) {}
+  constructor(public readonly toolbarEventService: ToolbarEventService,
+              public readonly toolbarButtons: ToolbarButtonVisibilityService,
+              private store: Store<fromStore.AnnotationSetState>) {}
 
   ngOnInit(): void {
     this.$subscription = this.store.pipe(select(fromRedactSelectors.getRedactionArray)).subscribe(redactions => {
