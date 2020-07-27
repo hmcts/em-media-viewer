@@ -15,13 +15,40 @@ export class RectangleComponent implements AfterViewInit, OnDestroy {
   rect: Rectangle;
   @Input() color: String;
   @Input() zoom: number;
-  @Input() rotate: number;
   @Input() editable: boolean;
 
   @Output() select = new EventEmitter<Rectangle>();
   @Output() update = new EventEmitter<Rectangle>();
 
   @ViewChild('rectElement') rectElement: ElementRef;
+
+  _rotate: number;
+  @Input() set rotate(rotate) {
+    this._rotate = rotate;
+    const rect = { ...this.rect };
+    switch (this.rotate) {
+      case 90:
+        this.rect.width = rect.height;
+        this.rect.height = rect.width;
+        this.rect.x = (1122/this.zoom) - rect.y - rect.height;
+        this.rect.y = rect.x;
+        break;
+      case 180:
+        this.rect.x = (793/this.zoom) - rect.x - rect.width;
+        this.rect.y = (1122/this.zoom) - rect.y - rect.height;
+        break;
+      case 270:
+        this.rect.width = rect.height;
+        this.rect.height = rect.width;
+        this.rect.x = rect.y;
+        this.rect.y = (793/this.zoom) - rect.x - rect.width;
+        break;
+    }
+  }
+
+  get rotate() {
+    return this._rotate;
+  }
 
   private subscriptions: Subscription[] = [];
   _selected: boolean;

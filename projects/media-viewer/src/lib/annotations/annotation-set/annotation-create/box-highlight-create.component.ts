@@ -54,10 +54,9 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  initHighlight(event) {
+  initHighlight({ offsetX, offsetY }) {
     this.position = 'absolute';
     this.backgroundColor = 'yellow';
-    const [offsetX, offsetY] = this.findOffsetValues(event);
     this.drawStartX = offsetX;
     this.drawStartY = offsetY;
 
@@ -82,9 +81,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateHighlight(event: MouseEvent) {
+  updateHighlight({ offsetX, offsetY }) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
-      const [offsetX, offsetY] = this.findOffsetValues(event);
       this.height = Math.abs(offsetY - this.drawStartY);
       this.width = Math.abs(offsetX - this.drawStartX);
       this.top = Math.min(offsetY, this.drawStartY);
@@ -96,12 +94,31 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     if (this.height / this.zoom > 5 || this.width / this.zoom > 5) {
       const rectangle = {
         id: uuid(),
-        x: + this.left / this.zoom,
-        y: + this.top / this.zoom,
-        width: + this.width / this.zoom,
-        height: + this.height / this.zoom,
+        x: this.left / this.zoom,
+        y: this.top / this.zoom,
+        width: this.width / this.zoom,
+        height: this.height / this.zoom,
         page: this.page
       } as any;
+      switch (this.rotate) {
+        case 90:
+          rectangle.width = this.height;
+          rectangle.height = this.width;
+          rectangle.x = this.top;
+          rectangle.y = (1122/this.zoom) - this.left - this.width;
+          break;
+        case 180:
+          rectangle.x = (793/this.zoom) - this.left - this.width;
+          rectangle.y = (1122/this.zoom) - this.top - this.height;
+          break;
+        case 270:
+          rectangle.width = this.height;
+          rectangle.height = this.width;
+          rectangle.x = (793/this.zoom) - this.top - this.height;
+          rectangle.y = this.left;
+          break;
+      }
+      console.log(`x=${rectangle.x}, y=${rectangle.y}, height=${rectangle.height}, width=${rectangle.width}`)
       this.saveSelection.emit({ rectangles: [rectangle], page: this.page });
       this.resetHighlight();
     }
@@ -113,13 +130,5 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.display = 'none';
     this.width = 0;
     this.height = 0;
-  }
-
-  private findOffsetValues(event: MouseEvent) {
-    const currentTarg = event.currentTarget as HTMLElement;
-    const rect = currentTarg.getBoundingClientRect(),
-      offsetX = event.clientX - rect.left,
-      offsetY = event.clientY - rect.top;
-    return [offsetX, offsetY];
   }
 }
