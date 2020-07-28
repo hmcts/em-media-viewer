@@ -5,7 +5,7 @@ import * as documentActions from '../actions/document.action';
 import { DocumentEffects } from './document.effects';
 import { DocumentConversionApiService } from '../../viewers/convertible-content-viewer/document-conversion-api.service';
 import { cold, hot } from 'jasmine-marbles';
-import { RotationApiService } from '../../viewers/rotation-api.service';
+import { RotationApiService } from '../../viewers/rotation-persist/rotation-api.service';
 
 
 describe('Document Effects', () => {

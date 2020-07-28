@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { DocumentConversionApiService } from '../../viewers/convertible-content-viewer/document-conversion-api.service';
-import { RotationApiService } from '../../viewers/rotation-api.service';
+import { RotationApiService } from '../../viewers/rotation-persist/rotation-api.service';
 import { of } from 'rxjs';
 import * as documentActions from '../actions/document.action';
 

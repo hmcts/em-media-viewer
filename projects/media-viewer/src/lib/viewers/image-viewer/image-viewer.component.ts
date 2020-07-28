@@ -37,7 +37,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() height: string;
 
-  @Output() imageLoadStatus = new EventEmitter<ResponseType>();
+  @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
   @Output() imageViewerException = new EventEmitter<ViewerException>();
 
   errorMessage: string;
@@ -143,12 +143,12 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       });
 
     this.errorMessage = `Could not load the image "${this.url}"`;
-    this.imageLoadStatus.emit(ResponseType.FAILURE);
+    this.mediaLoadStatus.emit(ResponseType.FAILURE);
     this.imageViewerException.emit(this.viewerException);
   }
 
   onLoad() {
-    this.imageLoadStatus.emit(ResponseType.SUCCESS);
+    this.mediaLoadStatus.emit(ResponseType.SUCCESS);
     this.initAnnoPage();
   }
 

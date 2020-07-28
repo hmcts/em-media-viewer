@@ -35,7 +35,8 @@ import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
 import { TreeModule } from 'angular-tree-component';
 import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.component';
-import { RotationApiService } from './viewers/rotation-api.service';
+import { RotationApiService } from './viewers/rotation-persist/rotation-api.service';
+import { RotationPersistDirective } from './viewers/rotation-persist/rotation-persist.directive';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { RotationApiService } from './viewers/rotation-api.service';
     MediaViewerComponent,
     ConvertibleContentViewerComponent,
     GrabNDragDirective,
+    RotationPersistDirective,
     ConfirmActionDialogComponent,
     RedactionComponent, // todo made put this into module
     BookmarkIconsComponent

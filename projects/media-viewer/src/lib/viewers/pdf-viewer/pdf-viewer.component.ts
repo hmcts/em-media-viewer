@@ -43,7 +43,7 @@ import { IcpState } from '../../icp/icp.interfaces';
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 
-  @Output() pdfLoadStatus = new EventEmitter<ResponseType>();
+  @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
   @Output() pdfViewerException = new EventEmitter<ViewerException>();
   @Output() documentTitle = new EventEmitter<string>();
 
@@ -175,7 +175,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private onDocumentLoaded() {
     this.loadingDocument = false;
-    this.pdfLoadStatus.emit(ResponseType.SUCCESS);
+    this.mediaLoadStatus.emit(ResponseType.SUCCESS);
   }
 
   private onDocumentLoadFailed(error: Error) {
@@ -183,7 +183,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.viewerException = new ViewerException(error.name, { message: error.message });
     this.errorMessage = `Could not load the document "${this.url}"`;
 
-    this.pdfLoadStatus.emit(ResponseType.FAILURE);
+    this.mediaLoadStatus.emit(ResponseType.FAILURE);
     this.pdfViewerException.emit(this.viewerException);
   }
 
