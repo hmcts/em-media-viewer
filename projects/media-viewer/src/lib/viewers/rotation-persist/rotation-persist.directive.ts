@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import * as fromDocumentActions from '../../store/actions/document.action';
 import { select, Store } from '@ngrx/store';
-import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
+import * as fromDocuments from '../../store/selectors/document.selectors';
 import { filter, take } from 'rxjs/operators';
 import { Rotation } from './rotation.model';
 import { ResponseType } from '../viewer-exception.model';
@@ -16,8 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class RotationPersistDirective implements OnInit, OnDestroy {
 
-  @Input() url: string;
-
+  documentId: string;
   rotation = 0;
   savedRotation = 0;
 
@@ -31,9 +30,12 @@ export class RotationPersistDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.$subscriptions = this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation));
-    this.$subscriptions.add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
-    this.$subscriptions.add(this.store.pipe(select(fromDocumentsSelector.getRotation))
-      .subscribe(rotation => this.savedRotation = rotation ));
+    this.$subscriptions
+      .add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()))
+      .add(this.store.pipe(select(fromDocuments.getRotation))
+        .subscribe(rotation => this.savedRotation = rotation))
+      .add(this.store.pipe(select(fromDocuments.getDocumentId))
+        .subscribe(documentId => this.documentId = documentId));
   }
 
   ngOnDestroy() {
@@ -43,9 +45,8 @@ export class RotationPersistDirective implements OnInit, OnDestroy {
   @HostListener('mediaLoadStatus', ['$event'])
   onMediaLoad(status: ResponseType) {
     this.rotation = 0;
-    const documentId = this.extractDMStoreDocId(this.url);
-    this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
-    this.store.pipe(select(fromDocumentsSelector.rotationLoaded),
+    this.store.dispatch(new fromDocumentActions.LoadRotation(this.documentId));
+    this.store.pipe(select(fromDocuments.rotationLoaded),
       filter(value => !!value),
       take(1))
       .subscribe(() => {
@@ -62,14 +63,9 @@ export class RotationPersistDirective implements OnInit, OnDestroy {
 
   private saveRotation() {
     const payload: Rotation = {
-      documentId: this.extractDMStoreDocId(this.url),
+      documentId: this.documentId,
       rotationAngle: this.rotation
     }
     this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
-  }
-
-  private extractDMStoreDocId(url: string): string {
-    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
-    return url.replace('/binary', '');
   }
 }
