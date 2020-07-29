@@ -203,29 +203,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }
   }
 
-  onPdfViewerClick() {
-    this.store.dispatch(new fromAnnotationActions.SelectedAnnotation({
-      annotationId: '', selected: false, editable: false
-    }));
-    this.viewerEvents.clearCtxToolbar();
-  }
-
-  onMouseUp(mouseEvent: MouseEvent) {
-    const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
-    const page = parseInt(pageElement.getAttribute('data-page-number'), 10);
-    if (this.toolbarEvents.highlightModeSubject.getValue()) {
-      this.viewerEvents.textSelected({
-        page,
-        event: mouseEvent,
-        annoSet: this.annotationSet
-      });
-    }
-    if (!this.annotationSet) {
-      this.toolbarEvents.highlightModeSubject.next(false);
-      this.toolbarEvents.drawModeSubject.next(false);
-    }
-  }
-
   toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
