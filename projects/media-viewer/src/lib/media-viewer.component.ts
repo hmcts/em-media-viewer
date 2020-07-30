@@ -27,9 +27,8 @@ import * as fromStore from './store/reducers/reducers';
 import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
 import * as fromDocumentsSelector from './store/selectors/document.selectors';
 import * as fromAnnoActions from './store/actions/annotations.action';
-import { Rotation } from './viewers/rotation.model';
+import * as fromRedactActions from './store/actions/redaction.actions';
 import * as fromDocumentActions from './store/actions/document.action';
-import { filter, take } from 'rxjs/operators';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
@@ -73,8 +72,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() caseId: string;
 
-  rotation = 0;
-  savedRotation = 0;
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
@@ -105,10 +102,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       .subscribe(changes => this.onCommentChange(changes));
     this.$subscriptions.add(this.toolbarEvents.getShowCommentSummary()
       .subscribe(changes => this.showCommentSummary = changes));
-    this.$subscriptions.add(this.store.pipe(select(fromDocumentsSelector.getRotation))
-        .subscribe(rotation => this.savedRotation = rotation ));
-    this.$subscriptions.add(this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation)));
-    this.$subscriptions.add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
   }
 
   contentTypeConvertible(): boolean {
@@ -127,9 +120,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     if (changes.url) {
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
+      const documentId = this.extractDMStoreDocId(this.url);
+      this.store.dispatch(new fromDocumentActions.SetDocumentId(documentId));
       if (this.enableAnnotations) {
-        const documentId = this.extractDMStoreDocId(this.url);
         this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(documentId));
+      }
+      if (this.enableRedactions) {
+        this.store.dispatch(new fromRedactActions.LoadRedactions(documentId));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
@@ -145,7 +142,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   onMediaLoad(status: ResponseType) {
-    this.setInitialRotation();
     this.mediaLoadStatus.emit(status);
   }
 
@@ -177,33 +173,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.contentType = null;
       this.setToolbarButtons();
     }
-  }
-
-  private setInitialRotation() {
-    this.rotation = 0;
-    const documentId = this.extractDMStoreDocId(this.url);
-    this.store.dispatch(new fromDocumentActions.LoadRotation(documentId));
-    this.store.pipe(select(fromDocumentsSelector.rotationLoaded),
-      filter(value => !!value),
-      take(1))
-      .subscribe(() => {
-        if (this.savedRotation) {
-          this.toolbarEvents.rotateSubject.next(this.savedRotation);
-        }
-      })
-  }
-
-  private onRotate(rotation: number) {
-    this.rotation = (this.rotation + rotation) %360;
-    this.toolbarButtons.showSaveRotationButton = this.savedRotation !== this.rotation;
-  }
-
-  private saveRotation() {
-    const payload: Rotation = {
-      documentId: this.extractDMStoreDocId(this.url),
-      rotationAngle: this.rotation
-    }
-    this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
   }
 
   onCommentChange(changes: boolean) {

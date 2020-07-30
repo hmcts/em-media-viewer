@@ -113,11 +113,9 @@ export function docReducer (state = initialDocumentState,
     }
 
     case fromActions.SET_DOCUMENT_ID : {
-      const url = action.payload.split('/documents/');
-      const documentId = (url.length > 1 ? url[1] : url[0]).replace('/binary', '');
       return {
         ...state,
-        documentId
+        documentId: action.payload
       };
     }
 

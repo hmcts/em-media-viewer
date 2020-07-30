@@ -18,7 +18,7 @@
       [pageWidth]="redaction.styles.width"
       [rotate]="rotate"
       [zoom]="zoom"
-      (saveSelection)="saveRedaction($event)">
+      (saveSelection)="markBoxRedaction($event)">
     </mv-box-highlight-create>
     <div class="pageContainer__page-item">
       <ng-container *ngFor="let anno of redaction.anno">
