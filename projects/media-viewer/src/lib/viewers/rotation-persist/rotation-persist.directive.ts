@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
 import * as fromDocumentActions from '../../store/actions/document.action';
 import { select, Store } from '@ngrx/store';
 import * as fromDocuments from '../../store/selectors/document.selectors';

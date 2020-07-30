@@ -16,7 +16,7 @@ describe('RotationPersistDirective', () => {
   });
 
   it('should set initial rotation on media load', () => {
-    directive.url = 'document-url';
+    directive.documentId = 'document-id';
     directive.savedRotation = 90;
     spyOn(store, 'pipe').and.returnValue(of(true));
     spyOn(store, 'dispatch');
@@ -24,7 +24,7 @@ describe('RotationPersistDirective', () => {
 
     directive.onMediaLoad({} as any);
 
-    expect(store.dispatch).toHaveBeenCalledWith(new fromDocumentActions.LoadRotation('document-url'));
+    expect(store.dispatch).toHaveBeenCalledWith(new fromDocumentActions.LoadRotation('document-id'));
     expect(toolbarEvents.rotateSubject.next).toHaveBeenCalledWith(90);
   });
 
@@ -41,15 +41,15 @@ describe('RotationPersistDirective', () => {
   });
 
   it('should save rotation', () => {
-    directive.url = 'document-url';
+    directive.documentId = 'document-id';
     directive.rotation = 90;
-    spyOn(store, 'pipe').and.returnValue(of(null));
+    spyOn(store, 'pipe').and.returnValue(of('document-id'));
     spyOn(store, 'dispatch');
 
     directive.ngOnInit();
     toolbarEvents.saveRotationSubject.next();
 
-    const action = new fromDocumentActions.SaveRotation({ documentId: 'document-url', rotationAngle: 90 });
+    const action = new fromDocumentActions.SaveRotation({ documentId: 'document-id', rotationAngle: 90 });
     expect(store.dispatch).toHaveBeenCalledWith(action);
   });
 });
