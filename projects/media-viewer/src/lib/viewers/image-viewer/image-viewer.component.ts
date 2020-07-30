@@ -33,12 +33,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() downloadFileName: string;
 
   @Input() enableAnnotations: boolean;
-  @Input() enableRedactions: boolean;
   @Input() annotationSet: AnnotationSet | null;
 
   @Input() height: string;
 
-  @Output() imageLoadStatus = new EventEmitter<ResponseType>();
+  @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
   @Output() imageViewerException = new EventEmitter<ViewerException>();
 
   errorMessage: string;
@@ -64,9 +63,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    if (this.enableRedactions) {
-      this.store.dispatch(new fromRedactionActions.LoadRedactions(this.url));
-    }
     this.subscriptions.push(
       this.toolbarEvents.rotateSubject.subscribe(rotation => this.rotateImage(rotation)),
       this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)),
@@ -147,21 +143,22 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       });
 
     this.errorMessage = `Could not load the image "${this.url}"`;
-    this.imageLoadStatus.emit(ResponseType.FAILURE);
+    this.mediaLoadStatus.emit(ResponseType.FAILURE);
     this.imageViewerException.emit(this.viewerException);
   }
 
   onLoad() {
-    this.imageLoadStatus.emit(ResponseType.SUCCESS);
+    this.mediaLoadStatus.emit(ResponseType.SUCCESS);
     this.initAnnoPage();
   }
 
   initAnnoPage() {
     const payload: any = [{
-      div: {offsetHeight: 1122}, // todo add dynamic height
+      div: { offsetHeight: 1122 }, // todo add dynamic height
       pageNumber: 1,
       scale: 1,
-      rotation: 1
+      rotation: 1,
+      id: 1
     }];
     this.store.dispatch(new fromDocument.AddPages(payload));
   }

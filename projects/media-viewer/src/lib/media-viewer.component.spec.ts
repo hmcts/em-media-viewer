@@ -95,6 +95,7 @@ describe('MediaViewerComponent', () => {
   it('should reset the type exception when the url is changed', () => {
     component.typeException = true;
     component.contentType = 'pdf';
+    component.url = 'file.pdf';
     component.ngOnChanges({ url: new SimpleChange('file.pdf', 'unsupported.txt', false) });
 
     expect(component.typeException).toBeFalse();
@@ -102,6 +103,7 @@ describe('MediaViewerComponent', () => {
 
   it('should reset the event state when the url is changed', () => {
     component.contentType = 'pdf';
+    component.url = 'file.pdf';
     component.toolbarEvents.zoomValueSubject.next(2);
     component.ngOnChanges({ url: new SimpleChange('file.pdf', 'text.pdf', false) });
 
@@ -111,6 +113,7 @@ describe('MediaViewerComponent', () => {
   it('should set documentTitle to null if the content type is image', () => {
     component.documentTitle = 'Document Title';
     component.contentType = 'image';
+    component.url = 'file.jpg';
     component.ngOnChanges({ url: new SimpleChange('file.jpg', 'text.jpg', false) });
 
     expect(component.documentTitle).toBeNull();

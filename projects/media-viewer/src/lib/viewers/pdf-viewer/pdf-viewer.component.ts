@@ -29,7 +29,7 @@ import * as fromDocumentActions from '../../store/actions/document.action';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
 import * as fromAnnotationActions from '../../store/actions/annotations.action';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
-import { tap, throttleTime } from 'rxjs/operators';
+import { filter, tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { SetCaseId } from '../../store/actions/icp.action';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
@@ -43,7 +43,7 @@ import { IcpState } from '../../icp/icp.interfaces';
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 
-  @Output() pdfLoadStatus = new EventEmitter<ResponseType>();
+  @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
   @Output() pdfViewerException = new EventEmitter<ViewerException>();
   @Output() documentTitle = new EventEmitter<string>();
 
@@ -70,7 +70,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   loadingDocument = false;
   loadingDocumentProgress: number;
   errorMessage: string;
-  documentId: string;
   hasDifferentPageSize = false;
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
@@ -131,16 +130,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
     }
     if (changes.url && this.pdfWrapper) {
-      this.store.dispatch(new fromDocumentActions.SetDocumentId(this.url));
       await this.loadDocument();
-      this.documentId = this.extractDMStoreDocId(this.url);
       if (this.enableRedactions) {
-        this.toolbarEvents.redactionMode.subscribe(redactMode => {
-          if (redactMode) {
-            this.store.dispatch(new fromRedactionActions.LoadRedactions(this.documentId));
-            this.resetRotation();
-          }
-        });
+        this.toolbarEvents.redactionMode.pipe(filter(value => !!value))
+          .subscribe(() => this.resetRotation());
       }
     }
     if (changes.caseId) {
@@ -182,7 +175,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private onDocumentLoaded() {
     this.loadingDocument = false;
-    this.pdfLoadStatus.emit(ResponseType.SUCCESS);
+    this.mediaLoadStatus.emit(ResponseType.SUCCESS);
   }
 
   private onDocumentLoadFailed(error: Error) {
@@ -190,7 +183,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.viewerException = new ViewerException(error.name, { message: error.message });
     this.errorMessage = `Could not load the document "${this.url}"`;
 
-    this.pdfLoadStatus.emit(ResponseType.FAILURE);
+    this.mediaLoadStatus.emit(ResponseType.FAILURE);
     this.pdfViewerException.emit(this.viewerException);
   }
 
@@ -279,11 +272,5 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       return 0.1;
     }
     return newZoomValue;
-  }
-
-  // todo move this to common place for media viewer and pdf
-  private extractDMStoreDocId(url: string): string {
-    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
-    return url.replace('/binary', '');
   }
 }

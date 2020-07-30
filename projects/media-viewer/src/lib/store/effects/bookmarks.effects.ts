@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
 import * as bookmarksActions from '../actions/bookmarks.action';
 import { select, Store } from '@ngrx/store';
-import * as fromAnnotations from '../selectors/annotations.selectors';
+import * as fromDocument from '../selectors/document.selectors';
 import * as fromBookmarks from '../reducers/bookmarks.reducer';
 import * as fromStore from '../reducers/reducers';
 
@@ -19,8 +19,8 @@ export class BookmarksEffects {
   @Effect()
   loadBookmarks$ = this.actions$.pipe(
     ofType(bookmarksActions.LOAD_BOOKMARKS),
-    withLatestFrom(this.store.pipe(select(fromAnnotations.getDocumentIdSetId))),
-    map(([,docSetId]) => docSetId.documentId),
+    withLatestFrom(this.store.pipe(select(fromDocument.getDocumentId))),
+    map(([,documentId]) => documentId),
     exhaustMap((documentId) =>
       this.bookmarksApiService.getBookmarks(documentId)
         .pipe(
