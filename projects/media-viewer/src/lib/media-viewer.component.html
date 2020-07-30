@@ -48,8 +48,7 @@
                    [downloadFileName]="downloadFileName"
                    [height]="height"
                    [caseId]="caseId"
-                   rotationPersist
-                   mvCreateTextHighlight>
+                   rotationPersist>
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      (mediaLoadStatus)="onMediaLoad($event)"

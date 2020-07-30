@@ -1,0 +1,33 @@
+<div class="pageContainer">
+  <div  *ngFor="let annotationPage of (annotationPages$ | async);  index as i"
+       class="pageContainer__page"
+       [ngStyle]="{
+       'width.px': annotationPage.styles.width,
+       'height.px': annotationPage.styles.height
+       }"
+       [ngClass]="{ 'pageContainer__page--draw' : drawMode }">
+    <mv-box-highlight-create
+      [page]="i + 1"
+      [pageHeight]="annotationPage.styles.height"
+      [pageWidth]="annotationPage.styles.width"
+      [rotate]="rotate"
+      [zoom]="zoom"
+      (saveSelection)="saveAnnotation($event)">
+    </mv-box-highlight-create>
+    <mv-ctx-toolbar *ngIf="rectangles && highlightPage === i+1"
+                    [rectangles]="rectangles"
+                    [canBookmark]="true" [canHighlight]="true"
+                    [zoom]="zoom"
+                    [rotate]="rotate"
+                    [height]="annotationPage.styles.height"
+                    [width]="annotationPage.styles.width"
+                    (createBookmarkEvent)="createBookmark($event)"
+                    (createHighlightEvent)="createHighlight()">
+    </mv-ctx-toolbar>
+    <div class="pageContainer__page-item">
+      <mv-annotation-set [zoom]="zoom"
+                         [rotate]="rotate"
+                         [annotationPage]="annotationPage"></mv-annotation-set>
+    </div>
+  </div>
+</div>

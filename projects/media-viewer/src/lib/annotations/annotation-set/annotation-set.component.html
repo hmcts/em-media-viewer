@@ -1,44 +1,12 @@
-<div class="pageContainer">
-  <div  *ngFor="let annotation of (annotationsPerPage$ | async);  index as i"
-       class="pageContainer__page"
-       [ngStyle]="{
-       'width.px': annotation.styles.width,
-       'height.px': annotation.styles.height
-       }"
-       [ngClass]="{
-         'pageContainer__page--draw' : drawMode
-       }">
-    <mv-box-highlight-create
-      [page]="i + 1"
-      [pageHeight]="annotation.styles.height"
-      [pageWidth]="annotation.styles.width"
-      [rotate]="rotate"
-      [zoom]="zoom"
-      (saveSelection)="saveAnnotation($event)">
-    </mv-box-highlight-create>
-    <mv-ctx-toolbar *ngIf="rectangles && highlightPage === i+1"
-                    [rectangles]="rectangles"
-                    [canBookmark]="true" [canHighlight]="true"
-                    [zoom]="zoom"
-                    [rotate]="rotate"
-                    [height]="annotation.styles.height"
-                    [width]="annotation.styles.width"
-                    (createBookmarkEvent)="createBookmark($event)"
-                    (createHighlightEvent)="createHighlight()">
-    </mv-ctx-toolbar>
-    <div class="pageContainer__page-item">
-      <ng-container *ngFor="let anno of annotation.anno">
-        <mv-annotation [annotation]="anno"
-                       [zoom]="zoom"
-                       [rotate]="rotate"
-                       [selectedAnnoId]="selectedAnnotation$ | async"
-                       [height]="annotation.styles.height"
-                       [width]="annotation.styles.width"
-                       (update)="onAnnotationUpdate($event)"
-                       (delete)="onAnnotationDelete($event)"
-                       (annotationClick)="selectAnnotation($event)">
-        </mv-annotation>
-      </ng-container>
-    </div>
-  </div>
-</div>
+<ng-container *ngFor="let annotation of annotationPage.anno">
+  <mv-annotation [annotation]="annotation"
+                 [zoom]="zoom"
+                 [rotate]="rotate"
+                 [selectedAnnoId]="selectedAnnotation$ | async"
+                 [height]="annotationPage.styles.height"
+                 [width]="annotationPage.styles.width"
+                 (update)="onAnnotationUpdate($event)"
+                 (delete)="onAnnotationDelete($event)"
+                 (annotationClick)="selectAnnotation($event)">
+  </mv-annotation>
+</ng-container>
