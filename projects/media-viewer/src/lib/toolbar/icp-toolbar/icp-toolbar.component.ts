@@ -43,6 +43,6 @@ export class IcpToolbarComponent implements OnInit, OnDestroy {
   }
 
   showParticipantsList() {
-    this.toolbarEventService.icp.toggleIcpParticipantsList(!this.toolbarEventService.icp.icpParticipantsListVisible.getValue());
+    this.toolbarEventService.toggleParticipantsList(!this.toolbarEventService.icp.participantsListVisible.getValue());
   }
 }

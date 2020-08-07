@@ -14,9 +14,9 @@ describe('IcpToolbarComponent', () => {
       becomePresenter: () => {},
       stopPresenting: () => {},
       leaveSession: () => {},
-      toggleIcpParticipantsList: () => {},
-      icpParticipantsListVisible: new BehaviorSubject(false)
-    }
+      participantsListVisible: new BehaviorSubject(false)
+    },
+    toggleParticipantsList: () => {}
   };
 
   beforeEach(() => {
@@ -67,10 +67,10 @@ describe('IcpToolbarComponent', () => {
   });
 
   it('should show participants', () => {
-    spyOn(toolbarEvents.icp, 'toggleIcpParticipantsList');
+    spyOn(toolbarEvents, 'toggleParticipantsList');
 
     component.showParticipantsList();
 
-    expect(toolbarEvents.icp.toggleIcpParticipantsList).toHaveBeenCalledWith(true);
+    expect(toolbarEvents.toggleParticipantsList).toHaveBeenCalledWith(true);
   });
 });

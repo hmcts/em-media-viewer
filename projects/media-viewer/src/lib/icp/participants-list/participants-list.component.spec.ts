@@ -11,9 +11,9 @@ describe('ParticipantsListComponent', () => {
   let toolbarEvents: ToolbarEventService;
   const toolbarEventsMock = {
     icp: {
-      toggleIcpParticipantsList: () => {},
-      icpParticipantsListVisible: new BehaviorSubject(false),
+      participantsListVisible: new BehaviorSubject(false),
     },
+    toggleParticipantsList: () => {},
     commentsPanelVisible: new BehaviorSubject(false)
   };
 
@@ -38,16 +38,5 @@ describe('ParticipantsListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should subscribe to icpParticipantsListVisible', () => {
-    toolbarEvents.icp.icpParticipantsListVisible.next(true);
-    expect(component.showParticipantsList).toBeTruthy();
-  });
-
-  it('should subscribe to commentsPanelVisible', () => {
-    spyOn(toolbarEvents.icp, 'toggleIcpParticipantsList');
-    toolbarEvents.commentsPanelVisible.next(true);
-    expect(toolbarEvents.icp.toggleIcpParticipantsList).toHaveBeenCalledWith(false);
   });
 });

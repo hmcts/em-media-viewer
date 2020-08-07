@@ -29,10 +29,10 @@ describe('CommentSetComponent', () => {
   const api = new AnnotationApiService({}  as any);
   const toolbarEventsMock = {
     icp: {
-      toggleIcpParticipantsList: () => {},
-      icpParticipantsListVisible: new BehaviorSubject(false),
+      participantsListVisible: new BehaviorSubject(false),
     },
     toggleCommentsPanel: () => {},
+    toggleParticipantsList: () => {},
     commentsPanelVisible: new BehaviorSubject(false)
   };
 
@@ -284,11 +284,4 @@ describe('CommentSetComponent', () => {
       expect(commentService.onCommentChange).toHaveBeenCalled();
     })
   );
-
-  it('should subscribe to icpParticipantsListVisible', () => {
-    spyOn(toolbarEvent, 'toggleCommentsPanel');
-
-    toolbarEvent.icp.icpParticipantsListVisible.next(true);
-    expect(toolbarEvent.toggleCommentsPanel).toHaveBeenCalledWith(false);
-  });
 });

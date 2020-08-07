@@ -266,7 +266,7 @@ describe('PdfViewerComponent', () => {
     component.showIcpParticipantsList = false;
     component.showCommentsPanel = false;
 
-    toolbarEvents.icp.icpParticipantsListVisible.next(true);
+    toolbarEvents.icp.participantsListVisible.next(true);
     fixture.detectChanges();
 
     expect(component.showIcpParticipantsList).toBeTruthy();
@@ -277,7 +277,7 @@ describe('PdfViewerComponent', () => {
     component.showIcpParticipantsList = true;
     component.showCommentsPanel = false;
 
-    toolbarEvents.icp.icpParticipantsListVisible.next(false);
+    toolbarEvents.icp.participantsListVisible.next(false);
     fixture.detectChanges();
 
     expect(component.showIcpParticipantsList).toBeFalsy();

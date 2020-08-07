@@ -10,7 +10,7 @@ describe('MomentDatePipe', () => {
 
   it('should return empty array', () => {
     const date = new Date();
-    const expected = moment(date).tz('Europe/London').format('MMM DD, YYYY');
+    const expected = moment(date).tz('Europe/London').format('MMM D, YYYY');
 
     const actual = pipe.transform(date);
 

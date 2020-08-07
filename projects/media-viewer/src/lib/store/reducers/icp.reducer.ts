@@ -35,10 +35,8 @@ export function icpReducer (state = initialIcpSessionState,
 
     case fromIcpActions.ICP_PARTICIPANT_LIST_UPDATED: {
       const updatedParticipants: any = action.payload;
-      const participants = [];
-      for (const id in updatedParticipants) {
-        participants.push({ id: id, username: updatedParticipants[id] });
-      }
+      const participants = Object.keys(updatedParticipants)
+        .map(id => ({ id: id, username: updatedParticipants[id] }));
       return {
         ...state,
         participants

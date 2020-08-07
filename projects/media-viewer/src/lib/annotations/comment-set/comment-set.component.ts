@@ -63,11 +63,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
         this.showCommentsPanel = toggle;
       })
     );
-    this.subscriptions.push(this.toolbarEvents.icp.icpParticipantsListVisible.subscribe(isVisible => {
-      if (isVisible) {
-        this.toolbarEvents.toggleCommentsPanel(false);
-      }
-    }));
   }
 
   ngOnChanges(changes: SimpleChanges): void {

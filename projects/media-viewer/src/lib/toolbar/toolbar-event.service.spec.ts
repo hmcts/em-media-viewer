@@ -63,4 +63,18 @@ describe('Toolbar Event Service', () => {
     expect(commentsToggleSpy).toHaveBeenCalledWith(false);
   });
 
+  it('should hide comments panel when participants list shows', () => {
+    const commentsToggleSpy = spyOn(service.commentsPanelVisible, 'next');
+    service.toggleParticipantsList(true);
+
+    expect(commentsToggleSpy).toHaveBeenCalledWith(false);
+  });
+
+  it('should hide participants list when comments panel shows', () => {
+    const commentsToggleSpy = spyOn(service.icp.participantsListVisible, 'next');
+    service.toggleCommentsPanel(true);
+
+    expect(commentsToggleSpy).toHaveBeenCalledWith(false);
+  });
+
 });

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import * as icpEvents from './icp-event.service';
+import { participantsListVisible } from './icp-event.service';
 
 // Toolbar Custom-Event Types
 export type HighlightMode = boolean;
@@ -163,7 +164,17 @@ export class ToolbarEventService {
     this.applyRedactToDocument.next();
   }
 
-  public toggleCommentsPanel(isVisible) {
+  public toggleCommentsPanel(isVisible: boolean) {
+    if (isVisible) {
+      this.toggleParticipantsList(!isVisible);
+    }
     this.commentsPanelVisible.next(isVisible);
   }
+
+  public toggleParticipantsList(isVisible: boolean) {
+    if (isVisible) {
+      this.toggleCommentsPanel(!isVisible);
+    }
+    this.icp.participantsListVisible.next(isVisible);
+  };
 }

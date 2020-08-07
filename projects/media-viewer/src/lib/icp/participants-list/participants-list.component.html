@@ -9,7 +9,7 @@
     <p class="participant__name">{{(presenter$ | async)?.username}}</p>
   </div>
 
-  <div *ngIf="!((participants$ | async).length == 1 && (isPresenter$ | async))" class="participant__card">
+  <div *ngIf="(participants$ | async).length > 1" class="participant__card">
     <div class="participant__header">Following</div>
     <ng-container *ngFor="let participant of (participants$ | async)">
         <p *ngIf="participant.id !== (presenter$ | async)?.id" class="participant__name">{{participant.username}}</p>
