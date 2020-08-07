@@ -1,33 +1,36 @@
 <div class="pageContainer">
-  <div  *ngFor="let annotationPage of (annotationPages$ | async);  index as i"
+  <div  *ngFor="let page of pages;  index as i"
        class="pageContainer__page"
        [ngStyle]="{
-       'width.px': annotationPage.styles.width,
-       'height.px': annotationPage.styles.height
+       'width.px': page.styles.width,
+       'height.px': page.styles.height
        }"
        [ngClass]="{ 'pageContainer__page--draw' : drawMode }">
     <mv-box-highlight-create
       [page]="i + 1"
-      [pageHeight]="annotationPage.styles.height"
-      [pageWidth]="annotationPage.styles.width"
+      [pageHeight]="page.styles.height"
+      [pageWidth]="page.styles.width"
       [rotate]="rotate"
       [zoom]="zoom"
       (saveSelection)="saveAnnotation($event)">
     </mv-box-highlight-create>
-    <mv-ctx-toolbar *ngIf="rectangles && highlightPage === i+1"
+    <mv-ctx-toolbar *ngIf="rectangles && highlightPage === (i + 1)"
                     [rectangles]="rectangles"
                     [canBookmark]="true" [canHighlight]="true"
                     [zoom]="zoom"
                     [rotate]="rotate"
-                    [height]="annotationPage.styles.height"
-                    [width]="annotationPage.styles.width"
+                    [height]="page.styles.height"
+                    [width]="page.styles.width"
                     (createBookmarkEvent)="createBookmark($event)"
                     (createHighlightEvent)="createHighlight()">
     </mv-ctx-toolbar>
     <div class="pageContainer__page-item">
-      <mv-annotation-set [zoom]="zoom"
+      <mv-annotation-set *ngIf="(annoPages$ | async) as annoPages"
+                         [zoom]="zoom"
                          [rotate]="rotate"
-                         [annotationPage]="annotationPage"></mv-annotation-set>
+                         [height]="page.styles.height"
+                         [width]="page.styles.width"
+                         [page]="i" [annotations]="annoPages[i + 1]"></mv-annotation-set>
     </div>
   </div>
 </div>

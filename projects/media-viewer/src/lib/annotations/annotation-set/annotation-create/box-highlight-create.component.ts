@@ -3,6 +3,7 @@ import uuid from 'uuid';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
+import { HighlightCreateService } from './highlight-create.service';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private readonly toolbarEvents: ToolbarEventService) {}
+  constructor(private readonly toolbarEvents: ToolbarEventService,
+              private readonly highlightService: HighlightCreateService) {}
 
   ngOnInit(): void {
     this.subscriptions = [
@@ -92,33 +94,9 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   createHighlight() {
     if (this.height / this.zoom > 5 || this.width / this.zoom > 5) {
-      const rectangle = {
-        id: uuid(),
-        x: this.left / this.zoom,
-        y: this.top / this.zoom,
-        width: this.width / this.zoom,
-        height: this.height / this.zoom,
-        page: this.page
-      } as any;
-      switch (this.rotate) {
-        case 90:
-          rectangle.width = this.height;
-          rectangle.height = this.width;
-          rectangle.x = this.top;
-          rectangle.y = (1122/this.zoom) - this.left - this.width;
-          break;
-        case 180:
-          rectangle.x = (793/this.zoom) - this.left - this.width;
-          rectangle.y = (1122/this.zoom) - this.top - this.height;
-          break;
-        case 270:
-          rectangle.width = this.height;
-          rectangle.height = this.width;
-          rectangle.x = (793/this.zoom) - this.top - this.height;
-          rectangle.y = this.left;
-          break;
-      }
-      console.log(`x=${rectangle.x}, y=${rectangle.y}, height=${rectangle.height}, width=${rectangle.width}`)
+      let rectangle = this.highlightService
+        .applyRotation(this.pageHeight, this.pageWidth, this.height, this.width, this.top, this.left, this.rotate, this.zoom);
+      rectangle = { id: uuid(), ...rectangle } as any;
       this.saveSelection.emit({ rectangles: [rectangle], page: this.page });
       this.resetHighlight();
     }

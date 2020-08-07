@@ -1,10 +1,10 @@
-<ng-container *ngFor="let annotation of annotationPage.anno">
+<ng-container *ngFor="let annotation of annotations">
   <mv-annotation [annotation]="annotation"
                  [zoom]="zoom"
                  [rotate]="rotate"
                  [selectedAnnoId]="selectedAnnotation$ | async"
-                 [height]="annotationPage.styles.height"
-                 [width]="annotationPage.styles.width"
+                 [height]="height"
+                 [width]="width"
                  (update)="onAnnotationUpdate($event)"
                  (delete)="onAnnotationDelete($event)"
                  (annotationClick)="selectAnnotation($event)">

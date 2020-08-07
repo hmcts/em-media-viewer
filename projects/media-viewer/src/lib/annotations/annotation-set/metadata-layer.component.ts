@@ -4,6 +4,7 @@ import { Highlight, ViewerEventService } from '../../viewers/viewer-event.servic
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
+import * as fromDocument from '../../store/selectors/document.selectors';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import { HighlightCreateService } from './annotation-create/highlight-create.service';
 import { Rectangle } from './annotation-view/rectangle/rectangle.model';
@@ -19,14 +20,17 @@ import uuid from 'uuid';
 })
 export class MetadataLayerComponent implements OnInit, OnDestroy {
 
-  annotationPages$: Observable<any[]>; // todo add type
   @Input() zoom: number;
   @Input() rotate: number;
+
+  pages: any[] = []; // todo add type
+  annoPages$: Observable<any>; // todo add type
+
   drawMode = false;
   highlightPage: number;
   rectangles: Rectangle[];
 
-  private subscriptions: Subscription[] = [];
+  private $subscriptions: Subscription;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -35,19 +39,16 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
     private readonly viewerEvents: ViewerEventService) {}
 
   ngOnInit(): void {
-    this.annotationPages$ = this.store.select(fromSelectors.getAnnoPerPage);
-    this.subscriptions = [
-      this.toolbarEvents.drawModeSubject
-        .subscribe(drawMode => this.drawMode = drawMode),
-      this.viewerEvents.textHighlight
-        .subscribe(highlight => this.showContextToolbar(highlight)),
-      this.viewerEvents.ctxToolbarCleared
-        .subscribe(() => this.clearContextToolbar())
-    ];
+    this.store.pipe(select(fromDocument.getPages)).subscribe(pages => this.pages = Object.values(pages));
+    this.annoPages$ = this.store.pipe(select(fromSelectors.getPageEntities));
+    this.$subscriptions = this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode);
+    this.$subscriptions
+      .add(this.viewerEvents.textHighlight.subscribe(highlight => this.showContextToolbar(highlight)))
+      .add(this.viewerEvents.ctxToolbarCleared.subscribe(() => this.clearContextToolbar()));
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.$subscriptions.unsubscribe();
   }
 
   showContextToolbar(highlight: Highlight) {

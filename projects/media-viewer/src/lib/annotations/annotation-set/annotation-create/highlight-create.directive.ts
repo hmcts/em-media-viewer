@@ -2,12 +2,12 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
-
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
 import * as fromDocument from '../../../store/selectors/document.selectors';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
 import * as fromAnnotationActions from '../../../store/actions/annotations.action';
+import { HighlightCreateService } from './highlight-create.service';
 
 @Directive({
   selector: '[mvCreateTextHighlight]'
@@ -23,6 +23,7 @@ export class HighlightCreateDirective {
   constructor(private element: ElementRef<HTMLElement>,
               private toolbarEvents: ToolbarEventService,
               private viewerEvents: ViewerEventService,
+              private highlightService: HighlightCreateService,
               private store: Store<fromStore.AnnotationSetState>) {
     this.store.select(fromDocument.getPages)
       .subscribe(pages => {
@@ -43,7 +44,7 @@ export class HighlightCreateDirective {
   }
 
   @HostListener('mousedown', ['$event'])
-  onPdfViewerClick() {
+  onPdfViewerClick(event: MouseEvent) {
     this.store.dispatch(new fromAnnotationActions.SelectedAnnotation({
       annotationId: '', selected: false, editable: false
     }));
@@ -84,29 +85,9 @@ export class HighlightCreateDirective {
     const top = (rect.top - parentRect.top)/this.zoom;
     const left = (rect.left - parentRect.left)/this.zoom;
 
-    const rectangle = { id: uuid(), height: height, width: width, x: 0, y: 0 };
+    let rectangle = this.highlightService.applyRotation(this.height, this.width, height, width, top, left, this.rotate, this.zoom);
+    rectangle = { id: uuid(), ...rectangle };
 
-    switch (this.rotate) {
-      case 90:
-        rectangle.width = height;
-        rectangle.height = width;
-        rectangle.x = top;
-        rectangle.y = (this.width/this.zoom) - left - width;
-        break;
-      case 180:
-        rectangle.x = (this.width/this.zoom) - left - width;
-        rectangle.y = (this.height/this.zoom) - top - height;
-        break;
-      case 270:
-        rectangle.width = height;
-        rectangle.height = width;
-        rectangle.x = (this.height/this.zoom) - top - height;
-        rectangle.y = left;
-        break;
-      default:
-        rectangle.x = left;
-        rectangle.y = top;
-    }
     return rectangle as Rectangle;
   }
 
