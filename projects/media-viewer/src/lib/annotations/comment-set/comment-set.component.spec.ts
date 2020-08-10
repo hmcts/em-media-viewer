@@ -9,13 +9,14 @@ import { annotationSet } from '../../../assets/annotation-set';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
-import {TagsServices} from '../services/tags/tags.services';
-import {TagsComponent} from '../tags/tags.component';
-import {TagInputModule} from 'ngx-chips';
+import { TagsServices } from '../services/tags/tags.services';
+import { TagsComponent } from '../tags/tags.component';
+import { TagInputModule } from 'ngx-chips';
 import { TextHighlightDirective } from './comment/text-highlight.directive';
 import { MomentDatePipe } from '../pipes/date.pipe';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../store/reducers/reducers';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../store/reducers/reducers';
+import { BehaviorSubject } from 'rxjs';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -23,8 +24,17 @@ describe('CommentSetComponent', () => {
   let mockComment;
   let annotation: Annotation, annotation2: Annotation, annotation3: Annotation;
   let comment, mockRectangles;
+  let toolbarEvent: ToolbarEventService;
 
   const api = new AnnotationApiService({}  as any);
+  const toolbarEventsMock = {
+    icp: {
+      participantsListVisible: new BehaviorSubject(false),
+    },
+    toggleCommentsPanel: () => {},
+    toggleParticipantsList: () => {},
+    commentsPanelVisible: new BehaviorSubject(false)
+  };
 
   beforeEach(() => {
     annotation = {
@@ -212,7 +222,7 @@ describe('CommentSetComponent', () => {
       ],
       providers: [
         { provide: AnnotationApiService, useValue: api },
-        ToolbarEventService,
+        { provide: ToolbarEventService, useValue: toolbarEventsMock },
         CommentService,
         CommentSetRenderService,
         TagsServices
@@ -230,6 +240,7 @@ describe('CommentSetComponent', () => {
     component.height = 100;
     component.zoom = 1;
     fixture.detectChanges();
+    toolbarEvent = TestBed.get(ToolbarEventService);
   });
 
   it('should create', () => {

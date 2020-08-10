@@ -21,7 +21,6 @@ import { reducers } from '../../store/reducers/reducers';
 import { SelectedAnnotation } from '../../store/actions/annotations.action';
 import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { IcpService } from '../../icp/icp.service';
 import { SetCaseId } from '../../store/actions/icp.action';
 
@@ -243,6 +242,7 @@ describe('PdfViewerComponent', () => {
 
   it('should show comments panel', () => {
     component.showCommentsPanel = false;
+    component.showIcpParticipantsList = false;
 
     toolbarEvents.commentsPanelVisible.next(true);
     fixture.detectChanges();
@@ -253,10 +253,34 @@ describe('PdfViewerComponent', () => {
 
   it('should hide comments panel', () => {
     component.showCommentsPanel = true;
+    component.showIcpParticipantsList = false;
 
     toolbarEvents.commentsPanelVisible.next(false);
+    fixture.detectChanges();
 
     expect(component.showCommentsPanel).toBeFalsy();
+    expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');
+  });
+
+  it('should show icp participants list', () => {
+    component.showIcpParticipantsList = false;
+    component.showCommentsPanel = false;
+
+    toolbarEvents.icp.participantsListVisible.next(true);
+    fixture.detectChanges();
+
+    expect(component.showIcpParticipantsList).toBeTruthy();
+    expect(component.viewerContainer.nativeElement.classList).toContain('show-comments-panel');
+  });
+
+  it('should hide icp participants list', () => {
+    component.showIcpParticipantsList = true;
+    component.showCommentsPanel = false;
+
+    toolbarEvents.icp.participantsListVisible.next(false);
+    fixture.detectChanges();
+
+    expect(component.showIcpParticipantsList).toBeFalsy();
     expect(component.viewerContainer.nativeElement.classList).not.toContain('show-comments-panel');
   });
 

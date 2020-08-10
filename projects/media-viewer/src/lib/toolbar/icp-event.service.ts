@@ -6,6 +6,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
   export const stoppingPresenting = new Subject();
   export const leavingSession = new BehaviorSubject(false);
   export const sessionExitConfirmed = new Subject();
+  export const participantsListVisible = new BehaviorSubject(false);
 
   export const enable = () => {
     enabled.next(true);
@@ -30,5 +31,6 @@ import { BehaviorSubject, Subject } from 'rxjs';
 
   export const confirmExit = () => {
     sessionExitConfirmed.next();
+    participantsListVisible.next(false);
     enabled.next(false);
   };

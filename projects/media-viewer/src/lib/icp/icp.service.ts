@@ -49,20 +49,23 @@ export class IcpService implements OnDestroy  {
   }
 
   setUpSessionSubscriptions() {
-    this.sessionSubscription = this.toolbarEvents.icp.becomingPresenter.subscribe(() => this.becomePresenter())
-      .add(this.toolbarEvents.icp.stoppingPresenting.subscribe(() => this.stopPresenting()))
-      .add(this.toolbarEvents.icp.sessionExitConfirmed.subscribe(() => this.leavePresentation()))
-      .add(this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => this.presenter = presenter ))
-      .add(this.store.pipe(select(fromIcpSelectors.getClient)).subscribe(client => this.client = client))
-      .add(this.store.pipe(select(fromIcpSelectors.isPresenter)).subscribe(isPresenter => {
+    this.sessionSubscription = this.toolbarEvents.icp.becomingPresenter.subscribe(() => this.becomePresenter());
+    this.sessionSubscription.add(this.toolbarEvents.icp.stoppingPresenting.subscribe(() => this.stopPresenting()));
+    this.sessionSubscription.add(this.toolbarEvents.icp.sessionExitConfirmed.subscribe(() => this.leavePresentation()));
+    this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => this.presenter = presenter ))
+    this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.getClient)).subscribe(client => this.client = client))
+    this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.isPresenter)).subscribe(isPresenter => {
         this.isPresenter = isPresenter;
         this.presenterSubscriptions.update(isPresenter);
         this.followerSubscriptions.update(!isPresenter);
-      }))
-      .add(this.socketService.clientDisconnected().subscribe(cli => this.clientDisconnected(cli)))
-      .add(this.socketService.presenterUpdated().subscribe(pres => {
+    }));
+    this.sessionSubscription.add(this.socketService.clientDisconnected().subscribe(cli => this.clientDisconnected(cli)))
+    this.sessionSubscription.add(this.socketService.presenterUpdated().subscribe(pres => {
         this.store.dispatch(new fromIcpActions.IcpPresenterUpdated(pres));
-      }));
+    }));
+    this.sessionSubscription.add(this.socketService.participantListUpdated().subscribe(participants => {
+        this.store.dispatch(new fromIcpActions.IcpParticipantListUpdated(participants));
+    }));
   }
 
   unsubscribeSession() {
@@ -75,6 +78,7 @@ export class IcpService implements OnDestroy  {
     if (this.isPresenter) {
       this.stopPresenting();
     }
+    this.removeParticipant(this.client.id);
     this.socketService.leaveSession();
     this.store.dispatch(new fromIcpActions.LeaveIcpSocketSession());
     this.unsubscribeSession();
@@ -93,5 +97,10 @@ export class IcpService implements OnDestroy  {
     if (client === this.presenter.id) {
       this.stopPresenting();
     }
+    this.removeParticipant(client);
+  }
+
+  removeParticipant(participantId) {
+    this.socketService.removeParticipant(participantId);
   }
 }

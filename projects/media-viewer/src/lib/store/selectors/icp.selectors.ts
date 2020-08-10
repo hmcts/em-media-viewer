@@ -37,3 +37,8 @@ export const isPresenter = createSelector(
   getClient,
   (presenter, client) => presenter === null ? undefined : presenter.id === client.id // isPresenter is called when = false.
 );
+
+export const getParticipants = createSelector(
+  getIcpState,
+  fromIcp.getParticipants
+);

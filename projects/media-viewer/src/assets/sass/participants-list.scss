@@ -1,0 +1,38 @@
+mv-participants-list {
+
+  .participant__card {
+    width: 85%;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background-color: govuk-colour(white);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.30), inset 0 -1px 0 0 #DDDDDD;
+    padding: 10px 20px 5px 20px;
+    margin: 5px 5px 20px 5px;
+  }
+
+  .participant__card.no-shadow {
+    box-shadow: none;
+    margin: 0px;
+  }
+
+  .participant__header {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: govuk-spacing(1);
+    @include govuk-font($size: 16);
+    display: block;
+    font-weight: bold;
+  }
+
+  .participant__name {
+    font-size: 1rem;
+    font-family: nta,Arial,sans-serif;
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    padding: 5px 0px 5px 0px
+  }
+}

@@ -103,4 +103,15 @@ describe('Icp actions', () => {
       });
     });
   });
+
+  describe('Participant List Updated', () => {
+    it('should create an action', () => {
+      const payload = [{'participantId': 'name'}];
+      const action = new fromIcp.IcpParticipantListUpdated(payload);
+      expect({...action}).toEqual({
+        type: fromIcp.ICP_PARTICIPANT_LIST_UPDATED,
+        payload: payload
+      });
+    });
+  });
 });

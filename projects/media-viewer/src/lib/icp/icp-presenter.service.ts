@@ -21,7 +21,6 @@ export class IcpPresenterService {
               private readonly socketService: IcpUpdateService,
               private store: Store<IcpState>) {}
 
-
   update(isPresenter: boolean) {
     if (isPresenter) {
       this.subscribe();
@@ -39,9 +38,7 @@ export class IcpPresenterService {
       this.$subscription.add(this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => {
         this.presenter = presenter;
       }));
-      this.$subscription.add(this.socketService.newParticipantJoined().subscribe(() => {
-        this.onNewParticipantJoined();
-      }));
+      this.$subscription.add(this.socketService.newParticipantJoined().subscribe(() => this.onNewParticipantJoined()));
     }
   }
 

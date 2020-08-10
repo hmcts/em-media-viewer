@@ -4,7 +4,8 @@ import { IcpSession, IcpState } from '../../icp/icp.interfaces';
 export const initialIcpSessionState: IcpState = {
   session: null,
   presenter: null,
-  client: null
+  client: null,
+  participants: []
 };
 
 export function icpReducer (state = initialIcpSessionState,
@@ -28,8 +29,18 @@ export function icpReducer (state = initialIcpSessionState,
         ...state,
         session,
         client: participantInfo.client,
-        presenter: participantInfo.presenter
+        presenter: participantInfo.presenter,
       };
+    }
+
+    case fromIcpActions.ICP_PARTICIPANT_LIST_UPDATED: {
+      const updatedParticipants: any = action.payload;
+      const participants = Object.keys(updatedParticipants)
+        .map(id => ({ id: id, username: updatedParticipants[id] }));
+      return {
+        ...state,
+        participants
+      }
     }
 
     case fromIcpActions.ICP_PRESENTER_UPDATED: {
@@ -52,3 +63,4 @@ export function icpReducer (state = initialIcpSessionState,
 export const getIcpSession = (state: IcpState) => state.session;
 export const getPresenter = (state: IcpState) => state.presenter;
 export const getClient = (state: IcpState) => state.client;
+export const getParticipants = (state: IcpState) => state.participants;

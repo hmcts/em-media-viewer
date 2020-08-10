@@ -8,6 +8,8 @@ export class IcpUpdateService {
   SESSION_JOINED = '[Icp] Client Joined Session';
   CLIENT_DISCONNECTED = '[Icp] Client Disconnected From Session';
   NEW_PARTICIPANT_JOINED = '[Icp] New Participant Joined Session';
+  REMOVE_PARTICIPANT = '[Icp] Remove Participant from List';
+  PARTICIPANTS_UPDATED = '[Icp] Participants List Updated';
   UPDATE_PRESENTER = '[Icp] New Presenter Starts Presenting';
   PRESENTER_UPDATED =  '[Icp] Presenter Updated';
   UPDATE_SCREEN = '[Icp] Update Screen';
@@ -34,6 +36,16 @@ export class IcpUpdateService {
 
   clientDisconnected() {
     return this.socket.listen(this.CLIENT_DISCONNECTED);
+  }
+
+  removeParticipant(participantId) {
+    this.socket.emit(this.REMOVE_PARTICIPANT, {
+      participantId: participantId, caseId: this.session.caseId
+    });
+  }
+
+  participantListUpdated() {
+    return this.socket.listen(this.PARTICIPANTS_UPDATED);
   }
 
   updatePresenter(presenter: IcpParticipant) {
