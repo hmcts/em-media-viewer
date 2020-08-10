@@ -13,12 +13,13 @@
   [showCommentSummary]="toolbarButtons.showCommentSummary"
   (showCommentSummaryDialog)="toggleCommentsSummary()">
 </mv-comment-set-header>
+<mv-participants-list></mv-participants-list>
 
 <div grabNDrag [dragY]="enableGrabNDrag"
      #viewerContainer
      class="pdfContainer"
      [ngStyle]="{ height: height }"
-     [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage, 'show-comments-panel': showCommentsPanel, 'grabNDrag': enableGrabNDrag }">
+     [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage, 'show-comments-panel': (showCommentsPanel || showIcpParticipantsList), 'grabNDrag': enableGrabNDrag }">
   <div grabNDrag [dragX]="enableGrabNDrag"
        #pdfViewer
        class="pdfViewer"
