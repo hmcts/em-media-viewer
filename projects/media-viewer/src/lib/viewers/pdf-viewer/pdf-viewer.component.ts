@@ -120,6 +120,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
+    this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
     this.$subscription.add(this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle));
     this.$subscription.add(this.pdfWrapper.positionUpdated.asObservable()
       .pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
@@ -274,5 +275,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       return 0.1;
     }
     return newZoomValue;
+  }
+
+  private goToDestination(destination: any[]) {
+    this.pdfWrapper.navigateTo(destination);
   }
 }
