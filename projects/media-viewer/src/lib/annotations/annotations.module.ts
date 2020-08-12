@@ -30,6 +30,7 @@ import {FilterPipe} from './pipes/filter.pipe';
 import {UnsnakePipe} from './pipes/unsnake.pipe';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {SharedModule} from '../shared/shared.module';
+import { MetadataLayerComponent } from './annotation-set/metadata-layer.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import {SharedModule} from '../shared/shared.module';
     SharedModule
   ],
   declarations: [
+    MetadataLayerComponent,
     AnnotationViewComponent,
     BoxHighlightCreateComponent,
     AnnotationSetComponent,
@@ -87,7 +89,8 @@ import {SharedModule} from '../shared/shared.module';
     CommentFilterComponent,
     MomentDatePipe,
     FilterPipe,
-    UnsnakePipe
+    UnsnakePipe,
+    MetadataLayerComponent
   ]
 })
 export class AnnotationsModule { }
