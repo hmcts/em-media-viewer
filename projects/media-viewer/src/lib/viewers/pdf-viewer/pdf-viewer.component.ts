@@ -18,6 +18,7 @@ import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.m
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
 import { asyncScheduler, BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { ViewerEventService } from '../viewer-event.service';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
@@ -88,6 +89,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
     public readonly toolbarEvents: ToolbarEventService,
+    private readonly viewerEvents: ViewerEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject.pipe(tap(() => {
