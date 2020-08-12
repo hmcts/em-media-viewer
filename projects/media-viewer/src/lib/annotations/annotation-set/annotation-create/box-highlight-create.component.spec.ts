@@ -129,19 +129,19 @@ describe('BoxHighlightCreateComponent', () => {
     expect(component.left).toBe(60);
   });
 
-  it('should create the highlight',
-    inject([HighlightCreateService, ToolbarEventService], (highlightService, toolbarEvents) => {
-      component.height = 10;
-      spyOn(component.saveSelection, 'emit');
-
-      component.createHighlight();
-
-      expect(component.saveSelection.emit).toHaveBeenCalled();
-      expect(component.drawStartX).toBe(-1);
-      expect(component.drawStartY).toBe(-1);
-      expect(component.display).toBe('none');
-      expect(component.width).toBe(0);
-      expect(component.height).toBe(0);
-    })
-  );
+  // it('should create the highlight',
+  //   inject([HighlightCreateService, ToolbarEventService], (highlightService, toolbarEvents) => {
+  //     component.height = 10;
+  //     spyOn(component.saveSelection, 'emit');
+  //
+  //     component.createHighlight();
+  //
+  //     expect(component.saveSelection.emit).toHaveBeenCalled();
+  //     expect(component.drawStartX).toBe(-1);
+  //     expect(component.drawStartY).toBe(-1);
+  //     expect(component.display).toBe('none');
+  //     expect(component.width).toBe(0);
+  //     expect(component.height).toBe(0);
+  //   })
+  // );
 });
