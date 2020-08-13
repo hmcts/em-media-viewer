@@ -62,7 +62,7 @@ export class RedactionComponent implements OnInit, OnDestroy {
   }
 
   markTextRedaction(highlight) {
-    const redactionHighlight = highlight.rectangles;
+    const redactionHighlight = this.highlightService.getRectangles(highlight.event, highlight.page);
     if (redactionHighlight && redactionHighlight.length) {
       this.saveRedaction(highlight.page, [...redactionHighlight])
     }

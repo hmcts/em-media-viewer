@@ -81,17 +81,17 @@ describe('AnnotationComponent', () => {
       .toHaveBeenCalledWith({ annotationId: 'annoId', editable: false, selected: true });
   });
 
-  // it('should update rectangle', () => {
-  //   spyOn(component.update, 'emit');
-  //   component.anno = { rectangles: [{ id: 'rectId' }] } as any;
-  //   const rectangle = { id: 'rectId', height: 100, width: 100 } as any;
-  //
-  //   component.onRectangleUpdate(rectangle);
-  //
-  //   expect(component.update.emit).toHaveBeenCalled();
-  //   expect(component.anno.rectangles[0].width).toBe(100);
-  //   expect(component.anno.rectangles[0].height).toBe(100);
-  // });
+  it('should update rectangle', () => {
+    spyOn(component.update, 'emit');
+    component.anno = { rectangles: [{ id: 'rectId' }] } as any;
+    const rectangle = { id: 'rectId', height: 100, width: 100 } as any;
+
+    component.onRectangleUpdate(rectangle);
+
+    expect(component.update.emit).toHaveBeenCalled();
+    expect(component.anno.rectangles[0].width).toBe(100);
+    expect(component.anno.rectangles[0].height).toBe(100);
+  });
 
   it('should delete highlight', () => {
     spyOn(component.delete, 'emit');

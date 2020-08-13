@@ -4,7 +4,7 @@ import { DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/
 import { Bookmark, BookmarkNode } from '../../../../store/model/bookmarks.interface';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmarks.selectors';
 import { Subscription } from 'rxjs';
-import { AnnotationSetState} from '../../../../store/reducers/annotations.reducer';
+import { AnnotationSetState} from '../../../../store/reducers/annotatons.reducer';
 import { DocumentPages } from '../../../../store/reducers/document.reducer';
 import * as fromDocument from '../../../../store/selectors/document.selectors';
 import { TreeNode } from 'angular-tree-component';

@@ -168,28 +168,28 @@ describe('PdfViewerComponent', () => {
     expect(mockWrapper.clearSearch).toHaveBeenCalled();
   });
 
-  // it('should not highlight text when in view mode for selected page', () => {
-  //   const mouseEvent = { target: { offsetParent: { offsetParent: { getAttribute: () => 1 }} } } as any;
-  //   spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(false);
-  //   spyOn(viewerEvents, 'textSelected');
-  //
-  //   component.onMouseUp(mouseEvent);
-  //
-  //   expect(viewerEvents.textSelected).not.toHaveBeenCalled();
-  // });
+  it('should not highlight text when in view mode for selected page', () => {
+    const mouseEvent = { target: { offsetParent: { offsetParent: { getAttribute: () => 1 }} } } as any;
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(false);
+    spyOn(viewerEvents, 'textSelected');
 
-  // it('should deselect annotation and context toolbar',
-  //   inject([Store], (store) => {
-  //     spyOn(store, 'dispatch');
-  //     spyOn(viewerEvents, 'clearCtxToolbar');
-  //
-  //     component.onPdfViewerClick();
-  //
-  //     expect(store.dispatch).toHaveBeenCalledWith(new SelectedAnnotation({
-  //       annotationId: '', selected: false, editable: false
-  //     }));
-  //     expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled()
-  // }));
+    component.onMouseUp(mouseEvent);
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
+
+  it('should deselect annotation and context toolbar',
+    inject([Store], (store) => {
+      spyOn(store, 'dispatch');
+      spyOn(viewerEvents, 'clearCtxToolbar');
+
+      component.onPdfViewerClick();
+
+      expect(store.dispatch).toHaveBeenCalledWith(new SelectedAnnotation({
+        annotationId: '', selected: false, editable: false
+      }));
+      expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled()
+  }));
 
   it('should initialize loading of document', () => {
     mockWrapper.documentLoadInit.next();
