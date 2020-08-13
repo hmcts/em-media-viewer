@@ -3,7 +3,6 @@ import uuid from 'uuid';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
-import { HighlightCreateService } from './highlight-create.service';
 
 
 @Component({
@@ -38,8 +37,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private readonly toolbarEvents: ToolbarEventService,
-              private readonly highlightService: HighlightCreateService) {}
+  constructor(private readonly toolbarEvents: ToolbarEventService) {}
 
   ngOnInit(): void {
     this.subscriptions = [
@@ -56,9 +54,10 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  initHighlight({ offsetX, offsetY }) {
+  initHighlight(event) {
     this.position = 'absolute';
     this.backgroundColor = 'yellow';
+    const [offsetX, offsetY] = this.findOffsetValues(event);
     this.drawStartX = offsetX;
     this.drawStartY = offsetY;
 
@@ -83,8 +82,9 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateHighlight({ offsetX, offsetY }) {
+  updateHighlight(event: MouseEvent) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
+      const [offsetX, offsetY] = this.findOffsetValues(event);
       this.height = Math.abs(offsetY - this.drawStartY);
       this.width = Math.abs(offsetX - this.drawStartX);
       this.top = Math.min(offsetY, this.drawStartY);
@@ -94,9 +94,14 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   createHighlight() {
     if (this.height / this.zoom > 5 || this.width / this.zoom > 5) {
-      let rectangle = this.highlightService
-        .applyRotation(this.pageHeight, this.pageWidth, this.height, this.width, this.top, this.left, this.rotate, this.zoom);
-      rectangle = { id: uuid(), ...rectangle } as any;
+      const rectangle = {
+        id: uuid(),
+        x: + this.left / this.zoom,
+        y: + this.top / this.zoom,
+        width: + this.width / this.zoom,
+        height: + this.height / this.zoom,
+        page: this.page
+      } as any;
       this.saveSelection.emit({ rectangles: [rectangle], page: this.page });
       this.resetHighlight();
     }
@@ -108,5 +113,13 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.display = 'none';
     this.width = 0;
     this.height = 0;
+  }
+
+  private findOffsetValues(event: MouseEvent) {
+    const currentTarg = event.currentTarget as HTMLElement;
+    const rect = currentTarg.getBoundingClientRect(),
+      offsetX = event.clientX - rect.left,
+      offsetY = event.clientY - rect.top;
+    return [offsetX, offsetY];
   }
 }

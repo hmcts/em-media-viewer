@@ -64,32 +64,34 @@ describe('BoxHighlightCreateComponent', () => {
   );
 
   it('should initialise the box highlight creator', () => {
-    const event = { offsetX: 100, offsetY: 200 } as MouseEvent;
-
+    const div = document.createElement('div');
+    const event = { currentTarget: div as EventTarget, clientX: 20, clientY: 20 } as MouseEvent;
     component.initHighlight(event);
 
     expect(component.display).toBe('block');
     expect(component.height).toBe(50);
     expect(component.width).toBe(50);
-    expect(component.top).toBe(200);
-    expect(component.left).toBe(100);
+    expect(component.top).toBe(20);
+    expect(component.left).toBe(20);
   });
 
   it('should update the box highlight creator, with no rotation', () => {
-    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
+    const div = document.createElement('div');
+    const updateEvent = { currentTarget: div as EventTarget, clientX: 20, clientY: 20 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
 
     component.updateHighlight(updateEvent);
 
     expect(component.width).toBe(40);
-    expect(component.height).toBe(50);
-    expect(component.top).toBe(50);
-    expect(component.left).toBe(60);
+    expect(component.height).toBe(30);
+    expect(component.top).toBe(20);
+    expect(component.left).toBe(20);
   });
 
   it('should update the box highlight creator, when rotate is 90', () => {
-    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
+    const div = document.createElement('div');
+    const updateEvent = { currentTarget: div as EventTarget, clientX: 20, clientY: 20 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.rotate = 90;
@@ -97,13 +99,14 @@ describe('BoxHighlightCreateComponent', () => {
     component.updateHighlight(updateEvent);
 
     expect(component.width).toBe(40);
-    expect(component.height).toBe(50);
-    expect(component.top).toBe(50);
-    expect(component.left).toBe(60);
+    expect(component.height).toBe(30);
+    expect(component.top).toBe(20);
+    expect(component.left).toBe(20);
   });
 
   it('should update the box highlight creator, when rotate is 180', () => {
-    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
+    const div = document.createElement('div');
+    const updateEvent = { currentTarget: div as EventTarget, clientX: 20, clientY: 20 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.rotate = 180;
@@ -111,37 +114,38 @@ describe('BoxHighlightCreateComponent', () => {
     component.updateHighlight(updateEvent);
 
     expect(component.width).toBe(40);
-    expect(component.height).toBe(50);
-    expect(component.top).toBe(50);
-    expect(component.left).toBe(60);
+    expect(component.height).toBe(30);
+    expect(component.top).toBe(20);
+    expect(component.left).toBe(20);
   });
 
   it('should update the box highlight creator, when rotate is 270', () => {
-    const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
+    const div = document.createElement('div');
+    const updateEvent = { currentTarget: div as EventTarget, clientX: 20, clientY: 20 } as MouseEvent;
     component.drawStartX = 60;
     component.drawStartY = 50;
     component.rotate = 270;
 
     component.updateHighlight(updateEvent);
     expect(component.width).toBe(40);
-    expect(component.height).toBe(50);
-    expect(component.top).toBe(50);
-    expect(component.left).toBe(60);
+    expect(component.height).toBe(30);
+    expect(component.top).toBe(20);
+    expect(component.left).toBe(20);
   });
 
-  // it('should create the highlight',
-  //   inject([HighlightCreateService, ToolbarEventService], (highlightService, toolbarEvents) => {
-  //     component.height = 10;
-  //     spyOn(component.saveSelection, 'emit');
-  //
-  //     component.createHighlight();
-  //
-  //     expect(component.saveSelection.emit).toHaveBeenCalled();
-  //     expect(component.drawStartX).toBe(-1);
-  //     expect(component.drawStartY).toBe(-1);
-  //     expect(component.display).toBe('none');
-  //     expect(component.width).toBe(0);
-  //     expect(component.height).toBe(0);
-  //   })
-  // );
+  it('should create the highlight',
+    inject([HighlightCreateService, ToolbarEventService], (highlightService, toolbarEvents) => {
+      component.height = 10;
+      spyOn(component.saveSelection, 'emit');
+
+      component.createHighlight();
+
+      expect(component.saveSelection.emit).toHaveBeenCalled();
+      expect(component.drawStartX).toBe(-1);
+      expect(component.drawStartY).toBe(-1);
+      expect(component.display).toBe('none');
+      expect(component.width).toBe(0);
+      expect(component.height).toBe(0);
+    })
+  );
 });

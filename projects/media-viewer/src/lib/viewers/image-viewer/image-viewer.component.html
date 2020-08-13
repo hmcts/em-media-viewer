@@ -22,10 +22,12 @@
                      [rotate]="rotation"
       ></mv-redactions>
       <ng-template #annotationTemplate>
-        <mv-metadata-layer *ngIf="enableAnnotations && annotationSet"
+        <mv-annotation-set *ngIf="enableAnnotations && annotationSet"
                            [zoom]="zoom"
-                           [rotate]="rotation">
-        </mv-metadata-layer>
+                           [rotate]="rotation"
+                           [height]="img !== undefined ? img.offsetHeight : 0"
+                           [width]="img !== undefined ? img.offsetWidth : 0">
+        </mv-annotation-set>
       </ng-template>
     </div>
   </div>
