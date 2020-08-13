@@ -9,10 +9,16 @@ describe('HighlightCreateService', () => {
   const annotationApi = { postAnnotation: () => {}} as any;
   let saveAnnoAction: any;
   const mockStore = {
-    select: () => of({
-      styles: { height: 100, width: 100 },
-      scaleRotation: { scale: 1, rotation: 0 }
-    }),
+    select: () => of([
+      {
+        styles: { height: 100, width: 100 },
+        scaleRotation: { scale: 1, rotation: 0 }
+      },
+      {
+        styles: { height: 100, width: 200 },
+        scaleRotation: { scale: 1, rotation: 0 }
+      }
+    ]),
     dispatch: (action) => { saveAnnoAction = action },
     pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
   } as any;
@@ -41,6 +47,39 @@ describe('HighlightCreateService', () => {
       '1': {
         scaleRotation: {
           rotation: 0,
+          scale: 1
+        },
+        styles: {
+          height: 1122,
+          left: 341,
+          width: 793
+        }
+      },
+      '2': {
+        scaleRotation: {
+          rotation: 90,
+          scale: 1
+        },
+        styles: {
+          height: 1122,
+          left: 341,
+          width: 793
+        }
+      },
+      '3': {
+        scaleRotation: {
+          rotation: 180,
+          scale: 1
+        },
+        styles: {
+          height: 1122,
+          left: 341,
+          width: 793
+        }
+      },
+      '4': {
+        scaleRotation: {
+          rotation: 270,
           scale: 1
         },
         styles: {

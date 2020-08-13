@@ -119,7 +119,8 @@ describe('AnnotationSetComponent', () => {
         { provide: AnnotationApiService, useValue: api },
         { provide: CommentService, useValue: mockCommentService },
         { provide: HighlightCreateService, useValue: mockHighlightService },
-        ToolbarEventService
+        ToolbarEventService,
+        ViewerEventService,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -254,6 +255,24 @@ describe('AnnotationSetComponent', () => {
       component.selectAnnotation({} as any);
 
       expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SelectedAnnotation({} as any));
+    }
+  ));
+
+  it('', inject([HighlightCreateService, ToolbarEventService],
+    (highlightService, toolbarEvents) => {
+      const mockEvent = {
+        rectangles: [
+          { annotationId: '', height: 10, width: 10, x: 30, y: 50 }
+        ],
+        page: 1
+      };
+      spyOn(highlightService, 'saveAnnotation');
+      spyOn(toolbarEvents.drawModeSubject, 'next');
+
+      component.saveAnnotation(mockEvent);
+
+      expect(highlightService.saveAnnotation).toHaveBeenCalled();
+      expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalled();
     }
   ));
 });
