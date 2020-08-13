@@ -1,4 +1,4 @@
-import * as fromAnnotations from './annotations.reducer';
+import * as fromAnnotations from './annotatons.reducer';
 import * as fromActions from '../actions/annotations.action';
 
 const annotationSet = {

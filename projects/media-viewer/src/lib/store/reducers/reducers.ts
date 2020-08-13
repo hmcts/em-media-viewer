@@ -1,6 +1,6 @@
 import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 import * as fromDocument from './document.reducer';
-import * as fromAnnotation from './annotations.reducer';
+import * as fromAnnotation from './annotatons.reducer';
 import * as fromTags from './tags.reducer';
 import * as fromBookmarks from './bookmarks.reducer';
 import * as fromRedaction from './redaction.reducer';
@@ -28,7 +28,7 @@ export const reducers: ActionReducerMap<State> = {
 export const getMVState = createFeatureSelector<State>('media-viewer');
 
 export * from './document.reducer';
-export * from './annotations.reducer';
+export * from './annotatons.reducer';
 export * from './tags.reducer';
 export * from './bookmarks.reducer';
 export * from './redaction.reducer';

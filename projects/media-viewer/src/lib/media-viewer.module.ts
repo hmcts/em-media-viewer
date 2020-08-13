@@ -22,6 +22,7 @@ import { IcpSessionApiService } from './icp/icp-session-api.service';
 import { IcpUpdateService } from './icp/icp-update.service';
 import { IcpService } from './icp/icp.service';
 import { SocketService } from './icp/socket.service';
+// APP store
 import { reducers} from './store/reducers/reducers';
 import { effects } from './store/effects/index';
 import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
@@ -37,7 +38,6 @@ import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.com
 import { RotationApiService } from './viewers/rotation-persist/rotation-api.service';
 import { RotationPersistDirective } from './viewers/rotation-persist/rotation-persist.directive';
 import { ParticipantsListComponent } from './icp/participants-list/participants-list.component';
-import { HighlightCreateDirective } from './annotations/annotation-set/annotation-create/highlight-create.directive';
 
 @NgModule({
   imports: [
@@ -65,7 +65,6 @@ import { HighlightCreateDirective } from './annotations/annotation-set/annotatio
     ConvertibleContentViewerComponent,
     GrabNDragDirective,
     RotationPersistDirective,
-    HighlightCreateDirective,
     ConfirmActionDialogComponent,
     RedactionComponent, // todo made put this into module
     BookmarkIconsComponent,

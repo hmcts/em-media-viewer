@@ -7,7 +7,7 @@ export class TextHighlightDirective implements AfterViewChecked {
 
   @Input() textToHighlight: string;
 
-  constructor(private element: ElementRef<HTMLElement>) {}
+  constructor(private element: ElementRef<HTMLElement>,) {}
 
   ngAfterViewChecked(): void {
     if (this.textToHighlight) {

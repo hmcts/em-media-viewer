@@ -47,10 +47,10 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
-    const annotation = {...this.anno}
-    annotation.rectangles = annotation.rectangles.filter(r => r.id !== rectangle.id);
-    annotation.rectangles.push(rectangle);
-    this.update.emit(annotation);
+    this.anno.rectangles = this.anno.rectangles.filter(r => r.id !== rectangle.id);
+    this.anno.rectangles.push(rectangle);
+
+    this.update.emit(this.anno);
   }
 
   public deleteHighlight() {
