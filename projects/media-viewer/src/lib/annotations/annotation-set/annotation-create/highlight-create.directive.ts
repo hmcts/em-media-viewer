@@ -59,7 +59,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     this.viewerEvents.clearCtxToolbar();
   }
 
-  getRectangles(event: MouseEvent, page) {
+  private getRectangles(event: MouseEvent, page) {
     this.height = this.allPages[page].styles.height;
     this.width = this.allPages[page].styles.width;
     this.zoom = parseFloat(this.allPages[page].scaleRotation.scale);
@@ -97,11 +97,6 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     rectangle = { id: uuid(), ...rectangle };
 
     return rectangle as Rectangle;
-  }
-
-  resetHighlight() {
-    window.getSelection().removeAllRanges();
-    this.toolbarEvents.highlightModeSubject.next(false);
   }
 
   private removeEnhancedTextModeStyling(element: HTMLElement) {
