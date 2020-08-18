@@ -10,9 +10,7 @@ describe('BoxHighlightCreateComponent', () => {
   let component: BoxHighlightCreateComponent;
   let fixture: ComponentFixture<BoxHighlightCreateComponent>;
   let nativeElement: HTMLElement;
-  const mockHighlightService = {
-    saveAnnotation: () => {}
-  };
+  const mockHighlightService = { saveAnnotation: () => {}, applyRotation: () => {} };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -129,19 +127,19 @@ describe('BoxHighlightCreateComponent', () => {
     expect(component.left).toBe(60);
   });
 
-  // it('should create the highlight',
-  //   inject([HighlightCreateService, ToolbarEventService], (highlightService, toolbarEvents) => {
-  //     component.height = 10;
-  //     spyOn(component.saveSelection, 'emit');
-  //
-  //     component.createHighlight();
-  //
-  //     expect(component.saveSelection.emit).toHaveBeenCalled();
-  //     expect(component.drawStartX).toBe(-1);
-  //     expect(component.drawStartY).toBe(-1);
-  //     expect(component.display).toBe('none');
-  //     expect(component.width).toBe(0);
-  //     expect(component.height).toBe(0);
-  //   })
-  // );
+  it('should create the highlight', inject([HighlightCreateService], (highlightService) => {
+      component.height = 10;
+      spyOn(component.saveSelection, 'emit');
+      spyOn(highlightService, 'applyRotation');
+
+      component.createHighlight();
+
+      expect(component.saveSelection.emit).toHaveBeenCalled();
+      expect(component.drawStartX).toBe(-1);
+      expect(component.drawStartY).toBe(-1);
+      expect(component.display).toBe('none');
+      expect(component.width).toBe(0);
+      expect(component.height).toBe(0);
+    })
+  );
 });

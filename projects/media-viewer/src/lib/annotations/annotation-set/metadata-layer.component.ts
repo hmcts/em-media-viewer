@@ -39,10 +39,12 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
     private readonly viewerEvents: ViewerEventService) {}
 
   ngOnInit(): void {
-    this.store.pipe(select(fromDocument.getPages)).subscribe(pages => this.pages = Object.values(pages));
+    this.$subscriptions = this.store.pipe(select(fromDocument.getPages))
+      .subscribe(pages => this.pages = Object.values(pages));
     this.annoPages$ = this.store.pipe(select(fromSelectors.getPageEntities));
-    this.$subscriptions = this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode);
+
     this.$subscriptions
+      .add(this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode))
       .add(this.viewerEvents.textHighlight.subscribe(highlight => this.showContextToolbar(highlight)))
       .add(this.viewerEvents.ctxToolbarCleared.subscribe(() => this.clearContextToolbar()));
   }

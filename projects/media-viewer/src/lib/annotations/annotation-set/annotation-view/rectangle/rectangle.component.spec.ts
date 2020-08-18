@@ -4,6 +4,9 @@ import { RectangleComponent } from './rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { MutableDivModule } from 'mutable-div';
 import { By } from '@angular/platform-browser';
+import { HighlightCreateService } from '../../annotation-create/highlight-create.service';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../../../store/reducers/reducers';
 
 describe('RectangleComponent', () => {
   let component: RectangleComponent;
@@ -39,16 +42,15 @@ describe('RectangleComponent', () => {
 
   beforeEach(() => {
     return TestBed.configureTestingModule({
-      declarations: [
-        RectangleComponent,
-      ],
+      declarations: [RectangleComponent],
       imports: [
         FormsModule,
-        MutableDivModule
+        MutableDivModule,
+        StoreModule.forFeature('media-viewer', reducers),
+        StoreModule.forRoot({})
       ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-      ]
+      providers: [HighlightCreateService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA,]
     })
     .compileComponents();
   });
@@ -68,110 +70,110 @@ describe('RectangleComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should be created', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+  });
 
-  // it('should emit a click', () => {
-  //   spyOn(component.select, 'emit');
-  //   component.onClick();
-  //
-  //   expect(component.select.emit).toHaveBeenCalledTimes(1);
-  // });
+  it('should emit a click', () => {
+    spyOn(component.select, 'emit');
+    component.onClick();
 
-  // it('should update the rectangle if moved', () => {
-  //   const oldLeft = rectangleEl.nativeElement.offsetLeft;
-  //   const oldTop = rectangleEl.nativeElement.offsetTop;
-  //
-  //   const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
-  //   const pointerMoveEvent = createPointerEvent('pointermove', 750, 750, 900, 900);
-  //   const pointerUpEvent = createPointerEvent('pointerup', 750, 800, 750, 800);
-  //
-  //   rectangleEl.nativeElement.dispatchEvent(pointerDownEvent);
-  //   rectangleEl.nativeElement.dispatchEvent(pointerMoveEvent);
-  //   rectangleEl.nativeElement.dispatchEvent(pointerUpEvent);
-  //
-  //   fixture.detectChanges();
-  //   expect(rectangleEl.nativeElement.offsetLeft).not.toEqual(oldLeft);
-  //   expect(rectangleEl.nativeElement.offsetTop).not.toEqual(oldTop);
-  // });
+    expect(component.select.emit).toHaveBeenCalledTimes(1);
+  });
 
-  // it('should update the rectangle if resized', function () {
-  //   const oldWidth = rectangleEl.nativeElement.offsetWidth;
-  //   const oldHeight = rectangleEl.nativeElement.offsetHeight;
-  //
-  //   const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
-  //   const pointerMoveEvent = createPointerEvent('pointermove', 750, 750, 900, 900);
-  //   const pointerUpEvent = createPointerEvent('pointerup', 750, 800, 750, 800);
-  //
-  //   rectangleEl.nativeElement.dispatchEvent(new Event('pointerdown'));
-  //   fixture.detectChanges();
-  //   const bottomRightHandle = document.querySelector('.BOTTOM-RIGHT');
-  //   bottomRightHandle.dispatchEvent(pointerDownEvent);
-  //   bottomRightHandle.dispatchEvent(pointerMoveEvent);
-  //   bottomRightHandle.dispatchEvent(pointerUpEvent);
-  //
-  //   fixture.detectChanges();
-  //   expect(rectangleEl.nativeElement.offsetWidth).not.toEqual(oldWidth);
-  //   expect(rectangleEl.nativeElement.offsetHeight).not.toEqual(oldHeight);
-  // });
+  it('should update the rectangle if moved', () => {
+    const oldLeft = rectangleEl.nativeElement.offsetLeft;
+    const oldTop = rectangleEl.nativeElement.offsetTop;
 
-  // it('should not update the rectangle if the rectangle did not change', function () {
-  //   spyOn(component.update, 'emit');
-  //   const oldLeft = rectangleEl.nativeElement.offsetLeft;
-  //   const oldTop = rectangleEl.nativeElement.offsetTop;
-  //   const oldWidth = rectangleEl.nativeElement.offsetWidth;
-  //   const oldHeight = rectangleEl.nativeElement.offsetHeight;
-  //
-  //   const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
-  //   const pointerMoveEvent = createPointerEvent('pointermove', 500, 500, 500, 500);
-  //   const pointerUpEvent = createPointerEvent('pointerup', 500, 500, 500, 500);
-  //
-  //   rectangleEl.nativeElement.dispatchEvent(pointerDownEvent);
-  //   rectangleEl.nativeElement.dispatchEvent(pointerMoveEvent);
-  //   rectangleEl.nativeElement.dispatchEvent(pointerUpEvent);
-  //
-  //   fixture.detectChanges();
-  //   expect(rectangleEl.nativeElement.offsetLeft).toEqual(oldLeft);
-  //   expect(rectangleEl.nativeElement.offsetTop).toEqual(oldTop);
-  //   expect(rectangleEl.nativeElement.offsetWidth).toEqual(oldWidth);
-  //   expect(rectangleEl.nativeElement.offsetHeight).toEqual(oldHeight);
-  //   expect(component.update.emit).not.toHaveBeenCalled();
-  // });
+    const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
+    const pointerMoveEvent = createPointerEvent('pointermove', 750, 750, 900, 900);
+    const pointerUpEvent = createPointerEvent('pointerup', 750, 800, 750, 800);
 
-  // it('should compare 2 rectangles values and see if its the same', function () {
-  //   const rect = {
-  //     offsetLeft: 100,
-  //     offsetTop: 100,
-  //     offsetWidth: 100,
-  //     offsetHeight: 100
-  //   };
-  //   let hasRectChanged = component.hasRectangleChanged(mockRectangle, rect);
-  //   expect(hasRectChanged).toEqual(true);
-  //
-  //   hasRectChanged = component.hasRectangleChanged({x: 100, y: 100, width: 100, height: 100 }, rect);
-  //   expect(hasRectChanged).toEqual(false);
-  // });
-  //
-  // function createPointerEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
-  //   const pointerEvent = document.createEvent('MouseEvents');
-  //   pointerEvent.initMouseEvent(
-  //     typeArg,
-  //     true,
-  //     true,
-  //     window,
-  //     1,
-  //     screenX,
-  //     screenY,
-  //     clientX,
-  //     clientY,
-  //     false,
-  //     false,
-  //     false,
-  //     false,
-  //     0,
-  //     null
-  //   );
-  //   return pointerEvent as PointerEvent;
-  // }
+    rectangleEl.nativeElement.dispatchEvent(pointerDownEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerMoveEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerUpEvent);
+
+    fixture.detectChanges();
+    expect(rectangleEl.nativeElement.offsetLeft).not.toEqual(oldLeft);
+    expect(rectangleEl.nativeElement.offsetTop).not.toEqual(oldTop);
+  });
+
+  it('should update the rectangle if resized', function () {
+    const oldWidth = rectangleEl.nativeElement.offsetWidth;
+    const oldHeight = rectangleEl.nativeElement.offsetHeight;
+
+    const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
+    const pointerMoveEvent = createPointerEvent('pointermove', 750, 750, 900, 900);
+    const pointerUpEvent = createPointerEvent('pointerup', 750, 800, 750, 800);
+
+    rectangleEl.nativeElement.dispatchEvent(new Event('pointerdown'));
+    fixture.detectChanges();
+    const bottomRightHandle = document.querySelector('.BOTTOM-RIGHT');
+    bottomRightHandle.dispatchEvent(pointerDownEvent);
+    bottomRightHandle.dispatchEvent(pointerMoveEvent);
+    bottomRightHandle.dispatchEvent(pointerUpEvent);
+
+    fixture.detectChanges();
+    expect(rectangleEl.nativeElement.offsetWidth).not.toEqual(oldWidth);
+    expect(rectangleEl.nativeElement.offsetHeight).not.toEqual(oldHeight);
+  });
+
+  it('should not update the rectangle if the rectangle did not change', function () {
+    spyOn(component.update, 'emit');
+    const oldLeft = rectangleEl.nativeElement.offsetLeft;
+    const oldTop = rectangleEl.nativeElement.offsetTop;
+    const oldWidth = rectangleEl.nativeElement.offsetWidth;
+    const oldHeight = rectangleEl.nativeElement.offsetHeight;
+
+    const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
+    const pointerMoveEvent = createPointerEvent('pointermove', 500, 500, 500, 500);
+    const pointerUpEvent = createPointerEvent('pointerup', 500, 500, 500, 500);
+
+    rectangleEl.nativeElement.dispatchEvent(pointerDownEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerMoveEvent);
+    rectangleEl.nativeElement.dispatchEvent(pointerUpEvent);
+
+    fixture.detectChanges();
+    expect(rectangleEl.nativeElement.offsetLeft).toEqual(oldLeft);
+    expect(rectangleEl.nativeElement.offsetTop).toEqual(oldTop);
+    expect(rectangleEl.nativeElement.offsetWidth).toEqual(oldWidth);
+    expect(rectangleEl.nativeElement.offsetHeight).toEqual(oldHeight);
+    expect(component.update.emit).not.toHaveBeenCalled();
+  });
+
+  it('should compare 2 rectangles values and see if its the same', function () {
+    const rect = {
+      offsetLeft: 100,
+      offsetTop: 100,
+      offsetWidth: 100,
+      offsetHeight: 100
+    };
+    let hasRectChanged = component.hasRectangleChanged(mockRectangle, rect);
+    expect(hasRectChanged).toEqual(true);
+
+    hasRectChanged = component.hasRectangleChanged({x: 100, y: 100, width: 100, height: 100 }, rect);
+    expect(hasRectChanged).toEqual(false);
+  });
+
+  function createPointerEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
+    const pointerEvent = document.createEvent('MouseEvents');
+    pointerEvent.initMouseEvent(
+      typeArg,
+      true,
+      true,
+      window,
+      1,
+      screenX,
+      screenY,
+      clientX,
+      clientY,
+      false,
+      false,
+      false,
+      false,
+      0,
+      null
+    );
+    return pointerEvent as PointerEvent;
+  }
 });

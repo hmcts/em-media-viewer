@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
@@ -8,11 +8,12 @@ import * as fromDocument from '../../../store/selectors/document.selectors';
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
 import * as fromAnnotationActions from '../../../store/actions/annotations.action';
 import { HighlightCreateService } from './highlight-create.service';
+import { Subscription } from 'rxjs';
 
 @Directive({
   selector: '[mvCreateTextHighlight]'
 })
-export class HighlightCreateDirective {
+export class HighlightCreateDirective implements OnInit, OnDestroy {
 
   height: number;
   width: number;
@@ -20,17 +21,24 @@ export class HighlightCreateDirective {
   rotate: number;
   allPages: object;
 
+  $subscription: Subscription;
+
   constructor(private element: ElementRef<HTMLElement>,
               private toolbarEvents: ToolbarEventService,
               private viewerEvents: ViewerEventService,
               private highlightService: HighlightCreateService,
-              private store: Store<fromStore.AnnotationSetState>) {
-    this.store.select(fromDocument.getPages)
-      .subscribe(pages => {
-        if (pages[1]) {
-          this.allPages = pages;
-        }
-      });
+              private store: Store<fromStore.AnnotationSetState>) {}
+
+  ngOnInit() {
+    this.$subscription = this.store.select(fromDocument.getPages).subscribe(pages => {
+      if (pages[1]) {
+        this.allPages = pages;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.$subscription.unsubscribe();
   }
 
   @HostListener('mouseup', ['$event'])
