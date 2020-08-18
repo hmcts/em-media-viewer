@@ -23,8 +23,7 @@
   <div grabNDrag [dragX]="enableGrabNDrag"
        #pdfViewer
        class="pdfViewer"
-       (mouseup)="onMouseUp($event)"
-       (mousedown)="onPdfViewerClick()"
+       mvCreateTextHighlight
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
   </div>
 
@@ -34,11 +33,11 @@
   ></mv-redactions>
 
   <ng-template #annotationTemplate>
-    <mv-annotation-set
+    <mv-metadata-layer
       *ngIf="enableAnnotations && annotationSet"
       [zoom]="zoom"
       [rotate]="rotation">
-    </mv-annotation-set>
+    </mv-metadata-layer>
     <mv-comment-set #commentsPanel
                     *ngIf="enableAnnotations && annotationSet"
                     [annotationSet]="annotationSet"
