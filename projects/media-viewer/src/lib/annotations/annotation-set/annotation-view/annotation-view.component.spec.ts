@@ -9,10 +9,9 @@ import {TagsComponent} from '../../tags/tags.component';
 import {TagInputModule} from 'ngx-chips';
 import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../../store/reducers/reducers';
-import { ViewerEventService } from '../../../viewers/viewer-event.service';
 import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
 
-describe('AnnotationComponent', () => {
+describe('AnnotationViewComponent', () => {
   let component: AnnotationViewComponent;
   let fixture: ComponentFixture<AnnotationViewComponent>;
 
@@ -88,9 +87,8 @@ describe('AnnotationComponent', () => {
 
     component.onRectangleUpdate(rectangle);
 
-    expect(component.update.emit).toHaveBeenCalled();
-    expect(component.anno.rectangles[0].width).toBe(100);
-    expect(component.anno.rectangles[0].height).toBe(100);
+    expect(component.update.emit)
+      .toHaveBeenCalledWith({ rectangles: [{ id: 'rectId', height: 100, width: 100 }] } as any);
   });
 
   it('should delete highlight', () => {

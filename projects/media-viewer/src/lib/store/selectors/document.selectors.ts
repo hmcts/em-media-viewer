@@ -13,6 +13,11 @@ export const getPages = createSelector(
   fromDocument.getDocPages
 );
 
+export const getPageList = createSelector(
+  getPages,
+  (pages) => Object.values(pages)
+);
+
 export const getDocumentId = createSelector(
   getDocumentState,
   fromDocument.getDocId

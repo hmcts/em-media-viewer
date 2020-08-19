@@ -119,8 +119,7 @@ describe('AnnotationSetComponent', () => {
         { provide: AnnotationApiService, useValue: api },
         { provide: CommentService, useValue: mockCommentService },
         { provide: HighlightCreateService, useValue: mockHighlightService },
-        ToolbarEventService,
-        ViewerEventService,
+        ToolbarEventService
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -140,89 +139,6 @@ describe('AnnotationSetComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should setup subscriptions',
-    inject([Store, ViewerEventService, ToolbarEventService],
-    (store, viewerEvents, toolbarEvents) => {
-      const mockSubscription = { unsubscribe: () => {} };
-      spyOn(store, 'select');
-      spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.returnValue(mockSubscription);
-      spyOn(viewerEvents.textHighlight, 'subscribe').and.returnValue(mockSubscription);
-      spyOn(viewerEvents.ctxToolbarCleared, 'subscribe').and.returnValue(mockSubscription);
-
-      component.ngOnInit();
-
-      expect(store.select).toHaveBeenCalled();
-      expect(toolbarEvents.drawModeSubject.subscribe).toHaveBeenCalled();
-      expect(viewerEvents.textHighlight.subscribe).toHaveBeenCalled();
-      expect(viewerEvents.ctxToolbarCleared.subscribe).toHaveBeenCalled();
-    }
-  ));
-
-  it('should destroy subscriptions',
-    inject([ViewerEventService, ToolbarEventService],(viewerEvents, toolbarEvents) => {
-      const mockSubscription = { unsubscribe: () => {} };
-      spyOn(mockSubscription, 'unsubscribe');
-      spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.returnValue(mockSubscription);
-      spyOn(viewerEvents.textHighlight, 'subscribe').and.returnValue(mockSubscription);
-      spyOn(viewerEvents.ctxToolbarCleared, 'subscribe').and.returnValue(mockSubscription);
-
-      component.ngOnInit();
-      component.ngOnDestroy();
-
-      expect(mockSubscription.unsubscribe).toHaveBeenCalledTimes(3);
-    }
-  ));
-
-  it('should show context toolbar',
-    inject([ViewerEventService, HighlightCreateService],
-      fakeAsync((viewerEvents, highlightService) => {
-        spyOn(highlightService, 'getRectangles').and.returnValue(['rectangles']);
-        component.ngOnInit();
-
-        viewerEvents.textSelected({ page: 1 } as Highlight);
-        tick();
-
-        expect(highlightService.getRectangles).toHaveBeenCalled();
-        expect(component.rectangles).toEqual(['rectangles'] as any);
-      })
-  ));
-
-  it('should clear context toolbar', () => {
-    component.rectangles = ['rectangles'] as any;
-
-    component.clearContextToolbar();
-
-    expect(component.rectangles).toBeUndefined();
-  });
-
-  it('should create highlight',
-    inject([HighlightCreateService], (highlightCreateService) => {
-      spyOn(highlightCreateService, 'saveAnnotation');
-      spyOn(highlightCreateService, 'resetHighlight');
-
-      component.createHighlight();
-
-      expect(highlightCreateService.saveAnnotation).toHaveBeenCalled();
-      expect(highlightCreateService.resetHighlight).toHaveBeenCalled();
-      expect(component.rectangles).toBeUndefined();
-  }));
-
-  it('should create bookmark',
-    inject([HighlightCreateService, Store], (highlightCreateService, store) => {
-      const mockSelection = { toString: () => 'bookmark text' } as any;
-      spyOn(window, 'getSelection').and.returnValue(mockSelection);
-      component.highlightPage = 1;
-      spyOn(store, 'dispatch');
-      spyOn(highlightCreateService, 'resetHighlight');
-
-      component.createBookmark({ x: 100, y: 200 } as any);
-
-      expect(store.dispatch).toHaveBeenCalled();
-      expect(highlightCreateService.resetHighlight).toHaveBeenCalled();
-      expect(component.rectangles).toBeUndefined();
-    }
-  ));
 
   it('should update annotation', inject([Store],
     (store) => {
@@ -255,24 +171,6 @@ describe('AnnotationSetComponent', () => {
       component.selectAnnotation({} as any);
 
       expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SelectedAnnotation({} as any));
-    }
-  ));
-
-  it('', inject([HighlightCreateService, ToolbarEventService],
-    (highlightService, toolbarEvents) => {
-      const mockEvent = {
-        rectangles: [
-          { annotationId: '', height: 10, width: 10, x: 30, y: 50 }
-        ],
-        page: 1
-      };
-      spyOn(highlightService, 'saveAnnotation');
-      spyOn(toolbarEvents.drawModeSubject, 'next');
-
-      component.saveAnnotation(mockEvent);
-
-      expect(highlightService.saveAnnotation).toHaveBeenCalled();
-      expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalled();
     }
   ));
 });
