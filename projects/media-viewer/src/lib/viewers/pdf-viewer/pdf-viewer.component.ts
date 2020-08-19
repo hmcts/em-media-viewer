@@ -26,8 +26,6 @@ import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocumentActions from '../../store/actions/document.action';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
-import * as fromAnnotationActions from '../../store/actions/annotations.action';
-import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import { filter, tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { SetCaseId } from '../../store/actions/icp.action';
@@ -200,29 +198,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   set searchBarHidden(hidden: boolean) {
     if (this.pdfWrapper && hidden) {
       this.pdfWrapper.clearSearch();
-    }
-  }
-
-  onPdfViewerClick() {
-    this.store.dispatch(new fromAnnotationActions.SelectedAnnotation({
-      annotationId: '', selected: false, editable: false
-    }));
-    this.viewerEvents.clearCtxToolbar();
-  }
-
-  onMouseUp(mouseEvent: MouseEvent) {
-    const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
-    const page = parseInt(pageElement.getAttribute('data-page-number'), 10);
-    if (this.toolbarEvents.highlightModeSubject.getValue()) {
-      this.viewerEvents.textSelected({
-        page,
-        event: mouseEvent,
-        annoSet: this.annotationSet
-      });
-    }
-    if (!this.annotationSet) {
-      this.toolbarEvents.highlightModeSubject.next(false);
-      this.toolbarEvents.drawModeSubject.next(false);
     }
   }
 

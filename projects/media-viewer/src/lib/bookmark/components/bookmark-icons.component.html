@@ -4,12 +4,6 @@
        [ngStyle]="{
          'width.px': bookmarks.styles.width,
          'height.px': bookmarks.styles.height
-       }"
-       [ngClass]="{
-         'rotation': true,
-         'rot90': rotate === 90,
-         'rot180': rotate === 180,
-         'rot270': rotate === 270
        }">
     <div class="pageContainer__page-item">
       <ng-container *ngFor="let bMrk of bookmarks.bookmark">

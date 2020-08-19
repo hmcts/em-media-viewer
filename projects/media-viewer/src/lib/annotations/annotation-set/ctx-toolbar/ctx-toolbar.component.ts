@@ -27,6 +27,8 @@ export class CtxToolbarComponent {
 
   rectangle: Rectangle;
   _rectangles: Rectangle[];
+  top: number;
+  left: number;
 
   constructor() {
     this.defaultHeight = 70;
@@ -36,8 +38,9 @@ export class CtxToolbarComponent {
   @Input() set rectangles(rectangles: Rectangle[]) {
     if (rectangles) {
       this._rectangles = rectangles;
-      this.rectangle = rectangles
-        .reduce((prev, current) => prev.y < current.y ? prev : current);
+      this.setRectangle();
+      this.top = this.popupTop();
+      this.left = this.popupLeft();
     }
   }
 
@@ -63,67 +66,43 @@ export class CtxToolbarComponent {
     this.rectangle = undefined;
   }
 
-  get transformStyles() {
+  setRectangle() {
+    const rectangle = this.rectangles
+      .reduce((prev, current) => prev.y < current.y ? prev : current);
+    this.rectangle =  { ...rectangle };
     switch (this.rotate) {
       case 90:
-        return { transformOrigin: 'top left', transform: 'rotate(-90deg)' };
+        this.rectangle.width = rectangle.height;
+        this.rectangle.height = rectangle.width;
+        this.rectangle.x = (this.width/this.zoom) - rectangle.y - rectangle.height;
+        this.rectangle.y = rectangle.x;
+        break;
       case 180:
-        return { transformOrigin: 'center center', transform: 'rotate(-180deg)' };
+        this.rectangle.x = (this.width/this.zoom) - rectangle.x - rectangle.width;
+        this.rectangle.y = (this.height/this.zoom) - rectangle.y - rectangle.height;
+        break;
       case 270:
-        return { transformOrigin: 'top left', transform: 'rotate(-270deg)' };
+        this.rectangle.width = rectangle.height;
+        this.rectangle.height = rectangle.width;
+        this.rectangle.x = rectangle.y;
+        this.rectangle.y = (this.height/this.zoom) - rectangle.x - rectangle.width;
+        break;
     }
   }
 
-  get top() {
-    let popupTop;
-    switch (this.rotate) {
-      case 90:
-        popupTop = (this.rectangle.y + (this.rectangle.height / 2)) * this.zoom + this.defaultWidth / 2;
-        if (popupTop >= this.height) {
-          return this.height;
-        } else if (popupTop < this.defaultWidth) {
-          return this.defaultWidth;
-        } else {
-          return popupTop;
-        }
-      case 180:
-        popupTop = (this.rectangle.y + this.rectangle.height) * this.zoom + 10;
-        return popupTop >= this.height - this.defaultHeight ? this.height - this.defaultHeight : popupTop;
-      case 270:
-        popupTop = (this.rectangle.y + (this.rectangle.height / 2)) * this.zoom - (this.defaultWidth / 2);
-        if (popupTop <= 0) {
-          return 0;
-        } else if (popupTop > this.height - this.defaultWidth) {
-          return this.height - this.defaultWidth;
-        } else {
-          return popupTop;
-        }
-      default:
-        popupTop = this.rectangle.y * this.zoom - this.defaultHeight;
-        return popupTop <= 0 ? this.defaultHeight : popupTop;
-    }
-
+  popupTop() {
+    const popupTop = this.rectangle.y * this.zoom - this.defaultHeight;
+    return popupTop <= 0 ? this.defaultHeight : popupTop;
   }
 
-  get left() {
-    let popupLeft;
-    switch (this.rotate) {
-      case 90:
-        popupLeft = (this.rectangle.x * this.zoom) - this.defaultHeight;
-        return popupLeft <= 0 ? this.defaultHeight : popupLeft;
-      case 270:
-        popupLeft = (this.rectangle.x + (this.rectangle.width)) * this.zoom + this.defaultHeight;
-        return popupLeft >= this.width - this.defaultHeight ? this.width - this.defaultHeight : popupLeft;
-      default:
-        popupLeft = (this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.defaultWidth / 2);
-        if (popupLeft <= 0) {
-          return 0;
-        } else if (popupLeft >= this.width - this.defaultWidth) {
-          return this.width - this.defaultWidth;
-        } else {
-          return popupLeft;
-        }
-
+  popupLeft() {
+    const popupLeft = (this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.defaultWidth / 2);
+    if (popupLeft <= 0) {
+      return 0;
+    } else if (popupLeft >= this.width - this.defaultWidth) {
+      return this.width - this.defaultWidth;
+    } else {
+      return popupLeft;
     }
   }
 }

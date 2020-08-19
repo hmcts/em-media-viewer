@@ -4,6 +4,9 @@ import { RectangleComponent } from './rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { MutableDivModule } from 'mutable-div';
 import { By } from '@angular/platform-browser';
+import { HighlightCreateService } from '../../annotation-create/highlight-create.service';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../../../store/reducers/reducers';
 
 describe('RectangleComponent', () => {
   let component: RectangleComponent;
@@ -39,16 +42,15 @@ describe('RectangleComponent', () => {
 
   beforeEach(() => {
     return TestBed.configureTestingModule({
-      declarations: [
-        RectangleComponent,
-      ],
+      declarations: [RectangleComponent],
       imports: [
         FormsModule,
-        MutableDivModule
+        MutableDivModule,
+        StoreModule.forFeature('media-viewer', reducers),
+        StoreModule.forRoot({})
       ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-      ]
+      providers: [HighlightCreateService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA,]
     })
     .compileComponents();
   });
