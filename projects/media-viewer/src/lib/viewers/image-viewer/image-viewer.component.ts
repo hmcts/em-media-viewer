@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -45,6 +46,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('img') img: ElementRef;
   rotation = 0;
   zoom = 1;
+  imageHeight = 0;
+  imageWidth = 0;
 
   private subscriptions: Subscription[] = [];
   private viewerException: ViewerException;
@@ -91,6 +94,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   private rotateImage(rotation: number) {
     this.rotation = (this.rotation + rotation) % 360;
+    if (this.rotation === 90 || this.rotation === 270) {
+      this.initAnnoPage(this.imageWidth, this.imageHeight);
+    } else {
+      this.initAnnoPage(this.imageHeight, this.imageWidth);
+    }
   }
 
   private async setZoom(zoomFactor: number) {
@@ -147,24 +155,22 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     this.imageViewerException.emit(this.viewerException);
   }
 
-  onLoad() {
+  onLoad(height, width) {
+    this.imageHeight = height;
+    this.imageWidth = width;
     this.mediaLoadStatus.emit(ResponseType.SUCCESS);
-    this.initAnnoPage();
+    this.initAnnoPage(height, width);
   }
 
-  initAnnoPage() {
+  initAnnoPage(offsetHeight: number, offsetWidth: number) {
+    console.log(`height=${this.imageHeight}, width=${this.imageWidth}`)
     const payload: any = [{
-      div: { offsetHeight: 1122 }, // todo add dynamic height
-      pageNumber: 1,
-      scale: 1,
-      rotation: 1,
+      div: { offsetHeight, offsetWidth, offsetLeft: 0 },
+      scale: this.zoom,
+      rotation: this.rotation,
       id: 1
     }];
     this.store.dispatch(new fromDocument.AddPages(payload));
-  }
-
-  getImageHeight(img) {
-    return this.rotation % 180 !== 0 ? img.offsetWidth + 15 : img.offsetHeight + 15;
   }
 
   toggleCommentsSummary() {

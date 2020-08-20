@@ -114,11 +114,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   public onAnnotationUpdate(annotation: Annotation) {
     this.store.dispatch(new fromActions.SaveAnnotation(annotation));
   }
-  // TODO move this to comment component instead of input
-  topRectangle(annotationId: string) {
-    const annotation = this.annotationSet.annotations.find((anno) => anno.id === annotationId);
-    return annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
-  }
 
   onContainerClick(e) {
     if (e.path && e.path[0] === this.container.nativeElement) {

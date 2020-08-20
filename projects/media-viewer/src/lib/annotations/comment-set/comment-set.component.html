@@ -14,7 +14,7 @@
         [index]="i"
         [page]="comment.page"
         [comment]="comment"
-        [rectangle]="topRectangle(comment.annotationId)"
+        [annotationId]="[annotationSet.annotations, comment.annotationId]"
         (renderComments)="redrawComments()">
     </mv-anno-comment>
   </ng-container>

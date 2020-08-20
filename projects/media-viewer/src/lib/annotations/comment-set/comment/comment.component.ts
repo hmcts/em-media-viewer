@@ -39,6 +39,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   _editable: boolean;
   _rectangle;
   totalPreviousPagesHeight = 0;
+  commentTop: number;
   rectTop;
   rectLeft;
   pageHeight: number;
@@ -105,6 +106,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
       const height = this._comment.pages[i + 1] ? this._comment.pages[i + 1].styles.height : undefined;
       if (height) {
         this.totalPreviousPagesHeight += height + pageMarginBottom;
+        this.commentTop = this.totalPreviousPagesHeight + (this.rectTop * this.zoom)
       }
     }
 
@@ -115,8 +117,9 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   }
 
   @Input()
-  set rectangle(rectangle: Rectangle) {
-    this._rectangle = rectangle;
+  set annotationId([annotations, annotationId]) {
+    const annotation = annotations.find((anno) => anno.id === annotationId);
+    this._rectangle = annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
     this.rectTop = this._rectangle.y;
     this.rectLeft = this._rectangle.x;
   }
@@ -173,11 +176,6 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   reRenderComments() {
     this.renderComments.emit(this._comment);
   }
-
-  get commentTop(): number {
-    return this.totalPreviousPagesHeight + (this.rectTop * this.zoom);
-  }
-
 
   get height() {
     return this.form.nativeElement.getBoundingClientRect().height / this.zoom;

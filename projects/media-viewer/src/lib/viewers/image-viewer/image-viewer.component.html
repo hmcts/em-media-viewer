@@ -11,12 +11,13 @@
     <div grabNDrag [dragX]="enableGrabNDrag"
          id="image-container"
          [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations, 'show-comments-panel': showCommentsPanel }"
-         [style.height.px]="getImageHeight(img)">
+         [style.height.px]="rotation % 180 !== 0 ? img.offsetWidth + 15 : img.offsetHeight + 15"
+         [style.width.px]="rotation % 180 !== 0 ? img.offsetHeight + 15 : img.offsetWidth + 15">
       <img #img
            [src]="url"
            [ngClass]="'rot' + rotation"
            (error)="onLoadError(url)"
-           (load)="onLoad()"/>
+           (load)="onLoad(img.offsetHeight, img.offsetWidth)"/>
       <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
                      [zoom]="zoom"
                      [rotate]="rotation"
@@ -33,6 +34,6 @@
                   [annotationSet]="annotationSet"
                   [zoom]="zoom"
                   [rotate]="rotation"
-                  [height]="getImageHeight(img)">
+                  [height]="rotation % 180 !== 0 ? img.offsetWidth + 15 : img.offsetHeight + 15">
   </mv-comment-set>
 </div>
