@@ -1,0 +1,19 @@
+#!groovy
+
+properties([
+// H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
+pipelineTriggers([cron('H 05 * * *')])
+])
+
+@Library("Infrastructure")
+
+def type = "nodejs"
+def product = "em"
+def component = "media-viewer"
+
+withNightlyPipeline(type, product, component) {
+    loadVaultSecrets(secrets)
+    enableCrossBrowserTest()
+    enableSecurityScan()
+    enableFullFunctionalTest(200)
+}
