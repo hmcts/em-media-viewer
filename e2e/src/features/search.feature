@@ -3,7 +3,7 @@ Feature: Search
 
   Background:
     Given I am on Media Viewer Page
-    Then I expect the page header to be "Media Viewer Demo"
+    Then I expect the page header to be "MEDIA VIEWER DEMO"
 
   @EM-1246 @MultipleWords_Search @ci
   Scenario Outline: Enable Search within a document

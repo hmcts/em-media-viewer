@@ -3,7 +3,7 @@ Feature: Custom Toolbar Feature
 
   Background:
     Given I am on Media Viewer Page
-    Then I expect the page header to be "Media Viewer Demo"
+    Then I expect the page header to be "MEDIA VIEWER DEMO"
     When I enable custom toolbar
     Then I expect custom toolbar should be enabled
 

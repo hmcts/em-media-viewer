@@ -3,7 +3,7 @@ Feature: PDF & Image Rotation
 
   Background:
     Given I am on Media Viewer Page
-    Then I expect the page header to be "Media Viewer Demo"
+    Then I expect the page header to be "MEDIA VIEWER DEMO"
 
   @PDF_Rotation @EM-960 @ci
   Scenario Outline: PDF Rotation

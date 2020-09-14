@@ -3,7 +3,7 @@ Feature: Zoom In/Out Feature
 
   Background:
     Given I am on Media Viewer Page
-    Then I expect the page header to be "Media Viewer Demo"
+    Then I expect the page header to be "MEDIA VIEWER DEMO"
 
   @PDF_Zoom_IN_OUT @Image_Zoom_IN_OUT @EM-1720 @ci
   Scenario Outline: PDF Viewer Zoom In/Out

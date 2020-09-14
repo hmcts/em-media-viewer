@@ -38,6 +38,7 @@ export class AppPage {
         this.clickElement(by.css('label[for="rotate-btn-toggle"]')),
         this.clickElement(by.css('label[for="search-btn-toggle"]')),
         this.clickElement(by.css('label[for="zoom-btn-toggle"]')),
+        // add more stuff for redaction ,icp etc etc .
       ]);
     }
     const annotationsToggle = await element(by.id('toggleAnnotations'));
@@ -57,7 +58,9 @@ export class AppPage {
   }
 
   async getHeaderText() {
-    return await element(by.css('media-viewer-wrapper h2')).getText();
+//    return await element(by.css('media-viewer-wrapper h2')).getText();
+    return await element(by.css('media-viewer-wrapper a')).getText();
+
   }
 
   async selectPdfViewer() {

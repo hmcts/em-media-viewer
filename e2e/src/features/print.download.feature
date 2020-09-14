@@ -3,7 +3,7 @@ Feature: Print And Download
 
   Background:
     Given I am on Media Viewer Page
-    Then I expect the page header to be "Media Viewer Demo"
+    Then I expect the page header to be "MEDIA VIEWER DEMO"
 
   @EM-1247 @Print_Document @WIP
   Scenario: Enable user to print file

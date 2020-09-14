@@ -3,7 +3,7 @@ Feature: PDF Viewer Annotations
 
   Background:
     Given I am on Media Viewer Page
-    Then I expect the page header to be "Media Viewer Demo"
+    Then I expect the page header to be "MEDIA VIEWER DEMO"
     When I click Annotate button
     Then I expect Annotate button must be enabled
 

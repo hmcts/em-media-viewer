@@ -140,6 +140,14 @@ const highLightTextForBookmarking = async function () {
   await page.highLightTextForBookmarking();
 };
 
+const useBoxHighlightToMarkTextForCommenting = async function () {
+  await page.waitForPdfToLoad();
+  await toolBar.enableDrawHighLightMode();
+  await page.highLightTextForBookmarking();
+};
+
+
+
 
 const addBookmarkAndVerify = async function() {
   await page.createBookmarkUsingOverlay();
@@ -219,6 +227,12 @@ When('I highlight text on a PDF document', async() => {
 When('I highlight text to be bookmarked on the PDF document', async() => {
   await highLightTextForBookmarking();
 });
+
+When('I box highlight text for adding comment  on the PDF document', async() => {
+  await useBoxHighlightToMarkTextForCommenting();
+});
+
+
 
 Then('I am able to add a bookmark and verify it has been created', async() => {
   await addBookmarkAndVerify();
@@ -488,15 +502,27 @@ When(/^The user clicks on the show comments panel toggle icon$/, async function 
 });
 
 //I expect to see the comments filter and search tabs
-Then(/^I expect to be able to click on the Filter Search And Comments Tab$/, async function () {
+// Then(/^I expect to be able to click on the Filter Search And Comments Tab$/, async function () {
+//   await genericMethods.sleep(2000);
+//   await commentsPanelPage.clickOnCommentsTab();
+//   await genericMethods.sleep(2000);
+//   await commentsPanelPage.clickOnFilterTab();
+//   await genericMethods.sleep(2000);
+//   await commentsPanelPage.clickOnSearchTab();
+// });
+
+Then(/^I expect to be able to click on the Comments Tab$/, async function () {
   await genericMethods.sleep(2000);
   await commentsPanelPage.clickOnCommentsTab();
   await genericMethods.sleep(2000);
-  await commentsPanelPage.clickOnFilterTab();
-  await genericMethods.sleep(2000);
-  await commentsPanelPage.clickOnSearchTab();
 });
 
+//
+Then(/^I am able to click on the Collate Summary Button$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnCollateCommentsButton();
+  await genericMethods.sleep(2000);
+});
 
 When(/^I Search for Comments$/, async function () {
   await genericMethods.sleep(2000);

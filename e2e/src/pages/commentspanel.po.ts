@@ -5,7 +5,8 @@ import {expect} from 'chai';
 
 
 export class CommentsPanelPage extends AppPage {
-  commentsToggleButton  : ElementFinder     =   element(by.xpath("//button[@id=\'toggle-comments-panel\' and @title=\'Toggle Comments Panel\']"));
+  //commentsToggleButton  : ElementFinder     =   element(by.xpath("//button[@id=\'sidebarCommentsToggle\' and @title=\'Toggle Comments Sidebar\']"));
+  commentsToggleButton  : ElementFinder     =   element(by.id('sidebarCommentsToggle'));
   commentsTabButton     : ElementFinder     =   element(by.xpath(("//div[@class=\'govuk-tabs commentSummaryHeader\']/ul/li[1]/a")));
   filterTabButton       : ElementFinder     =   element(by.xpath(("//div[@class=\'govuk-tabs commentSummaryHeader\']/ul/li[2]/a")));
   searchTabButton       : ElementFinder     =   element(by.xpath(("//div[@class=\'govuk-tabs commentSummaryHeader\']/ul/li[3]/a")));

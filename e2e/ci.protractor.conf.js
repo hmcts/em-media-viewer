@@ -11,13 +11,15 @@ exports.config = {
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   capabilities: {
     browserName: 'firefox',
-    chromeOptions: {
-      args: ['--headless']
-    },
-    'moz:firefoxOptions': {
-      args: ['--headless']
-    }
+    // chromeOptions: {
+    //   args: ['--headless']
+    // },
+    // 'moz:firefoxOptions': {
+    //   args: ['--headless']
+    // }
   },
+  chromeDriver: '../node_modules/webdriver-manager/selenium/chromedriver_77.0.3865.40',
+  geckoDriver: '../node_modules/webdriver-manager/selenium/geckodriver-v0.25.0',
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   specs: [

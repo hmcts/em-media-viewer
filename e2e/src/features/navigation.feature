@@ -3,7 +3,7 @@ Feature: Navigation
 
   Background:
     Given I am on Media Viewer Page
-    Then I expect the page header to be "Media Viewer Demo"
+    Then I expect the page header to be "MEDIA VIEWER DEMO"
 
   @Toggle_Buttons
   Scenario: Enable Toolbar Toggle buttons
