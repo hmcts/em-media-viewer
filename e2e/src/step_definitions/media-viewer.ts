@@ -1,6 +1,6 @@
 import {Given, Then, When} from 'cucumber';
 import {AppPage} from '../pages/app.po';
-import {browser, by} from 'protractor';
+import {browser, by, element, ElementArrayFinder, protractor, ProtractorBrowser} from 'protractor';
 import {NavigatePage} from '../pages/navigate.po';
 import {expect} from 'chai';
 import {ToolBar} from '../pages/toolbar.po';
@@ -34,6 +34,61 @@ const comment_2 = 'This is comment number 2';
 const comment_3 = 'This is comment number 3';
 const comment_new = 'This is comment number 1 new';
 const actual = 'Annotations Ellipsis EM-1814 story test';
+
+
+When(/^I click on the '(.*)' Comment$/, async (index:string) => {
+  let indexNumber = parseInt(index);
+  await commentsPanelPage.comments.get(indexNumber).click() ;
+
+  // click on Edit button first
+  console.log ( " ~~~~~~~~~~~~~~ Before Click Edit Button .....  ")
+  await commentsPanelPage.editOrSaveButton.click();
+  console.log ( " ~~~~~~~~~~~~~~ After Click Edit Button .....  ")
+
+  // Tags
+    console.log ( " ~~~~~~~~~~~~~~ Before Tag data .....  ")
+    // console.log ( " ~~~~~~~~~~~~~~ Visble is YES ....")
+  await this.commentsPanelPage.inputTagId.click();
+
+  await this.commentsPanelPage.inputTagId.sendKeys(" ProgressionTagForTestssss",protractor.Key.ENTER);
+
+  console.log ( " ~~~~~~~~~~~~~~ After Tag data .....  ")
+  browser.sleep(15000);
+
+  // delete comment.
+  // console.log ( " ~~~~~~~~~~~~~~  Before Delete....  ") ;
+  // await this.commentsPanelPage.deleteThisCommentCss.get(indexNumber).$(".mv-anno-comment[indexNumber] > div > div[2] > button[2]").click();
+  // //commentsPanelPage.deleteThisComment.all()
+  // console.log ( " ~~~~~~~~~~~~~~  After Delete.....") ;
+
+  browser.sleep(5000);
+
+});
+
+When(/^I add and Save A Tag on the Comment$/, async () => {
+  console.log ( " ~~~~~~~~~~~~~~  before adding Tag  .........") ;
+  await this.commentsPanelPage.inputTagId.sendKeys("progression");
+  console.log ( " ~~~~~~~~~~~~~~  AFGTER adding Tag  .........") ;
+
+  await genericMethods.sleep(2000);
+  await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+  await genericMethods.sleep(1000);
+  await page.clickOnSaveButton();
+
+
+});
+
+When(/^I delete the comment$/, async () => {
+  console.log ( " ~~~~~~~~~~~~~~  delete comment  .........") ;
+  await this.commentsPanelPage.deleteThisCommentButton.click();
+  console.log ( " ~~~~~~~~~~~~~~  AFGTER delete Comment   .........") ;
+  await genericMethods.sleep(2000);
+});
+
+
+// async getCommentByIndex(index: number){
+//   console.log ( await this.comments.get(index).getText() ) ;
+// }
 
 Given('I am on Media Viewer Page', async () => {
   await page.preparePage();
@@ -125,8 +180,21 @@ const addComment = async (comment: string) => {
   await page.clickOnCommentButton();
   await page.enterTextInAnnotation(comment);
   await page.clickOnSaveButton();
+  await sleep(5000);
 };
 
+
+
+const editComment = async (comment1: string) => {
+  await page.clickOnCommentButton();
+  await page.enterTextInAnnotation(comment1);
+  await page.clickOnSaveButton();
+  await sleep(5000);
+
+};
+const commentButtonClick= async function(){
+  await sleep(5000);
+}
 const highLightTextInPdf = async function () {
    await page.waitForPdfToLoad();
    await sleep(5000);
@@ -155,20 +223,23 @@ const addBookmarkAndVerify = async function() {
 };
 
 const highLightOnImage = async () => {
-  await sleep(5000);
   await toolBar.enableDrawHighLightMode();
   await page.drawOnImagePage();
 };
 
 const drawOnPdf = async (xAxis: number, yAxis: number) => {
   await page.waitForPdfToLoad();
-  await sleep(5000);
   await toolBar.enableDrawHighLightMode();
   await page.drawOnPDFPage(xAxis, yAxis);
 };
 
 const deleteComment = async () => {
   await page.deleteComment(comment_1);
+};
+
+// refactor , passing in the comment as String
+const deleteComment2 = async () => {
+  await page.deleteComment(comment_2);
 };
 
 const pdfRotate = async () => {
@@ -398,14 +469,20 @@ Then(/^I expect comment should display in ellipsis format$/, async function () {
 
 
 When('I create multiple non-textual comments on a PDF document', async () => {
-  await drawOnPdf(300, 300);
-  await addComment(comment_1);
+   //await commentsPanelPage.clickCommentsToggleIcon()
+   await drawOnPdf(450, 250);
+   await addComment(comment_1);
+   genericMethods.sleep(2000);
 
-  await drawOnPdf(350, 350);
-  await addComment(comment_2);
+   // await commentsPanelPage.clickOnCommentsTab();
+   // await drawOnPdf(800, 500);
+   // await addComment(comment_2);
+   // genericMethods.sleep(2000);
 
-  await drawOnPdf(400, 400);
-  await addComment(comment_3);
+   // await drawOnPdf(550, 325);
+   // await addComment(comment_3);
+   // await commentsPanelPage.clickOnCommentsTab();
+   // genericMethods.sleep(2000);
 
 });
 
@@ -514,11 +591,23 @@ When(/^The user clicks on the show comments panel toggle icon$/, async function 
 Then(/^I expect to be able to click on the Comments Tab$/, async function () {
   await genericMethods.sleep(2000);
   await commentsPanelPage.clickOnCommentsTab();
+  //await commentsPanelPage.clickTextLayerPdf();
   await genericMethods.sleep(2000);
 });
 
+// Then(/^Click on Comments Tab$/, async function () {
+//   await genericMethods.sleep(2000);
+//   await commentsPanelPage.clickOnCommentsTab();
+//   await genericMethods.sleep(2000);
+// });
 //
 Then(/^I am able to click on the Collate Summary Button$/, async function () {
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnCollateCommentsButton();
+  await genericMethods.sleep(2000);
+});
+
+Then(/^I am click on the Comments Button$/, async function () {
   await genericMethods.sleep(2000);
   await commentsPanelPage.clickOnCollateCommentsButton();
   await genericMethods.sleep(2000);

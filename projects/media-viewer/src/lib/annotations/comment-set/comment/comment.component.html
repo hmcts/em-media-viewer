@@ -35,14 +35,17 @@
      mvTextHighlight class="commentText" [textToHighlight]="searchString">
       {{ fullComment }}
   </p>
-  <div *ngIf="selected || this.editable || (!fullComment.length && (tagItems && !tagItems.length))"
+  <div id="commentButtonId" *ngIf="selected || this.editable || (!fullComment.length && (tagItems && !tagItems.length))"
        class="aui-comment__footer commentBtns">
-    <button class="govuk-button"
+    <button
+            id="editOrSaveButton"
+            class="govuk-button"
             type="button" role="button"
             (click)="editOrSave()">
       {{ !editable ? 'Edit' : 'Save' }}
     </button>
     <button type="button" role="button"
+            id="deleteOrCancelBtn"
             class="govuk-button govuk-button--secondary"
             (click)="deleteOrCancel()">
       {{ !editable ? 'Delete' : 'Cancel' }}

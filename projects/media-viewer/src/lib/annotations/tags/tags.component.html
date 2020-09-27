@@ -12,8 +12,10 @@
     [secondaryPlaceholder]="'Search or add tags'"
     [validators]="validators"
     [errorMessages]="errorMessages"
+    [inputId]="'inputTagId'"
     [onlyFromAutocomplete]="false">
     <tag-input-dropdown
+      id=""
       [autocompleteObservable]="requestAutocompleteItems"
       [displayBy]="'label'"
       [identifyBy]="'name'"

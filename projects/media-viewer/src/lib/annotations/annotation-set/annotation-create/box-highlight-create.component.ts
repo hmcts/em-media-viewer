@@ -56,11 +56,13 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  initHighlight({ offsetX, offsetY }) {
+  initHighlight(mouseEvent:{ offsetX, offsetY }) {
     this.position = 'absolute';
     this.backgroundColor = 'yellow';
-    this.drawStartX = offsetX;
-    this.drawStartY = offsetY;
+    this.drawStartX = mouseEvent.offsetX;
+    this.drawStartY = mouseEvent.offsetY;
+
+    console.log(" ~~~~~~~~~~~~ initHighlight the mouse evnet coordingates ...." , mouseEvent)
 
     this.display = 'block';
     this.height = 50;
@@ -83,12 +85,14 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateHighlight({ offsetX, offsetY }) {
+  updateHighlight(mouseEvent:{ offsetX, offsetY }) {
     if (this.drawStartX > 0 && this.drawStartY > 0) {
-      this.height = Math.abs(offsetY - this.drawStartY);
-      this.width = Math.abs(offsetX - this.drawStartX);
-      this.top = Math.min(offsetY, this.drawStartY);
-      this.left = Math.min(offsetX, this.drawStartX);
+      this.height = Math.abs(mouseEvent.offsetY - this.drawStartY);
+      this.width = Math.abs(mouseEvent.offsetX - this.drawStartX);
+      this.top = Math.min(mouseEvent.offsetY, this.drawStartY);
+      this.left = Math.min(mouseEvent.offsetX, this.drawStartX);
+
+      console.log(" ~~~~~~~~~~~~ updateHighlight the mouse evnet coordingates ...." , mouseEvent)
     }
   }
 

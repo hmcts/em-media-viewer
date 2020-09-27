@@ -5,10 +5,13 @@ import {create} from "domain";
 
 const until = protractor.ExpectedConditions;
 
+
+
 export class AppPage {
 
   contextToolbar: By = by.css('mv-popup-toolbar .toolbar');
-  commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
+  //commentButton: By = by.css('mv-popup-toolbar .toolbar button[title=\'Comment\']');
+  commentButton: By = by.id('commentId');
   bookmarkButton: By = by.css('#bookmarkButton');
   annotationTextArea: By = by.css('textarea.expanded');
   comments: By = by.css('textarea');
@@ -58,7 +61,6 @@ export class AppPage {
   }
 
   async getHeaderText() {
-//    return await element(by.css('media-viewer-wrapper h2')).getText();
     return await element(by.css('media-viewer-wrapper a')).getText();
 
   }
@@ -109,25 +111,56 @@ export class AppPage {
     });
   }
 
+
+
   async drawOnPDFPage(x: number, y: number) {
-
-    await browser.executeScript((xAxis, yAxis) => {
-      const pageElement = document.getElementsByClassName('page')[0];
-
-      const mouseDown = this.createMouseEvent('mousedown', 500, 500, 500, 500);
-      const mouseMove = this.createMouseEvent('mousemove', 0, 0, xAxis, yAxis);
-      const mouseUp = this.createMouseEvent('mouseup', 750, 800, 750, 800);
-
-      pageElement.dispatchEvent(mouseDown);
-      pageElement.dispatchEvent(mouseUp);
-
-      const annotationElement = document.getElementsByClassName('shapeRectangle')[0];
-
-      annotationElement.dispatchEvent(mouseDown);
-      annotationElement.dispatchEvent(mouseMove);
-      annotationElement.dispatchEvent(mouseUp);
-    }, x, y);
+    console.log("~~~~~~~~  Entering drawOnPDF ~~~~~~~~");
+    await browser.executeScript(this.mouseEventFn,x,y);
+    console.log( "~~~~~~~~~~~~~ draw on PDF completed .. about to sleep ")
+    console.log( "~~~~~Exit drawOnPDF. ")
   }
+
+  mouseEventFn(xAxis, yAxis) {
+
+    const createMouseEvent = function (typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
+      const mouseEvent = document.createEvent('MouseEvents');
+      mouseEvent.initMouseEvent(
+        typeArg,
+        true,
+        true,
+        window,
+        1,
+        screenX,
+        screenY,
+        clientX,
+        clientY,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+      return mouseEvent;
+    }
+    const pageElement = document.getElementsByClassName('page')[0];
+
+    console.log("11");
+
+    const mouseDown =  createMouseEvent('mousedown', 500, 500, 500, 500);
+    const mouseMove =  createMouseEvent('mousemove', 200, 0, xAxis, yAxis);
+    const mouseUp =    createMouseEvent('mouseup',  750, 800, 750, 800);
+
+    pageElement.dispatchEvent(mouseDown);
+    pageElement.dispatchEvent(mouseUp);
+
+    const annotationElement = document.getElementsByClassName('box-highlight')[0];
+
+    annotationElement.dispatchEvent(mouseDown);
+    annotationElement.dispatchEvent(mouseMove);
+    annotationElement.dispatchEvent(mouseUp);
+  }
+
 
   async drawOnImagePage() {
     await browser.executeScript(() => {
@@ -141,6 +174,45 @@ export class AppPage {
       imageElement.dispatchEvent(mouseMove);
       imageElement.dispatchEvent(mouseUp);
     });
+  }
+
+  async boxHighLightTextOnPdfPage() {
+    await browser.executeScript( () => {
+
+      const range = document.createRange();
+      const matchingElement = document.getElementsByClassName('textLayer')[0].children[4];
+      range.selectNodeContents(matchingElement);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+
+      const mouseEvent = document.createEvent('MouseEvents');
+      mouseEvent.initMouseEvent(
+        'mouseup',
+        true,
+        true,
+        window,
+        1,
+        844,
+        497,
+        937,
+        403,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+
+      //const mouseUp = 	mouseEvent;
+
+      const pageHandle = document.getElementsByClassName('textLayer')[0].children[4];
+      pageHandle.dispatchEvent(mouseEvent) ; // ('mouseup', 844,497,937,403)); //mouseUp Event
+
+
+    });
+
   }
 
 
@@ -316,7 +388,8 @@ export class AppPage {
 
   }
 
-  private createMouseEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
+  public createMouseEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
+    console.log( " inside the createMouseEvent ");
     const mouseEvent = document.createEvent('MouseEvents');
     mouseEvent.initMouseEvent(
       typeArg,

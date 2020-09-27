@@ -15,8 +15,15 @@ Feature: CommentsPanelSearch
 
   @CommentsPanelSearch @ci
   Scenario: Add A Comment and Enable Filter and Search
-    When I highlight a portion of pdf in a Draw mode
+    When I create multiple non-textual comments on a PDF document
+    When I click on the '1' Comment
+#    And I add and Save A Tag on the Comment
+#    When I delete the comment
+    And I expect to be able to click on the Comments Tab
 
+
+   #   And  I am able to click on the Collate Summary Button
+   #   Then The user closes the overlay panel
 
     # add a comment using box highlight
     # assert that Filter and Search Tabs are visible

@@ -5,7 +5,7 @@ import {expect} from 'chai';
 
 
 export class CommentsPanelPage extends AppPage {
-  //commentsToggleButton  : ElementFinder     =   element(by.xpath("//button[@id=\'sidebarCommentsToggle\' and @title=\'Toggle Comments Sidebar\']"));
+  //commentsToggleButton  : ElementFinder   =   element(by.xpath("//button[@id=\'sidebarCommentsToggle\' and @title=\'Toggle Comments Sidebar\']"));
   commentsToggleButton  : ElementFinder     =   element(by.id('sidebarCommentsToggle'));
   commentsTabButton     : ElementFinder     =   element(by.xpath(("//div[@class=\'govuk-tabs commentSummaryHeader\']/ul/li[1]/a")));
   filterTabButton       : ElementFinder     =   element(by.xpath(("//div[@class=\'govuk-tabs commentSummaryHeader\']/ul/li[2]/a")));
@@ -17,10 +17,34 @@ export class CommentsPanelPage extends AppPage {
   searchInputField      : ElementFinder     =   element(by.id('search-comments-input'));
   searchButton          : ElementFinder     =   element(by.xpath('//button[@class=\'govuk-button comment-search\']'));
   searchResult          : ElementFinder     =   element(by.css('#comment-search'));
+  commentButton         : ElementFinder     =   element(by.id(''));
+  textLayerInPdf        : ElementFinder      =  element(by.xpath(("//div[@class=\'pdfViewer page textLayer\']")));
+  // $x("//div[@id='commentButtonId']/button[@id=\'deleteOrCancelBtn\']")
+  deleteThisCommentXPath2   : ElementFinder  =   element(by.xpath("//div[@id=\'commentButtonId\']/button[@id=\'deleteOrCancelBtn\']"));
+  deleteThisCommentId   : ElementFinder  =   element(by.id("deleteOrCancelBtn"));
+
+  comments              : ElementArrayFinder =  element.all(by.css('mv-anno-comment > div > p'));
+  deleteThisCommentCss  : ElementArrayFinder =   element.all(by.css("mv-comment-set > div"));
+  tagForComment         : ElementFinder      =  element(by.id('tagIdForComment'));
+  tagFieldX             : ElementFinder      =  element(by.css('tag-input > div > div > tag-input-form > form > input'));
+  tagFieldXPath         : ElementFinder      =  element(by.xpath("//input[@id='inputTagId']"));
+
+  tagFieldCss           : ElementFinder      =  element(by.cssContainingText("#inputTagId", "Search or add tags")) ;
+
+
+  inputTagId             : ElementFinder      =  element(by.css('#inputTagId'));
+  editOrSaveButton        : ElementFinder     = element(by.id('editOrSaveButton'));
+  deleteThisComment     : ElementFinder       = element(by.css('#deleteOrCancelBtn'));
+  //
+  deleteThisCommentButton: By = by.css('#deleteOrCancelBtn');
 
 
   async clickCommentsToggleIcon(){
      await this.commentsToggleButton.click();
+  }
+
+  async clickTextLayerPdf(){
+    await this.textLayerInPdf.click();
   }
 
   async clickOnCommentsTab(){

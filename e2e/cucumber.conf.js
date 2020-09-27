@@ -1,9 +1,3 @@
-
-
-
-
-
-
 exports.config = {
   SELENIUM_PROMISE_MANAGER: false,
   allScriptsTimeout: 120000,
@@ -18,11 +12,9 @@ exports.config = {
   directConnect: true,
   baseUrl: 'http://localhost:3000/',
   specs: [
-    './src/**/*.feature',
+    //'./src/**/*.feature',
     //    './src/**/bookmarks.feature',
-//    './src/**/comments.panel.feature',
-//    './src/**/comments.panel.feature',
-
+    './src/**/comments.panel.feature',
   ],
   onPrepare: function () {
     require('ts-node').register({
