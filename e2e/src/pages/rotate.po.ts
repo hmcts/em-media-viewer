@@ -10,11 +10,11 @@ export class RotatePage extends AppPage {
   width: number;
 
   async rotateClockwise() {
-    await this.clickElement(by.id('pageRotateCw'));
+    await this.clickElement(by.id('mvRotateRightBtn'));
   }
 
   async rotateCounterClockwise() {
-    await this.clickElement(by.id('pageRotateCcw'));
+    await this.clickElement(by.id('mvRotateLeftBtn'));
   }
 
   async checkPdfIsRotated() {

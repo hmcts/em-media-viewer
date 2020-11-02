@@ -1,34 +1,51 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { ToolbarLeftPaneComponent } from './left-pane.component';
+import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { MediaViewerToolbarComponent } from './media-viewer-toolbar.component';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 
-describe('ToolbarLeftPaneComponent', () => {
-  let component: ToolbarLeftPaneComponent;
-  let fixture: ComponentFixture<ToolbarLeftPaneComponent>;
+describe('MediaViewerToolbarComponent', () => {
+  let component: MediaViewerToolbarComponent;
+  let fixture: ComponentFixture<MediaViewerToolbarComponent>;
   let toolbarService: ToolbarEventService;
+  let nativeElement;
 
-  beforeEach(() => {
-    return TestBed.configureTestingModule({
-      declarations: [ ToolbarLeftPaneComponent ],
-      providers: [ ToolbarEventService, ToolbarButtonVisibilityService ]
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [MediaViewerToolbarComponent],
+      providers: [ToolbarEventService, ToolbarButtonVisibilityService]
     })
       .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ToolbarLeftPaneComponent);
+    fixture = TestBed.createComponent(MediaViewerToolbarComponent);
     component = fixture.componentInstance;
     toolbarService = TestBed.get(ToolbarEventService);
+    nativeElement = fixture.debugElement.nativeElement;
     component.toolbarButtons.showHighlightButton = true;
     component.toolbarButtons.showDrawButton = true;
+    component.toolbarButtons.showRotate = true;
+    component.toolbarButtons.showZoom = true;
+    component.toolbarButtons.showPrint = true;
+    component.toolbarButtons.showDownload = true;
+    component.toolbarButtons.showCommentSummary = true;
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should toggle searchbar visible', fakeAsync((done) => {
+    component.toggleSearchBar();
+
+    component.toolbarEvents.searchBarHidden.asObservable()
+      .subscribe(
+        searchBarHidden => expect(searchBarHidden).toBeFalsy()
+        , error => done(error)
+      );
+  }));
 
   it('should get the page number of the current page', () => {
     component.ngOnInit();
@@ -59,16 +76,6 @@ describe('ToolbarLeftPaneComponent', () => {
     component.toolbarEvents.searchBarHidden.asObservable()
       .subscribe(
         searchBarHidden => expect(searchBarHidden).toBeTruthy()
-        , error => done(error)
-      );
-  }));
-
-  it('should toggle searchbar visible', fakeAsync((done) => {
-    component.toggleSearchBar();
-
-    component.toolbarEvents.searchBarHidden.asObservable()
-      .subscribe(
-        searchBarHidden => expect(searchBarHidden).toBeFalsy()
         , error => done(error)
       );
   }));
@@ -160,4 +167,60 @@ describe('ToolbarLeftPaneComponent', () => {
     expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toHaveClass('toggled');
     expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
   });
+
+  it('should emit rotate event with 90 degrees', () => {
+    const rotateSpy = spyOn(component.toolbarEvents.rotateSubject, 'next');
+    const rotateClkwiseBtn = nativeElement.querySelector('button[id=mvRotateRightBtn]');
+    rotateClkwiseBtn.click();
+
+    expect(rotateSpy).toHaveBeenCalledWith(90);
+  });
+
+  it('should emit rotate event with 270 degrees', () => {
+    const rotateSpy = spyOn(component.toolbarEvents.rotateSubject, 'next');
+    const rotateCtrClkwiseBtn = nativeElement.querySelector('button[id=mvRotateBtn]');
+    rotateCtrClkwiseBtn.click();
+
+    expect(rotateSpy).toHaveBeenCalledWith(270);
+  });
+
+  it('should emit zoom out event', () => {
+    const stepZoom = spyOn(component.toolbarEvents.stepZoomSubject, 'next');
+    const zoomOutButton = nativeElement.querySelector('button[id=zoomOut]');
+    zoomOutButton.click();
+
+    expect(stepZoom).toHaveBeenCalledWith(-0.1);
+  });
+
+  it('should emit zoom in event', () => {
+    const stepZoom = spyOn(component.toolbarEvents.stepZoomSubject, 'next');
+    const zoomInButton = nativeElement.querySelector('button[id=zoomIn]');
+    zoomInButton.click();
+
+    expect(stepZoom).toHaveBeenCalledWith(0.1);
+  });
+
+  it('should emit zoom in event', () => {
+    const zoomSpy = spyOn(component.toolbarEvents.zoomSubject, 'next');
+    component.zoom('25');
+
+    expect(zoomSpy).toHaveBeenCalledWith(25);
+  });
+
+  it('should emit print event', () => {
+    const printSpy = spyOn(component.toolbarEvents.printSubject, 'next');
+    const printButton = nativeElement.querySelector('button[id=print]');
+    printButton.click();
+
+    expect(printSpy).toHaveBeenCalledWith();
+  });
+
+  it('should emit download event', () => {
+    const downloadSpy = spyOn(component.toolbarEvents.downloadSubject, 'next');
+    const downloadButton = nativeElement.querySelector('button[id=download]');
+    downloadButton.click();
+
+    expect(downloadSpy).toHaveBeenCalledWith();
+  });
 });
+

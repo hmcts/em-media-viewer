@@ -432,18 +432,6 @@
   }
 }
 
-@media all and (max-width: 535px) {
-  #scaleSelectContainer {
-    display: none;
-  }
-}
-
-@media all and (max-width: 1000px) {
-  div.hiddenIfLargerThan1000px, div.hiddenIfLargerThan1000px * {
-    display: none;
-  }
-}
-
 #annotationButtons {
   position: absolute;
   left: 23%;

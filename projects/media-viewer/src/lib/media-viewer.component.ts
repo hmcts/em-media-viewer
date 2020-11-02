@@ -35,6 +35,10 @@ enum SupportedContentTypes {
   IMAGE = 'image'
 }
 
+enum SupportedICPContentTypes {
+  PDF = 'pdf'
+}
+
 enum ConvertibleContentTypes {
   EXCEL = 'excel',
   WORD = 'word',
@@ -78,6 +82,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   hasScrollBar: boolean;
   typeException = false;
   hasDifferentPageSize$: Observable<boolean>;
+  public icpSupported: boolean;
 
   private $subscriptions: Subscription;
 
@@ -112,6 +117,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     const supportedTypes = Object.keys(SupportedContentTypes).concat(Object.keys(ConvertibleContentTypes));
     return this.contentType === null || !supportedTypes.includes(this.contentType.toUpperCase());
   }
+
+  public icpUnsupported(): boolean {
+    const supportedTypes = Object.keys(SupportedICPContentTypes);
+    console.log(this.contentType === null || !supportedTypes.includes(this.contentType.toUpperCase()));
+    return this.contentType === null || !supportedTypes.includes(this.contentType.toUpperCase());
+  }
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.annotationApiUrl) {
@@ -162,6 +174,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
         ...this.toolbarButtonOverrides
       });
     }
+    this.icpSupported = !this.icpUnsupported();
   }
 
   onLoadException(exception: ViewerException) {

@@ -87,14 +87,13 @@ export class PdfJsWrapper {
     try {
       const pdfDocument = await loadingTask;
       this.documentLoaded.next(pdfDocument);
-
+      this.toolbarEvents.pageCountSubject.next(pdfDocument.numPages);
 
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
 
       this.documentOutline = await pdfDocument.getOutline();
       this.outlineLoaded.next(this.documentOutline);
-
       const pdfMetaData = await pdfDocument.getMetadata();
       this.setCurrentPDFTitle(pdfMetaData.info.Title);
     } catch (e) {

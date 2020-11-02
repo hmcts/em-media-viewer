@@ -11,6 +11,8 @@
 @import "media";
 @import "redaction-toolbar";
 @import "icp-buttons";
+@import "icp-toolbar";
+@import "media-viewer-toolbar";
 
 .hidden {
   display: none !important;
@@ -104,22 +106,20 @@ html[dir='rtl'] #toolbarContainer, .findbar, .secondaryToolbar {
   transform: translateX(-50%);
 }
 
-#toolbarViewerLeft,
 html[dir='rtl'] #toolbarViewerRight {
   float: left;
 }
-#toolbarViewerRight,
-html[dir='rtl'] #toolbarViewerLeft {
+#toolbarViewerRight {
   float: right;
 }
-#toolbarViewerLeft > *,
+
 #toolbarViewerMiddle > *,
 #toolbarViewerRight > *,
 .findbar * {
   position: relative;
   float: left;
 }
-html[dir='rtl'] #toolbarViewerLeft > *,
+
 html[dir='rtl'] #toolbarViewerMiddle > *,
 html[dir='rtl'] #toolbarViewerRight > *,
 html[dir='rtl'] .findbar * {

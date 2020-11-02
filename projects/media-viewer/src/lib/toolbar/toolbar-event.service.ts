@@ -30,6 +30,7 @@ export class ToolbarEventService {
   public readonly zoomSubject = new Subject<number>();
   public readonly stepZoomSubject = new Subject<number>();
   public readonly zoomValueSubject = new BehaviorSubject<number>(1);
+  public readonly pageCountSubject = new Subject<number>();
   public readonly printSubject = new Subject();
   public readonly downloadSubject = new Subject();
   public readonly setCurrentPageSubject = new Subject<number>();
@@ -108,6 +109,10 @@ export class ToolbarEventService {
     return this.zoomValueSubject.asObservable();
   }
 
+  public getPageCount(): Observable<number> {
+    return this.pageCountSubject.asObservable();
+  }
+
   public print(): void {
     this.printSubject.next();
   }
@@ -176,5 +181,5 @@ export class ToolbarEventService {
       this.toggleCommentsPanel(!isVisible);
     }
     this.icp.participantsListVisible.next(isVisible);
-  };
+  }
 }

@@ -10,6 +10,7 @@ export class ToolbarButtonVisibilityService {
   public showZoom = false;
   public showRotate = false;
   public showPresentationMode = false;
+  public showRedact = false;
   public showOpenFile = false;
   public showBookmark = false;
   public showHighlightButton = false;
@@ -30,7 +31,8 @@ export class ToolbarButtonVisibilityService {
     this.showNavigation = false;
     this.showZoom = false;
     this.showRotate = false;
-    this.showPresentationMode = false;
+    this.showPresentationMode = true;
+    this.showRedact = true;
     this.showOpenFile = false;
     this.showBookmark = false;
     this.showHighlightButton = false;
@@ -80,5 +82,10 @@ export const defaultImageOptions = {
  */
 export const defaultUnsupportedOptions = {
   showDownload: true,
-  showCommentSummary: false
+  showCommentSummary: false,
+  showDrawButton: false,
+  showPresentationMode: false,
+  showRedact: false,
+  showPrint: true,
+  showGrabNDragButton: false
 };

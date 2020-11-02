@@ -8,4 +8,5 @@ export class MainToolbarComponent {
   @Input() enableAnnotations = false;
   @Input() enableRedactions = false;
   @Input() enableICP = false;
+  @Input() icpSupported = true;
 }
