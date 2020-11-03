@@ -3,6 +3,7 @@ import { By } from '@angular/platform-browser';
 import { MediaViewerToolbarComponent } from './media-viewer-toolbar.component';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('MediaViewerToolbarComponent', () => {
   let component: MediaViewerToolbarComponent;
@@ -13,7 +14,8 @@ describe('MediaViewerToolbarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MediaViewerToolbarComponent],
-      providers: [ToolbarEventService, ToolbarButtonVisibilityService]
+      providers: [ToolbarEventService, ToolbarButtonVisibilityService],
+      imports: [OverlayModule]
     })
       .compileComponents();
   }));
@@ -94,6 +96,7 @@ describe('MediaViewerToolbarComponent', () => {
 
   it('should go to selected page', () => {
     const pageChangerSpy = spyOn(component.toolbarEvents.setCurrentPageSubject, 'next');
+    component.pageCount = 21;
     component.onPageNumberInputChange('4');
     expect(pageChangerSpy).toHaveBeenCalledWith(4);
   });
@@ -104,68 +107,68 @@ describe('MediaViewerToolbarComponent', () => {
   });
 
   it('should start with both annotation modes deactivated', () => {
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
-    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
   });
 
   it('should toggle on the highlight button', () => {
-    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
     component.onClickHighlightToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--highlight')).nativeElement).toHaveClass('toggled');
   });
 
   it('should toggle off the highlight button', () => {
     component.onClickHighlightToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--highlight')).nativeElement).toHaveClass('toggled');
     component.onClickHighlightToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
   });
 
   it('should show the draw button if permitted', () => {
     component.toolbarButtons.showHighlightButton = true;
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).toBeTruthy();
   });
 
   it('should toggle on the draw button', () => {
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
     component.onClickDrawToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).toHaveClass('toggled');
   });
 
   it('should  toggle off the draw button', () => {
     component.onClickDrawToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).toHaveClass('toggled');
     component.onClickDrawToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
   });
 
   it('should turn draw mode off when highlight is selected', () => {
     component.onClickDrawToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toHaveClass('toggled');
-    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
     component.onClickHighlightToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toHaveClass('toggled');
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--highlight')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
   });
 
   it('should turn highlight mode off when draw is selected', () => {
     component.onClickHighlightToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).toHaveClass('toggled');
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--highlight')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
     component.onClickDrawToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.drawBtn')).nativeElement).toHaveClass('toggled');
-    expect(fixture.debugElement.query(By.css('.highlightBtn')).nativeElement).not.toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--draw')).nativeElement).toHaveClass('toggled');
+    expect(fixture.debugElement.query(By.css('.jui-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
   });
 
   it('should emit rotate event with 90 degrees', () => {
@@ -178,15 +181,15 @@ describe('MediaViewerToolbarComponent', () => {
 
   it('should emit rotate event with 270 degrees', () => {
     const rotateSpy = spyOn(component.toolbarEvents.rotateSubject, 'next');
-    const rotateCtrClkwiseBtn = nativeElement.querySelector('button[id=mvRotateBtn]');
+    const rotateCtrClkwiseBtn = nativeElement.querySelector('button[id=mvRotateLeftBtn]');
     rotateCtrClkwiseBtn.click();
 
-    expect(rotateSpy).toHaveBeenCalledWith(270);
+    expect(rotateSpy).toHaveBeenCalledWith(-90);
   });
 
   it('should emit zoom out event', () => {
     const stepZoom = spyOn(component.toolbarEvents.stepZoomSubject, 'next');
-    const zoomOutButton = nativeElement.querySelector('button[id=zoomOut]');
+    const zoomOutButton = nativeElement.querySelector('button[id=mvMinusBtn]');
     zoomOutButton.click();
 
     expect(stepZoom).toHaveBeenCalledWith(-0.1);
@@ -194,7 +197,7 @@ describe('MediaViewerToolbarComponent', () => {
 
   it('should emit zoom in event', () => {
     const stepZoom = spyOn(component.toolbarEvents.stepZoomSubject, 'next');
-    const zoomInButton = nativeElement.querySelector('button[id=zoomIn]');
+    const zoomInButton = nativeElement.querySelector('button[id=mvPlusBtn]');
     zoomInButton.click();
 
     expect(stepZoom).toHaveBeenCalledWith(0.1);
@@ -209,7 +212,7 @@ describe('MediaViewerToolbarComponent', () => {
 
   it('should emit print event', () => {
     const printSpy = spyOn(component.toolbarEvents.printSubject, 'next');
-    const printButton = nativeElement.querySelector('button[id=print]');
+    const printButton = nativeElement.querySelector('button[id=mvPrintBtn]');
     printButton.click();
 
     expect(printSpy).toHaveBeenCalledWith();
@@ -217,7 +220,7 @@ describe('MediaViewerToolbarComponent', () => {
 
   it('should emit download event', () => {
     const downloadSpy = spyOn(component.toolbarEvents.downloadSubject, 'next');
-    const downloadButton = nativeElement.querySelector('button[id=download]');
+    const downloadButton = nativeElement.querySelector('button[id=mvDownloadBtn]');
     downloadButton.click();
 
     expect(downloadSpy).toHaveBeenCalledWith();

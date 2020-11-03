@@ -120,7 +120,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   public icpUnsupported(): boolean {
     const supportedTypes = Object.keys(SupportedICPContentTypes);
-    console.log(this.contentType === null || !supportedTypes.includes(this.contentType.toUpperCase()));
     return this.contentType === null || !supportedTypes.includes(this.contentType.toUpperCase());
   }
 

@@ -6,6 +6,8 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { SubToolbarComponent } from '../sub-toolbar/sub-toolbar.component';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import {reducers} from '../../store/reducers/reducers';
+import { MediaViewerToolbarComponent } from '../media-viewer-toolbar/media-viewer-toolbar.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('MainToolbarComponent', () => {
   let component: MainToolbarComponent;
@@ -17,9 +19,10 @@ describe('MainToolbarComponent', () => {
       declarations: [
         MainToolbarComponent,
         SearchBarComponent,
-        SubToolbarComponent
+        SubToolbarComponent,
+        MediaViewerToolbarComponent,
       ],
-      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({})],
+      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}), OverlayModule],
       providers: [ ToolbarButtonVisibilityService ]
     })
     .compileComponents();
