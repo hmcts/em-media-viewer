@@ -3,6 +3,10 @@ $--sidebar-width: 20%;
   .has-redact-bar & {
     top: 65px;
   }
+  .icp-mode {
+    top: 89px;
+    height: 100%
+  }
   position: absolute;
   top: 43px;
   bottom: 0;
@@ -14,6 +18,7 @@ $--sidebar-width: 20%;
 
   transition-duration: 600ms;
   transition-timing-function: ease;
+ 
 }
 #sidebarContainer {
   transition-property: left;

@@ -19,11 +19,13 @@ export class MediaViewerToolbarComponent implements OnInit, OnDestroy, AfterView
   @Input() enableAnnotations = true;
   @Input() enableRedaction = false;
   @Input() enableICP = false;
-  @Input() icpSupported = true;
+  @Input() contentType = null;
 
   @ViewChild('zoomSelect') public zoomSelect: ElementRef;
   @ViewChild('mvToolbarMain') public mvToolbarMain: ElementRef<HTMLElement>;
+  @ViewChild('mvMenuItems') public mvMenuItems: ElementRef<HTMLElement>;
 
+  private totalButtonSpace = 0;
   private readonly subscriptions: Subscription[] = [];
   private readonly breakWidths: number[] = [];
   private readonly toolbarButtonVisibilityStates: ButtonState[] = [];
@@ -97,28 +99,42 @@ export class MediaViewerToolbarComponent implements OnInit, OnDestroy, AfterView
     // Trigger change detection (necessary to ensure all toolbar elements are rendered fully - and have a size - at this stage)
     this.cdr.detectChanges();
 
+    for (const element of toolbarElements) {
+      this.totalButtonSpace += element.getBoundingClientRect().width;
+    }
+
+    // add the main toolbar left margin to the available space
+    this.totalButtonSpace = this.totalButtonSpace + this.mvToolbarMain.nativeElement.getBoundingClientRect().left;
+
     // Loop over all elements and set sum of widths for each toolbar element
     for (const element of toolbarElements) {
       // Use bounding client rectangle width for accuracy
       totalSpace += element.getBoundingClientRect().width;
       this.breakWidths.push(totalSpace);
     }
-
     // Call calculation method
     this.checkCalculation();
   }
 
   @HostListener('window:resize', [])
   public onResize() {
+    this.cdr.detectChanges();
     // Call calculation method
     this.checkCalculation();
   }
 
   private checkCalculation() {
+    // if the more options button is visible and we have enough space to all the buttons then show them all
+    if (this.totalButtonSpace < this.mvMenuItems.nativeElement.getBoundingClientRect().width) {
+      for (const buttonState of this.toolbarButtonVisibilityStates) {
+        buttonState.showOnToolbar = true;
+      }
+      return;
+    }
+
     // Get current space of main toolbar element, including the right margin (if any) to the "More options" button
     const availableSpace = this.mvToolbarMain.nativeElement.getBoundingClientRect().width +
       parseFloat(getComputedStyle(this.mvToolbarMain.nativeElement).marginRight);
-
     // Get space required for all elements in main toolbar element (i.e. break-width of the last visible element from breakWidth array)
     const indexOfLastVisibleElement = this.getIndexOfLastVisibleToolbarButton();
     const totalSpaceRequired = this.breakWidths[indexOfLastVisibleElement];
@@ -255,6 +271,10 @@ export class MediaViewerToolbarComponent implements OnInit, OnDestroy, AfterView
 
   public toggleGrabNDrag() {
     this.toolbarEvents.toggleGrabNDrag();
+  }
+
+  public isPdf() {
+    return this.contentType === 'pdf';
   }
 
   toggleSearchBar() {

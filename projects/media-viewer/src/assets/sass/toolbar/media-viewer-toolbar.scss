@@ -1,342 +1,462 @@
 .jui-toolbar {
-    background-color: #ffffff;
-    border-bottom: 1px solid #dddddd;
-    border-top: 1px solid #dddddd;
-    position: sticky;
-    top: -1px;
-    width: 100%;
-    z-index: 200;
-    height: 40px;
+  width: 100%;
+  height: 40px;
+  top: -1px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dddddd;
+  border-top: 1px solid #dddddd;
+  position: sticky;
+  z-index: 200;
+}
+
+.mv-toolbar__container {
+  display: flex;
+  left: 0;
+  top: 0;
+  background-color: #ffffff;
+  border-left: 1px solid #dee0e2;
+  border-right: 1px solid #dee0e2;
+  border-bottom: 1px solid #dee0e2;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.mv-toolbar__container::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.mv-toolbar-main {
+  width: 100%;
+  height: 40px;
+  // This has the effect of grabbing any extra space, thus positioning the "More options" button at the far right of the toolbar
+  margin-right: auto;
+  border-bottom: 1px solid #dee0e2;
+  // Used to hide a button on the toolbar
+  .button-hidden-on-toolbar {
+    display: none;
   }
-  
-  .jui-toolbar::before {
-    content: "";
-    background-color: #ffffff;
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    z-index: 0;
-  }
-  
-  .mv-toolbar__container {
-    background-color: #ffffff;
-    border-left: 1px solid #dee0e2;
-    border-right: 1px solid #dee0e2;
-    height: 100%;
-    position: relative;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    display: flex;
-  }
-  
-  .mv-toolbar__container::after {
-    content: "";
-    display: block;
-    clear: both;
-  }
-  
-  .mv-toolbar-main {
-    // This has the effect of grabbing any extra space, thus positioning the "More options" button at the far right of the toolbar
-    margin-right: auto;
-  
-    // Used to hide a button on the toolbar
-    .button-hidden-on-toolbar {
-      display: none;
-    }
-  }
-  
-  .mv-toolbar-more-options {
-    flex: none;
-  }
-  
-  .jui-toolbar__button {
-    font-family: "nta", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 400;
-    font-size: 16px;
-    font-size: 1rem;
-    line-height: 1;
-    background-color: #ffffff;
-    border: 0 none;
-    color: #0b0c0c;
-    cursor: pointer;
-    float: left;
-    margin: 0;
-    padding-left: 15px;
-    padding-right: 15px;
-    position: relative;
-    height: 40px;
-    border-right: 1px solid #dee0e2;
-    flex: none;
-    text-align: left;
-    &:disabled {
+}
+
+.mv-toolbar-more-options {
+  flex: none;
+}
+
+.jui-toolbar__button {
+  font-family: "nta", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1;
+  background-color: #ffffff;
+  color: #0b0c0c;
+  cursor: pointer;
+  float: left;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  height: 40px;
+  border: 0 none;
+  border-right: 1px solid #dee0e2;
+  flex: none;
+  text-align: left;
+  :disabled {
+    color: #aaabbb;
+    ::after {
       opacity: 0.4;
-      cursor: default;
-      &:hover {
-        background-color: #ffffff;
-      }
+    }
+    cursor: default;
+    &:hover {
+      background-color: #ffffff;
     }
   }
-  
-  .mv-button-left-border {
-    border-left: 10px solid #dee0e2;
+  &.button-hidden-on-toolbar {
+    border: 0;
   }
-  
-  .jui-toolbar__button:hover {
-    background-color: #f8f8f8;
-  }
-  
-  .hmcts-toolbar-select {
-    font-family: "nta", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 400;
-    font-size: 16px;
-    font-size: 1rem;
-    line-height: 1.25;
-    box-sizing: border-box;
-    max-width: 100%;
-    height: 30px;
-    padding: 0px;
-    margin-top: 5px;
-    border: 2px solid #0b0c0c;
-  }
-  
-  .jui-toolbar__button--items {
+}
+
+.mv-button-left-border {
+  border-left: 10px solid #dee0e2;
+}
+
+.jui-toolbar__button:hover {
+  background-color: #f8f8f8;
+}
+
+.hmcts-toolbar-select {
+  font-family: "nta", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  box-sizing: border-box;
+  max-width: 100%;
+  height: 30px;
+  padding: 0px;
+  margin-top: 5px;
+  border: 2px solid #0b0c0c;
+}
+
+.jui-toolbar__button--items {
+  ::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     background-image: url(/assets/images/icon-casefile-items.svg);
     background-repeat: no-repeat;
     background-size: 18px 14px;
     background-position: 15px 50%;
-    padding-left: 45px;
   }
-  
-  .jui-toolbar__menu-button {
-    cursor: pointer;
-    &:disabled {
-      cursor: default;
-      opacity: 0.4;
-    }
-  }
+  padding-left: 45px;
+}
 
-  .jui-toolbar__menu-button--draw {
+.jui-toolbar__menu-button {
+  cursor: pointer;
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.jui-toolbar__menu-button--index {
+  width: 100px;
+}
+
+.jui-toolbar__menu-button--draw {
+  width: 140px;
+  padding-left: 45px;
+  font-weight: 400;
+  ::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     background-image: url(/assets/images/icon-draw-box.svg);
     background-repeat: no-repeat;
     background-size: 20px 19px;
     background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
   }
-  
-  .jui-toolbar__menu-button--highlight {
+}
+
+.jui-toolbar__menu-button--highlight {
+  width: 120px;
+  padding-left: 45px;
+  font-weight: 400;
+  ::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     background-image: url(/assets/images/icon-highlight.svg);
     background-repeat: no-repeat;
     background-size: 18px 19px;
     background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
   }
+}
 
-  .jui-toolbar__menu-button--page, .jui-toolbar__menu-button--zoom, .jui-toolbar__menu-button--rotate {
-    &:hover {
-      cursor: default;
-      background: #fff;
-    }
+.jui-toolbar__menu-button--page,
+.jui-toolbar__menu-button--zoom,
+.jui-toolbar__menu-button--rotate {
+  &:hover {
+    cursor: default;
+    background: #fff;
   }
-  
-  .jui-toolbar__menu-button--page {
-    height: 30px;
-    padding-top: 10px;
-  }
+}
 
-  .jui-toolbar__menu-button--down {
-    background-image: url(/assets/images/arrow-down.svg);
-    background-repeat: no-repeat;
-    background-size: 16px 19px;
-    background-position: 7px 50%;
-    padding-left: 25px;
-    font-weight: 400;
+.jui-toolbar__menu-button--page {
+  height: 30px;
+  padding-top: 10px;
+  width: 200px;
+  span:first-of-type {
+    padding: 0 10px;
+  } 
+}
+
+.jui-toolbar__menu-button--zoom {
+  width: 190px;
+  span:first-of-type {
+    margin-left: 10px;
+    margin-right: 0px;
   }
-  
-  .jui-toolbar__menu-button--up {
+  button:first-of-type {
+    margin-left: 10px;
+  }
+  button:last-of-type {
+    margin-right: 10px;
+  }
+}
+
+.jui-toolbar__menu-button--up {
+  width: 22px;
+  left: 40px;
+  font-weight: 400;
+  ::after {
+    position: absolute;
+    content: '';
+    top: 8px;
+    bottom: 8px;
+    left: 62px;
+    right: 122px;
     background-image: url(/assets/images/arrow-up.svg);
     background-repeat: no-repeat;
     background-size: 16px 19px;
-    background-position: 6px 50%;
-    padding-left: 25px;
-    font-weight: 400;
+    background-position: 0px 50%;
   }
-  
-  .jui-toolbar__menu-button--zoom-out {
+}
+
+.jui-toolbar__menu-button--down {
+  width: 22px;
+  font-weight: 400;
+  ::after {
+    position: absolute;
+    content: '';
+    top: 8px;
+    bottom: 8px;
+    left: 88px;
+    right: 96px;
+    background-image: url(/assets/images/arrow-down.svg);
+    background-repeat: no-repeat;
+    background-size: 16px 19px;
+    background-position: 0px 50%;
+  }
+}
+
+.jui-toolbar__menu-button--zoom-out {
+  width: 22px;
+  font-weight: 400;
+  ::after {
+    position: absolute;
+    content: '';
+    top: 8px;
+    bottom: 8px;
+    left: 64px;
+    right: 110px;
     background-image: url(/assets/images/search-minus.svg);
     background-repeat: no-repeat;
     background-size: 16px 19px;
-    background-position: 6px 50%;
-    padding-left: 25px;
-    font-weight: 400;
+    background-position: 0px 50%;
   }
-  
-  .jui-toolbar__menu-button--zoom-in {
+}
+
+.jui-toolbar__menu-button--zoom-in {
+  width: 22px;
+  font-weight: 400;
+  ::after {
+    position: absolute;
+    content: '';
+    top: 8px;
+    bottom: 8px;
+    left: 157px;
+    right: 14px;
     background-image: url(/assets/images/search-plus.svg);
     background-repeat: no-repeat;
     background-size: 16px 19px;
-    background-position: 6px 50%;
-    padding-left: 25px;
-    font-weight: 400;
+    background-position: 0px 50%;
   }
+}
 
-  .jui-toolbar__menu-button--up:focus,
-  .jui-toolbar__menu-button--down:focus,
-  .jui-toolbar__menu-button--zoom-out:focus,
-  .jui-toolbar__menu-button--zoom-in:focus,
-  .jui-toolbar__menu-button--rotate_left:focus,
-  .jui-toolbar__menu-button--rotate_right:focus {
-    outline: 3px solid #ffbf47;
-    outline-offset: 0;
-    z-index: 1;
+.jui-toolbar__menu-button--up:focus,
+.jui-toolbar__menu-button--down:focus,
+.jui-toolbar__menu-button--zoom-out:focus,
+.jui-toolbar__menu-button--zoom-in:focus,
+.jui-toolbar__menu-button--rotate_left:focus,
+.jui-toolbar__menu-button--rotate_right:focus {
+  outline: 3px solid #ffbf47;
+  outline-offset: 0;
+  z-index: 1;
+}
+
+.jui-toolbar__menu-button--rotate {
+  width: 140px;
+  height: 30px;
+  padding-top: 10px;
+  button:first-of-type {
+    margin-left: 10px;
   }
-  
-  .jui-toolbar__menu-button--rotate {
-    height: 30px;
-    padding-top: 10px;
+  button:last-of-type {
+    margin-right: 10px;
   }
-  
-  .jui-toolbar__menu-button--rotate_left {
+}
+
+.jui-toolbar__menu-button--rotate_left, .jui-toolbar__menu-button--rotate_right {
+  width: 22px;
+  padding-left: 10px;
+  font-weight: 400;
+  ::after {
+    position: absolute;
+    content: '';
+    top: 8px;
+    bottom: 8px;
     background-image: url(/assets/images/icon-casefile-rotate-left.svg);
     background-repeat: no-repeat;
     background-size: 16px 19px;
     background-position: 0px 50%;
-    padding-left: 25px;
-    font-weight: 400;
   }
-  
-  .jui-toolbar__menu-button--rotate_right {
+}
+
+.jui-toolbar__menu-button--rotate_left {
+  ::after {
+    left: 13px;
+    right: 110px;
+    background-image: url(/assets/images/icon-casefile-rotate-left.svg);
+  }
+}
+
+.jui-toolbar__menu-button--rotate_right {
+  ::after {
+    left: 39px;
+    right: 81px;
     background-image: url(/assets/images/icon-casefile-rotate.svg);
-    background-repeat: no-repeat;
-    background-size: 16px 19px;
-    background-position: 0px 50%;
-    padding-left: 20px;
-    font-weight: 400;
   }
-  
-  .jui-toolbar__menu-button--search {
-    background-image: url(/assets/images/search.svg);
-    background-repeat: no-repeat;
-    background-size: 16px 19px;
+}
+
+.jui-toolbar__menu-button--search, .jui-toolbar__menu-button--present,
+.jui-toolbar__menu-button--marker, .jui-toolbar__menu-button--grab,
+.jui-toolbar__menu-button--download, .jui-toolbar__menu-button--printer,
+.jui-toolbar__menu-button--comments, .jui-toolbar__menu-button--more-options {
+  padding-left: 45px;
+  font-weight: 400;
+  ::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
-  }
-  
-  .jui-toolbar__menu-button--present {
-    background-image: url(/assets/images/present.svg);
-    background-repeat: no-repeat;
     background-size: 16px 19px;
-    background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
-  }
-  
-  .jui-toolbar__menu-button--marker {
-    background-image: url(/assets/images/marker-pen.svg);
     background-repeat: no-repeat;
-    background-size: 16px 19px;
-    background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
   }
-  
-  .jui-toolbar__menu-button--grab {
-    background-image: url(/assets/images/grab_n_drag.svg);
-    background-repeat: no-repeat;
-    background-size: 16px 19px;
-    background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
-  }
-  
-  .jui-toolbar__menu-button--download {
-    background-image: url(/assets/images/download-button.svg);
-    background-repeat: no-repeat;
-    background-size: 16px 19px;
-    background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
-  }
-  
-  .jui-toolbar__menu-button--printer {
-    background-image: url(/assets/images/printer.svg);
-    background-repeat: no-repeat;
-    background-size: 16px 19px;
-    background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
-  }
-  
-  .jui-toolbar__menu-button--comments {
-    background-image: url(/assets/images/icon-casefile-comments.svg);
-    background-repeat: no-repeat;
-    background-size: 16px 19px;
-    background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
-  }
-  
-  .jui-toolbar__menu-button--more-options {
-    background-image: url(/assets/images/more.svg);
-    background-repeat: no-repeat;
-    background-size: 16px 19px;
-    background-position: 15px 50%;
-    padding-left: 45px;
-    font-weight: 400;
-    border-left: 1px solid #dee0e2;
-    border-right: none;
-  }
-  
-  .jui-toolbar__menu-button--more-options__hidden {
-    display: none;
-  }
-  
-  .button-image {
-    border: none;
-    margin: 2px;
-    height: 18px;
-    vertical-align: middle;
-    background-color: transparent;
-  }
-  
-  @media (min-width: 40.0625em) {
-    .jui-toolbar__button {
-      font-size: 1rem;
-      line-height: 1;
+  &:disabled {
+    color: #aaabbb;
+    ::after {
+      opacity: 0.4;
     }
-  }
-  
-  .dropdown-menu {
-    background-color: #ffffff;
-    display: flex;
-    flex-flow: column wrap;
-    border-left: 1px solid #dee0e2;
-    // Each toolbar button already has a border-right, so no need to add one here
-    border-bottom: 1px solid #dee0e2;
-  
-    // Used to hide a button on the dropdown menu
-    .button-hidden-on-dropdown {
-      display: none;
+    cursor: default;
+    &:hover {
+      background-color: #ffffff;
     }
   }
 
-  .toolbarLabel {
-    font-size: 14px;
-    color: #000;
+}
+
+.jui-toolbar__menu-button--search {
+  width: 115px;
+  ::after {
+    background-image: url(/assets/images/search.svg);
   }
-  
-  input:focus,
-  textarea:focus,
-  select:focus,
-  button:focus {
+}
+
+.jui-toolbar__menu-button--present {
+  width: 120px;
+  ::after {
+    background-image: url(/assets/images/present.svg);
+  }
+}
+
+.jui-toolbar__menu-button--marker {
+  width: 115px;
+  ::after {
+    background-image: url(/assets/images/marker-pen.svg);
+  }
+}
+
+.jui-toolbar__menu-button--grab {
+  width: 170px;
+  ::after {
+    background-image: url(/assets/images/grab_n_drag.svg);
+  }
+}
+
+.jui-toolbar__menu-button--download {
+  width: 135px; 
+  ::after {
+    background-image: url(/assets/images/download-button.svg);
+  }
+}
+
+.jui-toolbar__menu-button--printer {
+  width: 100px;
+  ::after {
+    background-image: url(/assets/images/printer.svg);
+  }
+}
+
+.jui-toolbar__menu-button--comments {
+  width: 140px;
+  ::after {
+    background-image: url(/assets/images/icon-casefile-comments.svg);
+  }
+}
+
+.jui-toolbar__menu-button--more-options {
+  width: 155px;
+  border-left: 1px solid #dee0e2;
+  border-right: none;
+  ::after {
+    background-image: url(/assets/images/more.svg);
+  }
+}
+
+.jui-toolbar__menu-button--more-options__hidden {
+  display: none;
+}
+
+.button-image {
+  border: none;
+  margin: 2px;
+  height: 18px;
+  vertical-align: middle;
+  background-color: transparent;
+}
+
+@media (min-width: 40.0625em) {
+  .jui-toolbar__button {
+    font-size: 1rem;
+    line-height: 1;
+  }
+}
+
+.dropdown-menu {
+  background-color: #ffffff;
+  display: flex;
+  flex-flow: column wrap;
+  border-left: 1px solid #dee0e2;
+  // Each toolbar button already has a border-right, so no need to add one here
+  border-bottom: 1px solid #dee0e2;
+
+  // Used to hide a button on the dropdown menu
+  .button-hidden-on-dropdown {
+    display: none;
+  }
+}
+
+.toolbarLabel {
+  font-size: 14px;
+  color: #000;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
   outline: 3px solid #ffbf47;
   outline-offset: 0;
   z-index: 1;
+}
+
+.notSupported {
+  float: right;
 }

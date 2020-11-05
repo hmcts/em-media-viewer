@@ -42,8 +42,11 @@
     }
 
     #toolbar-title {
-        flex: 0 0 200px;
+        flex: 0 0 210px;
         text-align: right;
+        label {
+            margin-left: 10px;
+        }
     }
 
     #presentation-mode,
