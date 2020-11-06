@@ -50,41 +50,41 @@
   transition-timing-function: ease;
 }
 #viewerContainer {
-  box-shadow: inset 1px 0 0 hsla(0,0%,100%,.05);
+  box-shadow: inset 1px 0 0 hsla(0, 0%, 100%, 0.05);
 }
-html[dir='rtl'] #viewerContainer {
-  box-shadow: inset -1px 0 0 hsla(0,0%,100%,.05);
+html[dir="rtl"] #viewerContainer {
+  box-shadow: inset -1px 0 0 hsla(0, 0%, 100%, 0.05);
 }
 
 #toolbarContainer {
   width: 100%;
 }
 
-#toolbarContainer, .findbar, .secondaryToolbar {
+#toolbarContainer,
+.findbar,
+.secondaryToolbar {
   position: relative;
-  height: 32px;
-  background-color: #474747; /* fallback */
-  background-image: url(/assets/images/texture.png),
-  linear-gradient(hsla(0,0%,32%,.99), hsla(0,0%,27%,.95));
+  height: 42px;
 }
-#toolbarContainer, .findbar, .secondaryToolbar {
-  box-shadow: inset 0 1px 1px hsla(0,0%,0%,.15),
-  inset 0 -1px 0 hsla(0,0%,100%,.05),
-  0 1px 0 hsla(0,0%,0%,.15),
-  0 1px 1px hsla(0,0%,0%,.1);
+#toolbarContainer,
+.findbar,
+.secondaryToolbar {
+  box-shadow: inset 0 1px 1px hsla(0, 0%, 0%, 0.15), inset 0 -1px 0 hsla(0, 0%, 100%, 0.05),
+    0 1px 0 hsla(0, 0%, 0%, 0.15), 0 1px 1px hsla(0, 0%, 0%, 0.1);
 }
-html[dir='rtl'] #toolbarContainer, .findbar, .secondaryToolbar {
-  box-shadow: inset 0 1px 1px hsla(0,0%,0%,.15),
-  inset 0 -1px 0 hsla(0,0%,100%,.05),
-  0 1px 0 hsla(0,0%,0%,.15),
-  0 1px 1px hsla(0,0%,0%,.1);
+html[dir="rtl"] #toolbarContainer,
+.findbar,
+.secondaryToolbar {
+  box-shadow: inset 0 1px 1px hsla(0, 0%, 0%, 0.15), inset 0 -1px 0 hsla(0, 0%, 100%, 0.05),
+    0 1px 0 hsla(0, 0%, 0%, 0.15), 0 1px 1px hsla(0, 0%, 0%, 0.1);
 }
 
 #toolbarViewer {
   height: 32px;
 }
 
-.findbar, .secondaryToolbar {
+.findbar,
+.secondaryToolbar {
   top: 32px;
   position: absolute;
   z-index: 10000;
@@ -92,7 +92,7 @@ html[dir='rtl'] #toolbarContainer, .findbar, .secondaryToolbar {
   min-width: 16px;
   padding: 0px 6px 0px 6px;
   margin: 4px 2px 4px 2px;
-  color: hsl(0,0%,85%);
+  color: hsl(0, 0%, 85%);
   font-size: 12px;
   line-height: 14px;
   text-align: left;
@@ -106,7 +106,7 @@ html[dir='rtl'] #toolbarContainer, .findbar, .secondaryToolbar {
   transform: translateX(-50%);
 }
 
-html[dir='rtl'] #toolbarViewerRight {
+html[dir="rtl"] #toolbarViewerRight {
   float: left;
 }
 #toolbarViewerRight {
@@ -120,9 +120,9 @@ html[dir='rtl'] #toolbarViewerRight {
   float: left;
 }
 
-html[dir='rtl'] #toolbarViewerMiddle > *,
-html[dir='rtl'] #toolbarViewerRight > *,
-html[dir='rtl'] .findbar * {
+html[dir="rtl"] #toolbarViewerMiddle > *,
+html[dir="rtl"] #toolbarViewerRight > *,
+html[dir="rtl"] .findbar * {
   position: relative;
   float: right;
 }
@@ -132,13 +132,13 @@ html[dir='rtl'] .findbar * {
   padding: 8px 0;
   margin: 8px 4px;
   width: 1px;
-  background-color: hsla(0,0%,0%,.5);
-  box-shadow: 0 0 0 1px hsla(0,0%,100%,.08);
+  background-color: hsla(0, 0%, 0%, 0.5);
+  box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.08);
 }
 .verticalToolbarSeparator {
   margin-left: 2px;
 }
-html[dir='rtl'] .verticalToolbarSeparator {
+html[dir="rtl"] .verticalToolbarSeparator {
   margin-right: 2px;
 }
 
@@ -147,13 +147,13 @@ html[dir='rtl'] .verticalToolbarSeparator {
   margin: 0 0 4px 0;
   height: 1px;
   width: 100%;
-  background-color: hsla(0,0%,0%,.5);
-  box-shadow: 0 0 0 1px hsla(0,0%,100%,.08);
+  background-color: hsla(0, 0%, 0%, 0.5);
+  box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.08);
 }
 
 .noResults {
   font-size: 12px;
-  color: hsla(0,0%,100%,.8);
+  color: hsla(0, 0%, 100%, 0.8);
   font-style: italic;
   cursor: default;
 }
@@ -161,11 +161,15 @@ html[dir='rtl'] .verticalToolbarSeparator {
 /* TODO: file FF bug to support ::-moz-selection:window-inactive
    so we can override the opaque grey background when the window is inactive;
    see https://bugzilla.mozilla.org/show_bug.cgi?id=706209 */
-::-moz-selection { background: rgba(0,0,255,0.3); }
-::selection { background: rgba(0,0,255,0.3); }
+::-moz-selection {
+  background: rgba(0, 0, 255, 0.3);
+}
+::selection {
+  background: rgba(0, 0, 255, 0.3);
+}
 
 #errorWrapper {
-  background: none repeat scroll 0 0 #FF5555;
+  background: none repeat scroll 0 0 #ff5555;
   color: white;
   left: 0;
   position: absolute;
@@ -187,7 +191,7 @@ html[dir='rtl'] .verticalToolbarSeparator {
 }
 
 #errorMoreInfo {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: black;
   padding: 3px;
   margin: 3px;
@@ -217,7 +221,8 @@ html[dir='rtl'] .verticalToolbarSeparator {
 }
 
 .has-redact-bar.has-different-page-size {
-  .rotateCcw, .rotateCw {
+  .rotateCcw,
+  .rotateCw {
     display: none;
   }
 }

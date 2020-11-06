@@ -21,6 +21,7 @@
       </ng-template>
     </div>
   </div>
+  <mv-search-bar></mv-search-bar>
 </div>
 <div id="mvMenuItems" #mvMenuItems>
   <ng-template #menuItems>
@@ -42,8 +43,8 @@
       <span data-l10n-id="draw_label">Draw a box</span>
     </button>
 
-    <button *ngIf="toolbarButtons.showHighlightButton" [disabled]="icpEnabled" id="mvHighlightBtn"
-      #mvHighlightBtn class="jui-toolbar__button jui-toolbar__menu-button--highlight" title="Highlight"
+    <button *ngIf="toolbarButtons.showHighlightButton" [disabled]="icpEnabled" id="mvHighlightBtn" #mvHighlightBtn
+      class="jui-toolbar__button jui-toolbar__menu-button--highlight" title="Highlight"
       [class.button-hidden-on-toolbar]="!isToolbarButtonVisible(mvHighlightBtn.id)"
       [class.button-hidden-on-dropdown]="isToolbarButtonVisible(mvHighlightBtn.id)"
       [class.toggled]="toolbarEvents.highlightModeSubject | async" aria-pressed="false"
@@ -114,24 +115,24 @@
       <span>Rotate</span>
     </div>
 
-    <button *ngIf="toolbarButtons.showSearchBar" [disabled]="icpEnabled" id="mvSearchBtn" #mvSearchBtn
-      title="Search" data-l10n-id="searchbar" class="jui-toolbar__button jui-toolbar__menu-button--search"
+    <button *ngIf="toolbarButtons.showSearchBar" [disabled]="icpEnabled" id="mvSearchBtn" #mvSearchBtn title="Search"
+      data-l10n-id="searchbar" class="jui-toolbar__button jui-toolbar__menu-button--search"
       [class.button-hidden-on-toolbar]="!isToolbarButtonVisible(mvSearchBtn.id)"
       [class.button-hidden-on-dropdown]="isToolbarButtonVisible(mvSearchBtn.id)" aria-pressed="false"
       (click)="toggleSearchBar()">
       <span data-l10n-id="search_label">Search</span>
     </button>
 
-    <button *ngIf="enableICP && toolbarButtons.showPresentationMode && isPdf()"
-      [disabled]="icpEnabled || !contentType" id="mvPresentBtn" #mvPresentBtn
-      class="jui-toolbar__button jui-toolbar__menu-button--present" title="In-Court Presentation Mode"
-      data-l10n-id="icpMode_label" [class.button-hidden-on-toolbar]="!isToolbarButtonVisible(mvPresentBtn.id)"
+    <button *ngIf="enableICP && toolbarButtons.showPresentationMode && isPdf()" [disabled]="icpEnabled || !contentType"
+      id="mvPresentBtn" #mvPresentBtn class="jui-toolbar__button jui-toolbar__menu-button--present"
+      title="In-Court Presentation Mode" data-l10n-id="icpMode_label"
+      [class.button-hidden-on-toolbar]="!isToolbarButtonVisible(mvPresentBtn.id)"
       [class.button-hidden-on-dropdown]="isToolbarButtonVisible(mvPresentBtn.id)" aria-pressed="false"
-      (click)="enterIcpMode()"><span data-l10n-id="icpMode_label">Present</span>
+      (click)="togglePresentBar()"><span data-l10n-id="icpMode_label">Present</span>
     </button>
 
-    <button *ngIf="enableRedaction && toolbarButtons.showRedact" [disabled]="icpEnabled" id="mvRedactBtn"
-      #mvRedactBtn title="Redact" data-l10n-id="redact" class="jui-toolbar__button jui-toolbar__menu-button--marker"
+    <button *ngIf="enableRedaction && toolbarButtons.showRedact" [disabled]="icpEnabled" id="mvRedactBtn" #mvRedactBtn
+      title="Redact" data-l10n-id="redact" class="jui-toolbar__button jui-toolbar__menu-button--marker"
       [class.button-hidden-on-toolbar]="!isToolbarButtonVisible(mvRedactBtn.id)"
       [class.button-hidden-on-dropdown]="isToolbarButtonVisible(mvRedactBtn.id)" aria-pressed="false"
       (click)="toggleRedactBar()">

@@ -1,39 +1,60 @@
-<div class="findbar doorHanger" [hidden]="toolbarEvents.searchBarHidden | async">
-  <div id="findbarInputContainer">
-    <input #findInput
-           [(ngModel)]="searchText"
-           (ngModelChange)="search()"
-           (keydown)="onInputKeyPress($event)"
-           [ngClass]="'toolbarField ' + (!searchText || haveResults ? '' : 'notFound')"
-           title="Find"
-           placeholder="Find in document…"
-           tabindex="0"
-           data-l10n-id="find_input">
-    <div class="splitToolbarButton">
-      <button id="findPrevious" class="toolbarButton findPrevious"
-              title="Find the previous occurrence of the phrase" tabindex="0" data-l10n-id="find_previous"
-              (click)="searchPrev()">
-        <span data-l10n-id="find_previous_label">Previous</span>
-      </button>
-      <div class="splitToolbarButtonSeparator"></div>
-      <button id="findNext" class="toolbarButton findNext" title="Find the next occurrence of the phrase"
-              tabindex="0" data-l10n-id="find_next" (click)="searchNext()">
-        <span data-l10n-id="find_next_label">Next</span>
+<div class="searchbar govuk-!-padding-3" [hidden]="toolbarEvents.searchBarHidden | async">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <input class="govuk-input govuk-!-display-inline-block govuk-!-width-three-quarters govuk-!-margin-bottom-1"
+        type="text" #findInput [(ngModel)]="searchText" (keydown)="onInputKeyPress($event)" title="Find"
+        placeholder="Find in document…" tabindex="0" data-l10n-id="find_input" />
+      <button class="govuk-button govuk-!-display-inline-block govuk-!-margin-bottom-4" data-module="govuk-button"
+        (click)="search()">
+        Search
       </button>
     </div>
   </div>
-  <div id="findbarOptionsOneContainer">
-    <input (change)="highlightAll = !highlightAll; search()" [checked]="highlightAll" type="checkbox" id="findHighlightAll" class="toolbarField" tabindex="0">
-    <label for="findHighlightAll" class="toolbarLabel" data-l10n-id="find_highlight">Highlight all</label>
-    <input (change)="matchCase = !matchCase; search()" [checked]="matchCase" type="checkbox" id="findMatchCase" class="toolbarField" tabindex="0">
-    <label for="findMatchCase" class="toolbarLabel" data-l10n-id="find_match_case_label">Match case</label>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <span id="findResultsCount" class="govuk-!-display-inline-block govuk-!-margin-right-4">{{resultsText}}</span>
+      <a *ngIf="resultCount > 0" href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2"
+        (click)="searchPrev()" title="Find the previous occurrence of the phrase" data-l10n-id="find_previous">Prev</a>
+      <a *ngIf="resultCount > 0" href="#" class="govuk-link govuk-link--no-visited-state" (click)="searchNext()"
+        title="Find the next occurrence of the phrase" data-l10n-id="find_next">Next</a>
+    </div>
+    <div class="govuk-grid-column-one-quarter">
+      <a href="#" class="govuk-link govuk-link--no-visited-state" (click)="toggleAdvancedSearch()" title="Advanced"
+        data-l10n-id="find_advanced">Advanced</a>
+    </div>
   </div>
-  <div id="findbarOptionsTwoContainer">
-    <input (change)="wholeWord = !wholeWord; search()" [checked]="wholeWord" type="checkbox" id="findEntireWord" class="toolbarField" tabindex="0">
-    <label for="findEntireWord" class="toolbarLabel" data-l10n-id="find_entire_word_label">Whole words</label>
-    <span *ngIf="resultsText" id="findResultsCount" class="toolbarLabel">{{resultsText}}</span>
+
+  <div class="govuk-grid-row" *ngIf="advancedSearchVisible">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-form-group govuk-!-margin-top-3 govuk-!-margin-bottom-1">
+        <fieldset class="govuk-fieldset" aria-describedby="advanced">
+          <div class="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="findHighlightAll" name="findHighlightAll" type="checkbox"
+                (change)="highlightAll = !highlightAll; search()" [checked]="highlightAll">
+              <label class="govuk-label govuk-checkboxes__label" for="findHighlightAll" data-l10n-id="find_highlight">
+                Highlight all (instances of matches)
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="findMatchCase" name="findMatchCase" type="checkbox"
+                (change)="matchCase = !matchCase; search()" [checked]="matchCase">
+              <label class="govuk-label govuk-checkboxes__label" for="findMatchCase"
+                data-l10n-id="find_match_case_label">
+                Match text (exact words)
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="findEntireWord" name="findMatchCase" type="checkbox"
+                (change)="wholeWord = !wholeWord; search()" [checked]="wholeWord">
+              <label class="govuk-label govuk-checkboxes__label" for="findEntireWord"
+                data-l10n-id="find_entire_word_label">
+                Match sentence (strings of words)
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
   </div>
-  <div id="findbarMessageContainer">
-    <span id="findMsg" class="toolbarLabel"></span>
-  </div>
-</div>

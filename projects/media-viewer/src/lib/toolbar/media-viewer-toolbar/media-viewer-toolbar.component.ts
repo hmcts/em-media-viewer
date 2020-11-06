@@ -207,7 +207,8 @@ export class MediaViewerToolbarComponent implements OnInit, OnDestroy, AfterView
     this.toolbarEvents.sidebarOpen.next(!this.toolbarEvents.sidebarOpen.getValue());
   }
 
-  public enterIcpMode() {
+  public togglePresentBar() {
+    this.toolbarEvents.searchBarHidden.next(true);
     this.toolbarEvents.icp.enable();
   }
 
@@ -261,10 +262,6 @@ export class MediaViewerToolbarComponent implements OnInit, OnDestroy, AfterView
     this.toolbarEvents.toggleCommentsPanel(!this.toolbarEvents.commentsPanelVisible.getValue());
   }
 
-  public togglePresentBar() {
-    this.toolbarEvents.icp.enable();
-  }
-
   public toggleRedactBar() {
     this.toolbarEvents.toggleRedactionMode();
   }
@@ -277,7 +274,7 @@ export class MediaViewerToolbarComponent implements OnInit, OnDestroy, AfterView
     return this.contentType === 'pdf';
   }
 
-  toggleSearchBar() {
+  public toggleSearchBar() {
     this.toolbarEvents.searchBarHidden.next(!this.toolbarEvents.searchBarHidden.getValue());
   }
 }

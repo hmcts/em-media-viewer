@@ -4,16 +4,23 @@ import { MediaViewerToolbarComponent } from './media-viewer-toolbar.component';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { OverlayModule } from '@angular/cdk/overlay';
-
+import { Component } from '@angular/core';
 describe('MediaViewerToolbarComponent', () => {
   let component: MediaViewerToolbarComponent;
   let fixture: ComponentFixture<MediaViewerToolbarComponent>;
   let toolbarService: ToolbarEventService;
   let nativeElement;
 
+  @Component({
+    selector: 'mv-search-bar',
+    template: ''
+  })
+  class MockSearchComponent {
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MediaViewerToolbarComponent],
+      declarations: [MediaViewerToolbarComponent, MockSearchComponent],
       providers: [ToolbarEventService, ToolbarButtonVisibilityService],
       imports: [OverlayModule]
     })
@@ -226,4 +233,3 @@ describe('MediaViewerToolbarComponent', () => {
     expect(downloadSpy).toHaveBeenCalledWith();
   });
 });
-

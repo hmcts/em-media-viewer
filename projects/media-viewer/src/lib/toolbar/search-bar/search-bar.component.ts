@@ -16,14 +16,16 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   wholeWord = false;
   resultsText = '';
   searchText = '';
-  haveResults = false;
+  resultCount = 0;
 
   private subscriptions: Subscription[] = [];
+
+  public advancedSearchVisible = false;
 
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.subscriptions.push(
@@ -81,15 +83,22 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   private setSearchResultsCount(results: SearchResultsCount): void {
-    this.haveResults = results.total > 0;
-    this.resultsText = this.haveResults
-      ? `${results.current} of ${results.total} matches`
-      : 'Phrase not found';
+    this.resultCount = results.total;
+    this.resultsText = this.resultCount > 0
+      ? `Found ${results.current} of ${results.total}`
+      : 'No results found';
   }
 
   public onInputKeyPress(e: KeyboardEvent): void {
     if (e.key === 'Escape') {
       this.toolbarEvents.searchBarHidden.next(true);
     }
+    if (e.key === 'Enter') {
+      this.search();
+    }
+  }
+
+  public toggleAdvancedSearch(): void {
+    this.advancedSearchVisible = !this.advancedSearchVisible;
   }
 }

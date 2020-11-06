@@ -16,7 +16,7 @@ export class SubToolbarComponent implements OnInit, OnDestroy {
   constructor(
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.subscription = this.toolbarEvents.icp.enabled.subscribe(enabled => {
@@ -49,7 +49,7 @@ export class SubToolbarComponent implements OnInit, OnDestroy {
     this.closeMenu();
   }
 
-  enterIcpMode() {
+  togglePresentBar() {
     this.toolbarEvents.icp.enable();
   }
 
