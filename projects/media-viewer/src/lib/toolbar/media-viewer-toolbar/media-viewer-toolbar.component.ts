@@ -30,8 +30,9 @@ export class MediaViewerToolbarComponent implements OnInit, OnDestroy, AfterView
   private readonly breakWidths: number[] = [];
   private readonly toolbarButtonVisibilityStates: ButtonState[] = [];
 
-  icpEnabled = false;
-  showCommentsPanel: boolean;
+  public icpEnabled = false;
+  public redactionEnabled = false;
+  public showCommentsPanel: boolean;
 
   public pageNumber = 1;
   public pageCount = 0;
@@ -68,15 +69,15 @@ export class MediaViewerToolbarComponent implements OnInit, OnDestroy, AfterView
         if (this.icpEnabled) {
           this.toolbarEvents.toggleCommentsPanel(!enabled);
           this.toolbarEvents.subToolbarHidden.next(true);
+          this.toolbarEvents.sidebarOpen.next(false);
         }
       }),
+      this.toolbarEvents.redactionMode.subscribe(enabled => {
+        this.redactionEnabled = enabled;
+      }),
+
       this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
-
-    this.subscriptions.push(this.toolbarEvents.icp.enabled.subscribe(enabled => {
-      this.icpEnabled = enabled;
-      if (this.icpEnabled) { this.toolbarEvents.sidebarOpen.next(false); }
-    }));
   }
 
   public ngOnDestroy(): void {

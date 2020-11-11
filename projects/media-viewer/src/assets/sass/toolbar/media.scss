@@ -156,59 +156,6 @@
     content: url(/assets/images/secondaryToolbarButton-rotateCcw@2x.png);
   }
 
-  .redaction-preview-btn {
-    position: relative;
-    background: none;
-    border: none;
-    width: 20px;
-    height: 20px;
-    &:before {
-      content: "";
-      position: absolute;
-      top: 1px;
-      left: 0;
-      filter: invert(99%) sepia(0%) saturate(861%) hue-rotate(178deg) brightness(116%) contrast(73%);
-      width: 27px;
-      height: 27px;
-    }
-    span {
-      width: 0;
-      height: 0;
-      overflow: hidden;
-      display: block;
-    }
-  }
-
-  .redaction-preview {
-    &:before {
-      background: url(/assets/images/icon-preview.svg) 0 0 no-repeat;
-      background-size: 25px 25px;
-    }
-  }
-
-  .redaction-preview-off {
-    &:before {
-      background: url(/assets/images/icon-preview-off.svg) 0 0 no-repeat;
-      background-size: 25px 25px;
-    }
-  }
-
-  .unmark-all {
-    &:before {
-      top: 3px;
-      background: url(/assets/images/icon-unmark-all.svg) 5px 0 no-repeat;
-      background-size: 20px 20px;
-    }
-  }
-
-  .redaction-redact {
-    margin: 3px 0 0 20px;
-    border: none;
-    color: #DDD;
-    background-color: #474747;
-    font-size: 16px;
-  }
-
   .toolbarButton.rotateCw::before,
   .secondaryToolbarButton.rotateCw::before {
     content: url(/assets/images/secondaryToolbarButton-rotateCw@2x.png);

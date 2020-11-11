@@ -1,6 +1,7 @@
 <div id="outerContainer"
      [ngClass]="{
        'has-redact-bar': toolbarEvents.redactionMode | async,
+       'icp-mode': toolbarEvents.icp.enabled | async,
        'is-redaction-preview': toolbarEvents.redactionPreview | async,
        sidebarOpen: toolbarEvents.sidebarOpen | async,
        'has-scroll-bar': hasScrollBar,

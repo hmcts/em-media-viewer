@@ -1,6 +1,4 @@
 #icp-toolbar {
-    // sits below the loading bar so add top margin
-    margin-top: 9px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -11,7 +9,6 @@
         white-space: nowrap;
         font-size: 1rem;
         font-size: 16px;
-        font-size: 1rem;
         margin: 0 5px;
         font-weight: 700;
         line-height: 3rem;

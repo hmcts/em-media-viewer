@@ -1,10 +1,10 @@
 $--sidebar-width: 20%;
 #sidebarContainer {
   .has-redact-bar & {
-    top: 65px;
+    top: 83px;
   }
-  .icp-mode {
-    top: 89px;
+  .icp-mode & {
+    top: 91px;
     height: 100%
   }
   position: absolute;
