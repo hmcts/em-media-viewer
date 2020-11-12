@@ -1,5 +1,4 @@
 .mv-toolbar__container {
-  width: 100%;
   height: 40px;
   background-color: #ffffff;
   border: 1px solid #dee0e2;
@@ -314,6 +313,17 @@
   .button-hidden-on-dropdown {
     display: none;
   }
+}
+
+/* remove up and down arrows from page number field as there are already up and down icons on the toolbar
+/* Chrome, Safari, Edge, Opera */
+#pageNumber ::-webkit-outer-spin-button, #pageNumber::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Firefox */
+#pageNumber[type=number] {
+  -moz-appearance: textfield;
 }
 
 .toolbarLabel {

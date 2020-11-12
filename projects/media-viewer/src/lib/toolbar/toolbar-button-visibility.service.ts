@@ -16,7 +16,6 @@ export class ToolbarButtonVisibilityService {
   public showHighlightButton = false;
   public showDrawButton = false;
   public showSearchBar = false;
-  public showSubToolbar = false;
   public showSidebar = false;
   public showCommentSummary = false;
   public showGrabNDragButton = false;
@@ -31,14 +30,13 @@ export class ToolbarButtonVisibilityService {
     this.showNavigation = false;
     this.showZoom = false;
     this.showRotate = false;
-    this.showPresentationMode = true;
-    this.showRedact = true;
+    this.showPresentationMode = false;
+    this.showRedact = false;
     this.showOpenFile = false;
     this.showBookmark = false;
     this.showHighlightButton = false;
     this.showDrawButton = false;
     this.showSearchBar = false;
-    this.showSubToolbar = false;
     this.showSidebar = false;
     this.showCommentSummary = false;
     this.showGrabNDragButton = false;
@@ -62,7 +60,9 @@ export const defaultPdfOptions = {
   showSearchBar: true,
   showSidebar: true,
   showGrabNDragButton: true,
-  showCommentSummary: true
+  showCommentSummary: true,
+  showPresentationMode: true,
+  showRedact: true
 };
 
 /**
@@ -74,7 +74,8 @@ export const defaultImageOptions = {
   showZoom: true,
   showRotate: true,
   showGrabNDragButton: true,
-  showCommentSummary: true
+  showCommentSummary: true,
+  showRedact: false
 };
 
 /**

@@ -2,7 +2,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <input class="govuk-input govuk-!-display-inline-block govuk-!-width-three-quarters govuk-!-margin-bottom-1"
-        type="text" #findInput [(ngModel)]="searchText" (keydown)="onInputKeyPress($event)" title="Find"
+        type="text" aria-label="Find in document" #findInput [(ngModel)]="searchText" (keydown.escape)="onEscapeKeyPress($event)" (keydown.enter)="onEnterKeyPress($event)" title="Find in document"
         placeholder="Find in document…" tabindex="0" data-l10n-id="find_input" />
       <button class="govuk-button govuk-!-display-inline-block govuk-!-margin-bottom-4" data-module="govuk-button"
         (click)="search()">

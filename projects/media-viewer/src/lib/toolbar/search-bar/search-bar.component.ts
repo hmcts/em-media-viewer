@@ -89,14 +89,14 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       : 'No results found';
   }
 
-  public onInputKeyPress(e: KeyboardEvent): void {
-    if (e.key === 'Escape') {
+  public onEscapeKeyPress(e: KeyboardEvent): void {
       this.toolbarEvents.searchBarHidden.next(true);
-    }
-    if (e.key === 'Enter') {
-      this.search();
-    }
   }
+
+  public onEnterKeyPress(e: KeyboardEvent): void {
+      this.search();
+  }
+
 
   public toggleAdvancedSearch(): void {
     this.advancedSearchVisible = !this.advancedSearchVisible;

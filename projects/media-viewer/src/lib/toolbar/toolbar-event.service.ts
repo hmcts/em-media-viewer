@@ -46,7 +46,6 @@ export class ToolbarEventService {
   public readonly clearAllRedactMarkers = new Subject();
 
   public readonly sidebarOpen = new BehaviorSubject(false);
-  public readonly subToolbarHidden = new BehaviorSubject(true);
   public readonly searchBarHidden = new BehaviorSubject(true);
   public readonly commentsPanelVisible = new BehaviorSubject(false);
 
