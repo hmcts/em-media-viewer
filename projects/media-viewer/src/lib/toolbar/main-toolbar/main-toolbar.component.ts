@@ -5,11 +5,6 @@ import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { NumberHelperService } from '../../../lib/shared/util/services/number.helper.service';
 
-export interface ButtonState {
-  id: string;
-  showOnToolbar: boolean;
-}
-
 @Component({
   selector: 'mv-main-toolbar',
   templateUrl: './main-toolbar.component.html'
@@ -22,12 +17,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('zoomSelect') public zoomSelect: ElementRef;
   @ViewChild('mvToolbarMain') public mvToolbarMain: ElementRef<HTMLElement>;
-  @ViewChild('mvMenuItems') public mvMenuItems: ElementRef<HTMLElement>;
 
-  private totalButtonSpace = 0;
   private readonly subscriptions: Subscription[] = [];
-  private readonly breakWidths: number[] = [];
-  private readonly toolbarButtonVisibilityStates: ButtonState[] = [];
 
   public icpEnabled = false;
   public redactionEnabled = false;
@@ -50,10 +41,10 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       3)
   ];
 
-  public zoomScales = [this.scaleFactor(0.1), this.scaleFactor(0.25), this.scaleFactor(0.5),
-  this.scaleFactor(0.75), this.scaleFactor(1), this.scaleFactor(1.25),
-  this.scaleFactor(1.5), this.scaleFactor(2.5), this.scaleFactor(3),
-  this.scaleFactor(5)];
+  public zoomScales = [0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 2.5, 3, 5];
+
+  total = 0;
+  requiredSpaceFor: { [id: string]: number } = {};
 
   public constructor(
     public readonly toolbarEvents: ToolbarEventService,
@@ -90,114 +81,21 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public ngAfterViewInit() {
-    let totalSpace = 0;
-
-    // Get all toolbar elements
-    const toolbarElements: HTMLElement[] = Array.prototype.slice.call(this.mvToolbarMain.nativeElement.children);
-
-    // Set a flag for each element's visibility and push to array of button states
-    for (const element of toolbarElements) {
-      this.toolbarButtonVisibilityStates.push({ id: element.id, showOnToolbar: true } as ButtonState);
-    }
-
-    // Trigger change detection (necessary to ensure all toolbar elements are rendered fully - and have a size - at this stage)
-    this.cdr.detectChanges();
-
-    for (const element of toolbarElements) {
-      this.totalButtonSpace += element.getBoundingClientRect().width;
-    }
-
-    // add the main toolbar left margin to the available space
-    this.totalButtonSpace = this.totalButtonSpace + this.mvToolbarMain.nativeElement.getBoundingClientRect().left;
-
-    // Loop over all elements and set sum of widths for each toolbar element
-    for (const element of toolbarElements) {
-      // Use bounding client rectangle width for accuracy
-      totalSpace += element.getBoundingClientRect().width;
-      this.breakWidths.push(totalSpace);
-    }
-    // Call calculation method
-    this.checkCalculation();
+    Array.from(this.mvToolbarMain.nativeElement.children).forEach(button => {
+      this.total += button.getBoundingClientRect().width;
+      this.requiredSpaceFor[button.id] = this.total;
+    });
   }
 
   @HostListener('window:resize', [])
   public onResize() {
     this.cdr.detectChanges();
-    // Call calculation method
-    this.checkCalculation();
   }
 
-  private checkCalculation() {
-    // if the more options button is visible and we have enough space to all the buttons then show them all
-    if (this.totalButtonSpace < this.mvMenuItems.nativeElement.getBoundingClientRect().width) {
-      for (const buttonState of this.toolbarButtonVisibilityStates) {
-        buttonState.showOnToolbar = true;
-      }
-      return;
-    }
-
-    // Get current space of main toolbar element, including the right margin (if any) to the "More options" button
-    const availableSpace = this.mvToolbarMain.nativeElement.getBoundingClientRect().width +
-      parseFloat(getComputedStyle(this.mvToolbarMain.nativeElement).marginRight);
-    // Get space required for all elements in main toolbar element (i.e. break-width of the last visible element from breakWidth array)
-    const indexOfLastVisibleElement = this.getIndexOfLastVisibleToolbarButton();
-    const totalSpaceRequired = this.breakWidths[indexOfLastVisibleElement];
-
-    // If more space is needed than is available, hide last element
-    if (totalSpaceRequired > availableSpace) {
-      // Mark the toolbar button as hidden in the button states array
-      this.setToolbarButtonVisible(this.toolbarButtonVisibilityStates[indexOfLastVisibleElement].id, false);
-
-      // Apply changes
-      this.cdr.detectChanges();
-
-      // Call this method to recalculate for rest of toolbar elements
-      this.checkCalculation();
-    } else if (this.toolbarHasHiddenButtons() && this.breakWidths[indexOfLastVisibleElement + 1] <= availableSpace) {
-      // If there are some toolbar buttons marked as hidden in the button states array, AND there is room for the first of these,
-      // mark the button as visible
-      for (const buttonState of this.toolbarButtonVisibilityStates) {
-        if (!buttonState.showOnToolbar) {
-          buttonState.showOnToolbar = true;
-          break;
-        }
-      }
-
-      // Call this method to recalculate for rest of toolbar elements
-      this.checkCalculation();
-    }
-  }
-
-  public isToolbarButtonVisible(buttonId: string): boolean {
-    const button = this.toolbarButtonVisibilityStates.find(vs => vs.id === buttonId);
-    if (button) { return button.showOnToolbar; }
-  }
-
-  private setToolbarButtonVisible(buttonId: string, visible: boolean) {
-    const button = this.toolbarButtonVisibilityStates.find(vs => vs.id === buttonId);
-    if (button) { button.showOnToolbar = visible; }
-  }
-
-  public toolbarHasHiddenButtons(): boolean {
-    return this.toolbarButtonVisibilityStates.some(buttonState => buttonState.showOnToolbar === false);
-  }
-
-  private getIndexOfLastVisibleToolbarButton(): number {
-    for (let i = this.toolbarButtonVisibilityStates.length - 1; i >= 0; i--) {
-      if (this.toolbarButtonVisibilityStates[i].showOnToolbar) {
-        return i;
-      }
-    }
-  }
-
-  // Handler onClick Event of the Highlight Mode Button
   public onClickHighlightToggle() {
-    // Emit an event that HighlightMode has been enabled/disabled
     this.toolbarEvents.toggleHighlightMode();
   }
-  // Handler onClick Event of the Draw Mode Button
   public onClickDrawToggle() {
-    // Emit an event that HighlightMode has been enabled/disabled
     this.toolbarEvents.toggleDrawMode();
   }
 
@@ -274,12 +172,5 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public toggleSearchBar() {
     this.toolbarEvents.searchBarHidden.next(!this.toolbarEvents.searchBarHidden.getValue());
-  }
-
-  private scaleFactor(scaleFactor: number) {
-    return {
-      value: scaleFactor,
-      scale: scaleFactor * 100
-    };
   }
 }
