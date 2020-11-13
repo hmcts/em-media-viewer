@@ -43,8 +43,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public zoomScales = [0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 2.5, 3, 5];
 
-  total = 0;
-  requiredSpaceFor: { [id: string]: number } = {};
+  allButtonsWidth = 0;
+  widthRequiredForBtn: { [id: string]: number } = {};
 
   public constructor(
     public readonly toolbarEvents: ToolbarEventService,
@@ -82,8 +82,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public ngAfterViewInit() {
     Array.from(this.mvToolbarMain.nativeElement.children).forEach(button => {
-      this.total += button.getBoundingClientRect().width;
-      this.requiredSpaceFor[button.id] = this.total;
+      this.allButtonsWidth += button.getBoundingClientRect().width;
+      this.widthRequiredForBtn[button.id] = this.allButtonsWidth;
     });
   }
 

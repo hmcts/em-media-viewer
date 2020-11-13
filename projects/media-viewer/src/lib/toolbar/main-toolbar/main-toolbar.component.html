@@ -1,7 +1,7 @@
 <div class="toolbar">
   <div id="toolbarContainer">
     <div class="mv-toolbar__container">
-      <div class="mv-toolbar" [class.notSupported]="!contentType">
+      <div #mvToolbar class="mv-toolbar" [class.notSupported]="!contentType">
         <!-- The mvToolbarMain div contains all toolbar buttons except the "More options" button. This allows for calculation of the available space to display buttons -->
         <div id="mvToolbarMain" class="mv-toolbar-main" #mvToolbarMain>
           <ng-container *ngTemplateOutlet="menuItems"></ng-container>
@@ -10,8 +10,8 @@
             The space occupied by the button (if visible) is excluded from the toolbar space available calculation -->
         <div id="mvToolbarMoreOptions" class="mv-toolbar-more-options">
           <button id="mvMoreOptionsBtn" class="mv-button mv-toolbar__menu-button--more-options"
-            [class.mv-toolbar__menu-button--more-options__hidden]="mvToolbarMain.offsetWidth >= total" aria-pressed="false"
-            (click)="isDropdownMenuOpen = !isDropdownMenuOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+                  [class.mv-toolbar__menu-button--more-options__hidden]="mvToolbar.offsetWidth >= allButtonsWidth" aria-pressed="false"
+                  (click)="isDropdownMenuOpen = !isDropdownMenuOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
             <span>More options</span>
           </button>
           <!-- This template displays the overlay content for the dropdown menu and is connected to the "More options" button -->
@@ -29,16 +29,16 @@
 
           <button *ngIf="toolbarButtons.showSidebar" id="mvIndexBtn" title="Index" data-l10n-id="index" #mvIndexBtn
                   class="mv-button mv-toolbar__menu-button--index"
-                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvIndexBtn']"
-                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvIndexBtn']" aria-pressed="false"
+                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvIndexBtn']"
+                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvIndexBtn']" aria-pressed="false"
                   (click)="toggleSideBar()">
             <span>Index</span>
           </button>
 
           <button *ngIf="toolbarButtons.showDrawButton" [disabled]="icpEnabled || redactionEnabled" id="mvDrawBtn"
             #mvDrawBtn class="mv-button mv-toolbar__menu-button--draw" title="Draw a box" tabindex="-1"
-            [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvDrawBtn']"
-            [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvDrawBtn']"
+            [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']"
+            [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDrawBtn']"
             [class.toggled]="toolbarEvents.drawModeSubject | async" aria-hidden="true" aria-pressed="false"
             data-l10n-id="toggleDrawButton" (click)="onClickDrawToggle()">
             <span data-l10n-id="draw_label">Draw a box</span>
@@ -46,8 +46,8 @@
 
           <button *ngIf="toolbarButtons.showHighlightButton" [disabled]="icpEnabled || redactionEnabled"
             id="mvHighlightBtn" #mvHighlightBtn class="mv-button mv-toolbar__menu-button--highlight" title="Highlight"
-            tabindex="-1" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvHighlightBtn']"
-            [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvHighlightBtn']"
+            tabindex="-1" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvHighlightBtn']"
+            [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvHighlightBtn']"
             [class.toggled]="toolbarEvents.highlightModeSubject | async" aria-hidden="true" aria-pressed="false"
             (click)="onClickHighlightToggle()" data-l10n-id="toggleHighlightButton">
             <span data-l10n-id="highlight_label">Highlight</span>
@@ -55,8 +55,8 @@
 
           <ng-container *ngIf="toolbarButtons.showNavigation">
             <div id="mvPageBtn" #mvPageBtn class="mv-toolbar__menu-button--page" aria-pressed="false"
-              [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvPageBtn']"
-              [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvPageBtn']">
+              [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvPageBtn']"
+              [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvPageBtn']">
               <span>Page</span>
 
               <button id="mvUpBtn" [disabled]="pageNumber === 1" title="Previous Page"
@@ -75,8 +75,8 @@
 
           <ng-container *ngIf="toolbarButtons.showZoom">
             <div id="mvZoomBtn" #mvZoomBtn class="mv-toolbar__menu-button--zoom" aria-pressed="false"
-              [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvZoomBtn']"
-              [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvZoomBtn']">
+              [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvZoomBtn']"
+              [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvZoomBtn']">
               <span>Zoom</span>
               <button [disabled]="toolbarEvents.zoomValueSubject.value == 0.1" id="mvMinusBtn"
                 class="mv-toolbar__menu-button--zoom-out button-image" title="Zoom Out" data-l10n-id="zoom_out"
@@ -97,8 +97,8 @@
           </ng-container>
 
           <div *ngIf="toolbarButtons.showRotate" id="mvRotateBtn" #mvRotateBtn class="mv-toolbar__menu-button--rotate"
-            aria-pressed="false" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvRotateBtn']"
-            [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvRotateBtn']">
+            aria-pressed="false" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvRotateBtn']"
+            [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvRotateBtn']">
             <button id="mvRotateLeftBtn" class="mv-toolbar__menu-button--rotate_left button-image"
               title="Rotate Counterclockwise" data-l10n-id="page_rotate_ccw" (click)="rotate(-90)"><span></span>
             </button>
@@ -110,8 +110,8 @@
 
           <button *ngIf="toolbarButtons.showSearchBar" [disabled]="icpEnabled" id="mvSearchBtn" #mvSearchBtn
                   title="Search" data-l10n-id="searchbar" class="mv-button mv-toolbar__menu-button--search"
-                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvSearchBtn']"
-                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvSearchBtn']" aria-pressed="false"
+                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvSearchBtn']"
+                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvSearchBtn']" aria-pressed="false"
                   (click)="toggleSearchBar()">
             <span data-l10n-id="search_label">Search</span>
           </button>
@@ -119,47 +119,47 @@
           <button *ngIf="enableICP && toolbarButtons.showPresentationMode && isPdf()"
                   [disabled]="icpEnabled || !contentType || redactionEnabled" id="mvPresentBtn" #mvPresentBtn
                   class="mv-button mv-toolbar__menu-button--present" title="In-Court Presentation Mode"
-                  data-l10n-id="icpMode_label" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvPresentBtn']"
-                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvPresentBtn']" aria-pressed="false"
+                  data-l10n-id="icpMode_label" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvPresentBtn']"
+                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvPresentBtn']" aria-pressed="false"
                   (click)="togglePresentBar()"><span data-l10n-id="icpMode_label">Present</span>
           </button>
 
           <button *ngIf="enableRedactions && toolbarButtons.showRedact" [disabled]="icpEnabled" id="mvRedactBtn"
                   #mvRedactBtn title="Redact" data-l10n-id="redact" class="mv-button mv-toolbar__menu-button--redact"
-                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvRedactBtn']"
-                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvRedactBtn']" aria-pressed="false"
+                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvRedactBtn']"
+                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvRedactBtn']" aria-pressed="false"
                   (click)="toggleRedactBar()">
             <span>Redact</span>
           </button>
 
           <button *ngIf="toolbarButtons.showGrabNDragButton" [disabled]="icpEnabled" id="mvGrabBtn" #mvGrabBtn
                   class="mv-button mv-toolbar__menu-button--grab"
-                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvGrabBtn']"
-                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvGrabBtn']" aria-pressed="false"
+                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvGrabBtn']"
+                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvGrabBtn']" aria-pressed="false"
                   (click)="toggleGrabNDrag()">
             <span>Grab and drag</span>
           </button>
 
           <button *ngIf="toolbarButtons.showDownload" [disabled]="icpEnabled || redactionEnabled" id="mvDownloadBtn"
                   #mvDownloadBtn class="mv-button mv-toolbar__menu-button--download" title="Download" data-l10n-id="download"
-                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvDownloadBtn']"
-                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvDownloadBtn']" aria-pressed="false"
+                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDownloadBtn']"
+                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDownloadBtn']" aria-pressed="false"
                   (click)="downloadFile()">
             <span>Download</span>
           </button>
 
           <button *ngIf="toolbarButtons.showPrint" [disabled]="icpEnabled || redactionEnabled" id="mvPrintBtn"
                   #mvPrintBtn title="Print" data-l10n-id="print" class="mv-button mv-toolbar__menu-button--print"
-                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvPrintBtn']"
-                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvPrintBtn']" aria-pressed="false"
+                  [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvPrintBtn']"
+                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvPrintBtn']" aria-pressed="false"
                   (click)="printFile()">
             <span>Print</span>
           </button>
 
           <button *ngIf="enableAnnotations && toolbarButtons.showCommentSummary" [disabled]="redactionEnabled"
                   id="mvCommentsBtn" #mvCommentsBtn class="mv-button mv-toolbar__menu-button--comments" title="Comments"
-                  data-l10n-id="comments" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < requiredSpaceFor['mvCommentsBtn']"
-                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= requiredSpaceFor['mvCommentsBtn']" aria-pressed="false"
+                  data-l10n-id="comments" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvCommentsBtn']"
+                  [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvCommentsBtn']" aria-pressed="false"
                   (click)="toggleCommentsPanel()">
             <span>Comments</span>
           </button>
