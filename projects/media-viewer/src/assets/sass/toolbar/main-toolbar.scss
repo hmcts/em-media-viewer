@@ -18,6 +18,7 @@
       display: block;
       clear: both;
     }
+
   }
 
   .mv-toolbar-main {
@@ -39,6 +40,11 @@
     border-right: none;
     &:after {
       background-image: url(/assets/images/more.svg);
+    }
+    &:focus {
+      outline: 3px solid #ffbf47;
+      outline-offset: -2px;
+      z-index: 99;    
     }
   }
 
@@ -78,7 +84,7 @@
 .mv-toolbar__menu-button--down,
 .mv-toolbar__menu-button--zoom-in,
 .mv-toolbar__menu-button--zoom-out {
-  width: 22px;
+  width: 26px;
   left: 40px;
   font-weight: 400;
   &:after {
@@ -140,7 +146,7 @@
 .mv-toolbar__menu-button--rotate_left:focus,
 .mv-toolbar__menu-button--rotate_right:focus {
   outline: 3px solid #ffbf47;
-  outline-offset: 0;
+  outline-offset: -2px;
   z-index: 1;
 }
 
@@ -156,7 +162,7 @@
 .mv-toolbar__menu-button--zoom {
   width: 190px;
   span:first-of-type {
-    margin-left: 10px;
+    margin-left: 8px;
     margin-right: 0px;
   }
   button:first-of-type {
@@ -204,16 +210,16 @@
   height: 30px;
   padding-top: 10px;
   button:first-of-type {
-    margin-left: 10px;
+    margin-left: 8px;
   }
   button:last-of-type {
-    margin-right: 10px;
+    margin-right: 8px;
   }
 }
 
 .mv-toolbar__menu-button--rotate_left,
 .mv-toolbar__menu-button--rotate_right {
-  width: 22px;
+  width: 26px;
   padding-left: 10px;
   font-weight: 400;
   &:after {
@@ -295,8 +301,8 @@
 
 .button-image {
   border: none;
-  margin: 2px;
-  height: 18px;
+  margin: 0px;
+  height: 22px;
   vertical-align: middle;
   background-color: transparent;
 }
@@ -312,6 +318,11 @@
   // Used to hide a button on the dropdown menu
   .button-hidden-on-dropdown {
     display: none;
+  }
+  &:focus {
+    outline: 0;
+    border-left: 1px solid #dee0e2;
+    border-bottom: 1px solid #dee0e2;
   }
 }
 
@@ -336,7 +347,7 @@ textarea:focus,
 select:focus,
 button:focus {
   outline: 3px solid #ffbf47;
-  outline-offset: 0;
+  outline-offset: -2px;
   z-index: 99;
 }
 

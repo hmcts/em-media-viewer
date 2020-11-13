@@ -17,6 +17,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('zoomSelect') public zoomSelect: ElementRef;
   @ViewChild('mvToolbarMain') public mvToolbarMain: ElementRef<HTMLElement>;
+  @ViewChild('dropdownMenu') public mvMenuItems: ElementRef<HTMLElement>;
 
   private readonly subscriptions: Subscription[] = [];
 
@@ -172,5 +173,13 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public toggleSearchBar() {
     this.toolbarEvents.searchBarHidden.next(!this.toolbarEvents.searchBarHidden.getValue());
+  }
+
+  public toggleMoreOptions() {
+    setTimeout(() => {
+      if (this.mvMenuItems) {
+        this.mvMenuItems.nativeElement.focus();
+      }
+    }, 100);
   }
 }

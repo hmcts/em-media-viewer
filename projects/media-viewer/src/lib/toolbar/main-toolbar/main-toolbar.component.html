@@ -11,13 +11,13 @@
         <div id="mvToolbarMoreOptions" class="mv-toolbar-more-options">
           <button id="mvMoreOptionsBtn" class="mv-button mv-toolbar__menu-button--more-options"
             [class.mv-toolbar__menu-button--more-options__hidden]="mvToolbarMain.offsetWidth >= total" aria-pressed="false"
-            (click)="isDropdownMenuOpen = !isDropdownMenuOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+            (click)="isDropdownMenuOpen = !isDropdownMenuOpen;toggleMoreOptions()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
             <span>More options</span>
           </button>
           <!-- This template displays the overlay content for the dropdown menu and is connected to the "More options" button -->
           <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
             [cdkConnectedOverlayOpen]="isDropdownMenuOpen" [cdkConnectedOverlayPositions]="dropdownMenuPositions">
-            <div class="dropdown-menu" #dropdownMenu>
+            <div class="dropdown-menu" #dropdownMenu tabindex="0">
               <ng-container *ngTemplateOutlet="menuItems"></ng-container>
             </div>
           </ng-template>
