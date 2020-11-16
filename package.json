@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.5.1",
+  "version": "2.5.1-test-github-workflow-public",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
