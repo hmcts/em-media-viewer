@@ -128,9 +128,6 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onPageNumberInputChange(pageNumber: string) {
-    if (!pageNumber || !this.numberHelper.isNumber(pageNumber)) {
-      pageNumber = '1';
-    }
     if (Number(pageNumber) < 1) {
       pageNumber = '1';
     }
