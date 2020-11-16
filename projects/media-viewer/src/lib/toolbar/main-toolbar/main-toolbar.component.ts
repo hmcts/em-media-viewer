@@ -1,5 +1,15 @@
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
@@ -10,6 +20,7 @@ import { NumberHelperService } from '../../../lib/shared/util/services/number.he
   templateUrl: './main-toolbar.component.html'
 })
 export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
+
   @Input() enableAnnotations = false;
   @Input() enableRedactions = false;
   @Input() enableICP = false;
@@ -70,8 +81,6 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       this.toolbarEvents.redactionMode.subscribe(enabled => {
         this.redactionEnabled = enabled;
       }),
-
-      this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
   }
 
@@ -86,6 +95,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       this.allButtonsWidth += button.getBoundingClientRect().width;
       this.widthRequiredForBtn[button.id] = this.allButtonsWidth;
     });
+    this.cdr.detectChanges();
   }
 
   @HostListener('window:resize', [])
