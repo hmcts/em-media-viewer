@@ -11,7 +11,7 @@
         <div id="mvToolbarMoreOptions" class="mv-toolbar-more-options">
           <button id="mvMoreOptionsBtn" class="mv-button mv-toolbar__menu-button--more-options"
                   [class.mv-toolbar__menu-button--more-options__hidden]="mvToolbar.offsetWidth >= allButtonsWidth" aria-pressed="false"
-                  (click)="isDropdownMenuOpen = !isDropdownMenuOpen;toggleMoreOptions()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+                  (click)="toggleMoreOptions()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
             <span>More options</span>
           </button>
           <!-- This template displays the overlay content for the dropdown menu and is connected to the "More options" button -->

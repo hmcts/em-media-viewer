@@ -186,6 +186,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public toggleMoreOptions() {
+    this.isDropdownMenuOpen = !this.isDropdownMenuOpen;
     setTimeout(() => {
       if (this.mvMenuItems) {
         this.mvMenuItems.nativeElement.focus();
