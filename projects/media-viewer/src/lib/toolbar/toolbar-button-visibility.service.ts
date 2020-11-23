@@ -75,7 +75,7 @@ export const defaultImageOptions = {
   showRotate: true,
   showGrabNDragButton: true,
   showCommentSummary: true,
-  showRedact: false
+  showRedact: true
 };
 
 /**

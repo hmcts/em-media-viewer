@@ -11,19 +11,19 @@
     <span data-l10n-id="toggleTextRedactionButton_label">Redact text</span>
   </button>
 
-  <button id="mvClearBtn" #mvClearBtn class="mv-button redaction-button--clear" aria-pressed="false" title="Clear all"
+  <button [disabled]="!hasRedactions" id="mvClearBtn" #mvClearBtn class="mv-button redaction-button--clear" aria-pressed="false" title="Clear all"
     data-l10n-id="toggleClearAllButton" (click)="unmarkAll()">
     <span data-l10n-id="Clear all">Clear all</span>
   </button>
 
-  <button id="mvPreviewBtn" class="mv-button" [class.redaction-button--preview]="!preview"
+  <button [disabled]="!hasRedactions" id="mvPreviewBtn" class="mv-button" [class.redaction-button--preview]="!preview"
     [class.redaction-button--hide-preview]="preview" redaction-button--preview aria-pressed="false" title="Preview"
     data-l10n-id="togglePreviewButton" (click)="togglePreview()">
     <span *ngIf="!preview" data-l10n-id="redaction-preview_label">Preview</span>
     <span *ngIf="preview" data-l10n-id="redaction-hide-preview_label">Hide preview</span>
   </button>
 
-  <button id="mvDownloadBtn" class="mv-button redaction-button--download" aria-pressed="false" title="Download and save"
+  <button [disabled]="!hasRedactions" id="mvDownloadBtn" class="mv-button redaction-button--download" aria-pressed="false" title="Download and save"
     data-l10n-id="toggleDownloadButton" (click)="redact()">
     <span data-l10n-id="Save Document">Save document</span>
   </button>
