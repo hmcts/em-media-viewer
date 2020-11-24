@@ -11,11 +11,11 @@ describe('SearchBarComponent', () => {
 
   beforeEach(() => {
     return TestBed.configureTestingModule({
-      declarations: [ SearchBarComponent ],
+      declarations: [SearchBarComponent],
       imports: [FormsModule],
-      providers: [ ToolbarButtonVisibilityService, ToolbarEventService ]
+      providers: [ToolbarButtonVisibilityService, ToolbarEventService]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -36,7 +36,7 @@ describe('SearchBarComponent', () => {
     component.toolbarEvents.searchBarHidden.next(true);
     fixture.detectChanges();
 
-    const searchbar = nativeElement.querySelector('.findbar');
+    const searchbar = nativeElement.querySelector('.searchbar');
 
     expect(searchbar.getAttribute('hidden')).toBeDefined();
   });
@@ -45,7 +45,7 @@ describe('SearchBarComponent', () => {
     component.toolbarEvents.searchBarHidden.next(true);
     fixture.detectChanges();
 
-    const searchbar = nativeElement.querySelector('.findbar');
+    const searchbar = nativeElement.querySelector('.searchbar');
     expect(searchbar.getAttribute('hidden')).toBeDefined();
 
     const event = new KeyboardEvent('keydown', { 'code': 'F3' });
@@ -74,7 +74,7 @@ describe('SearchBarComponent', () => {
     component.toolbarEvents.searchBarHidden.next(false);
     fixture.detectChanges();
 
-    const searchbar = nativeElement.querySelector('.findbar');
+    const searchbar = nativeElement.querySelector('.searchbar');
     expect(searchbar.getAttribute('hidden')).toBeNull();
 
     const event = new KeyboardEvent('keydown', { 'key': 'Escape' });
@@ -88,7 +88,7 @@ describe('SearchBarComponent', () => {
     component.toolbarEvents.searchBarHidden.next(false);
     fixture.detectChanges();
 
-    const searchbar = nativeElement.querySelector('.findbar');
+    const searchbar = nativeElement.querySelector('.searchbar');
     expect(searchbar.getAttribute('hidden')).toBeNull();
 
     const event = new KeyboardEvent('keydown', { 'key': 'F' });
@@ -102,8 +102,7 @@ describe('SearchBarComponent', () => {
     component.toolbarEvents.searchBarHidden.next(false);
     const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
     component.searchText = 'searchTerm';
-    const searchNextButton = nativeElement.querySelector('button[id=findNext]');
-    searchNextButton.click();
+    component.searchNext();
 
     const mockSearchOperation = {
       searchTerm: 'searchTerm',
@@ -121,8 +120,7 @@ describe('SearchBarComponent', () => {
     component.toolbarEvents.searchBarHidden.next(false);
     const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
     component.searchText = 'searchTerm';
-    const searchPrevButton = nativeElement.querySelector('button[id=findPrevious]');
-    searchPrevButton.click();
+    component.searchPrev();
 
     const mockSearchOperation = {
       searchTerm: 'searchTerm',
@@ -137,14 +135,14 @@ describe('SearchBarComponent', () => {
   });
 
   it('should set search result count with results found', () => {
-    component.toolbarEvents.searchResultsCountSubject.next({current: 1, total: 4});
-    expect(component.haveResults).toBeTruthy();
-    expect(component.resultsText).toEqual('1 of 4 matches');
+    component.toolbarEvents.searchResultsCountSubject.next({ current: 1, total: 4 });
+    expect(component.resultCount).toBeTruthy();
+    expect(component.resultsText).toEqual('Found 1 of 4');
   });
 
   it('should set search result count with no results found', () => {
-    component.toolbarEvents.searchResultsCountSubject.next({current: null, total: null});
-    expect(component.haveResults).toBeFalsy();
-    expect(component.resultsText).toEqual('Phrase not found');
+    component.toolbarEvents.searchResultsCountSubject.next({ current: null, total: null });
+    expect(component.resultCount).toBeFalsy();
+    expect(component.resultsText).toEqual('No results found');
   });
 });

@@ -17,7 +17,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   wholeWord = false;
   resultsText = '';
   searchText = '';
-  haveResults = false;
 
   private subscriptions: Subscription[] = [];
 
@@ -77,8 +76,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   private setSearchResultsCount(results: SearchResultsCount): void {
-    this.haveResults = results.total > 0;
-    this.resultsText = this.haveResults
+    this.resultsText = results.total > 0
       ? `${results.current} of ${results.total} matches`
       : 'Phrase not found';
   }

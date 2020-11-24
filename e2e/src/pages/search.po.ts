@@ -7,12 +7,12 @@ const genericMethods = new GenericMethods();
 export class SearchPage extends AppPage {
 
   searchCount: ElementFinder = element(by.xpath('//span[@id=\'findResultsCount\']'));
-  searchIcon: ElementFinder = element(by.xpath('//button[@id=\'viewFind\']'));
+  searchIcon: ElementFinder = element(by.xpath('//button[@id=\'mvSearchBtn\']'));
   searchField: ElementFinder = element(by.css('#findbarInputContainer > input'));
   findIndex: ElementFinder = element(by.xpath('//button[@id=\'findNext\']'));
 
   async toggleSearchBar() {
-    return this.clickElement(by.id('viewFind'));
+    return this.clickElement(by.id('mvSearchBtn'));
   }
 
   async searchFor(searchTerm: string) {

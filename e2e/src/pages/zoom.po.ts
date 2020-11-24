@@ -4,11 +4,11 @@ import { AppPage } from './app.po';
 export class ZoomPage extends AppPage {
 
   async zoomIn() {
-    await this.clickElement(by.id('zoomIn'));
+    await this.clickElement(by.id('mvPlusBtn'));
   }
 
   async zoomOut() {
-    await this.clickElement(by.id('zoomOut'));
+    await this.clickElement(by.id('mvMinusBtn'));
   }
 
   async currentZoom() {
