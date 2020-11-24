@@ -83,10 +83,5 @@ export const defaultImageOptions = {
  */
 export const defaultUnsupportedOptions = {
   showDownload: true,
-  showCommentSummary: false,
-  showDrawButton: false,
-  showPresentationMode: false,
-  showRedact: false,
-  showPrint: true,
-  showGrabNDragButton: false
+  showPrint: true
 };
