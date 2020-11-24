@@ -1,34 +1,31 @@
-<div class="toolbar">
-  <div id="toolbarContainer">
-    <div class="findbar">
-      <button *ngIf="toolbarButtons.showHighlightButton" class="toolbarButton highlightBtn" title="Highlight Text Mode" (click)="toggleTextRedactionMode()"
-              id="toggleHighlightButton" tabindex="0" data-l10n-id="toggleHighlightButton">
-        <span data-l10n-id="toggleHighlightButton_label">Highlight Text</span>
-      </button>
-      <button class="toolbarButton drawBtn" title="Draw Mode" (click)="toggleDrawMode()"
-              id="toggleDrawButton" tabindex="0" data-l10n-id="toggleDrawButton">
-        <span data-l10n-id="toggleDrawButton_label">Draw</span>
-      </button>
-    </div>
-    <div id="annotationButtons">
-      <div class="splitToolbarButton">
-        <button class="unmark-all redaction-preview-btn" id="unmark-all" tabindex="0" title="unmark all" (click)="unmarkAll()">
-          <span data-l10n-id="unmark-all_label">Redact All</span>
-        </button>
-      </div>
-    </div>
-    <div id="toolbarViewerMiddle" *ngIf="hasRedactions">
-      <div class="splitToolbarButton">
-        <button [ngClass]="{'redaction-preview': !preview, 'redaction-preview-off': preview, 'redaction-preview-btn': true}"
-                id="redaction-preview" tabindex="0" title="Preview" (click)="togglePreview()">
-          <span data-l10n-id="redaction-preview_label">Preview</span>
-        </button>
-      </div>
-      <div class="splitToolbarButton">
-        <button id="redaction-redact" tabindex="0" title="Redact" class="redaction-redact" (click)="redact()">
-          <span data-l10n-id="redaction-redact_label">Redact</span>
-        </button>
-      </div>
-    </div>
-  </div>
+<div class="redaction">
+  <label class="govuk-label redaction-title" data-l10n-id="redaction_options">Redaction options</label>
+  <button id="toggleDrawButton" class="mv-button redaction-button--draw" title="Draw a box"
+    data-l10n-id="toggleDrawButton" (click)="toggleDrawMode()">
+    <span data-l10n-id="toggleDrawButton_label">Draw a box</span>
+  </button>
+
+  <button *ngIf="toolbarButtons.showHighlightButton" id="toggleHighlightButton"
+    class="mv-button redaction-button--redact" aria-pressed="false" title="Redact text"
+    data-l10n-id="toggleTextRedactionButton" (click)="toggleTextRedactionMode()">
+    <span data-l10n-id="toggleTextRedactionButton_label">Redact text</span>
+  </button>
+
+  <button [disabled]="!hasRedactions" id="mvClearBtn" #mvClearBtn class="mv-button redaction-button--clear" aria-pressed="false" title="Clear all"
+    data-l10n-id="toggleClearAllButton" (click)="unmarkAll()">
+    <span data-l10n-id="Clear all">Clear all</span>
+  </button>
+
+  <button [disabled]="!hasRedactions" id="mvPreviewBtn" class="mv-button" [class.redaction-button--preview]="!preview"
+    [class.redaction-button--hide-preview]="preview" redaction-button--preview aria-pressed="false" title="Preview"
+    data-l10n-id="togglePreviewButton" (click)="togglePreview()">
+    <span *ngIf="!preview" data-l10n-id="redaction-preview_label">Preview</span>
+    <span *ngIf="preview" data-l10n-id="redaction-hide-preview_label">Hide preview</span>
+  </button>
+
+  <button [disabled]="!hasRedactions" id="mvDownloadBtn" class="mv-button redaction-button--download" aria-pressed="false" title="Download and save"
+    data-l10n-id="toggleDownloadButton" (click)="redact()">
+    <span data-l10n-id="Save Document">Save document</span>
+  </button>
+
 </div>

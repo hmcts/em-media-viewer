@@ -1,3 +1,8 @@
+// CDK overlays require a small set of structural styles to work correctly
+// As the component is not yet using Angular Material we have to include the style ourself
+// see https://material.angular.io/cdk/overlay/overview
+@import '~@angular/cdk/overlay-prebuilt';
+
 @import 'sass/settings';
 @import "sass/annotation-set";
 @import "sass/annotation-ui-theme";
@@ -25,7 +30,6 @@
 @import 'sass/comment-filter';
 @import 'sass/angular-tree-component';
 @import 'sass/redaction';
-
 div.govuk-prose-scope, p {
   white-space: pre-wrap;
 }

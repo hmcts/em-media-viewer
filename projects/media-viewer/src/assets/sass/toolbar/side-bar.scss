@@ -1,20 +1,24 @@
 $--sidebar-width: 20%;
 #sidebarContainer {
   .has-redact-bar & {
-    top: 65px;
+    top: 83px;
+  }
+  .icp-mode & {
+    top: 91px;
+    height: 100%
   }
   position: absolute;
-  top: 32px;
+  top: 43px;
   bottom: 0;
   width: 200px; /* Here, and elsewhere below, keep the constant value for compatibility
                    with older browsers that lack support for CSS variables. */
   width: var($--sidebar-width);
-  visibility: hidden;
   z-index: 100;
   border-top: 1px solid #333;
 
   transition-duration: 600ms;
   transition-timing-function: ease;
+ 
 }
 #sidebarContainer {
   transition-property: left;

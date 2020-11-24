@@ -1,6 +1,7 @@
 <div id="outerContainer"
      [ngClass]="{
        'has-redact-bar': toolbarEvents.redactionMode | async,
+       'icp-mode': toolbarEvents.icp.enabled | async,
        'is-redaction-preview': toolbarEvents.redactionPreview | async,
        sidebarOpen: toolbarEvents.sidebarOpen | async,
        'has-scroll-bar': hasScrollBar,
@@ -19,7 +20,9 @@
     <mv-main-toolbar *ngIf="showToolbar"
                      [enableAnnotations]="enableAnnotations"
                      [enableICP]="enableICP"
-                     [enableRedactions]="enableRedactions">
+                     [enableRedactions]="enableRedactions"
+                     [contentType]="contentType"
+                     >
     </mv-main-toolbar>
     <mv-redaction-toolbar *ngIf="toolbarEvents.redactionMode | async"></mv-redaction-toolbar>
     <mv-icp-toolbar *ngIf="toolbarEvents.icp.enabled | async"></mv-icp-toolbar>

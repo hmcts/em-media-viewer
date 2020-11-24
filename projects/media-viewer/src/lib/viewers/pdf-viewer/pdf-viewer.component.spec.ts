@@ -117,7 +117,7 @@ describe('PdfViewerComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('should setup subscriptions', inject([Store],(store) => {
+  it('should setup subscriptions', inject([Store], (store) => {
     spyOn(printService, 'printDocumentNatively');
     spyOn(toolbarEvents, 'toggleCommentsPanel');
     spyOnAllFunctions(mockWrapper);

@@ -1,9 +1,9 @@
 #loadingBar {
+  display: none;
   position: relative;
   width: 100%;
   height: 4px;
-  background-color: #333;
-  border-bottom: 1px solid #333;
+  background-color: #ddd;
 }
 
 #loadingBar .progress {
@@ -12,7 +12,7 @@
   left: 0;
   width: 0%;
   height: 100%;
-  background-color: #ddd;
+  background-color: #333;
   overflow: hidden;
   transition: width 200ms;
 }

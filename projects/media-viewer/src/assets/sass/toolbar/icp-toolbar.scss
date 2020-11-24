@@ -1,0 +1,117 @@
+#icp-toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #dee0e2;
+
+    label {
+        white-space: nowrap;
+        font-size: 1rem;
+        font-size: 16px;
+        margin: 0 5px;
+        font-weight: 700;
+        line-height: 3rem;
+    }
+
+    .govuk-button {
+        white-space: nowrap;
+        margin: 5px;
+        width: auto;
+        font-size: 16px;
+        font-size: 1rem;
+    }
+
+    .govuk-label {
+        display: inline-block;
+    }
+
+    #toolbar-title,
+    #presentation-mode,
+    #presenter-info,
+    #participant-list {
+        display: flex;
+    }
+
+    #presentation-mode .item-label,
+    #presenter-info .item-button {
+        flex-grow: 1;
+    }
+
+    #toolbar-title {
+        flex: 0 0 210px;
+        text-align: right;
+        label {
+            margin-left: 10px;
+        }
+    }
+
+    #presentation-mode,
+    #presenter-info {
+        flex: 0 0 400px;
+        .item-label {
+            text-align: right;
+        }
+    }
+
+    @media (max-width: 400px) {
+        #toolbar-title,
+        #presentation-mode,
+        #presenter-info,
+        #participant-list {
+            border-top: 0;
+            border-bottom: 0;
+            .item-button {
+                border-top: 1px solid #dee0e2;
+            }
+            flex-direction: column;
+            text-align: left;
+            button {
+                width: 96%;
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        #presentation-mode .item-label {
+            flex-grow: 0;
+        }
+        #presentation-mode {
+            border-top: 1px solid #dee0e2;
+        }
+        #toolbar-title,
+        #presentation-mode,
+        #presenter-info,
+        #participant-list {
+            flex: 0 0 100%;
+            width: 100%;
+            .item-label {
+                text-align: left;
+            }
+        }
+    }
+
+    @media (max-width: 1000px) {
+        #presenter-info,
+        #participant-list {
+            border-top: 1px solid #dee0e2;
+            flex: 0 0 100%;
+            width: 100%;
+            .item-label {
+                text-align: left;
+            }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        justify-content: flex-start;
+        #participant-list {
+            border-top: 1px solid #dee0e2;
+            flex: 0 0 100%;
+            width: 100%;
+            .item-button {
+                text-align: left;
+            }
+        }
+    }
+}

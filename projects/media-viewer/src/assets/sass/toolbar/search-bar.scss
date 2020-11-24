@@ -1,68 +1,43 @@
-.findbar {
-  min-width: 300px;
-}
-.findbar > div {
-  height: 32px;
-}
-.findbar.wrapContainers > div {
-  clear: both;
-}
-.findbar.wrapContainers > div#findbarMessageContainer {
-  height: auto;
-}
-.findbar {
-  left: 68px;
-}
-html[dir='rtl'] .findbar {
-  right: 68px;
-}
-
-.findbar label {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.searchbar {
+  z-index: 100;
+  position: absolute;
+  top: 41px;
+  float: right;
+  width: 390px;
+  background-color: white;
+  border: 1px solid #b1b4b6;
+  border-top: 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), inset 0 -1px 0 0 #dddddd;
+  button {
+    float: right;
+  }
+  span {
+    @include govuk-font($size: 16);
+    color: $govuk-secondary-text-colour;
+    min-width: 110px;
+  }
 }
 
-#findInput {
-  width: 200px;
+@media screen and (max-width: 425px) {
+  .searchbar {
+    width: 100%;
+    left: 0px;
+  }
 }
-#findInput::-webkit-input-placeholder {
-  color: hsl(0, 0%, 75%);
+
+@media screen and (max-width: 1009px) {
+  .searchbar {
+    right: 0px;
+  }
 }
-#findInput:-ms-input-placeholder {
-  font-style: italic;
-}
-#findInput::-ms-input-placeholder {
-  font-style: italic;
-}
-#findInput::placeholder {
-  font-style: italic;
+
+@media screen and (min-width: 1010px) {
+  .searchbar {
+    left: 587px;
+  }
 }
 #findInput[data-status="pending"] {
-  background-image: url(/assets/images/loading-small.png);
+  background-image: url(/assets/images/loading-icon.gif);
   background-repeat: no-repeat;
   background-position: right;
-}
-html[dir='rtl'] #findInput[data-status="pending"] {
-  background-position: left;
-}
-
-#findResultsCount {
-  background-color: hsl(0, 0%, 85%);
-  color: hsl(0, 0%, 32%);
-  text-align: center;
-  padding: 3px 4px;
-}
-
-#findMsg {
-  font-style: italic;
-  color: #A6B7D0;
-}
-#findMsg:empty {
-  display: none;
-}
-
-#findInput.notFound {
-  background-color: rgb(255, 102, 102);
 }

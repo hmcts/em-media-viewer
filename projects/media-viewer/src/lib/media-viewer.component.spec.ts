@@ -184,7 +184,7 @@ describe('MediaViewerComponent', () => {
     component.contentType = 'xxxxxx';
 
     component.setToolbarButtons();
-    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions, showCommentSummary: false });
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions });
   });
 
   it('onLoadException should emit a ViewerException', () => {
@@ -205,7 +205,7 @@ describe('MediaViewerComponent', () => {
     component.onLoadException(viewerException);
     expect(component.typeException).toBeTrue();
     expect(component.contentType).toBeNull();
-    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions, showCommentSummary: false });
+    expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultUnsupportedOptions });
   });
 
   it('onLoadException should set type exception false', () => {
