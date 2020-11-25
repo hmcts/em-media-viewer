@@ -33,7 +33,8 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: |
-          pwd && cd dist/media-viewer
+          ls -alrt
+          cd dist/media-viewer
           npm publish --access public --dry-run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_API_TOKEN }}
