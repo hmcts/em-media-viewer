@@ -33,7 +33,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: |
-          ls -alrt
+          npm run package
           cd dist/media-viewer
           npm publish --access public --dry-run
         env:
