@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -19,6 +19,7 @@
     "build:lib": "npm install && npm run install:js-dependencies && cd projects/media-viewer && ng build --prod",
     "npm-pack": "cd dist/media-viewer && npm pack",
     "package": "npm run build:lib && npm run copy:files && npm run npm-pack",
+    "publish": "cd dist/media-viewer && npm publish",
     "test": "cd projects/media-viewer; ng test",
     "lint": "ng lint",
     "test:codacy-upload": "cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
@@ -123,5 +124,8 @@
     "typescript": "^3.2.4",
     "typescript-string-operations": "^1.3.1",
     "webdriver-manager": "^12.1.7"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
