@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "publishConfig": {
     "access": "public"
   },
@@ -22,7 +22,7 @@
     "build:lib": "npm install && npm run install:js-dependencies && cd projects/media-viewer && ng build --prod",
     "npm-pack": "cd dist/media-viewer && npm pack",
     "package": "npm run build:lib && npm run copy:files && npm run npm-pack",
-    "publish": "cd dist/media-viewer && npm publish --access public",
+    "publish:dist": "npm run package && cd dist/media-viewer && npm publish --access public",
     "test": "cd projects/media-viewer; ng test",
     "lint": "ng lint",
     "test:codacy-upload": "cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
