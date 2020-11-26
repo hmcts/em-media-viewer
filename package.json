@@ -1,6 +1,9 @@
 {
   "name": "@hmcts/media-viewer",
   "version": "2.6.2",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
