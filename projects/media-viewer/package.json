@@ -44,5 +44,8 @@
   },
   "resolutions": {
     "ng2-material-dropdown": "0.10.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
