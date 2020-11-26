@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "description": "Media Viewer",
   "scripts": {
     "preinstall": "npx npm-force-resolutions"
@@ -15,6 +15,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/hmcts/media-viewer"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "angular-tree-component": "^8.5.6",
@@ -36,16 +39,10 @@
     "@ngrx/store": "^7.4.0",
     "@ngrx/store-devtools": "^7.4.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
     "@types/uuid": "^3.4.4"
   },
   "resolutions": {
     "ng2-material-dropdown": "0.10.1"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
