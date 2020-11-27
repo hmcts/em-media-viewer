@@ -10,6 +10,7 @@ import { IcpToolbarComponent } from './icp-toolbar/icp-toolbar.component';
 export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
 export { ToolbarEventService } from './toolbar-event.service';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
   imports: [
     CommonModule,
     FormsModule,
-    OverlayModule
+    OverlayModule,
+    RouterModule
   ]
 })
 export class ToolbarModule { }
