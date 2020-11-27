@@ -14,13 +14,13 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
       <span id="findResultsCount" class="govuk-!-display-inline-block govuk-!-margin-right-4">{{resultsText}}</span>
-      <a *ngIf="resultCount > 0" href="#" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2"
+      <a *ngIf="resultCount > 0" [routerLink]="" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2"
         (click)="searchPrev()" title="Find the previous occurrence of the phrase" data-l10n-id="find_previous">Prev</a>
-      <a *ngIf="resultCount > 0" href="#" class="govuk-link govuk-link--no-visited-state" (click)="searchNext()"
+      <a *ngIf="resultCount > 0" [routerLink]="" class="govuk-link govuk-link--no-visited-state" (click)="searchNext()"
         title="Find the next occurrence of the phrase" data-l10n-id="find_next">Next</a>
     </div>
     <div class="govuk-grid-column-one-quarter">
-      <a class="govuk-link govuk-link--no-visited-state" href="#" (click)="toggleAdvancedSearch()" title="Advanced"
+      <a [routerLink]="" class="govuk-link govuk-link--no-visited-state" (click)="toggleAdvancedSearch()" title="Advanced"
         data-l10n-id="find_advanced">Advanced</a>
     </div>
   </div>

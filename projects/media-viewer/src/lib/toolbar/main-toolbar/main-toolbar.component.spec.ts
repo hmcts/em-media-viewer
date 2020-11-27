@@ -9,6 +9,7 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { StoreModule } from '@ngrx/store';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('MainToolbarComponent', () => {
@@ -23,7 +24,7 @@ describe('MainToolbarComponent', () => {
         MainToolbarComponent,
         SearchBarComponent
       ],
-      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}), OverlayModule],
+      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}), OverlayModule, RouterTestingModule],
       providers: [ToolbarButtonVisibilityService, ToolbarEventService]
     })
       .compileComponents();
