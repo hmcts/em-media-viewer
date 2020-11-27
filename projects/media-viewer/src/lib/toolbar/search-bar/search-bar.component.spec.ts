@@ -3,6 +3,7 @@ import { SearchBarComponent } from './search-bar.component';
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -12,7 +13,7 @@ describe('SearchBarComponent', () => {
   beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [SearchBarComponent],
-      imports: [FormsModule],
+      imports: [FormsModule, RouterTestingModule],
       providers: [ToolbarButtonVisibilityService, ToolbarEventService]
     })
       .compileComponents();

@@ -1,10 +1,7 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "description": "Media Viewer",
-  "scripts": {
-    "preinstall": "npx npm-force-resolutions"
-  },
   "keywords": [
     "Angular",
     "PDF",
@@ -18,6 +15,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "preinstall": "npx npm-force-resolutions"
   },
   "dependencies": {
     "angular-tree-component": "^8.5.6",

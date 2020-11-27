@@ -15,6 +15,7 @@ import { By } from '@angular/platform-browser';
 import {reducers} from './store/reducers/reducers';
 import {StoreModule} from '@ngrx/store';
 import { Subject } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -36,7 +37,8 @@ describe('MediaViewerComponent', () => {
         ToolbarModule,
         AnnotationsModule,
         StoreModule.forRoot({}),
-        StoreModule.forFeature('media-viewer', reducers)
+        StoreModule.forFeature('media-viewer', reducers),
+        RouterTestingModule
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
