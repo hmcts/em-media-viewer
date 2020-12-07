@@ -19,6 +19,7 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
 
   @Input() title: string;
   @Input() contentType: string;
+  @ViewChild('outerContainer') container: ElementRef;
   @ViewChild('commentContainer') commentsTable: ElementRef;
   public comments$: Observable<any>;
   public filtersFg: FormGroup;
@@ -51,6 +52,7 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
     });
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary));
     this.buildCheckBoxForm();
+    this.container.nativeElement.focus();
   }
 
   buildCheckBoxForm() {

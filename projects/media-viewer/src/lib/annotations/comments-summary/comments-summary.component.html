@@ -1,5 +1,5 @@
 <div id="modal-background" class="modal" (click)="onClose()">
-  <div id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
+  <div #outerContainer id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()" cdkTrapFocus tabindex="0">
     <div id="comment-container" class="comment-container" #commentContainer>
       <h2 class="govuk-heading-m">{{ title }}</h2>
       <ng-container *ngIf="(comments$ | async) as comments">

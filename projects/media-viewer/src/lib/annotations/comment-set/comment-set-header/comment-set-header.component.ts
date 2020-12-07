@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
