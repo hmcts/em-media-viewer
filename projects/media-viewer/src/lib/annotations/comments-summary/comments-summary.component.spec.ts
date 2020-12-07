@@ -3,15 +3,15 @@ import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import {ViewerEventService} from '../../viewers/viewer-event.service';
-import {MomentDatePipe} from '../pipes/date.pipe';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import {RouterModule} from '@angular/router';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../store/reducers/reducers';
-import {ReactiveFormsModule} from '@angular/forms';
-import {SharedModule} from '../../shared/shared.module';
-import {UnsnakePipe} from '../pipes/unsnake.pipe';
+import { ViewerEventService } from '../../viewers/viewer-event.service';
+import { MomentDatePipe } from '../pipes/date.pipe';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../store/reducers/reducers';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
+import { UnsnakePipe } from '../pipes/unsnake.pipe';
 
 describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
@@ -43,6 +43,14 @@ describe('CommentsSummaryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set focus on container', () => {
+    spyOn(component.container.nativeElement, 'focus')
+
+    component.ngOnInit();
+
+    expect(component.container.nativeElement.focus).toHaveBeenCalled();
   });
 
   it('close',
