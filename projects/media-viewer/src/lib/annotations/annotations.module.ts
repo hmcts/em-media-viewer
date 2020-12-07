@@ -31,9 +31,11 @@ import {UnsnakePipe} from './pipes/unsnake.pipe';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {SharedModule} from '../shared/shared.module';
 import { MetadataLayerComponent } from './annotation-set/metadata-layer.component';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule({
   imports: [
+    A11yModule,
     CommonModule,
     FormsModule,
     HttpClientModule,
