@@ -66,7 +66,6 @@ export class PdfJsWrapper {
         viewportScale: page.viewport.scale
       };
     });
-
     this.pageRendered.next(allPages);
   }
 
