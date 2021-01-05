@@ -194,7 +194,7 @@ describe('MainToolbarComponent', () => {
     const rotateCtrClkwiseBtn = nativeElement.querySelector('button[id=mvRotateLeftBtn]');
     rotateCtrClkwiseBtn.click();
 
-    expect(rotateSpy).toHaveBeenCalledWith(-90);
+    expect(rotateSpy).toHaveBeenCalledWith(270);
   });
 
   it('should emit zoom out event', () => {
