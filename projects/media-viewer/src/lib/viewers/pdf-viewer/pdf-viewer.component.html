@@ -25,7 +25,7 @@
        class="pdfViewer"
        mvCreateTextHighlight
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
-  </div>
+
 
   <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
                  [zoom]="zoom"
@@ -50,6 +50,7 @@
                        [rotate]="rotation">
     </mv-bookmark-icons>
   </ng-template>
+  </div>
 
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}
