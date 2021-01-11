@@ -2,14 +2,12 @@
                        [showCommentSummary]="toolbarButtons.showCommentSummary"
                        (showCommentSummaryDialog)="toggleCommentsSummary()">
 </mv-comment-set-header>
-<div grabNDrag [dragY]="enableGrabNDrag"
+<div grabNDrag [dragY]="enableGrabNDrag" [dragX]="enableGrabNDrag"
      id="viewer-wrapper"
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'grabNDrag': enableGrabNDrag }"
      *ngIf="url && !errorMessage">
-  <div class="split left">
-    <div grabNDrag [dragX]="enableGrabNDrag"
-         id="image-container"
+    <div id="image-container"
          [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations, 'show-comments-panel': showCommentsPanel }"
          [style.height.px]="getImageHeight(img)">
       <img #img
@@ -28,7 +26,6 @@
         </mv-metadata-layer>
       </ng-template>
     </div>
-  </div>
   <mv-comment-set *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
                   [annotationSet]="annotationSet"
                   [zoom]="zoom"

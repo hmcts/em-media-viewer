@@ -15,7 +15,7 @@
 </mv-comment-set-header>
 <mv-participants-list></mv-participants-list>
 
-<div grabNDrag [dragY]="enableGrabNDrag"
+<div grabNDrag [dragY]="enableGrabNDrag" [dragX]="enableGrabNDrag"
      #viewerContainer
      class="pdfContainer"
      [ngStyle]="{ height: height }"
@@ -25,6 +25,7 @@
        class="pdfViewer"
        mvCreateTextHighlight
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
+  </div>
 
 
   <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
@@ -50,7 +51,6 @@
                        [rotate]="rotation">
     </mv-bookmark-icons>
   </ng-template>
-  </div>
 
   <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}

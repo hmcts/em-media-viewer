@@ -36,7 +36,7 @@ export class GrabNDragDirective {
         top: this.originalPosition.top - (event.clientY + this.el.nativeElement.scrollTop)
       };
       if (this.dragX) {
-        this.el.nativeElement.scrollLeft += scrollDiff.left;
+        this.el.nativeElement.firstElementChild.scrollLeft += scrollDiff.left;
       }
       if (this.dragY) {
         this.el.nativeElement.scrollTop += scrollDiff.top;
