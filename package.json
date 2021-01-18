@@ -12,7 +12,6 @@
     "copy:docs": "npm run copy:readme && npm run copy:license",
     "copy:assets": "npm run copy:lib-assets",
     "copy:lib-assets": "rsync -r projects/media-viewer/src/assets/* dist/media-viewer/assets/",
-    "copy:govuk-assets": "rsync -r projects/media-viewer/node_modules/govuk-frontend dist/media-viewer/assets",
     "install:js-dependencies": "cd projects/media-viewer && npm install",
     "copy:js-dependencies": "rsync -r projects/media-viewer/node_modules/pdfjs-dist/build dist/media-viewer/assets",
     "copy:files": "npm run copy:js-dependencies && npm run copy:assets && npm run copy:docs",
@@ -67,7 +66,7 @@
     "rxjs-compat": "^6.5.2",
     "scss-bundle": "~2.4.0",
     "session-file-store": "^1.2.0",
-    "zone.js": "~0.11.3"
+    "zone.js": "^0.11.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.10",
