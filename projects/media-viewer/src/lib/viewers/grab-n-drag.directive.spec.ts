@@ -10,11 +10,11 @@ describe('GrabNDragDirective', () => {
 
   beforeEach(() => {
     directive = new GrabNDragDirective(new ElementRef<HTMLElement>(hostElement));
+    directive.dragX = { scrollLeft: 0 } as Element;
   });
 
   it('should set original position on pointer down', () => {
-    directive.dragX = true;
-    directive.dragY = true;
+    directive.dragEnabled = true;
 
     directive.onPointerDown(event as any);
 
@@ -22,7 +22,7 @@ describe('GrabNDragDirective', () => {
   });
 
   it('should set host element on pointer move', () => {
-    directive.dragX = true;
+    directive.dragEnabled = true;
 
     directive.onPointerMove(event as any);
 
@@ -31,7 +31,7 @@ describe('GrabNDragDirective', () => {
   });
 
   it('should set host element on pointer move, when pointer down', () => {
-    directive.dragX = true;
+    directive.dragEnabled = true;
 
     directive.onPointerDown(event as any);
     directive.onPointerMove(event as any);
@@ -41,7 +41,7 @@ describe('GrabNDragDirective', () => {
   });
 
   it('should set host element on pointer move, when dragX', () => {
-    directive.dragX = true;
+    directive.dragEnabled = true;
 
     directive.onPointerDown(event as any);
     directive.onPointerMove(event as any);
@@ -51,8 +51,7 @@ describe('GrabNDragDirective', () => {
   });
 
   it('should set host element on pointer move, when dragY', () => {
-    directive.dragX = false;
-    directive.dragY = true;
+    directive.dragEnabled = false;
 
     directive.onPointerDown(event as any);
     directive.onPointerMove(event as any);
