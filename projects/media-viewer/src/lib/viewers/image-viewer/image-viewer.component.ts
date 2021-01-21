@@ -52,6 +52,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   showCommentsPanel: boolean;
   enableGrabNDrag = false;
+  imageHeight: number;
+  imageWidth: number;
+  imageLeft: number;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -91,6 +94,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   private rotateImage(rotation: number) {
     this.rotation = (this.rotation + rotation) % 360;
+    this.initAnnoPage(this.img.nativeElement)
   }
 
   private async setZoom(zoomFactor: number) {
@@ -147,28 +151,28 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     this.imageViewerException.emit(this.viewerException);
   }
 
-  onLoad() {
+  onLoad(img: any) {
     this.mediaLoadStatus.emit(ResponseType.SUCCESS);
-    this.initAnnoPage();
+    this.initAnnoPage(img);
   }
 
-  initAnnoPage() {
+  initAnnoPage(img: any) {
+    this.imageHeight = this.rotation % 180 !== 0 ? img.offsetWidth : img.offsetHeight;
+    this.imageWidth = this.rotation % 180 !== 0 ? img.offsetHeight : img.offsetWidth;
+    this.imageLeft = this.rotation % 180 !== 0 ? img.offsetTop : img.offsetLeft;
     const payload: any = [{
-      div: { offsetHeight: 1122 }, // todo add dynamic height
+      div: { offsetHeight: this.imageHeight, offsetWidth: this.imageWidth, left: this.imageLeft },
       pageNumber: 1,
       scale: 1,
-      rotation: 1,
+      rotation: 0,
       id: 1
     }];
+    console.log("img", { h: this.imageHeight, w: this.imageWidth })
+    console.log("payload", payload)
     this.store.dispatch(new fromDocument.AddPages(payload));
-  }
-
-  getImageHeight(img) {
-    return this.rotation % 180 !== 0 ? img.offsetWidth + 15 : img.offsetHeight + 15;
   }
 
   toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
-
 }
