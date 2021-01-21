@@ -31,7 +31,7 @@ mv-image-viewer {
     overflow: auto;
   }
 
-  .rot90 {
+  img.rot90 {
     -webkit-transform: translateY(-100%) rotate(90deg); /* Safari */
     -moz-transform: translateY(-100%) rotate(90deg); /* Firefox 3.6 Firefox 4 */
     /*-moz-transform-origin: right top; */
@@ -40,7 +40,7 @@ mv-image-viewer {
     transform: translateY(-100%) rotate(90deg); /* W3C */
   }
 
-  .rot180 {
+  img.rot180 {
     -webkit-transform: translateX(100%) translateY(-100%) rotate(180deg); /* Safari */
     -moz-transform: translateX(100%) translateY(-100%) rotate(180deg); /* Firefox 3.6 Firefox 4 */
     /*-moz-transform-origin: right top; */
@@ -49,7 +49,7 @@ mv-image-viewer {
     transform: translateX(100%) translateY(-100%) rotate(180deg); /* W3C */
   }
 
-  .rot270 {
+  img.rot270 {
     -webkit-transform: rotate(-90deg) translate(-100%, 0); /* Safari */
     -moz-transform: rotate(-90deg) translate(-100%, 0); /* Firefox 3.6 Firefox 4 */
     -ms-transform: rotate(-90deg) translate(-100%, 0); /* IE9 */
