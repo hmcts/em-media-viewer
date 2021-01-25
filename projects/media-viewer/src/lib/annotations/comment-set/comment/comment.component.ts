@@ -22,6 +22,7 @@ import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
 import * as fromSelector from '../../../store/selectors/annotations.selectors';
 import { AnnotationSet } from "../../annotation-set/annotation-set.model";
+import { Annotation } from "../../annotation-set/annotation-view/annotation.model";
 
 @Component({
   selector: 'mv-anno-comment',
@@ -116,9 +117,9 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   }
 
   @Input()
-  set annoData([annotationId, annotationSet]) {
-    const annotation = annotationSet.annotations.find((anno) => anno.id === annotationId);
-    this._rectangle = annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
+  set annotation(annotation: Annotation) {
+    this._rectangle = annotation.rectangles
+      .reduce((prev, current) => prev.y < current.y ? prev : current);
     const actualHeight = this._comment.pages[this.page].styles.height/this.zoom;
     switch (this.rotate) {
       case 90: this.rectTop = this._rectangle.x;

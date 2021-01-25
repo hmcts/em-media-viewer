@@ -1,14 +1,14 @@
-import { ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommentComponent } from './comment.component';
 import { FormsModule } from '@angular/forms';
 import { CommentService } from './comment.service';
 import { TextHighlightDirective } from './text-highlight.directive';
-import {TagsServices} from '../../services/tags/tags.services';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MomentDatePipe} from '../../pipes/date.pipe';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../../store/reducers/reducers';
+import { TagsServices } from '../../services/tags/tags.services';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MomentDatePipe } from '../../pipes/date.pipe';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../../store/reducers/reducers';
 
 describe('CommentComponent', () => {
   let component: CommentComponent;
@@ -37,7 +37,7 @@ describe('CommentComponent', () => {
     editable: true,
     page: 1,
     pageHeight: 1122,
-    pages: []
+    pages: { 1: { styles: {}}}
   };
 
   const mockRectangle = {
@@ -59,6 +59,17 @@ describe('CommentComponent', () => {
       'email': 'jeroen.rijks@hmcts.net'
     },
   };
+
+  const mockAnnotation = {
+    annotationSetId: 'annotationSetId',
+    annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329',
+    page: 1,
+    color: 'yellow',
+    comments: [mockComment],
+    rectangles: [mockRectangle],
+    type: 'annotation',
+    tags: []
+  }
 
   const waitForChanges = () => {
     tick(10);
@@ -92,7 +103,7 @@ describe('CommentComponent', () => {
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
     component.comment = {...mockComment};
-    component.rectangle = {...mockRectangle};
+    component.annotation = { ...mockAnnotation } as any;
     nativeElement = fixture.debugElement.nativeElement;
     nativeElement.style.position = 'absolute';
     nativeElement.style.width = '100px';

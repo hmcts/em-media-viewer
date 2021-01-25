@@ -41,12 +41,12 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   tags: TagsModel[]
   private subscriptions: Subscription[] = [];
   public comments$: Observable<Annotation[]>;
+  public annoEntities$: Observable<{ [id: string]: Annotation }>;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
   showCommentsPanel: boolean;
-  private topRectangle: Rectangle;
 
   constructor(private store: Store<fromStore.AnnotationSetState>,
               private readonly viewerEvents: ViewerEventService,
@@ -59,6 +59,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentsArray));
+    this.annoEntities$ = this.store.pipe(select(fromSelectors.getAnnotationEntities));
     this.subscriptions.push(
       this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
         this.redrawComments();

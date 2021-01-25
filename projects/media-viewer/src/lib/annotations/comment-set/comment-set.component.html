@@ -15,7 +15,7 @@
       [index]="i"
       [page]="comment.page"
       [comment]="comment"
-      [annoData]="[comment.annotationId, annotationSet]"
+      [annotation]="(annoEntities$ | async)[comment.annotationId]"
       (renderComments)="redrawComments()">
     </mv-anno-comment>
   </ng-container>

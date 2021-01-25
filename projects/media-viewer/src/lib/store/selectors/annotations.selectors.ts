@@ -47,9 +47,9 @@ export const getSelectedAnnotation = createSelector(
   fromAnnotations.getSelectedAnno
 );
 
-export const getAnnComments = createSelector(
+export const getCommentEntities = createSelector(
   getAnnotationsSetState,
-  fromAnnotations.getComments
+  fromAnnotations.getCommentEnts
 );
 
 
@@ -94,18 +94,18 @@ export const getAnnoPerPage = createSelector(
 );
 
 export const getCommentsArray = createSelector(
-  getAnnComments,
+  getCommentEntities,
   fromDocument.getPages,
   getAnnotationEntities,
   fromTags.getTagFiltered,
-  (comments, pages, annoEnt, filtered) => {
-    if (comments && annoEnt && pages[1]) {
+  (commentEnts, pages, annoEnts, filtered) => {
+    if (commentEnts && annoEnts && pages[1]) {
         const isFiltered: boolean = !!Object.keys(filtered).length;
-        const com = isFiltered ? filtered : comments;
+        const com = isFiltered ? filtered : commentEnts;
         return Object.keys(com).map(key => {
-          const page = annoEnt[key].page;
+          const page = annoEnts[key].page;
           return {
-            ...comments[key],
+            ...commentEnts[key],
             page,
             pages
           };
