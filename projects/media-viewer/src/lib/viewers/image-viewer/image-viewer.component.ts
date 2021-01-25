@@ -101,6 +101,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     if (!isNaN(zoomFactor)) {
       await this.setZoomValue(this.calculateZoomValue(zoomFactor));
       this.img.nativeElement.width = this.img.nativeElement.naturalWidth * this.zoom;
+      this.initAnnoPage(this.img.nativeElement)
     }
   }
 
@@ -108,6 +109,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     if (!isNaN(zoomFactor)) {
       await this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10);
       this.img.nativeElement.width = this.img.nativeElement.naturalWidth * this.zoom;
+      this.initAnnoPage(this.img.nativeElement)
     }
   }
 
@@ -161,14 +163,18 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     this.imageWidth = this.rotation % 180 !== 0 ? img.offsetHeight : img.offsetWidth;
     this.imageLeft = this.rotation % 180 !== 0 ? img.offsetTop : img.offsetLeft;
     const payload: any = [{
-      div: { offsetHeight: this.imageHeight, offsetWidth: this.imageWidth, left: this.imageLeft },
+      div: {
+        offsetHeight: this.imageHeight,
+        offsetWidth: this.imageWidth,
+        left: this.imageLeft,
+        top: img.offsetTop
+      },
       pageNumber: 1,
-      scale: 1,
-      rotation: 0,
+      scale: this.zoom,
+      rotation: this.rotation,
       id: 1
     }];
-    console.log("img", { h: this.imageHeight, w: this.imageWidth })
-    console.log("payload", payload)
+
     this.store.dispatch(new fromDocument.AddPages(payload));
   }
 

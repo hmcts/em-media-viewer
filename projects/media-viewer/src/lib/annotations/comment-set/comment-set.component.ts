@@ -23,6 +23,7 @@ import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import {select, Store} from '@ngrx/store';
 import {TagsModel} from '../models/tags.model';
 import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
+import { Rectangle } from "../annotation-set/annotation-view/rectangle/rectangle.model";
 
 @Component({
   selector: 'mv-comment-set',
@@ -45,6 +46,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
   showCommentsPanel: boolean;
+  private topRectangle: Rectangle;
 
   constructor(private store: Store<fromStore.AnnotationSetState>,
               private readonly viewerEvents: ViewerEventService,
@@ -113,11 +115,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   public onAnnotationUpdate(annotation: Annotation) {
     this.store.dispatch(new fromActions.SaveAnnotation(annotation));
-  }
-  // TODO move this to comment component instead of input
-  topRectangle(annotationId: string) {
-    const annotation = this.annotationSet.annotations.find((anno) => anno.id === annotationId);
-    return annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
   }
 
   onContainerClick(e) {

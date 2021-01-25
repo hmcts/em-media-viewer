@@ -269,12 +269,7 @@ describe('CommentSetComponent', () => {
   });
 
 
-  it('should find rectangle which is at the top', () => {
-    component.annotationSet.annotations[0].rectangles = mockRectangles;
-    const topRectangle = component.topRectangle(component.annotationSet.annotations[0].id);
 
-    expect(topRectangle).toEqual(mockRectangles[1]);
-  });
 
   it('should call the comment service to update comments state value',
     inject([CommentService], (commentService: CommentService) => {

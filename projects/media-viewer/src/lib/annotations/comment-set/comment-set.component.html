@@ -3,19 +3,20 @@
      [style.height.px]="height"
      (click)="onContainerClick($event)">
   <ng-container *ngFor="let comment of (comments$ | async); let i = index;">
-    <mv-anno-comment [ngStyle]="showCommentsPanel ? {} : {'display':'none'}"
-        #commentComponent
-        (commentClick)="onSelect($event)"
-        (delete)="onCommentDelete($event)"
-        (updated)="onCommentUpdate($event)"
-        (changes)="allCommentsSaved()"
-        [zoom]="zoom"
-        [rotate]="rotate"
-        [index]="i"
-        [page]="comment.page"
-        [comment]="comment"
-        [rectangle]="topRectangle(comment.annotationId)"
-        (renderComments)="redrawComments()">
+    <mv-anno-comment
+      [ngStyle]="showCommentsPanel ? {} : {'display':'none'}"
+      #commentComponent
+      (commentClick)="onSelect($event)"
+      (delete)="onCommentDelete($event)"
+      (updated)="onCommentUpdate($event)"
+      (changes)="allCommentsSaved()"
+      [zoom]="zoom"
+      [rotate]="rotate"
+      [index]="i"
+      [page]="comment.page"
+      [comment]="comment"
+      [annoData]="[comment.annotationId, annotationSet]"
+      (renderComments)="redrawComments()">
     </mv-anno-comment>
   </ng-container>
 </div>
