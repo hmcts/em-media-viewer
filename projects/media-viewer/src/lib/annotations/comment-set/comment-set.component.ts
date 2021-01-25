@@ -47,7 +47,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
   showCommentsPanel: boolean;
-  private topRectangle: Rectangle;
 
   constructor(private store: Store<fromStore.AnnotationSetState>,
               private readonly viewerEvents: ViewerEventService,
