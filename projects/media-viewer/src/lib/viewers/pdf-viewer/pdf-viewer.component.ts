@@ -99,7 +99,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
@@ -155,17 +154,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
 
   private async loadDocument() {
+    this.setDocumentProgress();
     await this.pdfWrapper.loadDocument(this.url);
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
     this.setPageHeights();
     this.$subscription.add(this.store.pipe(select(fromDocumentsSelector.getPageDifference))
       .subscribe(hasDifferentPageSie => this.hasDifferentPageSize = hasDifferentPageSie));
-  }
-
-  private onDocumentLoadInit() {
-    this.loadingDocument = true;
-    this.loadingDocumentProgress = null;
-    this.errorMessage = null;
   }
 
   private onDocumentLoadProgress(documentLoadProgress: DocumentLoadProgress) {
@@ -215,6 +209,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.rotation = (this.rotation + rotation) % 360;
 
     this.setPageHeights();
+  }
+
+  private setDocumentProgress() {
+    this.loadingDocument = true;
+    this.loadingDocumentProgress = null;
+    this.errorMessage = null;
   }
 
   private setZoom(zoomFactor: number) {
