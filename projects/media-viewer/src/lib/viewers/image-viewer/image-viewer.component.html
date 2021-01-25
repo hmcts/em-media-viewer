@@ -7,25 +7,25 @@
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'grabNDrag': enableGrabNDrag }"
      *ngIf="url && !errorMessage">
-    <div #imageContainer id="image-container"
-         [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations, 'show-comments-panel': showCommentsPanel }"
-         [style.height.px]="imageHeight" [style.width.px]="imageWidth">
-      <img #img
-           [src]="url"
-           [ngClass]="'rot' + rotation"
-           (error)="onLoadError(url)"
-           (load)="onLoad(img)"/>
-      <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
-                     [zoom]="zoom"
-                     [rotate]="rotation"
-      ></mv-redactions>
-      <ng-template #annotationTemplate>
-        <mv-metadata-layer *ngIf="enableAnnotations && annotationSet"
-                           [zoom]="zoom"
-                           [rotate]="rotation">
-        </mv-metadata-layer>
-      </ng-template>
-    </div>
+  <div #imageContainer id="image-container"
+       [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations, 'show-comments-panel': showCommentsPanel }"
+       [style.height.px]="imageHeight">
+    <img #img
+         [src]="url"
+         [ngClass]="'rot' + rotation"
+         (error)="onLoadError(url)"
+         (load)="onLoad(img)"/>
+    <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
+                   [zoom]="zoom"
+                   [rotate]="rotation"
+    ></mv-redactions>
+    <ng-template #annotationTemplate>
+      <mv-metadata-layer *ngIf="enableAnnotations && annotationSet"
+                         [zoom]="zoom"
+                         [rotate]="rotation">
+      </mv-metadata-layer>
+    </ng-template>
+  </div>
   <mv-comment-set *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
                   [annotationSet]="annotationSet"
                   [zoom]="zoom"
