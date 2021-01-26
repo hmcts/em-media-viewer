@@ -54,6 +54,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   imageHeight: number;
   imageWidth: number;
   imageLeft: number;
+  imageTop: number;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -161,12 +162,13 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     this.imageHeight = this.rotation % 180 !== 0 ? img.offsetWidth : img.offsetHeight;
     this.imageWidth = this.rotation % 180 !== 0 ? img.offsetHeight : img.offsetWidth;
     this.imageLeft = this.rotation % 180 !== 0 ? img.offsetTop : img.offsetLeft;
+    this.imageTop = this.rotation % 180 !== 0 ? img.offsetLeft : img.offsetTop;
     const payload: any = [{
       div: {
         offsetHeight: this.imageHeight,
         offsetWidth: this.imageWidth,
         left: this.imageLeft,
-        top: img.offsetTop
+        top: this.imageTop
       },
       pageNumber: 1,
       scale: this.zoom,
