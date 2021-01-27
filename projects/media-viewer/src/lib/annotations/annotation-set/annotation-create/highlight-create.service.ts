@@ -29,24 +29,29 @@ export class HighlightCreateService {
     });
   }
 
-  applyRotation(pageHeight, pageWidth, height, width, top, left, rotate, zoom ) {
-    const rectangle = { x: left, y: top, width: width, height: height };
+  applyRotation(pageHeight, pageWidth, offsetHeight, offsetWidth, offsetTop, offsetLeft, rotate, zoom ) {
+    const rectangle = {
+      x: Math.round(offsetLeft/zoom),
+      y: Math.round(offsetTop/zoom),
+      width: Math.round(offsetWidth/zoom),
+      height: Math.round(offsetHeight/zoom)
+    };
     switch (rotate) {
       case 90:
-        rectangle.width = height / zoom;
-        rectangle.height = width / zoom;
-        rectangle.x = top / zoom;
-        rectangle.y = (pageWidth - left - width)/zoom;
+        rectangle.width = offsetHeight ;
+        rectangle.height = offsetWidth;
+        rectangle.x = offsetTop;
+        rectangle.y = Math.round(pageWidth/zoom) - offsetLeft - offsetWidth;
         break;
       case 180:
-        rectangle.x = (pageWidth - left - width)/zoom;
-        rectangle.y = (pageHeight - top - height)/zoom;
+        rectangle.x = Math.round(pageWidth/zoom) - offsetLeft - offsetWidth;
+        rectangle.y = Math.round(pageHeight/zoom) - offsetTop - offsetHeight;
         break;
       case 270:
-        rectangle.width = height / zoom;
-        rectangle.height = width / zoom;
-        rectangle.x = (pageHeight - top - height)/zoom;
-        rectangle.y = left / zoom;
+        rectangle.width = offsetHeight;
+        rectangle.height = offsetWidth;
+        rectangle.x = Math.round(pageHeight/zoom) - offsetTop - offsetHeight;
+        rectangle.y = offsetLeft;
         break;
     }
     return rectangle as any;

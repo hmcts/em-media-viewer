@@ -19,8 +19,8 @@ export class AnnotationSetComponent implements OnInit {
   @Input() annotations: Annotation[] = [];
   @Input() zoom: number;
   @Input() rotate: number;
-  @Input() height: number;
-  @Input() width: number;
+  @Input() pageHeight: number;
+  @Input() pageWidth: number;
 
   selectedAnnotation$: Observable<SelectionAnnotation>;
 
