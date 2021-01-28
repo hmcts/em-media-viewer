@@ -154,7 +154,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
 
   private async loadDocument() {
-    this.setDocumentProgress();
+    this.initDocumentProgress();
     await this.pdfWrapper.loadDocument(this.url);
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
     this.setPageHeights();
@@ -211,7 +211,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.setPageHeights();
   }
 
-  private setDocumentProgress() {
+  private initDocumentProgress() {
     this.loadingDocument = true;
     this.loadingDocumentProgress = null;
     this.errorMessage = null;
