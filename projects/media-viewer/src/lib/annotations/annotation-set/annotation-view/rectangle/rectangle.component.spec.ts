@@ -120,10 +120,10 @@ describe('RectangleComponent', () => {
 
   it('should not update the rectangle if the rectangle did not change', function () {
     spyOn(component.update, 'emit');
-    const oldLeft = rectangleEl.nativeElement.offsetLeft;
-    const oldTop = rectangleEl.nativeElement.offsetTop;
-    const oldWidth = rectangleEl.nativeElement.offsetWidth;
-    const oldHeight = rectangleEl.nativeElement.offsetHeight;
+    component.left = rectangleEl.nativeElement.offsetLeft;
+    component.top = rectangleEl.nativeElement.offsetTop;
+    component.width = rectangleEl.nativeElement.offsetWidth;
+    component.height = rectangleEl.nativeElement.offsetHeight;
 
     const pointerDownEvent = createPointerEvent('pointerdown', 500, 500, 500, 500);
     const pointerMoveEvent = createPointerEvent('pointermove', 500, 500, 500, 500);
@@ -134,10 +134,10 @@ describe('RectangleComponent', () => {
     rectangleEl.nativeElement.dispatchEvent(pointerUpEvent);
 
     fixture.detectChanges();
-    expect(rectangleEl.nativeElement.offsetLeft).toEqual(oldLeft);
-    expect(rectangleEl.nativeElement.offsetTop).toEqual(oldTop);
-    expect(rectangleEl.nativeElement.offsetWidth).toEqual(oldWidth);
-    expect(rectangleEl.nativeElement.offsetHeight).toEqual(oldHeight);
+    expect(rectangleEl.nativeElement.offsetLeft).toEqual(component.left);
+    expect(rectangleEl.nativeElement.offsetTop).toEqual(component.top);
+    expect(rectangleEl.nativeElement.offsetWidth).toEqual(component.width);
+    expect(rectangleEl.nativeElement.offsetHeight).toEqual(component.height);
     expect(component.update.emit).not.toHaveBeenCalled();
   });
 
@@ -148,10 +148,14 @@ describe('RectangleComponent', () => {
       offsetWidth: 100,
       offsetHeight: 100
     };
-    let hasRectChanged = component.hasRectangleChanged(mockRectangle, rect);
+    let hasRectChanged = component.hasRectangleChanged(rect);
     expect(hasRectChanged).toEqual(true);
 
-    hasRectChanged = component.hasRectangleChanged({x: 100, y: 100, width: 100, height: 100 }, rect);
+    component.top = 100;
+    component.left = 100;
+    component.height = 100;
+    component.width = 100;
+    hasRectChanged = component.hasRectangleChanged(rect);
     expect(hasRectChanged).toEqual(false);
   });
 
