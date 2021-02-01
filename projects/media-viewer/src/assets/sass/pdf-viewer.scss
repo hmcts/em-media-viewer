@@ -4,6 +4,10 @@ mv-pdf-viewer {
     position: relative;
     width: 100%;
     background-color: #dee0e2;
+
+    .pageContainer {
+      width: 100%;
+    }
   }
 
   .hidden {

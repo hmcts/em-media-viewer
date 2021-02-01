@@ -5,13 +5,7 @@
        'width.px': redaction.styles.width,
        'height.px': redaction.styles.height
        }"
-       [ngClass]="{
-         'pageContainer__page--draw' : drawMode,
-         'rotation': true,
-         'rot90': rotate === 90,
-         'rot180': rotate === 180,
-         'rot270': rotate === 270
-       }">
+       [ngClass]="{ 'pageContainer__page--draw' : drawMode }">
     <mv-box-highlight-create
       [page]="i + 1"
       [pageHeight]="redaction.styles.height"
@@ -27,8 +21,8 @@
                        [zoom]="zoom"
                        [rotate]="rotate"
                        [selectedAnnoId]="selectedRedaction$ | async"
-                       [height]="redaction.styles.height"
-                       [width]="redaction.styles.width"
+                       [pageHeight]="redaction.styles.height"
+                       [pageWidth]="redaction.styles.width"
                        (update)="onMarkerUpdate($event)"
                        (delete)="onMarkerDelete($event)"
                        (annotationClick)="selectRedaction($event)">

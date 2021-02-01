@@ -23,6 +23,7 @@ import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import {select, Store} from '@ngrx/store';
 import {TagsModel} from '../models/tags.model';
 import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
+import { Rectangle } from "../annotation-set/annotation-view/rectangle/rectangle.model";
 
 @Component({
   selector: 'mv-comment-set',
@@ -40,6 +41,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   tags: TagsModel[]
   private subscriptions: Subscription[] = [];
   public comments$: Observable<Annotation[]>;
+  public annoEntities$: Observable<{ [id: string]: Annotation }>;
 
   @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
@@ -57,6 +59,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentsArray));
+    this.annoEntities$ = this.store.pipe(select(fromSelectors.getAnnotationEntities));
     this.subscriptions.push(
       this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
         this.redrawComments();
@@ -113,11 +116,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   public onAnnotationUpdate(annotation: Annotation) {
     this.store.dispatch(new fromActions.SaveAnnotation(annotation));
-  }
-  // TODO move this to comment component instead of input
-  topRectangle(annotationId: string) {
-    const annotation = this.annotationSet.annotations.find((anno) => anno.id === annotationId);
-    return annotation.rectangles.reduce((prev, current) => prev.y < current.y ? prev : current);
   }
 
   onContainerClick(e) {

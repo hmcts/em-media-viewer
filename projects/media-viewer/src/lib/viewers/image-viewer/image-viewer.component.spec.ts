@@ -5,12 +5,12 @@ import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AnnotationsModule } from '../../annotations/annotations.module';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { ViewerEventService } from '../viewer-event.service';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { AnnotationApiService } from '../../annotations/annotation-api.service';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../store/reducers/reducers';
-import {RouterTestingModule} from '@angular/router/testing';
+import { Store, StoreModule } from '@ngrx/store';
+import { reducers } from '../../store/reducers/reducers';
+import { RouterTestingModule } from '@angular/router/testing';
+import * as fromDocument from '../../store/actions/document.action';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -156,5 +156,36 @@ describe('ImageViewerComponent', () => {
     component.toggleCommentsSummary();
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
+
+  it('should dispatch AddPages event', inject([Store], (store) => {
+    spyOn(store, 'dispatch');
+    const img = { offsetHeight: 100, offsetWidth: 50, offsetLeft: 20, offsetTop: 30 };
+    const payload = [{
+      div: { offsetHeight: 100, offsetWidth: 50, left: 20, top: 30 },
+      pageNumber: 1,
+      scale: 1,
+      rotation: 0,
+      id: 1
+    }] as any;
+    component.initAnnoPage(img);
+    expect(store.dispatch).toHaveBeenCalledWith(new fromDocument.AddPages(payload));
+  }));
+
+  it('should dispatch AddPages event with relevant payload for 90 deg rotation',
+    inject([Store], (store) => {
+      spyOn(store, 'dispatch');
+      component.rotation = 90;
+      const img = { offsetHeight: 100, offsetWidth: 50, offsetLeft: 20, offsetTop: 30 };
+      const payload = [{
+        div: { offsetHeight: 50, offsetWidth: 100, left: 30, top: 20 },
+        pageNumber: 1,
+        scale: 1,
+        rotation: 90,
+        id: 1
+      }] as any;
+      component.initAnnoPage(img);
+      expect(store.dispatch).toHaveBeenCalledWith(new fromDocument.AddPages(payload));
+    })
+  );
 });
 

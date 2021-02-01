@@ -12,8 +12,8 @@ export class CtxToolbarComponent {
 
   @Input() zoom = 1;
   @Input() rotate = 0;
-  @Input() height: number;
-  @Input() width: number;
+  @Input() pageHeight: number;
+  @Input() pageWidth: number;
 
   @Input() canHighlight: boolean;
   @Input() canBookmark: boolean;
@@ -74,18 +74,18 @@ export class CtxToolbarComponent {
       case 90:
         this.rectangle.width = rectangle.height;
         this.rectangle.height = rectangle.width;
-        this.rectangle.x = (this.width/this.zoom) - rectangle.y - rectangle.height;
+        this.rectangle.x = (this.pageWidth/this.zoom) - rectangle.y - rectangle.height;
         this.rectangle.y = rectangle.x;
         break;
       case 180:
-        this.rectangle.x = (this.width/this.zoom) - rectangle.x - rectangle.width;
-        this.rectangle.y = (this.height/this.zoom) - rectangle.y - rectangle.height;
+        this.rectangle.x = (this.pageWidth/this.zoom) - rectangle.x - rectangle.width;
+        this.rectangle.y = (this.pageHeight/this.zoom) - rectangle.y - rectangle.height;
         break;
       case 270:
         this.rectangle.width = rectangle.height;
         this.rectangle.height = rectangle.width;
         this.rectangle.x = rectangle.y;
-        this.rectangle.y = (this.height/this.zoom) - rectangle.x - rectangle.width;
+        this.rectangle.y = (this.pageHeight/this.zoom) - rectangle.x - rectangle.width;
         break;
     }
   }
@@ -99,8 +99,8 @@ export class CtxToolbarComponent {
     const popupLeft = (this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.defaultWidth / 2);
     if (popupLeft <= 0) {
       return 0;
-    } else if (popupLeft >= this.width - this.defaultWidth) {
-      return this.width - this.defaultWidth;
+    } else if (popupLeft >= this.pageWidth - this.defaultWidth) {
+      return this.pageWidth - this.defaultWidth;
     } else {
       return popupLeft;
     }

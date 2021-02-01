@@ -3,29 +3,29 @@
        class="rectangle"
        draggable
        resizable
-       [tabindex]="rectangle.id"
+       [tabindex]="annoRect.id"
        [ngClass]="{ 'selected': selected, 'grabNDrag': enableGrabNDrag }"
        [style.backgroundColor]="'#' + color"
-       [style.width]="rectangle.width * zoom + 'px'"
-       [style.height]="rectangle.height * zoom + 'px'"
-       [style.left]="rectangle.x * zoom + 'px'"
-       [style.top]="rectangle.y * zoom + 'px'"
+       [style.width]="width + 'px'"
+       [style.height]="height + 'px'"
+       [style.left]="left + 'px'"
+       [style.top]="top + 'px'"
        [rotate]="0"
        [selected]="selected"
        (click)="onClick()"
-       (stopped)="onUpdate()">
+       (stopped)="onUpdate(rectElement)">
   </div>
 </div>
 <ng-template #nonEditable>
   <div #rectElement
        class="rectangle"
-       [tabindex]="rectangle.id"
+       [tabindex]="annoRect.id"
        [ngClass]="{ 'selected': selected }"
        [style.backgroundColor]="'#' + color"
-       [style.width]="rectangle.width * zoom + 'px'"
-       [style.height]="rectangle.height * zoom + 'px'"
-       [style.left]="rectangle.x * zoom + 'px'"
-       [style.top]="rectangle.y * zoom + 'px'"
+       [style.width]="width + 'px'"
+       [style.height]="height+ 'px'"
+       [style.left]="left + 'px'"
+       [style.top]="top + 'px'"
        (click)="onClick()">
   </div>
 </ng-template>
