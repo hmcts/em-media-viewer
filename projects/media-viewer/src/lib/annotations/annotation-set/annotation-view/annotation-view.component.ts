@@ -29,8 +29,8 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
       this.selected = selectedId.annotationId ? (selectedId.annotationId === id) : false;
     }
   };
-  @Input() height: number;
-  @Input() width: number;
+  @Input() pageHeight: number;
+  @Input() pageWidth: number;
   @Output() update = new EventEmitter<Annotation>();
   @Output() delete = new EventEmitter<Annotation>();
   @Output() annotationClick = new EventEmitter<SelectionAnnotation>();
@@ -43,7 +43,7 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
 
   public onSelect() {
     const annotationId = this.anno.id || this.anno.redactionId;
-    this.annotationClick.emit({annotationId, editable: false, selected: true });
+    this.annotationClick.emit({ annotationId, editable: false, selected: true });
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {

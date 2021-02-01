@@ -4,8 +4,8 @@
                   [rectangles]="anno.rectangles"
                   [zoom]="zoom"
                   [rotate]="rotate"
-                  [height]="height"
-                  [width]="width"
+                  [pageHeight]="pageHeight"
+                  [pageWidth]="pageWidth"
                   (deleteHighlightEvent)="deleteHighlight()"
                   (addOrEditCommentEvent)="addOrEditComment()">
   </mv-ctx-toolbar>
@@ -16,10 +16,10 @@
       [selected]="selected"
       [zoom]="zoom"
       [rotate]="rotate"
-      [height]="height"
-      [width]="width"
+      [pageHeight]="pageHeight"
+      [pageWidth]="pageWidth"
       [editable]="anno.rectangles.length <= 1"
-      [rectangle]="rectangle"
+      [annoRect]="rectangle"
       [color]="anno.color">
     </mv-anno-rectangle>
   </ng-container>

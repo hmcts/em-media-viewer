@@ -209,7 +209,7 @@ export function reducer (
 }
 
 export const getAnnoSet = (state: AnnotationSetState) => state.annotationSet;
-export const getComments = (state: AnnotationSetState) => state.commentEntities;
+export const getCommentEnts = (state: AnnotationSetState) => state.commentEntities;
 export const getAnnoPageEnt = (state: AnnotationSetState) => state.annotationPageEntities;
 export const getAnnoEnt = (state: AnnotationSetState) => state.annotationEntities;
 export const getSelectedAnno = (state: AnnotationSetState) => state.selectedAnnotation;

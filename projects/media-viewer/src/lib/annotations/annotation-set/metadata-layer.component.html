@@ -19,8 +19,8 @@
                     [canBookmark]="true" [canHighlight]="true"
                     [zoom]="zoom"
                     [rotate]="rotate"
-                    [height]="page.styles.height"
-                    [width]="page.styles.width"
+                    [pageHeight]="page.styles.height"
+                    [pageWidth]="page.styles.width"
                     (createBookmarkEvent)="createBookmark($event)"
                     (createHighlightEvent)="createHighlight()">
     </mv-ctx-toolbar>
@@ -28,8 +28,8 @@
       <mv-annotation-set *ngIf="(annoPages$ | async) as annoPages"
                          [zoom]="zoom"
                          [rotate]="rotate"
-                         [height]="page.styles.height"
-                         [width]="page.styles.width"
+                         [pageHeight]="page.styles.height"
+                         [pageWidth]="page.styles.width"
                          [page]="i" [annotations]="annoPages[i + 1]"></mv-annotation-set>
     </div>
   </div>

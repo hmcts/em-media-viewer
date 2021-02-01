@@ -144,7 +144,7 @@ describe('CtxToolbarComponent', () => {
   it('rotate 90 should align top to the height of the page when annotation is at far left of page', () => {
     component.rotate = 90;
     component.rectangle.y = 600;
-    component.height = 750;
+    component.pageHeight = 750;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.top).toEqual('30px');
@@ -193,7 +193,7 @@ describe('CtxToolbarComponent', () => {
   it('rotate 180 should align left to width - defaultWidth when annotation is at the far left of the page', () => {
     component.rotate = 180;
     component.rectangle.x = 750;
-    component.width = 350;
+    component.pageWidth = 350;
     fixture.detectChanges();
     const element = fixture.debugElement.query(By.css('div'));
     expect(element.styles.left).toEqual('0px');

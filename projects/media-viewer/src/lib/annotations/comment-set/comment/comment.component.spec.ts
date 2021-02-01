@@ -1,14 +1,14 @@
-import { ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommentComponent } from './comment.component';
 import { FormsModule } from '@angular/forms';
 import { CommentService } from './comment.service';
 import { TextHighlightDirective } from './text-highlight.directive';
-import {TagsServices} from '../../services/tags/tags.services';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MomentDatePipe} from '../../pipes/date.pipe';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from '../../../store/reducers/reducers';
+import { TagsServices } from '../../services/tags/tags.services';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MomentDatePipe } from '../../pipes/date.pipe';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../../store/reducers/reducers';
 
 describe('CommentComponent', () => {
   let component: CommentComponent;
@@ -37,11 +37,11 @@ describe('CommentComponent', () => {
     editable: true,
     page: 1,
     pageHeight: 1122,
-    pages: []
+    pages: { 1: { styles: { height: 200 }}}
   };
 
   const mockRectangle = {
-    x: 10, y: 10, width: 100, height: 20,
+    x: 10, y: 20, width: 100, height: 50,
     id: '16d5c513-15f9-4c39-8102-88bdb85d8831',
     annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329',
     createdDate: '2018-05-28T08:48:33.206Z',
@@ -59,6 +59,17 @@ describe('CommentComponent', () => {
       'email': 'jeroen.rijks@hmcts.net'
     },
   };
+
+  const mockAnnotation = {
+    annotationSetId: 'annotationSetId',
+    annotationId: '4f3f9361-6d17-4689-81dd-5cb2e317b329',
+    page: 1,
+    color: 'yellow',
+    comments: [mockComment],
+    rectangles: [mockRectangle],
+    type: 'annotation',
+    tags: []
+  }
 
   const waitForChanges = () => {
     tick(10);
@@ -92,7 +103,7 @@ describe('CommentComponent', () => {
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
     component.comment = {...mockComment};
-    component.rectangle = {...mockRectangle};
+    component.annotation = { ...mockAnnotation } as any;
     nativeElement = fixture.debugElement.nativeElement;
     nativeElement.style.position = 'absolute';
     nativeElement.style.width = '100px';
@@ -259,5 +270,36 @@ describe('CommentComponent', () => {
     const commentRenderedEmitEventSpy = spyOn(component.renderComments, 'emit');
     component.reRenderComments();
     expect(commentRenderedEmitEventSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should set rectTop and rectLeft', () => {
+    component.annotation = mockAnnotation as any;
+
+    expect(component.rectLeft).toBe(10)
+    expect(component.rectTop).toBe(20)
+  });
+
+  it('should set rectTop and rectLeft when rotated 90deg', () => {
+    component.rotate = 90;
+    component.annotation = mockAnnotation as any;
+
+    expect(component.rectLeft).toBe(10)
+    expect(component.rectTop).toBe(10)
+  });
+
+  it('should set rectTop and rectLeft when rotated 180deg', () => {
+    component.rotate = 180;
+    component.annotation = mockAnnotation as any;
+
+    expect(component.rectLeft).toBe(10)
+    expect(component.rectTop).toBe(130)
+  });
+
+  it('should set rectTop and rectLeft when rotated 270deg', () => {
+    component.rotate = 270;
+    component.annotation = mockAnnotation as any;
+
+    expect(component.rectLeft).toBe(10)
+    expect(component.rectTop).toBe(90)
   });
 });
