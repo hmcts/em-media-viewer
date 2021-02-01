@@ -46,10 +46,10 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input()
   set annoRect(annoRect: Rectangle) {
     this._annoRect = { ...annoRect };
-    this.height = Math.round(annoRect.height * this.zoom);
-    this.width = Math.round(annoRect.width * this.zoom);
-    this.left = Math.round(annoRect.x * this.zoom);
-    this.top = Math.round(annoRect.y * this.zoom);
+    this.height = +(annoRect.height * this.zoom).toFixed(2);
+    this.width = +(annoRect.width * this.zoom).toFixed(2);
+    this.left = +(annoRect.x * this.zoom).toFixed(2);
+    this.top = +(annoRect.y * this.zoom).toFixed(2);
   }
 
   get annoRect() {

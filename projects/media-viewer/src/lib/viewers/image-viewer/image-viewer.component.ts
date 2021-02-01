@@ -107,7 +107,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   private async stepZoom(zoomFactor: number) {
     if (!isNaN(zoomFactor)) {
-      await this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10);
+      await this.setZoomValue(this.calculateZoomValue(this.zoom, zoomFactor));
       this.img.nativeElement.width = this.img.nativeElement.naturalWidth * this.zoom;
       this.initAnnoPage(this.img.nativeElement)
     }
@@ -136,7 +136,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     const newZoomValue = zoomValue + increment;
     if (newZoomValue > 5) { return 5; }
     if (newZoomValue < 0.1) { return 0.1; }
-    return newZoomValue;
+    return +newZoomValue.toFixed(2);
   }
 
   onLoadError(url) {

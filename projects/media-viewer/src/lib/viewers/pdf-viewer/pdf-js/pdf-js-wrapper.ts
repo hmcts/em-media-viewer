@@ -150,7 +150,7 @@ export class PdfJsWrapper {
   }
 
   public stepZoom(zoomValue: number): void {
-    this.pdfViewer.currentScaleValue = Math.round(this.getZoomValue((+this.pdfViewer.currentScaleValue) + zoomValue) * 10) / 10;
+    this.pdfViewer.currentScaleValue = +this.getZoomValue((+this.pdfViewer.currentScaleValue) + zoomValue);
     this.zoomValue = this.pdfViewer.currentScaleValue;
     this.toolbarEvents.zoomValueSubject.next(this.pdfViewer.currentScaleValue);
   }
@@ -160,7 +160,7 @@ export class PdfJsWrapper {
     if (zoomValue > 5) { return 5; }
     if (zoomValue < 0.1) { return 0.1; }
 
-    return zoomValue;
+    return +zoomValue.toFixed(2);
   }
 
   public rotate(rotation: number): number {

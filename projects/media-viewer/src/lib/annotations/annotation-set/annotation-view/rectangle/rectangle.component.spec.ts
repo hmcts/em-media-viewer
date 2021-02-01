@@ -59,6 +59,8 @@ describe('RectangleComponent', () => {
     fixture = TestBed.createComponent(RectangleComponent);
     component = fixture.componentInstance;
     component.annoRect = mockRectangle;
+    component.pageHeight = 800;
+    component.pageWidth = 400;
     component.zoom = 1;
     component.rotate = 0;
     component.editable = true;
@@ -72,6 +74,60 @@ describe('RectangleComponent', () => {
 
   it('should be created', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set dimentions on annoRect input with 0.5 zoom', () => {
+    component.zoom = 0.5
+    component.annoRect = mockRectangle;
+
+    expect(component.height).toBe(50);
+    expect(component.width).toBe(25);
+    expect(component.top).toBe(5);
+    expect(component.left).toBe(2.5);
+  });
+
+  it('should maitain dimensions when rotation is zero', () => {
+    component.zoom = 0.5
+    component.annoRect = mockRectangle;
+    component.adjustForRotation(0);
+
+    expect(component.height).toBe(50);
+    expect(component.width).toBe(25);
+    expect(component.top).toBe(5);
+    expect(component.left).toBe(2.5);
+  });
+
+  it('should adjust dimensions when rotation is 90deg', () => {
+    component.zoom = 0.5
+    component.annoRect = mockRectangle;
+    component.adjustForRotation(90);
+
+    expect(component.height).toBe(25);
+    expect(component.width).toBe(50);
+    expect(component.top).toBe(2.5);
+    expect(component.left).toBe(345);
+  });
+
+  it('should adjust dimensions when rotation is 180deg', () => {
+    component.zoom = 0.5
+    component.annoRect = mockRectangle;
+    component.adjustForRotation(180);
+
+    expect(component.height).toBe(50);
+    expect(component.width).toBe(25);
+    expect(component.top).toBe(745);
+    expect(component.left).toBe(372.5);
+  });
+
+  it('should adjust dimensions when rotation is 270deg', () => {
+    component.zoom = 0.5
+    component.annoRect = mockRectangle;
+    component.adjustForRotation(270);
+
+    expect(component.height).toBe(25);
+    expect(component.width).toBe(50);
+    expect(component.top).toBe(772.5);
+    expect(component.left).toBe(5);
   });
 
   it('should emit a click', () => {
@@ -98,7 +154,7 @@ describe('RectangleComponent', () => {
     expect(rectangleEl.nativeElement.offsetTop).not.toEqual(oldTop);
   });
 
-  it('should update the rectangle if resized', function () {
+  it('should update the rectangle if resized', () => {
     const oldWidth = rectangleEl.nativeElement.offsetWidth;
     const oldHeight = rectangleEl.nativeElement.offsetHeight;
 
@@ -118,7 +174,7 @@ describe('RectangleComponent', () => {
     expect(rectangleEl.nativeElement.offsetHeight).not.toEqual(oldHeight);
   });
 
-  it('should not update the rectangle if the rectangle did not change', function () {
+  it('should not update the rectangle if the rectangle did not change', () => {
     spyOn(component.update, 'emit');
     component.left = rectangleEl.nativeElement.offsetLeft;
     component.top = rectangleEl.nativeElement.offsetTop;
@@ -141,7 +197,7 @@ describe('RectangleComponent', () => {
     expect(component.update.emit).not.toHaveBeenCalled();
   });
 
-  it('should compare 2 rectangles values and see if its the same', function () {
+  it('should compare 2 rectangles values and see if its the same', () => {
     const rect = {
       offsetLeft: 100,
       offsetTop: 100,

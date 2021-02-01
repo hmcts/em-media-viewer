@@ -42,11 +42,25 @@ describe('HighlightCreateService', () => {
     expect(rectangle).toEqual({ x: 80, y: 75, width: 150, height: 200 });
   });
 
+  it('should apply no rotation and 1.2 zoom', () => {
+    const rectangle = service
+      .applyRotation(500, 400, 200, 150, 75, 80, 0, 1.2);
+
+    expect(rectangle).toEqual({ x: 66.67, y: 62.5, width: 125, height: 166.67 });
+  });
+
   it('should apply 90 degree rotation', () => {
     const rectangle = service
       .applyRotation(500, 400, 200, 150, 75, 80, 90, 1);
 
     expect(rectangle).toEqual({ x: 75, y: 170, width: 200, height: 150 });
+  });
+
+  it('should apply 90 degree rotation and 1.2 zoom', () => {
+    const rectangle = service
+      .applyRotation(500, 400, 200, 150, 75, 80, 90, 1.2);
+
+    expect(rectangle).toEqual({ x: 62.5, y: 141.66, width: 166.67, height: 125 });
   });
 
   it('should apply 180 degree rotation', () => {
@@ -56,11 +70,25 @@ describe('HighlightCreateService', () => {
     expect(rectangle).toEqual({ x: 170, y: 225, width: 150, height: 200 });
   });
 
+  it('should apply 180 degree rotation and 1.2 zoom', () => {
+    const rectangle = service
+      .applyRotation(500, 400, 200, 150, 75, 80, 180, 1.2);
+
+    expect(rectangle).toEqual({ x: 141.66, y: 187.5, width: 125, height: 166.67 });
+  });
+
   it('should apply 270 degree rotation', () => {
     const rectangle = service
       .applyRotation(500, 400, 200, 150, 75, 80, 270, 1);
 
     expect(rectangle).toEqual({ x: 225, y: 80, width: 200, height: 150 });
+  });
+
+  it('should apply 270 degree rotation and 1.2 zoom', () => {
+    const rectangle = service
+      .applyRotation(500, 400, 200, 150, 75, 80, 270, 1.2);
+
+    expect(rectangle).toEqual({ x: 187.5, y: 66.67, width: 166.67, height: 125 });
   });
 
   it('should reset highlight', () => {
