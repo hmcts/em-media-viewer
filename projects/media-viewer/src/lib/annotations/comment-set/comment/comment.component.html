@@ -1,7 +1,6 @@
 <div #form (click)="onCommentClick()" class="aui-comment"
       [style.top.px]="commentTop"
-      [style.zIndex]="selected ? 100 : 0"
-      [ngClass]="'rotation rot' + rotate">
+      [style.zIndex]="selected ? 100 : 0">
   <div id="detailsWrapper {{index}}" class="aui-comment__header">
     <span *ngIf="author && !editor" class="aui-comment__author">
       {{ author.forename }} {{ author.surname }}

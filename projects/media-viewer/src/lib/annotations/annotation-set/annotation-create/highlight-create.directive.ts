@@ -15,8 +15,8 @@ import { Subscription } from 'rxjs';
 })
 export class HighlightCreateDirective implements OnInit, OnDestroy {
 
-  height: number;
-  width: number;
+  pageHeight: number;
+  pageWidth: number;
   zoom: number;
   rotate: number;
   allPages: object;
@@ -60,8 +60,8 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   }
 
   private getRectangles(event: MouseEvent, page) {
-    this.height = this.allPages[page].styles.height;
-    this.width = this.allPages[page].styles.width;
+    this.pageHeight = this.allPages[page].styles.height;
+    this.pageWidth = this.allPages[page].styles.width;
     this.zoom = parseFloat(this.allPages[page].scaleRotation.scale);
     this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
     const selection = window.getSelection();
@@ -88,12 +88,12 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   }
 
   private createTextRectangle(rect: any, parentRect: any): Rectangle {
-    const height = (rect.bottom - rect.top)/this.zoom;
-    const width = (rect.right - rect.left)/this.zoom;
-    const top = (rect.top - parentRect.top)/this.zoom;
-    const left = (rect.left - parentRect.left)/this.zoom;
+    const height = rect.bottom - rect.top;
+    const width = rect.right - rect.left;
+    const top = rect.top - parentRect.top;
+    const left = rect.left - parentRect.left;
 
-    let rectangle = this.highlightService.applyRotation(this.height, this.width, height, width, top, left, this.rotate, this.zoom);
+    let rectangle = this.highlightService.applyRotation(this.pageHeight, this.pageWidth, height, width, top, left, this.rotate, this.zoom);
     rectangle = { id: uuid(), ...rectangle };
 
     return rectangle as Rectangle;

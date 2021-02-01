@@ -3,8 +3,8 @@
                  [zoom]="zoom"
                  [rotate]="rotate"
                  [selectedAnnoId]="selectedAnnotation$ | async"
-                 [height]="height"
-                 [width]="width"
+                 [pageHeight]="pageHeight"
+                 [pageWidth]="pageWidth"
                  (update)="onAnnotationUpdate($event)"
                  (delete)="onAnnotationDelete($event)"
                  (annotationClick)="selectAnnotation($event)">

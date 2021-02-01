@@ -21,7 +21,6 @@ import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocument from '../../store/actions/document.action';
-import * as fromRedactionActions from '../../store/actions/redaction.actions';
 
 @Component({
     selector: 'mv-image-viewer',
@@ -52,6 +51,10 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   showCommentsPanel: boolean;
   enableGrabNDrag = false;
+  imageHeight: number;
+  imageWidth: number;
+  imageLeft: number;
+  imageTop: number;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -91,12 +94,14 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   private rotateImage(rotation: number) {
     this.rotation = (this.rotation + rotation) % 360;
+    this.initAnnoPage(this.img.nativeElement)
   }
 
   private async setZoom(zoomFactor: number) {
     if (!isNaN(zoomFactor)) {
       await this.setZoomValue(this.calculateZoomValue(zoomFactor));
       this.img.nativeElement.width = this.img.nativeElement.naturalWidth * this.zoom;
+      this.initAnnoPage(this.img.nativeElement)
     }
   }
 
@@ -104,6 +109,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     if (!isNaN(zoomFactor)) {
       await this.setZoomValue(Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10);
       this.img.nativeElement.width = this.img.nativeElement.naturalWidth * this.zoom;
+      this.initAnnoPage(this.img.nativeElement)
     }
   }
 
@@ -147,28 +153,33 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     this.imageViewerException.emit(this.viewerException);
   }
 
-  onLoad() {
+  onLoad(img: any) {
     this.mediaLoadStatus.emit(ResponseType.SUCCESS);
-    this.initAnnoPage();
+    this.initAnnoPage(img);
   }
 
-  initAnnoPage() {
+  initAnnoPage(img: any) {
+    this.imageHeight = this.rotation % 180 !== 0 ? img.offsetWidth : img.offsetHeight;
+    this.imageWidth = this.rotation % 180 !== 0 ? img.offsetHeight : img.offsetWidth;
+    this.imageLeft = this.rotation % 180 !== 0 ? img.offsetTop : img.offsetLeft;
+    this.imageTop = this.rotation % 180 !== 0 ? img.offsetLeft : img.offsetTop;
     const payload: any = [{
-      div: { offsetHeight: 1122 }, // todo add dynamic height
+      div: {
+        offsetHeight: this.imageHeight,
+        offsetWidth: this.imageWidth,
+        left: this.imageLeft,
+        top: this.imageTop
+      },
       pageNumber: 1,
-      scale: 1,
-      rotation: 1,
+      scale: this.zoom,
+      rotation: this.rotation,
       id: 1
     }];
-    this.store.dispatch(new fromDocument.AddPages(payload));
-  }
 
-  getImageHeight(img) {
-    return this.rotation % 180 !== 0 ? img.offsetWidth + 15 : img.offsetHeight + 15;
+    this.store.dispatch(new fromDocument.AddPages(payload));
   }
 
   toggleCommentsSummary() {
     this.toolbarEvents.toggleCommentsSummary(!this.toolbarEvents.showCommentSummary.getValue());
   }
-
 }

@@ -127,8 +127,8 @@ describe('AnnotationSetComponent', () => {
     fixture = TestBed.createComponent(AnnotationSetComponent);
     component = fixture.componentInstance;
     component.rotate = 0;
-    component.height = 400;
-    component.width = 200;
+    component.pageHeight = 400;
+    component.pageWidth = 200;
     component.zoom = 1;
     fixture.detectChanges();
 

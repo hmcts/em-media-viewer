@@ -21,23 +21,41 @@ import { HighlightCreateService } from '../../annotation-create/highlight-create
 })
 export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
 
-  @Input() rectangle: Rectangle;
   @Input() color: String;
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() editable: boolean;
-  @Input() height: number;
-  @Input() width: number;
+  @Input() pageHeight: number;
+  @Input() pageWidth: number;
 
   @Output() select = new EventEmitter<Rectangle>();
   @Output() update = new EventEmitter<Rectangle>();
 
-  @ViewChild('rectElement') rectElement: ElementRef;
+  @ViewChild('rectElement') viewRect: ElementRef;
 
   private subscriptions: Subscription[] = [];
   _selected: boolean;
   enableGrabNDrag = false;
-  prevRotation = 0;
+
+  height: number;
+  width: number;
+  top: number;
+  left: number;
+
+  _annoRect: Rectangle;
+  @Input()
+  set annoRect(annoRect: Rectangle) {
+    this._annoRect = { ...annoRect };
+    this.height = Math.round(annoRect.height * this.zoom);
+    this.width = Math.round(annoRect.width * this.zoom);
+    this.left = Math.round(annoRect.x * this.zoom);
+    this.top = Math.round(annoRect.y * this.zoom);
+  }
+
+  get annoRect() {
+    return this._annoRect;
+  }
+
 
   constructor(private readonly toolbarEvents: ToolbarEventService,
               private readonly highlightService: HighlightCreateService) {}
@@ -62,8 +80,8 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input()
   set selected(selected: boolean) {
     this._selected = selected;
-    if (this._selected && this.rectElement) {
-      this.rectElement.nativeElement.focus();
+    if (this._selected && this.viewRect) {
+      this.viewRect.nativeElement.focus();
     }
   }
 
@@ -72,43 +90,45 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   onClick() {
-    this.select.emit(this.rectangle);
+    this.select.emit(this.annoRect);
   }
 
-  onUpdate() {
-    const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = this.rectElement.nativeElement;
-    if (this.hasRectangleChanged(this.rectangle, this.rectElement.nativeElement)) {
-      let rectangle = this.highlightService.applyRotation(this.height, this.width, offsetHeight, offsetWidth, offsetTop, offsetLeft, this.rotate, this.zoom);
-      rectangle = { ...this.rectangle, ...rectangle };
+  onUpdate(viewRect: any) {
+    const { offsetHeight, offsetWidth, offsetTop, offsetLeft } = viewRect;
+    if (this.hasRectangleChanged(viewRect)) {
+      let rectangle = this.highlightService
+        .applyRotation(this.pageHeight, this.pageWidth, offsetHeight, offsetWidth, offsetTop, offsetLeft, this.rotate, this.zoom);
+      rectangle = { ...this.annoRect, ...rectangle };
       this.update.emit({ ...rectangle });
     }
   }
 
   adjustForRotation(rotation: number) {
-    const rect = { ...this.rectangle };
+    const { top, left, height, width } = this;
     switch (rotation) {
       case 90:
-        rect.width = this.rectangle.height;
-        rect.height = this.rectangle.width;
-        rect.x = (this.width/this.zoom) - this.rectangle.y - this.rectangle.height;
-        rect.y = this.rectangle.x;
+        this.width = height;
+        this.height = width;
+        this.left = this.pageWidth  - top - height;
+        this.top = left;
         break;
       case 180:
-        rect.x = (this.width/this.zoom) - this.rectangle.x - this.rectangle.width;
-        rect.y = (this.height/this.zoom) - this.rectangle.y - this.rectangle.height;
+        this.left = this.pageWidth - left - width;
+        this.top = this.pageHeight - top - height;
         break;
       case 270:
-        rect.width = this.rectangle.height;
-        rect.height = this.rectangle.width;
-        rect.x = this.rectangle.y;
-        rect.y = (this.height/this.zoom) - this.rectangle.x - this.rectangle.width;
+        this.width = height;
+        this.height = width;
+        this.left = top;
+        this.top = this.pageHeight - left - width;
         break;
     }
-    this.rectangle = {...rect};
   }
 
-  hasRectangleChanged({ x, y, width, height }, { offsetLeft, offsetTop, offsetWidth, offsetHeight }): boolean {
-    return x !== (offsetLeft / this.zoom) || y !== (offsetTop / this.zoom) ||
-      width !== (offsetWidth / this.zoom) || height !== (offsetHeight / this.zoom);
+  hasRectangleChanged(viewRect): boolean {
+    return this.left !== viewRect.offsetLeft ||
+      this.top !== viewRect.offsetTop ||
+      this.width !== viewRect.offsetWidth ||
+      this.height !== viewRect.offsetHeight;
   }
 }
