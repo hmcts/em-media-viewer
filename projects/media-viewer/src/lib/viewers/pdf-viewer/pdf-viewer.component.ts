@@ -70,9 +70,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   errorMessage: string;
   hasDifferentPageSize = false;
 
-  @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
-  @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
-  @ViewChild('commentsPanel') commentsPanel: CommentSetComponent;
+  @ViewChild('viewerContainer', { static: false }) viewerContainer: ElementRef<HTMLDivElement>;
+  @ViewChild('pdfViewer', { static: false }) pdfViewer: ElementRef<HTMLDivElement>;
+  @ViewChild('commentsPanel', { static: false }) commentsPanel: CommentSetComponent;
 
   private pdfWrapper: PdfJsWrapper;
   private $subscription: Subscription;

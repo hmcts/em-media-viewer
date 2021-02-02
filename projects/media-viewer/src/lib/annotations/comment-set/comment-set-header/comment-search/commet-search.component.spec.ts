@@ -6,6 +6,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../../../store/reducers/reducers';
 import * as fromActions from '../../../../store/actions/annotations.action';
+import { CommentsNavigateComponent } from "../../comment-navigate/comments-navigate.component";
 
 describe('CommentSearch', () => {
   let hostComponent: TestHostComponent;
@@ -87,6 +88,6 @@ describe('CommentSearch', () => {
 class TestHostComponent {
   annotations = [] ;
 
-  @ViewChild(CommentSearchComponent) commentSearchComponent: CommentSearchComponent;
+  @ViewChild(CommentSearchComponent, { static: false }) commentSearchComponent: CommentSearchComponent;
 }
 

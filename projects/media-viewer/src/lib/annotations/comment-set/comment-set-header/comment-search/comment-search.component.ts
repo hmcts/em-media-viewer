@@ -13,7 +13,7 @@ export class CommentSearchComponent implements AfterViewInit, OnDestroy {
 
   @Input() public readonly annotations: Annotation[];
 
-  @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
+  @ViewChild('searchInput', { static: false }) searchInput: ElementRef<HTMLInputElement>;
 
   searchString: string;
   searchResults: Annotation[] = [];

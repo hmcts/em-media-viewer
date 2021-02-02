@@ -26,9 +26,9 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() enableICP = false;
   @Input() contentType = null;
 
-  @ViewChild('zoomSelect') public zoomSelect: ElementRef;
-  @ViewChild('mvToolbarMain') public mvToolbarMain: ElementRef<HTMLElement>;
-  @ViewChild('dropdownMenu') public mvMenuItems: ElementRef<HTMLElement>;
+  @ViewChild('zoomSelect', { static: false }) public zoomSelect: ElementRef;
+  @ViewChild('mvToolbarMain', { static: false }) public mvToolbarMain: ElementRef<HTMLElement>;
+  @ViewChild('dropdownMenu', { static: false }) public mvMenuItems: ElementRef<HTMLElement>;
 
   private readonly subscriptions: Subscription[] = [];
 
