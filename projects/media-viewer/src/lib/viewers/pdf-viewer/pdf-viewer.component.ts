@@ -228,7 +228,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private stepZoom(zoomFactor: number) {
     if (!isNaN(zoomFactor)) {
       this.pdfWrapper.stepZoom(zoomFactor);
-      this.zoom = Math.round(this.calculateZoomValue(this.zoom, zoomFactor) * 10) / 10;
+      this.zoom = this.calculateZoomValue(this.zoom, zoomFactor);
       this.setPageHeights();
     }
   }
@@ -249,7 +249,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     if (newZoomValue < 0.1) {
       return 0.1;
     }
-    return newZoomValue;
+    return +newZoomValue.toFixed(2);
   }
 
   private goToDestination(destination: any[]) {

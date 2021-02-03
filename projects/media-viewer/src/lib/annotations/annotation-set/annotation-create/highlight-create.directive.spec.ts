@@ -66,11 +66,14 @@ describe('HighlightCreateDirective', () => {
     directive.allPages = { '1': { ...page } };
     spyOn(viewerEvents, 'textSelected');
     const rectangle = { x: 20, y: 50, height: 20, width: 10 };
-    spyOn(highlightService, 'applyRotation').and
-      .returnValue(rectangle);
+    spyOn(highlightService, 'applyRotation').and.returnValue(rectangle);
     const id = any(String) as any;
+    const { height, width } = page.styles;
+    directive.zoom = 0.5;
+
     directive.onMouseUp(mockEvent);
 
+    expect(highlightService.applyRotation).toHaveBeenCalledWith(height, width, 20, 10, 50, 20, 0, 1);
     expect(viewerEvents.textSelected)
       .toHaveBeenCalledWith({ page: 1 , rectangles: [{ id, ...rectangle }]});
   }));
