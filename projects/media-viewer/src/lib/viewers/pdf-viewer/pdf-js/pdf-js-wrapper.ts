@@ -22,7 +22,7 @@ export class PdfJsWrapper {
 
   private zoomValue: number;
   private documentTitle: string;
-  private documentOutline: Outline;
+  private documentOutline: any;
 
   constructor(
     private readonly pdfViewer: PDFViewer,
@@ -91,9 +91,9 @@ export class PdfJsWrapper {
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
 
-      this.documentOutline = await pdfDocument.getOutline();
+      this.documentOutline = await pdfDocument.getOutline() as any;
       this.outlineLoaded.next(this.documentOutline);
-      const pdfMetaData = await pdfDocument.getMetadata();
+      const pdfMetaData = await pdfDocument.getMetadata() as any;
       this.setCurrentPDFTitle(pdfMetaData.info.Title);
     } catch (e) {
       this.documentLoadFailed.next(e);

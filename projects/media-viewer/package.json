@@ -21,7 +21,7 @@
     "@swimlane/ngx-datatable": "16.1.1",
     "hammerjs": "^2.0.8",
     "mutable-div": "0.0.11",
-    "pdfjs-dist": "2.5.207",
+    "pdfjs-dist": "2.6.347",
     "uuid": "^3.3.2",
     "socket.io-client": "^2.3.0"
   },
