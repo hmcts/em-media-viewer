@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  media-viewer:
+    build:
+      context: .
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    ports:
+      - 3000:3000
