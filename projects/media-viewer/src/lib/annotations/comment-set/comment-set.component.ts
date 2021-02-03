@@ -43,7 +43,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   public comments$: Observable<Annotation[]>;
   public annoEntities$: Observable<{ [id: string]: Annotation }>;
 
-  @ViewChild('container', { static: false }) container: ElementRef;
+  @ViewChild('container') container: ElementRef;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
   showCommentsPanel: boolean;

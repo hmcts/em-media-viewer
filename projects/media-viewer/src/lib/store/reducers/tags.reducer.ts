@@ -83,7 +83,7 @@ export function tagsReducer (
         return formFilterState[key] ? [...arr, key] : arr;
       }, []);
 
-      const filteredComments = filters.reduce((obj: {[id: string]: string}, f) => {
+      const filteredComments = filters.reduce((obj: { [id: string]: any }, f) => {
         return {
           ...obj,
           ...state.tagNameEnt[f]

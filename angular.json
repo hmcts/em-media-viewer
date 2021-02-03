@@ -18,7 +18,8 @@
           "configurations": {
             "production": {
               "project": "projects/media-viewer/ng-package.prod.json"
-            }
+            ,              "tsConfig": "projects/media-viewer/tsconfig.lib.prod.json"
+}
           }
         },
         "test": {
@@ -63,6 +64,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/media-viewer-demo-app",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -105,6 +107,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -212,7 +220,7 @@
   "defaultProject": "media-viewer",
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "style": "scss"
     }
   }
 }

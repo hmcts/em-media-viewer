@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
-import { PdfPosition } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import { Rotation } from '../../viewers/rotation-persist/rotation.model';
+import { PdfPosition } from "../reducers/document.reducer";
 
 export const SET_DOCUMENT_ID = '[Document] Set Document Id';
 export const POSITION_UPDATED = '[Document] Position Updated';

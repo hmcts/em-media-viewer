@@ -70,9 +70,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   errorMessage: string;
   hasDifferentPageSize = false;
 
-  @ViewChild('viewerContainer', { static: false }) viewerContainer: ElementRef<HTMLDivElement>;
-  @ViewChild('pdfViewer', { static: false }) pdfViewer: ElementRef<HTMLDivElement>;
-  @ViewChild('commentsPanel', { static: false }) commentsPanel: CommentSetComponent;
+  @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
+  @ViewChild('viewer') pdfViewer: ElementRef<HTMLDivElement>;
+  @ViewChild('commentsPanel') commentsPanel: CommentSetComponent;
 
   private pdfWrapper: PdfJsWrapper;
   private $subscription: Subscription;
@@ -99,36 +99,41 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
-    this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
-    this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
-    this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
-    this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
-    this.pdfWrapper.pageRendered.subscribe((event) => this.updatePages(event));
     this.$subscription = this.toolbarEvents.printSubject
       .subscribe(() => this.printService.printDocumentNatively(this.url));
-    this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() =>
-      this.pdfWrapper.downloadFile(this.downloadUrl || this.url, this.downloadFileName)
-    ));
     this.$subscription.add(this.toolbarEvents.rotateSubject.subscribe(rotate => this.rotateDocument(rotate)));
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
-    this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
-    this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
-    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
     this.$subscription.add(this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle));
-    this.$subscription.add(this.pdfWrapper.positionUpdated.asObservable()
-      .pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
-      .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
-    );
   }
 
+  subscriptionsSet = false;
   async ngOnChanges(changes: SimpleChanges) {
-    if (!this.pdfWrapper) {
+    if (!this.pdfWrapper && this.viewerContainer) {
       this.pdfWrapper = this.pdfJsWrapperFactory.create(this.viewerContainer);
+      if (!this.subscriptionsSet) {
+        this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
+        this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
+        this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
+        this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
+        this.pdfWrapper.outlineLoaded.subscribe(outline => this.documentOutline = outline);
+        this.pdfWrapper.pageRendered.subscribe((event) => this.updatePages(event));
+        this.$subscription.add(this.toolbarEvents.downloadSubject.subscribe(() =>
+          this.pdfWrapper.downloadFile(this.downloadUrl || this.url, this.downloadFileName)
+        ));
+        this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
+        this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
+        this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
+        this.$subscription.add(this.pdfWrapper.positionUpdated.asObservable()
+          .pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
+          .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
+        );
+        this.subscriptionsSet = true;
+        await this.loadDocument();
+      }
     }
     if (changes.url && this.pdfWrapper) {
       await this.loadDocument();

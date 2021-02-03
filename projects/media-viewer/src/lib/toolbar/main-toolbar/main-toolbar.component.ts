@@ -1,4 +1,3 @@
-import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -14,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { NumberHelperService } from '../../../lib/shared/util/services/number.helper.service';
+import { ConnectionPositionPair } from "@angular/cdk/overlay";
 
 @Component({
   selector: 'mv-main-toolbar',
@@ -26,9 +26,9 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() enableICP = false;
   @Input() contentType = null;
 
-  @ViewChild('zoomSelect', { static: false }) public zoomSelect: ElementRef;
-  @ViewChild('mvToolbarMain', { static: false }) public mvToolbarMain: ElementRef<HTMLElement>;
-  @ViewChild('dropdownMenu', { static: false }) public mvMenuItems: ElementRef<HTMLElement>;
+  @ViewChild('zoomSelect') public zoomSelect: ElementRef;
+  @ViewChild('mvToolbarMain') public mvToolbarMain: ElementRef<HTMLElement>;
+  @ViewChild('dropdownMenu') public mvMenuItems: ElementRef<HTMLElement>;
 
   private readonly subscriptions: Subscription[] = [];
 

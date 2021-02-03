@@ -60,8 +60,8 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   @Input() index: number;
   @Input() page: number;
 
-  @ViewChild('form', { static: false }) form: ElementRef;
-  @ViewChild('editableComment', { static: false }) editableComment: ElementRef<HTMLElement>;
+  @ViewChild('form') form: ElementRef;
+  @ViewChild('editableComment') editableComment: ElementRef<HTMLElement>;
 
   private subscriptions: Subscription;
 

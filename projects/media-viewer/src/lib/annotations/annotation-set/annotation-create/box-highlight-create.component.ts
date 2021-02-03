@@ -21,7 +21,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   @Output() saveSelection = new EventEmitter<{ rectangles: Rectangle[], page: number }>()
 
-  @ViewChild('boxHighlight', { static: false }) highlight: ElementRef;
+  @ViewChild('boxHighlight') highlight: ElementRef;
 
   drawStartX = -1;
   drawStartY = -1;

@@ -1,4 +1,4 @@
-import { PdfPosition } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import { PdfPosition } from "../store/reducers/document.reducer";
 
 export interface IcpState {
   session: IcpSession;

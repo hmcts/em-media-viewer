@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
 
-  @ViewChild('searchInput', { static: false }) searchElement: ElementRef;
+  @ViewChild('searchInput') searchElement: ElementRef;
   @Input() toolbarEvents;
 
   highlightAll = true;

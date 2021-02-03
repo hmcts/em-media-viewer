@@ -15,12 +15,12 @@
 </mv-comment-set-header>
 <mv-participants-list></mv-participants-list>
 
-<div grabNDrag [dragX]="pdfViewer" [dragEnabled]="enableGrabNDrag"
+<div grabNDrag [dragX]="viewer" [dragEnabled]="enableGrabNDrag"
      #viewerContainer
      class="pdfContainer"
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage, 'show-comments-panel': (showCommentsPanel || showIcpParticipantsList), 'grabNDrag': enableGrabNDrag }">
-  <div #pdfViewer
+  <div #viewer id="viewer"
        class="pdfViewer"
        mvCreateTextHighlight
        [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
@@ -42,7 +42,7 @@
                     [annotationSet]="annotationSet"
                     [zoom]="zoom"
                     [rotate]="rotation"
-                    [height]="pdfViewer.offsetHeight"
+                    [height]="viewer.offsetHeight"
                     [pageHeights]="pageHeights">
     </mv-comment-set>
     <mv-bookmark-icons [zoom]="zoom"
