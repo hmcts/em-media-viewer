@@ -1,17 +1,26 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-ctx-toolbar',
-  templateUrl: './ctx-toolbar.component.html'
+  templateUrl: './ctx-toolbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CtxToolbarComponent {
+export class CtxToolbarComponent implements OnChanges {
 
   readonly defaultHeight;
   readonly defaultWidth;
 
-  @Input() zoom = 1;
-  @Input() rotate = 0;
+  @Input() zoom;
+  @Input() rotate;
   @Input() pageHeight: number;
   @Input() pageWidth: number;
 
@@ -35,12 +44,16 @@ export class CtxToolbarComponent {
     this.defaultWidth = 300;
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    this.setRectangle();
+    this.top = this.popupTop();
+    this.left = this.popupLeft();
+  }
+
   @Input() set rectangles(rectangles: Rectangle[]) {
     if (rectangles) {
       this._rectangles = rectangles;
       this.setRectangle();
-      this.top = this.popupTop();
-      this.left = this.popupLeft();
     }
   }
 
@@ -92,6 +105,7 @@ export class CtxToolbarComponent {
 
   popupTop() {
     const popupTop = this.rectangle.y * this.zoom - this.defaultHeight;
+    console.log("this is context toolbar zoom ", this.zoom)
     return popupTop <= 0 ? this.defaultHeight : popupTop;
   }
 

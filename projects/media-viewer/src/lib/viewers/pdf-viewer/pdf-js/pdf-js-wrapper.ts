@@ -77,7 +77,7 @@ export class PdfJsWrapper {
       withCredentials: true
     });
 
-    loadingTask.onProgress = ({loaded, total}) => {
+    loadingTask.onProgress = ({ loaded, total }) => {
       this.documentLoadProgress.next({ loaded, total });
     };
 
