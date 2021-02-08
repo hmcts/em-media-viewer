@@ -1,12 +1,14 @@
 import {
   AfterContentInit,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   Output,
   SimpleChanges,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
@@ -50,13 +52,33 @@ enum ConvertibleContentTypes {
 })
 export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
 
+  @ViewChild('viewerRef') viewerRef: ElementRef;
+
   @Input() url;
   @Input() downloadFileName: string;
   @Input() contentType: string;
 
   @Input() showToolbar = true;
   @Input() toolbarButtonOverrides: any = {};
-  @Input() height = 'calc(100vh - 42px)';
+
+  @Input()
+  public set height(value: string) {
+    this._givenHeight = value;
+  }
+
+  public get height(): string {
+    const viewerHeight = this.viewerRef ? this.viewerRef.nativeElement.offsetTop : 0;
+
+    // intput param value takes precedence
+    if (this._givenHeight) {
+      return this._givenHeight;
+    }
+
+    return `calc(100vh - ${this.elRef.nativeElement.offsetTop + viewerHeight}px)`;
+  }
+
+  private _givenHeight: string;
+
   @Input() width = '100%';
 
   @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
@@ -86,7 +108,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly api: AnnotationApiService,
-    private readonly commentService: CommentService
+    private readonly commentService: CommentService,
+    private elRef: ElementRef
   ) {
     if (this.annotationApiUrl) {
       api.annotationApiUrl = this.annotationApiUrl;
@@ -102,6 +125,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       .subscribe(changes => this.onCommentChange(changes));
     this.$subscriptions.add(this.toolbarEvents.getShowCommentSummary()
       .subscribe(changes => this.showCommentSummary = changes));
+
+    //
   }
 
   contentTypeConvertible(): boolean {

@@ -1,4 +1,5 @@
 .comments-panel {
+  display: none;
   position: absolute;
   overflow-y: auto;
   top: 0;
@@ -16,6 +17,7 @@
 }
 
 .comments-panel.expanded {
+  display: block;
   width: 24%;
 }
 
@@ -23,4 +25,3 @@
   top: 90px;
   height: 100%
 }
-

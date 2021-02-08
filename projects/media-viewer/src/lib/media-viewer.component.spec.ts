@@ -233,4 +233,21 @@ describe('MediaViewerComponent', () => {
     component.onDocumentTitleChange(newTitle);
     expect(component.documentTitle).toEqual(newTitle);
   });
+
+  describe('height param', () => {
+    it('should calc height when input value is not provided', () => {
+      component.height = undefined;
+      fixture.detectChanges();
+
+      expect(component.height).toBeDefined();
+    });
+
+    it('should set height to input value', () => {
+      const mockHeight = 'calc(100vh - 25px)';
+      component.height = mockHeight;
+      fixture.detectChanges();
+
+      expect(component.height).toEqual(mockHeight);
+    });
+  });
 });
