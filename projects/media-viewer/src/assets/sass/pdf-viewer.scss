@@ -2,7 +2,6 @@ mv-pdf-viewer {
   .pdfContainer {
     overflow: auto;
     position: relative;
-    width: 100%;
     background-color: #dee0e2;
 
     .pageContainer {
@@ -56,7 +55,6 @@ mv-pdf-viewer {
 
   .pdfViewer {
     width: 100%;
-    overflow-x: auto;
     transition-duration: 600ms;
     transition-timing-function: ease;
   }
