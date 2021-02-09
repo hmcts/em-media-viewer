@@ -7,7 +7,6 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -52,7 +51,7 @@ enum ConvertibleContentTypes {
   templateUrl: './media-viewer.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class MediaViewerComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit {
+export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
 
   @ViewChild('viewerRef') viewerRef: ElementRef;
 
@@ -104,9 +103,6 @@ export class MediaViewerComponent implements OnInit, OnChanges, OnDestroy, After
     if (this.annotationApiUrl) {
       api.annotationApiUrl = this.annotationApiUrl;
     }
-  }
-
-  public ngOnInit(): void {
   }
 
   ngAfterContentInit() {
