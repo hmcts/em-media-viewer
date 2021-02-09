@@ -9,7 +9,7 @@ import {
   defaultPdfOptions,
   defaultUnsupportedOptions
 } from './toolbar/toolbar-button-visibility.service';
-import { AnnotationApiService } from './annotations/annotation-api.service';
+import { AnnotationApiService } from './annotations/services/annotation-api/annotation-api.service';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { By } from '@angular/platform-browser';
 import {reducers} from './store/reducers/reducers';

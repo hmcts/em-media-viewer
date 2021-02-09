@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
-import { AnnotationApiService } from '../annotation-api.service';
+import { AnnotationApiService } from '../services/annotation-api/annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { CommentComponent } from './comment/comment.component';
 import {Observable, Subscription} from 'rxjs';

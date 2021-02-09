@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Bookmark } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
+import { Bookmark } from '../../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 @Injectable()
 export class BookmarksApiService {
@@ -54,4 +54,3 @@ export class BookmarksApiService {
       .pipe(map(response => response.body));
   }
 }
-

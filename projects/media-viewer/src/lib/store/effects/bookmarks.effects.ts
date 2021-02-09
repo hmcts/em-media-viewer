@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
+import { BookmarksApiService } from '../../annotations/services/bookmarks-api/bookmarks-api.service';
 import * as bookmarksActions from '../actions/bookmarks.action';
 import { select, Store } from '@ngrx/store';
 import * as fromDocument from '../selectors/document.selectors';
@@ -86,4 +86,3 @@ export class BookmarksEffects {
         )
     ));
 }
-

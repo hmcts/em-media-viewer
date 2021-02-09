@@ -18,7 +18,7 @@ import {
 } from './toolbar/toolbar-button-visibility.service';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from './toolbar/toolbar-event.service';
-import { AnnotationApiService } from './annotations/annotation-api.service';
+import { AnnotationApiService } from './annotations/services/annotation-api/annotation-api.service';
 import { ResponseType, ViewerException } from './viewers/viewer-exception.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';

@@ -1,22 +1,23 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { CommentSetComponent } from './comment-set.component';
-import { CommentComponent } from './comment/comment.component';
-import { FormsModule } from '@angular/forms';
-import { AnnotationApiService } from '../annotation-api.service';
-import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { TagInputModule } from 'ngx-chips';
+import { StoreModule } from '@ngrx/store';
+
+import { AnnotationApiService } from '../services/annotation-api/annotation-api.service';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { annotationSet } from '../../../assets/annotation-set';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
 import { CommentService } from './comment/comment.service';
+import { CommentSetComponent } from './comment-set.component';
+import { CommentComponent } from './comment/comment.component';
 import { CommentSetRenderService } from './comment-set-render.service';
 import { TagsServices } from '../services/tags/tags.services';
 import { TagsComponent } from '../tags/tags.component';
-import { TagInputModule } from 'ngx-chips';
 import { TextHighlightDirective } from './comment/text-highlight.directive';
-import { MomentDatePipe } from '../pipes/date.pipe';
-import { StoreModule } from '@ngrx/store';
+import { MomentDatePipe } from '../pipes/date/date.pipe';
 import { reducers } from '../../store/reducers/reducers';
-import { BehaviorSubject } from 'rxjs';
 
 describe('CommentSetComponent', () => {
   let component: CommentSetComponent;
@@ -247,7 +248,6 @@ describe('CommentSetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('should delete the comment for the annotation', () => {
     spyOn(component, 'onAnnotationUpdate');
 
@@ -267,9 +267,6 @@ describe('CommentSetComponent', () => {
     expect(component.onAnnotationUpdate).toHaveBeenCalled();
     expect(component.annotationSet.annotations[0].comments[0]).toEqual(mockComment.comment);
   });
-
-
-
 
   it('should call the comment service to update comments state value',
     inject([CommentService], (commentService: CommentService) => {

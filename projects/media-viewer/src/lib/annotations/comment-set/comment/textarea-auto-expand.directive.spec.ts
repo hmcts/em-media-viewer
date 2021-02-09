@@ -1,18 +1,20 @@
-import { TextareaAutoExpandDirective } from './textarea-auto-expand.directive';
 import { CommentComponent } from './comment.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+
+import { StoreModule } from '@ngrx/store';
+import { TagInputModule } from 'ngx-chips';
+
+import { TextareaAutoExpandDirective } from './textarea-auto-expand.directive';
 import { CommentService } from './comment.service';
 import { TextHighlightDirective } from './text-highlight.directive';
-import {TagsComponent} from '../../tags/tags.component';
-import {TagInputModule} from 'ngx-chips';
-import {TagsServices} from '../../services/tags/tags.services';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MomentDatePipe } from '../../pipes/date.pipe';
-import {StoreModule} from '@ngrx/store';
+import { TagsComponent } from '../../tags/tags.component';
+import { TagsServices } from '../../services/tags/tags.services';
+import { MomentDatePipe } from '../../pipes/date/date.pipe';
 import {reducers} from '../../../store/reducers/reducers';
 
 describe('TextareaAutoExpandDirective', () => {

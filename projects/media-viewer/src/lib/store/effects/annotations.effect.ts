@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
 import { of } from 'rxjs';
-import {AnnotationApiService} from '../../annotations/annotation-api.service';
+import {AnnotationApiService} from '../../annotations/services/annotation-api/annotation-api.service';
 import * as annotationsActions from '../actions/annotations.action';
 
 @Injectable()
@@ -54,4 +54,3 @@ export class AnnotationEffects {
         }));
     }));
 }
-

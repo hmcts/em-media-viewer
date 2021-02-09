@@ -1,7 +1,7 @@
 import { BoxHighlightCreateComponent } from './box-highlight-create.component';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AnnotationApiService } from '../../annotation-api.service';
+import { AnnotationApiService } from '../../services/annotation-api/annotation-api.service';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HighlightCreateService } from './highlight-create.service';

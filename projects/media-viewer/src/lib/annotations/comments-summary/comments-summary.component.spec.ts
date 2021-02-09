@@ -1,17 +1,17 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-import { MomentDatePipe } from '../pipes/date.pipe';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { RouterModule } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
+import { MomentDatePipe } from '../pipes/date/date.pipe';
 import { reducers } from '../../store/reducers/reducers';
-import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
-import { UnsnakePipe } from '../pipes/unsnake.pipe';
+import { UnsnakePipe } from '../pipes/unsnake/unsnake.pipe';
 
 describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;

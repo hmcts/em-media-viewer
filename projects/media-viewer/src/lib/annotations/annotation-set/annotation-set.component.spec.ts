@@ -1,6 +1,6 @@
 import { AnnotationSetComponent } from './annotation-set.component';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { AnnotationApiService } from '../annotation-api.service';
+import { AnnotationApiService } from '../services/annotation-api/annotation-api.service';
 import { Observable, of } from 'rxjs';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { CommentService } from '../comment-set/comment/comment.service';
