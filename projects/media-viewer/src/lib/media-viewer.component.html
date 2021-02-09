@@ -37,7 +37,7 @@
                             [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                             [originalUrl]="url"
                             [downloadFileName]="downloadFileName"
-                            [height]="height"
+                            [height]="viewerHeight"
                             rotationPersist>
       </mv-conversion-viewer>
       <mv-pdf-viewer *ngIf="contentType === 'pdf'"
@@ -51,7 +51,7 @@
                      [enableICP]="enableICP"
                      [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                      [downloadFileName]="downloadFileName"
-                     [height]="height"
+                     [height]="viewerHeight"
                      [caseId]="caseId"
                      rotationPersist>
       </mv-pdf-viewer>
@@ -62,7 +62,7 @@
                        [enableAnnotations]="enableAnnotations"
                        [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                        [downloadFileName]="downloadFileName"
-                       [height]="height"
+                       [height]="viewerHeight"
                        rotationPersist>
       </mv-image-viewer>
       <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
