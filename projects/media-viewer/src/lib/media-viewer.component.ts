@@ -1,11 +1,13 @@
 import {
   AfterContentInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -50,7 +52,7 @@ enum ConvertibleContentTypes {
   templateUrl: './media-viewer.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
+export class MediaViewerComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit {
 
   @ViewChild('viewerRef') viewerRef: ElementRef;
 
@@ -62,22 +64,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Input() toolbarButtonOverrides: any = {};
 
   @Input()
-  public set height(value: string) {
-    this._givenHeight = value;
-  }
-
-  public get height(): string {
-    const viewerHeight = this.viewerRef ? this.viewerRef.nativeElement.offsetTop : 0;
-
-    // intput param value takes precedence
-    if (this._givenHeight) {
-      return this._givenHeight;
-    }
-
-    return `calc(100vh - ${this.elRef.nativeElement.offsetTop + viewerHeight}px)`;
-  }
-
-  private _givenHeight: string;
+  public height: string;
+  public viewerHeight: string;
 
   @Input() width = '100%';
 
@@ -102,6 +90,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   hasDifferentPageSize$: Observable<boolean>;
 
   private $subscriptions: Subscription;
+  private prevOffset: number;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -109,11 +98,15 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     public readonly toolbarEvents: ToolbarEventService,
     private readonly api: AnnotationApiService,
     private readonly commentService: CommentService,
-    private elRef: ElementRef
+    private elRef: ElementRef,
+    private cdr: ChangeDetectorRef
   ) {
     if (this.annotationApiUrl) {
       api.annotationApiUrl = this.annotationApiUrl;
     }
+  }
+
+  public ngOnInit(): void {
   }
 
   ngAfterContentInit() {
@@ -125,8 +118,26 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       .subscribe(changes => this.onCommentChange(changes));
     this.$subscriptions.add(this.toolbarEvents.getShowCommentSummary()
       .subscribe(changes => this.showCommentSummary = changes));
+  }
 
-    //
+  ngAfterViewChecked(): void {
+    if (this.height && this.viewerHeight !== this.height) {
+      this.viewerHeight = this.height;
+      this.cdr.detectChanges();
+      return;
+    }
+
+    if (!this.height) {
+      const compOffsetTop = this.elRef.nativeElement.offsetTop;
+      const viewerOffsetTop = this.viewerRef.nativeElement.offsetTop;
+      const offset = compOffsetTop + viewerOffsetTop;
+
+      if (this.prevOffset !== offset) {
+        this.viewerHeight = `calc(100vh - ${offset}px)`;
+        this.prevOffset = offset;
+        this.cdr.detectChanges();
+      }
+    }
   }
 
   contentTypeConvertible(): boolean {

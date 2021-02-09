@@ -239,7 +239,7 @@ describe('MediaViewerComponent', () => {
       component.height = undefined;
       fixture.detectChanges();
 
-      expect(component.height).toBeDefined();
+      expect(component.viewerHeight).toBeDefined();
     });
 
     it('should set height to input value', () => {
@@ -247,7 +247,7 @@ describe('MediaViewerComponent', () => {
       component.height = mockHeight;
       fixture.detectChanges();
 
-      expect(component.height).toEqual(mockHeight);
+      expect(component.viewerHeight).toEqual(mockHeight);
     });
   });
 });
