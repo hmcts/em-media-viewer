@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 import { HighlightCreateDirective } from './highlight-create.directive';
-import { SelectedAnnotation } from '../../../store/actions/annotations.action';
+import { SelectedAnnotation } from '../../../../store/actions/annotations.action';
 import { BehaviorSubject, of } from 'rxjs';
 import { fakeAsync } from '@angular/core/testing';
 import any = jasmine.any;

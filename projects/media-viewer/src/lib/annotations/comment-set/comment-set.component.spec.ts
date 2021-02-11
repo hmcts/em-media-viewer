@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 import { TagInputModule } from 'ngx-chips';
 import { StoreModule } from '@ngrx/store';
 
-import { AnnotationApiService } from '../services/annotation-api/annotation-api.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { annotationSet } from '../../../assets/annotation-set';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
@@ -13,9 +12,8 @@ import { CommentService } from './comment/comment.service';
 import { CommentSetComponent } from './comment-set.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentSetRenderService } from './comment-set-render.service';
-import { TagsServices } from '../services/tags/tags.services';
 import { TagsComponent } from '../tags/tags.component';
-import { TextHighlightDirective } from './comment/text-highlight.directive';
+import { TextHighlightDirective } from './comment/text-highlight/text-highlight.directive';
 import { MomentDatePipe } from '../pipes/date/date.pipe';
 import { reducers } from '../../store/reducers/reducers';
 
@@ -27,7 +25,6 @@ describe('CommentSetComponent', () => {
   let comment, mockRectangles;
   let toolbarEvent: ToolbarEventService;
 
-  const api = new AnnotationApiService({}  as any);
   const toolbarEventsMock = {
     icp: {
       participantsListVisible: new BehaviorSubject(false),
@@ -222,11 +219,9 @@ describe('CommentSetComponent', () => {
         StoreModule.forFeature('media-viewer', reducers)
       ],
       providers: [
-        { provide: AnnotationApiService, useValue: api },
         { provide: ToolbarEventService, useValue: toolbarEventsMock },
         CommentService,
         CommentSetRenderService,
-        TagsServices
       ]
     })
     .compileComponents();

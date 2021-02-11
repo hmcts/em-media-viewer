@@ -1,13 +1,13 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { RedactionComponent } from './redaction.component';
 import { Store, StoreModule } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+
 import * as fromActions from '../../store/actions/redaction.actions';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { reducers } from '../../store/reducers/reducers';
-import { Subscription } from 'rxjs';
 import any = jasmine.any;
 
 describe('RedactionComponent', () => {
@@ -27,7 +27,6 @@ describe('RedactionComponent', () => {
       declarations: [RedactionComponent],
       providers: [
         { provide: ViewerEventService, useValue: viewerEvents },
-        { provide: HighlightCreateService, useValue: highlightService },
         { provide: ToolbarEventService, useValue: toolbarEvents }
       ],
       imports: [
@@ -50,7 +49,7 @@ describe('RedactionComponent', () => {
   });
 
   it('should mark Text for Redaction',
-    inject([Store, HighlightCreateService],(store) => {
+    inject([Store],(store) => {
       spyOn(toolbarEvents.highlightModeSubject, 'next');
       spyOn(store, 'dispatch');
       component.documentId = 'documentId'

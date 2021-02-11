@@ -16,14 +16,14 @@ import { RectangleComponent } from './annotation-set/annotation-view/rectangle/r
 import { CommentComponent } from './comment-set/comment/comment.component';
 import { CtxToolbarComponent } from './annotation-set/ctx-toolbar/ctx-toolbar.component';
 import { CommentSetComponent } from './comment-set/comment-set.component';
-import { TextareaAutoExpandDirective } from './comment-set/comment/textarea-auto-expand.directive';
+import { TextareaAutoExpandDirective } from './comment-set/comment/textarea-auto-expand/textarea-auto-expand.directive';
 import { CommentsSummaryComponent } from './comments-summary/comments-summary.component';
 import { CommentSetRenderService } from './comment-set/comment-set-render.service';
-import { BoxHighlightCreateComponent } from './annotation-set/annotation-create/box-highlight-create.component';
-import { HighlightCreateService } from './annotation-set/annotation-create/highlight-create.service';
+import { BoxHighlightCreateComponent } from './annotation-set/annotation-create/box-highlight-create/box-highlight-create.component';
+import { HighlightCreateService } from './annotation-set/annotation-create/highlight-create/highlight-create.service';
 import { CommentSetHeaderComponent } from './comment-set/comment-set-header/comment-set-header.component';
 import { CommentSearchComponent } from './comment-set/comment-set-header/comment-search/comment-search.component';
-import { TextHighlightDirective } from './comment-set/comment/text-highlight.directive';
+import { TextHighlightDirective } from './comment-set/comment/text-highlight/text-highlight.directive';
 import { TagsComponent } from './tags/tags.component';
 import { TagsServices } from './services/tags/tags.services';
 import { CommentsNavigateComponent } from './comment-set/comment-navigate/comments-navigate.component';
@@ -33,7 +33,7 @@ import { BookmarksApiService } from './services/bookmarks-api/bookmarks-api.serv
 import {FilterPipe} from './pipes/filter/filter.pipe';
 import {UnsnakePipe} from './pipes/unsnake/unsnake.pipe';
 import {SharedModule} from '../shared/shared.module';
-import { MetadataLayerComponent } from './annotation-set/metadata-layer.component';
+import { MetadataLayerComponent } from './annotation-set/metadata-layer/metadata-layer.component';
 
 @NgModule({
   imports: [

@@ -1,10 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import uuid from 'uuid';
 import { Subscription } from 'rxjs';
-import { ToolbarEventService } from '../../../toolbar/toolbar.module';
-import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
-import { HighlightCreateService } from './highlight-create.service';
-
+import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
+import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
+import { HighlightCreateService } from '../highlight-create/highlight-create.service';
 
 @Component({
   selector: 'mv-box-highlight-create',

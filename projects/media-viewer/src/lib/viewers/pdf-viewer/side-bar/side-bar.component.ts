@@ -3,7 +3,7 @@ import { Outline } from './outline-item/outline.model';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import * as bookmarksSelectors from '../../../store/selectors/bookmarks.selectors';
-import { BookmarkNode } from '../../../store/model/bookmarks.interface';
+import { BookmarkNode } from '../../../store/models/bookmarks.interface';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
 import { take } from 'rxjs/operators';
 import uuid from 'uuid';

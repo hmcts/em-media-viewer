@@ -208,5 +208,74 @@ describe('CtxToolbarComponent', () => {
 
     expect(element.styles.left).toEqual('0px');
   });
-});
 
+  describe('rectangles', () => {
+    it('should call setRectangle, popupTop and popupLeft when rectangles provided', () => {
+      spyOn(component, 'setRectangle').and.callThrough();
+      spyOn(component, 'popupTop').and.callThrough();
+      spyOn(component, 'popupLeft').and.callThrough();
+
+      component.rectangles = [mockRectangle];
+      fixture.detectChanges();
+
+      expect(component.setRectangle).toHaveBeenCalled();
+      expect(component.popupTop).toHaveBeenCalled();
+      expect(component.popupLeft).toHaveBeenCalled();
+    });
+
+    it('should not call setRectangle, popupTop and popupLeft when rectangles is not provided', () => {
+      spyOn(component, 'setRectangle').and.callThrough();
+      spyOn(component, 'popupTop').and.callThrough();
+      spyOn(component, 'popupLeft').and.callThrough();
+
+      component.rectangles = null;
+      fixture.detectChanges();
+
+      expect(component.setRectangle).not.toHaveBeenCalled();
+      expect(component.popupTop).not.toHaveBeenCalled();
+      expect(component.popupLeft).not.toHaveBeenCalled();
+    });
+  });
+
+  it('should emit an event when createBookmark called', () => {
+    component.rectangle = mockRectangle;
+    fixture.detectChanges();
+
+    spyOn(component.createBookmarkEvent, 'emit').and.callThrough();
+    component.createBookmark();
+
+    expect(component.createBookmarkEvent.emit).toHaveBeenCalledWith(mockRectangle);
+    expect(component.rectangle).toBeUndefined();
+  });
+
+  describe('setRectangle', () => {
+    beforeEach(() => {
+      component.pageWidth = 300;
+      component.pageHeight = 200;
+    });
+
+    [
+      { rotate: 90, zoom: 1, rectangle: { x: 180, y: 100, width: 20, height: 100 } },
+      { rotate: 90, zoom: 2, rectangle: { x: 30, y: 100, width: 20, height: 100 } },
+      { rotate: 180, zoom: 1, rectangle: { x: 100, y: 80, width: 100, height: 20 } },
+      { rotate: 180, zoom: 2, rectangle: { x: -50, y: -20, width: 100, height: 20 } },
+      { rotate: 270, zoom: 1, rectangle: { x: 100, y: 0, width: 20, height: 100 } },
+      { rotate: 270, zoom: 2, rectangle: { x: 100, y: -100, width: 20, height: 100 } }
+    ]
+      .forEach((take: {rotate: number, zoom: number, rectangle: { x: number, y: number, width: number, height: number}}) => {
+        it(`should update the rectangle when rotate ${take.rotate}deg, zoom = ${take.zoom}`, () => {
+          component.rotate = take.rotate;
+          component.zoom = take.zoom;
+          fixture.detectChanges();
+
+          component.setRectangle();
+
+          expect(component.rectangle.x).toEqual(take.rectangle.x);
+          expect(component.rectangle.y).toEqual(take.rectangle.y);
+          expect(component.rectangle.width).toEqual(take.rectangle.width);
+          expect(component.rectangle.height).toEqual(take.rectangle.height);
+        });
+      }
+    );
+  });
+});

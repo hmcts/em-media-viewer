@@ -30,8 +30,7 @@ export class AnnotationApiService {
     return this.httpClient
       .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
       .pipe(
-        map(response => response.body),
-        catchError(() => [])
+        map(response => response.body)
       );
   }
 
@@ -39,8 +38,7 @@ export class AnnotationApiService {
     return annotationSet
       .pipe(
         map(this.sortAnnotations),
-        map(this.extractComments),
-        catchError(() => [])
+        map(this.extractComments)
       );
   }
 

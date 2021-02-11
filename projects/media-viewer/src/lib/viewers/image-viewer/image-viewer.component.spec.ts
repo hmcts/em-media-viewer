@@ -6,7 +6,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AnnotationsModule } from '../../annotations/annotations.module';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
-import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -24,7 +23,6 @@ describe('ImageViewerComponent', () => {
         ImageViewerComponent,
         GrabNDragDirective
       ],
-      providers: [AnnotationApiService],
       imports: [
         AnnotationsModule,
         StoreModule.forRoot({}),
@@ -188,4 +186,3 @@ describe('ImageViewerComponent', () => {
     })
   );
 });
-

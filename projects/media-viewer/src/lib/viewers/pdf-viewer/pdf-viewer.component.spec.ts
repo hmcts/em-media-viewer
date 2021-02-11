@@ -6,19 +6,16 @@ import { annotationSet } from '../../../assets/annotation-set';
 import { PrintService } from '../../print.service';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
-import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
 
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { Outline } from './side-bar/outline-item/outline.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
-import { SelectedAnnotation } from '../../store/actions/annotations.action';
 import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
 import { IcpService } from '../../icp/icp.service';
@@ -51,13 +48,11 @@ describe('PdfViewerComponent', () => {
         StoreModule.forRoot({})
       ],
       providers: [
-        AnnotationApiService,
         CommentService,
         ToolbarEventService,
         ViewerEventService,
         PrintService,
         PdfJsWrapperFactory,
-        HighlightCreateService,
         { provide: IcpService, useValue: mockIcpService },
       ],
       schemas: [

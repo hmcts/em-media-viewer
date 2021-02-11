@@ -26,7 +26,8 @@ export class AnnotationSetComponent implements OnInit {
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
-    private readonly commentService: CommentService) {}
+    private readonly commentService: CommentService
+  ) {}
 
   ngOnInit(): void {
     this.selectedAnnotation$ = this.store.pipe(select(fromSelectors.getSelectedAnnotation));
@@ -43,7 +44,7 @@ export class AnnotationSetComponent implements OnInit {
     this.store.dispatch(new fromActions.DeleteAnnotation(annotation.id));
   }
 
-  selectAnnotation(selectedAnnotation) {
+  selectAnnotation(selectedAnnotation: SelectionAnnotation) {
     this.store.dispatch(new fromActions.SelectedAnnotation(selectedAnnotation));
   }
 }

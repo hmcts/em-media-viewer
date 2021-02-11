@@ -1,11 +1,9 @@
 import { AnnotationSetComponent } from './annotation-set.component';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { AnnotationApiService } from '../services/annotation-api/annotation-api.service';
 import { Observable, of } from 'rxjs';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { CommentService } from '../comment-set/comment/comment.service';
-import { HighlightCreateService } from './annotation-create/highlight-create.service';
-import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
+import { HighlightCreateService } from './annotation-create/highlight-create/highlight-create.service';
 import { Action, Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import * as fromActions from '../../store/actions/annotations.action';
@@ -25,32 +23,12 @@ describe('AnnotationSetComponent', () => {
     pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
   } as any;
 
-  const api = new AnnotationApiService({}  as any);
   const mockCommentService = new CommentService();
   const mockHighlightService = {
     getRectangles: () => {},
     saveAnnotation: () => {},
     resetHighlight: () => {}
   } as any;
-
-  const fakeApi: any = {
-    returnedAnnotation: {
-      id: 'testId',
-      annotationSetId: 'testAnnotationSetId',
-      color: 'FFFF00',
-      comments: [],
-      page: 1,
-      rectangles: [],
-      type: 'highlight'
-    },
-    postAnnotation(annotation: any): Observable<any> {
-      fakeApi.returnedAnnotation.id = annotation.id;
-      fakeApi.returnedAnnotation.annotationSetId = annotation.annotationSetId;
-      fakeApi.returnedAnnotation.page = annotation.page;
-      fakeApi.returnedAnnotation.rectangles = annotation.rectangles;
-      return of(fakeApi.returnedAnnotation);
-    }
-  };
 
   beforeEach(() => {
     mockTextLayerRect = {
@@ -116,7 +94,6 @@ describe('AnnotationSetComponent', () => {
       ],
       providers: [
         { provide: Store, useValue: mockStore },
-        { provide: AnnotationApiService, useValue: api },
         { provide: CommentService, useValue: mockCommentService },
         { provide: HighlightCreateService, useValue: mockHighlightService },
         ToolbarEventService
@@ -151,18 +128,33 @@ describe('AnnotationSetComponent', () => {
     }
   ));
 
-  it('should delete annotation', inject([Store, CommentService],
-    (store, commentService) => {
-      spyOn(store, 'dispatch');
-      spyOn(commentService, 'updateUnsavedCommentsStatus');
-      const mockAnno = { comments: ['comments'], id: 'id'} as any;
+  describe('onAnnotationDelete', () => {
+    it('should update unsaved comments and dispatch delete annotation action',
+      inject([Store, CommentService], (store: Store<any>, commentService: CommentService) => {
+        spyOn(store, 'dispatch');
+        spyOn(commentService, 'updateUnsavedCommentsStatus');
+        const mockAnno = { comments: ['comments'], id: 'id'} as any;
 
-      component.onAnnotationDelete(mockAnno);
+        component.onAnnotationDelete(mockAnno);
 
-      expect(commentService.updateUnsavedCommentsStatus).toHaveBeenCalledWith(mockAnno, false);
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'))
-    }
-  ));
+        expect(commentService.updateUnsavedCommentsStatus).toHaveBeenCalledWith(mockAnno, false);
+        expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'))
+      })
+    );
+
+    it('should dispatch delete annotation actions and not to call commentService',
+      inject([Store, CommentService], (store: Store<any>, commentService: CommentService) => {
+        spyOn(store, 'dispatch');
+        spyOn(commentService, 'updateUnsavedCommentsStatus');
+        const mockAnno = { comments: [], id: 'id'} as any;
+
+        component.onAnnotationDelete(mockAnno);
+
+        expect(commentService.updateUnsavedCommentsStatus).not.toHaveBeenCalled();
+        expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'))
+      })
+    );
+  });
 
   it('should select annotation', inject([Store],
     (store) => {

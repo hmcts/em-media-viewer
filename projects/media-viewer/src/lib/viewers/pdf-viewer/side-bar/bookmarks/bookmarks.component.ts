@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmarks.action';
-import { Bookmark, BookmarkNode } from '../../../../store/model/bookmarks.interface';
+import { Bookmark, BookmarkNode } from '../../../../store/models/bookmarks.interface';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmarks.selectors';
 import { Subscription } from 'rxjs';
 import { AnnotationSetState} from '../../../../store/reducers/annotations.reducer';
@@ -96,7 +96,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   goToBookmark(bookmark: Bookmark) {
-
     const thisPage = this.pageLookup[bookmark.pageNumber + 1];
     const defaultHeight = thisPage.styles.height;
     const defaultScaleY = this.scaledY(bookmark.yCoordinate, defaultHeight, thisPage);
@@ -118,6 +117,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
     this.goToDestination.emit([
       bookmark.pageNumber,
+      // @TODO: Should the name be hard coded?
       { 'name': 'XYZ' },
       left,
       top

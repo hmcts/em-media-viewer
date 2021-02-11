@@ -1,11 +1,12 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { of, Subscription } from 'rxjs';
-import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { HighlightCreateService } from './annotation-create/highlight-create.service';
-import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { Action, Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../../store/reducers/reducers';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { HighlightCreateService } from '../annotation-create/highlight-create/highlight-create.service';
+import { ViewerEventService } from '../../../viewers/viewer-event.service';
+import { reducers } from '../../../store/reducers/reducers';
 import { MetadataLayerComponent } from './metadata-layer.component';
 
 describe('MetadataLayerComponent', () => {
@@ -26,7 +27,7 @@ describe('MetadataLayerComponent', () => {
       annotationSetId: 'annotationSetId',
       documentId: 'documentId'
     }]),
-    dispatch: (actualAction) => { expectedAction = actualAction },
+    dispatch: (actualAction: Action) => { expectedAction = actualAction },
   } as any;
 
   const mockHighlightService = {
@@ -153,14 +154,27 @@ describe('MetadataLayerComponent', () => {
     }
   ));
 
-  it('should show context toolbar', inject([ToolbarEventService],(toolbarEvents) => {
-    spyOn(toolbarEvents.highlightModeSubject, 'next');
+  describe('showContextToolbar', () => {
+    it('should set page and rectangles and push false to highlightModeSubject',
+      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+        spyOn(toolbarEvents.highlightModeSubject, 'next');
+        component.showContextToolbar({ page: 1, rectangles: ['rectangles'] } as any);
 
-    component.showContextToolbar({ page: 1, rectangles: ['rectangles'] } as any);
+        expect(toolbarEvents.highlightModeSubject.next).toHaveBeenCalledWith(false);
+        expect(component.rectangles).toEqual(['rectangles'] as any);
+      })
+    );
 
-    expect(toolbarEvents.highlightModeSubject.next).toHaveBeenCalledWith(false);
-    expect(component.rectangles).toEqual(['rectangles'] as any);
-  }));
+    it('should set page and rectangles and do not push false to highlightModeSubject',
+      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+        spyOn(toolbarEvents.highlightModeSubject, 'next');
+        component.showContextToolbar({ page: 1, rectangles: null } as any);
+
+        expect(toolbarEvents.highlightModeSubject.next).not.toHaveBeenCalled();
+        expect(component.rectangles).toEqual(null);
+      })
+    );
+  });
 
   it('should clear context toolbar', () => {
     component.rectangles = ['rectangles'] as any;
@@ -197,4 +211,18 @@ describe('MetadataLayerComponent', () => {
       expect(component.rectangles).toBeUndefined();
     }
   ));
+
+  it('should call saveAnnotation and push false to drawModeSubject',
+    inject([HighlightCreateService, ToolbarEventService], (highlightCreateService: HighlightCreateService, toolbarEvents: ToolbarEventService) => {
+      const mockRectangles = [];
+      const mockPage = {};
+
+      spyOn(highlightCreateService, 'saveAnnotation');
+      spyOn(toolbarEvents.drawModeSubject, 'next');
+
+      component.saveAnnotation({ rectangles: mockRectangles, page: mockPage});
+      expect(highlightCreateService.saveAnnotation).toHaveBeenCalledWith(mockRectangles, mockPage);
+      expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalledWith(false);
+    })
+  );
 });

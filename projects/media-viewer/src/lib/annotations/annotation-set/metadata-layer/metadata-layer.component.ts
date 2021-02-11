@@ -1,18 +1,18 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import { Highlight, ViewerEventService } from '../../viewers/viewer-event.service';
 import { Observable, Subscription } from 'rxjs';
-import { select, Store } from '@ngrx/store';
-import * as fromStore from '../../store/reducers/reducers';
-import * as fromDocument from '../../store/selectors/document.selectors';
-import * as fromSelectors from '../../store/selectors/annotations.selectors';
-import { HighlightCreateService } from './annotation-create/highlight-create.service';
-import { Rectangle } from './annotation-view/rectangle/rectangle.model';
-import { CreateBookmark } from '../../store/actions/bookmarks.action';
-import * as fromBookmarks from '../../store/selectors/bookmarks.selectors';
 import { take } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
 import uuid from 'uuid';
 
+import * as fromStore from '../../../store/reducers/reducers';
+import * as fromDocument from '../../../store/selectors/document.selectors';
+import * as fromSelectors from '../../../store/selectors/annotations.selectors';
+import { HighlightCreateService } from '../annotation-create/highlight-create/highlight-create.service';
+import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
+import { CreateBookmark } from '../../../store/actions/bookmarks.action';
+import * as fromBookmarks from '../../../store/selectors/bookmarks.selectors';
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { Highlight, ViewerEventService } from '../../../viewers/viewer-event.service';
 
 @Component({
   selector: 'mv-metadata-layer',
@@ -90,7 +90,7 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
       });
   }
 
-  saveAnnotation({ rectangles, page }) {
+  saveAnnotation({ rectangles, page } : { rectangles: Rectangle[], page: any}) {
     this.highlightService.saveAnnotation(rectangles, page);
     this.toolbarEvents.drawModeSubject.next(false);
   }

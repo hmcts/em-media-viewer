@@ -1,8 +1,9 @@
-import * as fromAnnotations from '../actions/annotations.action';
-import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
-import {StoreUtils} from '../store-utils';
-import {SelectionAnnotation} from '../../annotations/models/event-select.model';
 import uuid from 'uuid/v4';
+import * as fromAnnotations from '../actions/annotations.action';
+import { Annotation } from '../../annotations/annotation-set/annotation-view/annotation.model';
+import { Comment } from '../../annotations/comment-set/comment/comment.model';
+import { StoreUtils } from '../store-utils';
+import { SelectionAnnotation } from '../../annotations/models/event-select.model';
 
 export interface AnnotationSetState {
   annotationSet: any;
@@ -215,4 +216,3 @@ export const getAnnoEnt = (state: AnnotationSetState) => state.annotationEntitie
 export const getSelectedAnno = (state: AnnotationSetState) => state.selectedAnnotation;
 export const commentSearchQ = (state: AnnotationSetState) => state.commentSearchQueries;
 export const getSummaryFilters = (state: AnnotationSetState) => state.commentSummaryFilters;
-

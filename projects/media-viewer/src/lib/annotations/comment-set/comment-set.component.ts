@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
-import { AnnotationApiService } from '../services/annotation-api/annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { CommentComponent } from './comment/comment.component';
 import {Observable, Subscription} from 'rxjs';
@@ -50,7 +49,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(private store: Store<fromStore.AnnotationSetState>,
               private readonly viewerEvents: ViewerEventService,
-              private readonly api: AnnotationApiService,
               private readonly commentService: CommentService,
               private readonly renderService: CommentSetRenderService,
               private readonly toolbarEvents: ToolbarEventService) {

@@ -17,7 +17,6 @@ import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ViewerUtilService } from '../viewer-util.service';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
-import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocument from '../../store/actions/document.action';
@@ -58,7 +57,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
-    private readonly annotationsApi: AnnotationApiService,
     private readonly printService: PrintService,
     private readonly viewerUtilService: ViewerUtilService,
     public readonly toolbarEvents: ToolbarEventService,

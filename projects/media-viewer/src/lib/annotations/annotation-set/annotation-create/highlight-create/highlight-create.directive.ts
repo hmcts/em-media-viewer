@@ -1,14 +1,15 @@
 import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 import uuid from 'uuid';
-import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 import { Store } from '@ngrx/store';
-import * as fromStore from '../../../store/reducers/reducers';
-import * as fromDocument from '../../../store/selectors/document.selectors';
-import { ViewerEventService } from '../../../viewers/viewer-event.service';
-import * as fromAnnotationActions from '../../../store/actions/annotations.action';
-import { HighlightCreateService } from './highlight-create.service';
 import { Subscription } from 'rxjs';
+
+import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
+import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
+import * as fromStore from '../../../../store/reducers/reducers';
+import * as fromDocument from '../../../../store/selectors/document.selectors';
+import { ViewerEventService } from '../../../../viewers/viewer-event.service';
+import * as fromAnnotationActions from '../../../../store/actions/annotations.action';
+import { HighlightCreateService } from './highlight-create.service';
 
 @Directive({
   selector: '[mvCreateTextHighlight]'

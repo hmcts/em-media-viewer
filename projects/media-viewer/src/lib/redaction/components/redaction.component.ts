@@ -1,6 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
+import uuid from 'uuid';
+import {filter, take} from 'rxjs/operators';
+
 import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromSelectors from '../../store/selectors/redaction.selectors';
@@ -10,11 +13,8 @@ import * as fromActions from '../../store/actions/redaction.actions';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import * as fromRedaActions from '../../store/actions/redaction.actions';
 import { SelectionAnnotation } from '../../annotations/models/event-select.model';
-import uuid from 'uuid';
-import {filter, take} from 'rxjs/operators';
 import { ToolbarEventService } from '../../toolbar/toolbar.module';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
-import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 import { Redaction } from '../services/redaction.model';
 
 @Component({
@@ -36,7 +36,6 @@ export class RedactionComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromStore.State>,
               private readonly viewerEvents: ViewerEventService,
-              private readonly highlightService: HighlightCreateService,
               private toolbarEvents: ToolbarEventService) {}
 
   ngOnInit(): void {

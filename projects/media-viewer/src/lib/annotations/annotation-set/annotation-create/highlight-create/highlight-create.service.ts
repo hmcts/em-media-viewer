@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
-import uuid from 'uuid';
-import { ToolbarEventService } from '../../../toolbar/toolbar.module';
-import { select, Store } from '@ngrx/store';
-import * as fromStore from '../../../store/reducers/reducers';
-import * as fromSelectors from '../../../store/selectors/annotations.selectors';
-import * as fromActions from '../../../store/actions/annotations.action';
 import { take } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import uuid from 'uuid';
+
+import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
+import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
+import * as fromStore from '../../../../store/reducers/reducers';
+import * as fromSelectors from '../../../../store/selectors/annotations.selectors';
+import * as fromActions from '../../../../store/actions/annotations.action';
 
 @Injectable()
 export class HighlightCreateService {
