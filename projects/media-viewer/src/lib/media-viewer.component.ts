@@ -124,7 +124,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
 
     if (!this.height) {
-      const compOffsetTop = this.elRef.nativeElement.offsetTop;
+      const compOffsetTop = this.elRef.nativeElement.getBoundingClientRect().top;
       const viewerOffsetTop = this.viewerRef.nativeElement.offsetTop;
       const offset = compOffsetTop + viewerOffsetTop;
 
