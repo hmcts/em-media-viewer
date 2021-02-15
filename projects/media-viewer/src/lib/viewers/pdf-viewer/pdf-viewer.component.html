@@ -18,6 +18,7 @@
 <div grabNDrag [dragX]="viewerContainer" [dragEnabled]="enableGrabNDrag"
      #viewerContainer
      class="pdfContainer"
+     (scroll)="onScroll($event)"
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'pdfContainer': true, 'annotations': enableAnnotations, hidden: errorMessage, 'show-comments-panel': (showCommentsPanel || showIcpParticipantsList), 'grabNDrag': enableGrabNDrag }">
   <div #pdfViewer
