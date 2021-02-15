@@ -9,7 +9,6 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-  ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
 import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
@@ -30,7 +29,6 @@ import { filter, tap, throttleTime } from 'rxjs/operators';
 import * as fromTagActions from '../../store/actions/tags.actions';
 import { SetCaseId } from '../../store/actions/icp.action';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
-import { IcpService } from '../../icp/icp.service';
 import { IcpState } from '../../icp/icp.interfaces';
 import { ViewerEventService } from '../viewer-event.service';
 
@@ -84,9 +82,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
     private icpStore: Store<IcpState>,
-    private icpService: IcpService,
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
-    private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
@@ -153,6 +149,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription.unsubscribe();
   }
 
+  public onScroll(event: any): void {
+    // adjust comments location on scroll
+    if (event.target.scrollLeft !== 0 && this.commentsPanel) {
+      this.commentsPanel.container.nativeElement.style.right = `-${event.target.scrollLeft}px`;
+    }
+  }
 
   private async loadDocument() {
     await this.pdfWrapper.loadDocument(this.url);
