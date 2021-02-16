@@ -15,6 +15,10 @@ html {
   background-color: govuk-colour("light-grey");
 }
 
+body {
+  overflow: hidden;
+}
+
 .js-enabled .js-hidden {
   display: none !important;
 }
@@ -89,4 +93,3 @@ html {
 .aui-case-action-alert__link:focus {
   color: govuk-colour("black");
 }
-
