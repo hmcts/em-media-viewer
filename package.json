@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.6.6",
+  "version": "2.6.7-RC",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
