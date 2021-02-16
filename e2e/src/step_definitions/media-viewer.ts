@@ -487,7 +487,7 @@ When(/^The user clicks on the show comments panel toggle icon$/, async function 
   await commentsPanelPage.clickCommentsToggleIcon();
 });
 
-//I expect to see the comments filter and search tabs
+// I expect to see the comments filter and search tabs
 Then(/^I expect to be able to click on the Filter Search And Comments Tab$/, async function () {
   await genericMethods.sleep(2000);
   await commentsPanelPage.clickOnCommentsTab();
@@ -500,7 +500,7 @@ Then(/^I expect to be able to click on the Filter Search And Comments Tab$/, asy
 
 When(/^I Search for Comments$/, async function () {
   await genericMethods.sleep(2000);
-  let searchText = "Some Random to Search";
+  const searchText = 'Some Random to Search';
   await commentsPanelPage.performSearch(searchText);
 
   const viewableDoc = await browser.takeScreenshot();
@@ -509,7 +509,7 @@ When(/^I Search for Comments$/, async function () {
 
 });
 Then(/^No matching results have been found$/, async function () {
-  let noMatchText ="No matches have been found";
+  const noMatchText = 'No matches have been found';
   await commentsPanelPage.assertSearchResultText(noMatchText);
 });
 
@@ -528,7 +528,7 @@ Then(/^There are no comment rows present$/, async function () {
 });
 
 When(/^The user closes the overlay panel$/, async function () {
-  await commentsPanelPage.closeOverlayPanel()
+  await commentsPanelPage.closeOverlayPanel();
 });
 
 When(/^The user clicks to hide the toggle icon$/, async function () {

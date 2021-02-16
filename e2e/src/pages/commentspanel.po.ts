@@ -1,42 +1,42 @@
-import {browser, by, element, ElementArrayFinder, ElementFinder,} from 'protractor';
+import {browser, by, element, ElementArrayFinder, ElementFinder, } from 'protractor';
 import {AppPage} from './app.po';
 import {By} from '@angular/platform-browser';
 import {expect} from 'chai';
 
 
 export class CommentsPanelPage extends AppPage {
-  commentsToggleButton  : ElementFinder     =   element(by.xpath("//button[@id=\'toggle-comments-panel\' and @title=\'Toggle Comments Panel\']"));
-  commentsTabButton     : ElementFinder     =   element(by.xpath(("//div[@class=\'govuk-tabs commentSummaryHeader\']/ul/li[1]/a")));
-  filterTabButton       : ElementFinder     =   element(by.xpath(("//div[@class=\'govuk-tabs commentSummaryHeader\']/ul/li[2]/a")));
-  searchTabButton       : ElementFinder     =   element(by.xpath(("//div[@class=\'govuk-tabs commentSummaryHeader\']/ul/li[3]/a")));
-  collateCommentsButton : ElementFinder     =   element(by.xpath("//button[@id=\'commentSummary\']"));
-  commentsNotAvailable  : ElementFinder     =   element(by.xpath("//div[@id=\'comment-container\'/h3"));
-  courtBundleName       : ElementFinder     =   element(by.xpath("//div[@id=\'comment-container\'/h2"));
-  overlayCloseButton    : ElementFinder     =   element(by.buttonText("Close"));
-  searchInputField      : ElementFinder     =   element(by.id('search-comments-input'));
-  searchButton          : ElementFinder     =   element(by.xpath('//button[@class=\'govuk-button comment-search\']'));
-  searchResult          : ElementFinder     =   element(by.css('#comment-search'));
+  commentsToggleButton: ElementFinder     =   element(by.xpath("//button[@id=\\'toggle - comments - panel\\' and @title=\\'Toggle Comments Panel\\']"));
+  commentsTabButton: ElementFinder     =   element(by.xpath(("//div[@class=\\'govuk - tabs commentSummaryHeader\\']/ul/li[1]/a")));
+  filterTabButton: ElementFinder     =   element(by.xpath(("//div[@class=\\'govuk - tabs commentSummaryHeader\\']/ul/li[2]/a")));
+  searchTabButton: ElementFinder     =   element(by.xpath(("//div[@class=\\'govuk - tabs commentSummaryHeader\\']/ul/li[3]/a")));
+  collateCommentsButton: ElementFinder     =   element(by.xpath("//button[@id=\\'commentSummary\\']"));
+  commentsNotAvailable: ElementFinder     =   element(by.xpath("//div[@id=\\'comment - container\\'/h3"));
+  courtBundleName: ElementFinder     =   element(by.xpath("//div[@id=\\'comment - container\\'/h2"));
+  overlayCloseButton: ElementFinder     =   element(by.buttonText('Close'));
+  searchInputField: ElementFinder     =   element(by.id('search-comments-input'));
+  searchButton: ElementFinder     =   element(by.xpath('//button[@class=\'govuk-button comment-search\']'));
+  searchResult: ElementFinder     =   element(by.css('#comment-search'));
 
 
-  async clickCommentsToggleIcon(){
+  async clickCommentsToggleIcon() {
      await this.commentsToggleButton.click();
   }
 
-  async clickOnCommentsTab(){
+  async clickOnCommentsTab() {
     await this.commentsTabButton.click();
   }
 
-  async clickOnFilterTab(){
+  async clickOnFilterTab() {
     const result  = await this.getFilterTabButtonText();
-    expect(result).to.equal("Filter");
+    expect(result).to.equal('Filter');
     await this.filterTabButton.click();
   }
 
-  async clickOnSearchTab(){
+  async clickOnSearchTab() {
     await this.searchTabButton.click();
  }
 
-  async performSearch(searchText: string){
+  async performSearch(searchText: string) {
     await this.enterTextInSearchBox(searchText);
     await this.clickSearch();
   }
@@ -53,25 +53,25 @@ export class CommentsPanelPage extends AppPage {
     await this.collateCommentsButton.click();
   }
 
-  async hideCommentsToggle(){
+  async hideCommentsToggle() {
     await this.commentsToggleButton.click();
  }
 
  async assertToggleButtonText()  {
    const result  = await this.getToggleButtonText();
-   expect(result).to.equal("Hide comments");
+   expect(result).to.equal('Hide comments');
  }
 
-  async assertSearchResultText(searchResultStringOnPanel :String)  {
-    let result  = await this.searchResult.getText();
+  async assertSearchResultText(searchResultStringOnPanel: String)  {
+    const result  = await this.searchResult.getText();
     expect(result).to.equal(searchResultStringOnPanel);
   }
 
   async assertNoCommentRowsPresent() {
     const result  = await this.commentsNotAvailable.getText();
-    expect(result).to.equal("No comments available");
+    expect(result).to.equal('No comments available');
     const courtBundleName  = await this.courtBundleName.getText();
-    expect(courtBundleName).to.equal("Bury Metropolitan Council:  TEST COURT BUNDLE");
+    expect(courtBundleName).to.equal('Bury Metropolitan Council:  TEST COURT BUNDLE');
   }
 
   async closeOverlayPanel() {

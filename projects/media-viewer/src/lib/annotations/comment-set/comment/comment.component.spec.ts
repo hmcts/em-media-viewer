@@ -69,7 +69,7 @@ describe('CommentComponent', () => {
     rectangles: [mockRectangle],
     type: 'annotation',
     tags: []
-  }
+  };
 
   const waitForChanges = () => {
     tick(10);
@@ -197,9 +197,9 @@ describe('CommentComponent', () => {
   it('should emit a delete', () => {
     const deleteEmitEventSpy = spyOn(component.delete, 'emit');
     component.author = 'Test user' as any;
-    component.fullComment = 'Test'
+    component.fullComment = 'Test';
     component._editable = false;
-;   component.deleteOrCancel();
+   component.deleteOrCancel();
     expect(deleteEmitEventSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -275,31 +275,31 @@ describe('CommentComponent', () => {
   it('should set rectTop and rectLeft', () => {
     component.annotation = mockAnnotation as any;
 
-    expect(component.rectLeft).toBe(10)
-    expect(component.rectTop).toBe(20)
+    expect(component.rectLeft).toBe(10);
+    expect(component.rectTop).toBe(20);
   });
 
   it('should set rectTop and rectLeft when rotated 90deg', () => {
     component.rotate = 90;
     component.annotation = mockAnnotation as any;
 
-    expect(component.rectLeft).toBe(10)
-    expect(component.rectTop).toBe(10)
+    expect(component.rectLeft).toBe(10);
+    expect(component.rectTop).toBe(10);
   });
 
   it('should set rectTop and rectLeft when rotated 180deg', () => {
     component.rotate = 180;
     component.annotation = mockAnnotation as any;
 
-    expect(component.rectLeft).toBe(10)
-    expect(component.rectTop).toBe(130)
+    expect(component.rectLeft).toBe(10);
+    expect(component.rectTop).toBe(130);
   });
 
   it('should set rectTop and rectLeft when rotated 270deg', () => {
     component.rotate = 270;
     component.annotation = mockAnnotation as any;
 
-    expect(component.rectLeft).toBe(10)
-    expect(component.rectTop).toBe(90)
+    expect(component.rectLeft).toBe(10);
+    expect(component.rectTop).toBe(90);
   });
 });

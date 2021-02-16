@@ -24,10 +24,10 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   @Input() rotate: number;
   @Input() set selectedAnnoId(selectedId) {
     if (selectedId) {
-      const id = this.anno.id || this.anno.redactionId // todo make it unique
+      const id = this.anno.id || this.anno.redactionId; // todo make it unique
       this.selected = selectedId.annotationId ? (selectedId.annotationId === id) : false;
     }
-  };
+  }
   @Input() pageHeight: number;
   @Input() pageWidth: number;
   @Output() update = new EventEmitter<Annotation>();
@@ -46,7 +46,7 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
-    const annotation = {...this.anno}
+    const annotation = {...this.anno};
     annotation.rectangles = annotation.rectangles.filter(r => r.id !== rectangle.id);
     annotation.rectangles.push(rectangle);
     this.update.emit(annotation);

@@ -5,7 +5,7 @@ import { Bookmark } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.int
       (bookmarkEntities, bookmark) =>
         Object.assign(bookmarkEntities, { [bookmark.id]: bookmark }),
       {});
-  }
+  };
 
   export const generateBookmarkNodes = (entities: { [id: string]: Bookmark }) => {
     const bookmarkEntities = JSON.parse(JSON.stringify(entities));
@@ -23,7 +23,7 @@ import { Bookmark } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.int
       }
       return nodes;
     }, []);
-  }
+  };
 
   const indexEntities = (entities: { [id: string]: Bookmark }) => {
     const entityIds = Object.keys(entities);
@@ -38,17 +38,17 @@ import { Bookmark } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.int
       keysToRemove.forEach(key => entityIds.splice(entityIds.indexOf(key), 1));
       keysToRemove = [];
     }
-  }
+  };
 
-  export const getBookmarkChildren = (bookmarks:Bookmark[]) => {
+  export const getBookmarkChildren = (bookmarks: Bookmark[]) => {
     if (bookmarks) {
       return bookmarks.reduce((childIds, bookmark) => {
         if (bookmark.children && bookmark.children.length > 0) {
-          return [...childIds, bookmark.id, ...getBookmarkChildren(bookmark.children)]
+          return [...childIds, bookmark.id, ...getBookmarkChildren(bookmark.children)];
         }
-        return [...childIds, bookmark.id]
+        return [...childIds, bookmark.id];
       }, []);
     } else {
-      return []
+      return [];
     }
-  }
+  };

@@ -20,7 +20,7 @@ export class BookmarksEffects {
   loadBookmarks$ = this.actions$.pipe(
     ofType(bookmarksActions.LOAD_BOOKMARKS),
     withLatestFrom(this.store.pipe(select(fromDocument.getDocumentId))),
-    map(([,documentId]) => documentId),
+    map(([, documentId]) => documentId),
     exhaustMap((documentId) =>
       this.bookmarksApiService.getBookmarks(documentId)
         .pipe(
@@ -65,7 +65,7 @@ export class BookmarksEffects {
               return [
                 new bookmarksActions.DeleteBookmarkSuccess(deleted),
                 new bookmarksActions.UpdateBookmarkSuccess(updated)
-              ]
+              ];
             } else {
               return [new bookmarksActions.DeleteBookmarkSuccess(deleted)];
             }

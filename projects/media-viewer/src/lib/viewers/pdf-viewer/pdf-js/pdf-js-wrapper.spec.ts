@@ -71,7 +71,7 @@ describe('PdfJsWrapper', () => {
     spyOnProperty(pdfjsLib, 'getDocument')
       .and.returnValue(() => ({ promise: Promise.resolve(mockDocument)}));
 
-    wrapper.loadDocument("document-url");
+    wrapper.loadDocument('document-url');
     tick();
 
     expect(pdfViewerSpy).toHaveBeenCalledWith(mockDocument);
@@ -86,7 +86,7 @@ describe('PdfJsWrapper', () => {
     const documentLoadFailedSpy = spyOn(wrapper.documentLoadFailed, 'next').and.callThrough();
     spyOnProperty(pdfjsLib, 'getDocument').and.returnValue(() => ({ promise: Promise.reject(new Error('x'))}));
 
-    wrapper.loadDocument("document-url");
+    wrapper.loadDocument('document-url');
     tick();
 
     expect(pdfViewerSpy).not.toHaveBeenCalled();

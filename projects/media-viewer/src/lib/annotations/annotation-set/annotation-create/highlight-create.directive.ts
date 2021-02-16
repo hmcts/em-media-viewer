@@ -102,7 +102,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   private removeEnhancedTextModeStyling(element: HTMLElement) {
     if (element.parentElement.children) {
       for (let i = 0; i < element.parentElement.children.length; i++) {
-        const child = <HTMLElement>element.parentElement.children[i]
+        const child = <HTMLElement>element.parentElement.children[i];
 
         child.style.padding = '0';
         // regex will be targeting the translate style in string

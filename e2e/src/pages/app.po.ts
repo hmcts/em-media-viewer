@@ -1,7 +1,6 @@
 import {browser, by, element, ElementArrayFinder, ElementFinder, Locator, protractor, WebElement} from 'protractor';
 import {By} from '@angular/platform-browser';
 import {String} from 'typescript-string-operations';
-import {create} from "domain";
 
 const until = protractor.ExpectedConditions;
 
@@ -171,7 +170,7 @@ export class AppPage {
         null
       );
 
-      //const mouseUp = 	mouseEvent;
+      // const mouseUp = 	mouseEvent;
 
       const pageHandle = document.getElementsByClassName('textLayer')[0].children[4];
       pageHandle.dispatchEvent(mouseEvent) ; // ('mouseup', 844,497,937,403)); //mouseUp Event
@@ -195,12 +194,12 @@ export class AppPage {
   }
 
   async clickOnShowBookmarksSidePanel()  {
-    await element.all(by.css('#bookmarkContainer a')).count().then((count)=> {
+    await element.all(by.css('#bookmarkContainer a')).count().then((count) => {
       console.log('  ~~~~~~~~~~~~~~~~~   Bookmark Count is ' + count);
     });
   }
 
-  async createBookmarkUsingOverlay(){
+  async createBookmarkUsingOverlay() {
     // This is the Bookmark button on the Popup overlay.
     await element(this.bookmarkButton).click();
   }

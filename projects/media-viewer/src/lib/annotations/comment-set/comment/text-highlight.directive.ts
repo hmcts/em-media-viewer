@@ -30,7 +30,7 @@ export class TextHighlightDirective implements AfterViewChecked {
   resetHighlight() {
     const hostElement = this.element.nativeElement;
     const searchPattern = new RegExp(this.highlightPattern('(.*?)'), 'gi');
-    while(hostElement.innerHTML.match(searchPattern)) {
+    while (hostElement.innerHTML.match(searchPattern)) {
       const matchGroups = searchPattern.exec(hostElement.innerHTML);
       if (matchGroups) {
         hostElement.innerHTML = hostElement.innerHTML.replace(matchGroups[0], matchGroups[1]);
@@ -39,6 +39,6 @@ export class TextHighlightDirective implements AfterViewChecked {
   }
 
   private highlightPattern(dynamicText: string) {
-    return '<span class="mvTextHighlight">' + dynamicText + '</span>'
+    return '<span class="mvTextHighlight">' + dynamicText + '</span>';
   }
 }

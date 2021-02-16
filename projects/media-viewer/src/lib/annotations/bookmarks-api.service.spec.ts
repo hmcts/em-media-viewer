@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 describe('BookmarksApiService', () => {
 
-  let service: BookmarksApiService
+  let service: BookmarksApiService;
   let mockHttpClient: HttpTestingController;
 
   const bookmark = {

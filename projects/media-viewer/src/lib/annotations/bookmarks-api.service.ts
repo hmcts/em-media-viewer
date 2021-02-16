@@ -49,7 +49,7 @@ export class BookmarksApiService {
 
   public deleteMultipleBookmarks(payload: { deleted: string[], updated: Bookmark }): Observable<void> {
     return this.httpClient
-      .request<void>('DELETE',`${this.ANNOTATIONS_API}/bookmarks_multiple`,
+      .request<void>('DELETE', `${this.ANNOTATIONS_API}/bookmarks_multiple`,
         { body: payload, observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
   }

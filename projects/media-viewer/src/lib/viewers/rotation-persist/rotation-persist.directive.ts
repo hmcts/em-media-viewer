@@ -53,11 +53,11 @@ export class RotationPersistDirective implements OnInit, OnDestroy {
         if (this.savedRotation) {
           this.toolbarEvents.rotateSubject.next(this.savedRotation);
         }
-      })
+      });
   }
 
   private onRotate(rotation: number) {
-    this.rotation = (this.rotation + rotation) %360;
+    this.rotation = (this.rotation + rotation) % 360;
     this.toolbarButtons.showSaveRotationButton = this.savedRotation !== this.rotation;
   }
 
@@ -65,7 +65,7 @@ export class RotationPersistDirective implements OnInit, OnDestroy {
     const payload: Rotation = {
       documentId: this.documentId,
       rotationAngle: this.rotation
-    }
+    };
     this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
   }
 }

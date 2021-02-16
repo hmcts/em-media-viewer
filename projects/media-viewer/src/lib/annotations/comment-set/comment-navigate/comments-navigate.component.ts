@@ -50,7 +50,7 @@ export class CommentsNavigateComponent implements OnChanges {
     } else {
       const rectA = mappedCommentA.rectangle;
       const rectB = mappedCommentB.rectangle;
-      if(rectA.y !== rectB.y) {
+      if (rectA.y !== rectB.y) {
         return rectA.y - rectB.y;
       } else {
         return rectA.x - rectB.x;

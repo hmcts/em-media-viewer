@@ -35,7 +35,7 @@ export class TagsServices {
 
   private snakeCase = string => {
     // transform string_to_snake_case
-    return string.replace(/ +/g, " ")  // find space
+    return string.replace(/ +/g, ' ')  // find space
       .split(/ |\B(?=[A-Z])/) // split it into array
       .map(word => word.toLowerCase()) // transform to lover case
       .join('_'); // trun array into sting using _

@@ -19,7 +19,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   @Input() zoom: number;
   @Input() container: { top: number, left: number };
 
-  @Output() saveSelection = new EventEmitter<{ rectangles: Rectangle[], page: number }>()
+  @Output() saveSelection = new EventEmitter<{ rectangles: Rectangle[], page: number }>();
 
   @ViewChild('boxHighlight') highlight: ElementRef;
 
@@ -52,7 +52,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => {
-      subscription.unsubscribe()
+      subscription.unsubscribe();
     });
   }
 

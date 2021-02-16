@@ -87,25 +87,25 @@ export class CtxToolbarComponent implements OnChanges {
       case 90:
         this.rectangle.width = rectangle.height;
         this.rectangle.height = rectangle.width;
-        this.rectangle.x = (this.pageWidth/this.zoom) - rectangle.y - rectangle.height;
+        this.rectangle.x = (this.pageWidth / this.zoom) - rectangle.y - rectangle.height;
         this.rectangle.y = rectangle.x;
         break;
       case 180:
-        this.rectangle.x = (this.pageWidth/this.zoom) - rectangle.x - rectangle.width;
-        this.rectangle.y = (this.pageHeight/this.zoom) - rectangle.y - rectangle.height;
+        this.rectangle.x = (this.pageWidth / this.zoom) - rectangle.x - rectangle.width;
+        this.rectangle.y = (this.pageHeight / this.zoom) - rectangle.y - rectangle.height;
         break;
       case 270:
         this.rectangle.width = rectangle.height;
         this.rectangle.height = rectangle.width;
         this.rectangle.x = rectangle.y;
-        this.rectangle.y = (this.pageHeight/this.zoom) - rectangle.x - rectangle.width;
+        this.rectangle.y = (this.pageHeight / this.zoom) - rectangle.x - rectangle.width;
         break;
     }
   }
 
   popupTop() {
     const popupTop = this.rectangle.y * this.zoom - this.defaultHeight;
-    console.log("this is context toolbar zoom ", this.zoom)
+    console.log('this is context toolbar zoom ', this.zoom);
     return popupTop <= 0 ? this.defaultHeight : popupTop;
   }
 

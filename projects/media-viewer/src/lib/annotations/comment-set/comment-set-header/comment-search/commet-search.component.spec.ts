@@ -46,7 +46,7 @@ describe('CommentSearch', () => {
   });
 
   it('should dispatch search action when search matches',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       hostComponent.annotations =  [{ comments: [{ content: 'searchText' }] }];
       fixture.detectChanges();
       spyOn(store, 'dispatch');
@@ -57,7 +57,7 @@ describe('CommentSearch', () => {
   }));
 
   it('should not dispatch search action when no results found',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       hostComponent.annotations = [] ;
       fixture.detectChanges();
       spyOn(store, 'dispatch');
@@ -68,7 +68,7 @@ describe('CommentSearch', () => {
   }));
 
   it('should clear search',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       spyOn(store, 'dispatch');
 
       component.clearSearch();

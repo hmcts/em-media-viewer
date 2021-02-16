@@ -6,7 +6,7 @@ describe('GrabNDragDirective', () => {
   const hostElement = document.createElement('div');
   hostElement.scrollLeft = 20;
   hostElement.scrollTop = 30;
-  const event = { clientX: 50, clientY: 40, preventDefault: () => {} }
+  const event = { clientX: 50, clientY: 40, preventDefault: () => {} };
 
   beforeEach(() => {
     directive = new GrabNDragDirective(new ElementRef<HTMLElement>(hostElement));
