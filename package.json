@@ -58,7 +58,7 @@
     "formidable": "^1.2.1",
     "glob": "^7.1.4",
     "global-tunnel-ng": "^2.7.1",
-    "govuk-frontend": "^3.10.2",
+    "govuk-frontend": "^3.11.0",
     "moment-timezone": "^0.5.28",
     "ngx-chips": "^1.9.8",
     "nodemon": "^1.19.0",
