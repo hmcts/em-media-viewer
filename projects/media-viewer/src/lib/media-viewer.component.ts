@@ -56,7 +56,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() showToolbar = true;
   @Input() toolbarButtonOverrides: any = {};
-  @Input() height = 'calc(100vh - 32px)';
+  @Input() height = 'calc(100vh - 42px)';
   @Input() width = '100%';
 
   @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
