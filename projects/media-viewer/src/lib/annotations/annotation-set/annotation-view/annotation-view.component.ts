@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@
 import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
-import { ViewerEventService } from '../../../viewers/viewer-event.service';
-import * as moment_ from 'moment-timezone';
+import moment from 'moment-timezone';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
 import * as fromActions from '../../../store/actions/annotations.action';
@@ -59,13 +58,12 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
 
   public addOrEditComment() {
     if (this.anno.comments.length === 0) {
-      const moment = moment_;
       const comment = {
         annotationId: this.anno.id,
         content: '',
         createdBy: this.anno.createdBy,
         createdByDetails: undefined,
-        createdDate: moment.utc().tz('Europe/London'),
+        createdDate: moment.utc().tz('Europe/London').toISOString(),
         id: uuid(),
         lastModifiedBy: '',
         lastModifiedByDetails: undefined,

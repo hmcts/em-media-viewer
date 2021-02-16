@@ -1,5 +1,5 @@
 import { Annotation } from '../annotations/annotation-set/annotation-view/annotation.model';
-import * as moment_ from 'moment-timezone';
+import moment from 'moment-timezone';
 import { Redaction } from '../redaction/services/redaction.model';
 
 /*
@@ -120,7 +120,6 @@ export class StoreUtils {
         }
         // check for dates
         if (dateFilterApplied) {
-          const moment = moment_;
           const commentDate = moment(comment.lastModifiedDate);
           const dateFrom =  filters.dateRangeFrom !== null ? moment(filters.dateRangeFrom) : undefined;
           const dateTo = filters.dateRangeTo !== null ? moment(filters.dateRangeTo) : undefined;
