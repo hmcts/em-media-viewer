@@ -10,4 +10,4 @@ export * from './lib/viewers/viewer-exception.model';
 export * from './lib/store/reducers/annotations.reducer';
 export * from './lib/store/selectors/annotations.selectors';
 export * from './lib/store/actions/annotations.action';
-export * from './lib/store/effects/annotations.effect';
+export * from './lib/store/effects/annotation.effects';
