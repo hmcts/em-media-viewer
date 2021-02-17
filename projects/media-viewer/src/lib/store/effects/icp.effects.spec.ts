@@ -1,4 +1,3 @@
-import { IcpEffects } from './icp.effect';
 import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../reducers/reducers';
@@ -10,6 +9,7 @@ import * as icpActions from '../actions/icp.action';
 import { IcpUpdateService } from '../../icp/icp-update.service';
 import { SocketService } from '../../icp/socket.service';
 import { IcpSession } from '../../icp/icp.interfaces';
+import { IcpEffects } from './icp.effects';
 
 describe('Icp Effects', () => {
   let actions$;

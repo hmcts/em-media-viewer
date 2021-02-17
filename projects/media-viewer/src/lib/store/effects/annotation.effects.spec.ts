@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as annotationActions from '../actions/annotations.action';
 import { AnnotationApiService } from '../../annotations/services/annotation-api/annotation-api.service';
-import { AnnotationEffects } from './annotations.effects';
+import { AnnotationEffects } from './annotation.effects';
 
 
 describe('Annotations Effects', () => {
