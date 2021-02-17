@@ -11,7 +11,13 @@ describe('HighlightCreateDirective', () => {
   const toolbarEvents = { highlightModeSubject: new BehaviorSubject(false) } as any;
   const viewerEvents = { textSelected: () => {}, clearCtxToolbar: () => {} } as any;
   const highlightService = { applyRotation: () => {} } as any;
-  const store = { dispatch: () => {}, select: () => of([{}])  } as any;
+  const allPages = {
+    '1': {
+      scaleRotation: { rotation: 0, scale: 1 },
+      styles: { height: 1122, left: 341, width: 793 }
+    }
+  };
+  const store = { dispatch: () => {}, select: () => of(allPages)  } as any;
   const hostElement = document.createElement('div');
   hostElement.scrollLeft = 20;
   hostElement.scrollTop = 30;

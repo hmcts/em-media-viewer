@@ -1,5 +1,5 @@
+import { Component, SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-
 import { SideBarComponent } from './side-bar.component';
 import { OutlineItemComponent } from './outline-item/outline-item.component';
 import { Store, StoreModule } from '@ngrx/store';
@@ -9,6 +9,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { PdfPositionUpdate } from '../../../store/actions/document.action';
 import { ViewerEventService } from '../../viewer-event.service';
 import * as fromDocument from '../../../store/actions/document.action';
+import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
 
 describe('SideBarComponent', () => {
   let component: SideBarComponent;
@@ -74,5 +75,18 @@ describe('SideBarComponent', () => {
       expect(store.dispatch).toHaveBeenCalled();
       expect(component.selectedView).toBe('bookmarks');
     }))
+  );
+
+  it('should dispatch LoadBookmarks action on change',
+    inject([Store], (store: Store<{}>) => {
+      const dispatchSpy = spyOn(store, 'dispatch');
+      component.url = 'prev-url';
+
+      component.ngOnChanges({
+        url: new SimpleChange('prev-url', 'new-url', false)
+      });
+
+      expect(dispatchSpy).toHaveBeenCalledWith(new LoadBookmarks());
+    })
   );
 });

@@ -4,8 +4,8 @@ import { hot, cold } from 'jasmine-marbles';
 import { of } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
 import * as annotationActions from '../actions/annotations.action';
-import {AnnotationApiService} from '../../annotations/services/annotation-api/annotation-api.service';
-import {AnnotationEffects} from './annotations.effect';
+import { AnnotationApiService } from '../../annotations/services/annotation-api/annotation-api.service';
+import { AnnotationEffects } from './annotations.effects';
 
 
 describe('Annotations Effects', () => {

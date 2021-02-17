@@ -1,16 +1,11 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 import { BookmarksComponent } from './bookmarks.component';
 import { Bookmark } from '../../../../store/models/bookmarks.interface';
 import * as fromActions from '../../../../store/actions/bookmarks.action';
-import { reducers, State } from '../../../../store/reducers/reducers';
-import { AnnotationSetState} from '../../../../store/reducers/annotations.reducer';
-
-import * as fromBookmarks from '../../../../store/reducers/bookmarks.reducer';
-
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
@@ -51,8 +46,6 @@ describe('BookmarksComponent', () => {
         provideMockStore({ initialState })
       ],
       imports: [
-        // StoreModule.forFeature('media-viewer', reducers),
-        // StoreModule.forRoot({})
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
@@ -126,7 +119,7 @@ describe('BookmarksComponent', () => {
       yCoordinate: 100
     };
 
-    it('should emit goToDestination event no ratation', () => {
+    it('should emit goToDestination event no rotation', () => {
       component.zoom = 1;
       fixture.detectChanges();
 

@@ -31,11 +31,6 @@ describe('CommentSetHeader', () => {
     fixture.detectChanges();
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
-
-
   it('should emit toggleCommentsSummary event', () => {
     const commentSummarySpy = spyOn(component.showCommentSummaryDialog, 'emit');
     const commentSummaryButton = nativeElement.querySelector('#commentSummary');
@@ -43,5 +38,17 @@ describe('CommentSetHeader', () => {
     commentSummaryButton.click();
 
     expect(commentSummarySpy).toHaveBeenCalled();
+  });
+
+  it('should set tabSelected', () => {
+    component.tabSelected = 'comments';
+    component.selectTab('tab1');
+    expect(component.tabSelected).toEqual('tab1');
+  });
+
+  it('should reset tabSelected', () => {
+    component.tabSelected = 'tab1';
+    component.selectTab('tab1');
+    expect(component.tabSelected).toBeUndefined();
   });
 });

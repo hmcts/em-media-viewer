@@ -74,7 +74,7 @@ describe('AnnotationApiService', () => {
     },
   ];
 
-  const annotation: Annotation = {
+  const annotation1: Annotation = {
     id: annotationId,
     annotationSetId: annotationSetId,
     createdBy: 'example@example.org',
@@ -87,6 +87,66 @@ describe('AnnotationApiService', () => {
     color: 'FFFF00',
     type: 'highlight',
     comments: comments,
+    rectangles: [{
+      annotationId,
+      x: 100,
+      y: 100,
+      width: 150,
+      height: 50,
+      id: null,
+      createdBy: null,
+      createdDate: null,
+      createdByDetails: null,
+      lastModifiedBy: null,
+      lastModifiedDate: null,
+      lastModifiedByDetails: null
+    }],
+    tags: []
+  };
+
+  const annotation2: Annotation = {
+    id: '2',
+    annotationSetId: annotationSetId,
+    createdBy: 'example@example.org',
+    createdByDetails: user,
+    createdDate: '2019-06-03T10:00:00Z',
+    lastModifiedBy: 'example@example.org',
+    lastModifiedByDetails: user,
+    lastModifiedDate: '2019-06-03T10:00:00Z',
+    page: 1,
+    color: 'FFFF00',
+    type: 'highlight',
+    comments: comments,
+    rectangles: [{
+      annotationId,
+      x: 100,
+      y: 120,
+      width: 150,
+      height: 50,
+      id: null,
+      createdBy: null,
+      createdDate: null,
+      createdByDetails: null,
+      lastModifiedBy: null,
+      lastModifiedDate: null,
+      lastModifiedByDetails: null
+    }],
+    tags: []
+  };
+
+  const annotation3: Annotation = {
+    id: '3',
+    annotationSetId: annotationSetId,
+    createdBy: 'example@example.org',
+    createdByDetails: user,
+    createdDate: '2019-06-03T10:00:00Z',
+    lastModifiedBy: 'example@example.org',
+    lastModifiedByDetails: user,
+    lastModifiedDate: '2019-06-03T10:00:00Z',
+    page: 2,
+    color: 'FFFF00',
+    type: 'highlight',
+    comments: [],
     rectangles: [],
     tags: []
   };
@@ -100,7 +160,7 @@ describe('AnnotationApiService', () => {
     lastModifiedByDetails: user,
     lastModifiedDate: '2019-06-03T10:00:00Z',
     documentId: dmDocumentId,
-    annotations: [annotation]
+    annotations: [annotation1, annotation2, annotation3]
   };
 
   beforeEach(() => {
@@ -117,11 +177,6 @@ describe('AnnotationApiService', () => {
     api.annotationApiUrl = '/my-context-path';
     httpMock = TestBed.get(HttpTestingController);
   });
-
-
-  it('should be created', inject([AnnotationApiService], (service: AnnotationApiService) => {
-    expect(service).toBeTruthy();
-  }));
 
   it('should createAnnotationSet', fakeAsync((done) => {
     const requestBody = {
@@ -151,31 +206,32 @@ describe('AnnotationApiService', () => {
   }));
 
   it('delete annotation', fakeAsync((done) => {
-    api.deleteAnnotation(annotation.id).subscribe((response) => {
+    api.deleteAnnotation(annotation1.id).subscribe((response) => {
       expect(response).toEqual(null);
     }, error => done(error));
 
-    const req = httpMock.expectOne(`/my-context-path/annotations/${annotation.id}`);
+    const req = httpMock.expectOne(`/my-context-path/annotations/${annotation1.id}`);
     expect(req.request.method).toBe('DELETE');
     req.flush(null);
   }));
 
   it('save annotation', fakeAsync((done) => {
-    api.postAnnotation(annotation).subscribe((response) => {
+    api.postAnnotation(annotation1).subscribe((response) => {
       expect(response.annotationSetId).toEqual(annotationSet.id);
     }, error => done(error));
 
     const req = httpMock.expectOne('/my-context-path/annotations');
     expect(req.request.method).toBe('POST');
-    req.flush(annotation);
+    req.flush(annotation1);
   }));
 
-  it('get comments', fakeAsync((done) => {
+  it('get comments', async (done) => {
     const annotationSetObservable = of(annotationSet);
     api.getComments(annotationSetObservable).subscribe((comment) => {
       expect(comment[0].content).toBe('Test comment 1');
       expect(comment[1].content).toBe('Test comment 2');
       expect(comment[2].content).toBe('Test comment 3');
-    }, error => done(error));
-  }));
+      done();
+    });
+  });
 });

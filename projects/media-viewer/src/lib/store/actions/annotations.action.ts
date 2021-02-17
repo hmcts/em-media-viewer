@@ -1,7 +1,8 @@
 import { Action } from '@ngrx/store';
-import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
-import {SelectionAnnotation} from '../../annotations/models/event-select.model';
-import {AnnotationSet} from '../../annotations/annotation-set/annotation-set.model';
+import { Annotation } from '../../annotations/annotation-set/annotation-view/annotation.model';
+import { SelectionAnnotation } from '../../annotations/models/event-select.model';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import { Filters } from '../models/filters.interface';
 
 export const LOAD_ANNOTATION_SET = '[Annotations] Load Annotation Set';
 export const LOAD_ANNOTATION_SET_SUCCESS = '[Annotations] Load Annotation Set Success';
@@ -83,7 +84,7 @@ export class SearchComment implements Action {
 
 export class ApplyCommentSymmaryFilter implements Action {
   readonly type = APPLY_COMMENT_SUMMARY_FILTER;
-  constructor(public payload) {}
+  constructor(public payload: Filters) {}
 }
 
 export class ClearCommentSummaryFilters implements Action {

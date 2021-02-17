@@ -4,6 +4,7 @@ import { Annotation } from '../../annotations/annotation-set/annotation-view/ann
 import { Comment } from '../../annotations/comment-set/comment/comment.model';
 import { StoreUtils } from '../store-utils';
 import { SelectionAnnotation } from '../../annotations/models/event-select.model';
+import { Filters } from '../models/filters.interface';
 
 export interface AnnotationSetState {
   annotationSet: any;
@@ -12,7 +13,7 @@ export interface AnnotationSetState {
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation;
   commentSearchQueries: {commentSearch: string;};
-  commentSummaryFilters: {hasFilter: boolean; filters: any};
+  commentSummaryFilters: {hasFilter: boolean; filters: Filters};
   loaded: boolean;
   loading: boolean;
 }
@@ -185,7 +186,7 @@ export function reducer (
         }
         return isFiltered;
       };
-      const hasFilter = (hasTagFilter() || payload.dateRangeFrom || payload.dateRangeTo);
+      const hasFilter = (hasTagFilter() || !!payload.dateRangeFrom || !!payload.dateRangeTo);
       const commentSummaryFilters = {
         hasFilter,
         filters: payload

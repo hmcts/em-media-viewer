@@ -8,7 +8,6 @@ import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.
 import { take } from 'rxjs/operators';
 import uuid from 'uuid';
 import { ViewerEventService } from '../../viewer-event.service';
-import { ToolbarButtonVisibilityService } from '../../../toolbar/toolbar.module';
 import { BookmarksState } from '../../../store/reducers/bookmarks.reducer';
 
 @Component({
@@ -29,7 +28,6 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   $subscription: Subscription;
 
   constructor(private viewerEvents: ViewerEventService,
-              private toolbarButtons: ToolbarButtonVisibilityService,
               private store: Store<BookmarksState>
   ) {}
 

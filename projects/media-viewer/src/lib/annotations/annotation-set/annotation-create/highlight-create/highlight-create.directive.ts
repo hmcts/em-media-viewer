@@ -39,7 +39,9 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.$subscription.unsubscribe();
+    if (this.$subscription) {
+      this.$subscription.unsubscribe();
+    }
   }
 
   @HostListener('mouseup', ['$event'])

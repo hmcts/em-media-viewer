@@ -100,7 +100,7 @@ describe('StoreUtils', () => {
     it('should return filtered array by date from filter', () => {
       const result = StoreUtils.filterCommentsSummary(mockComments, {
         tagFilters: {},
-        dateRangeFrom: '2021-01-03T00:00:00Z',
+        dateRangeFrom: new Date('2021-01-03T00:00:00Z').getTime(),
         dateRangeTo: null
       });
       expect(result).toEqual(mockComments);
@@ -109,7 +109,7 @@ describe('StoreUtils', () => {
     it('should return filtered array by date to filter', () => {
       const result = StoreUtils.filterCommentsSummary(mockComments, {
         tagFilters: {},
-        dateRangeTo: '2021-01-04T00:00:00Z',
+        dateRangeTo: new Date('2021-01-04T00:00:00Z').getTime(),
         dateRangeFrom: null
       });
       expect(result).toEqual([mockComments[0]]);
@@ -118,8 +118,8 @@ describe('StoreUtils', () => {
     it('should return filtered array by date to and from filters', () => {
       const result = StoreUtils.filterCommentsSummary(mockComments, {
         tagFilters: {},
-        dateRangeFrom: '2021-01-03T12:00:00Z',
-        dateRangeTo: '2021-01-05T10:00:00Z'
+        dateRangeFrom: new Date('2021-01-03T12:00:00Z').getTime(),
+        dateRangeTo: new Date('2021-01-05T10:00:00Z').getTime()
       });
       expect(result).toEqual([mockComments[1]]);
     });

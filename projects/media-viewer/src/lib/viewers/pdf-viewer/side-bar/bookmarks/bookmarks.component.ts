@@ -117,7 +117,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
     this.goToDestination.emit([
       bookmark.pageNumber,
-      // @TODO: Should the name be hard coded?
       { 'name': 'XYZ' },
       left,
       top

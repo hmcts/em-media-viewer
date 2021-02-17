@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@
 import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
-import { ViewerEventService } from '../../../viewers/viewer-event.service';
 import * as moment_ from 'moment-timezone';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
@@ -23,7 +22,7 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   selected: boolean;
   @Input() zoom: number;
   @Input() rotate: number;
-  @Input() set selectedAnnoId(selectedId) {
+  @Input() set selectedAnnoId(selectedId: { annotationId: string }) {
     if (selectedId) {
       const id = this.anno.id || this.anno.redactionId // todo make it unique
       this.selected = selectedId.annotationId ? (selectedId.annotationId === id) : false;
@@ -39,7 +38,8 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
 
   constructor(
     private readonly toolbarEvents: ToolbarEventService,
-    private store: Store<fromStore.AnnotationSetState>) {}
+    private store: Store<fromStore.AnnotationSetState>
+  ) {}
 
   public onSelect() {
     const annotationId = this.anno.id || this.anno.redactionId;
