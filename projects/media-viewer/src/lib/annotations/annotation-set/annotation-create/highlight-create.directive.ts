@@ -66,7 +66,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
     const selection = window.getSelection();
     if (selection) {
-      const localElement = (<HTMLElement>event.target) || (<HTMLElement>event.srcElement);
+      const localElement = <HTMLElement>event.target;
 
       this.removeEnhancedTextModeStyling(localElement);
 
