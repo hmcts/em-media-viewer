@@ -6,7 +6,7 @@
     "start": "ng serve",
     "start:ng": "ng serve --proxy-config proxy.config.js",
     "start:vm": "ng serve --disable-host-check --host 0.0.0.0",
-    "build": "ng build --prod && ng run media-viewer:serve",
+    "build": "yarn build:lib && ng build --prod",
     "copy:license": "cp ./README.md dist/media-viewer",
     "copy:readme": "cp ./LICENSE dist/media-viewer",
     "copy:docs": "yarn copy:readme && yarn copy:license",
