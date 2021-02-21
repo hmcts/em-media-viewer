@@ -81,9 +81,9 @@ describe('RedactionComponent', () => {
   }));
 
   it('should save redaction',
-    inject([Store, ToolbarEventService], (store, toolbarEvents) => {
+    inject([Store, ToolbarEventService], (store, toolbarEventService) => {
       spyOn(store, 'dispatch');
-      spyOn(toolbarEvents.drawModeSubject, 'next');
+      spyOn(toolbarEventService.drawModeSubject, 'next');
       component.documentId = 'documentId';
       const redactionId = any(String) as any;
       const rectangles = ['rectangle' as any];
@@ -93,7 +93,7 @@ describe('RedactionComponent', () => {
       expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveRedaction({
         page: 1, rectangles, redactionId, documentId: 'documentId'
       }));
-      expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalledWith(false);
+      expect(toolbarEventService.drawModeSubject.next).toHaveBeenCalledWith(false);
     })
   );
 

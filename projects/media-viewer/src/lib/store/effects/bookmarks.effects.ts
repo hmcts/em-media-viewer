@@ -36,7 +36,7 @@ export class BookmarksEffects {
     exhaustMap((bookmark) =>
       this.bookmarksApiService.createBookmark(bookmark)
         .pipe(
-          map(bookmark => new bookmarksActions.CreateBookmarkSuccess(bookmark)),
+          map(bmrk => new bookmarksActions.CreateBookmarkSuccess(bmrk)),
           catchError(error => of(new bookmarksActions.CreateBookmarkFailure(error)))
         )
     ));
@@ -48,7 +48,7 @@ export class BookmarksEffects {
     exhaustMap((bookmarks) =>
       this.bookmarksApiService.updateMultipleBookmarks(bookmarks)
         .pipe(
-          map(bookmarks => new bookmarksActions.MoveBookmarkSuccess(bookmarks)),
+          map(bmrks => new bookmarksActions.MoveBookmarkSuccess(bmrks)),
           catchError(error => of(new bookmarksActions.MoveBookmarkFailure(error)))
         )
     ));
@@ -81,7 +81,7 @@ export class BookmarksEffects {
     switchMap((bookmark) =>
       this.bookmarksApiService.updateBookmark(bookmark)
         .pipe(
-          map(bookmark => new bookmarksActions.UpdateBookmarkSuccess(bookmark)),
+          map(bmrk => new bookmarksActions.UpdateBookmarkSuccess(bmrk)),
           catchError(error => of(new bookmarksActions.UpdateBookmarkFailure(error)))
         )
     ));

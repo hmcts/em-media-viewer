@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 
 
 @Directive({
-  selector: '[rotationPersist]'
+  selector: '[mvRotationPersist]'
 })
 export class RotationPersistDirective implements OnInit, OnDestroy {
 

@@ -5,7 +5,7 @@ import {ViewerEventService} from '../../viewers/viewer-event.service';
 import {select, Store} from '@ngrx/store';
 import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromAnnoActions from  '../../store/actions/annotations.action';
+import * as fromAnnoActions from '../../store/actions/annotations.action';
 import {combineLatest, Observable, Subscription} from 'rxjs';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 

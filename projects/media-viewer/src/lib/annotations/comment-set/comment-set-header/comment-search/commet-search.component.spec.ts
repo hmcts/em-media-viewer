@@ -8,6 +8,18 @@ import {reducers} from '../../../../store/reducers/reducers';
 import * as fromActions from '../../../../store/actions/annotations.action';
 
 describe('CommentSearch', () => {
+
+  @Component({
+    selector: `mv-host-component`,
+    template: `
+    <mv-comment-search [annotations]="annotations"></mv-comment-search>`
+  })
+  class TestHostComponent {
+    annotations = [] ;
+
+    @ViewChild(CommentSearchComponent) commentSearchComponent: CommentSearchComponent;
+  }
+
   let hostComponent: TestHostComponent;
   let component: CommentSearchComponent;
   let fixture: ComponentFixture<TestHostComponent>;
@@ -78,15 +90,4 @@ describe('CommentSearch', () => {
       expect(component.searchIndex).toBe(0);
   }));
 });
-
-@Component({
-  selector: `host-component`,
-  template: `
-    <mv-comment-search [annotations]="annotations"></mv-comment-search>`
-})
-class TestHostComponent {
-  annotations = [] ;
-
-  @ViewChild(CommentSearchComponent) commentSearchComponent: CommentSearchComponent;
-}
 

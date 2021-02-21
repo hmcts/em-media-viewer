@@ -9,7 +9,7 @@ import {HtmlTemplatesHelper} from '../util/helpers/html-templates.helper';
 * @param errorMessage - used for aria tag
 * */
 @Component({
-  selector: 'lib-gov-uk-fieldset',
+  selector: 'mv-gov-uk-fieldset',
   template: `
       <fieldset class="govuk-fieldset" [attr.aria-describedby]="setDescribedBy()">
         <legend [class]="config.classes + ' govuk-fieldset__legend'" *ngIf="!isHeading">

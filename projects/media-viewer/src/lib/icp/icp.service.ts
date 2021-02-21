@@ -52,7 +52,9 @@ export class IcpService implements OnDestroy  {
     this.sessionSubscription = this.toolbarEvents.icp.becomingPresenter.subscribe(() => this.becomePresenter());
     this.sessionSubscription.add(this.toolbarEvents.icp.stoppingPresenting.subscribe(() => this.stopPresenting()));
     this.sessionSubscription.add(this.toolbarEvents.icp.sessionExitConfirmed.subscribe(() => this.leavePresentation()));
-    this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => this.presenter = presenter ));
+    this.sessionSubscription.add(
+      this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => this.presenter = presenter )
+    );
     this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.getClient)).subscribe(client => this.client = client));
     this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.isPresenter)).subscribe(isPresenter => {
         this.isPresenter = isPresenter;

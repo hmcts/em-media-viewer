@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: '[app-toggle]',
+  selector: 'app-toggle',
   templateUrl: './toggle.component.html',
   styleUrls: ['../toolbar-toggles.component.scss']
 })

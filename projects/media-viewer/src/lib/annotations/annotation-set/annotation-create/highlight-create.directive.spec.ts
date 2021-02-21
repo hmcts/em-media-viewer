@@ -21,6 +21,12 @@ describe('HighlightCreateDirective', () => {
     scaleRotation: { rotation: 0, scale: 1 },
     styles: { height: 1122, left: 341, width: 793 }
   };
+  const getMockElement = (transform: string) => {
+    return {
+      getBoundingClientRect: () => ({ top: 30, left: 40}),
+      children: [{ style: { padding: '20', transform: transform }}]
+    };
+  };
 
   beforeEach(() => {
     directive = new HighlightCreateDirective(new ElementRef<HTMLElement>(hostElement),
@@ -105,11 +111,4 @@ describe('HighlightCreateDirective', () => {
     expect(mockElement.children[0].style.padding).toBe('0');
     expect(mockElement.children[0].style.transform).not.toContain('translateX');
   });
-
-  const getMockElement = (transform: string) => {
-    return {
-        getBoundingClientRect: () => ({ top: 30, left: 40}),
-        children: [{ style: { padding: '20', transform: transform }}]
-    };
-  };
 });
