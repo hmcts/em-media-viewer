@@ -45,25 +45,25 @@ mv-metadata-layer, mv-redactions, mv-bookmark-icons {
     z-index: 4;
   }
 
-  .pageContainer {
-    position: absolute;
-    top: 0;
-    transition-duration: 600ms;
-    transition-timing-function: ease;
-    &__page {
-      border: 1px solid transparent; // fix for text-highlight mispositioned
-      background-color: transparent;
-      margin: 0 auto 8px auto;
-      position: relative;
-    }
-
-    &__page-item {
-      z-index: 100;
-    }
-  }
-  .pageContainer__page--draw {
-    z-index: 100;
-  }
+  // .pageContainer {
+  //   position: absolute;
+  //   top: 0;
+  //   transition-duration: 600ms;
+  //   transition-timing-function: ease;
+  //   &__page {
+  //     border: 1px solid transparent; // fix for text-highlight mispositioned
+  //     background-color: transparent;
+  //     margin: 0 auto 8px auto;
+  //     position: relative;
+  //   }
+  //
+  //   &__page-item {
+  //     z-index: 100;
+  //   }
+  // }
+  // .pageContainer__page--draw {
+  //   z-index: 100;
+  // }
 }
 
 mv-bookmark-icons {
@@ -71,5 +71,3 @@ mv-bookmark-icons {
     z-index: 3;
   }
 }
-
-

@@ -120,10 +120,12 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public increasePageNumber() {
+    console.log('increase');
     this.toolbarEvents.incrementPage(1);
   }
 
   public decreasePageNumber() {
+    console.log('decrease');
     this.toolbarEvents.incrementPage(-1);
   }
 
