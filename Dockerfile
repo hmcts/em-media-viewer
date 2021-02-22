@@ -8,8 +8,9 @@ WORKDIR ${WORKDIR}
 COPY --chown=hmcts:hmcts ./ /opt/app/
 
 RUN yarn install --production \
-  && yarn setup \
+  && yarn build:lib \
+  && yarn copy:files \
   && yarn cache clean
 
 EXPOSE 3000
-CMD [ "yarn", "start" ]
+CMD [ "yarn", "start:ng" ]
