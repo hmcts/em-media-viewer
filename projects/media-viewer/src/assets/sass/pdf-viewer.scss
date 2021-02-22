@@ -4,6 +4,27 @@ mv-pdf-viewer {
     position: relative;
     background-color: #dee0e2;
 
+    .viewer-container {
+      position: absolute;
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+
+      &.annotations {
+        width: 100%;
+      }
+
+      &.annotations.show-comments-panel {
+        width: 75%;
+      }
+
+      // .pdfViewer {
+      //   width: 100%;
+      //   transition-duration: 600ms;
+      //   transition-timing-function: ease;
+      // }
+    }
+
     .pageContainer {
       width: 100%;
     }
@@ -64,7 +85,7 @@ mv-pdf-viewer {
       .has-redact-bar & {
         width: 100%;
       }
-      width: 76%;
+      width: 75%;
     }
   }
 
