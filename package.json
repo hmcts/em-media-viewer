@@ -20,6 +20,7 @@
     "package": "yarn build:lib && yarn copy:files && yarn npm-pack",
     "publish:dist": "yarn package && cd dist/media-viewer && yarn publish",
     "test": "cd projects/media-viewer; ng test",
+    "test:coverage": "cd projects/media-viewer; ng test",
     "lint": "ng lint",
     "test:codacy-upload": "cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
     "test:coveralls-upload": "cat ./reports/tests/coverage/ng/lcov.info | coveralls",
