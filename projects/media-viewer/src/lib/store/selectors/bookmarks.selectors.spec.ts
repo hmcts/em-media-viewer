@@ -20,7 +20,7 @@ describe('Bookmarks selectors', () => {
     rotation: 0,
     id: '1',
     viewportScale: 1.33333
-  }
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
