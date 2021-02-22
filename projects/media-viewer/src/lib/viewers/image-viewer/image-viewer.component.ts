@@ -165,10 +165,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     this.imageTop = this.rotation % 180 !== 0 ? img.offsetLeft : img.offsetTop;
     const payload: any = [{
       div: {
-        offsetHeight: this.imageHeight,
-        offsetWidth: this.imageWidth,
-        left: this.imageLeft,
-        top: this.imageTop
+        scrollHeight: this.imageHeight,
+        scrollWidth: this.imageWidth,
+        offsetLeft: this.imageLeft,
       },
       pageNumber: 1,
       scale: this.zoom,

@@ -17,9 +17,7 @@ import { HighlightCreateService } from '../../annotations/annotation-set/annotat
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { Outline } from './side-bar/outline-item/outline.model';
 import { Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../../store/reducers/reducers';
-import { SelectedAnnotation } from '../../store/actions/annotations.action';
-import { PdfPosition } from './side-bar/bookmarks/bookmarks.interfaces';
+import { PdfPosition, reducers } from '../../store/reducers/reducers';
 import { PdfPositionUpdate } from '../../store/actions/document.action';
 import { IcpService } from '../../icp/icp.service';
 import { SetCaseId } from '../../store/actions/icp.action';
@@ -130,7 +128,7 @@ describe('PdfViewerComponent', () => {
     toolbarEvents.searchSubject.next();
     toolbarEvents.setCurrentPageSubject.next();
     toolbarEvents.changePageByDeltaSubject.next();
-    mockWrapper.positionUpdated.next({ location: { pageNumber: 1, top: 10, left: 10, rotation: 0 }});
+    mockWrapper.positionUpdated.next({ location: { pageNumber: 1, top: 10, left: 10, rotation: 0, scale: 1 }});
 
     expect(printService.printDocumentNatively).toHaveBeenCalledWith(component.url);
     expect(mockWrapper.downloadFile).toHaveBeenCalled();
@@ -139,7 +137,7 @@ describe('PdfViewerComponent', () => {
     expect(mockWrapper.search).toHaveBeenCalled();
     expect(mockWrapper.setPageNumber).toHaveBeenCalled();
     expect(mockWrapper.changePageNumber).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(new PdfPositionUpdate({ pageNumber: 1, top: 10, left: 10, rotation: 0 }));
+    expect(store.dispatch).toHaveBeenCalledWith(new PdfPositionUpdate({ pageNumber: 1, top: 10, left: 10, rotation: 0, scale: 1 }));
   }));
 
   it('on DocumentLoadProgress indicate document loading progress', () => {

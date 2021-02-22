@@ -1,9 +1,8 @@
 import { fakeAsync, inject, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../store/reducers/reducers';
+import { PdfPosition, reducers } from '../store/reducers/reducers';
 import { IcpUpdateService } from './icp-update.service';
 import { IcpFollowerService } from './icp-follower.service';
-import { PdfPosition } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import { ViewerEventService } from '../viewers/viewer-event.service';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { PdfPositionUpdate } from '../store/actions/document.action';
@@ -22,7 +21,8 @@ describe('Icp Follower Service', () => {
     pageNumber: 1,
     top: 1,
     left: 1,
-    rotation: 270
+    rotation: 270,
+    scale: 1
   };
 
   beforeEach(() => {

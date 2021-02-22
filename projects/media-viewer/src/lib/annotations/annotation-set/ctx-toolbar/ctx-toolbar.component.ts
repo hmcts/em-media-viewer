@@ -11,8 +11,7 @@ import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-ctx-toolbar',
-  templateUrl: './ctx-toolbar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './ctx-toolbar.component.html'
 })
 export class CtxToolbarComponent implements OnChanges {
 
@@ -45,6 +44,7 @@ export class CtxToolbarComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log("it came to onChanges")
     this.setRectangle();
     this.top = this.popupTop();
     this.left = this.popupLeft();
@@ -104,12 +104,13 @@ export class CtxToolbarComponent implements OnChanges {
   }
 
   popupTop() {
+    console.log("it came to topup top")
     const popupTop = this.rectangle.y * this.zoom - this.defaultHeight;
-    console.log('this is context toolbar zoom ', this.zoom);
     return popupTop <= 0 ? this.defaultHeight : popupTop;
   }
 
   popupLeft() {
+    console.log("it came to topup left")
     const popupLeft = (this.rectangle.x + (this.rectangle.width / 2)) * this.zoom - (this.defaultWidth / 2);
     if (popupLeft <= 0) {
       return 0;

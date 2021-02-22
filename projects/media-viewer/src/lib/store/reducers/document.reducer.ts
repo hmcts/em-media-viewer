@@ -1,6 +1,5 @@
 import * as fromActions from '../actions/document.action';
 
-import { PdfPosition } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 export interface DocumentState {
   convertedDocument: {
     url: string;
