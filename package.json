@@ -34,7 +34,8 @@
     "webdriver:update": "webdriver-manager update --versions.chrome 77.0.3865.40 --versions.gecko v0.25.0",
     "e2e": "yarn stub:annotations && ng e2e --webdriverUpdate=false",
     "e2e:cucumber": "yarn webdriver:update && yarn e2e -- --protractor-config e2e/cucumber.conf.js",
-    "e2e:ci": "yarn webdriver:update && yarn stub:annotations && ng e2e --webdriverUpdate=false --protractor-config 'e2e/ci.protractor.conf.js'"
+    "e2e:ci": "yarn webdriver:update && yarn stub:annotations && ng e2e --webdriverUpdate=false --protractor-config 'e2e/ci.protractor.conf.js'",
+    "sonar-scan": "yarn test"
   },
   "dependencies": {
     "@angular/animations": "^7.2.15",
