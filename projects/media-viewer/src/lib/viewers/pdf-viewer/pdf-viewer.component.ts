@@ -109,16 +109,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
-    this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => {
-        console.log('set PN = ', pageNumber);
-        this.pdfWrapper.setPageNumber(pageNumber);
-      })
-    );
-    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => {
-        console.log('chnage PN = ', pageNumber);
-        this.pdfWrapper.changePageNumber(pageNumber)
-      })
-    );
+    this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
+    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
