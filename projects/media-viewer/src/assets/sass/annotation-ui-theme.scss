@@ -1,12 +1,12 @@
-  // .pdfViewer .page {
-  //   direction: ltr;
-  //   margin: 0 auto;
-  //   position: relative;
-  //   overflow: visible;
-  //   background-clip: content-box;
-  //   border-image: url('/assets/images/shadow.png') 9 9 repeat;
-  //   background-color: white;
-  // }
+  .pdfViewer .page {
+    direction: ltr;
+    margin: 0 auto;
+    position: relative;
+    overflow: visible;
+    background-clip: content-box;
+    border-image: url('/assets/images/shadow.png') 9 9 repeat;
+    background-color: white;
+  }
 
   .pdfViewer .canvasWrapper {
     box-shadow: 0 0 3px #bbb;

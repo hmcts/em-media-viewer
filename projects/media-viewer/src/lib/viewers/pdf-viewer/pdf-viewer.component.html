@@ -1,19 +1,19 @@
-<!-- <mv-side-bar *ngIf="toolbarEvents.sidebarOpen"
+<mv-side-bar *ngIf="toolbarEvents.sidebarOpen"
              id="sidebarContainer"
              [url]="url"
              [zoom]="zoom"
              [rotate]="rotation"
              [outline]="documentOutline"
              [annotationsEnabled]="enableAnnotations">
-</mv-side-bar> -->
+</mv-side-bar>
 
-<!-- <mv-comment-set-header
+<mv-comment-set-header
   *ngIf="enableAnnotations"
   [ngClass]="{'show-comments-panel': showCommentsPanel}"
   [showCommentSummary]="toolbarButtons.showCommentSummary"
   (showCommentSummaryDialog)="toggleCommentsSummary()">
 </mv-comment-set-header>
-<mv-participants-list></mv-participants-list> -->
+<mv-participants-list></mv-participants-list>
 
 <div grabNDrag [dragX]="viewerContainer" [dragEnabled]="enableGrabNDrag"
      class="pdfContainer"
@@ -31,12 +31,12 @@
          [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
     </div>
 
-    <!-- <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
+    <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
                    [zoom]="zoom"
                    [rotate]="rotation"
-    ></mv-redactions> -->
+    ></mv-redactions>
 
-    <!-- <ng-template #annotationTemplate>
+    <ng-template #annotationTemplate>
       <mv-metadata-layer
         *ngIf="enableAnnotations && annotationSet"
         [zoom]="zoom"
@@ -46,19 +46,19 @@
       <mv-bookmark-icons [zoom]="zoom"
                          [rotate]="rotation">
       </mv-bookmark-icons>
-    </ng-template> -->
+    </ng-template>
   </div>
 
-  <!-- <mv-comment-set #commentsPanel
+  <mv-comment-set #commentsPanel
                   *ngIf="enableAnnotations && annotationSet"
                   [annotationSet]="annotationSet"
                   [zoom]="zoom"
                   [rotate]="rotation"
                   [height]="pdfViewer.offsetHeight"
                   [pageHeights]="pageHeights">
-  </mv-comment-set> -->
+  </mv-comment-set>
 
-  <!-- <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
+  <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
     <h3 class="govuk-heading-m">Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}</h3>
-  </div> -->
+  </div>
 </div>
