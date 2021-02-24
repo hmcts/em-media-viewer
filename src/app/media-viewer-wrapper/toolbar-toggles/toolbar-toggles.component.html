@@ -1,13 +1,13 @@
 <table style="float: right; margin-top: 15px;">
   <tr>
     <ng-container *ngIf="toggleToolbar.getValue()">
-      <app-toggle [label]="'search'" (toggleButtonOverrides)="toggleButtonOverrides('showSearchBar', $event)"></app-toggle>
-      <app-toggle [label]="'navigate'" (toggleButtonOverrides)="toggleButtonOverrides('showNavigation', $event)"></app-toggle>
-      <app-toggle [label]="'rotate'" (toggleButtonOverrides)="toggleButtonOverrides('showRotate', $event)"></app-toggle>
-      <app-toggle [label]="'zoom'" (toggleButtonOverrides)="toggleButtonOverrides('showZoom', $event)"></app-toggle>
-      <app-toggle [label]="'print'" (toggleButtonOverrides)="toggleButtonOverrides('showPrint', $event)"></app-toggle>
-      <app-toggle [label]="'download'" (toggleButtonOverrides)="toggleButtonOverrides('showDownload', $event)"></app-toggle>
-      <app-toggle [label]="'comments'" (toggleButtonOverrides)="toggleButtonOverrides('showCommentSummary', $event)"></app-toggle>
+      <td><app-toggle [label]="'search'" (toggleButtonOverrides)="toggleButtonOverrides('showSearchBar', $event)"></app-toggle></td>
+      <td><app-toggle [label]="'navigate'" (toggleButtonOverrides)="toggleButtonOverrides('showNavigation', $event)"></app-toggle></td>
+      <td><app-toggle [label]="'rotate'" (toggleButtonOverrides)="toggleButtonOverrides('showRotate', $event)"></app-toggle></td>
+      <td><app-toggle [label]="'zoom'" (toggleButtonOverrides)="toggleButtonOverrides('showZoom', $event)"></app-toggle></td>
+      <td><app-toggle [label]="'print'" (toggleButtonOverrides)="toggleButtonOverrides('showPrint', $event)"></app-toggle></td>
+      <td><app-toggle [label]="'download'" (toggleButtonOverrides)="toggleButtonOverrides('showDownload', $event)"></app-toggle></td>
+      <td><app-toggle [label]="'comments'" (toggleButtonOverrides)="toggleButtonOverrides('showCommentSummary', $event)"></app-toggle></td>
     </ng-container>
     <td>
       <div class="govuk-grid-row"><div class="govuk-grid-column-full">
