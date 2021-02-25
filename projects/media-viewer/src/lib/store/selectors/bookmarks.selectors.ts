@@ -60,7 +60,6 @@ export const getBookmarksPerPage = createSelector(
           styles: pages[key].styles
         });
       });
-
       return arr;
     }
   }

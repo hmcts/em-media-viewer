@@ -7,7 +7,7 @@ import {Component, Input} from '@angular/core';
 * @prop config - obj with properties
 * */
 @Component({
-  selector: 'lib-gov-label',
+  selector: 'mv-gov-label',
   template: `<h1 *ngIf="config.isPageHeading else noHeading">
           <label *ngIf="config.label" [class]="config.classes + ' govuk-label'"
                  [for]="config.id" [innerHTML]="config.label">

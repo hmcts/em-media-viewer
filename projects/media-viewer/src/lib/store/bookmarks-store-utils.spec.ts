@@ -15,7 +15,7 @@ describe('bookmarks-store-utils', () => {
 
   it('should generate bookmark nodes', function () {
     const bookmark3 = { ...bookmark1, parent: 'id1', id: 'id3', name: 'bookmark 3' };
-    const parent = { ...bookmark1, children: [ { ...bookmark3, index: 0 } ]}
+    const parent = { ...bookmark1, children: [ { ...bookmark3, index: 0 } ]};
     const bookmarkNodes = generateBookmarkNodes({ id1: bookmark1, id2: bookmark2, id3: bookmark3 });
 
     expect(bookmarkNodes).toEqual([{ ...parent, index: 0 }, { ...bookmark2, index: 1 }]);
@@ -23,10 +23,10 @@ describe('bookmarks-store-utils', () => {
 
   it('should get bookmark children', function () {
     const bookmark3 = { ...bookmark1, parent: 'id2', id: 'id3', name: 'bookmark 3' };
-    const parent = { ...bookmark2, previous: undefined, parent: 'id1', children: [bookmark3]}
-    const grandparent = { ...bookmark1, children: [ parent ]}
+    const parent = { ...bookmark2, previous: undefined, parent: 'id1', children: [bookmark3]};
+    const grandparent = { ...bookmark1, children: [ parent ]};
 
-    const children = getBookmarkChildren(grandparent.children)
+    const children = getBookmarkChildren(grandparent.children);
 
     expect(children).toEqual(['id2', 'id3']);
   });

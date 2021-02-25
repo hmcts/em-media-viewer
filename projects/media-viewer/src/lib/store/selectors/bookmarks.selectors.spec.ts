@@ -5,8 +5,6 @@ import { reducers, State } from '../reducers/reducers';
 import * as fromSelectors from './bookmarks.selectors';
 import * as fromActions from '../actions/bookmarks.action';
 import * as fromDocActions from '../actions/document.action';
-import { take } from 'rxjs/operators';
-
 
 describe('Bookmarks selectors', () => {
 
@@ -14,6 +12,15 @@ describe('Bookmarks selectors', () => {
   const bookmark = {
     name: 'bookmark', xCoordinate: 100, yCoordinate: 50, documentId: 'documentId', id: 'id', pageNumber: 1, zoom: 1
   } as any;
+  const page = {
+    div: {
+      scrollHeight: 466.666
+    },
+    scale: 1,
+    rotation: 0,
+    id: '1',
+    viewportScale: 1.33333
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -26,59 +33,31 @@ describe('Bookmarks selectors', () => {
     spyOn(store, 'dispatch').and.callThrough();
   });
 
-  it('should return bookmark info', () => {
-    let result;
+  it('should return bookmark info', (done) => {
     const bookmark2 = { ...bookmark, name: 'bookmark 2', id: 'id2', previous: 'id' };
     const payload: any = { pageNumber: 1, left: 100, top: 200 };
     store.dispatch(new fromDocActions.PdfPositionUpdate(payload));
     store.dispatch(new fromDocActions.SetDocumentId('documentId'));
     store.dispatch(new fromActions.LoadBookmarksSuccess({ body: [bookmark, bookmark2], status: 200 }));
 
-    store.dispatch(new fromDocActions.AddPages([{
-      div: {
-        offsetHeight: 466.666
-      },
-      scale: 1,
-      rotation: 0,
-      id: '1',
-      viewportScale: 1.33333
-    }]));
+    store.dispatch(new fromDocActions.AddPages([page]));
 
     store.pipe(select(fromSelectors.getBookmarkInfo)).subscribe(value => {
-      result = value;
-    });
 
-    const expected = { pageNumber: 0, xCoordinate: 100, yCoordinate: 200, previous: 'id2', documentId: 'documentId' };
-    expect(result).toEqual(expected);
-  });
-
-  describe('getBookmarksPerPage', () => {
-    it('should return pages of bookmarks', () => {
-      store.dispatch(new fromDocActions.AddPages([{
-        div: {
-          offsetHeight: 466.666
-        },
-        scale: 1,
-        rotation: 0,
-        id: '1',
-        viewportScale: 1.33333
-      }]));
-
-      let result;
-      store.pipe(select(fromSelectors.getBookmarksPerPage)).subscribe(value => {
-        result = value;
-      });
-      const payload: any = {
-        id: '1',
-        documentId: 'uuid',
-        name: 'bookmark1',
-        pageNumber: 0,
-        xCoordinate: 100,
-        yCoordinate: -120
-      };
-      const expected = [ { bookmark: [  ], styles: { left: undefined, height: 466.666, width: undefined } } ];
-      expect(result).toEqual(expected);
+      const expected = { pageNumber: 0, xCoordinate: 100, yCoordinate: 200, previous: 'id2', documentId: 'documentId' };
+      expect(value).toEqual(expected);
+      done();
     });
   });
 
+  it('should return pages of bookmarks', (done) => {
+    store.dispatch(new fromDocActions.AddPages([page]));
+
+    store.pipe(select(fromSelectors.getBookmarksPerPage)).subscribe(value => {
+      const expected = [{ bookmark: [], styles: { left: undefined, height: 466.666, width: undefined }}];
+
+      expect(value).toEqual(expected);
+      done();
+    });
+  });
 });

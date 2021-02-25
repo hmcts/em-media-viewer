@@ -4,7 +4,7 @@ import { TextHighlightDirective } from './text-highlight.directive';
 describe('TextHighlightDirective', () => {
   let directive: TextHighlightDirective;
   const hostElement = document.createElement('div');
-  hostElement.innerText = 'text'
+  hostElement.innerText = 'text';
 
   beforeEach(() => {
     directive = new TextHighlightDirective(new ElementRef<HTMLElement>(hostElement));

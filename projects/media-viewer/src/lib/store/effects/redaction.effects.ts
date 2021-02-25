@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { RedactionApiService } from '../../redaction/services/redaction-api.service'
+import { RedactionApiService } from '../../redaction/services/redaction-api.service';
 import * as redactionActions from '../actions/redaction.actions';
 import { HttpResponse } from '@angular/common/http';
 

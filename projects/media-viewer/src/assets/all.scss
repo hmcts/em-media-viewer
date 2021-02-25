@@ -5,7 +5,6 @@
 
 @import 'sass/settings';
 @import "sass/annotation-set";
-@import "sass/annotation-ui-theme";
 @import 'sass/bookmarks.scss';
 @import "sass/box-highlight";
 @import "sass/bookmarks";
@@ -30,6 +29,7 @@
 @import 'sass/comment-filter';
 @import 'sass/angular-tree-component';
 @import 'sass/redaction';
+@import 'pdfjs/pdf_viewer';
 div.govuk-prose-scope, p {
   white-space: pre-wrap;
 }

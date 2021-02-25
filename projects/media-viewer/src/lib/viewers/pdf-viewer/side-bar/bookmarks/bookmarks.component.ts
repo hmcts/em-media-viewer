@@ -131,5 +131,5 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   private scaledY(yCoordinate: number, height: number, page: DocumentPages): number {
     const viewportScale = page.viewportScale / this.zoom;
     return ((height / this.zoom) - yCoordinate) / viewportScale;
-  };
+  }
 }

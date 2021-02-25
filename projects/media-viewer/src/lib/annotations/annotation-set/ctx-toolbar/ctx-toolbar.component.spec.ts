@@ -28,7 +28,7 @@ describe('CtxToolbarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ CtxToolbarComponent ]
+      declarations: [CtxToolbarComponent]
     })
       .compileComponents();
 
@@ -36,6 +36,7 @@ describe('CtxToolbarComponent', () => {
     component = fixture.componentInstance;
     component.rectangles = [mockRectangle];
     component.zoom = 1;
+    component.ngOnChanges({ zoom: { previousValue: undefined, currentValue: 1, firstChange: true, isFirstChange: () => true }});
 
     fixture.detectChanges();
   });

@@ -54,7 +54,7 @@ export class IcpFollowerService {
     }
     this.store.pipe(select(fromDocSelectors.getPdfPosition), take(1))
       .subscribe(position => {
-        const rotationDelta =  (pdfPosition.rotation - position.rotation)%360;
+        const rotationDelta =  (pdfPosition.rotation - position.rotation) % 360;
         if (rotationDelta !== 0) {
           this.toolbarEvents.rotate(rotationDelta);
         }

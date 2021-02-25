@@ -77,14 +77,14 @@ export class PdfJsWrapper {
       withCredentials: true
     });
 
-    loadingTask.onProgress = ({loaded, total}) => {
+    loadingTask.onProgress = ({ loaded, total }) => {
       this.documentLoadProgress.next({ loaded, total });
     };
 
     this.documentLoadInit.next(documentUrl);
 
     try {
-      const pdfDocument = await loadingTask;
+      const pdfDocument = await loadingTask.promise;
       this.documentLoaded.next(pdfDocument);
       this.toolbarEvents.pageCountSubject.next(pdfDocument.numPages);
 

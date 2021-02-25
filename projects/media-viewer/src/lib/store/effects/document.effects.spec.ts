@@ -30,7 +30,7 @@ describe('Document Effects', () => {
     it('should return a ConvertSuccess', () => {
       const action = new documentActions.Convert('document-id');
       docConvertApi.convert.and.returnValue(of({ body: 'blob' }));
-      spyOn(URL, 'createObjectURL').and.returnValue('blob-url')
+      spyOn(URL, 'createObjectURL').and.returnValue('blob-url');
 
       const completion = new documentActions.ConvertSuccess('blob-url');
       actions$ = hot('-a', { a: action });
@@ -38,7 +38,7 @@ describe('Document Effects', () => {
       expect(effects.convert$).toBeObservable(expected);
     });
 
-    it('should return a ConvertFailure',() => {
+    it('should return a ConvertFailure', () => {
       const action = new documentActions.Convert('document-url');
       docConvertApi.convert.and.returnValue(throwError('error converting document'));
 

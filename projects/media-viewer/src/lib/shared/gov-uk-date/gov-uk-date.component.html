@@ -1,20 +1,20 @@
 <div class="govuk-form-group" [ngClass]="{'govuk-form-group--error': errorMessage?.isInvalid}" [formGroup]="formGroup">
-  <lib-gov-uk-fieldset
+  <mv-gov-uk-fieldset
     [config]="{legend: config.legend, classes: 'govuk-label--m', id: config.id, hint: ' For example, 12 11 2007'}"
     [isHeading]="false"
     [errorMessage]="errorMessage">
-    <lib-gov-uk-error-message
+    <mv-gov-uk-error-message
       [config]="{id: 'passport'}"
       *ngIf="errorMessage"
       [errorMessage]="errorMessage">
-    </lib-gov-uk-error-message>
+    </mv-gov-uk-error-message>
 
     <div class="govuk-date-input" [id]="config.id+'-date'">
       <div class="govuk-date-input__item">
         <div class="govuk-form-group">
-          <lib-gov-label
+          <mv-gov-label
             [config]="{label: 'Day', name: config.id, id: config.id+'-day', classes: 'govuk-date-input__label'}">
-          </lib-gov-label>
+          </mv-gov-label>
           <input class="govuk-input govuk-date-input__input govuk-input--width-2"
                  [ngClass]="{'govuk-input--error': errorMessage?.isInvalid}"
                  [id]="config.id"
@@ -24,9 +24,9 @@
       </div>
       <div class="govuk-date-input__item">
         <div class="govuk-form-group">
-          <lib-gov-label
+          <mv-gov-label
             [config]="{label: 'Month', name: config.id+'-month', id: config.id+'-month', classes: 'govuk-date-input__label'}">
-          </lib-gov-label>
+          </mv-gov-label>
           <input class="govuk-input govuk-date-input__input govuk-input--width-2"
                  [ngClass]="{'govuk-input--error': errorMessage?.isInvalid}"
                  [id]="config.id+'-month'"
@@ -36,9 +36,9 @@
       </div>
       <div class="govuk-date-input__item">
         <div class="govuk-form-group">
-          <lib-gov-label
+          <mv-gov-label
             [config]="{label: 'Year', name: config.id+'-year', id: config.id+'-year', classes: 'govuk-date-input__label'}">
-          </lib-gov-label>
+          </mv-gov-label>
           <input class="govuk-input govuk-date-input__input govuk-input--width-4"
                  [ngClass]="{'govuk-input--error': errorMessage?.isInvalid}"
                  [id]="config.id+'-year'"
@@ -47,5 +47,5 @@
         </div>
       </div>
     </div>
-  </lib-gov-uk-fieldset>
+  </mv-gov-uk-fieldset>
 </div>

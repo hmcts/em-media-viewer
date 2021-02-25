@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import * as moment_ from 'moment-timezone';
+import moment from 'moment-timezone';
 /**
  * A moment timezone pipe to support parsing based on time zone abbreviations
  * covers all cases of offset variation due to daylight saving.
@@ -18,7 +18,6 @@ export class MomentDatePipe extends DatePipe implements PipeTransform {
     format: string = 'mediumDate',
     timezone: string = 'Europe/London'
   ): string {
-    const moment = moment_;
     const timezoneOffset = moment(value).tz(timezone).format('Z');
     return super.transform(value, format, timezoneOffset);
   }

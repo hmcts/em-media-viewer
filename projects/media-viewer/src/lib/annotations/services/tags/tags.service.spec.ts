@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AnnotationApiService } from '../../annotation-api.service';;
+import { AnnotationApiService } from '../../annotation-api.service';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import {TagsServices} from '../../services/tags/tags.services';
 import {TagsComponent} from '../../tags/tags.component';

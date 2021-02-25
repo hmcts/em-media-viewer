@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { PageEvent } from '../../viewers/pdf-viewer/pdf-js/pdf-js-wrapper';
-import { PdfPosition } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import { Rotation } from '../../viewers/rotation-persist/rotation.model';
+import { PdfPosition } from '../reducers/document.reducer';
 
 export const SET_DOCUMENT_ID = '[Document] Set Document Id';
 export const POSITION_UPDATED = '[Document] Position Updated';
@@ -11,12 +11,12 @@ export const CONVERT_SUCCESS = '[Document] Convert Success';
 export const CONVERT_FAIL = '[Document] Convert Fail';
 export const CLEAR_CONVERT_DOC_URL = '[Document] Clear Convert Doc Url';
 
-export const LOAD_ROTATION = '[Document] Load Rotation'
-export const LOAD_ROTATION_SUCCESS = '[Document] Load Rotation Success'
-export const LOAD_ROTATION_FAIL = '[Document] Load Rotation Fail'
-export const SAVE_ROTATION = '[Document] Save Rotation'
-export const SAVE_ROTATION_SUCCESS = '[Document] Save Rotation Success'
-export const SAVE_ROTATION_FAIL = '[Document] Save Rotation Fail'
+export const LOAD_ROTATION = '[Document] Load Rotation';
+export const LOAD_ROTATION_SUCCESS = '[Document] Load Rotation Success';
+export const LOAD_ROTATION_FAIL = '[Document] Load Rotation Fail';
+export const SAVE_ROTATION = '[Document] Save Rotation';
+export const SAVE_ROTATION_SUCCESS = '[Document] Save Rotation Success';
+export const SAVE_ROTATION_FAIL = '[Document] Save Rotation Fail';
 
 export class SetDocumentId implements Action {
   readonly type = SET_DOCUMENT_ID;
