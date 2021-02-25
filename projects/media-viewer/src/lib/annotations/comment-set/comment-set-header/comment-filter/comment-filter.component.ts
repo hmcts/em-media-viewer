@@ -63,7 +63,7 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   }
 
   onToggleFilterView() {
-    this.isPreview = !this.isPreview
+    this.isPreview = !this.isPreview;
   }
 
 

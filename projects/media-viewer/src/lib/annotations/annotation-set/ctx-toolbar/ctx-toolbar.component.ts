@@ -1,17 +1,25 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-ctx-toolbar',
   templateUrl: './ctx-toolbar.component.html'
 })
-export class CtxToolbarComponent {
+export class CtxToolbarComponent implements OnChanges {
 
   readonly defaultHeight;
   readonly defaultWidth;
 
-  @Input() zoom = 1;
-  @Input() rotate = 0;
+  @Input() zoom;
+  @Input() rotate;
   @Input() pageHeight: number;
   @Input() pageWidth: number;
 
@@ -35,12 +43,16 @@ export class CtxToolbarComponent {
     this.defaultWidth = 300;
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    this.setRectangle();
+    this.top = this.popupTop();
+    this.left = this.popupLeft();
+  }
+
   @Input() set rectangles(rectangles: Rectangle[]) {
     if (rectangles) {
       this._rectangles = rectangles;
       this.setRectangle();
-      this.top = this.popupTop();
-      this.left = this.popupLeft();
     }
   }
 
@@ -74,18 +86,18 @@ export class CtxToolbarComponent {
       case 90:
         this.rectangle.width = rectangle.height;
         this.rectangle.height = rectangle.width;
-        this.rectangle.x = (this.pageWidth/this.zoom) - rectangle.y - rectangle.height;
+        this.rectangle.x = (this.pageWidth / this.zoom) - rectangle.y - rectangle.height;
         this.rectangle.y = rectangle.x;
         break;
       case 180:
-        this.rectangle.x = (this.pageWidth/this.zoom) - rectangle.x - rectangle.width;
-        this.rectangle.y = (this.pageHeight/this.zoom) - rectangle.y - rectangle.height;
+        this.rectangle.x = (this.pageWidth / this.zoom) - rectangle.x - rectangle.width;
+        this.rectangle.y = (this.pageHeight / this.zoom) - rectangle.y - rectangle.height;
         break;
       case 270:
         this.rectangle.width = rectangle.height;
         this.rectangle.height = rectangle.width;
         this.rectangle.x = rectangle.y;
-        this.rectangle.y = (this.pageHeight/this.zoom) - rectangle.x - rectangle.width;
+        this.rectangle.y = (this.pageHeight / this.zoom) - rectangle.x - rectangle.width;
         break;
     }
   }

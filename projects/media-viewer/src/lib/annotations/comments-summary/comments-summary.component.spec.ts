@@ -46,7 +46,7 @@ describe('CommentsSummaryComponent', () => {
   });
 
   it('should set focus on container', () => {
-    spyOn(component.container.nativeElement, 'focus')
+    spyOn(component.container.nativeElement, 'focus');
 
     component.ngOnInit();
 

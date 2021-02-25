@@ -23,11 +23,11 @@ describe('DocumentReducer', () => {
 };
 
   it('should return the default state', () => {
-    const { initialRedactionState } = fromRedaction;
+    const initRedactionState = fromRedaction.initialRedactionState;
     const action = new LoadRedactions('document-id');
     const state = fromRedaction.redactionReducer(undefined, action);
 
-    expect(state).toEqual(initialRedactionState);
+    expect(state).toEqual(initRedactionState);
   });
 
   it('should set loaded redactions in the state', () => {

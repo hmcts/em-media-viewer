@@ -32,7 +32,7 @@ import * as fromTags from '../actions/tags.actions';
         label: 'important',
         color: null
       }
-    ]
+    ];
   const anno = {
     createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
     createdByDetails: {
@@ -82,7 +82,7 @@ import * as fromTags from '../actions/tags.actions';
     ],
     type: 'highlight',
     positionTop: 673
-  }
+  };
 
   const annoSet: any = {
     createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
@@ -127,7 +127,7 @@ describe('Annotations selectors', () => {
         result = value;
       });
       store.dispatch(new fromActions.SearchComment('this'));
-      expect(result).toEqual({commentSearch: 'this',});
+      expect(result).toEqual({commentSearch: 'this', });
     });
   });
 

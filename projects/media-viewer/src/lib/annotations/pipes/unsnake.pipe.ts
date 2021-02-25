@@ -7,6 +7,6 @@ export class UnsnakePipe implements PipeTransform {
 
   transform(items: string): string {
     return items.split('_').join(' ');
-  };
+  }
 
 }

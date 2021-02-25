@@ -26,7 +26,7 @@ describe('MetadataLayerComponent', () => {
       annotationSetId: 'annotationSetId',
       documentId: 'documentId'
     }]),
-    dispatch: (actualAction) => { expectedAction = actualAction },
+    dispatch: (actualAction) => { expectedAction = actualAction; },
   } as any;
 
   const mockHighlightService = {
@@ -123,7 +123,7 @@ describe('MetadataLayerComponent', () => {
   it('should setup subscriptions',
     inject([Store, ViewerEventService, ToolbarEventService],
     (store, viewerEvents, toolbarEvents) => {
-      spyOn(store, 'pipe').and.returnValue(of(['pages']))
+      spyOn(store, 'pipe').and.returnValue(of(['pages']));
       spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.callThrough();
       spyOn(viewerEvents.textHighlight, 'subscribe').and.callThrough();
       spyOn(viewerEvents.ctxToolbarCleared, 'subscribe').and.callThrough();
@@ -153,7 +153,7 @@ describe('MetadataLayerComponent', () => {
     }
   ));
 
-  it('should show context toolbar', inject([ToolbarEventService],(toolbarEvents) => {
+  it('should show context toolbar', inject([ToolbarEventService], (toolbarEvents) => {
     spyOn(toolbarEvents.highlightModeSubject, 'next');
 
     component.showContextToolbar({ page: 1, rectangles: ['rectangles'] } as any);

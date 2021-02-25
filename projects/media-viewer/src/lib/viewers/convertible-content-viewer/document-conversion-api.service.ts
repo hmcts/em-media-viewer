@@ -12,7 +12,7 @@ export class DocumentConversionApiService {
 
   public convert(documentId): Observable<HttpResponse<Blob>> {
     return this.httpClient
-      .post<Blob>(`${this.documentConversionUrl}/${documentId}`,{},
+      .post<Blob>(`${this.documentConversionUrl}/${documentId}`, {},
         { observe: 'response' , withCredentials: true, responseType: 'blob' as 'json' })
       .pipe(
         map(response => response),

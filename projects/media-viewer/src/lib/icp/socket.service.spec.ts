@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 describe('SocketService', () => {
 
-  let socketService: SocketService
+  let socketService: SocketService;
 
   const mockSocketClient = {
     on: () => {},
@@ -17,7 +17,7 @@ describe('SocketService', () => {
     spyOn(socketService, 'getSocketClient').and.returnValue(mockSocketClient);
     spyOnAllFunctions(mockSocketClient);
     socketService.connect();
-  })
+  });
 
   it('should connect', () => {
     expect(mockSocketClient.on.calls.allArgs()).toEqual([
@@ -27,7 +27,7 @@ describe('SocketService', () => {
   });
 
   it('should join', () => {
-    socketService.join({})
+    socketService.join({});
     socketService.connected$.next(true);
 
     expect(mockSocketClient.emit).toHaveBeenCalledWith('join', {});
@@ -35,7 +35,7 @@ describe('SocketService', () => {
 
   it('should leave', () => {
     socketService.subscription = { unsubscribe: () => {}} as any;
-    spyOn(socketService.subscription, 'unsubscribe')
+    spyOn(socketService.subscription, 'unsubscribe');
     socketService.leave({});
 
     expect(mockSocketClient.emit).toHaveBeenCalledWith('leave', {});
@@ -51,16 +51,16 @@ describe('SocketService', () => {
   it('should listen', function () {
     const observable = socketService.listen({} as any);
 
-    expect(observable).toEqual(any(Observable))
+    expect(observable).toEqual(any(Observable));
   });
 
   it('should unsubscribe', () => {
     socketService.subscription = { unsubscribe: () => {}} as any;
-    spyOn(socketService.subscription, 'unsubscribe')
+    spyOn(socketService.subscription, 'unsubscribe');
 
     socketService.ngOnDestroy();
 
     expect(socketService.subscription.unsubscribe).toHaveBeenCalled();
   });
-})
+});
 

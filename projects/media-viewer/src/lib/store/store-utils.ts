@@ -1,5 +1,5 @@
 import { Annotation } from '../annotations/annotation-set/annotation-view/annotation.model';
-import * as moment_ from 'moment-timezone';
+import moment from 'moment-timezone';
 import { Redaction } from '../redaction/services/redaction.model';
 
 /*
@@ -11,7 +11,7 @@ export class StoreUtils {
 
   static groupByKeyEntities(annotations, key): {[id: string]: any[]} {
     return annotations.reduce((h, obj) =>
-      Object.assign(h, { [obj[key]]:( h[obj[key]] || [] ).concat(obj) }), {});
+      Object.assign(h, { [obj[key]]: ( h[obj[key]] || [] ).concat(obj) }), {});
   }
 
   static generateCommentsEntities(annotations): {[id: string]: Comment} {
@@ -21,7 +21,7 @@ export class StoreUtils {
           const comment = {
             ...annotation.comments[0] || '',
             tags: [...annotation.tags || []]
-          }
+          };
           return {
             ...commentEntities,
             [annotation.id]: comment
@@ -45,7 +45,7 @@ export class StoreUtils {
       }, {});
 
     return this.genNameEnt(annotations, groupedByName);
-  };
+  }
 
   static genNameEnt(annos, groupedByName) {
      return Object.keys(groupedByName).reduce(
@@ -57,7 +57,7 @@ export class StoreUtils {
         return {
           ...tagNameEnt,
           [key]: readyAnno
-        }
+        };
       }, {});
 
   }
@@ -99,7 +99,7 @@ export class StoreUtils {
   }
 
   static filterCommentsSummary(comments, filters) {
-    if(Object.keys(filters).length) {
+    if (Object.keys(filters).length) {
       const tagFilterApplied = Object.keys(filters.tagFilters)
         .filter(key => filters.tagFilters[key] === true).length;
       const dateFilterApplied = (filters.dateRangeFrom || filters.dateRangeTo);
@@ -120,7 +120,6 @@ export class StoreUtils {
         }
         // check for dates
         if (dateFilterApplied) {
-          const moment = moment_;
           const commentDate = moment(comment.lastModifiedDate);
           const dateFrom =  filters.dateRangeFrom !== null ? moment(filters.dateRangeFrom) : undefined;
           const dateTo = filters.dateRangeTo !== null ? moment(filters.dateRangeTo) : undefined;

@@ -43,7 +43,7 @@ describe('IcpToolbarComponent', () => {
   });
 
   it('should present', () => {
-    spyOn(toolbarEvents.icp, 'becomePresenter')
+    spyOn(toolbarEvents.icp, 'becomePresenter');
 
     component.present();
 

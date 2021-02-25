@@ -94,14 +94,14 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   private rotateImage(rotation: number) {
     this.rotation = (this.rotation + rotation) % 360;
-    this.initAnnoPage(this.img.nativeElement)
+    this.initAnnoPage(this.img.nativeElement);
   }
 
   private async setZoom(zoomFactor: number) {
     if (!isNaN(zoomFactor)) {
       await this.setZoomValue(this.calculateZoomValue(zoomFactor));
       this.img.nativeElement.width = this.img.nativeElement.naturalWidth * this.zoom;
-      this.initAnnoPage(this.img.nativeElement)
+      this.initAnnoPage(this.img.nativeElement);
     }
   }
 
@@ -109,7 +109,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     if (!isNaN(zoomFactor)) {
       await this.setZoomValue(this.calculateZoomValue(this.zoom, zoomFactor));
       this.img.nativeElement.width = this.img.nativeElement.naturalWidth * this.zoom;
-      this.initAnnoPage(this.img.nativeElement)
+      this.initAnnoPage(this.img.nativeElement);
     }
   }
 
@@ -165,10 +165,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     this.imageTop = this.rotation % 180 !== 0 ? img.offsetLeft : img.offsetTop;
     const payload: any = [{
       div: {
-        offsetHeight: this.imageHeight,
-        offsetWidth: this.imageWidth,
-        left: this.imageLeft,
-        top: this.imageTop
+        scrollHeight: this.imageHeight,
+        scrollWidth: this.imageWidth,
+        offsetLeft: this.imageLeft,
       },
       pageNumber: 1,
       scale: this.zoom,

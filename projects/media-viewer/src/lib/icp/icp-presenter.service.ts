@@ -3,10 +3,10 @@ import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { select, Store } from '@ngrx/store';
 import * as fromDocSelectors from '../store/selectors/document.selectors';
 import { Subscription } from 'rxjs';
-import { PdfPosition } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import { IcpUpdateService } from './icp-update.service';
 import { IcpState, IcpScreenUpdate, IcpSession, IcpParticipant } from './icp.interfaces';
 import * as fromIcpSelectors from '../store/selectors/icp.selectors';
+import { PdfPosition } from '../store/reducers/document.reducer';
 
 @Injectable()
 export class IcpPresenterService {

@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 describe('BookmarksApiService', () => {
 
-  let service: BookmarksApiService
+  let service: BookmarksApiService;
   let mockHttpClient: HttpTestingController;
 
   const bookmark = {
@@ -25,9 +25,9 @@ describe('BookmarksApiService', () => {
       expect(resp.body).toEqual([bookmark]);
     }, error => done(error));
 
-    const req = mockHttpClient.expectOne(req => req.url.endsWith('/documentId/bookmarks'));
-    expect(req.request.method).toBe('GET');
-    req.flush([bookmark]);
+    const request = mockHttpClient.expectOne(req => req.url.endsWith('/documentId/bookmarks'));
+    expect(request.request.method).toBe('GET');
+    request.flush([bookmark]);
   }));
 
   it('should create bookmark', fakeAsync((done) => {
@@ -35,9 +35,9 @@ describe('BookmarksApiService', () => {
       expect(resp).toEqual(bookmark);
     }, error => done(error));
 
-    const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks'));
-    expect(req.request.method).toBe('POST');
-    req.flush(bookmark);
+    const request = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks'));
+    expect(request.request.method).toBe('POST');
+    request.flush(bookmark);
   }));
 
   it('should update bookmark', fakeAsync((done) => {
@@ -45,9 +45,9 @@ describe('BookmarksApiService', () => {
       expect(resp).toEqual(bookmark);
     }, error => done(error));
 
-    const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks'));
-    expect(req.request.method).toBe('PUT');
-    req.flush(bookmark);
+    const request = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks'));
+    expect(request.request.method).toBe('PUT');
+    request.flush(bookmark);
   }));
 
   it('should delete bookmark', fakeAsync((done) => {
@@ -55,9 +55,9 @@ describe('BookmarksApiService', () => {
       expect(resp).toEqual(null);
     }, error => done(error));
 
-    const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks/bookmarkId'));
-    expect(req.request.method).toBe('DELETE');
-    req.flush(null);
+    const request = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks/bookmarkId'));
+    expect(request.request.method).toBe('DELETE');
+    request.flush(null);
   }));
 
   it('should update multiple bookmarks', fakeAsync((done) => {
@@ -65,9 +65,9 @@ describe('BookmarksApiService', () => {
       expect(resp).toEqual([bookmark]);
     }, error => done(error));
 
-    const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks_multiple'));
-    expect(req.request.method).toBe('PUT');
-    req.flush([bookmark]);
+    const request = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks_multiple'));
+    expect(request.request.method).toBe('PUT');
+    request.flush([bookmark]);
   }));
 
   it('should delete multiple bookmarks', fakeAsync((done) => {
@@ -75,8 +75,8 @@ describe('BookmarksApiService', () => {
       .subscribe((resp) => expect(resp).toEqual(null),
           error => done(error));
 
-    const req = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks_multiple'));
-    expect(req.request.method).toBe('DELETE');
-    req.flush(null);
+    const request = mockHttpClient.expectOne(req => req.url.endsWith('/bookmarks_multiple'));
+    expect(request.request.method).toBe('DELETE');
+    request.flush(null);
   }));
 });

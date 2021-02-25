@@ -40,7 +40,11 @@ export class CommentsNavigateComponent implements OnChanges {
 
     if (this.autoSelect) {
       this.toolbarEvents.setPage(Number.parseInt(this.navigationList[0].page, 0));
-      this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: this.navigationList[0].annotationId, editable: false, selected: true}));
+      this.store.dispatch(new fromActions.SelectedAnnotation({
+        annotationId: this.navigationList[0].annotationId,
+        editable: false,
+        selected: true
+      }));
     }
   }
 
@@ -50,7 +54,7 @@ export class CommentsNavigateComponent implements OnChanges {
     } else {
       const rectA = mappedCommentA.rectangle;
       const rectB = mappedCommentB.rectangle;
-      if(rectA.y !== rectB.y) {
+      if (rectA.y !== rectB.y) {
         return rectA.y - rectB.y;
       } else {
         return rectA.x - rectB.x;
@@ -77,7 +81,11 @@ export class CommentsNavigateComponent implements OnChanges {
       this.index = this.navigationList.length - 1;
     }
     this.toolbarEvents.setPage(Number.parseInt(this.navigationList[this.index].page, 0));
-    this.store.dispatch(new fromActions.SelectedAnnotation({annotationId: this.navigationList[this.index].annotationId, editable: false, selected: true}));
+    this.store.dispatch(new fromActions.SelectedAnnotation({
+      annotationId: this.navigationList[this.index].annotationId,
+      editable: false,
+      selected: true
+    }));
   }
 
   upperRectangle(rectangles: Rectangle[]) {
