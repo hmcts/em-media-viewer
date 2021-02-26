@@ -1,5 +1,6 @@
 import {
   AfterContentInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -71,6 +72,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
   @ViewChild('commentsPanel') commentsPanel: CommentSetComponent;
+  @ViewChild('scrollTwo') scrollTwo: ElementRef<HTMLDivElement>;
 
   private pdfWrapper: PdfJsWrapper;
   private $subscription: Subscription;
@@ -112,7 +114,17 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
     this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
-    this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
+    this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
+        this.showCommentsPanel = toggle;
+
+        if (toggle) {
+
+          setTimeout(() => {
+            this.scrollTwo.nativeElement.scrollBy(0, this.viewerContainer.nativeElement.scrollTop);
+          });
+        }
+      })
+    );
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
     this.$subscription.add(this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle));
     this.$subscription.add(this.pdfWrapper.positionUpdated.asObservable()
@@ -146,13 +158,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   ngOnDestroy(): void {
     this.$subscription.unsubscribe();
-  }
-
-  public onScroll(event: any): void {
-    // adjust comments location on scroll
-    if (event.target.scrollLeft !== 0 && this.commentsPanel) {
-      this.commentsPanel.container.nativeElement.style.right = `-${event.target.scrollLeft}px`;
-    }
   }
 
   private async loadDocument() {

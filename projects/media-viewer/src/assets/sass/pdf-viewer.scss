@@ -19,6 +19,15 @@ mv-pdf-viewer {
       }
     }
 
+    .comments {
+      position: absolute;
+      overflow-y: hidden;
+      top: 0;
+      right: 0;
+      width: 24%;
+      height: 100%;
+    }
+
     .pageContainer {
       width: 100%;
     }

@@ -131,6 +131,4 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   allCommentsSaved() {
     this.commentService.allCommentsSaved();
   }
-
-
 }
