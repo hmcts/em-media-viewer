@@ -11,7 +11,7 @@ describe('HighlightCreateService', () => {
       styles: { height: 100, width: 100 },
       scaleRotation: { scale: 1, rotation: 0 }
     }),
-    dispatch: (action) => { saveAnnoAction = action },
+    dispatch: (action) => { saveAnnoAction = action; },
     pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
   } as any;
 
@@ -26,7 +26,7 @@ describe('HighlightCreateService', () => {
     const mockRectangles = ['rectangles'] as any;
     spyOn(mockStore, 'dispatch').and.callThrough();
 
-    service.saveAnnotation(mockRectangles,1);
+    service.saveAnnotation(mockRectangles, 1);
 
     expect(mockStore.dispatch).toHaveBeenCalled();
     expect(saveAnnoAction.payload.page).toBe(1);

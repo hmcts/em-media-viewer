@@ -6,13 +6,13 @@ import {Component, Input, OnInit} from '@angular/core';
 * displaying errorMessage messages
 * */
 @Component({
-  selector: 'lib-gov-uk-date',
+  selector: 'mv-gov-uk-date',
 templateUrl: './gov-uk-date.component.html'
 })
 export class GovUkDateComponent implements OnInit {
   constructor () { }
   @Input() config: { id: string; legend: string };
-  @Input() errorMessage: {isInvalid: boolean; messages: string[]}
+  @Input() errorMessage: {isInvalid: boolean; messages: string[]};
   @Input() formGroup;
 
   ngOnInit(): void {

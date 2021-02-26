@@ -10,7 +10,7 @@ export interface AnnotationSetState {
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment} | {};
   selectedAnnotation: SelectionAnnotation;
-  commentSearchQueries: {commentSearch: string;};
+  commentSearchQueries: {commentSearch: string; };
   commentSummaryFilters: {hasFilter: boolean; filters: any};
   loaded: boolean;
   loading: boolean;
@@ -110,7 +110,7 @@ export function reducer (
       const commentEntities = {
         ...state.commentEntities
       };
-      if(state.commentEntities[id]) {
+      if (state.commentEntities[id]) {
         delete commentEntities[id];
       }
       return {

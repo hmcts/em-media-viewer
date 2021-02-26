@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import socketio from 'socket.io-client/dist/socket.io.slim.js';
+import socketio from 'socket.io-client/dist/socket.io.js';
 
 @Injectable()
 export class SocketService implements OnDestroy {

@@ -65,7 +65,7 @@ describe('SideBarComponent', () => {
     inject([Store], fakeAsync((store) => {
 
       store.dispatch(new fromDocument.AddPages([{div: {}, scale: 1, rotation: 0, id: '1', viewportScale: 1.333333}]));
-      store.dispatch(new PdfPositionUpdate({ pageNumber: 1, top: 50, left: 30, rotation: 0 }));
+      store.dispatch(new PdfPositionUpdate({ pageNumber: 1, top: 50, left: 30, rotation: 0, scale: 1 }));
       spyOn(store, 'dispatch');
 
       component.onAddBookmarkClick();

@@ -23,7 +23,7 @@ import * as fromSelectors from '../../store/selectors/annotations.selectors';
 import {select, Store} from '@ngrx/store';
 import {TagsModel} from '../models/tags.model';
 import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
-import { Rectangle } from "../annotation-set/annotation-view/rectangle/rectangle.model";
+import { Rectangle } from '../annotation-set/annotation-view/rectangle/rectangle.model';
 
 @Component({
   selector: 'mv-comment-set',
@@ -38,7 +38,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @Input() pageHeights = [];
 
   comments: Comment[];
-  tags: TagsModel[]
+  tags: TagsModel[];
   private subscriptions: Subscription[] = [];
   public comments$: Observable<Annotation[]>;
   public annoEntities$: Observable<{ [id: string]: Annotation }>;

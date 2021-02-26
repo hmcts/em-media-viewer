@@ -22,7 +22,8 @@ describe('UpdateService', () => {
       pageNumber: 1,
       top: 1,
       left: 1,
-      rotation: 1
+      rotation: 1,
+      scale: 1
     },
     document: 'document'
   };

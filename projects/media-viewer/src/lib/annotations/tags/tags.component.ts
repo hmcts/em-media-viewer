@@ -25,11 +25,11 @@ export class TagsComponent {
 
   onUpdateTags(value) {
     this.tagsServices.updateTagItems(value, this.annoId);
-  };
+  }
 
   public requestAutocompleteItems = (text: string): Observable<any[]> => {
     return this.tagsServices.getAllTags(this.userId);
-  };
+  }
 
   private minLength(control: FormControl) {
     if (control.value.length < 2) {

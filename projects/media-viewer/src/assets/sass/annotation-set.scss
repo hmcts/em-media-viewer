@@ -51,9 +51,9 @@ mv-metadata-layer, mv-redactions, mv-bookmark-icons {
     transition-duration: 600ms;
     transition-timing-function: ease;
     &__page {
-      border: 1px solid transparent; // fix for text-highlight mispositioned
+      border: 9px solid transparent; // fix for text-highlight mispositioned
       background-color: transparent;
-      margin: 0 auto 8px auto;
+      margin: 1px auto -8px auto;
       position: relative;
     }
 

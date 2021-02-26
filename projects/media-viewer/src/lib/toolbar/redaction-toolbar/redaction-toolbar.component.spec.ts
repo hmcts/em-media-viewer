@@ -42,7 +42,7 @@ describe('RedactionToolbarComponent', () => {
   });
 
   it('should toggleTextRedactionMode', () => {
-    spyOn(toolbarEvents.highlightModeSubject, 'next')
+    spyOn(toolbarEvents.highlightModeSubject, 'next');
 
     component.toggleTextRedactionMode();
 
@@ -50,7 +50,7 @@ describe('RedactionToolbarComponent', () => {
   });
 
   it('should toggleDrawMode', () => {
-    spyOn(toolbarEvents.drawModeSubject, 'next')
+    spyOn(toolbarEvents.drawModeSubject, 'next');
 
     component.toggleDrawMode();
 
@@ -58,7 +58,7 @@ describe('RedactionToolbarComponent', () => {
   });
 
   it('should togglePreview', () => {
-    spyOn(toolbarEvents, 'toggleRedactionPreview')
+    spyOn(toolbarEvents, 'toggleRedactionPreview');
 
     component.togglePreview();
 
@@ -66,7 +66,7 @@ describe('RedactionToolbarComponent', () => {
   });
 
   it('should unmarkAll', () => {
-    spyOn(toolbarEvents, 'unmarkAll')
+    spyOn(toolbarEvents, 'unmarkAll');
 
     component.unmarkAll();
 
@@ -74,7 +74,7 @@ describe('RedactionToolbarComponent', () => {
   });
 
   it('should redact', () => {
-    spyOn(toolbarEvents, 'applyRedactionToDocument')
+    spyOn(toolbarEvents, 'applyRedactionToDocument');
 
     component.redact();
 

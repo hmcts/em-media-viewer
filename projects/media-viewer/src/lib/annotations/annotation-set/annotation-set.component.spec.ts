@@ -21,7 +21,7 @@ describe('AnnotationSetComponent', () => {
       styles: { height: 100, width: 100 },
       scaleRotation: { scale: 1, rotation: 0 }
     }]),
-    dispatch: (actualAction) => { expectedAction = actualAction },
+    dispatch: (actualAction) => { expectedAction = actualAction; },
     pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
   } as any;
 
@@ -147,7 +147,7 @@ describe('AnnotationSetComponent', () => {
 
       component.onAnnotationUpdate(mockAnno);
 
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveAnnotation(mockAnno))
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveAnnotation(mockAnno));
     }
   ));
 
@@ -160,7 +160,7 @@ describe('AnnotationSetComponent', () => {
       component.onAnnotationDelete(mockAnno);
 
       expect(commentService.updateUnsavedCommentsStatus).toHaveBeenCalledWith(mockAnno, false);
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'))
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'));
     }
   ));
 

@@ -51,7 +51,7 @@ describe('Icp selectors', () => {
       };
       store.dispatch(new fromActions.IcpSocketSessionJoined(joinPayload));
 
-      const participantPayload = { 'participantId': 'name' }
+      const participantPayload = { 'participantId': 'name' };
       store.dispatch(new fromActions.IcpParticipantListUpdated(participantPayload));
 
       expect(result).toEqual(icpState);

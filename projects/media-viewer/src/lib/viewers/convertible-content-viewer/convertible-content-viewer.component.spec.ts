@@ -46,7 +46,7 @@ describe('ConvertibleContentViewerComponent', () => {
   });
 
   it('should convert original url',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       spyOn(store, 'dispatch');
       component.ngOnInit();
 
@@ -54,7 +54,7 @@ describe('ConvertibleContentViewerComponent', () => {
   }));
 
   it('should emit viewerException', fakeAsync(() => {
-    spyOn(component.viewerException, "emit");
+    spyOn(component.viewerException, 'emit');
     component.onLoadException(new ViewerException());
     tick();
 
@@ -62,8 +62,8 @@ describe('ConvertibleContentViewerComponent', () => {
   }));
 
   it('should emit documentTitle', fakeAsync(() => {
-    spyOn(component.documentTitle, "emit");
-    component.onDocumentTitleChange("");
+    spyOn(component.documentTitle, 'emit');
+    component.onDocumentTitleChange('');
     tick();
 
     expect(component.documentTitle.emit).toHaveBeenCalled();
