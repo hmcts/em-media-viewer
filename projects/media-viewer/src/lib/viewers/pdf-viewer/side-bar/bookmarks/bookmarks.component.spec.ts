@@ -42,7 +42,7 @@ describe('BookmarksComponent', () => {
   });
 
   it('should delete bookmark',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       spyOn(store, 'dispatch');
       const bookmarkNode = {
         parent: { children: [{}]},
@@ -57,7 +57,7 @@ describe('BookmarksComponent', () => {
   );
 
   it('should update bookmark',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       spyOn(store, 'dispatch');
       const mockBookmark = {name: 'Bookmark name', id: 'id'} as any;
       const newName = 'Bookmark new name';
@@ -68,16 +68,16 @@ describe('BookmarksComponent', () => {
   );
 
   it('should move bookmarks',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       spyOn(store, 'dispatch');
       const node = {
-        documentId: "86dc297a-0153-44c0-b996-f563c1ff112a",
-        id: "id1",
+        documentId: '86dc297a-0153-44c0-b996-f563c1ff112a',
+        id: 'id1',
         index: 0,
-        name: "new bookmark",
+        name: 'new bookmark',
         parent: undefined,
         previous: undefined
-    }
+    };
       const from = { index: 0, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
       const to = { index: 1, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
       const movedBookmarks = [{ ...node, previous: 'id2' }, { id: 'id2', index: 1, previous: undefined } as any];

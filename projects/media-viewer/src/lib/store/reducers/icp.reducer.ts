@@ -40,7 +40,7 @@ export function icpReducer (state = initialIcpSessionState,
       return {
         ...state,
         participants
-      }
+      };
     }
 
     case fromIcpActions.ICP_PRESENTER_UPDATED: {

@@ -111,8 +111,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
-    this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
-    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
+    this.$subscription.add(
+      this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber))
+    );
+    this.$subscription.add(
+      this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber))
+    );
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
         this.showCommentsPanel = toggle;
@@ -126,7 +130,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       })
     );
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
-    this.$subscription.add(this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle));
+    this.$subscription.add(
+      this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle)
+    );
     this.$subscription.add(this.pdfWrapper.positionUpdated.asObservable()
       .pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
       .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
@@ -169,9 +175,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       .subscribe(hasDifferentPageSie => this.hasDifferentPageSize = hasDifferentPageSie));
   }
 
-  private onDocumentLoadProgress(documentLoadProgress: DocumentLoadProgress) {
-    if (documentLoadProgress.total) {
-      this.loadingDocumentProgress = Math.min(100, Math.ceil(documentLoadProgress.loaded / documentLoadProgress.total * 100));
+  private onDocumentLoadProgress(progress: DocumentLoadProgress) {
+    if (progress.total) {
+      this.loadingDocumentProgress = Math.min(100, Math.ceil(progress.loaded / progress.total * 100));
     }
   }
 

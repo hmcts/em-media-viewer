@@ -5,7 +5,7 @@ import * as fromAnnotations from '../reducers/annotations.reducer';
 import * as fromTags from './tags.selectors';
 import * as fromDocument from './document.selectors';
 import {StoreUtils} from '../store-utils';
-import * as moment_ from 'moment-timezone';
+import moment from 'moment-timezone';
 export const getAnnotationsSetState = createSelector(
   fromFeature.getMVState,
   (state: fromFeature.State) =>  state.annotations
@@ -121,7 +121,6 @@ export const getCommentSummary = createSelector(
     const comments = StoreUtils.filterCommentsSummary(commentSummary, filters.filters);
     if (comments.length) {
       return comments.map((comment) => {
-        const moment = moment_;
         return {
           page: comment.page,
           user: comment.createdByDetails.forename.concat(' ').concat(comment.createdByDetails.surname),

@@ -55,7 +55,7 @@ describe('DocumentReducer', () => {
   });
 
   it('should convert document', function () {
-    let url = 'new url';
+    const url = 'new url';
 
     const state = fromDocument.docReducer(documentState, new ConvertSuccess(url));
 

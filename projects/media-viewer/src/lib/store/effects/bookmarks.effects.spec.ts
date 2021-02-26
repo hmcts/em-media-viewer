@@ -73,7 +73,7 @@ describe('Bookmark Effects', () => {
       expect(effects.createBookmark$).toBeObservable(expected);
     }));
 
-    it('should return a CreateBookmarkFailure', inject([Store],(store) => {
+    it('should return a CreateBookmarkFailure', inject([Store], (store) => {
       const action = new bookmarkActions.CreateBookmark({ ...bookmarkInfo, name: 'new bookmark' } as any);
       store.dispatch(new PdfPositionUpdate(pdfPosition));
       bookmarksApi.createBookmark.and.returnValue(throwError(bookmark));

@@ -50,10 +50,10 @@ describe('RedactionComponent', () => {
   });
 
   it('should mark Text for Redaction',
-    inject([Store, HighlightCreateService],(store) => {
+    inject([Store, HighlightCreateService], (store) => {
       spyOn(toolbarEvents.highlightModeSubject, 'next');
       spyOn(store, 'dispatch');
-      component.documentId = 'documentId'
+      component.documentId = 'documentId';
       const redactionId = any(String) as any;
 
       component.markTextRedaction({ page: 1, rectangles: ['highlight'] });
@@ -64,26 +64,26 @@ describe('RedactionComponent', () => {
     })
   );
 
-  it('should dispatch DeleteRedaction', inject([Store],(store) => {
+  it('should dispatch DeleteRedaction', inject([Store], (store) => {
     spyOn(store, 'dispatch');
 
     component.onMarkerDelete({});
 
-    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteRedaction({} as any))
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteRedaction({} as any));
   }));
 
-  it('should select redaction', inject([Store],(store) => {
+  it('should select redaction', inject([Store], (store) => {
     spyOn(store, 'dispatch');
 
     component.selectRedaction({});
 
-    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SelectRedaction({} as any))
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SelectRedaction({} as any));
   }));
 
   it('should save redaction',
-    inject([Store, ToolbarEventService],(store, toolbarEvents) => {
+    inject([Store, ToolbarEventService], (store, toolbarEventService) => {
       spyOn(store, 'dispatch');
-      spyOn(toolbarEvents.drawModeSubject, 'next');
+      spyOn(toolbarEventService.drawModeSubject, 'next');
       component.documentId = 'documentId';
       const redactionId = any(String) as any;
       const rectangles = ['rectangle' as any];
@@ -92,28 +92,28 @@ describe('RedactionComponent', () => {
 
       expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveRedaction({
         page: 1, rectangles, redactionId, documentId: 'documentId'
-      }))
-      expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalledWith(false);
+      }));
+      expect(toolbarEventService.drawModeSubject.next).toHaveBeenCalledWith(false);
     })
   );
 
-  it('should update marker', inject([Store],(store) => {
+  it('should update marker', inject([Store], (store) => {
     spyOn(store, 'dispatch');
 
     component.onMarkerUpdate({});
 
-    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveRedaction({}))
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveRedaction({}));
   }));
 
-  it('should dispatch DeleteRedaction', inject([Store],(store) => {
+  it('should dispatch DeleteRedaction', inject([Store], (store) => {
     spyOn(store, 'dispatch');
 
     component.onMarkerDelete({});
 
-    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteRedaction({} as any))
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteRedaction({} as any));
   }));
 
-  it('should download redacted document', inject([Store],(store) => {
+  it('should download redacted document', inject([Store], (store) => {
     const anchor = {
       setAttribute: () => {}, click: () => {}, remove: () => {}, href: undefined, download: undefined
     } as any;
@@ -131,6 +131,6 @@ describe('RedactionComponent', () => {
     expect(URL.revokeObjectURL).toHaveBeenCalled();
     expect(anchor.click).toHaveBeenCalled();
     expect(anchor.remove).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.ResetRedactedDocument())
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.ResetRedactedDocument());
   }));
 });

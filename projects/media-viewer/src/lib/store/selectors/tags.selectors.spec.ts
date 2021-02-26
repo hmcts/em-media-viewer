@@ -32,7 +32,7 @@ const tags = [
     label: 'important',
     color: null
   }
-]
+];
 const anno = {
   createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
   createdByDetails: {
@@ -82,7 +82,7 @@ const anno = {
   ],
   type: 'highlight',
   positionTop: 673
-}
+};
 
 
 describe('Tags selectors', () => {

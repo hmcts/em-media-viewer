@@ -87,7 +87,7 @@ export function tagsReducer (
         return {
           ...obj,
           ...state.tagNameEnt[f]
-        }
+        };
       }, {});
 
       const annotations = Object.keys(filteredComments).map(key => state.annotations.filter(a => a.id === key)[0]);

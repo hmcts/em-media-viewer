@@ -15,7 +15,7 @@
 </mv-comment-set-header>
 <mv-participants-list></mv-participants-list>
 
-<div grabNDrag [dragX]="viewerContainer" [dragEnabled]="enableGrabNDrag"
+<div mvGrabNDrag [dragX]="viewerContainer" [dragEnabled]="enableGrabNDrag"
      class="pdfContainer"
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'pdfContainer': true, hidden: errorMessage, 'grabNDrag': enableGrabNDrag }">

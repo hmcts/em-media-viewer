@@ -8,6 +8,17 @@ import {RouterTestingModule} from '@angular/router/testing';
 import { ToolbarEventService } from '../../../toolbar/toolbar.module';
 
 describe('CommentsNavigateComponent', () => {
+
+  @Component({
+    selector: `mv-host-component`,
+    template: `<mv-comments-navigate [annotationList]="annotationList"></mv-comments-navigate>`
+  })
+  class TestHostComponent {
+    annotationList = [];
+
+    @ViewChild(CommentsNavigateComponent) commentsNavigateComponent;
+  }
+
   let hostComponent: TestHostComponent;
   let component: CommentsNavigateComponent;
   let fixture: ComponentFixture<TestHostComponent>;
@@ -81,13 +92,3 @@ describe('CommentsNavigateComponent', () => {
       expect(store.dispatch).toHaveBeenCalled();
   }));
 });
-
-@Component({
-  selector: `host-component`,
-  template: `<mv-comments-navigate [annotationList]="annotationList"></mv-comments-navigate>`
-})
-class TestHostComponent {
-  annotationList = [];
-
-  @ViewChild(CommentsNavigateComponent) commentsNavigateComponent;
-}

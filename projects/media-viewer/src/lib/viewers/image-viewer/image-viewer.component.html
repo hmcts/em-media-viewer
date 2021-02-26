@@ -2,7 +2,7 @@
                        [showCommentSummary]="toolbarButtons.showCommentSummary"
                        (showCommentSummaryDialog)="toggleCommentsSummary()">
 </mv-comment-set-header>
-<div grabNDrag [dragX]="imageContainer" [dragEnabled]="enableGrabNDrag"
+<div mvGrabNDrag [dragX]="imageContainer" [dragEnabled]="enableGrabNDrag"
      id="viewer-wrapper"
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'grabNDrag': enableGrabNDrag }"

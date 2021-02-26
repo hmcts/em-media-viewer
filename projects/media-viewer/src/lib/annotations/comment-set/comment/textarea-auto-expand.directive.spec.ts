@@ -32,7 +32,7 @@ describe('TextareaAutoExpandDirective', () => {
     component.selected = true;
     component._comment = {
       annotationId: '123',
-    } as any
+    } as any;
     component._editable = true;
     fixture.detectChanges();
     textareaEl = fixture.debugElement.query(By.css('textarea'));

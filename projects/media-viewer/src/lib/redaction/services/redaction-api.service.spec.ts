@@ -62,7 +62,7 @@ describe('RedactionApiService', () => {
 
   it('should apply redactions', fakeAsync((done) => {
     const blobResp = new Blob(['blob'], { type : 'application/json' });
-    const redactPaylod = { redactions: [redaction], documentId: 'document-id' }
+    const redactPaylod = { redactions: [redaction], documentId: 'document-id' };
     api.redact(redactPaylod).subscribe((response) => {
       expect(response.body).toEqual(blobResp);
     }, error => done(error));
