@@ -20,10 +20,13 @@
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'pdfContainer': true, hidden: errorMessage, 'grabNDrag': enableGrabNDrag }">
 
-  <div #viewerContainer
+  <div
+    #viewerContainer
+    id="viewerContainer"
     class="viewer-container"
+    (scroll)="scrollTwo.scrollTop = viewerContainer.scrollTop"
     [class.annotations]="enableAnnotations"
-    [class.show-comments-panel]="showCommentsPanel || showIcpParticipantsList">
+    [class.show-comments-panel]="(showCommentsPanel || showIcpParticipantsList) && !(toolbarEvents.redactionMode | async)">
 
     <div #pdfViewer
          class="pdfViewer"
@@ -31,7 +34,7 @@
          [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
     </div>
 
-    <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
+    <mv-redactions *ngIf="(toolbarEvents.redactionMode | async); else annotationTemplate"
                    [zoom]="zoom"
                    [rotate]="rotation"
     ></mv-redactions>
@@ -49,16 +52,18 @@
     </ng-template>
   </div>
 
-  <mv-comment-set #commentsPanel
-                  *ngIf="enableAnnotations && annotationSet"
-                  [annotationSet]="annotationSet"
-                  [zoom]="zoom"
-                  [rotate]="rotation"
-                  [height]="pdfViewer.offsetHeight"
-                  [pageHeights]="pageHeights">
-  </mv-comment-set>
+  <div #scrollTwo class="comments">
+    <mv-comment-set #commentsPanel
+                    *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
+                    [annotationSet]="annotationSet"
+                    [zoom]="zoom"
+                    [rotate]="rotation"
+                    [height]="pdfViewer.offsetHeight"
+                    [pageHeights]="pageHeights">
+    </mv-comment-set>
+  </div>
 
-  <div class="loadingMessage" [ngClass]="{ hidden: !loadingDocument }">
+  <div class="loadingMessage" *ngIf="loadingDocument">
     <h3 class="govuk-heading-m">Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}</h3>
   </div>
 </div>

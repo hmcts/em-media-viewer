@@ -26,10 +26,13 @@
       </mv-metadata-layer>
     </ng-template>
   </div>
-  <mv-comment-set *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
-                  [annotationSet]="annotationSet"
-                  [zoom]="zoom"
-                  [rotate]="rotation"
-                  [height]="imageHeight">
-  </mv-comment-set>
+
+  <div class="comments" [style.height.px]="imageHeight">
+    <mv-comment-set *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
+                    [annotationSet]="annotationSet"
+                    [zoom]="zoom"
+                    [rotate]="rotation"
+                    [height]="imageHeight">
+    </mv-comment-set>
+  </div>
 </div>

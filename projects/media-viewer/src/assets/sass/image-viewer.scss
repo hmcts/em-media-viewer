@@ -4,21 +4,30 @@ mv-image-viewer {
     width: 100%;
     overflow: auto;
     background-color: #dee0e2;
-  }
 
-  .image-container {
-    position: absolute;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
+    .image-container {
+      position: absolute;
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
 
-  .image-container.annotations {
-    width: 100%;
-  }
+      &.annotations {
+        width: 100%;
 
-  .image-container.annotations.show-comments-panel {
-    width: 75%;
+        &.show-comments-panel {
+          width: 75%;
+        }
+      }
+    }
+
+    .comments {
+      position: absolute;
+      overflow-y: hidden;
+      top: 0;
+      right: 0;
+      width: 24%;
+      height: 100%;
+    }
   }
 
   img {
@@ -67,4 +76,3 @@ mv-image-viewer {
   }
 
 }
-
