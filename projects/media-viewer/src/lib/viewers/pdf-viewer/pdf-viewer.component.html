@@ -15,18 +15,22 @@
 </mv-comment-set-header>
 <mv-participants-list></mv-participants-list>
 
-<div mvGrabNDrag [dragX]="viewerContainer" [dragEnabled]="enableGrabNDrag"
+<div
      class="pdfContainer"
      [ngStyle]="{ height: height }"
-     [ngClass]="{ 'pdfContainer': true, hidden: errorMessage, 'grabNDrag': enableGrabNDrag }">
+     [ngClass]="{ 'pdfContainer': true, hidden: errorMessage }">
 
   <div
     #viewerContainer
+    mvGrabNDrag
+    [dragX]="viewerContainer"
+    [dragEnabled]="enableGrabNDrag"
     id="viewerContainer"
     class="viewer-container"
     (scroll)="scrollTwo.scrollTop = viewerContainer.scrollTop"
     [class.annotations]="enableAnnotations"
-    [class.show-comments-panel]="(showCommentsPanel || showIcpParticipantsList) && !(toolbarEvents.redactionMode | async)">
+    [class.show-comments-panel]="(showCommentsPanel || showIcpParticipantsList) && !(toolbarEvents.redactionMode | async)"
+    [class.grabNDrag]="enableGrabNDrag">
 
     <div #pdfViewer
          class="pdfViewer"
