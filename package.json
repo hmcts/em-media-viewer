@@ -35,8 +35,7 @@
     "e2e": "yarn stub:annotations && ng e2e --webdriverUpdate=false",
     "e2e:cucumber": "yarn webdriver:update && yarn e2e -- --protractor-config e2e/cucumber.conf.js",
     "e2e:ci": "yarn webdriver:update && yarn stub:annotations && ng e2e --webdriverUpdate=false --protractor-config 'e2e/ci.protractor.conf.js'",
-    "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner",
-    "sonar-scan": "sonar-scanner -Dsonar.projectKey='em-showcase' -Dsonar.sources=projects/api -Dsonar.tests=test -Dsonar.exclusions=test/**,node_modules/**,src/**,projects/** "
+    "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner"
   },
   "dependencies": {
     "@angular/animations": "^7.2.15",
