@@ -1,6 +1,5 @@
 import {
   AfterContentInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
