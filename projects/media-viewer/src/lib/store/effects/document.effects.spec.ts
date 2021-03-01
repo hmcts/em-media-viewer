@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
-import * as documentActions from '../actions/document.action';
+import * as documentActions from '../actions/document.actions';
 import { DocumentEffects } from './document.effects';
 import { DocumentConversionApiService } from '../../viewers/convertible-content-viewer/document-conversion-api.service';
 import { cold, hot } from 'jasmine-marbles';

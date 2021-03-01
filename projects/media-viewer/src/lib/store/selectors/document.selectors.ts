@@ -5,7 +5,7 @@ import * as fromDocument from '../reducers/document.reducer';
 
 export const getDocumentState = createSelector(
   fromFeature.getMVState,
-  (state: fromFeature.State) =>  state.document
+  (state: fromFeature.State) => state.document
 );
 
 export const getPages = createSelector(
@@ -47,6 +47,3 @@ export const rotationLoaded = createSelector(
   getDocumentState,
   fromDocument.rotationLoaded
 );
-
-
-

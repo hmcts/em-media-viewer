@@ -1,6 +1,6 @@
 import * as fromDocument from './document.reducer';
-import * as fromActions from '../actions/document.action';
-import { ClearConvertDocUrl, ConvertFailure, ConvertSuccess } from '../actions/document.action';
+import * as fromActions from '../actions/document.actions';
+import { ClearConvertDocUrl, ConvertFailure, ConvertSuccess } from '../actions/document.actions';
 import { DocumentState } from './document.reducer';
 
 describe('DocumentReducer', () => {

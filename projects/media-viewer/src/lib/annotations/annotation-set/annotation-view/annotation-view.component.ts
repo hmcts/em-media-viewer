@@ -5,9 +5,10 @@ import { Rectangle } from './rectangle/rectangle.model';
 import moment from 'moment-timezone';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
-import * as fromActions from '../../../store/actions/annotations.action';
+import * as fromActions from '../../../store/actions/annotation.actions';
 import {SelectionAnnotation} from '../../models/event-select.model';
 import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
+import { Comment } from '../../comment-set/comment/comment.model';
 
 @Component({
   selector: 'mv-annotation',
@@ -22,7 +23,7 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   selected: boolean;
   @Input() zoom: number;
   @Input() rotate: number;
-  @Input() set selectedAnnoId(selectedId) {
+  @Input() set selectedAnnoId(selectedId: { annotationId: string }) {
     if (selectedId) {
       const id = this.anno.id || this.anno.redactionId; // todo make it unique
       this.selected = selectedId.annotationId ? (selectedId.annotationId === id) : false;
@@ -38,7 +39,8 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
 
   constructor(
     private readonly toolbarEvents: ToolbarEventService,
-    private store: Store<fromStore.AnnotationSetState>) {}
+    private store: Store<fromStore.AnnotationSetState>
+  ) {}
 
   public onSelect() {
     const annotationId = this.anno.id || this.anno.redactionId;
@@ -58,7 +60,7 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
 
   public addOrEditComment() {
     if (this.anno.comments.length === 0) {
-      const comment = {
+      const comment: Comment = {
         annotationId: this.anno.id,
         content: '',
         createdBy: this.anno.createdBy,
@@ -68,7 +70,12 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
         lastModifiedBy: '',
         lastModifiedByDetails: undefined,
         lastModifiedDate: '',
-        tags: []
+        tags: [],
+        page: null,
+        pages: {},
+        pageHeight: null,
+        selected: false,
+        editable: false
       };
       this.store.dispatch(new fromActions.AddOrEditComment(comment));
 

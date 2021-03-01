@@ -5,11 +5,9 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AnnotationApiService } from '../../annotation-api.service';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { CommentSetRenderService } from '../comment-set-render.service';
 import { annotationSet } from '../../../../assets/annotation-set';
-import {TagsServices} from '../../services/tags/tags.services';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../../store/reducers/reducers';
 
@@ -17,8 +15,6 @@ describe('CommentService', () => {
   let component: CommentSetComponent;
   let fixture: ComponentFixture<CommentSetComponent>;
   let commentService: CommentService;
-
-  const api = new AnnotationApiService({}  as any);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -30,11 +26,9 @@ describe('CommentService', () => {
         StoreModule.forFeature('media-viewer', reducers)
       ],
       providers: [
-        { provide: AnnotationApiService, useValue: api },
         ToolbarEventService,
         CommentService,
         CommentSetRenderService,
-        TagsServices
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

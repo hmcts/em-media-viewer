@@ -3,7 +3,7 @@ import { Rectangle } from '../../annotation-set/annotation-view/rectangle/rectan
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
-import * as fromActions from '../../../store/actions/annotations.action';
+import * as fromActions from '../../../store/actions/annotation.actions';
 import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
 
 @Component({

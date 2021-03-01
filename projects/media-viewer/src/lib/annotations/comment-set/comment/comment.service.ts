@@ -4,6 +4,7 @@ import { CommentSetComponent } from '../comment-set.component';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import { CommentComponent } from './comment.component';
 
+// TODO: replace by NgRx
 @Injectable()
 export class CommentService {
 

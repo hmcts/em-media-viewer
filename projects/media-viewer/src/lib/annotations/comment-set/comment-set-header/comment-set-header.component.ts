@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsul
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
-import * as fromTagSelectors from '../../../store/selectors/tags.selectors';
-import * as fromAnnoSelector from '../../../store/selectors/annotations.selectors';
+import * as fromTagSelectors from '../../../store/selectors/tag.selectors';
+import * as fromAnnoSelector from '../../../store/selectors/annotation.selectors';
 import { combineLatest, Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 

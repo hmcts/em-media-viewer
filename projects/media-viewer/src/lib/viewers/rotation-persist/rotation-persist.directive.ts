@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
-import * as fromDocumentActions from '../../store/actions/document.action';
+import * as fromDocumentActions from '../../store/actions/document.actions';
 import { select, Store } from '@ngrx/store';
 import * as fromDocuments from '../../store/selectors/document.selectors';
 import { filter, take } from 'rxjs/operators';

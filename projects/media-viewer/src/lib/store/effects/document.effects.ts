@@ -5,7 +5,7 @@ import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { DocumentConversionApiService } from '../../viewers/convertible-content-viewer/document-conversion-api.service';
 import { RotationApiService } from '../../viewers/rotation-persist/rotation-api.service';
 import { of } from 'rxjs';
-import * as documentActions from '../actions/document.action';
+import * as documentActions from '../actions/document.actions';
 
 @Injectable()
 export class DocumentEffects {

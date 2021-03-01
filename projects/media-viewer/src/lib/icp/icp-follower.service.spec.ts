@@ -5,7 +5,7 @@ import { IcpUpdateService } from './icp-update.service';
 import { IcpFollowerService } from './icp-follower.service';
 import { ViewerEventService } from '../viewers/viewer-event.service';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
-import { PdfPositionUpdate } from '../store/actions/document.action';
+import { PdfPositionUpdate } from '../store/actions/document.actions';
 
 describe('Icp Follower Service', () => {
 

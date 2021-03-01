@@ -1,4 +1,4 @@
-import { ApiPersisted } from '../../api-persisted.model';
+import { ApiPersisted } from '../../models/api-persisted.model';
 import { TagsModel } from '../../models/tags.model';
 
 export interface Comment extends ApiPersisted {

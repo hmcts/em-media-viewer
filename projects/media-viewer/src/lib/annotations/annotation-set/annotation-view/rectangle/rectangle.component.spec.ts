@@ -4,7 +4,7 @@ import { RectangleComponent } from './rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { MutableDivModule } from 'mutable-div';
 import { By } from '@angular/platform-browser';
-import { HighlightCreateService } from '../../annotation-create/highlight-create.service';
+import { HighlightCreateService } from '../../annotation-create/highlight-create/highlight-create.service';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../../../store/reducers/reducers';
 

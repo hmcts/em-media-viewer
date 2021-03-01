@@ -2,7 +2,7 @@ import { select, Store, StoreModule } from '@ngrx/store';
 import { reducers, State } from '../reducers/reducers';
 import { TestBed } from '@angular/core/testing';
 import * as fromSelectors from './icp.selectors';
-import * as fromActions from '../actions/icp.action';
+import * as fromActions from '../actions/icp.actions';
 
 const icpState = {
   session : {

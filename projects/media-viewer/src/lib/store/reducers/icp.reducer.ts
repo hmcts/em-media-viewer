@@ -1,4 +1,4 @@
-import * as fromIcpActions from '../actions/icp.action';
+import * as fromIcpActions from '../actions/icp.actions';
 import { IcpSession, IcpState } from '../../icp/icp.interfaces';
 
 export const initialIcpSessionState: IcpState = {

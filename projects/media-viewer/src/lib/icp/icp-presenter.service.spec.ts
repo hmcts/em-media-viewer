@@ -3,8 +3,8 @@ import { IcpPresenterService } from './icp-presenter.service';
 import { IcpUpdateService } from './icp-update.service';
 import { Store, StoreModule } from '@ngrx/store';
 import { PdfPosition, reducers } from '../store/reducers/reducers';
-import { IcpSocketSessionJoined } from '../store/actions/icp.action';
-import { PdfPositionUpdate } from '../store/actions/document.action';
+import { IcpSocketSessionJoined } from '../store/actions/icp.actions';
+import { PdfPositionUpdate } from '../store/actions/document.actions';
 import { IcpParticipant, IcpSession } from './icp.interfaces';
 import { of } from 'rxjs';
 
@@ -124,4 +124,3 @@ describe('Icp Presenter Service', () => {
     expect(updateService.updatePresenter).toHaveBeenCalledWith(participant);
   });
 });
-

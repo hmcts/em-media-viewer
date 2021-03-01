@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 import { RotationPersistDirective } from './rotation-persist.directive';
-import * as fromDocumentActions from '../../store/actions/document.action';
+import * as fromDocumentActions from '../../store/actions/document.actions';
 import { of, Subject } from 'rxjs';
 
 describe('RotationPersistDirective', () => {

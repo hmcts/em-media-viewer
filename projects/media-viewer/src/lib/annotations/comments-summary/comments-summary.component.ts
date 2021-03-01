@@ -1,15 +1,14 @@
 import {Component, Input, ViewChild, ElementRef, OnInit, OnDestroy} from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import {select, Store} from '@ngrx/store';
+
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
-import {ViewerEventService} from '../../viewers/viewer-event.service';
-import {select, Store} from '@ngrx/store';
-import * as fromSelectors from '../../store/selectors/annotations.selectors';
+import * as fromSelectors from '../../store/selectors/annotation.selectors';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromAnnoActions from '../../store/actions/annotations.action';
-import {combineLatest, Observable, Subscription} from 'rxjs';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-
-import * as fromTagSelectors from '../../store/selectors/tags.selectors';
+import * as fromAnnoActions from '../../store/actions/annotation.actions';
+import * as fromTagSelectors from '../../store/selectors/tag.selectors';
 
 @Component({
   selector: 'mv-comments-summary',
@@ -32,7 +31,6 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
     private store: Store<fromStore.AnnotationSetState>,
     private readonly printService: PrintService,
     private readonly toolbarEvents: ToolbarEventService,
-    private readonly viewerEvents: ViewerEventService,
     private fb: FormBuilder
   ) {}
 
@@ -78,7 +76,7 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
   }
 
   onFilter() {
-    const {value} = this.filtersFg;
+    const { value } = this.filtersFg;
     const hasDateFrom =  (value.dateRangeFrom.year && value.dateRangeFrom.month && value.dateRangeFrom.day);
     const hasDateTo = (value.dateRangeTo.year && value.dateRangeTo.month && value.dateRangeTo.day);
     const dateRangeFrom = hasDateFrom ?
