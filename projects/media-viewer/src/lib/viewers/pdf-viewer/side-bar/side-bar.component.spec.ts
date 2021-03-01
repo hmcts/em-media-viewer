@@ -1,14 +1,15 @@
+import { SimpleChange, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { Store, StoreModule } from '@ngrx/store';
 
 import { SideBarComponent } from './side-bar.component';
 import { OutlineItemComponent } from './outline-item/outline-item.component';
-import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../../store/reducers/reducers';
 import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { PdfPositionUpdate } from '../../../store/actions/document.action';
+import { PdfPositionUpdate } from '../../../store/actions/document.actions';
 import { ViewerEventService } from '../../viewer-event.service';
-import * as fromDocument from '../../../store/actions/document.action';
+import * as fromDocument from '../../../store/actions/document.actions';
+import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmark.actions';
 
 describe('SideBarComponent', () => {
   let component: SideBarComponent;
@@ -65,7 +66,7 @@ describe('SideBarComponent', () => {
     inject([Store], fakeAsync((store) => {
 
       store.dispatch(new fromDocument.AddPages([{div: {}, scale: 1, rotation: 0, id: '1', viewportScale: 1.333333}]));
-      store.dispatch(new PdfPositionUpdate({ pageNumber: 1, top: 50, left: 30, rotation: 0 }));
+      store.dispatch(new PdfPositionUpdate({ pageNumber: 1, top: 50, left: 30, rotation: 0, scale: 1 }));
       spyOn(store, 'dispatch');
 
       component.onAddBookmarkClick();
@@ -74,5 +75,18 @@ describe('SideBarComponent', () => {
       expect(store.dispatch).toHaveBeenCalled();
       expect(component.selectedView).toBe('bookmarks');
     }))
+  );
+
+  it('should dispatch LoadBookmarks action on change',
+    inject([Store], (store: Store<{}>) => {
+      const dispatchSpy = spyOn(store, 'dispatch');
+      component.url = 'prev-url';
+
+      component.ngOnChanges({
+        url: new SimpleChange('prev-url', 'new-url', false)
+      });
+
+      expect(dispatchSpy).toHaveBeenCalledWith(new LoadBookmarks());
+    })
   );
 });

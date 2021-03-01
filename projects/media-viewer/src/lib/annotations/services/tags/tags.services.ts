@@ -10,16 +10,17 @@ export class TagsServices {
 
   constructor(private http: HttpClient) {}
 
-  public getAllTags(createdBy): Observable<TagsModel[]> {
+  public getAllTags(createdBy: string): Observable<TagsModel[]> {
     const url = `/em-anno/tags/${createdBy}`;
     return this.http.get<TagsModel[]>(url);
   }
 
-  getNewTags(annoid): TagsModel[] {
+  // @TODO: Move everything below this to NgRx store
+  getNewTags(annoid: string): TagsModel[] {
     return this.tagItems ? this.tagItems[annoid] : [];
   }
 
-  updateTagItems(items, annoId) {
+  updateTagItems(items: Array<TagsModel>, annoId: string) {
     const snakeCased = items.map(item => {
       return {
         ...item,
@@ -35,7 +36,7 @@ export class TagsServices {
 
   private snakeCase = string => {
     // transform string_to_snake_case
-    return string.replace(/ +/g, " ")  // find space
+    return string.replace(/ +/g, ' ')  // find space
       .split(/ |\B(?=[A-Z])/) // split it into array
       .map(word => word.toLowerCase()) // transform to lover case
       .join('_'); // trun array into sting using _

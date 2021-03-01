@@ -2,7 +2,7 @@ import { select, Store, StoreModule } from '@ngrx/store';
 import { reducers, State } from '../reducers/reducers';
 import { TestBed } from '@angular/core/testing';
 import * as fromSelectors from './icp.selectors';
-import * as fromActions from '../actions/icp.action';
+import * as fromActions from '../actions/icp.actions';
 
 const icpState = {
   session : {
@@ -51,7 +51,7 @@ describe('Icp selectors', () => {
       };
       store.dispatch(new fromActions.IcpSocketSessionJoined(joinPayload));
 
-      const participantPayload = { 'participantId': 'name' }
+      const participantPayload = { 'participantId': 'name' };
       store.dispatch(new fromActions.IcpParticipantListUpdated(participantPayload));
 
       expect(result).toEqual(icpState);

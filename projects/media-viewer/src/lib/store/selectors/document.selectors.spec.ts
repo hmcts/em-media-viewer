@@ -3,7 +3,7 @@ import { select, Store, StoreModule } from '@ngrx/store';
 import { reducers, State } from '../reducers/reducers';
 
 import * as fromSelectors from './document.selectors';
-import * as fromActions from '../actions/document.action';
+import * as fromActions from '../actions/document.actions';
 
 describe('Document selectors', () => {
   let store: Store<State>;

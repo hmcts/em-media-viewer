@@ -27,8 +27,8 @@ import { effects } from './store/effects/index';
 import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
 import { RedactionApiService } from './redaction/services/redaction-api.service';
 import { MutableDivModule } from 'mutable-div';
-import { ConvertibleContentViewerComponent } from "./viewers/convertible-content-viewer/convertible-content-viewer.component";
-import { DocumentConversionApiService } from "./viewers/convertible-content-viewer/document-conversion-api.service";
+import { ConvertibleContentViewerComponent } from './viewers/convertible-content-viewer/convertible-content-viewer.component';
+import { DocumentConversionApiService } from './viewers/convertible-content-viewer/document-conversion-api.service';
 import { IcpPresenterService } from './icp/icp-presenter.service';
 import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
@@ -37,7 +37,7 @@ import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.com
 import { RotationApiService } from './viewers/rotation-persist/rotation-api.service';
 import { RotationPersistDirective } from './viewers/rotation-persist/rotation-persist.directive';
 import { ParticipantsListComponent } from './icp/participants-list/participants-list.component';
-import { HighlightCreateDirective } from './annotations/annotation-set/annotation-create/highlight-create.directive';
+import { HighlightCreateDirective } from './annotations/annotation-set/annotation-create/highlight-create/highlight-create.directive';
 
 @NgModule({
   imports: [

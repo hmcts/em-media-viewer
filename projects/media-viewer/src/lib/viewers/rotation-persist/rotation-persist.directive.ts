@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
-import * as fromDocumentActions from '../../store/actions/document.action';
+import * as fromDocumentActions from '../../store/actions/document.actions';
 import { select, Store } from '@ngrx/store';
 import * as fromDocuments from '../../store/selectors/document.selectors';
 import { filter, take } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 
 
 @Directive({
-  selector: '[rotationPersist]'
+  selector: '[mvRotationPersist]'
 })
 export class RotationPersistDirective implements OnInit, OnDestroy {
 
@@ -53,11 +53,11 @@ export class RotationPersistDirective implements OnInit, OnDestroy {
         if (this.savedRotation) {
           this.toolbarEvents.rotateSubject.next(this.savedRotation);
         }
-      })
+      });
   }
 
   private onRotate(rotation: number) {
-    this.rotation = (this.rotation + rotation) %360;
+    this.rotation = (this.rotation + rotation) % 360;
     this.toolbarButtons.showSaveRotationButton = this.savedRotation !== this.rotation;
   }
 
@@ -65,7 +65,7 @@ export class RotationPersistDirective implements OnInit, OnDestroy {
     const payload: Rotation = {
       documentId: this.documentId,
       rotationAngle: this.rotation
-    }
+    };
     this.store.dispatch(new fromDocumentActions.SaveRotation(payload));
   }
 }

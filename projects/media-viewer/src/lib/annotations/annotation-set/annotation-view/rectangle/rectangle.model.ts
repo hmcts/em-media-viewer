@@ -1,4 +1,4 @@
-import { ApiPersisted } from '../../../api-persisted.model';
+import { ApiPersisted } from '../../../models/api-persisted.model';
 
 export interface Rectangle extends ApiPersisted {
   annotationId: string;

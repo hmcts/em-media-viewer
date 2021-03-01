@@ -5,9 +5,9 @@ import {
   LoadBookmarksSuccess,
   DeleteBookmarkSuccess,
   UpdateBookmarkSuccess, MoveBookmarkSuccess
-} from '../actions/bookmarks.action';
+} from '../actions/bookmark.actions';
 import * as fromBookmarks from './bookmarks.reducer';
-import * as fromDocActions from '../actions/document.action';
+import * as fromDocActions from '../actions/document.actions';
 import {TestBed} from '@angular/core/testing';
 import {Store, StoreModule} from '@ngrx/store';
 import {reducers, State} from './reducers';

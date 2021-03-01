@@ -8,22 +8,21 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+
 import { AnnotationSet } from '../annotation-set/annotation-set.model';
 import { Annotation } from '../annotation-set/annotation-view/annotation.model';
-import { AnnotationApiService } from '../annotation-api.service';
 import { Comment } from './comment/comment.model';
 import { CommentComponent } from './comment/comment.component';
-import {Observable, Subscription} from 'rxjs';
-import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromActions from '../../store/actions/annotations.action';
-import * as fromSelectors from '../../store/selectors/annotations.selectors';
-import {select, Store} from '@ngrx/store';
-import {TagsModel} from '../models/tags.model';
-import {ToolbarEventService} from '../../toolbar/toolbar-event.service';
-import { Rectangle } from "../annotation-set/annotation-view/rectangle/rectangle.model";
+import * as fromActions from '../../store/actions/annotation.actions';
+import * as fromSelectors from '../../store/selectors/annotation.selectors';
+import { TagsModel } from '../models/tags.model';
+import { SelectionAnnotation } from '../models/event-select.model';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-comment-set',
@@ -38,7 +37,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @Input() pageHeights = [];
 
   comments: Comment[];
-  tags: TagsModel[]
+  tags: TagsModel[];
   private subscriptions: Subscription[] = [];
   public comments$: Observable<Annotation[]>;
   public annoEntities$: Observable<{ [id: string]: Annotation }>;
@@ -49,8 +48,6 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   showCommentsPanel: boolean;
 
   constructor(private store: Store<fromStore.AnnotationSetState>,
-              private readonly viewerEvents: ViewerEventService,
-              private readonly api: AnnotationApiService,
               private readonly commentService: CommentService,
               private readonly renderService: CommentSetRenderService,
               private readonly toolbarEvents: ToolbarEventService) {
@@ -80,7 +77,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  public onSelect(annotationId) {
+  public onSelect(annotationId: SelectionAnnotation) {
     this.store.dispatch(new fromActions.SelectedAnnotation(annotationId));
   }
 
@@ -131,6 +128,4 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   allCommentsSaved() {
     this.commentService.allCommentsSaved();
   }
-
-
 }

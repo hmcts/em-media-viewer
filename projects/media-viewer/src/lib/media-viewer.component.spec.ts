@@ -9,7 +9,6 @@ import {
   defaultPdfOptions,
   defaultUnsupportedOptions
 } from './toolbar/toolbar-button-visibility.service';
-import { AnnotationApiService } from './annotations/annotation-api.service';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import { By } from '@angular/platform-browser';
 import {reducers} from './store/reducers/reducers';
@@ -20,7 +19,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
   let fixture: ComponentFixture<MediaViewerComponent>;
-  let api: AnnotationApiService;
   const commentService = {
     getUnsavedChanges: () => new Subject(),
     resetCommentSet: () => {}
@@ -48,7 +46,6 @@ describe('MediaViewerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MediaViewerComponent);
     component = fixture.componentInstance;
-    api = TestBed.get(AnnotationApiService);
     component.contentType = 'pdf';
     component.ngAfterContentInit();
   });
@@ -61,7 +58,7 @@ describe('MediaViewerComponent', () => {
     inject([ToolbarButtonVisibilityService], (toolbarButtons) => {
       spyOn(toolbarButtons, 'setup').and.callThrough();
       component.contentType = 'pdf';
-      component.url = 'url'
+      component.url = 'url';
 
       fixture.detectChanges();
 
@@ -134,18 +131,6 @@ describe('MediaViewerComponent', () => {
     expect(component.annotationSet$).toBe(null);
   });
 
-  it('should set annotationApiUrl', () => {
-    component.contentType = 'pdf';
-    const ANNOTATION_API_URL = 'annotation-api-url';
-    component.annotationApiUrl = ANNOTATION_API_URL;
-
-    component.ngOnChanges({
-      annotationApiUrl: new SimpleChange(true, false, false)
-    });
-
-    expect(api.annotationApiUrl).toBe(ANNOTATION_API_URL);
-  });
-
   it('onMediaLoad should emit a ResponseType', () => {
     spyOn(component.mediaLoadStatus, 'emit');
     component.url = 'document-url';
@@ -161,7 +146,7 @@ describe('MediaViewerComponent', () => {
 
     component.setToolbarButtons();
     expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultPdfOptions, showHighlightButton: true, showDrawButton: true });
-  })
+  });
 
   it('should set the default toolbar behaviour for pdf viewer', () => {
     const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'setup');

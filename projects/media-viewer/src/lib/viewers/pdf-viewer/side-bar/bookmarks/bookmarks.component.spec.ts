@@ -1,13 +1,33 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { BookmarksComponent } from './bookmarks.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Store, StoreModule } from '@ngrx/store';
-import * as fromActions from '../../../../store/actions/bookmarks.action';
-import { reducers } from '../../../../store/reducers/reducers';
+import { Store } from '@ngrx/store';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+
+import { BookmarksComponent } from './bookmarks.component';
+import { Bookmark } from '../../../../store/models/bookmarks.interface';
+import * as fromActions from '../../../../store/actions/bookmark.actions';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
   let fixture: ComponentFixture<BookmarksComponent>;
+  let store: MockStore<any>;
+  const initialState = {
+    'media-viewer': {
+      bookmarks: {
+        editableBookmark: '123'
+      },
+      document: {
+        pages: {
+          '1': {
+            viewportScale: 1,
+            styles: {
+              height: 300
+            }
+          }
+        }
+      }
+    }
+  };
 
   const bookmarks = [
     { id: 1, name: 'root1', next: 4 },
@@ -22,18 +42,17 @@ describe('BookmarksComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ BookmarksComponent ],
+      providers: [
+        provideMockStore({ initialState })
+      ],
       imports: [
-        StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({})
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
-    .compileComponents();
-  });
+    });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(BookmarksComponent);
     component = fixture.componentInstance;
+    store = TestBed.get(Store);
     fixture.detectChanges();
   });
 
@@ -41,51 +60,136 @@ describe('BookmarksComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should delete bookmark',
-    inject([Store],(store) => {
-      spyOn(store, 'dispatch');
-      const bookmarkNode = {
-        parent: { children: [{}]},
-        index: 0,
-        data: { id: 'bookmarkId', children: [] }
-      } as any;
-      component.deleteBookmark(bookmarkNode);
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
-        deleted: ['bookmarkId'], updated: undefined
-      }));
-    })
-  );
+  it('should delete bookmark', () => {
+    spyOn(store, 'dispatch');
+    const bookmarkNode = {
+      parent: { children: [{}]},
+      index: 0,
+      data: { id: 'bookmarkId', children: [] }
+    } as any;
+    component.deleteBookmark(bookmarkNode);
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
+      deleted: ['bookmarkId'], updated: undefined
+    }));
+  });
 
-  it('should update bookmark',
-    inject([Store],(store) => {
-      spyOn(store, 'dispatch');
-      const mockBookmark = {name: 'Bookmark name', id: 'id'} as any;
-      const newName = 'Bookmark new name';
-      component.updateBookmark(mockBookmark, newName);
-      mockBookmark.name = newName;
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.UpdateBookmark(mockBookmark));
-    })
-  );
+  it('should update bookmark', () => {
+    spyOn(store, 'dispatch');
+    const mockBookmark = {name: 'Bookmark name', id: 'id'} as any;
+    const newName = 'Bookmark new name';
+    component.updateBookmark(mockBookmark, newName);
+    mockBookmark.name = newName;
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.UpdateBookmark(mockBookmark));
+  });
 
-  it('should move bookmarks',
-    inject([Store],(store) => {
-      spyOn(store, 'dispatch');
-      const node = {
-        documentId: "86dc297a-0153-44c0-b996-f563c1ff112a",
-        id: "id1",
-        index: 0,
-        name: "new bookmark",
-        parent: undefined,
-        previous: undefined
-    }
-      const from = { index: 0, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
-      const to = { index: 1, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
-      const movedBookmarks = [{ ...node, previous: 'id2' }, { id: 'id2', index: 1, previous: undefined } as any];
+  it('should move bookmarks', () => {
+    spyOn(store, 'dispatch');
+    const node = {
+      documentId: '86dc297a-0153-44c0-b996-f563c1ff112a',
+      id: 'id1',
+      index: 0,
+      name: 'new bookmark',
+      parent: undefined,
+      previous: undefined
+    };
 
-      component.onBookmarkMove({ node, to, from });
+    const from = { index: 0, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
+    const to = { index: 1, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
+    const movedBookmarks = [{ ...node, previous: 'id2' }, { id: 'id2', index: 1, previous: undefined } as any];
 
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.MoveBookmark(movedBookmarks));
-    })
-  );
+    component.onBookmarkMove({ node, to, from });
+
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.MoveBookmark(movedBookmarks));
+  });
+
+  it('should set editableBookmark', () => {
+    const mockId = '123';
+    component.editBookmark(mockId);
+    expect(component.editableBookmark).toEqual(mockId);
+  });
+
+  describe('goToBookmark', () => {
+    const mockBookmark = {
+      pageNumber: 0,
+      yCoordinate: 100
+    };
+
+    it('should emit goToDestination event no rotation', () => {
+      component.zoom = 1;
+      fixture.detectChanges();
+
+      spyOn(component.goToDestination, 'emit').and.callThrough();
+      component.goToBookmark(mockBookmark as Bookmark);
+
+      expect(component.goToDestination.emit).toHaveBeenCalledWith([
+        mockBookmark.pageNumber,
+        { 'name': 'XYZ' },
+        0,
+        200
+      ]);
+    });
+
+    it('should emit goToDestination event no ratation, zoom = 2', () => {
+      component.zoom = 2;
+      fixture.detectChanges();
+
+      spyOn(component.goToDestination, 'emit').and.callThrough();
+      component.goToBookmark(mockBookmark as Bookmark);
+
+      expect(component.goToDestination.emit).toHaveBeenCalledWith([
+        mockBookmark.pageNumber,
+        { 'name': 'XYZ' },
+        0,
+        100
+      ]);
+    });
+
+    it('should emit goToDestination event with ratation = 90deg, zoom = 2', () => {
+      component.zoom = 2;
+      component.rotate = 90;
+      fixture.detectChanges();
+
+      spyOn(component.goToDestination, 'emit').and.callThrough();
+      component.goToBookmark(mockBookmark as Bookmark);
+
+      expect(component.goToDestination.emit).toHaveBeenCalledWith([
+        mockBookmark.pageNumber,
+        { 'name': 'XYZ' },
+        -100,
+        0
+      ]);
+    });
+
+    it('should emit goToDestination event with ratation = 180deg, no zoom', () => {
+      component.zoom = 1;
+      component.rotate = 180;
+      fixture.detectChanges();
+
+      spyOn(component.goToDestination, 'emit').and.callThrough();
+      component.goToBookmark(mockBookmark as Bookmark);
+
+      expect(component.goToDestination.emit).toHaveBeenCalledWith([
+        mockBookmark.pageNumber,
+        { 'name': 'XYZ' },
+        0,
+        176
+      ]);
+    });
+
+    it('should emit goToDestination event with ratation = 270deg, zoom = 3', () => {
+      component.zoom = 3;
+      component.rotate = 270;
+      fixture.detectChanges();
+
+      spyOn(component.goToDestination, 'emit').and.callThrough();
+      component.goToBookmark(mockBookmark as Bookmark);
+
+      expect(component.goToDestination.emit).toHaveBeenCalledWith([
+        mockBookmark.pageNumber,
+        { 'name': 'XYZ' },
+        0,
+        0
+      ]);
+    });
+  });
 });
-

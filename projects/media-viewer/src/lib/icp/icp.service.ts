@@ -7,7 +7,7 @@ import { IcpUpdateService } from './icp-update.service';
 import { IcpPresenterService } from './icp-presenter.service';
 import { IcpFollowerService } from './icp-follower.service';
 import { select, Store } from '@ngrx/store';
-import * as fromIcpActions from '../store/actions/icp.action';
+import * as fromIcpActions from '../store/actions/icp.actions';
 import * as fromIcpSelectors from '../store/selectors/icp.selectors';
 import { filter, take } from 'rxjs/operators';
 
@@ -52,14 +52,16 @@ export class IcpService implements OnDestroy  {
     this.sessionSubscription = this.toolbarEvents.icp.becomingPresenter.subscribe(() => this.becomePresenter());
     this.sessionSubscription.add(this.toolbarEvents.icp.stoppingPresenting.subscribe(() => this.stopPresenting()));
     this.sessionSubscription.add(this.toolbarEvents.icp.sessionExitConfirmed.subscribe(() => this.leavePresentation()));
-    this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => this.presenter = presenter ))
-    this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.getClient)).subscribe(client => this.client = client))
+    this.sessionSubscription.add(
+      this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => this.presenter = presenter )
+    );
+    this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.getClient)).subscribe(client => this.client = client));
     this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.isPresenter)).subscribe(isPresenter => {
         this.isPresenter = isPresenter;
         this.presenterSubscriptions.update(isPresenter);
         this.followerSubscriptions.update(!isPresenter);
     }));
-    this.sessionSubscription.add(this.socketService.clientDisconnected().subscribe(cli => this.clientDisconnected(cli)))
+    this.sessionSubscription.add(this.socketService.clientDisconnected().subscribe(cli => this.clientDisconnected(cli)));
     this.sessionSubscription.add(this.socketService.presenterUpdated().subscribe(pres => {
         this.store.dispatch(new fromIcpActions.IcpPresenterUpdated(pres));
     }));

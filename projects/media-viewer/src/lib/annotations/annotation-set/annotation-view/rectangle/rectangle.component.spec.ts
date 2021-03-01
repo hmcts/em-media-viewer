@@ -4,7 +4,7 @@ import { RectangleComponent } from './rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { MutableDivModule } from 'mutable-div';
 import { By } from '@angular/platform-browser';
-import { HighlightCreateService } from '../../annotation-create/highlight-create.service';
+import { HighlightCreateService } from '../../annotation-create/highlight-create/highlight-create.service';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../../../store/reducers/reducers';
 
@@ -50,7 +50,7 @@ describe('RectangleComponent', () => {
         StoreModule.forRoot({})
       ],
       providers: [HighlightCreateService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA,]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, ]
     })
     .compileComponents();
   });
@@ -77,7 +77,7 @@ describe('RectangleComponent', () => {
   });
 
   it('should set dimentions on annoRect input with 0.5 zoom', () => {
-    component.zoom = 0.5
+    component.zoom = 0.5;
     component.annoRect = mockRectangle;
 
     expect(component.height).toBe(50);
@@ -87,7 +87,7 @@ describe('RectangleComponent', () => {
   });
 
   it('should maitain dimensions when rotation is zero', () => {
-    component.zoom = 0.5
+    component.zoom = 0.5;
     component.annoRect = mockRectangle;
     component.adjustForRotation(0);
 
@@ -98,7 +98,7 @@ describe('RectangleComponent', () => {
   });
 
   it('should adjust dimensions when rotation is 90deg', () => {
-    component.zoom = 0.5
+    component.zoom = 0.5;
     component.annoRect = mockRectangle;
     component.adjustForRotation(90);
 
@@ -109,7 +109,7 @@ describe('RectangleComponent', () => {
   });
 
   it('should adjust dimensions when rotation is 180deg', () => {
-    component.zoom = 0.5
+    component.zoom = 0.5;
     component.annoRect = mockRectangle;
     component.adjustForRotation(180);
 
@@ -120,7 +120,7 @@ describe('RectangleComponent', () => {
   });
 
   it('should adjust dimensions when rotation is 270deg', () => {
-    component.zoom = 0.5
+    component.zoom = 0.5;
     component.annoRect = mockRectangle;
     component.adjustForRotation(270);
 
