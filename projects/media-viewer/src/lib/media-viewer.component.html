@@ -37,7 +37,7 @@
                           [originalUrl]="url"
                           [downloadFileName]="downloadFileName"
                           [height]="height"
-                          rotationPersist>
+                          mvRotationPersist>
     </mv-conversion-viewer>
     <mv-pdf-viewer *ngIf="contentType === 'pdf'"
                    (mediaLoadStatus)="onMediaLoad($event)"
@@ -51,7 +51,7 @@
                    [downloadFileName]="downloadFileName"
                    [height]="height"
                    [caseId]="caseId"
-                   rotationPersist>
+                   mvRotationPersist>
     </mv-pdf-viewer>
     <mv-image-viewer *ngIf="contentType === 'image'"
                      (mediaLoadStatus)="onMediaLoad($event)"
@@ -61,7 +61,7 @@
                      [annotationSet]="enableAnnotations ? (annotationSet$ | async) : null"
                      [downloadFileName]="downloadFileName"
                      [height]="height"
-                     rotationPersist>
+                     mvRotationPersist>
     </mv-image-viewer>
     <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
                            [url]="url"

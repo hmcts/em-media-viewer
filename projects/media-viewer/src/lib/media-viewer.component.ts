@@ -23,11 +23,11 @@ import { CommentService } from './annotations/comment-set/comment/comment.servic
 import 'hammerjs';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from './store/reducers/reducers';
-import * as fromAnnoSelectors from './store/selectors/annotations.selectors';
+import * as fromAnnoSelectors from './store/selectors/annotation.selectors';
 import * as fromDocumentsSelector from './store/selectors/document.selectors';
-import * as fromAnnoActions from './store/actions/annotations.action';
+import * as fromAnnoActions from './store/actions/annotation.actions';
 import * as fromRedactActions from './store/actions/redaction.actions';
-import * as fromDocumentActions from './store/actions/document.action';
+import * as fromDocumentActions from './store/actions/document.actions';
 
 enum SupportedContentTypes {
   PDF = 'pdf',

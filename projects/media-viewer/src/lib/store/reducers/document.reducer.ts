@@ -1,6 +1,5 @@
-import * as fromActions from '../actions/document.action';
+import * as fromActions from '../actions/document.actions';
 
-import { PdfPosition } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 export interface DocumentState {
   convertedDocument: {
     url: string;
@@ -127,16 +126,16 @@ export function docReducer (state = initialDocumentState,
       let hasDifferentPageSize = state.hasDifferentPageSize;
       payload.forEach(page => {
         if (!hasDifferentPageSize && pageHeight && pageWidth &&
-          (pageHeight !== page.div['offsetHeight'] || pageWidth !== page.div['offsetWidth'])) {
+          (pageHeight !== page.div['scrollHeight'] || pageWidth !== page.div['scrollWidth'])) {
             hasDifferentPageSize = true;
         } else {
-          pageHeight = page.div['offsetHeight'];
-          pageWidth = page.div['offsetWidth'];
+          pageHeight = page.div['scrollHeight'];
+          pageWidth = page.div['scrollWidth'];
         }
         const styles = {
           left: page.div['offsetLeft'],
-          height: page.div['offsetHeight'],
-          width: page.div['offsetWidth']
+          height: page.div['scrollHeight'],
+          width: page.div['scrollWidth']
         };
 
         const scaleRotation = {

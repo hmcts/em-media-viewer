@@ -5,7 +5,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { IcpSessionApiService } from '../../icp/icp-session-api.service';
 import { of, throwError } from 'rxjs';
 import { cold, hot } from 'jasmine-marbles';
-import * as icpActions from '../actions/icp.action';
+import * as icpActions from '../actions/icp.actions';
 import { IcpUpdateService } from '../../icp/icp-update.service';
 import { SocketService } from '../../icp/socket.service';
 import { IcpSession } from '../../icp/icp.interfaces';

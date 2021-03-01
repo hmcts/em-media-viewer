@@ -63,13 +63,13 @@ export class RedactionComponent implements OnInit, OnDestroy {
   markTextRedaction(highlight) {
     const redactionHighlight = highlight.rectangles;
     if (redactionHighlight && redactionHighlight.length) {
-      this.saveRedaction(highlight.page, [...redactionHighlight])
+      this.saveRedaction(highlight.page, [...redactionHighlight]);
     }
     this.toolbarEvents.highlightModeSubject.next(false);
   }
 
   markBoxRedaction({ rectangles, page }) {
-    this.saveRedaction(page, rectangles)
+    this.saveRedaction(page, rectangles);
     this.toolbarEvents.drawModeSubject.next(false);
   }
 
@@ -91,8 +91,8 @@ export class RedactionComponent implements OnInit, OnDestroy {
   }
 
   downloadDocument({ blob, filename }) {
-    if(navigator && navigator.msSaveBlob) {
-      navigator.msSaveBlob(blob,filename);
+    if (navigator && navigator.msSaveBlob) {
+      navigator.msSaveBlob(blob, filename);
     } else {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');

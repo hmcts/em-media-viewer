@@ -148,7 +148,7 @@ describe('AnnotationViewComponent', () => {
   });
 
   it('should add or edit comment',
-    inject([Store, ToolbarEventService],(store, toolbarEvents) => {
+    inject([Store, ToolbarEventService], (store, toolbarEvents) => {
       spyOn(store, 'dispatch');
       spyOn(toolbarEvents, 'toggleCommentsPanel');
       spyOn(component.annotationClick, 'emit');

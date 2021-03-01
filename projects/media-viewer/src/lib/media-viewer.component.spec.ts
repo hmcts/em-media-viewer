@@ -58,7 +58,7 @@ describe('MediaViewerComponent', () => {
     inject([ToolbarButtonVisibilityService], (toolbarButtons) => {
       spyOn(toolbarButtons, 'setup').and.callThrough();
       component.contentType = 'pdf';
-      component.url = 'url'
+      component.url = 'url';
 
       fixture.detectChanges();
 
@@ -146,7 +146,7 @@ describe('MediaViewerComponent', () => {
 
     component.setToolbarButtons();
     expect(toolbarButtonsSpy).toHaveBeenCalledWith({ ...defaultPdfOptions, showHighlightButton: true, showDrawButton: true });
-  })
+  });
 
   it('should set the default toolbar behaviour for pdf viewer', () => {
     const toolbarButtonsSpy = spyOn(component.toolbarButtons, 'setup');

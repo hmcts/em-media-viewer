@@ -5,9 +5,21 @@ import { FormsModule } from '@angular/forms';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../../../store/reducers/reducers';
-import * as fromActions from '../../../../store/actions/annotations.action';
+import * as fromActions from '../../../../store/actions/annotation.actions';
 
 describe('CommentSearch', () => {
+
+  @Component({
+    selector: `mv-host-component`,
+    template: `
+    <mv-comment-search [annotations]="annotations"></mv-comment-search>`
+  })
+  class TestHostComponent {
+    annotations = [] ;
+
+    @ViewChild(CommentSearchComponent) commentSearchComponent: CommentSearchComponent;
+  }
+
   let hostComponent: TestHostComponent;
   let component: CommentSearchComponent;
   let fixture: ComponentFixture<TestHostComponent>;
@@ -46,7 +58,7 @@ describe('CommentSearch', () => {
   });
 
   it('should dispatch search action when search matches',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       hostComponent.annotations =  [{ comments: [{ content: 'searchText' }] }];
       fixture.detectChanges();
       spyOn(store, 'dispatch');
@@ -57,7 +69,7 @@ describe('CommentSearch', () => {
   }));
 
   it('should not dispatch search action when no results found',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       hostComponent.annotations = [] ;
       fixture.detectChanges();
       spyOn(store, 'dispatch');
@@ -68,7 +80,7 @@ describe('CommentSearch', () => {
   }));
 
   it('should clear search',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       spyOn(store, 'dispatch');
 
       component.clearSearch();
@@ -78,15 +90,3 @@ describe('CommentSearch', () => {
       expect(component.searchIndex).toBe(0);
   }));
 });
-
-@Component({
-  selector: `host-component`,
-  template: `
-    <mv-comment-search [annotations]="annotations"></mv-comment-search>`
-})
-class TestHostComponent {
-  annotations = [] ;
-
-  @ViewChild(CommentSearchComponent) commentSearchComponent: CommentSearchComponent;
-}
-

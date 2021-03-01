@@ -12,23 +12,24 @@ import {
   ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
+import { asyncScheduler, BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { filter, tap, throttleTime } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+
 import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
-import { asyncScheduler, BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
-import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromDocumentActions from '../../store/actions/document.action';
-import { PdfPositionUpdate } from '../../store/actions/document.action';
-import { filter, tap, throttleTime } from 'rxjs/operators';
-import * as fromTagActions from '../../store/actions/tags.actions';
-import { SetCaseId } from '../../store/actions/icp.action';
+import * as fromDocumentActions from '../../store/actions/document.actions';
+import { PdfPositionUpdate } from '../../store/actions/document.actions';
+import * as fromTagActions from '../../store/actions/tag.actions';
+import { SetCaseId } from '../../store/actions/icp.actions';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
 import { IcpService } from '../../icp/icp.service';
 import { IcpState } from '../../icp/icp.interfaces';
@@ -99,7 +100,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   async ngAfterContentInit(): Promise<void> {
-    this.pdfWrapper.documentLoadInit.subscribe(() => this.onDocumentLoadInit());
     this.pdfWrapper.documentLoadProgress.subscribe(v => this.onDocumentLoadProgress(v));
     this.pdfWrapper.documentLoaded.subscribe(() => this.onDocumentLoaded());
     this.pdfWrapper.documentLoadFailed.subscribe((error) => this.onDocumentLoadFailed(error));
@@ -114,12 +114,18 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription.add(this.toolbarEvents.zoomSubject.subscribe(zoom => this.setZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.stepZoomSubject.subscribe(zoom => this.stepZoom(zoom)));
     this.$subscription.add(this.toolbarEvents.searchSubject.subscribe(search => this.pdfWrapper.search(search)));
-    this.$subscription.add(this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber)));
-    this.$subscription.add(this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber)));
+    this.$subscription.add(
+      this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.pdfWrapper.setPageNumber(pageNumber))
+    );
+    this.$subscription.add(
+      this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber))
+    );
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
-    this.$subscription.add(this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle));
+    this.$subscription.add(
+      this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle)
+    );
     this.$subscription.add(this.pdfWrapper.positionUpdated.asObservable()
       .pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
       .subscribe(event => this.store.dispatch(new PdfPositionUpdate(event.location)))
@@ -155,6 +161,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
 
   private async loadDocument() {
+    this.initDocumentProgress();
     await this.pdfWrapper.loadDocument(this.url);
     this.documentTitle.emit(this.pdfWrapper.getCurrentPDFTitle());
     this.setPageHeights();
@@ -162,15 +169,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       .subscribe(hasDifferentPageSie => this.hasDifferentPageSize = hasDifferentPageSie));
   }
 
-  private onDocumentLoadInit() {
-    this.loadingDocument = true;
-    this.loadingDocumentProgress = null;
-    this.errorMessage = null;
-  }
-
-  private onDocumentLoadProgress(documentLoadProgress: DocumentLoadProgress) {
-    if (documentLoadProgress.total) {
-      this.loadingDocumentProgress = Math.min(100, Math.ceil(documentLoadProgress.loaded / documentLoadProgress.total * 100));
+  private onDocumentLoadProgress(progress: DocumentLoadProgress) {
+    if (progress.total) {
+      this.loadingDocumentProgress = Math.min(100, Math.ceil(progress.loaded / progress.total * 100));
     }
   }
 
@@ -215,6 +216,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.rotation = (this.rotation + rotation) % 360;
 
     this.setPageHeights();
+  }
+
+  private initDocumentProgress() {
+    this.loadingDocument = true;
+    this.loadingDocumentProgress = null;
+    this.errorMessage = null;
   }
 
   private setZoom(zoomFactor: number) {

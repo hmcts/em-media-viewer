@@ -28,7 +28,7 @@ describe('CtxToolbarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ CtxToolbarComponent ]
+      declarations: [CtxToolbarComponent]
     })
       .compileComponents();
 
@@ -36,6 +36,7 @@ describe('CtxToolbarComponent', () => {
     component = fixture.componentInstance;
     component.rectangles = [mockRectangle];
     component.zoom = 1;
+    component.ngOnChanges({ zoom: { previousValue: undefined, currentValue: 1, firstChange: true, isFirstChange: () => true }});
 
     fixture.detectChanges();
   });
@@ -212,15 +213,11 @@ describe('CtxToolbarComponent', () => {
   describe('rectangles', () => {
     it('should call setRectangle, popupTop and popupLeft when rectangles provided', () => {
       spyOn(component, 'setRectangle').and.callThrough();
-      spyOn(component, 'popupTop').and.callThrough();
-      spyOn(component, 'popupLeft').and.callThrough();
 
       component.rectangles = [mockRectangle];
       fixture.detectChanges();
 
       expect(component.setRectangle).toHaveBeenCalled();
-      expect(component.popupTop).toHaveBeenCalled();
-      expect(component.popupLeft).toHaveBeenCalled();
     });
 
     it('should not call setRectangle, popupTop and popupLeft when rectangles is not provided', () => {

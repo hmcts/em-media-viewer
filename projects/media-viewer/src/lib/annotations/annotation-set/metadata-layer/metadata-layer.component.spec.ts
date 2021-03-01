@@ -124,7 +124,7 @@ describe('MetadataLayerComponent', () => {
   it('should setup subscriptions',
     inject([Store, ViewerEventService, ToolbarEventService],
     (store, viewerEvents, toolbarEvents) => {
-      spyOn(store, 'pipe').and.returnValue(of(['pages']))
+      spyOn(store, 'pipe').and.returnValue(of(['pages']));
       spyOn(toolbarEvents.drawModeSubject, 'subscribe').and.callThrough();
       spyOn(viewerEvents.textHighlight, 'subscribe').and.callThrough();
       spyOn(viewerEvents.ctxToolbarCleared, 'subscribe').and.callThrough();
@@ -215,7 +215,7 @@ describe('MetadataLayerComponent', () => {
   it('should call saveAnnotation and push false to drawModeSubject',
     inject([HighlightCreateService, ToolbarEventService], (highlightCreateService: HighlightCreateService, toolbarEvents: ToolbarEventService) => {
       const mockRectangles = [];
-      const mockPage = {};
+      const mockPage = 1;
 
       spyOn(highlightCreateService, 'saveAnnotation');
       spyOn(toolbarEvents.drawModeSubject, 'next');

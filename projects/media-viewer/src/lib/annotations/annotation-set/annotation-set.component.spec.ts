@@ -6,7 +6,7 @@ import { CommentService } from '../comment-set/comment/comment.service';
 import { HighlightCreateService } from './annotation-create/highlight-create/highlight-create.service';
 import { Action, Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
-import * as fromActions from '../../store/actions/annotations.action';
+import * as fromActions from '../../store/actions/annotation.actions';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AnnotationSetComponent', () => {
@@ -19,7 +19,7 @@ describe('AnnotationSetComponent', () => {
       styles: { height: 100, width: 100 },
       scaleRotation: { scale: 1, rotation: 0 }
     }]),
-    dispatch: (actualAction) => { expectedAction = actualAction },
+    dispatch: (actualAction) => { expectedAction = actualAction; },
     pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
   } as any;
 
@@ -124,7 +124,7 @@ describe('AnnotationSetComponent', () => {
 
       component.onAnnotationUpdate(mockAnno);
 
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveAnnotation(mockAnno))
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveAnnotation(mockAnno));
     }
   ));
 

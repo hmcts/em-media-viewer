@@ -18,8 +18,8 @@ import { CommentComponent } from './comment/comment.component';
 import { CommentService } from './comment/comment.service';
 import { CommentSetRenderService } from './comment-set-render.service';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromActions from '../../store/actions/annotations.action';
-import * as fromSelectors from '../../store/selectors/annotations.selectors';
+import * as fromActions from '../../store/actions/annotation.actions';
+import * as fromSelectors from '../../store/selectors/annotation.selectors';
 import { TagsModel } from '../models/tags.model';
 import { SelectionAnnotation } from '../models/event-select.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
@@ -37,7 +37,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @Input() pageHeights = [];
 
   comments: Comment[];
-  tags: TagsModel[]
+  tags: TagsModel[];
   private subscriptions: Subscription[] = [];
   public comments$: Observable<Annotation[]>;
   public annoEntities$: Observable<{ [id: string]: Annotation }>;

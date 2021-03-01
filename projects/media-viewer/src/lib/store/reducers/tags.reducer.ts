@@ -1,5 +1,5 @@
-import * as fromAnnotations from '../actions/annotations.action';
-import * as fromTags from '../actions/tags.actions';
+import * as fromAnnotations from '../actions/annotation.actions';
+import * as fromTags from '../actions/tag.actions';
 import {StoreUtils} from '../store-utils';
 import {Annotation} from '../../annotations/annotation-set/annotation-view/annotation.model';
 
@@ -87,7 +87,7 @@ export function tagsReducer (
         return {
           ...obj,
           ...state.tagNameEnt[f]
-        }
+        };
       }, {});
 
       const annotations = Object.keys(filteredComments).map(key => state.annotations.filter(a => a.id === key)[0]);
@@ -118,6 +118,3 @@ export const getTagNameEnt = (state: TagsState) => state.tagNameEnt;
 export const getFilters = (state: TagsState) => state.filters;
 export const getFilteredComments = (state: TagsState) => state.filteredComments;
 export const getFilteredPageEnt = (state: TagsState) => state.filteredPageEntities;
-
-
-

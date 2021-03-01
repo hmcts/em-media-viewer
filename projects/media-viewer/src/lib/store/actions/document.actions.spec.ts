@@ -1,4 +1,4 @@
-import * as fromDocument from './document.action';
+import * as fromDocument from './document.actions';
 
 describe('Document actions', () => {
 

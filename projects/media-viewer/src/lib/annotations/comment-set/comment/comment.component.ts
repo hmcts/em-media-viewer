@@ -20,9 +20,9 @@ import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
-import * as fromSelector from '../../../store/selectors/annotations.selectors';
-import { AnnotationSet } from "../../annotation-set/annotation-set.model";
-import { Annotation } from "../../annotation-set/annotation-view/annotation.model";
+import * as fromSelector from '../../../store/selectors/annotation.selectors';
+import { AnnotationSet } from '../../annotation-set/annotation-set.model';
+import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -103,7 +103,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
     this.tagItems = this._comment.tags;
     const pageMarginBottom = 10;
     this.totalPreviousPagesHeight = 0;
-    for (let i = 0; i < this.page -1; i++) {
+    for (let i = 0; i < this.page - 1; i++) {
       const height = this._comment.pages[i + 1] ? this._comment.pages[i + 1].styles.height : undefined;
       if (height) {
         this.totalPreviousPagesHeight += height + pageMarginBottom;
@@ -120,7 +120,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   set annotation(annotation: Annotation) {
     this._rectangle = annotation.rectangles
       .reduce((prev, current) => prev.y < current.y ? prev : current);
-    const actualHeight = this._comment.pages[this.page].styles.height/this.zoom;
+    const actualHeight = this._comment.pages[this.page].styles.height / this.zoom;
     switch (this.rotate) {
       case 90: this.rectTop = this._rectangle.x;
       break;

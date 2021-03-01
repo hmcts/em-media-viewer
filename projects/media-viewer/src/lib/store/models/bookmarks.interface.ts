@@ -5,21 +5,21 @@ export interface Bookmark {
   pageNumber: number;
   xCoordinate: number;
   yCoordinate: number;
-  zoom: number
-  parent: string,
-  previous: string,
-  children: Bookmark[],
-  index: number
+  zoom: number;
+  parent: string;
+  previous: string;
+  children: Bookmark[];
+  index: number;
 }
 
 export interface BookmarkNode {
   id: string;
   name: string;
-  children: string[]
+  children: string[];
 }
 
 export interface BookmarkMoveEvent {
-  node: Bookmark,
+  node: Bookmark;
   from: {
     parent: string,
     next: Bookmark

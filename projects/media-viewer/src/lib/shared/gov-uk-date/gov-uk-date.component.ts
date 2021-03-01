@@ -6,11 +6,11 @@ import {Component, Input} from '@angular/core';
 * displaying errorMessage messages
 * */
 @Component({
-  selector: 'lib-gov-uk-date',
+  selector: 'mv-gov-uk-date',
 templateUrl: './gov-uk-date.component.html'
 })
 export class GovUkDateComponent {
   @Input() config: { id: string; legend: string };
-  @Input() errorMessage: {isInvalid: boolean; messages: string[]}
+  @Input() errorMessage: {isInvalid: boolean; messages: string[]};
   @Input() formGroup;
 }

@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmarks.action';
-import { Bookmark, BookmarkNode } from '../../../../store/models/bookmarks.interface';
-import * as bookmarksSelectors from '../../../../store/selectors/bookmarks.selectors';
 import { Subscription } from 'rxjs';
+import { TreeNode } from 'angular-tree-component';
+
+import { DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmark.actions';
+import { Bookmark, BookmarkNode } from '../../../../store/models/bookmarks.interface';
+import * as bookmarksSelectors from '../../../../store/selectors/bookmark.selectors';
 import { AnnotationSetState} from '../../../../store/reducers/annotations.reducer';
 import { DocumentPages } from '../../../../store/reducers/document.reducer';
 import * as fromDocument from '../../../../store/selectors/document.selectors';
-import { TreeNode } from 'angular-tree-component';
 import * as fromBookmarks from '../../../../store/reducers/bookmarks.reducer';
 import { getBookmarkChildren } from '../../../../store/bookmarks-store-utils';
 
@@ -130,5 +131,5 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   private scaledY(yCoordinate: number, height: number, page: DocumentPages): number {
     const viewportScale = page.viewportScale / this.zoom;
     return ((height / this.zoom) - yCoordinate) / viewportScale;
-  };
+  }
 }

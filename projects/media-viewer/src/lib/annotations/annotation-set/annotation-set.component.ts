@@ -5,9 +5,8 @@ import { SelectionAnnotation } from '../models/event-select.model';
 import { CommentService } from '../comment-set/comment/comment.service';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromActions from '../../store/actions/annotations.action';
-import * as fromSelectors from '../../store/selectors/annotations.selectors';
-
+import * as fromActions from '../../store/actions/annotation.actions';
+import * as fromSelectors from '../../store/selectors/annotation.selectors';
 
 @Component({
   selector: 'mv-annotation-set',

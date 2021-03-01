@@ -1,5 +1,5 @@
 import { MomentDatePipe } from './date.pipe';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 describe('MomentDatePipe', () => {
   let pipe: MomentDatePipe;

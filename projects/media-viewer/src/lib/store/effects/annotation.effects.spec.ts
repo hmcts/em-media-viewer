@@ -3,7 +3,9 @@ import { TestBed } from '@angular/core/testing';
 import { hot, cold } from 'jasmine-marbles';
 import { of } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
-import * as annotationActions from '../actions/annotations.action';
+
+import { mockAnnotations } from 'test/mocks/data/mock-annotations';
+import * as annotationActions from '../actions/annotation.actions';
 import { AnnotationApiService } from '../../annotations/services/annotation-api/annotation-api.service';
 import { AnnotationEffects } from './annotation.effects';
 
@@ -54,7 +56,7 @@ describe('Annotations Effects', () => {
 
   describe('postAnnotation$', () => {
     it('should return a SaveAnnotationSuccess', () => {
-      const action = new annotationActions.SaveAnnotation('12345');
+      const action = new annotationActions.SaveAnnotation(mockAnnotations[0]);
       UserServiceMock.postAnnotation.and.returnValue(of(returnValue));
       const completion = new annotationActions.SaveAnnotationSuccess(returnValue);
       actions$ = hot('-a', { a: action });
@@ -73,6 +75,4 @@ describe('Annotations Effects', () => {
       expect(effects.deleteAnnotation$).toBeObservable(expected);
     });
   });
-
-
 });

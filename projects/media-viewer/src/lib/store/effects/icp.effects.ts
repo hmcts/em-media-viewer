@@ -4,7 +4,7 @@ import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { IcpSessionApiService } from '../../icp/icp-session-api.service';
 import { IcpUpdateService } from '../../icp/icp-update.service';
-import * as icpActions from '../actions/icp.action' ;
+import * as icpActions from '../actions/icp.actions' ;
 import { IcpSession } from '../../icp/icp.interfaces';
 
 @Injectable()

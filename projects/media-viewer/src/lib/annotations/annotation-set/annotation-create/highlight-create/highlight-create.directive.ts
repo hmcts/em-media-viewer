@@ -8,7 +8,7 @@ import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
 import * as fromStore from '../../../../store/reducers/reducers';
 import * as fromDocument from '../../../../store/selectors/document.selectors';
 import { ViewerEventService } from '../../../../viewers/viewer-event.service';
-import * as fromAnnotationActions from '../../../../store/actions/annotations.action';
+import * as fromAnnotationActions from '../../../../store/actions/annotation.actions';
 import { HighlightCreateService } from './highlight-create.service';
 
 @Directive({
@@ -69,7 +69,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
     const selection = window.getSelection();
     if (selection) {
-      const localElement = (<HTMLElement>event.target) || (<HTMLElement>event.srcElement);
+      const localElement = <HTMLElement>event.target;
 
       this.removeEnhancedTextModeStyling(localElement);
 
@@ -105,7 +105,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   private removeEnhancedTextModeStyling(element: HTMLElement) {
     if (element.parentElement.children) {
       for (let i = 0; i < element.parentElement.children.length; i++) {
-        const child = <HTMLElement>element.parentElement.children[i]
+        const child = <HTMLElement>element.parentElement.children[i];
 
         child.style.padding = '0';
         // regex will be targeting the translate style in string

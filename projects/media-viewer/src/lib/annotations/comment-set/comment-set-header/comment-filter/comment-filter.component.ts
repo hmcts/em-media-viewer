@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 
 import {select, Store} from '@ngrx/store';
 import * as fromStore from '../../../../store/reducers/reducers';
-import * as fromSelectors from '../../../../store/selectors/tags.selectors';
-import * as fromActions from '../../../../store/actions/tags.actions';
+import * as fromSelectors from '../../../../store/selectors/tag.selectors';
+import * as fromActions from '../../../../store/actions/tag.actions';
 import {Observable, Subscription} from 'rxjs';
 import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
 import {auditTime, tap} from 'rxjs/operators';
@@ -63,7 +63,7 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   }
 
   onToggleFilterView() {
-    this.isPreview = !this.isPreview
+    this.isPreview = !this.isPreview;
   }
 
 

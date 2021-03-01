@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 import { HighlightCreateDirective } from './highlight-create.directive';
-import { SelectedAnnotation } from '../../../../store/actions/annotations.action';
+import { SelectedAnnotation } from '../../../../store/actions/annotation.actions';
 import { BehaviorSubject, of } from 'rxjs';
 import { fakeAsync } from '@angular/core/testing';
 import any = jasmine.any;
@@ -21,11 +21,17 @@ describe('HighlightCreateDirective', () => {
   const hostElement = document.createElement('div');
   hostElement.scrollLeft = 20;
   hostElement.scrollTop = 30;
-  const event = { clientX: 50, clientY: 40, preventDefault: () => {} }
+  const event = { clientX: 50, clientY: 40, preventDefault: () => {} };
   const mouseEvent = { target: { offsetParent: { offsetParent: { getAttribute: () => 1 }} } } as any;
   const page = {
     scaleRotation: { rotation: 0, scale: 1 },
     styles: { height: 1122, left: 341, width: 793 }
+  };
+  const getMockElement = (transform: string) => {
+    return {
+      getBoundingClientRect: () => ({ top: 30, left: 40}),
+      children: [{ style: { padding: '20', transform: transform }}]
+    };
   };
 
   beforeEach(() => {
@@ -51,7 +57,7 @@ describe('HighlightCreateDirective', () => {
     expect(store.dispatch).toHaveBeenCalledWith(new SelectedAnnotation({
       annotationId: '', selected: false, editable: false
     }));
-    expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled()
+    expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled();
   });
 
   it('should create rectangles', fakeAsync(() => {
@@ -111,11 +117,4 @@ describe('HighlightCreateDirective', () => {
     expect(mockElement.children[0].style.padding).toBe('0');
     expect(mockElement.children[0].style.transform).not.toContain('translateX');
   });
-
-  const getMockElement = (transform: string) => {
-    return {
-        getBoundingClientRect: () => ({ top: 30, left: 40}),
-        children: [{ style: { padding: '20', transform: transform }}]
-    };
-  }
 });

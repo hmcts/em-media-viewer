@@ -6,11 +6,11 @@ import uuid from 'uuid';
 
 import * as fromStore from '../../../store/reducers/reducers';
 import * as fromDocument from '../../../store/selectors/document.selectors';
-import * as fromSelectors from '../../../store/selectors/annotations.selectors';
+import * as fromSelectors from '../../../store/selectors/annotation.selectors';
 import { HighlightCreateService } from '../annotation-create/highlight-create/highlight-create.service';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
-import { CreateBookmark } from '../../../store/actions/bookmarks.action';
-import * as fromBookmarks from '../../../store/selectors/bookmarks.selectors';
+import { CreateBookmark } from '../../../store/actions/bookmark.actions';
+import * as fromBookmarks from '../../../store/selectors/bookmark.selectors';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Highlight, ViewerEventService } from '../../../viewers/viewer-event.service';
 

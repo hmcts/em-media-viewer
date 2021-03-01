@@ -9,7 +9,7 @@ import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { MomentDatePipe } from '../pipes/date/date.pipe';
-import * as fromAnnoActions from  '../../store/actions/annotations.action';
+import * as fromAnnoActions from  '../../store/actions/annotation.actions';
 import { SharedModule } from '../../shared/shared.module';
 import { UnsnakePipe } from '../pipes/unsnake/unsnake.pipe';
 
@@ -57,7 +57,7 @@ describe('CommentsSummaryComponent', () => {
   });
 
   it('should set focus on container', () => {
-    spyOn(component.container.nativeElement, 'focus')
+    spyOn(component.container.nativeElement, 'focus');
 
     component.ngOnInit();
 

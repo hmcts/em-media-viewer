@@ -2,7 +2,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 
 @Directive({
-  selector: '[grabNDrag]'
+  selector: '[mvGrabNDrag]'
 })
 export class GrabNDragDirective {
 

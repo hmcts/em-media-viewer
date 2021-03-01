@@ -2,12 +2,11 @@ import { fakeAsync, inject, TestBed } from '@angular/core/testing';
 import { IcpPresenterService } from './icp-presenter.service';
 import { IcpUpdateService } from './icp-update.service';
 import { Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../store/reducers/reducers';
-import { IcpSocketSessionJoined } from '../store/actions/icp.action';
-import { PdfPositionUpdate } from '../store/actions/document.action';
+import { PdfPosition, reducers } from '../store/reducers/reducers';
+import { IcpSocketSessionJoined } from '../store/actions/icp.actions';
+import { PdfPositionUpdate } from '../store/actions/document.actions';
 import { IcpParticipant, IcpSession } from './icp.interfaces';
 import { of } from 'rxjs';
-import { PdfPosition } from '../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 
 describe('Icp Presenter Service', () => {
 
@@ -33,7 +32,8 @@ describe('Icp Presenter Service', () => {
     pageNumber: 1,
     top: 1,
     left: 1,
-    rotation: 90
+    rotation: 90,
+    scale: 1
   };
 
   beforeEach(() => {
@@ -124,4 +124,3 @@ describe('Icp Presenter Service', () => {
     expect(updateService.updatePresenter).toHaveBeenCalledWith(participant);
   });
 });
-

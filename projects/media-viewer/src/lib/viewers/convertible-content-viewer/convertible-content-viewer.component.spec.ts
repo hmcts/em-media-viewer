@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/cor
 import { Store } from '@ngrx/store';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { provideMockStore } from '@ngrx/store/testing';
-import { Convert } from '../../store/actions/document.action';
+import { Convert } from '../../store/actions/document.actions';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ConvertibleContentViewerComponent } from './convertible-content-viewer.component';
@@ -64,7 +64,7 @@ describe('ConvertibleContentViewerComponent', () => {
   }));
 
   it('should emit viewerException', fakeAsync(() => {
-    spyOn(component.viewerException, "emit");
+    spyOn(component.viewerException, 'emit');
     component.onLoadException(new ViewerException());
     tick();
 
@@ -72,8 +72,8 @@ describe('ConvertibleContentViewerComponent', () => {
   }));
 
   it('should emit documentTitle', fakeAsync(() => {
-    spyOn(component.documentTitle, "emit");
-    component.onDocumentTitleChange("");
+    spyOn(component.documentTitle, 'emit');
+    component.onDocumentTitleChange('');
     tick();
 
     expect(component.documentTitle.emit).toHaveBeenCalled();

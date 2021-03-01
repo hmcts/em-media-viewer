@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import uuid from 'uuid/v4';
+import { catchError, map } from 'rxjs/operators';
 
 import { AnnotationSet } from '../../annotation-set/annotation-set.model';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
@@ -30,7 +29,8 @@ export class AnnotationApiService {
     return this.httpClient
       .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
       .pipe(
-        map(response => response.body)
+        map(response => response.body),
+        catchError(() => [])
       );
   }
 

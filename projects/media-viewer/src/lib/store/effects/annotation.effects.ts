@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
 import { of } from 'rxjs';
 import {AnnotationApiService} from '../../annotations/services/annotation-api/annotation-api.service';
-import * as annotationsActions from '../actions/annotations.action';
+import * as annotationsActions from '../actions/annotation.actions';
 
 @Injectable()
 export class AnnotationEffects {

@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4';
-import * as fromAnnotations from '../actions/annotations.action';
+import * as fromAnnotations from '../actions/annotation.actions';
 import { Annotation } from '../../annotations/annotation-set/annotation-view/annotation.model';
 import { Comment } from '../../annotations/comment-set/comment/comment.model';
 import { StoreUtils } from '../store-utils';
@@ -10,7 +10,7 @@ export interface AnnotationSetState {
   annotationSet: any;
   annotationEntities: {[id: string]: any};
   annotationPageEntities: {[id: string]: Annotation[]};
-  commentEntities: {[id: string]: Comment} | {};
+  commentEntities: {[id: string]: Comment};
   selectedAnnotation: SelectionAnnotation;
   commentSearchQueries: {commentSearch: string;};
   commentSummaryFilters: {hasFilter: boolean; filters: Filters};
@@ -112,7 +112,7 @@ export function reducer (
       const commentEntities = {
         ...state.commentEntities
       };
-      if(state.commentEntities[id]) {
+      if (state.commentEntities[id]) {
         delete commentEntities[id];
       }
       return {

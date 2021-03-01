@@ -1,4 +1,4 @@
-import * as fromIcpActions from '../actions/icp.action';
+import * as fromIcpActions from '../actions/icp.actions';
 import { IcpSession, IcpState } from '../../icp/icp.interfaces';
 
 export const initialIcpSessionState: IcpState = {
@@ -40,7 +40,7 @@ export function icpReducer (state = initialIcpSessionState,
       return {
         ...state,
         participants
-      }
+      };
     }
 
     case fromIcpActions.ICP_PRESENTER_UPDATED: {

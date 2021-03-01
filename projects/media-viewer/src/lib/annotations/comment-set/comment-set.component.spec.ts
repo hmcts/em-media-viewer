@@ -11,7 +11,7 @@ import { CommentSetComponent } from './comment-set.component';
 import { CommentSetRenderService } from './comment-set-render.service';
 import { TagsModel } from '../models/tags.model';
 import { reducers } from '../../store/reducers/reducers';
-import * as fromActions from '../../store/actions/annotations.action';
+import * as fromActions from '../../store/actions/annotation.actions';
 
 @Component({
   selector: 'mv-anno-comment',
