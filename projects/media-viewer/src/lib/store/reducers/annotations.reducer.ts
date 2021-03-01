@@ -12,7 +12,7 @@ export interface AnnotationSetState {
   annotationPageEntities: {[id: string]: Annotation[]};
   commentEntities: {[id: string]: Comment};
   selectedAnnotation: SelectionAnnotation;
-  commentSearchQueries: {commentSearch: string;};
+  commentSearchQueries: { commentSearch: string };
   commentSummaryFilters: {hasFilter: boolean; filters: Filters};
   loaded: boolean;
   loading: boolean;

@@ -133,8 +133,7 @@ describe('MainToolbarComponent', () => {
 
       expect(setPageSpy).toHaveBeenCalledWith(4);
     });
-  })
-
+  });
 
   it('should update page number', () => {
     component.toolbarEvents.setPage(4);

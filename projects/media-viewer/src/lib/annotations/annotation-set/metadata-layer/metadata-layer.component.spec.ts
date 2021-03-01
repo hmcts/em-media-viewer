@@ -27,7 +27,9 @@ describe('MetadataLayerComponent', () => {
       annotationSetId: 'annotationSetId',
       documentId: 'documentId'
     }]),
-    dispatch: (actualAction: Action) => { expectedAction = actualAction },
+    dispatch: (actualAction: Action) => {
+      expectedAction = actualAction;
+    },
   } as any;
 
   const mockHighlightService = {
@@ -156,7 +158,7 @@ describe('MetadataLayerComponent', () => {
 
   describe('showContextToolbar', () => {
     it('should set page and rectangles and push false to highlightModeSubject',
-      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+      inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
         spyOn(toolbarEvents.highlightModeSubject, 'next');
         component.showContextToolbar({ page: 1, rectangles: ['rectangles'] } as any);
 
@@ -166,7 +168,7 @@ describe('MetadataLayerComponent', () => {
     );
 
     it('should set page and rectangles and do not push false to highlightModeSubject',
-      inject([ToolbarEventService],(toolbarEvents: ToolbarEventService) => {
+      inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
         spyOn(toolbarEvents.highlightModeSubject, 'next');
         component.showContextToolbar({ page: 1, rectangles: null } as any);
 
@@ -213,16 +215,18 @@ describe('MetadataLayerComponent', () => {
   ));
 
   it('should call saveAnnotation and push false to drawModeSubject',
-    inject([HighlightCreateService, ToolbarEventService], (highlightCreateService: HighlightCreateService, toolbarEvents: ToolbarEventService) => {
-      const mockRectangles = [];
-      const mockPage = 1;
+    inject([HighlightCreateService, ToolbarEventService],
+      (highlightCreateService: HighlightCreateService, toolbarEvents: ToolbarEventService) => {
+        const mockRectangles = [];
+        const mockPage = 1;
 
-      spyOn(highlightCreateService, 'saveAnnotation');
-      spyOn(toolbarEvents.drawModeSubject, 'next');
+        spyOn(highlightCreateService, 'saveAnnotation');
+        spyOn(toolbarEvents.drawModeSubject, 'next');
 
-      component.saveAnnotation({ rectangles: mockRectangles, page: mockPage});
-      expect(highlightCreateService.saveAnnotation).toHaveBeenCalledWith(mockRectangles, mockPage);
-      expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalledWith(false);
-    })
+        component.saveAnnotation({ rectangles: mockRectangles, page: mockPage});
+        expect(highlightCreateService.saveAnnotation).toHaveBeenCalledWith(mockRectangles, mockPage);
+        expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalledWith(false);
+      }
+    )
   );
 });

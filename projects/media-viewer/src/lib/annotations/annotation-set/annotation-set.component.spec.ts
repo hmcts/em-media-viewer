@@ -138,7 +138,7 @@ describe('AnnotationSetComponent', () => {
         component.onAnnotationDelete(mockAnno);
 
         expect(commentService.updateUnsavedCommentsStatus).toHaveBeenCalledWith(mockAnno, false);
-        expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'))
+        expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'));
       })
     );
 
@@ -151,7 +151,7 @@ describe('AnnotationSetComponent', () => {
         component.onAnnotationDelete(mockAnno);
 
         expect(commentService.updateUnsavedCommentsStatus).not.toHaveBeenCalled();
-        expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'))
+        expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteAnnotation('id'));
       })
     );
   });

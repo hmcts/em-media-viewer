@@ -9,7 +9,7 @@ import { CommentsSummaryComponent } from './comments-summary.component';
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { MomentDatePipe } from '../pipes/date/date.pipe';
-import * as fromAnnoActions from  '../../store/actions/annotation.actions';
+import * as fromAnnoActions from '../../store/actions/annotation.actions';
 import { SharedModule } from '../../shared/shared.module';
 import { UnsnakePipe } from '../pipes/unsnake/unsnake.pipe';
 
@@ -139,7 +139,11 @@ describe('CommentsSummaryComponent', () => {
     it('should dispatch ApplyCommentSymmaryFilter with no dateRange filters',
       inject([Store], (store: Store<{}>) => {
         spyOn(store, 'dispatch').and.callThrough();
-        const action = new fromAnnoActions.ApplyCommentSymmaryFilter({ dateRangeTo: null, dateRangeFrom: null, tagFilters: { ...mockTags } });
+        const action = new fromAnnoActions.ApplyCommentSymmaryFilter({
+          dateRangeTo: null,
+          dateRangeFrom: null,
+          tagFilters: { ...mockTags }
+          });
         component.onFilter();
 
         expect(store.dispatch).toHaveBeenCalledWith(action);
@@ -154,7 +158,10 @@ describe('CommentsSummaryComponent', () => {
         });
 
         spyOn(store, 'dispatch').and.callThrough();
-        const action = new fromAnnoActions.ApplyCommentSymmaryFilter({ dateRangeTo: new Date('2021-01-20T00:00:00').getTime(), dateRangeFrom: null, tagFilters: { ...mockTags } });
+        const action = new fromAnnoActions.ApplyCommentSymmaryFilter({
+          dateRangeTo: new Date('2021-01-20T00:00:00').getTime(),
+          dateRangeFrom: null, tagFilters: { ...mockTags }
+        });
         component.onFilter();
 
         expect(store.dispatch).toHaveBeenCalledWith(action);
@@ -169,7 +176,11 @@ describe('CommentsSummaryComponent', () => {
         });
 
         spyOn(store, 'dispatch').and.callThrough();
-        const action = new fromAnnoActions.ApplyCommentSymmaryFilter({ dateRangeFrom: new Date('2021-01-20T00:00:00').getTime(), dateRangeTo: null, tagFilters: { ...mockTags } });
+        const action = new fromAnnoActions.ApplyCommentSymmaryFilter({
+          dateRangeFrom: new Date('2021-01-20T00:00:00').getTime(),
+          dateRangeTo: null,
+          tagFilters: { ...mockTags }
+        });
         component.onFilter();
 
         expect(store.dispatch).toHaveBeenCalledWith(action);

@@ -2,7 +2,7 @@ import { Annotation } from '../annotations/annotation-set/annotation-view/annota
 import moment from 'moment-timezone';
 import { Redaction } from '../redaction/services/redaction.model';
 import { Filters } from './models/filters.interface';
-import { Comment } from '../annotations/comment-set/comment/comment.model'
+import { Comment } from '../annotations/comment-set/comment/comment.model';
 
 /*
   @dynamic

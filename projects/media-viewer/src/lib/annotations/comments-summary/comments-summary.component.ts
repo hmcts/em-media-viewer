@@ -7,7 +7,7 @@ import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import * as fromSelectors from '../../store/selectors/annotation.selectors';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromAnnoActions from  '../../store/actions/annotation.actions';
+import * as fromAnnoActions from '../../store/actions/annotation.actions';
 import * as fromTagSelectors from '../../store/selectors/tag.selectors';
 
 @Component({

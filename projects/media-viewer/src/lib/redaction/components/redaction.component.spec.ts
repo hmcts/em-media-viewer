@@ -49,7 +49,7 @@ describe('RedactionComponent', () => {
   });
 
   it('should mark Text for Redaction',
-    inject([Store],(store) => {
+    inject([Store], (store) => {
       spyOn(toolbarEvents.highlightModeSubject, 'next');
       spyOn(store, 'dispatch');
       component.documentId = 'documentId';

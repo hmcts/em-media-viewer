@@ -101,6 +101,7 @@ describe('ImageViewerComponent', () => {
 
       toolbarEvents.downloadSubject.next();
 
+      // tslint:disable-next-line
       expect(document.createElement).toHaveBeenCalledWith('a');
       expect(anchor.href).toContain(DOCUMENT_URL);
       expect(anchor.download).toBe('download-filename');

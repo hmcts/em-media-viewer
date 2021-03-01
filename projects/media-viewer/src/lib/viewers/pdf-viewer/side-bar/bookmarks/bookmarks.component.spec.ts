@@ -60,52 +60,47 @@ describe('BookmarksComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should delete bookmark',
-    inject([Store], (store) => {
-      spyOn(store, 'dispatch');
-      const bookmarkNode = {
-        parent: { children: [{}]},
-        index: 0,
-        data: { id: 'bookmarkId', children: [] }
-      } as any;
-      component.deleteBookmark(bookmarkNode);
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
-        deleted: ['bookmarkId'], updated: undefined
-      }));
-    })
-  );
+  it('should delete bookmark', () => {
+    spyOn(store, 'dispatch');
+    const bookmarkNode = {
+      parent: { children: [{}]},
+      index: 0,
+      data: { id: 'bookmarkId', children: [] }
+    } as any;
+    component.deleteBookmark(bookmarkNode);
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
+      deleted: ['bookmarkId'], updated: undefined
+    }));
+  });
 
-  it('should update bookmark',
-    inject([Store], (store) => {
-      spyOn(store, 'dispatch');
-      const mockBookmark = {name: 'Bookmark name', id: 'id'} as any;
-      const newName = 'Bookmark new name';
-      component.updateBookmark(mockBookmark, newName);
-      mockBookmark.name = newName;
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.UpdateBookmark(mockBookmark));
-    })
-  );
+  it('should update bookmark', () => {
+    spyOn(store, 'dispatch');
+    const mockBookmark = {name: 'Bookmark name', id: 'id'} as any;
+    const newName = 'Bookmark new name';
+    component.updateBookmark(mockBookmark, newName);
+    mockBookmark.name = newName;
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.UpdateBookmark(mockBookmark));
+  });
 
-  it('should move bookmarks',
-    inject([Store], (store) => {
-      spyOn(store, 'dispatch');
-      const node = {
-        documentId: '86dc297a-0153-44c0-b996-f563c1ff112a',
-        id: 'id1',
-        index: 0,
-        name: 'new bookmark',
-        parent: undefined,
-        previous: undefined
+  it('should move bookmarks', () => {
+    spyOn(store, 'dispatch');
+    const node = {
+      documentId: '86dc297a-0153-44c0-b996-f563c1ff112a',
+      id: 'id1',
+      index: 0,
+      name: 'new bookmark',
+      parent: undefined,
+      previous: undefined
     };
-      const from = { index: 0, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
-      const to = { index: 1, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
-      const movedBookmarks = [{ ...node, previous: 'id2' }, { id: 'id2', index: 1, previous: undefined } as any];
 
-      component.onBookmarkMove({ node, to, from });
+    const from = { index: 0, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
+    const to = { index: 1, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
+    const movedBookmarks = [{ ...node, previous: 'id2' }, { id: 'id2', index: 1, previous: undefined } as any];
 
-      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.MoveBookmark(movedBookmarks));
-    })
-  );
+    component.onBookmarkMove({ node, to, from });
+
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.MoveBookmark(movedBookmarks));
+  });
 
   it('should set editableBookmark', () => {
     const mockId = '123';
