@@ -1,4 +1,4 @@
-import * as fromBookmarks from '../actions/bookmarks.action';
+import * as fromBookmarks from '../actions/bookmark.actions';
 import { Bookmark } from '../../viewers/pdf-viewer/side-bar/bookmarks/bookmarks.interfaces';
 import { StoreUtils } from '../store-utils';
 import { generateBookmarkEntities } from '../bookmarks-store-utils';

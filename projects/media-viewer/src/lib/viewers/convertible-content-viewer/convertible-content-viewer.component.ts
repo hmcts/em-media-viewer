@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsul
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/document.reducer';
-import * as fromDocumentActions from '../../store/actions/document.action';
+import * as fromDocumentActions from '../../store/actions/document.actions';
 import { Subscription } from 'rxjs';
 import * as fromSelectors from '../../store/selectors/document.selectors';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';

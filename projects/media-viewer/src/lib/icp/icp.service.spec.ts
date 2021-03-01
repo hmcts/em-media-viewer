@@ -8,7 +8,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../store/reducers/reducers';
 import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { IcpParticipant, IcpSession } from './icp.interfaces';
-import * as fromIcpActions from '../store/actions/icp.action';
+import * as fromIcpActions from '../store/actions/icp.actions';
 import { of, Subscription } from 'rxjs';
 
 describe('Icp Service', () => {

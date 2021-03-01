@@ -1,16 +1,26 @@
-import { ConvertibleContentViewerComponent } from './convertible-content-viewer.component';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
-import { reducers } from '../../store/reducers/reducers';
+import { Store } from '@ngrx/store';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Convert } from '../../store/actions/document.action';
+import { provideMockStore } from '@ngrx/store/testing';
+import { Convert } from '../../store/actions/document.actions';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
+import { ConvertibleContentViewerComponent } from './convertible-content-viewer.component';
 
 describe('ConvertibleContentViewerComponent', () => {
   let component: ConvertibleContentViewerComponent;
   let fixture: ComponentFixture<ConvertibleContentViewerComponent>;
   const DOCUMENT_URL = '/documents/111/binary';
+  const initialState = {
+    'media-viewer': {
+      document: {
+        convertedDocument: {
+          url: 'sample-url',
+          error: ''
+        }
+      }
+    }
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,10 +29,10 @@ describe('ConvertibleContentViewerComponent', () => {
         GrabNDragDirective
       ],
       imports: [
-        StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({}),
       ],
-      providers: [],
+      providers: [
+        provideMockStore({ initialState }),
+      ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
       ]
@@ -46,7 +56,7 @@ describe('ConvertibleContentViewerComponent', () => {
   });
 
   it('should convert original url',
-    inject([Store], (store) => {
+    inject([Store], (store: Store<{}>) => {
       spyOn(store, 'dispatch');
       component.ngOnInit();
 

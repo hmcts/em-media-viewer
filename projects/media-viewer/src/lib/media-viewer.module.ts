@@ -37,7 +37,7 @@ import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.com
 import { RotationApiService } from './viewers/rotation-persist/rotation-api.service';
 import { RotationPersistDirective } from './viewers/rotation-persist/rotation-persist.directive';
 import { ParticipantsListComponent } from './icp/participants-list/participants-list.component';
-import { HighlightCreateDirective } from './annotations/annotation-set/annotation-create/highlight-create.directive';
+import { HighlightCreateDirective } from './annotations/annotation-set/annotation-create/highlight-create/highlight-create.directive';
 
 @NgModule({
   imports: [

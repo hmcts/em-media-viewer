@@ -6,11 +6,10 @@ import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AnnotationsModule } from '../../annotations/annotations.module';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
-import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { RouterTestingModule } from '@angular/router/testing';
-import * as fromDocument from '../../store/actions/document.action';
+import * as fromDocument from '../../store/actions/document.actions';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
@@ -24,7 +23,6 @@ describe('ImageViewerComponent', () => {
         ImageViewerComponent,
         GrabNDragDirective
       ],
-      providers: [AnnotationApiService],
       imports: [
         AnnotationsModule,
         StoreModule.forRoot({}),
@@ -103,6 +101,7 @@ describe('ImageViewerComponent', () => {
 
       toolbarEvents.downloadSubject.next();
 
+      // tslint:disable-next-line
       expect(document.createElement).toHaveBeenCalledWith('a');
       expect(anchor.href).toContain(DOCUMENT_URL);
       expect(anchor.download).toBe('download-filename');
@@ -188,4 +187,3 @@ describe('ImageViewerComponent', () => {
     })
   );
 });
-

@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
-import * as fromSelector from '../../../store/selectors/annotations.selectors';
+import * as fromSelector from '../../../store/selectors/annotation.selectors';
 import { AnnotationSet } from '../../annotation-set/annotation-set.model';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 

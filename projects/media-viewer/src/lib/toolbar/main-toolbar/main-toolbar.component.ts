@@ -134,7 +134,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     if (Number(pageNumber) > this.pageCount) {
       pageNumber = this.pageCount.toString();
     }
-    this.toolbarEvents.setPage(Number.parseInt(pageNumber, 0));
+
+    this.toolbarEvents.setPage(Number.parseInt(pageNumber, 10));
   }
 
   private setCurrentPage(pageNumber: number) {
