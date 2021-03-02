@@ -2,12 +2,12 @@ import { inject, TestBed } from '@angular/core/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { of, throwError } from 'rxjs';
 import { provideMockActions } from '@ngrx/effects/testing';
-import * as bookmarkActions from '../actions/bookmarks.action';
+import * as bookmarkActions from '../actions/bookmark.actions';
 import { BookmarksEffects } from './bookmarks.effects';
-import { BookmarksApiService } from '../../annotations/bookmarks-api.service';
+import { BookmarksApiService } from '../../annotations/services/bookmarks-api/bookmarks-api.service';
 import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../reducers/reducers';
-import { PdfPositionUpdate } from '../actions/document.action';
+import { PdfPositionUpdate } from '../actions/document.actions';
 
 describe('Bookmark Effects', () => {
   let actions$;
@@ -143,4 +143,3 @@ describe('Bookmark Effects', () => {
     });
   });
 });
-

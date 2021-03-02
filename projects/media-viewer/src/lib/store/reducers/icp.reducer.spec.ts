@@ -7,7 +7,7 @@ import {
   LeaveIcpSocketSession,
   LoadIcpSession,
   SetCaseId
-} from '../actions/icp.action';
+} from '../actions/icp.actions';
 
 const icpState = {
   session: {

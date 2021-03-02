@@ -1,58 +1,61 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AnnotationApiService } from '../../annotation-api.service';
-import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
-import {TagsServices} from '../../services/tags/tags.services';
-import {TagsComponent} from '../../tags/tags.component';
-import {HttpClient} from '@angular/common/http';
-import {TagInputModule} from 'ngx-chips';
+import { TestBed,  } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TagsServices } from '../../services/tags/tags.services';
+
+const mockTags = [{ name: 'tag1', label: 'Tag 1'}];
 
 describe('TagsService', () => {
-  let component: TagsComponent;
-  let fixture: ComponentFixture<TagsComponent>;
+  let httpMock: HttpTestingController;
   let tagsService: TagsServices;
-
-  const api = new AnnotationApiService({}  as any);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TagsComponent],
       imports: [
-        FormsModule,
         HttpClientTestingModule,
-        TagInputModule
       ],
       providers: [
-        { provide: AnnotationApiService, useValue: api },
-        ToolbarEventService,
         TagsServices
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    });
+
+    httpMock = TestBed.get(HttpTestingController);
+    tagsService = TestBed.get(TagsServices);
   });
 
-  beforeEach(() => {
-    tagsService = new TagsServices(HttpClient as any);
-    fixture = TestBed.createComponent(TagsComponent);
-    component = fixture.componentInstance;
+  afterEach(() => {
+    httpMock.verify();
   });
 
-  it('should have getAllTags', () => {
-    expect(tagsService.getAllTags).not.toBeNull();
+  it('should fetch data from the API', () => {
+    const mockUserId = 'user123';
+
+    tagsService.getAllTags(mockUserId).subscribe(data => {
+      expect(data).toEqual(mockTags);
+    });
+
+    const req = httpMock.expectOne(`/em-anno/tags/${mockUserId}`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockTags);
   });
 
-  it('should have tagItems', () => {
-    expect(tagsService.tagItems).not.toBeNull();
+  describe('getNewTags', () => {
+    it('should return a tags array', () => {
+      tagsService.tagItems = {
+        123: [...mockTags]
+      };
+
+      expect(tagsService.getNewTags('123')).toEqual(mockTags);
+    });
+
+    it('should return an empty array', () => {
+      expect(tagsService.getNewTags('321')).toEqual([]);
+    });
   });
 
   it('should have updateTagItems', () => {
-    expect(tagsService.updateTagItems).not.toBeNull();
-  });
+    const mockItems = [{ name: 'This should be a snake cased', label: 'One' }];
+    tagsService.updateTagItems(mockItems, '111');
 
-  it('should have getNewTags', () => {
-    expect(tagsService.getNewTags).not.toBeNull();
+    expect(tagsService.tagItems['111']).toEqual([{ name: 'this_should_be_a_snake_cased', label: 'One' }]);
   });
-
 });

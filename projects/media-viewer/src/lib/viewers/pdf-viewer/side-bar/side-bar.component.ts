@@ -2,13 +2,12 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { Outline } from './outline-item/outline.model';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import * as bookmarksSelectors from '../../../store/selectors/bookmarks.selectors';
-import { BookmarkNode } from '../../../store/model/bookmarks.interface';
-import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmarks.action';
+import * as bookmarksSelectors from '../../../store/selectors/bookmark.selectors';
+import { BookmarkNode } from '../../../store/models/bookmarks.interface';
+import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmark.actions';
 import { take } from 'rxjs/operators';
 import uuid from 'uuid';
 import { ViewerEventService } from '../../viewer-event.service';
-import { ToolbarButtonVisibilityService } from '../../../toolbar/toolbar.module';
 import { BookmarksState } from '../../../store/reducers/bookmarks.reducer';
 
 @Component({
@@ -29,7 +28,6 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   $subscription: Subscription;
 
   constructor(private viewerEvents: ViewerEventService,
-              private toolbarButtons: ToolbarButtonVisibilityService,
               private store: Store<BookmarksState>
   ) {}
 

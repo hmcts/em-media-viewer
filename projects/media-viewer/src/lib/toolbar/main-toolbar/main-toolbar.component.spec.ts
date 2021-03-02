@@ -24,7 +24,13 @@ describe('MainToolbarComponent', () => {
         MainToolbarComponent,
         SearchBarComponent
       ],
-      imports: [FormsModule, StoreModule.forFeature('media-viewer', reducers), StoreModule.forRoot({}), OverlayModule, RouterTestingModule],
+      imports: [
+        FormsModule,
+        StoreModule.forFeature('media-viewer', reducers),
+        StoreModule.forRoot({}),
+        OverlayModule,
+        RouterTestingModule
+      ],
       providers: [ToolbarButtonVisibilityService, ToolbarEventService]
     })
       .compileComponents();
@@ -104,11 +110,29 @@ describe('MainToolbarComponent', () => {
     expect(pageChangerSpy).toHaveBeenCalledWith(-1);
   });
 
-  it('should go to selected page', () => {
-    const pageChangerSpy = spyOn(component.toolbarEvents.setCurrentPageSubject, 'next');
-    component.pageCount = 21;
-    component.onPageNumberInputChange('4');
-    expect(pageChangerSpy).toHaveBeenCalledWith(4);
+  describe('onPageNumberInputChange', () => {
+    it('should go to selected page', () => {
+      const pageChangerSpy = spyOn(component.toolbarEvents.setCurrentPageSubject, 'next');
+      component.pageCount = 21;
+      component.onPageNumberInputChange('4');
+      expect(pageChangerSpy).toHaveBeenCalledWith(4);
+    });
+
+    it('should emit pageNumber as 1 when given value < 1', () => {
+      component.pageCount = 4;
+      const setPageSpy = spyOn(toolbarService, 'setPage');
+      component.onPageNumberInputChange('0');
+
+      expect(setPageSpy).toHaveBeenCalledWith(1);
+    });
+
+    it('should emit pageCount value when provided value too big', () => {
+      component.pageCount = 4;
+      const setPageSpy = spyOn(toolbarService, 'setPage');
+      component.onPageNumberInputChange('5');
+
+      expect(setPageSpy).toHaveBeenCalledWith(4);
+    });
   });
 
   it('should update page number', () => {
@@ -234,5 +258,33 @@ describe('MainToolbarComponent', () => {
     downloadButton.click();
 
     expect(downloadSpy).toHaveBeenCalledWith();
+  });
+
+  it('should return true is contentType equals pdf', () => {
+    component.contentType = 'pdf';
+
+    expect(component.isPdf()).toBeTrue();
+  });
+
+  it('should invert toggleCommentsPanel value', () => {
+    const value = toolbarService.commentsPanelVisible.getValue();
+    const toggleCommentsPanelSpy = spyOn(toolbarService, 'toggleCommentsPanel');
+    component.toggleCommentsPanel();
+
+    expect(toggleCommentsPanelSpy).toHaveBeenCalledWith(!value);
+  });
+
+  it('should call toggleRedactionMode', () => {
+    const toggleRedactionModeSpy = spyOn(toolbarService, 'toggleRedactionMode');
+    component.toggleRedactBar();
+
+    expect(toggleRedactionModeSpy).toHaveBeenCalled();
+  });
+
+  it('should call toggleGrabNDrag', () => {
+    const toggleGrabNDragSpy = spyOn(toolbarService, 'toggleGrabNDrag');
+    component.toggleGrabNDrag();
+
+    expect(toggleGrabNDragSpy).toHaveBeenCalled();
   });
 });

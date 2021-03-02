@@ -1,26 +1,24 @@
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { Subject } from 'rxjs';
+import { Store, StoreModule } from '@ngrx/store';
+
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { annotationSet } from '../../../assets/annotation-set';
 import { PrintService } from '../../print.service';
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AnnotationSetComponent } from '../../annotations/annotation-set/annotation-set.component';
-import { AnnotationApiService } from '../../annotations/annotation-api.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { DocumentLoadProgress } from './pdf-js/pdf-js-wrapper';
 import { ViewerEventService } from '../viewer-event.service';
-
 import { CommentService } from '../../annotations/comment-set/comment/comment.service';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create.service';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
 import { Outline } from './side-bar/outline-item/outline.model';
-import { Store, StoreModule } from '@ngrx/store';
 import { PdfPosition, reducers } from '../../store/reducers/reducers';
-import { PdfPositionUpdate } from '../../store/actions/document.action';
+import { PdfPositionUpdate } from '../../store/actions/document.actions';
 import { IcpService } from '../../icp/icp.service';
-import { SetCaseId } from '../../store/actions/icp.action';
+import { SetCaseId } from '../../store/actions/icp.actions';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -49,13 +47,11 @@ describe('PdfViewerComponent', () => {
         StoreModule.forRoot({})
       ],
       providers: [
-        AnnotationApiService,
         CommentService,
         ToolbarEventService,
         ViewerEventService,
         PrintService,
         PdfJsWrapperFactory,
-        HighlightCreateService,
         { provide: IcpService, useValue: mockIcpService },
       ],
       schemas: [
@@ -265,7 +261,7 @@ describe('PdfViewerComponent', () => {
     expect(commentSummarySpy).toHaveBeenCalledWith(true);
   });
 
-  it('Should call set case id action when case id is set',
+  it('should call set case id action when case id is set',
     inject([Store], fakeAsync((store) => {
       spyOn(store, 'dispatch');
 
@@ -278,4 +274,19 @@ describe('PdfViewerComponent', () => {
       expect(store.dispatch).toHaveBeenCalledWith(new SetCaseId(caseId));
     }))
   );
+
+  it('should scroll comments panel to current scrolling position of the viewer when became visible', fakeAsync(() => {
+    const scrollBySpy = spyOn(component.scrollTwo.nativeElement, 'scrollBy').and.callThrough();
+
+    component.viewerContainer.nativeElement.scrollBy(0, 100);
+    fixture.detectChanges();
+
+    toolbarEvents.commentsPanelVisible.next(true);
+    fixture.detectChanges();
+    tick(5);
+
+    fixture.whenStable().then(() => {
+      expect(scrollBySpy).toHaveBeenCalled();
+    });
+  }));
 });

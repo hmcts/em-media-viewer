@@ -13,7 +13,7 @@ import {
 import { Rectangle } from './rectangle.model';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
-import { HighlightCreateService } from '../../annotation-create/highlight-create.service';
+import { HighlightCreateService } from '../../annotation-create/highlight-create/highlight-create.service';
 
 @Component({
   selector: 'mv-anno-rectangle',

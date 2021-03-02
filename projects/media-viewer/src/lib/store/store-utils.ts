@@ -1,6 +1,8 @@
 import { Annotation } from '../annotations/annotation-set/annotation-view/annotation.model';
 import moment from 'moment-timezone';
 import { Redaction } from '../redaction/services/redaction.model';
+import { Filters } from './models/filters.interface';
+import { Comment } from '../annotations/comment-set/comment/comment.model';
 
 /*
   @dynamic
@@ -86,8 +88,7 @@ export class StoreUtils {
       }, {});
   }
 
-
-  static resetCommentEntSelect(ent) {
+  static resetCommentEntSelect(ent: { [id: string]: Comment }) {
     return Object.keys(ent).reduce((object, key) => {
       object[key] = {
         ...ent[key],
@@ -98,7 +99,7 @@ export class StoreUtils {
     }, {});
   }
 
-  static filterCommentsSummary(comments, filters) {
+  static filterCommentsSummary(comments: Array<Comment>, filters: Filters) {
     if (Object.keys(filters).length) {
       const tagFilterApplied = Object.keys(filters.tagFilters)
         .filter(key => filters.tagFilters[key] === true).length;
@@ -140,6 +141,7 @@ export class StoreUtils {
             }
           }
         }
+
         return (hasTagFilter || hasDateFilter);
       });
       return (tagFilterApplied || dateFilterApplied) ? filteredComments : comments;

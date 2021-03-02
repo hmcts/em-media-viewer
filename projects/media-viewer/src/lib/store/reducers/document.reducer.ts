@@ -1,4 +1,4 @@
-import * as fromActions from '../actions/document.action';
+import * as fromActions from '../actions/document.actions';
 
 export interface DocumentState {
   convertedDocument: {

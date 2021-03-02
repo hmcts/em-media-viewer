@@ -7,7 +7,7 @@ import { IcpUpdateService } from './icp-update.service';
 import { IcpPresenterService } from './icp-presenter.service';
 import { IcpFollowerService } from './icp-follower.service';
 import { select, Store } from '@ngrx/store';
-import * as fromIcpActions from '../store/actions/icp.action';
+import * as fromIcpActions from '../store/actions/icp.actions';
 import * as fromIcpSelectors from '../store/selectors/icp.selectors';
 import { filter, take } from 'rxjs/operators';
 
