@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/hmcts/media-viewer/badge.svg?branch=master)](https://coveralls.io/github/hmcts/media-viewer?branch=upload-npm-in-pipeline)
 [![Build Status](https://travis-ci.com/hmcts/media-viewer.svg?branch=master)](https://travis-ci.com/hmcts/media-viewer)
 
-This is an angular library that provides components to view and annotate PDF documents, as well as view images.
+This is an angular library that can be used to view and annotate PDF documents and images.
 
 ## Running demo app
 - npm run package

@@ -1,5 +1,5 @@
 import * as fromRedaction from '../actions/redaction.actions';
-import * as fromAnnotations from '../actions/annotations.action';
+import * as fromAnnotations from '../actions/annotation.actions';
 import {StoreUtils} from '../store-utils';
 import {SelectionAnnotation} from '../../annotations/models/event-select.model';
 import { Redaction } from '../../redaction/services/redaction.model'; // todo rename
@@ -127,6 +127,3 @@ export const getRedactionEnt = (state: RedactionState) => state.redactionEntitie
 export const getPageEnt = (state: RedactionState) => state.redactionPageEntities;
 export const getSelectedRedaction = (state: RedactionState) => state.selectedRedaction;
 export const getRedactedDocInfo = (state: RedactionState) => state.redactedDocumentInfo;
-
-
-

@@ -11,23 +11,24 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
+import { asyncScheduler, BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { filter, tap, throttleTime } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+
 import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
 import { PdfJsWrapperFactory } from './pdf-js/pdf-js-wrapper.provider';
 import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { PrintService } from '../../print.service';
-import { asyncScheduler, BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-visibility.service';
 import { CommentSetComponent } from '../../annotations/comment-set/comment-set.component';
 import { Outline } from './side-bar/outline-item/outline.model';
-import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromDocumentActions from '../../store/actions/document.action';
-import { PdfPositionUpdate } from '../../store/actions/document.action';
-import { filter, tap, throttleTime } from 'rxjs/operators';
-import * as fromTagActions from '../../store/actions/tags.actions';
-import { SetCaseId } from '../../store/actions/icp.action';
+import * as fromDocumentActions from '../../store/actions/document.actions';
+import { PdfPositionUpdate } from '../../store/actions/document.actions';
+import * as fromTagActions from '../../store/actions/tag.actions';
+import { SetCaseId } from '../../store/actions/icp.actions';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
 import { IcpState } from '../../icp/icp.interfaces';
 import { ViewerEventService } from '../viewer-event.service';
@@ -121,7 +122,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
         this.showCommentsPanel = toggle;
 
         if (toggle) {
-
           setTimeout(() => {
             this.scrollTwo.nativeElement.scrollBy(0, this.viewerContainer.nativeElement.scrollTop);
           });

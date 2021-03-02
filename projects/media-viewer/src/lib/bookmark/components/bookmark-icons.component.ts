@@ -2,7 +2,7 @@ import {Bookmark, BookmarksPerPage} from '../../viewers/pdf-viewer/side-bar/book
 import {Component, Input, OnInit} from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromSelectors from '../../store/selectors/bookmarks.selectors';
+import * as fromSelectors from '../../store/selectors/bookmark.selectors';
 import { Observable } from 'rxjs';
 
 @Component({

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../../../store/reducers/reducers';
-import * as fromActions from '../../../../store/actions/annotations.action';
+import * as fromActions from '../../../../store/actions/annotation.actions';
 
 describe('CommentSearch', () => {
 
@@ -90,4 +90,3 @@ describe('CommentSearch', () => {
       expect(component.searchIndex).toBe(0);
   }));
 });
-

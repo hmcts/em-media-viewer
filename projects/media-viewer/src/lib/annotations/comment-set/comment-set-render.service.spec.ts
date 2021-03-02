@@ -74,5 +74,12 @@ describe('CommentSetRenderService', () => {
       expect(commentList[0].rectTop).toBe(60);
     }));
 
+  it('should sort components and call adjustIfOverlapping',
+    inject([CommentSetRenderService], (service: CommentSetRenderService) => {
+      const beforeCommentList = [...componentList];
 
+      service.redrawComponents(beforeCommentList, pageHeights, 0, 2);
+      expect(beforeCommentList).toEqual([componentList[1], componentList[0]]);
+    })
+  );
 });

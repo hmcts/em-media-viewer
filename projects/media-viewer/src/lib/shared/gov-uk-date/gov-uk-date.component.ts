@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 /*
 * Gov UK Date Component
 * Responsible for displaying 3 input fields:
@@ -9,12 +9,8 @@ import {Component, Input, OnInit} from '@angular/core';
   selector: 'mv-gov-uk-date',
 templateUrl: './gov-uk-date.component.html'
 })
-export class GovUkDateComponent implements OnInit {
-  constructor () { }
+export class GovUkDateComponent {
   @Input() config: { id: string; legend: string };
   @Input() errorMessage: {isInvalid: boolean; messages: string[]};
   @Input() formGroup;
-
-  ngOnInit(): void {
-  }
 }
