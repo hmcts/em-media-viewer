@@ -1,5 +1,8 @@
 FROM hmctspublic.azurecr.io/base/node:12-alpine as base
 
+# Update & Install theses apps.
+RUN apk update && apk upgrade && apk add --no-cache rsync
+
 USER hmcts
 
 ENV WORKDIR /opt/app
