@@ -38,7 +38,8 @@
     "e2e": "yarn stub:annotations && ng e2e --webdriverUpdate=false",
     "e2e:cucumber": "yarn webdriver:update && yarn e2e -- --protractor-config e2e/cucumber.conf.js",
     "e2e:ci": "yarn webdriver:update && yarn stub:annotations && ng e2e --webdriverUpdate=false --protractor-config 'e2e/ci.protractor.conf.js'",
-    "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner"
+    "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner",
+    "rebuild-node-sass": "npm install node-sass@4.14.1"
   },
   "dependencies": {
     "angular-tree-component": "^8.5.6",

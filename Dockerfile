@@ -11,7 +11,8 @@ WORKDIR ${WORKDIR}
 
 COPY --chown=hmcts:hmcts ./ /opt/app/
 
-RUN yarn \
+RUN yarn rebuild-node-sass \
+  && yarn \
   && yarn setup \
   && yarn cache clean
 
