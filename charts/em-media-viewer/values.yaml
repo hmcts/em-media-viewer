@@ -3,9 +3,19 @@ nodejs:
   aadIdentityName: em
   ingressHost: media-viewer.{{ .Values.global.environment }}.platform.hmcts.net
   image: 'hmctspublic.azurecr.io/em/media-viewer:latest'
-#  Uncomment once the vault containing the app insights key has been set up
-#  keyVaults:
-#    rpe:
-#      secrets:
-#        - AppInsightsInstrumentationKey
+  keyVaults:
+    em-showcase:
+      resourceGroup: em-media-viewer
+      secrets:
+        - show-oauth2-token
+        - microservicekey-em-gw
   environment:
+    REFORM_ENVIRONMENT: "{{ .Values.global.environment }}"
+    DOCASSEMBLY_URL: "http://dg-docassembly-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    DM_STORE_APP_URL: "http://dm-store-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    ANNOTATION_API_URL: "http://em-anno-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    ICP_API_URL: "http://em-icp-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    IDAM_URL: "https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net"
+    S2S_URL: "http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    NPA_URL: "http://em-npa-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    REDIRECT_URL: "https://em-show-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/oauth2/callback"
