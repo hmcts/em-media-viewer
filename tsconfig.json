@@ -31,5 +31,13 @@
       ],
       "core-js/es6/*": ["node_modules/core-js/es"]
     }
-  }
+  },
+  "exclude": [
+    "dist",
+    "e2e",
+    "node_modules",
+    "projects",
+    "src",
+    "test"
+  ]
 }
