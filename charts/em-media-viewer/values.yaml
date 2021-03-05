@@ -4,11 +4,14 @@ nodejs:
   ingressHost: media-viewer.{{ .Values.global.environment }}.platform.hmcts.net
   image: 'hmctspublic.azurecr.io/em/media-viewer:latest'
   keyVaults:
-    em-media-viewer:
-      resourceGroup: em-media-viewer
+    s2s:
+      resourceGroup: rpe-service-auth-provider
+      secrets:
+        - microservicekey-em-gw
+    rpa:
+      resourceGroup: rpa
       secrets:
         - show-oauth2-token
-        - microservicekey-em-gw
   environment:
     REFORM_ENVIRONMENT: "{{ .Values.global.environment }}"
     DOCASSEMBLY_URL: "http://dg-docassembly-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
