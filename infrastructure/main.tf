@@ -11,6 +11,7 @@ locals {
   ase_name = "core-compute-${var.env}"
   local_env = var.env == "preview" ? "aat" : var.env
   local_ase = var.env == "preview" ? "core-compute-aat" : local.ase_name
+  resource_group_name = "${local.app_full_name}-${var.env}"
 }
 
 resource "azurerm_resource_group" "rg" {
