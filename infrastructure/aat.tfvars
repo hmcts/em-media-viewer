@@ -1,4 +1,4 @@
-additional_host_name = "em-showcase.aat.platform.hmcts.net"
+additional_host_name = "em-media-viewer.aat.platform.hmcts.net"
 
 capacity = "2"
 

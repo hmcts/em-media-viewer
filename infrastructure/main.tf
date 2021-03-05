@@ -5,8 +5,8 @@ provider "azurerm" {
 locals {
   app_full_name = "${var.product}-${var.component}"
 
-  asp_name = "em-showcase-${var.env}"
-  asp_rg = "em-showcase-${var.env}"
+  asp_name = "em-media-viewer-${var.env}"
+  asp_rg = "em-em-media-viewer-${var.env}"
 
   ase_name = "core-compute-${var.env}"
   local_env = var.env == "preview" ? "aat" : var.env
@@ -63,19 +63,19 @@ data "azurerm_key_vault_secret" "s2s_key" {
   key_vault_id = data.azurerm_key_vault.s2s_vault.id
 }
 
-resource "azurerm_key_vault_secret" "local_s2s_key" {
-  name         = "microservicekey-em-gw"
-  value        = data.azurerm_key_vault_secret.s2s_key.value
-  key_vault_id = data.azurerm_key_vault.local_key_vault.id
-}
+//resource "azurerm_key_vault_secret" "local_s2s_key" {
+//  name         = "microservicekey-em-gw"
+//  value        = data.azurerm_key_vault_secret.s2s_key.value
+//  key_vault_id = data.azurerm_key_vault.local_key_vault.id
+//}
 
 data "azurerm_key_vault_secret" "oauth2_secret" {
   name      = "show-oauth2-token"
   key_vault_id = data.azurerm_key_vault.shared_vault.id
 }
 
-resource "azurerm_key_vault_secret" "local_oauth2_secret" {
-  name         = "show-oauth2-token"
-  value        = data.azurerm_key_vault_secret.oauth2_secret.value
-  key_vault_id = data.azurerm_key_vault.local_key_vault.id
-}
+//resource "azurerm_key_vault_secret" "local_oauth2_secret" {
+//  name         = "show-oauth2-token"
+//  value        = data.azurerm_key_vault_secret.oauth2_secret.value
+//  key_vault_id = data.azurerm_key_vault.local_key_vault.id
+//}

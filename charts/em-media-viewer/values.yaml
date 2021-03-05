@@ -4,7 +4,7 @@ nodejs:
   ingressHost: media-viewer.{{ .Values.global.environment }}.platform.hmcts.net
   image: 'hmctspublic.azurecr.io/em/media-viewer:latest'
   keyVaults:
-    em-showcase:
+    em-media-viewer:
       resourceGroup: em-media-viewer
       secrets:
         - show-oauth2-token
