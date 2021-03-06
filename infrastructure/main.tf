@@ -28,7 +28,7 @@ data "azurerm_user_assigned_identity" "rpa-shared-identity" {
 }
 
 module "local_key_vault" {
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=azurermv2"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   product = local.app_full_name
   env = var.env
   tenant_id = var.tenant_id
