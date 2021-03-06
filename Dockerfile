@@ -16,5 +16,5 @@ RUN yarn rebuild-node-sass \
   && yarn setup \
   && yarn cache clean
 
-EXPOSE 3000
+EXPOSE 1337
 CMD [ "yarn", "start:api" ]

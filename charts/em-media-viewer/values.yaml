@@ -1,5 +1,5 @@
 nodejs:
-  applicationPort: 3000
+  applicationPort: 1337
   aadIdentityName: em
   ingressHost: media-viewer.{{ .Values.global.environment }}.platform.hmcts.net
   image: 'hmctspublic.azurecr.io/em/media-viewer:latest'
