@@ -2,8 +2,8 @@ import * as aksVaultConfig from "config";
 import * as propertiesVolume from "@hmcts/properties-volume";
 propertiesVolume.addTo(aksVaultConfig);
 
-const IDAM_SECRET = aksVaultConfig.secrets ? aksVaultConfig.secrets["rpa"]["show-oauth2-token"] : undefined;
-const S2S_KEY = aksVaultConfig.secrets ? aksVaultConfig.secrets["rpe-service-auth-provider"]["microservicekey-em-gw"] : undefined;
+const IDAM_SECRET = aksVaultConfig.secrets ? aksVaultConfig.secrets["em-showcase"]["show-oauth2-token"] : undefined;
+const S2S_KEY = aksVaultConfig.secrets ? aksVaultConfig.secrets["em-showcase"]["microservicekey-em-gw"] : undefined;
 
 export const config = {
     proxies: {
