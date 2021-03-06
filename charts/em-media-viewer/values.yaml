@@ -4,13 +4,10 @@ nodejs:
   ingressHost: media-viewer.{{ .Values.global.environment }}.platform.hmcts.net
   image: 'hmctspublic.azurecr.io/em/media-viewer:latest'
   keyVaults:
-    s2s:
-      resourceGroup: rpe-service-auth-provider
+    em-media-viewer:
+      resourceGroup: em-media-viewer
       secrets:
         - microservicekey-em-gw
-    rpa:
-      resourceGroup: rpa
-      secrets:
         - show-oauth2-token
   environment:
     REFORM_ENVIRONMENT: "{{ .Values.global.environment }}"
