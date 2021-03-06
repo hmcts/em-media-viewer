@@ -50,29 +50,29 @@ data "azurerm_key_vault" "shared_vault" {
   resource_group_name = "rpa-${local.local_env}"
 }
 
-data "azurerm_key_vault" "local_key_vault" {
-  name = module.local_key_vault.key_vault_name
-  resource_group_name = module.local_key_vault.key_vault_name
-}
+//data "azurerm_key_vault" "local_key_vault" {
+//  name = module.local_key_vault.key_vault_name
+//  resource_group_name = module.local_key_vault.key_vault_name
+//}
 
 data "azurerm_key_vault_secret" "s2s_key" {
   name      = "microservicekey-em-gw"
   key_vault_id = data.azurerm_key_vault.s2s_vault.id
 }
 
-resource "azurerm_key_vault_secret" "local_s2s_key" {
-  name         = "microservicekey-em-gw"
-  value        = data.azurerm_key_vault_secret.s2s_key.value
-  key_vault_id = data.azurerm_key_vault.local_key_vault.id
-}
+//resource "azurerm_key_vault_secret" "local_s2s_key" {
+//  name         = "microservicekey-em-gw"
+//  value        = data.azurerm_key_vault_secret.s2s_key.value
+//  key_vault_id = data.azurerm_key_vault.local_key_vault.id
+//}
 
 data "azurerm_key_vault_secret" "oauth2_secret" {
   name      = "show-oauth2-token"
   key_vault_id = data.azurerm_key_vault.shared_vault.id
 }
 
-resource "azurerm_key_vault_secret" "local_oauth2_secret" {
-  name         = "show-oauth2-token"
-  value        = data.azurerm_key_vault_secret.oauth2_secret.value
-  key_vault_id = data.azurerm_key_vault.local_key_vault.id
-}
+//resource "azurerm_key_vault_secret" "local_oauth2_secret" {
+//  name         = "show-oauth2-token"
+//  value        = data.azurerm_key_vault_secret.oauth2_secret.value
+//  key_vault_id = data.azurerm_key_vault.local_key_vault.id
+//}
