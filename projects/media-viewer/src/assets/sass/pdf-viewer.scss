@@ -4,6 +4,30 @@ mv-pdf-viewer {
     position: relative;
     background-color: #dee0e2;
 
+    .viewer-container {
+      position: absolute;
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+
+      &.annotations {
+        width: 100%;
+      }
+
+      &.annotations.show-comments-panel {
+        width: 75%;
+      }
+    }
+
+    .comments {
+      position: absolute;
+      overflow-y: hidden;
+      top: 0;
+      right: 0;
+      width: 24%;
+      height: 100%;
+    }
+
     .pageContainer {
       width: 100%;
     }
@@ -64,7 +88,7 @@ mv-pdf-viewer {
       .has-redact-bar & {
         width: 100%;
       }
-      width: 76%;
+      width: 75%;
     }
   }
 

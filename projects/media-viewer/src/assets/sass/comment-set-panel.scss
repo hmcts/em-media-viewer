@@ -1,11 +1,11 @@
 .comments-panel {
+  display: none;
   position: absolute;
   overflow-y: auto;
   top: 0;
-  right: 0%;
-  width: 0%;
+  right: 0;
+  width: 100%;
   z-index: 1;
-  padding-top: -10px;
   transition-duration: 600ms;
   transition-timing-function: ease;
   background-color: white;
@@ -16,11 +16,10 @@
 }
 
 .comments-panel.expanded {
-  width: 24%;
+  display: block;
 }
 
 .comments-panel.icp-mode {
   top: 90px;
   height: 100%
 }
-

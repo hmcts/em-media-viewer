@@ -9,7 +9,6 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-  ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
 import { asyncScheduler, BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -31,7 +30,6 @@ import { PdfPositionUpdate } from '../../store/actions/document.actions';
 import * as fromTagActions from '../../store/actions/tag.actions';
 import { SetCaseId } from '../../store/actions/icp.actions';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
-import { IcpService } from '../../icp/icp.service';
 import { IcpState } from '../../icp/icp.interfaces';
 import { ViewerEventService } from '../viewer-event.service';
 
@@ -74,6 +72,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
   @ViewChild('commentsPanel') commentsPanel: CommentSetComponent;
+  @ViewChild('scrollTwo') scrollTwo: ElementRef<HTMLDivElement>;
 
   private pdfWrapper: PdfJsWrapper;
   private $subscription: Subscription;
@@ -85,9 +84,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
     private icpStore: Store<IcpState>,
-    private icpService: IcpService,
     private readonly pdfJsWrapperFactory: PdfJsWrapperFactory,
-    private readonly viewContainerRef: ViewContainerRef,
     private readonly printService: PrintService,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
@@ -121,7 +118,16 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.toolbarEvents.changePageByDeltaSubject.subscribe(pageNumber => this.pdfWrapper.changePageNumber(pageNumber))
     );
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
-    this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle));
+    this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
+        this.showCommentsPanel = toggle;
+
+        if (toggle) {
+          setTimeout(() => {
+            this.scrollTwo.nativeElement.scrollBy(0, this.viewerContainer.nativeElement.scrollTop);
+          });
+        }
+      })
+    );
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
     this.$subscription.add(
       this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle)
@@ -158,7 +164,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   ngOnDestroy(): void {
     this.$subscription.unsubscribe();
   }
-
 
   private async loadDocument() {
     this.initDocumentProgress();
