@@ -15,7 +15,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://npm.pkg.github.com/@hmcts"
   },
   "dependencies": {
     "angular-tree-component": "^8.5.6",
