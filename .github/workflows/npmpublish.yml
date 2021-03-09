@@ -19,9 +19,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm install
-      - run: npm run package
-      - run: npm run test
+      - run: yarn install
+      - run: yarn package
+      - run: yarn test
 
   publish-npm:
     needs: build
@@ -34,8 +34,8 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - run: npm install
-      - run: npm run publish:dist
+      - run: yarn install
+      - run: yarn publish:dist
         if: startsWith(github.ref, 'refs/tags')
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_API_TOKEN }}
@@ -52,8 +52,8 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: '@hmcts'
-      - run: npm install
-      - run: npm run publish:dist
+      - run: yarn install
+      - run: yarn publish:dist
         if: startsWith(github.ref, 'refs/tags')
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
