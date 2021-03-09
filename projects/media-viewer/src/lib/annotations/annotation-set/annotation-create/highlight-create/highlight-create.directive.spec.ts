@@ -1,8 +1,7 @@
 import { ElementRef } from '@angular/core';
 import { HighlightCreateDirective } from './highlight-create.directive';
 import { SelectedAnnotation } from '../../../../store/actions/annotation.actions';
-import { BehaviorSubject, of } from 'rxjs';
-import { fakeAsync } from '@angular/core/testing';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
 import any = jasmine.any;
 
 describe('HighlightCreateDirective', () => {
@@ -39,6 +38,24 @@ describe('HighlightCreateDirective', () => {
       toolbarEvents, viewerEvents, highlightService, store);
   });
 
+  it('should set allPages onInit', () => {
+    const pages = { 1: 'pages' };
+    spyOn(store, 'select').and.returnValue(of(pages));
+
+    directive.ngOnInit();
+
+    expect(directive.allPages).toEqual(pages);
+  });
+
+  it('should unSubscribe on ngOnDestroy', () => {
+    directive.$subscription = new Subscription();
+    spyOn(directive.$subscription, 'unsubscribe');
+
+    directive.ngOnDestroy();
+
+    expect(directive.$subscription.unsubscribe).toHaveBeenCalled();
+  });
+
   it('should not highlight text when in view mode for selected page', () => {
     spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(false);
     spyOn(viewerEvents, 'textSelected');
@@ -60,7 +77,7 @@ describe('HighlightCreateDirective', () => {
     expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled();
   });
 
-  it('should create rectangles', fakeAsync(() => {
+  it('should create rectangles', () => {
     const mockClientRects = [{ top: 80, left: 60 , bottom: 100, right: 70 }] as any;
     const mockRange = { getClientRects: () => mockClientRects } as any;
     const mockSelection = {
@@ -88,7 +105,7 @@ describe('HighlightCreateDirective', () => {
     expect(highlightService.applyRotation).toHaveBeenCalledWith(height, width, 20, 10, 50, 20, 0, 1);
     expect(viewerEvents.textSelected)
       .toHaveBeenCalledWith({ page: 1 , rectangles: [{ id, ...rectangle }]});
-  }));
+  });
 
   it('should remove extra padding and transform', () => {
     spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
