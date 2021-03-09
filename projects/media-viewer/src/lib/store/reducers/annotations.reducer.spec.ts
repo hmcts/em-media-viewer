@@ -2,6 +2,7 @@ import { mockComments } from 'test/mocks/data/mock-comments';
 import { Comment } from '../../annotations/comment-set/comment/comment.model';
 import * as fromAnnotations from './annotations.reducer';
 import * as fromActions from '../actions/annotation.actions';
+import { Filters } from '../models/filters.interface';
 
 const annotationSet = {
   annotations: [{
@@ -129,4 +130,13 @@ describe('AnnotationReducer', () => {
     });
   });
 
+  describe('APPLY_COMMENT_SUMMARY_FILTER action', () => {
+    it('should add filters to the state', () => {
+      const { initialState } = fromAnnotations;
+      const payload: Filters = { tagFilters: { color: 'blue' }};
+      const action = new fromActions.ApplyCommentSymmaryFilter(payload);
+      const state =  fromAnnotations.reducer(initialState, action);
+      expect(state.commentSummaryFilters).toEqual({ hasFilter: true, filters: payload });
+    });
+  });
 });
