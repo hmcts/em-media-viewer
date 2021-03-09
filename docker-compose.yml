@@ -9,4 +9,4 @@ services:
         - https_proxy
         - no_proxy
     ports:
-      - 3000:3000
+      - 1337:1337
