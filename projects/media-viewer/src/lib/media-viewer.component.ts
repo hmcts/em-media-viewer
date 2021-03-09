@@ -1,12 +1,15 @@
 import {
   AfterContentInit,
+  ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   Output,
   SimpleChanges,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
@@ -49,13 +52,19 @@ enum ConvertibleContentTypes {
 })
 export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
 
+  @ViewChild('viewerRef') viewerRef: ElementRef;
+
   @Input() url;
   @Input() downloadFileName: string;
   @Input() contentType: string;
 
   @Input() showToolbar = true;
   @Input() toolbarButtonOverrides: any = {};
-  @Input() height = 'calc(100vh - 42px)';
+
+  @Input()
+  public height: string;
+  public viewerHeight: string;
+
   @Input() width = '100%';
 
   @Output() mediaLoadStatus = new EventEmitter<ResponseType>();
@@ -78,12 +87,15 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   hasDifferentPageSize$: Observable<boolean>;
 
   private $subscriptions: Subscription;
+  private prevOffset: number;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
-    private readonly commentService: CommentService
+    private readonly commentService: CommentService,
+    private elRef: ElementRef,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -96,6 +108,26 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       .subscribe(changes => this.onCommentChange(changes));
     this.$subscriptions.add(this.toolbarEvents.getShowCommentSummary()
       .subscribe(changes => this.showCommentSummary = changes));
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.height && this.viewerHeight !== this.height) {
+      this.viewerHeight = this.height;
+      this.cdr.detectChanges();
+      return;
+    }
+
+    if (!this.height) {
+      const compOffsetTop = this.elRef.nativeElement.getBoundingClientRect().top;
+      const viewerOffsetTop = this.viewerRef.nativeElement.offsetTop;
+      const offset = compOffsetTop + viewerOffsetTop;
+
+      if (this.prevOffset !== offset) {
+        this.viewerHeight = `calc(100vh - ${offset}px)`;
+        this.prevOffset = offset;
+        this.cdr.detectChanges();
+      }
+    }
   }
 
   contentTypeConvertible(): boolean {

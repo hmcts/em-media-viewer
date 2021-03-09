@@ -1,6 +1,7 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { MediaViewerComponent } from './media-viewer.component';
 import { ToolbarButtonVisibilityService, ToolbarModule } from './toolbar/toolbar.module';
+import { ToolbarEventService } from './toolbar/toolbar-event.service';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ResponseType, ViewerException } from './viewers/viewer-exception.model';
@@ -29,7 +30,8 @@ describe('MediaViewerComponent', () => {
       declarations: [MediaViewerComponent],
       providers: [
         { provide: CommentService, useValue: commentService },
-        ToolbarButtonVisibilityService
+        ToolbarButtonVisibilityService,
+        ToolbarEventService,
       ],
       imports: [
         ToolbarModule,
@@ -217,5 +219,43 @@ describe('MediaViewerComponent', () => {
 
     component.onDocumentTitleChange(newTitle);
     expect(component.documentTitle).toEqual(newTitle);
+  });
+
+  describe('height param', () => {
+    it('should calc height when input value is not provided', () => {
+      component.height = undefined;
+      fixture.detectChanges();
+
+      expect(component.viewerHeight).toBeDefined();
+    });
+
+    it('should set height to input value', () => {
+      const mockHeight = 'calc(100vh - 25px)';
+      component.height = mockHeight;
+      fixture.detectChanges();
+
+      expect(component.viewerHeight).toEqual(mockHeight);
+    });
+
+    it('should set viewHeight to height when component moved', () => {
+      const mockHeight = 'calc(100vh - 25px)';
+      component.height = mockHeight;
+
+      const toolbarEvents = TestBed.get(ToolbarEventService);
+      toolbarEvents.redactionMode.next(true);
+      fixture.detectChanges();
+
+      expect(component.viewerHeight).toEqual(mockHeight);
+    });
+
+    it('should re-calc viewHeight when component moved and height input param omitted', () => {
+      const viewerHeight = component.viewerHeight;
+      const toolbarEvents = TestBed.get(ToolbarEventService);
+
+      toolbarEvents.redactionMode.next(true);
+      fixture.detectChanges();
+
+      expect(component.viewerHeight).not.toEqual(viewerHeight);
+    });
   });
 });
