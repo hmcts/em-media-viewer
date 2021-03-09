@@ -14,7 +14,7 @@
     "url": "https://github.com/hmcts/media-viewer"
   },
   "publishConfig": {
-    "access": "public",
+    "access": "public"
   },
   "dependencies": {
     "angular-tree-component": "^8.5.6",
