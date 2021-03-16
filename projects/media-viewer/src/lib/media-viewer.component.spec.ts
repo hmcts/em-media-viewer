@@ -1,4 +1,9 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
+import {StoreModule} from '@ngrx/store';
+import { Subject } from 'rxjs';
+
 import { MediaViewerComponent } from './media-viewer.component';
 import { ToolbarButtonVisibilityService, ToolbarModule } from './toolbar/toolbar.module';
 import { ToolbarEventService } from './toolbar/toolbar-event.service';
@@ -10,12 +15,9 @@ import {
   defaultPdfOptions,
   defaultUnsupportedOptions
 } from './toolbar/toolbar-button-visibility.service';
+import { AnnotationApiService } from './annotations/services/annotation-api/annotation-api.service';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
-import { By } from '@angular/platform-browser';
 import {reducers} from './store/reducers/reducers';
-import {StoreModule} from '@ngrx/store';
-import { Subject } from 'rxjs';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -30,6 +32,12 @@ describe('MediaViewerComponent', () => {
       declarations: [MediaViewerComponent],
       providers: [
         { provide: CommentService, useValue: commentService },
+        {
+          provide: AnnotationApiService,
+          useValue: {
+            api: null
+          }
+        },
         ToolbarButtonVisibilityService,
         ToolbarEventService,
       ],
@@ -132,6 +140,19 @@ describe('MediaViewerComponent', () => {
 
     expect(component.annotationSet$).toBe(null);
   });
+
+  it('should set annotationApiUrl', () => {
+     const api = TestBed.get(AnnotationApiService);
+     component.contentType = 'pdf';
+     const ANNOTATION_API_URL = 'annotation-api-url';
+     component.annotationApiUrl = ANNOTATION_API_URL;
+
+     component.ngOnChanges({
+       annotationApiUrl: new SimpleChange(true, false, false)
+     });
+
+     expect(api.annotationApiUrl).toBe(ANNOTATION_API_URL);
+   });
 
   it('onMediaLoad should emit a ResponseType', () => {
     spyOn(component.mediaLoadStatus, 'emit');
