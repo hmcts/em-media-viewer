@@ -21,6 +21,7 @@ import {
 } from './toolbar/toolbar-button-visibility.service';
 import { AnnotationSet } from './annotations/annotation-set/annotation-set.model';
 import { ToolbarEventService } from './toolbar/toolbar-event.service';
+import { AnnotationApiService } from './annotations/services/annotation-api/annotation-api.service';
 import { ResponseType, ViewerException } from './viewers/viewer-exception.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import 'hammerjs';
@@ -73,6 +74,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   @Output() unsavedChanges = new EventEmitter<boolean>();
 
   @Input() enableAnnotations = false;
+  @Input() annotationApiUrl;
 
   @Input() enableRedactions = false;
   @Input() enableICP = false;
@@ -93,10 +95,14 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     private store: Store<fromStore.AnnotationSetState>,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
+    private readonly api: AnnotationApiService,
     private readonly commentService: CommentService,
     private elRef: ElementRef,
     private cdr: ChangeDetectorRef
   ) {
+    if (this.annotationApiUrl) {
+      api.annotationApiUrl = this.annotationApiUrl;
+    }
   }
 
   ngAfterContentInit() {
@@ -140,6 +146,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes.annotationApiUrl) {
+      this.api.annotationApiUrl = this.annotationApiUrl;
+    }
+
     if (changes.url) {
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
