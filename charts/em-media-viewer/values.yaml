@@ -1,7 +1,7 @@
 nodejs:
   applicationPort: 1337
   aadIdentityName: em
-  ingressHost: media-viewer.{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+  ingressHost: em-media-viewer.{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
   image: 'hmctspublic.azurecr.io/em/media-viewer:latest'
   keyVaults:
     em-showcase:
