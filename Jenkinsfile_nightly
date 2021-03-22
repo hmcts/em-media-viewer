@@ -21,10 +21,10 @@ env.S2S_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.int
 env.REDIRECT_URL = "https://em-show-aat.service.core-compute-aat.internal/oauth2/callback"
 
 def secrets = [
-        's2s-${env}': [
+        'em-showcase-${env}': [
                 secret('microservicekey-em-gw', 'S2S_KEY')
         ],
-        'rpa-${env}': [
+        'em-showcase-${env}': [
                 secret('show-oauth2-token', 'IDAM_SECRET')
         ]
 ]
