@@ -30,6 +30,7 @@
     "test:a11y": "yarn test",
     "test:smoke": "yarn test",
     "test:functional": "yarn test",
+    "test:fullfunctional": "yarn e2e:fullfunctional",
     "test:codacy-upload": "cross-env NODE_PATH=. cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
     "test:coveralls-upload": "cross-env NODE_PATH=. cat ./reports/tests/coverage/ng/lcov.info | coveralls",
     "test:codecov-upload": "codecov -f ./reports/tests/coverage/ng/lcov.info",
@@ -41,6 +42,7 @@
     "e2e": "yarn stub:annotations && ng e2e --webdriverUpdate=false",
     "e2e:cucumber": "yarn webdriver:update && yarn e2e -- --protractor-config e2e/cucumber.conf.js",
     "e2e:ci": "yarn webdriver:update && yarn stub:annotations && ng e2e --webdriverUpdate=false --protractor-config 'e2e/ci.protractor.conf.js'",
+    "e2e:fullfunctional": "yarn webdriver:update && protractor e2e/fullfunctional.conf.js",
     "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner",
     "rebuild-node-sass": "npm install node-sass@4.14.1"
   },
