@@ -143,6 +143,7 @@
     "pa11y-ci": "^2.4.0",
     "protractor": "^5.4.2",
     "protractor-cucumber-framework": "^6.1.1",
+    "protractor-multiple-cucumber-html-reporter-plugin": "1.8.0",
     "sonar-scanner": "^3.1.0",
     "ts-node": "^8.1.0",
     "tsickle": "^0.35.0",
