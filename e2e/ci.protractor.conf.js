@@ -28,7 +28,7 @@ exports.config = {
     compiler: 'ts:ts-node/register',
     strict: true,
     plugin: ['pretty'],
-    format: ['node_modules/cucumber-pretty', 'json:../../functional-output/reports/cucumber.json'],
+    format: ['node_modules/cucumber-pretty', 'json:./functional-output/reports/cucumber.json'],
     require: ['../e2e/src/step_definitions/*.ts'],
     tags: "@ci",
   },
@@ -38,9 +38,9 @@ exports.config = {
       options: {
         automaticallyGenerateReport: true,
         removeExistingJsonReportFile: true,
-        reportName: 'EM-ShowCase Full Functional Tests',
-        jsonDir: '../../functional-output/reports',
-        reportPath: '../../functional-output/reports/html'
+        reportName: 'MediaViewer Functional Tests',
+        jsonDir: './functional-output/reports',
+        reportPath: './functional-output/reports/html'
       }
     }
   ]
