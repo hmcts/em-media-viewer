@@ -1,5 +1,5 @@
-import * as express from "express";
-import * as healthcheck from "@hmcts/nodejs-healthcheck";
+import * as express from 'express';
+import * as healthcheck from '@hmcts/nodejs-healthcheck';
 
 export const healthcheckRoutes = express.Router();
 
