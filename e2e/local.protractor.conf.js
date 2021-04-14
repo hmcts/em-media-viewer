@@ -1,7 +1,3 @@
-// Protractor configuration file, see link for more information
-// https://github.com/angular/protractor/blob/master/lib/config.ts
-const path = require('path');
-
 exports.config = {
   SELENIUM_PROMISE_MANAGER: false,
   allScriptsTimeout: 120000,
@@ -11,17 +7,18 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     chromeOptions: {
+      // 'args': ['--no-sandbox', '--start-maximized', 'use-fake-ui-for-media-stream'],
       args: ['--headless', '--window-size=1920,1080']
     }
   },
   directConnect: true,
-  baseUrl: "http://em-showcase-aat.service.core-compute-aat.internal/media-viewer",
+  baseUrl: 'http://localhost:1337',
   specs: [
     './src/**/*.feature',
   ],
   onPrepare: function () {
     require('ts-node').register({
-      project: path.join(__dirname, './tsconfig.e2e.json')
+      project: require('path').join(__dirname, './tsconfig.e2e.json')
     });
   },
   cucumberOpts: {
@@ -32,17 +29,17 @@ exports.config = {
     require: ['../e2e/src/step_definitions/*.ts'],
     tags: "@ci",
   },
+
   plugins: [
     {
       package: 'protractor-multiple-cucumber-html-reporter-plugin',
       options: {
         automaticallyGenerateReport: true,
         removeExistingJsonReportFile: true,
-        reportName: 'EM-ShowCase Full Functional Tests',
+        reportName: 'EM-ShowCase Functional Tests',
         jsonDir: '../../functional-output/reports',
         reportPath: '../../functional-output/reports/html'
       }
     }
   ]
 };
-
