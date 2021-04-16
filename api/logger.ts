@@ -1,3 +1,3 @@
-import { Logger } from "@hmcts/nodejs-logging";
+import { Logger } from '@hmcts/nodejs-logging';
 
-export const logger = Logger.getLogger("em-media-viewer");
+export const logger = Logger.getLogger('em-media-viewer');

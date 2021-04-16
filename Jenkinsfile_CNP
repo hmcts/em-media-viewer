@@ -5,14 +5,45 @@
 def type = "nodejs"
 def product = "em"
 def component = "media-viewer"
+def channel   = '#em-dev-chat'
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 withPipeline(type, product, component) {
   disableLegacyDeployment()
+  enableSlackNotifications(channel)
+
+  after('checkout') {
+      sh ("rm -rf node_modules")
+      sh ("yarn cache clean")
+      sh ('npm rebuild node-sass')
+      sh ('yarn install --force')
+      sh ('yarn setup')
+  }
 
   after('build') {
     yarnBuilder.yarn('build')
   }
 
+after('functionalTest:preview') {
+        publishHTML([
+                allowMissing         : true,
+                alwaysLinkToLastBuild: true,
+                keepAll              : true,
+                reportDir            : "functional-output/reports/html",
+                reportFiles          : 'index.html',
+                reportName           : 'PREVIEW Functional Test'
+        ])
+    }
+
+    after('functionalTest:aat') {
+        publishHTML([
+                allowMissing         : true,
+                alwaysLinkToLastBuild: true,
+                keepAll              : true,
+                reportDir            : "functional-output/reports/html",
+                reportFiles          : 'index.html',
+                reportName           : 'AAT Functional Test'
+        ])
+    }
 }
