@@ -10,10 +10,36 @@ pipelineTriggers([cron('H 05 * * *')])
 def type = "nodejs"
 def product = "em"
 def component = "media-viewer"
+def channel   = '#em-dev-chat'
+
+def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 withNightlyPipeline(type, product, component) {
-    loadVaultSecrets(secrets)
-    enableCrossBrowserTest()
-    enableSecurityScan()
-    enableFullFunctionalTest(200)
+  disableLegacyDeployment()
+  enableSecurityScan()
+  enableSlackNotifications(channel)
+  enableFullFunctionalTest(200)
+
+  after('checkout') {
+    sh ("rm -rf node_modules")
+    sh ("yarn cache clean")
+    sh ('npm rebuild node-sass')
+    sh ('yarn install --force')
+    sh ('yarn setup')
+  }
+
+  after('build') {
+    yarnBuilder.yarn('build')
+  }
+
+  after('functionalTest') {
+    publishHTML([
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : "functional-output/reports/html",
+      reportFiles          : 'index.html',
+      reportName           : 'MediaViewer Functional Tests'
+    ])
+  }
 }
