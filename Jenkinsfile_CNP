@@ -1,5 +1,17 @@
 #!groovy
 
+properties([
+  [
+    $class       : 'GithubProjectProperty',
+    displayName  : 'MediaViewer',
+    projectUrlStr: 'https://github.com/hmcts/em-media-viewer/'
+  ],
+  pipelineTriggers([
+    [$class: 'GitHubPushTrigger']
+  ])
+])
+
+
 @Library("Infrastructure")
 
 def type = "nodejs"
@@ -9,9 +21,46 @@ def channel   = '#em-dev-chat'
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
+env.DOCASSEMBLY_URL = "http://dg-docassembly-aat.service.core-compute-aat.internal"
+env.DM_STORE_APP_URL = "http://dm-store-aat.service.core-compute-aat.internal"
+env.ANNOTATION_API_URL = "http://em-anno-aat.service.core-compute-aat.internal"
+env.ICP_API_URL = "http://em-icp-aat.service.core-compute-aat.internal"
+env.NPA_URL = "http://em-npa-aat.service.core-compute-aat.internal"
+env.IDAM_URL = "http://idam-api.aat.platform.hmcts.net"
+env.S2S_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+env.REDIRECT_URL = "https://em-show-aat.service.core-compute-aat.internal/oauth2/callback"
+env.NODE_ENV="TEST"
+
+def vaultOverrides = [
+        'preview' : 'aat',
+]
+
+def secrets = [
+        's2s-${env}': [
+                secret('microservicekey-em-gw', 'S2S_KEY')
+        ],
+        'rpa-${env}': [
+                secret('show-oauth2-token', 'IDAM_SECRET')
+        ]
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
 withPipeline(type, product, component) {
-  disableLegacyDeployment()
   enableSlackNotifications(channel)
+  overrideVaultEnvironments(vaultOverrides)
+  loadVaultSecrets(secrets)
+  enableSecurityScan()
+  env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
+  enableAksStagingDeployment()
+  disableLegacyDeployment()
 
   after('checkout') {
       sh ("rm -rf node_modules")
@@ -25,25 +74,25 @@ withPipeline(type, product, component) {
     yarnBuilder.yarn('build')
   }
 
-after('functionalTest:preview') {
-        publishHTML([
-                allowMissing         : true,
-                alwaysLinkToLastBuild: true,
-                keepAll              : true,
-                reportDir            : "functional-output/reports/html",
-                reportFiles          : 'index.html',
-                reportName           : 'PREVIEW Functional Test'
-        ])
-    }
+  after('functionalTest:preview') {
+      publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : "functional-output/reports/html",
+              reportFiles          : 'index.html',
+              reportName           : 'PREVIEW Functional Test'
+      ])
+  }
 
-    after('functionalTest:aat') {
-        publishHTML([
-                allowMissing         : true,
-                alwaysLinkToLastBuild: true,
-                keepAll              : true,
-                reportDir            : "functional-output/reports/html",
-                reportFiles          : 'index.html',
-                reportName           : 'AAT Functional Test'
-        ])
-    }
+  after('functionalTest:aat') {
+      publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : "functional-output/reports/html",
+              reportFiles          : 'index.html',
+              reportName           : 'AAT Functional Test'
+      ])
+  }
 }

@@ -1,8 +1,14 @@
 #!groovy
 
 properties([
-// H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-pipelineTriggers([cron('H 05 * * *')])
+  [
+    $class       : 'GithubProjectProperty',
+    displayName  : 'MediaViewer',
+    projectUrlStr: 'https://github.com/hmcts/em-media-viewer/'
+  ],
+  pipelineTriggers([
+    cron('H 05 * * *')
+  ])
 ])
 
 @Library("Infrastructure")
@@ -19,6 +25,8 @@ withNightlyPipeline(type, product, component) {
   enableSecurityScan()
   enableSlackNotifications(channel)
   enableFullFunctionalTest(200)
+
+  env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
 
   after('checkout') {
     sh ("rm -rf node_modules")
@@ -40,6 +48,17 @@ withNightlyPipeline(type, product, component) {
       reportDir            : "functional-output/reports/html",
       reportFiles          : 'index.html',
       reportName           : 'MediaViewer Functional Tests'
+    ])
+  }
+
+  after('securityScan') {
+    publishHTML([
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : "reports/tests/",
+      reportFiles          : 'activescan.html',
+      reportName           : 'MediaViewer ZAP Security Scan Report'
     ])
   }
 }
