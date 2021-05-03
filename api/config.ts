@@ -22,6 +22,10 @@ export const config = {
             endpoints: ['/documents'],
             target: process.env['REFORM_ENVIRONMENT'] ? process.env['DM_STORE_APP_URL'] : 'http://localhost:4603'
         },
+        hrsApi: {
+            endpoints: ['/hearing-recordings'],
+            target: process.env['REFORM_ENVIRONMENT'] ? process.env['HRS_API_URL'] : 'http://localhost:8080'
+        },
         annotation: {
             endpoints: ['/em-anno'],
             target: process.env['REFORM_ENVIRONMENT'] ? process.env['ANNOTATION_API_URL'] : 'http://localhost:4623',

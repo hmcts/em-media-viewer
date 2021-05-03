@@ -1,25 +1,25 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, OnDestroy, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { Subscription } from 'rxjs';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ViewerUtilService } from '../viewer-util.service';
 
 @Component({
-  selector: 'mv-unsupported-viewer',
-  templateUrl: './unsupported-viewer.component.html'
+  selector: 'mv-audio-player',
+  templateUrl: './audio-player.component.html'
 })
-export class UnsupportedViewerComponent implements OnInit, OnDestroy {
+export class AudioPlayerComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() url: string;
   @Input() downloadFileName: string;
-  @Input() typeException: boolean;
 
   @Output() loadStatus = new EventEmitter<ResponseType>();
-  @Output() unsupportedViewerException = new EventEmitter<ViewerException>();
 
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
-  private subscriptions: Subscription[] = [];
+  relativeUrl: string;
+
+  private subscription: Subscription;
   private viewerException: ViewerException;
 
   constructor(
@@ -28,8 +28,9 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.subscriptions.push(
-      this.toolbarEvents.downloadSubject.subscribe(() => this.downloadLink.nativeElement.click()),
+    this.url = this.extractRelativeUrl(this.url);
+    this.subscription = this.toolbarEvents.downloadSubject.subscribe(() => this.downloadLink.nativeElement.click());
+    this.subscription.add(
       this.viewerUtilService.validateFile(this.url).subscribe(
         next => next,
         error => {
@@ -38,18 +39,21 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
         }
       )
     );
+    this.loadStatus.emit(ResponseType.SUCCESS);
+  }
 
-    this.loadStatus.emit(ResponseType.UNSUPPORTED);
-
-    if (!this.typeException) {
-      this.unsupportedViewerException.emit(this.viewerException);
+  public ngOnChanges(changes: SimpleChanges) {
+    if (changes.url) {
+      this.relativeUrl = this.extractRelativeUrl(this.url);
     }
   }
 
   ngOnDestroy(): void {
-    for (const subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
   }
 
+  private extractRelativeUrl(url: string): string {
+    const matchIndex = url.indexOf('/hearing-recordings/');
+    return matchIndex > 0 ? url.substring(matchIndex, url.length) : url;
+  }
 }

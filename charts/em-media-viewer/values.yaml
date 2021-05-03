@@ -13,6 +13,7 @@ nodejs:
     REFORM_ENVIRONMENT: "{{ .Values.global.environment }}"
     DOCASSEMBLY_URL: "http://dg-docassembly-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
     DM_STORE_APP_URL: "http://dm-store-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    HRS_API_URL: "http://em-hrs-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
     ANNOTATION_API_URL: "http://em-anno-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
     ICP_API_URL: "http://em-icp-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
     IDAM_URL: "https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net"

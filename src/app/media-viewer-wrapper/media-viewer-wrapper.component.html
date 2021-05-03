@@ -98,6 +98,11 @@
                 [ngClass]="{ 'govuk-button--secondary': documentType !== 'image' }" id="image-button"
                 data-module="govuk-button" (click)="setDocumentType('image')">Image
         </button>
+        <button class="govuk-button govuk-!-margin-right-1 govuk-!-width-one-quarter"
+                data-module="govuk-button" id="audio-button"
+                [ngClass]="{ 'govuk-button--secondary': documentType !== 'mp4' }"
+                (click)="setDocumentType('mp4')">Audio
+        </button>
         <button class="govuk-button govuk-!-width-one-third" data-module="govuk-button" id="unsupported-button"
                 [ngClass]="{ 'govuk-button--secondary': documentType !== null }"
                 (click)="setDocumentType(null)">Unsupported content

@@ -1,0 +1,7 @@
+<div class="govuk-width-container">
+  <audio width="320" height="240" controls>
+    <source [src]="relativeUrl" type="audio/mpeg">
+    <span>Your browser does not support the video tag.</span>
+    Please <a #downloadLink [href]="relativeUrl" [download]="downloadFileName">click here to download</a>.
+  </audio>
+</div>

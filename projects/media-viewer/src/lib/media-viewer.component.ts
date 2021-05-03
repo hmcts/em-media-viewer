@@ -1,5 +1,5 @@
 import {
-  AfterContentInit,
+  AfterContentInit, AfterViewChecked,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -35,7 +35,8 @@ import * as fromDocumentActions from './store/actions/document.actions';
 
 enum SupportedContentTypes {
   PDF = 'pdf',
-  IMAGE = 'image'
+  IMAGE = 'image',
+  MP4 = 'mp4'
 }
 
 enum ConvertibleContentTypes {
@@ -51,7 +52,7 @@ enum ConvertibleContentTypes {
   templateUrl: './media-viewer.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
+export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit, AfterViewChecked {
 
   @ViewChild('viewerRef') viewerRef: ElementRef;
 
@@ -81,6 +82,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() caseId: string;
 
+  unsupportedContent = false;
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
@@ -140,9 +142,9 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     return this.contentType !== null && Object.keys(ConvertibleContentTypes).includes(this.contentType.toUpperCase());
   }
 
-  contentTypeUnsupported(): boolean {
+  isSupported(): boolean {
     const supportedTypes = Object.keys(SupportedContentTypes).concat(Object.keys(ConvertibleContentTypes));
-    return this.contentType === null || !supportedTypes.includes(this.contentType.toUpperCase());
+    return this.contentType !== null && supportedTypes.includes(this.contentType.toUpperCase());
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -164,6 +166,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       if (this.contentType === 'image') {
         this.documentTitle = null;
       }
+    }
+
+    if (changes.contentType) {
+      this.unsupportedContent = !this.isSupported();
     }
     this.setToolbarButtons();
     this.detectOs();
@@ -199,7 +205,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   onLoadException(exception: ViewerException) {
     this.viewerException.emit(exception);
-    if (this.contentTypeUnsupported()) {
+    if (!this.isSupported()) {
       this.typeException = false;
     } else {
       this.typeException = true;

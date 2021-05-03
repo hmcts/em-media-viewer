@@ -12,6 +12,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   pdfUrl = '86dc297a-0153-44c0-b996-f563c1ff112a';
   imageUrl = '9a55775d-3326-4be1-9731-6806e948e557';
+  audioUrl = 'http://localhost:8080/hearing-recordings/9c5603f4-7cd1-4718-b49d-db64d9eb6595/segments/0';
   unsupportedUrl = 'assets/unsupported.txt';
   filename = 'filename';
   caseId = 'dummyCaseId';
@@ -38,11 +39,12 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   setDocumentType(newTab: string) {
     this.documentType = newTab;
-
     if (newTab === 'pdf') {
       this.setDocumentUrl(this.pdfUrl);
     } else if (newTab === 'image') {
       this.setDocumentUrl(this.imageUrl);
+    } else if (newTab === 'mp4') {
+      this.setDocumentUrl(this.audioUrl);
     } else {
       this.setDocumentUrl(this.unsupportedUrl);
     }

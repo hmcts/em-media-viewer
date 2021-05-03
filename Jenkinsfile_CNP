@@ -23,6 +23,7 @@ def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 env.DOCASSEMBLY_URL = "http://dg-docassembly-aat.service.core-compute-aat.internal"
 env.DM_STORE_APP_URL = "http://dm-store-aat.service.core-compute-aat.internal"
+env.HRS_API_URL = "http://em-hrs-api-aat.service.core-compute-aat.internal"
 env.ANNOTATION_API_URL = "http://em-anno-aat.service.core-compute-aat.internal"
 env.ICP_API_URL = "http://em-icp-aat.service.core-compute-aat.internal"
 env.NPA_URL = "http://em-npa-aat.service.core-compute-aat.internal"
