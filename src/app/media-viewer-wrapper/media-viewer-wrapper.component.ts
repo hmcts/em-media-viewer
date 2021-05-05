@@ -12,7 +12,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   pdfUrl = '86dc297a-0153-44c0-b996-f563c1ff112a';
   imageUrl = '9a55775d-3326-4be1-9731-6806e948e557';
-  audioUrl = 'http://localhost:8080/hearing-recordings/9c5603f4-7cd1-4718-b49d-db64d9eb6595/segments/0';
+  audioUrl = 'http://localhost:3000/hearing-recordings/ac3e6a5e-1f79-4ee7-a3ab-2d4d3d24fad1/segments/0';
   unsupportedUrl = 'assets/unsupported.txt';
   filename = 'filename';
   caseId = 'dummyCaseId';
