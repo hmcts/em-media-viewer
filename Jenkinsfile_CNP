@@ -67,6 +67,7 @@ withPipeline(type, product, component) {
       sh ("yarn cache clean")
       sh ('npm rebuild node-sass')
       sh ('yarn install --force')
+      sh ('yarn add xmlhttprequest-ssl@1.6.2')
       sh ('yarn setup')
   }
 
