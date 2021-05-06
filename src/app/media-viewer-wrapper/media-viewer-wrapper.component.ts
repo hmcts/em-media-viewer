@@ -30,6 +30,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   enableAnnotations = false;
   enableRedactions = false;
   enableICP = false;
+  enableAudioPlayer = false;
   toolbarButtonOverrides: {};
   showHeader = true;
 
@@ -84,6 +85,10 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   toggleICP(showICP: boolean) {
     this.enableICP = showICP;
+  }
+
+  toggleAudioPlayer(showAudioPlayer: boolean) {
+    this.enableAudioPlayer = showAudioPlayer;
   }
 
   onMediaLoad(loadStatus: ResponseType) {

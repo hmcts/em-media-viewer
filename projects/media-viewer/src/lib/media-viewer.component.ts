@@ -83,6 +83,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() enableRedactions = false;
   @Input() enableICP = false;
+  @Input() audioPlayerEnabled = false;
+
 
   @Input() caseId: string;
 

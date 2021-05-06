@@ -12,6 +12,7 @@ export class AudioPlayerComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() url: string;
   @Input() downloadFileName: string;
+  @Input() audioPlayerEnabled: boolean;
 
   @Output() loadStatus = new EventEmitter<ResponseType>();
 

@@ -66,9 +66,10 @@
                        mvRotationPersist>
       </mv-image-viewer>
       <mv-audio-player *ngIf="contentType === 'mp4'"
-                             [url]="url"
-                             [downloadFileName]="downloadFileName"
-                             (loadStatus)="onMediaLoad($event)">
+                       [audioPlayerEnabled]="audioPlayerEnabled"
+                       [url]="url"
+                       [downloadFileName]="downloadFileName"
+                       (loadStatus)="onMediaLoad($event)">
       </mv-audio-player>
       <mv-unsupported-viewer *ngIf="unsupportedContent"
                              [url]="url"

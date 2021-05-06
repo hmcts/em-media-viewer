@@ -20,6 +20,7 @@ describe('AudioPlayerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AudioPlayerComponent);
     component = fixture.componentInstance;
+    component.url = 'document-url';
     fixture.detectChanges();
   });
 
