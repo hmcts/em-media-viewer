@@ -3,6 +3,7 @@ import { AudioPlayerComponent } from './audio-player.component';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerUtilService } from '../viewer-util.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SimpleChange } from '@angular/core';
 
 describe('AudioPlayerComponent', () => {
   let component: AudioPlayerComponent;
@@ -35,5 +36,23 @@ describe('AudioPlayerComponent', () => {
     fixture.detectChanges();
 
     expect(clickSpy).toHaveBeenCalledWith();
+  });
+
+  it('should extract relative url for hrs URLs', () => {
+    const url = 'http://localhost:8080/hearing-recordings/recording-id/segments/0';
+    component.url = url;
+
+    component.ngOnChanges({ url: new SimpleChange(null, url, true)});
+
+    expect(component.relativeUrl).toEqual('/hearing-recordings/recording-id/segments/0');
+  });
+
+  it('should not extract relative url for non hrs URLs', () => {
+    const url = 'http://localhost:8080/documents/documentId/binary';
+    component.url = url;
+
+    component.ngOnChanges({ url: new SimpleChange(null, url, true)});
+
+    expect(component.relativeUrl).toEqual(url);
   });
 });

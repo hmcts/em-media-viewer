@@ -29,7 +29,6 @@ export class AudioPlayerComponent implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.url = this.extractRelativeUrl(this.url);
     this.subscription = this.toolbarEvents.downloadSubject.subscribe(() => this.downloadLink.nativeElement.click());
     this.subscription.add(
       this.viewerUtilService.validateFile(this.url).subscribe(
