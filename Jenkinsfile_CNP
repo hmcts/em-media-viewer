@@ -66,8 +66,10 @@ withPipeline(type, product, component) {
       sh ("rm -rf node_modules")
       sh ("yarn cache clean")
       sh ('npm rebuild node-sass')
+      sh ('yarn upgrade engine.io-client@4.1.2')
+      sh ('yarn upgrade xmlhttprequest-ssl@1.6.2')
+      sh ('yarn upgrade serialize-javascript@5.0.1')
       sh ('yarn install --force')
-      sh ('yarn add xmlhttprequest-ssl@1.6.2')
       sh ('yarn setup')
   }
 
