@@ -1,5 +1,5 @@
 import {
-  AfterContentInit,
+  AfterContentInit, AfterViewChecked,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import {
-  defaultImageOptions,
+  defaultImageOptions, defaultMultimediaOptions,
   defaultPdfOptions,
   defaultUnsupportedOptions,
   ToolbarButtonVisibilityService
@@ -33,9 +33,14 @@ import * as fromAnnoActions from './store/actions/annotation.actions';
 import * as fromRedactActions from './store/actions/redaction.actions';
 import * as fromDocumentActions from './store/actions/document.actions';
 
-enum SupportedContentTypes {
+enum CoreContentTypes {
   PDF = 'pdf',
   IMAGE = 'image'
+}
+
+enum MultimediaContentTypes {
+  MP4 = 'mp4',
+  MP3 = 'mp3',
 }
 
 enum ConvertibleContentTypes {
@@ -51,7 +56,7 @@ enum ConvertibleContentTypes {
   templateUrl: './media-viewer.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit {
+export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit, AfterViewChecked {
 
   @ViewChild('viewerRef') viewerRef: ElementRef;
 
@@ -78,9 +83,12 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() enableRedactions = false;
   @Input() enableICP = false;
+  @Input() audioPlayerEnabled = false;
+
 
   @Input() caseId: string;
 
+  unsupportedContent = false;
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
@@ -140,9 +148,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     return this.contentType !== null && Object.keys(ConvertibleContentTypes).includes(this.contentType.toUpperCase());
   }
 
-  contentTypeUnsupported(): boolean {
-    const supportedTypes = Object.keys(SupportedContentTypes).concat(Object.keys(ConvertibleContentTypes));
-    return this.contentType === null || !supportedTypes.includes(this.contentType.toUpperCase());
+  isMultimedia(): boolean {
+    return this.contentType !== null && Object.keys(MultimediaContentTypes).includes(this.contentType.toUpperCase());
+  }
+
+  isSupported(): boolean {
+    const supportedTypes = Object.assign(MultimediaContentTypes, ConvertibleContentTypes, CoreContentTypes);
+    return this.contentType !== null && Object.keys(supportedTypes).includes(this.contentType.toUpperCase());
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -165,6 +177,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
         this.documentTitle = null;
       }
     }
+
+    if (changes.contentType) {
+      this.unsupportedContent = !this.isSupported();
+    }
     this.setToolbarButtons();
     this.detectOs();
     this.typeException = false;
@@ -179,14 +195,19 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   setToolbarButtons() {
-    if (this.contentType === SupportedContentTypes.PDF || this.contentTypeConvertible()) {
+    if (this.contentType === CoreContentTypes.PDF || this.contentTypeConvertible()) {
       this.toolbarButtons.setup({
         ...defaultPdfOptions, showHighlightButton: this.enableAnnotations, showDrawButton: this.enableAnnotations,
         ...this.toolbarButtonOverrides
       });
-    } else if (this.contentType === SupportedContentTypes.IMAGE) {
+    } else if (this.contentType === CoreContentTypes.IMAGE) {
       this.toolbarButtons.setup({
         ...defaultImageOptions, showDrawButton: this.enableAnnotations,
+        ...this.toolbarButtonOverrides
+      });
+    } else if (this.isMultimedia()) {
+      this.toolbarButtons.setup({
+        ...defaultMultimediaOptions,
         ...this.toolbarButtonOverrides
       });
     } else {
@@ -199,7 +220,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   onLoadException(exception: ViewerException) {
     this.viewerException.emit(exception);
-    if (this.contentTypeUnsupported()) {
+    if (!this.isSupported()) {
       this.typeException = false;
     } else {
       this.typeException = true;

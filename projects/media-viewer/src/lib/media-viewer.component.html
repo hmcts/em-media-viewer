@@ -65,7 +65,13 @@
                        [height]="viewerHeight"
                        mvRotationPersist>
       </mv-image-viewer>
-      <mv-unsupported-viewer *ngIf="contentTypeUnsupported()"
+      <mv-audio-player *ngIf="contentType === 'mp4'"
+                       [audioPlayerEnabled]="audioPlayerEnabled"
+                       [url]="url"
+                       [downloadFileName]="downloadFileName"
+                       (loadStatus)="onMediaLoad($event)">
+      </mv-audio-player>
+      <mv-unsupported-viewer *ngIf="unsupportedContent"
                              [url]="url"
                              [typeException]="typeException"
                              [downloadFileName]="downloadFileName"

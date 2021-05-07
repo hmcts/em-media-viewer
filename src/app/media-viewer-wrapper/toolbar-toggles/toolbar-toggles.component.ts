@@ -17,6 +17,7 @@ export class ToolbarTogglesComponent {
   @Output() toggleAnnotations = new BehaviorSubject(true);
   @Output() toggleRedaction = new BehaviorSubject(true);
   @Output() toggleICP = new BehaviorSubject(true);
+  @Output() toggleAudioPlayer = new BehaviorSubject(true);
   @Output() showCommentSummary = new BehaviorSubject(false);
 
   toolbarButtonOverrides = {};

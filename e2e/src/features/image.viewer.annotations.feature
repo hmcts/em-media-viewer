@@ -5,7 +5,7 @@ Feature: Image Viewer Annotations
     Given I am on Media Viewer Page
     And I change to Image Viewer tab
 
-  @EM-1964 @Image_Add_Comment @ci
+  @EM-1964 @Image_Add_Comment
   Scenario: Add Non Textual Highlight and add comment in image viewer
     When I highlight a portion of image
     Then I should be able to add comment for the highlight

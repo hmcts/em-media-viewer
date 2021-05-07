@@ -1,9 +1,11 @@
 <div class="govuk-width-container">
-  <p style="padding-top: 100px;">
-    <span *ngIf="typeException, else unsupported">The document could not be displayed, or the file type is unsupported.</span>
-    Please <a #downloadLink [href]="url" [download]="downloadFileName">click here to download</a>.
-  </p>
-  <ng-template #unsupported>
-    <span>This file type is not supported by this viewer.</span>
-  </ng-template>
+  <div class="govuk-notification-banner__content">
+    <p>
+      <span *ngIf="typeException, else unsupported">The document could not be displayed, or the file type is unsupported.</span>
+      Please <a #downloadLink [href]="url" [download]="downloadFileName">click here to download</a>.
+    </p>
+    <ng-template #unsupported>
+      <span>This file type is not supported by this viewer.</span>
+    </ng-template>
+  </div>
 </div>
