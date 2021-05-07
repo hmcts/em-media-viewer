@@ -79,13 +79,13 @@ describe('MediaViewerComponent', () => {
 
   it('should support content', () => {
     component.contentType = 'pdf';
-    expect(component.contentTypeUnsupported()).toBeFalsy();
+    expect(component.isSupported()).toBeTruthy();
   });
 
   it('should not support content', () => {
     component.contentType = 'unsupported';
 
-    expect(component.contentTypeUnsupported()).toBeTruthy();
+    expect(component.isSupported()).toBeFalsy();
   });
 
   it('should be convertible', () => {
@@ -97,7 +97,7 @@ describe('MediaViewerComponent', () => {
   it('should not support content when content type is null', () => {
     component.contentType = null;
 
-    expect(component.contentTypeUnsupported()).toBeTruthy();
+    expect(component.isSupported()).toBeFalsy();
     expect(component.contentTypeConvertible()).toBeFalsy();
   });
 

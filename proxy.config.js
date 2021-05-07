@@ -8,6 +8,13 @@ module.exports = [
   },
   {
     context: [
+      '/hearing-recordings'
+    ],
+    target: 'http://localhost:1337',
+    secure: false
+  },
+  {
+    context: [
       '/api'
     ],
     target: 'http://localhost:1337',

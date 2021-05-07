@@ -5,8 +5,8 @@
 This is an angular library that can be used to view and annotate PDF documents and images.
 
 ## Running demo app
-- npm run package
-- npm run start:ng
+- yarn package
+- yarn start:ng
 
 ## Integrating into your own Angular application
 add @hmcts/media-viewer as a dependency in package.json

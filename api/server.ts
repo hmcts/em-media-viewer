@@ -77,6 +77,9 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
             headers: { 'Authorization': idamRepository.getToken() }
         }));
 
+        const hrsProxy = config.proxies.hrsApi;
+        app.use(proxy(hrsProxy.endpoints, { target: hrsProxy.target, ...proxyOptions }));
+
         app.use('/', healthcheckRoutes);
         app.use('/dm-store', (req, res) => res.render('index.html'));
         app.use('/', (req, res) => res.render('index.html'));

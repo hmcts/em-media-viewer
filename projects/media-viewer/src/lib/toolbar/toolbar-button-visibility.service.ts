@@ -79,6 +79,13 @@ export const defaultImageOptions = {
 };
 
 /**
+ * Default toolbar state for multimedia
+ */
+export const defaultMultimediaOptions = {
+  showDownload: true
+};
+
+/**
  * Default toolbar state for unsupported media
  */
 export const defaultUnsupportedOptions = {
