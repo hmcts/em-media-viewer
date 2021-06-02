@@ -94,7 +94,7 @@
     "uuid": "^3.4.0",
     "xmlhttprequest-ssl": "^1.6.2",
     "zone.js": "^0.11.3",
-    "ws": "^7.4.6"
+    "ws": "^6.2.2"
   },
   "resolutions": {
     "xmlhttprequest-ssl": "^1.6.2",
