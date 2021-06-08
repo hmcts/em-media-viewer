@@ -54,12 +54,12 @@
     <td>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="govuk-!-font-weight-bold">Audio</span>
+          <span class="govuk-!-font-weight-bold">Multimedia</span>
         </div>
         <div class="govuk-grid-column-full">
-          <label for="toggleAudio" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleAudio" [checked]="toggleAudioPlayer.getValue()"
-                   (change)="toggleAudioPlayer.next($event.target.checked)" aria-label="redact">
+          <label for="toggleMultimedia" class="switch govuk-!-margin-right-2">
+            <input type="checkbox" id="toggleMultimedia" [checked]="toggleMultimediaPlayer.getValue()"
+                   (change)="toggleMultimediaPlayer.next($event.target.checked)" aria-label="toggleMultimedia">
             <span class="slider round"></span>
           </label>
         </div>
