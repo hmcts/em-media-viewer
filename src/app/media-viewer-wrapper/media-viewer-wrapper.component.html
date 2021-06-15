@@ -10,7 +10,7 @@
                              (toggleAnnotations)="toggleAnnotations($event)"
                              (toggleRedaction)="toggleRedaction($event)"
                              (toggleICP)="toggleICP($event)"
-                             (toggleAudioPlayer)="toggleAudioPlayer($event)"
+                             (toggleMultimediaPlayer)="toggleMultimediaPlayer($event)"
                              (toggleToolbar)="toggleToolbar($event)"
                              (toggleToolbarBtns)="toggleToolbarBtns($event)"
                              (toggleCustomToolbar)="toggleCustomToolbar($event)"
@@ -101,9 +101,9 @@
                   data-module="govuk-button" (click)="setDocumentType('image')">Image
           </button>
           <button class="govuk-button govuk-!-margin-left-2 govuk-!-width-one-third"
-                  data-module="govuk-button" id="audio-button"
+                  data-module="govuk-button" id="multimedia-button"
                   [ngClass]="{ 'govuk-button--secondary': documentType !== 'mp4' }"
-                  (click)="setDocumentType('mp4')">Audio
+                  (click)="setDocumentType('mp4')">Multimedia
           </button>
         </div>
         <div class="govuk-grid-column-one-third">
@@ -125,7 +125,7 @@
                    [enableAnnotations]="enableAnnotations"
                    [enableRedactions]="enableRedactions"
                    [enableICP]="enableICP"
-                   [audioPlayerEnabled]="enableAudioPlayer"
+                   [multimediaPlayerEnabled]="enableMultimediaPlayer"
                    [showToolbar]="showToolbar"
                    [toolbarButtonOverrides]="toolbarButtonOverrides"
                    (mediaLoadStatus)="onMediaLoad($event)"
