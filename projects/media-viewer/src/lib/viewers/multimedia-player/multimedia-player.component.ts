@@ -5,14 +5,14 @@ import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ViewerUtilService } from '../viewer-util.service';
 
 @Component({
-  selector: 'mv-audio-player',
-  templateUrl: './audio-player.component.html'
+  selector: 'mv-multimedia-player',
+  templateUrl: './multimedia-player.component.html'
 })
-export class AudioPlayerComponent implements OnInit, OnChanges, OnDestroy {
+export class MultimediaPlayerComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() url: string;
   @Input() downloadFileName: string;
-  @Input() audioPlayerEnabled: boolean;
+  @Input() multimediaPlayerEnabled: boolean;
 
   @Output() loadStatus = new EventEmitter<ResponseType>();
 

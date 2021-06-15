@@ -38,7 +38,7 @@ import { RotationApiService } from './viewers/rotation-persist/rotation-api.serv
 import { RotationPersistDirective } from './viewers/rotation-persist/rotation-persist.directive';
 import { ParticipantsListComponent } from './icp/participants-list/participants-list.component';
 import { HighlightCreateDirective } from './annotations/annotation-set/annotation-create/highlight-create/highlight-create.directive';
-import {AudioPlayerComponent} from './viewers/audio-player/audio-player.component';
+import {MultimediaPlayerComponent} from './viewers/multimedia-player/multimedia-player.component';
 
 @NgModule({
   imports: [
@@ -62,7 +62,7 @@ import {AudioPlayerComponent} from './viewers/audio-player/audio-player.componen
     OutlineItemComponent,
     ImageViewerComponent,
     UnsupportedViewerComponent,
-    AudioPlayerComponent,
+    MultimediaPlayerComponent,
     MediaViewerComponent,
     ConvertibleContentViewerComponent,
     GrabNDragDirective,

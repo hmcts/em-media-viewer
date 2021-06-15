@@ -12,7 +12,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   pdfUrl = '86dc297a-0153-44c0-b996-f563c1ff112a';
   imageUrl = '9a55775d-3326-4be1-9731-6806e948e557';
-  audioUrl = 'assets/multimedia/audio_test.mp3';
+  multimediaUrl = 'assets/multimedia/movie.mp4';
   unsupportedUrl = 'assets/unsupported.txt';
   filename = 'filename';
   caseId = 'dummyCaseId';
@@ -30,7 +30,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   enableAnnotations = false;
   enableRedactions = false;
   enableICP = false;
-  enableAudioPlayer = false;
+  enableMultimediaPlayer = false;
   toolbarButtonOverrides: {};
   showHeader = true;
 
@@ -45,7 +45,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
     } else if (newTab === 'image') {
       this.setDocumentUrl(this.imageUrl);
     } else if (newTab === 'mp4') {
-      this.setDocumentUrl(this.audioUrl);
+      this.setDocumentUrl(this.multimediaUrl);
     } else {
       this.setDocumentUrl(this.unsupportedUrl);
     }
@@ -87,8 +87,8 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
     this.enableICP = showICP;
   }
 
-  toggleAudioPlayer(showAudioPlayer: boolean) {
-    this.enableAudioPlayer = showAudioPlayer;
+  toggleMultimediaPlayer(showMultimediaPlayer: boolean) {
+    this.enableMultimediaPlayer = showMultimediaPlayer;
   }
 
   onMediaLoad(loadStatus: ResponseType) {

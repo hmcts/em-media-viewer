@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AudioPlayerComponent } from './audio-player.component';
+import { MultimediaPlayerComponent } from './multimedia-player.component';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerUtilService } from '../viewer-util.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SimpleChange } from '@angular/core';
 
-describe('AudioPlayerComponent', () => {
-  let component: AudioPlayerComponent;
-  let fixture: ComponentFixture<AudioPlayerComponent>;
+describe('MultimediaPlayerComponent', () => {
+  let component: MultimediaPlayerComponent;
+  let fixture: ComponentFixture<MultimediaPlayerComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ AudioPlayerComponent ],
+      declarations: [ MultimediaPlayerComponent ],
       providers: [ ToolbarEventService, ViewerUtilService ],
       imports: [ HttpClientTestingModule ]
     })
@@ -19,7 +19,7 @@ describe('AudioPlayerComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AudioPlayerComponent);
+    fixture = TestBed.createComponent(MultimediaPlayerComponent);
     component = fixture.componentInstance;
     component.url = 'document-url';
     fixture.detectChanges();
