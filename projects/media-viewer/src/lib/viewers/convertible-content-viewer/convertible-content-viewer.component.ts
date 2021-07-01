@@ -39,13 +39,13 @@ export class ConvertibleContentViewerComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromDocumentActions.Convert(this.extractDMStoreDocId(this.originalUrl)));
     this.$subscription = this.store.pipe(select(fromSelectors.getConvertedDocument), filter(value => !!value))
       .subscribe((docInfo)  => {
-      if (docInfo.url) {
-        this.convertedUrl = docInfo.url;
-        this.store.dispatch(new fromDocumentActions.ClearConvertDocUrl());
-      } else {
-        this.onLoadException(new ViewerException(docInfo.error));
-      }
-    });
+        if (docInfo.url) {
+          this.convertedUrl = docInfo.url;
+          this.store.dispatch(new fromDocumentActions.ClearConvertDocUrl());
+        } else {
+          this.onLoadException(new ViewerException(docInfo.error));
+        }
+      });
   }
 
   ngOnDestroy(): void {

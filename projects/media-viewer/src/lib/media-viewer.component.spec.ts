@@ -91,14 +91,14 @@ describe('MediaViewerComponent', () => {
   it('should be convertible', () => {
     component.contentType = 'excel';
 
-    expect(component.contentTypeConvertible()).toBeTruthy();
+    expect(component.needsConverting()).toBeTruthy();
   });
 
   it('should not support content when content type is null', () => {
     component.contentType = null;
 
     expect(component.isSupported()).toBeFalsy();
-    expect(component.contentTypeConvertible()).toBeFalsy();
+    expect(component.needsConverting()).toBeFalsy();
   });
 
   it('should reset the type exception when the url is changed', () => {

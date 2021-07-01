@@ -44,7 +44,7 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
       this.setDocumentUrl(this.pdfUrl);
     } else if (newTab === 'image') {
       this.setDocumentUrl(this.imageUrl);
-    } else if (newTab === 'mp4') {
+    } else if (newTab.startsWith('mp')) {
       this.setDocumentUrl(this.multimediaUrl);
     } else {
       this.setDocumentUrl(this.unsupportedUrl);
