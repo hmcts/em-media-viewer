@@ -3,6 +3,7 @@ import { MultimediaPlayerComponent } from './multimedia-player.component';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { ViewerUtilService } from '../viewer-util.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SimpleChange } from '@angular/core';
 
 describe('MultimediaPlayerComponent', () => {
   let component: MultimediaPlayerComponent;
@@ -38,10 +39,12 @@ describe('MultimediaPlayerComponent', () => {
     expect(clickSpy).toHaveBeenCalledWith();
   });
 
-  it('should reload video player', () => {
+  it('should reload video on changes', () => {
     const loadSpy = spyOn(component.videoPlayer.nativeElement, 'load');
 
-    component.reloadVideo();
+    component.ngOnChanges({
+      url: new SimpleChange('old-url', 'new-url', false)
+    });
 
     expect(loadSpy).toHaveBeenCalledWith();
     expect(component.mimeTypeSupported).toBeFalse();

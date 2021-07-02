@@ -2,7 +2,7 @@
   <div class="govuk-notification-banner__content">
     <p>
       <span *ngIf="multimediaPlayerEnabled && mimeTypeSupported, else download">
-        Use the player to listen to the file or </span>
+        Use the player to play to the file or </span>
       <a #downloadLink [href]="url" [download]="downloadFileName">Click here to download</a>.
     </p>
     <ng-template #download>

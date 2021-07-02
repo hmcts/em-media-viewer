@@ -1,7 +1,7 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import {StoreModule} from '@ngrx/store';
+import {Store, StoreModule} from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import { MediaViewerComponent } from './media-viewer.component';
@@ -18,6 +18,8 @@ import {
 import { AnnotationApiService } from './annotations/services/annotation-api/annotation-api.service';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
 import {reducers} from './store/reducers/reducers';
+import * as fromRedactActions from './store/actions/redaction.actions';
+import * as fromAnnoActions from './store/actions/annotation.actions';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -82,6 +84,11 @@ describe('MediaViewerComponent', () => {
     expect(component.isSupported()).toBeTruthy();
   });
 
+  it('should support multimedia content', () => {
+    component.contentType = 'mp3';
+    expect(component.isMultimedia()).toBeTruthy();
+  });
+
   it('should not support content', () => {
     component.contentType = 'unsupported';
 
@@ -128,7 +135,6 @@ describe('MediaViewerComponent', () => {
     expect(component.documentTitle).toBeNull();
   });
 
-
   it('should not set annotations$ when annotations disabled', () => {
     component.contentType = 'pdf';
     component.annotationSet$ = null;
@@ -139,6 +145,72 @@ describe('MediaViewerComponent', () => {
     });
 
     expect(component.annotationSet$).toBe(null);
+  });
+
+  it('should not load annotations when playing multimedia', inject([Store], (store) => {
+    spyOn(store, 'dispatch');
+    component.url = 'new-url';
+    component.enableAnnotations = true;
+    component.multimediaContent = true;
+
+    component.ngOnChanges({
+      url: new SimpleChange('old-url', 'new-url', false)
+    });
+
+    expect(store.dispatch).not.toHaveBeenCalledWith(new fromAnnoActions.LoadAnnotationSet('new-url'));
+  }));
+
+  it('should load annotations when not playing multimedia', inject([Store], (store) => {
+    spyOn(store, 'dispatch');
+    component.url = 'new-url';
+    component.enableAnnotations = true;
+    component.multimediaContent = false;
+
+    component.ngOnChanges({
+      url: new SimpleChange('old-url', 'new-url', false)
+    });
+
+    expect(store.dispatch).toHaveBeenCalledWith(new fromAnnoActions.LoadAnnotationSet('new-url'));
+  }));
+
+  it('should not load redactions when playing multimedia', inject([Store], (store) => {
+    spyOn(store, 'dispatch');
+    component.url = 'new-url';
+    component.enableRedactions = true;
+    component.multimediaContent = true;
+
+    component.ngOnChanges({
+      url: new SimpleChange('old-url', 'new-url', false)
+    });
+
+    expect(store.dispatch).not.toHaveBeenCalledWith(new fromRedactActions.LoadRedactions('new-url'));
+  }));
+
+  it('should load redactions when not playing multimedia', inject([Store], (store) => {
+    spyOn(store, 'dispatch');
+    component.url = 'new-url';
+    component.enableRedactions = true;
+    component.multimediaContent = false;
+
+    component.ngOnChanges({
+      url: new SimpleChange('old-url', 'new-url', false)
+    });
+
+    expect(store.dispatch).toHaveBeenCalledWith(new fromRedactActions.LoadRedactions('new-url'));
+  }));
+
+  it('should content variables on content changes', () => {
+    component.multimediaContent = true;
+    component.unsupportedContent = true;
+    component.convertibleContent = true;
+
+    component.ngOnChanges({
+      contentType: new SimpleChange('pdf', 'image', false)
+    });
+
+    expect(component.multimediaContent).toBeFalse();
+    expect(component.unsupportedContent).toBeFalse();
+    expect(component.multimediaContent).toBeFalse();
   });
 
   it('should set annotationApiUrl', () => {
