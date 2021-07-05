@@ -28,7 +28,7 @@
     <mv-icp-toolbar *ngIf="toolbarEvents.icp.enabled | async"></mv-icp-toolbar>
 
     <div #viewerRef>
-      <mv-conversion-viewer *ngIf="contentTypeConvertible()"
+      <mv-conversion-viewer *ngIf="convertibleContent"
                             (documentTitle)="onDocumentTitleChange($event)"
                             (mediaLoadStatus)="onMediaLoad($event)"
                             (viewerException)="onLoadException($event)"
@@ -65,7 +65,7 @@
                        [height]="viewerHeight"
                        mvRotationPersist>
       </mv-image-viewer>
-      <mv-multimedia-player *ngIf="contentType === 'mp4'"
+      <mv-multimedia-player *ngIf="multimediaContent"
                             [multimediaPlayerEnabled]="multimediaPlayerEnabled"
                             [url]="url"
                             [downloadFileName]="downloadFileName"

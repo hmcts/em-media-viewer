@@ -17,8 +17,9 @@ export class MultimediaPlayerComponent implements OnInit, OnChanges, OnDestroy {
   @Output() loadStatus = new EventEmitter<ResponseType>();
 
   @ViewChild('downloadLink') downloadLink: ElementRef;
+  @ViewChild('videoPlayer') videoPlayer: ElementRef;
 
-  relativeUrl: string;
+  mimeTypeSupported = false;
 
   private subscription: Subscription;
   private viewerException: ViewerException;
@@ -44,7 +45,7 @@ export class MultimediaPlayerComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes.url) {
-      this.relativeUrl = this.extractRelativeUrl(this.url);
+      this.reloadVideo();
     }
   }
 
@@ -52,8 +53,14 @@ export class MultimediaPlayerComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private extractRelativeUrl(url: string): string {
-    const matchIndex = url.indexOf('/hearing-recordings/');
-    return matchIndex > 0 ? url.substring(matchIndex, url.length) : url;
+  reloadVideo() {
+    this.mimeTypeSupported = false;
+    if (this.videoPlayer) {
+      this.videoPlayer.nativeElement.load();
+    }
+  }
+
+  confirmVideoSupported() {
+    this.mimeTypeSupported = true;
   }
 }

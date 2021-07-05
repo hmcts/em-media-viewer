@@ -88,7 +88,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() caseId: string;
 
+  multimediaContent = false;
+  convertibleContent = false;
   unsupportedContent = false;
+
   documentTitle: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
@@ -144,19 +147,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
   }
 
-  contentTypeConvertible(): boolean {
-    return this.contentType !== null && Object.keys(ConvertibleContentTypes).includes(this.contentType.toUpperCase());
-  }
-
-  isMultimedia(): boolean {
-    return this.contentType !== null && Object.keys(MultimediaContentTypes).includes(this.contentType.toUpperCase());
-  }
-
-  isSupported(): boolean {
-    const supportedTypes = Object.assign(MultimediaContentTypes, ConvertibleContentTypes, CoreContentTypes);
-    return this.contentType !== null && Object.keys(supportedTypes).includes(this.contentType.toUpperCase());
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     if (changes.annotationApiUrl) {
       this.api.annotationApiUrl = this.annotationApiUrl;
@@ -167,10 +157,10 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.commentService.resetCommentSet();
       const documentId = this.extractDMStoreDocId(this.url);
       this.store.dispatch(new fromDocumentActions.SetDocumentId(documentId));
-      if (this.enableAnnotations) {
+      if (this.enableAnnotations && !(this.multimediaContent || this.unsupportedContent)) {
         this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(documentId));
       }
-      if (this.enableRedactions) {
+      if (this.enableRedactions && !(this.multimediaContent || this.unsupportedContent)) {
         this.store.dispatch(new fromRedactActions.LoadRedactions(documentId));
       }
       if (this.contentType === 'image') {
@@ -179,8 +169,11 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
 
     if (changes.contentType) {
+      this.convertibleContent = this.needsConverting();
+      this.multimediaContent = this.isMultimedia();
       this.unsupportedContent = !this.isSupported();
     }
+
     this.setToolbarButtons();
     this.detectOs();
     this.typeException = false;
@@ -190,12 +183,25 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.$subscriptions.unsubscribe();
   }
 
+  needsConverting(): boolean {
+    return this.contentType !== null && Object.keys(ConvertibleContentTypes).includes(this.contentType.toUpperCase());
+  }
+
+  isMultimedia(): boolean {
+    return this.contentType !== null && Object.keys(MultimediaContentTypes).includes(this.contentType.toUpperCase());
+  }
+
+  isSupported(): boolean {
+    const supportedTypes = Object.assign({}, MultimediaContentTypes, ConvertibleContentTypes, CoreContentTypes);
+    return this.contentType !== null && Object.keys(supportedTypes).includes(this.contentType.toUpperCase());
+  }
+
   onMediaLoad(status: ResponseType) {
     this.mediaLoadStatus.emit(status);
   }
 
   setToolbarButtons() {
-    if (this.contentType === CoreContentTypes.PDF || this.contentTypeConvertible()) {
+    if (this.contentType === CoreContentTypes.PDF || this.needsConverting()) {
       this.toolbarButtons.setup({
         ...defaultPdfOptions, showHighlightButton: this.enableAnnotations, showDrawButton: this.enableAnnotations,
         ...this.toolbarButtonOverrides
