@@ -102,7 +102,7 @@
           </button>
           <button class="govuk-button govuk-!-margin-left-2 govuk-!-width-one-third"
                   data-module="govuk-button" id="multimedia-button"
-                  [ngClass]="{ 'govuk-button--secondary': documentType !== 'mp4' }"
+                  [ngClass]="{ 'govuk-button--secondary': !documentType.startsWith('mp') }"
                   (click)="setDocumentType('mp4')">Multimedia
           </button>
         </div>

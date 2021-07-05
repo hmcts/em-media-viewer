@@ -22,6 +22,7 @@ describe('MultimediaPlayerComponent', () => {
     fixture = TestBed.createComponent(MultimediaPlayerComponent);
     component = fixture.componentInstance;
     component.url = 'document-url';
+    component.multimediaPlayerEnabled = true;
     fixture.detectChanges();
   });
 
@@ -38,21 +39,22 @@ describe('MultimediaPlayerComponent', () => {
     expect(clickSpy).toHaveBeenCalledWith();
   });
 
-  it('should extract relative url for hrs URLs', () => {
-    const url = 'http://localhost:8080/hearing-recordings/recording-id/segments/0';
-    component.url = url;
+  it('should reload video on changes', () => {
+    const loadSpy = spyOn(component.videoPlayer.nativeElement, 'load');
 
-    component.ngOnChanges({ url: new SimpleChange(null, url, true)});
+    component.ngOnChanges({
+      url: new SimpleChange('old-url', 'new-url', false)
+    });
 
-    expect(component.relativeUrl).toEqual('/hearing-recordings/recording-id/segments/0');
+    expect(loadSpy).toHaveBeenCalledWith();
+    expect(component.mimeTypeSupported).toBeFalse();
   });
 
-  it('should not extract relative url for non hrs URLs', () => {
-    const url = 'http://localhost:8080/documents/documentId/binary';
-    component.url = url;
+  it('should confirm mime type is supported', () => {
+    component.mimeTypeSupported = false;
 
-    component.ngOnChanges({ url: new SimpleChange(null, url, true)});
+    component.confirmVideoSupported();
 
-    expect(component.relativeUrl).toEqual(url);
+    expect(component.mimeTypeSupported).toBeTrue();
   });
 });
