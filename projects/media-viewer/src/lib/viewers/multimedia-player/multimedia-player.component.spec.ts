@@ -11,9 +11,9 @@ describe('MultimediaPlayerComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ MultimediaPlayerComponent ],
-      providers: [ ToolbarEventService, ViewerUtilService ],
-      imports: [ HttpClientTestingModule ]
+      declarations: [MultimediaPlayerComponent],
+      providers: [ToolbarEventService, ViewerUtilService],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
   });
@@ -22,7 +22,7 @@ describe('MultimediaPlayerComponent', () => {
     fixture = TestBed.createComponent(MultimediaPlayerComponent);
     component = fixture.componentInstance;
     component.url = 'document-url';
-    component.multimediaPlayerEnabled = true;
+    component.multimediaOn = true;
     fixture.detectChanges();
   });
 
@@ -31,6 +31,8 @@ describe('MultimediaPlayerComponent', () => {
   });
 
   it('should click download button', () => {
+    component.playbackMsg = 'success';
+    fixture.detectChanges();
     const clickSpy = spyOn(component.downloadLink.nativeElement, 'click');
 
     component.toolbarEvents.downloadSubject.next();
@@ -41,20 +43,27 @@ describe('MultimediaPlayerComponent', () => {
 
   it('should reload video on changes', () => {
     const loadSpy = spyOn(component.videoPlayer.nativeElement, 'load');
+    component.playbackMsg = 'something';
 
     component.ngOnChanges({
       url: new SimpleChange('old-url', 'new-url', false)
     });
 
     expect(loadSpy).toHaveBeenCalledWith();
-    expect(component.mimeTypeSupported).toBeFalse();
+    expect(component.playbackMsg).toEqual('loading');
   });
 
   it('should confirm mime type is supported', () => {
-    component.mimeTypeSupported = false;
+    component.playbackMsg = 'loading';
 
-    component.confirmVideoSupported();
+    component.onSuccess();
 
-    expect(component.mimeTypeSupported).toBeTrue();
+    expect(component.playbackMsg).toEqual('success');
+  });
+
+  it('should confirm mime type is supported', () => {
+    component.onError();
+
+    expect(component.playbackMsg).toEqual('error');
   });
 });

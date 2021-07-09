@@ -9,7 +9,7 @@ export class ViewerUtilService {
     private http: HttpClient) {
   }
 
-  public validateFile(fileName: string) {
-    return this.http.head(fileName);
+  public validateFile(url: string) {
+    return this.http.head(url);
   }
 }
