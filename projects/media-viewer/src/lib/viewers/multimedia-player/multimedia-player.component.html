@@ -1,23 +1,23 @@
 <div class="govuk-width-container">
   <div class="govuk-notification-banner__content">
     <p>
-      <span *ngIf="multimediaPlayerEnabled && mimeTypeSupported, else download">
-        Use the player to play to the file or </span>
-      <a #downloadLink [href]="url" [download]="downloadFileName">Click here to download</a>.
+      <span *ngIf="multimediaOn && playbackMsg === 'loading'">Loading multimedia content ... </span>
+      <span *ngIf="!multimediaOn">Multimedia playback is not enabled, </span>
+      <span *ngIf="multimediaOn && playbackMsg === 'success'">Use the player to play to the file or </span>
+      <span *ngIf="multimediaOn && playbackMsg === 'error'">Mime type not supported. </span>
+      <a *ngIf="playbackMsg !== 'loading'" #downloadLink
+         [href]="url" [download]="downloadFileName">Click here to download</a>
     </p>
-    <ng-template #download>
-      <span>Multimedia playback is not enabled, or Mime type not supported. </span>
-    </ng-template>
-    <video #videoPlayer *ngIf="multimediaPlayerEnabled" width="100%" height="100%"
-           (canplay)="confirmVideoSupported()" controls>
-      <source [src]="url" type="video/mp4">
-      <source [src]="url" type="video/ogg">
-      <source [src]="url" type="video/webm">
-      <source [src]="url" type="video/quicktime">
-      <source [src]="url" type="video/mpeg">
-      <source [src]="url" type="video/3gpp">
-      <source [src]="url" type="video/x-msvideo">
-      <source [src]="url" type="video/x-ms-wmv">
+    <video #videoPlayer *ngIf="multimediaOn"
+           width="100%" height="100%" preload="auto" (canplay)="onSuccess()" controls>
+      <source (error)="onError()" [src]="url" type="video/mp4">
+      <source (error)="onError()" [src]="url" type="video/ogg">
+      <source (error)="onError()" [src]="url" type="video/webm">
+      <source (error)="onError()" [src]="url" type="video/quicktime">
+      <source (error)="onError()" [src]="url" type="video/mpeg">
+      <source (error)="onError()" [src]="url" type="video/3gpp">
+      <source (error)="onError()" [src]="url" type="video/x-msvideo">
+      <source (error)="onError()" [src]="url" type="video/x-ms-wmv">
     </video>
   </div>
 </div>
