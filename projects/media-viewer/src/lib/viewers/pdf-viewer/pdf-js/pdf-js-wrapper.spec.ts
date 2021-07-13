@@ -66,12 +66,13 @@ describe('PdfJsWrapper', () => {
     const pdfViewerSpy = spyOn(mockViewer, 'setDocument');
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
-    const mockDocument = { numPages: 10, getOutline: () => {}, getMetadata: () => ({ info: { Title: 'Title' }})};
+    const mockDocument = {};
+    const loadingTask = new Promise(resolve => {
+      resolve(mockDocument);
+    });
+    pdfjsLib.getDocument = () => loadingTask;
 
-    spyOnProperty(pdfjsLib, 'getDocument')
-      .and.returnValue(() => ({ promise: Promise.resolve(mockDocument)}));
-
-    wrapper.loadDocument('document-url');
+    wrapper.loadDocument({} as any);
     tick();
 
     expect(pdfViewerSpy).toHaveBeenCalledWith(mockDocument);
@@ -84,9 +85,10 @@ describe('PdfJsWrapper', () => {
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
     const documentLoadFailedSpy = spyOn(wrapper.documentLoadFailed, 'next').and.callThrough();
-    spyOnProperty(pdfjsLib, 'getDocument').and.returnValue(() => ({ promise: Promise.reject(new Error('x'))}));
+    const loadingTask = Promise.reject(new Error('x'));
+    pdfjsLib.getDocument = () => loadingTask;
 
-    wrapper.loadDocument('document-url');
+    wrapper.loadDocument({} as any);
     tick();
 
     expect(pdfViewerSpy).not.toHaveBeenCalled();
