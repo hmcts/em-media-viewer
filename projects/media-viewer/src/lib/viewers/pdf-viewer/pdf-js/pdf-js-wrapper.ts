@@ -84,7 +84,7 @@ export class PdfJsWrapper {
     this.documentLoadInit.next(documentUrl);
 
     try {
-      const pdfDocument = await loadingTask.promise;
+      const pdfDocument = await loadingTask;
       this.documentLoaded.next(pdfDocument);
       this.toolbarEvents.pageCountSubject.next(pdfDocument.numPages);
 
