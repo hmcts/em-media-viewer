@@ -11,13 +11,11 @@
     <video #videoPlayer *ngIf="multimediaOn"
            width="100%" height="100%" preload="auto" (canplay)="onSuccess()" controls>
       <source (error)="onError()" [src]="url" type="video/mp4">
+      <source (error)="onError()" [src]="url" type="video/mp4; codecs='avc1, av01, hvc1, hev1, mp4v, mp4a.40.2, opus'">
       <source (error)="onError()" [src]="url" type="video/ogg">
+      <source (error)="onError()" [src]="url" type="video/ogg; codecs='theora, vp8, vp9, flac, opus, vorbis'">
       <source (error)="onError()" [src]="url" type="video/webm">
-      <source (error)="onError()" [src]="url" type="video/quicktime">
-      <source (error)="onError()" [src]="url" type="video/mpeg">
-      <source (error)="onError()" [src]="url" type="video/3gpp">
-      <source (error)="onError()" [src]="url" type="video/x-msvideo">
-      <source (error)="onError()" [src]="url" type="video/x-ms-wmv">
+      <source (error)="onError()" [src]="url" type="video/webm; codecs='vp8, vp9, vorbis, opus'">
     </video>
   </div>
 </div>
