@@ -1,5 +1,6 @@
-import { browser, by, element } from 'protractor';
-import { AppPage } from './app.po';
+import {browser, by, element} from 'protractor';
+import {AppPage} from './app.po';
+
 const fs = require('fs');
 
 export class DownloadPage extends AppPage {
@@ -14,5 +15,13 @@ export class DownloadPage extends AppPage {
 
   hasFileDownloaded(filePath: string) {
     return fs.existsSync(filePath);
+  }
+
+  async clickMoreOptions() {
+    await this.clickElement(by.id('mvMoreOptionsBtn'));
+  }
+
+  async clickDownloadButton() {
+    await this.clickElement(by.xpath('/html/body/div/div/div/div/button[8]'));
   }
 }

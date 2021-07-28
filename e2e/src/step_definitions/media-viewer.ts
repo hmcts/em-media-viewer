@@ -12,6 +12,7 @@ import {CommentPage} from '../pages/comment.po';
 import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
+import {DownloadPage} from '../pages/download.po';
 
 
 
@@ -26,6 +27,7 @@ const commentsPage = new CommentPage();
 const zoomPage = new ZoomPage();
 const outlinePage = new OutlinePage();
 const commentsPanelPage = new CommentsPanelPage();
+const downloadPage = new DownloadPage();
 
 
 const ellipsisComment = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
@@ -81,6 +83,10 @@ When('the user selects the print option', async () => {
   await printPage.clickPrint();
 });
 
+When('the user selects the download option', async () => {
+  await downloadPage.clickMoreOptions();
+  await downloadPage.clickDownloadButton();
+});
 
 Then('I expect the print dialog should appear and the file is queued for printing', async function () {
   const screenshots = browser.takeScreenshot();
@@ -112,6 +118,13 @@ Then('I expect bookmark to be added to the existing list', async function () {
   const screenshots = await browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
 });
+
+Then('I expect to see the document should be downloaded', async function () {
+  await genericMethods.sleep(5000);
+  const screenshots = await browser.takeScreenshot();
+  this.attach(screenshots, 'image/png');
+});
+
 
 const addComment = async (comment: string) => {
   await page.clickOnCommentButton();
