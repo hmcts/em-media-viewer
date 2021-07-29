@@ -36,6 +36,7 @@ const secondComment = 'This is comment number 2';
 const thirdComment = 'This is comment number 3';
 const newComment = 'This is comment number 1 new';
 const actual = 'Annotations Ellipsis EM-1814 story test';
+const file = 'src/assets/example.pdf';
 
 Given('I am on Media Viewer Page', async () => {
   await genericMethods.sleep(5000);
@@ -120,7 +121,6 @@ Then('I expect bookmark to be added to the existing list', async function () {
 });
 
 Then('I expect to see the document should be downloaded', async function () {
-  const file = 'src/assets/example.pdf';
   await genericMethods.sleep(5000);
   const screenshots = await browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
