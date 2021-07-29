@@ -120,9 +120,11 @@ Then('I expect bookmark to be added to the existing list', async function () {
 });
 
 Then('I expect to see the document should be downloaded', async function () {
+  const file = 'src/assets/example.pdf';
   await genericMethods.sleep(5000);
   const screenshots = await browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
+  await downloadPage.waitForDownloadToComplete(file);
 });
 
 
