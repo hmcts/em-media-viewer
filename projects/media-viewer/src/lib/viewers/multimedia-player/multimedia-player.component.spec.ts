@@ -61,7 +61,7 @@ describe('MultimediaPlayerComponent', () => {
     expect(component.playbackMsg).toEqual('success');
   });
 
-  it('should confirm mime type is supported', () => {
+  it('should confirm mime type is not supported', () => {
     component.onError();
 
     expect(component.playbackMsg).toEqual('error');
