@@ -20,8 +20,4 @@ export class DownloadPage extends AppPage {
   async clickMoreOptions() {
     await this.clickElement(by.id('mvMoreOptionsBtn'));
   }
-
-  async clickDownloadButton() {
-    await this.clickAction('mvDownloadBtn');
-  }
 }
