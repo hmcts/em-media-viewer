@@ -67,6 +67,15 @@ export class AppPage {
     }, 10000, 'failed to load search results');
   }
 
+  async clickAction(key: string) {
+    const downLoadRef = element.all(by.id('mvDownloadBtn')).filter(function (elm) {
+      return elm.isDisplayed().then(function (isDisplayed) {
+        return isDisplayed;
+      });
+    }).last();
+    downLoadRef.click();
+  }
+
   async waitForElementsArray(selector: Locator) {
     await browser.wait(async () => {
       return (await element.all(selector).isPresent());

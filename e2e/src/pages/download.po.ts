@@ -22,6 +22,6 @@ export class DownloadPage extends AppPage {
   }
 
   async clickDownloadButton() {
-    await this.clickElement(by.xpath('/html/body/div/div/div/div/button[8]'));
+    await this.clickAction('mvDownloadBtn');
   }
 }
