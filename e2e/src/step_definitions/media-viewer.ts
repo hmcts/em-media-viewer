@@ -86,7 +86,7 @@ When('the user selects the print option', async () => {
 
 When('the user selects the download option', async () => {
   await downloadPage.clickMoreOptions();
-  await downloadPage.clickDownload();
+  await genericMethods.clickAction('mvDownloadBtn');
 });
 
 Then('I expect the print dialog should appear and the file is queued for printing', async function () {
