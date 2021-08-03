@@ -5,7 +5,7 @@
       <span *ngIf="!multimediaOn">Multimedia playback is not enabled, </span>
       <span *ngIf="multimediaOn && playbackMsg === 'success'">Use the player to play to the file or </span>
       <span *ngIf="multimediaOn && playbackMsg === 'error'">Mime type not supported. </span>
-      <a *ngIf="playbackMsg !== 'loading'" #downloadLink
+      <a *ngIf="!multimediaOn || playbackMsg !== 'loading'" #downloadLink
          [href]="url" [download]="downloadFileName">Click here to download</a>
     </p>
     <video #videoPlayer *ngIf="multimediaOn"

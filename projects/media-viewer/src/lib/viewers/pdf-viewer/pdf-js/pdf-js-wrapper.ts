@@ -6,7 +6,7 @@ import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-e
 import { Outline } from '../side-bar/outline-item/outline.model';
 import { PdfPosition } from '../../../store/reducers/document.reducer';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/build/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/assets/build/pdf.worker.min.js';
 
 /**
  * Values of the state field returned by the find events
@@ -84,7 +84,7 @@ export class PdfJsWrapper {
     this.documentLoadInit.next(documentUrl);
 
     try {
-      const pdfDocument = await loadingTask;
+      const pdfDocument = await loadingTask.promise;
       this.documentLoaded.next(pdfDocument);
       this.toolbarEvents.pageCountSubject.next(pdfDocument.numPages);
 
