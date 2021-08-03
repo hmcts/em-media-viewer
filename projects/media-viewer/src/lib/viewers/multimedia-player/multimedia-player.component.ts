@@ -38,7 +38,8 @@ export class MultimediaPlayerComponent implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.subscription = this.toolbarEvents.downloadSubject.subscribe(() => this.downloadLink.nativeElement.click());
+    this.subscription = this.toolbarEvents.downloadSubject
+      .subscribe(() => this.downloadLink.nativeElement.click());
     this.loadStatus.emit(ResponseType.SUCCESS);
   }
 
