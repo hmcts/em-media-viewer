@@ -13,8 +13,7 @@ import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
-
-
+import {MultimediaPage} from '../pages/multimedia.po';
 
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
@@ -28,6 +27,7 @@ const zoomPage = new ZoomPage();
 const outlinePage = new OutlinePage();
 const commentsPanelPage = new CommentsPanelPage();
 const downloadPage = new DownloadPage();
+const multimediaPage = new MultimediaPage();
 
 
 const ellipsisComment = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
@@ -127,6 +127,32 @@ Then('I expect to see the document should be downloaded', async function () {
   await downloadPage.waitForDownloadToComplete(file);
 });
 
+When('the user selects the multimedia option', async () => {
+  await multimediaPage.clickMultimedia();
+  await genericMethods.sleep(5000);
+});
+
+When('the user selects play option', async () => {
+  await multimediaPage.clickPlayButton();
+});
+
+Then('I should see video should be in play mode', async function ()  {
+    await genericMethods.sleep(5000);
+    const screenshots = await browser.takeScreenshot();
+    this.attach(screenshots, 'image/png');
+});
+
+When('the user selects pause option', async () => {
+  await multimediaPage.clickPlayButton();
+});
+
+Then('I should see video should be in pause mode', async function () {
+    await genericMethods.sleep(5000);
+    await multimediaPage.clickPause();
+    await genericMethods.sleep(5000);
+    const screenshots = await browser.takeScreenshot();
+    this.attach(screenshots, 'image/png');
+});
 
 const addComment = async (comment: string) => {
   await page.clickOnCommentButton();
