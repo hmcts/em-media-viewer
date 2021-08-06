@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.7.5-EM-3823-document-load-fix",
+  "version": "2.7.6",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
