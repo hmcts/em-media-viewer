@@ -6,12 +6,12 @@ import {GenericMethods} from '../utils/genericMethods';
 const genericMethods = new GenericMethods();
 const multimediaPage = new MultimediaPage();
 
-When('the user selects the multimedia option', async () => {
+When('I select the multimedia option', async () => {
   await multimediaPage.clickMultimedia();
   await genericMethods.sleep(5000);
 });
 
-When('the user selects play option', async () => {
+When('I click play option', async () => {
   await multimediaPage.clickPlayButton();
 });
 
@@ -21,7 +21,7 @@ Then('I should see video in play mode', async function ()  {
   this.attach(screenshots, 'image/png');
 });
 
-When('the user selects pause option', async () => {
+When('I click pause option', async () => {
   await multimediaPage.clickPlayButton();
 });
 
