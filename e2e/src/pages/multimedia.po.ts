@@ -8,10 +8,7 @@ export class MultimediaPage extends AppPage {
   }
 
   async clickPlayButton() {
-    await this.clickElement(by.css('#mainContainer > div > mv-multimedia-player'));
+    await this.clickElement(by.css('mv-multimedia-player'));
   }
 
-  async clickPause() {
-    await this.clickElement(by.css('#mainContainer > div > mv-multimedia-player'));
-  }
 }
