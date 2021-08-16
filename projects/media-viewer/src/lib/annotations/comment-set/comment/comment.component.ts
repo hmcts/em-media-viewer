@@ -30,7 +30,7 @@ import { Annotation } from '../../annotation-set/annotation-view/annotation.mode
 })
 export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
 
-  COMMENT_CHAR_LIMIT = 5000;
+  CHAR_LIMIT = 5000;
   lastUpdate: string;
   originalComment: string;
   fullComment: string;
@@ -40,7 +40,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   _comment: Comment;
   _editable: boolean;
   _rectangle;
-  totalPreviousPagesHeight = 0;
+  totalPrevPagesHeight = 0;
   rectTop;
   rectLeft;
   pageHeight: number;
@@ -102,11 +102,11 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
     this._editable = this._comment.editable;
     this.tagItems = this._comment.tags;
     const pageMarginBottom = 10;
-    this.totalPreviousPagesHeight = 0;
+    this.totalPrevPagesHeight = 0;
     for (let i = 0; i < this.page - 1; i++) {
       const height = this._comment.pages[i + 1] ? this._comment.pages[i + 1].styles.height : undefined;
       if (height) {
-        this.totalPreviousPagesHeight += height + pageMarginBottom;
+        this.totalPrevPagesHeight += height + pageMarginBottom;
       }
     }
 
@@ -138,8 +138,8 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   }
 
   onCommentChange(updatedComment) {
-    this.hasUnsavedChanges = this.originalComment.substring(0, this.COMMENT_CHAR_LIMIT) !==
-      updatedComment.substring(0, this.COMMENT_CHAR_LIMIT);
+    this.hasUnsavedChanges =
+      this.originalComment.substring(0, this.CHAR_LIMIT) !== updatedComment.substring(0, this.CHAR_LIMIT);
     this.commentService.onCommentChange(this.hasUnsavedChanges);
   }
 
@@ -161,7 +161,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
     if (!this.editable) {
       this._editable = true;
     } else {
-      this._comment.content = this.fullComment.substring(0, this.COMMENT_CHAR_LIMIT);
+      this._comment.content = this.fullComment.substring(0, this.CHAR_LIMIT);
       const tags = this.tagsServices.getNewTags(this._comment.annotationId);
       const payload = {
         comment: this._comment,
@@ -187,7 +187,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   }
 
   get commentTop(): number {
-    return this.totalPreviousPagesHeight + (this.rectTop * this.zoom);
+    return this.totalPrevPagesHeight + (this.rectTop * this.zoom);
   }
 
 

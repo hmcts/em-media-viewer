@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { StoreModule, Store } from '@ngrx/store';
 
@@ -46,7 +46,8 @@ describe('CommentSetComponent', () => {
     },
     toggleCommentsPanel: () => {},
     toggleParticipantsList: () => {},
-    commentsPanelVisible: new BehaviorSubject(false)
+    commentsPanelVisible: new BehaviorSubject(false),
+    rotateSubject: new BehaviorSubject(false),
   };
 
   beforeEach(() => {
@@ -357,5 +358,16 @@ describe('CommentSetComponent', () => {
 
       expect(component.clearSelection).not.toHaveBeenCalled();
     });
+
+    it('should scroll comments panel to current scrolling position of the viewer when became visible', fakeAsync(() => {
+      const scrollToSpy = spyOn(component.container.nativeElement, 'scrollTo').and.callThrough();
+
+      component.contentScrollTop = 100;
+      fixture.detectChanges();
+
+      fixture.whenStable().then(() => {
+        expect(scrollToSpy).toHaveBeenCalled();
+      });
+    }));
   });
 });

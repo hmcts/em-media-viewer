@@ -24,7 +24,7 @@ export class CommentSetRenderService {
     if (prevComment) {
       const endOfPrevComment = prevComment.commentTop + this.height(prevComment);
       if (comment.commentTop <= endOfPrevComment) {
-        comment.rectTop = (endOfPrevComment - comment.totalPreviousPagesHeight) / zoom;
+        comment.rectTop = (endOfPrevComment - comment.totalPrevPagesHeight) / zoom;
       }
     }
   }
