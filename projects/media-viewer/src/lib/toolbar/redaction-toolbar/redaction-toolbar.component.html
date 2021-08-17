@@ -23,8 +23,8 @@
     <span *ngIf="preview" data-l10n-id="redaction-hide-preview_label">Hide preview</span>
   </button>
 
-  <button [disabled]="!hasRedactions" id="mvDownloadBtn" class="mv-button redaction-button--download" aria-pressed="false" title="Download and save"
-    data-l10n-id="toggleDownloadButton" (click)="redact()">
+  <button [disabled]="!hasRedactions" id="mvRedactBtn" class="mv-button redaction-button--download" aria-pressed="false" title="Redact"
+    data-l10n-id="mvRedactBtn" (click)="redact()">
     <span data-l10n-id="Save Document">Save document</span>
   </button>
 
