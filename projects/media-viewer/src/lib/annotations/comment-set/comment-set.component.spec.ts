@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import {Component, Input, Output, EventEmitter, SimpleChanges, SimpleChange} from '@angular/core';
 import {ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { StoreModule, Store } from '@ngrx/store';
@@ -345,12 +345,16 @@ describe('CommentSetComponent', () => {
   );
 
   describe('onContainerClick', () => {
-    it('should call clearSelection when onContainerClick called', () => {
-      spyOn(component, 'clearSelection').and.callThrough();
-      component.onContainerClick({ path: [component.container.nativeElement] });
+    it('should call clearSelection when onContainerClick called',
+      inject([Store], (store: Store<{}>) => {
+        spyOn(store, 'dispatch').and.callThrough();
+        const action = new fromActions.SelectedAnnotation({ annotationId: '', editable: false, selected: false});
 
-      expect(component.clearSelection).toHaveBeenCalled();
-    });
+        component.onContainerClick({ path: [component.panel.nativeElement] });
+
+        expect(store.dispatch).toHaveBeenCalledWith(action);
+      })
+    );
 
     it('should not call clearSelection when param is not the container', () => {
       spyOn(component, 'clearSelection').and.callThrough();
@@ -362,12 +366,9 @@ describe('CommentSetComponent', () => {
     it('should scroll comments panel to current scrolling position of the viewer when became visible', fakeAsync(() => {
       const scrollToSpy = spyOn(component.container.nativeElement, 'scrollTo').and.callThrough();
 
-      component.contentScrollTop = 100;
-      fixture.detectChanges();
+      component.ngOnChanges({ contentScrollTop: new SimpleChange(0, 100, true) });
 
-      fixture.whenStable().then(() => {
-        expect(scrollToSpy).toHaveBeenCalled();
-      });
+      expect(scrollToSpy).toHaveBeenCalled();
     }));
   });
 });
