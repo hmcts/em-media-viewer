@@ -14,8 +14,6 @@ import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
 
-
-
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
 const toolBar = new ToolBar();
@@ -28,7 +26,6 @@ const zoomPage = new ZoomPage();
 const outlinePage = new OutlinePage();
 const commentsPanelPage = new CommentsPanelPage();
 const downloadPage = new DownloadPage();
-
 
 const ellipsisComment = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
 const firstComment = 'This is comment number 1';
@@ -126,7 +123,6 @@ Then('I expect to see the document should be downloaded', async function () {
   this.attach(screenshots, 'image/png');
   await downloadPage.waitForDownloadToComplete(file);
 });
-
 
 const addComment = async (comment: string) => {
   await page.clickOnCommentButton();
