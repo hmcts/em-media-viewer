@@ -73,7 +73,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
       this.commentService.setCommentSet(this);
     }
     if (changes.contentScrollTop) {
-      if (this.container ) {
+      if (this.container) {
         this.container.nativeElement.scrollTo(0, this.contentScrollTop);
       }
     }
