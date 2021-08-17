@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, SimpleChanges, SimpleChange} from '@angular/core';
-import {ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { StoreModule, Store } from '@ngrx/store';
 
@@ -363,12 +363,12 @@ describe('CommentSetComponent', () => {
       expect(component.clearSelection).not.toHaveBeenCalled();
     });
 
-    it('should scroll comments panel to current scrolling position of the viewer when became visible', fakeAsync(() => {
+    it('should scroll comments panel to current scrolling position of the viewer when became visible', () => {
       const scrollToSpy = spyOn(component.container.nativeElement, 'scrollTo').and.callThrough();
 
       component.ngOnChanges({ contentScrollTop: new SimpleChange(0, 100, true) });
 
       expect(scrollToSpy).toHaveBeenCalled();
-    }));
+    });
   });
 });
