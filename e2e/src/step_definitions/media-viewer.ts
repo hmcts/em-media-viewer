@@ -12,8 +12,7 @@ import {CommentPage} from '../pages/comment.po';
 import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
-
-
+import {DownloadPage} from '../pages/download.po';
 
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
@@ -26,7 +25,7 @@ const commentsPage = new CommentPage();
 const zoomPage = new ZoomPage();
 const outlinePage = new OutlinePage();
 const commentsPanelPage = new CommentsPanelPage();
-
+const downloadPage = new DownloadPage();
 
 const ellipsisComment = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
 const firstComment = 'This is comment number 1';
@@ -34,6 +33,7 @@ const secondComment = 'This is comment number 2';
 const thirdComment = 'This is comment number 3';
 const newComment = 'This is comment number 1 new';
 const actual = 'Annotations Ellipsis EM-1814 story test';
+const file = 'src/assets/example.pdf';
 
 Given('I am on Media Viewer Page', async () => {
   await genericMethods.sleep(5000);
@@ -81,6 +81,10 @@ When('the user selects the print option', async () => {
   await printPage.clickPrint();
 });
 
+When('the user selects the download option', async () => {
+  await downloadPage.clickMoreOptions();
+  await genericMethods.clickAction('mvDownloadBtn');
+});
 
 Then('I expect the print dialog should appear and the file is queued for printing', async function () {
   const screenshots = browser.takeScreenshot();
@@ -111,6 +115,13 @@ Then('I expect bookmark to be added to the existing list', async function () {
   await genericMethods.sleep(5000);
   const screenshots = await browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
+});
+
+Then('I expect to see the document should be downloaded', async function () {
+  await genericMethods.sleep(5000);
+  const screenshots = await browser.takeScreenshot();
+  this.attach(screenshots, 'image/png');
+  await downloadPage.waitForDownloadToComplete(file);
 });
 
 const addComment = async (comment: string) => {

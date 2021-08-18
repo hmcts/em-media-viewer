@@ -56,7 +56,7 @@
     </ng-template>
   </div>
 
-  <div #scrollTwo class="comments">
+  <div #scrollTwo [ngClass]="{'comments': showCommentsPanel}">
     <mv-comment-set #commentsPanel
                     *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
                     [annotationSet]="annotationSet"
