@@ -1,4 +1,4 @@
-import {browser} from 'protractor';
+import {browser, by, element} from 'protractor';
 
 export class GenericMethods {
 
@@ -26,5 +26,14 @@ export class GenericMethods {
     await browser.executeScript('window.scrollTo(0,0);').then(async function () {
       console.log('SCROLLED UP...');
     });
+  }
+
+  async clickAction(key: string) {
+    const downLoadRef = element.all(by.id(key)).filter(function (elm) {
+      return elm.isDisplayed().then(function (isDisplayed) {
+        return isDisplayed;
+      });
+    }).last();
+    downLoadRef.click();
   }
 }
