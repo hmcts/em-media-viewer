@@ -124,7 +124,6 @@ Then('I expect to see the document should be downloaded', async function () {
   await downloadPage.waitForDownloadToComplete(file);
 });
 
-
 const addComment = async (comment: string) => {
   await page.clickOnCommentButton();
   await page.enterTextInAnnotation(comment);
