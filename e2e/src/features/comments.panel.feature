@@ -1,5 +1,5 @@
 @MediaViewer
-Feature: Comments E2E Tests
+Feature: Comments Panel E2E
 
   Background:
     Given I am on Media Viewer Page
