@@ -28,8 +28,8 @@ Feature: Comments E2E Tests
 
   @CommentsPanelCollateComments @ci
   Scenario: Collate Comments Overlay Panel
-    When The user clicks on the show comments panel
-    And   The user clicks on Collate Comments
-    Then  The comment summary is displayed
+    When The user clicks on the show comments panel toggle icon
+    And The user clicks on Collate Comments
+    Then The comment summary is displayed
 
 
