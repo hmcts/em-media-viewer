@@ -643,3 +643,8 @@ Then('I expect comments panel should disappear', async function () {
   expect(result).to.equal('Comments');
 });
 
+When(/^The user clicks on the show comments panel toggle icon$/, async function () {
+  await commentsPanelPage.clickCommentsToggleIcon();
+  await genericMethods.sleep(2000);
+});
+
