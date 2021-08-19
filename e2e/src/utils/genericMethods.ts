@@ -29,11 +29,11 @@ export class GenericMethods {
   }
 
   async clickAction(key: string) {
-    const downLoadRef = element.all(by.id(key)).filter(function (elm) {
+    const elementsList = element.all(by.id(key)).filter(function (elm) {
       return elm.isDisplayed().then(function (isDisplayed) {
         return isDisplayed;
       });
     }).last();
-    downLoadRef.click();
+    elementsList.click();
   }
 }

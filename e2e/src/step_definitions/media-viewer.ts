@@ -14,8 +14,6 @@ import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
 
-
-
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
 const toolBar = new ToolBar();
@@ -28,7 +26,6 @@ const zoomPage = new ZoomPage();
 const outlinePage = new OutlinePage();
 const commentsPanelPage = new CommentsPanelPage();
 const downloadPage = new DownloadPage();
-
 
 const ellipsisComment = 'This is comment number 1+Annotations Ellipsis EM-1814 story test';
 const firstComment = 'This is comment number 1';
@@ -135,10 +132,10 @@ const addComment = async (comment: string) => {
 };
 
 const highLightTextInPdf = async function () {
-   await page.waitForPdfToLoad();
-   await sleep(5000);
-   await toolBar.enableTextHighLightMode();
-   await page.highLightTextOnPdfPage();
+  await page.waitForPdfToLoad();
+  await sleep(5000);
+  await toolBar.enableTextHighLightMode();
+  await page.highLightTextOnPdfPage();
 };
 
 const highLightTextForBookmarking = async function () {
@@ -158,39 +155,39 @@ const toggleIndexButton = async function () {
 };
 
 const addBookmark = async function () {
-    await page.createBookmarkUsingOverlay();
+  await page.createBookmarkUsingOverlay();
 
-    const count: number = await page.getSaveBookMarksCount();
-    expect(count).eq(1);
+  const count: number = await page.getSaveBookMarksCount();
+  expect(count).eq(1);
 
-    await page.saveBookmarks();
+  await page.saveBookmarks();
 };
 
 const verifyBookmarkCount = async function (expectedCount: number) {
-    const actualCount: number = await page.getBookMarksCount();
-    expect(actualCount).eq(expectedCount);
+  const actualCount: number = await page.getBookMarksCount();
+  expect(actualCount).eq(expectedCount);
 };
 
 const deleteBookmark = async function () {
-    beforeDeleteBookMarksCount = await page.getBookMarksCount();
-    await page.deleteBookmarks();
+  beforeDeleteBookMarksCount = await page.getBookMarksCount();
+  await page.deleteBookmarks();
 };
 
 const verifyBookmarkCountAfterDelete = async function () {
-    const actualCount: number = await page.getBookMarksCount();
-    expect(actualCount).lessThan(beforeDeleteBookMarksCount);
+  const actualCount: number = await page.getBookMarksCount();
+  expect(actualCount).lessThan(beforeDeleteBookMarksCount);
 };
 
 const updateBookmark = async function (textToBeUpdated: string) {
-    await page.updateBookmarks(textToBeUpdated);
+  await page.updateBookmarks(textToBeUpdated);
 };
 
 const verifyBookmarkTextAfterUpdate = async function (textToBeUpdated: string) {
-    const actualUpdatedText = await page.getUpdatedBookMarkName();
-    expect(actualUpdatedText).eq(textToBeUpdated);
+  const actualUpdatedText = await page.getUpdatedBookMarkName();
+  expect(actualUpdatedText).eq(textToBeUpdated);
 
-    await deleteBookmark();
-    await verifyBookmarkCountAfterDelete();
+  await deleteBookmark();
+  await verifyBookmarkCountAfterDelete();
 };
 
 const showBookmarks = async function () {
@@ -260,11 +257,11 @@ const imageZoomInOut = async (zoomOption: string) => {
 };
 
 Then('I should be able to add comment for the highlight', async () => {
-    await addComment(firstComment);
+  await addComment(firstComment);
 });
 
 When('I highlight text on a PDF document', async () => {
-    await highLightTextInPdf();
+  await highLightTextInPdf();
 });
 
 Then('I expect no existing bookmarks present', async () => {
@@ -272,7 +269,7 @@ Then('I expect no existing bookmarks present', async () => {
 });
 
 When('I highlight text to be bookmarked on the PDF document', async () => {
-    await highLightTextForBookmarking();
+  await highLightTextForBookmarking();
 });
 
 When('I clear existing bookmarks', async () => {
@@ -291,8 +288,8 @@ When('I open document outline sidebar and click show bookmarks', async () => {
 });
 
 Then('I am able to add a bookmark and verify it has been created {int} bookmark', async (int) => {
-    await addBookmark();
-    await verifyBookmarkCount(int);
+  await addBookmark();
+  await verifyBookmarkCount(int);
 });
 
 Then('I expect {int} bookmark is present in bookmarks list', async (int) => {
@@ -300,13 +297,13 @@ Then('I expect {int} bookmark is present in bookmarks list', async (int) => {
 });
 
 Then('I am able to update a bookmark with text {string} and verify it has been updated', async (string) => {
-    await updateBookmark(string);
-    await verifyBookmarkTextAfterUpdate(string);
+  await updateBookmark(string);
+  await verifyBookmarkTextAfterUpdate(string);
 });
 
 Then('I am able to delete a bookmark and verify it has been deleted', async () => {
-    await deleteBookmark();
-    await verifyBookmarkCountAfterDelete();
+  await deleteBookmark();
+  await verifyBookmarkCountAfterDelete();
 });
 
 function sleep(time: number) {
@@ -573,8 +570,10 @@ Then('I expect custom toolbar should be enabled', async () => {
   await page.waitForElement(by.className('customToolbar'));
 });
 
-When(/^The user clicks on the show comments panel toggle icon$/, async function () {
-  await commentsPanelPage.clickCommentsToggleIcon();
+When(/^The user clicks on the show comments panel$/, async function () {
+  await downloadPage.clickMoreOptions();
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickCommentsPanel();
   await genericMethods.sleep(2000);
 });
 
@@ -629,3 +628,19 @@ When(/^The user closes the overlay panel$/, async function () {
 When(/^The user clicks to hide the toggle icon$/, async function () {
   await commentsPanelPage.hideCommentsToggle();
 });
+
+Then('I expect to see comments panel should appear', async function () {
+  const result = await commentsPanelPage.getCommentsTabText();
+  console.log('Result' + result);
+  expect(result).to.equal('Comments');
+});
+
+When('I click comments panel again', async () => {
+  await commentsPanelPage.clickCommentsPanel();
+});
+
+Then('I expect comments panel should disappear', async function () {
+  const result = await commentsPanelPage.getCommentsPanelText();
+  expect(result).to.equal('Comments');
+});
+
