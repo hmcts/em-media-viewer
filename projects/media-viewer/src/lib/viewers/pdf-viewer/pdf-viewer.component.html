@@ -6,7 +6,6 @@
              [outline]="documentOutline"
              [annotationsEnabled]="enableAnnotations">
 </mv-side-bar>
-
 <mv-comment-set-header
   *ngIf="enableAnnotations"
   [ngClass]="{'show-comments-panel': showCommentsPanel}"
@@ -14,12 +13,10 @@
   (showCommentSummaryDialog)="toggleCommentsSummary()">
 </mv-comment-set-header>
 <mv-participants-list></mv-participants-list>
-
 <div
      class="pdfContainer"
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'pdfContainer': true, hidden: errorMessage }">
-
   <div
     #viewerContainer
     mvGrabNDrag
@@ -27,46 +24,37 @@
     [dragEnabled]="enableGrabNDrag"
     id="viewerContainer"
     class="viewer-container"
-    (scroll)="scrollTwo.scrollTop = viewerContainer.scrollTop"
     [class.annotations]="enableAnnotations"
     [class.show-comments-panel]="(showCommentsPanel || showIcpParticipantsList) && !(toolbarEvents.redactionMode | async)"
     [class.grabNDrag]="enableGrabNDrag">
-
     <div #pdfViewer
          class="pdfViewer"
          mvCreateTextHighlight
          [ngClass]="{ hidden: loadingDocument, highlightMode: highlightMode | async, drawMode: drawMode | async }">
     </div>
-
     <mv-redactions *ngIf="(toolbarEvents.redactionMode | async); else annotationTemplate"
                    [zoom]="zoom"
                    [rotate]="rotation"
     ></mv-redactions>
-
     <ng-template #annotationTemplate>
       <mv-metadata-layer
         *ngIf="enableAnnotations && annotationSet"
         [zoom]="zoom"
         [rotate]="rotation">
       </mv-metadata-layer>
-
       <mv-bookmark-icons [zoom]="zoom"
                          [rotate]="rotation">
       </mv-bookmark-icons>
     </ng-template>
   </div>
-
-  <div #scrollTwo [ngClass]="{'comments': showCommentsPanel}">
-    <mv-comment-set #commentsPanel
-                    *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
-                    [annotationSet]="annotationSet"
-                    [zoom]="zoom"
-                    [rotate]="rotation"
-                    [height]="pdfViewer.offsetHeight"
-                    [pageHeights]="pageHeights">
-    </mv-comment-set>
-  </div>
-
+  <mv-comment-set [contentScrollTop]="viewerContainer.scrollTop"
+                  *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
+                  [annotationSet]="annotationSet"
+                  [zoom]="zoom"
+                  [rotate]="rotation"
+                  [height]="pdfViewer.offsetHeight"
+                  [pageHeights]="pageHeights">
+  </mv-comment-set>
   <div class="loadingMessage" *ngIf="loadingDocument">
     <h3 class="govuk-heading-m">Loading...{{ loadingDocumentProgress ? loadingDocumentProgress + '%' : '' }}</h3>
   </div>

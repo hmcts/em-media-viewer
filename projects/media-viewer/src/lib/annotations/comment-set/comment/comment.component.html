@@ -24,7 +24,7 @@
             type="text"
             required
             name="content"
-            [maxlength]="COMMENT_CHAR_LIMIT"
+            [maxlength]="CHAR_LIMIT"
             class="aui-comment__content form-control mimic-focus edit-mode expanded"
             [(ngModel)]="fullComment"
             (ngModelChange)="reRenderComments(); onCommentChange($event);"
