@@ -274,19 +274,4 @@ describe('PdfViewerComponent', () => {
       expect(store.dispatch).toHaveBeenCalledWith(new SetCaseId(caseId));
     }))
   );
-
-  it('should scroll comments panel to current scrolling position of the viewer when became visible', fakeAsync(() => {
-    const scrollBySpy = spyOn(component.scrollTwo.nativeElement, 'scrollBy').and.callThrough();
-
-    component.viewerContainer.nativeElement.scrollBy(0, 100);
-    fixture.detectChanges();
-
-    toolbarEvents.commentsPanelVisible.next(true);
-    fixture.detectChanges();
-    tick(5);
-
-    fixture.whenStable().then(() => {
-      expect(scrollBySpy).toHaveBeenCalled();
-    });
-  }));
 });

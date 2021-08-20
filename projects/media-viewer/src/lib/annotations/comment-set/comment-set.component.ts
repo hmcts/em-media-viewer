@@ -35,6 +35,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   @Input() rotate: number;
   @Input() height: number;
   @Input() pageHeights = [];
+  @Input() contentScrollTop: number;
 
   comments: Comment[];
   tags: TagsModel[];
@@ -42,7 +43,8 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   public comments$: Observable<Annotation[]>;
   public annoEntities$: Observable<{ [id: string]: Annotation }>;
 
-  @ViewChild('container') container: ElementRef;
+  @ViewChild('container') container: ElementRef<HTMLDivElement>;
+  @ViewChild('panel') panel: ElementRef<HTMLDivElement>;
   @ViewChildren('commentComponent') commentComponents: QueryList<CommentComponent>;
 
   showCommentsPanel: boolean;
@@ -63,11 +65,17 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
         this.showCommentsPanel = toggle;
       })
     );
+    this.subscriptions.push(this.toolbarEvents.rotateSubject.subscribe(rotate => this.rotateDocument()));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.annotationSet) {
       this.commentService.setCommentSet(this);
+    }
+    if (changes.contentScrollTop) {
+      if (this.container) {
+        this.container.nativeElement.scrollTo(0, this.contentScrollTop);
+      }
     }
   }
 
@@ -99,6 +107,12 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
     }, 0);
   }
 
+  private rotateDocument() {
+    if (this.panel) {
+      this.panel.nativeElement.style.height = '0';
+    }
+  }
+
   public onCommentUpdate(payload: {comment: Comment, tags: TagsModel[]} ) {
     const annotation = this.annotationSet.annotations.find(anno => anno.id === payload.comment.annotationId);
     const comments = [payload.comment];
@@ -116,7 +130,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onContainerClick(e) {
-    if (e.path && e.path[0] === this.container.nativeElement) {
+    if (e.path && e.path[0] === this.panel.nativeElement) {
       this.clearSelection();
     }
   }

@@ -71,8 +71,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @ViewChild('viewerContainer') viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
-  @ViewChild('commentsPanel') commentsPanel: CommentSetComponent;
-  @ViewChild('scrollTwo') scrollTwo: ElementRef<HTMLDivElement>;
 
   private pdfWrapper: PdfJsWrapper;
   private $subscription: Subscription;
@@ -120,12 +118,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
         this.showCommentsPanel = toggle;
-
-        if (toggle) {
-          setTimeout(() => {
-            this.scrollTwo.nativeElement.scrollBy(0, this.viewerContainer.nativeElement.scrollTop);
-          });
-        }
       })
     );
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
@@ -213,9 +205,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   private rotateDocument(rotation: number) {
     const pageNumber = this.pdfWrapper.getPageNumber();
-    if (this.commentsPanel) {
-      this.commentsPanel.container.nativeElement.style.height = 0;
-    }
     this.pdfWrapper.rotate(rotation);
     this.pdfWrapper.setPageNumber(pageNumber);
     this.rotation = (this.rotation + rotation) % 360;
