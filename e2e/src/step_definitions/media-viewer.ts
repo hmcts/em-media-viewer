@@ -203,7 +203,7 @@ export const drawOnPdf = async (xAxis: number, yAxis: number) => {
   await page.waitForPdfToLoad();
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();
-  await page.drawOnPDFPage(xAxis, yAxis);
+  await page.drawBoxOnPdfText(xAxis, yAxis);
 };
 
 const deleteComment = async () => {

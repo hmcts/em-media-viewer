@@ -6,22 +6,22 @@ const until = protractor.ExpectedConditions;
 
 export class AppPage {
 
-    contextToolbar: By = by.css('mv-ctx-toolbar .toolbar');
-    commentButton: By = by.css('mv-ctx-toolbar button[title=\'Comment\']');
-    bookmarkButton: By = by.css('#bookmarkButton');
-    annotationTextArea: By = by.css('textarea.expanded');
-    comments: By = by.css('textarea');
-    saveButton: By = by.xpath('//button[text()=\' Save \']');
-    editButton: By = by.xpath('//button[text()=\' Edit \']');
-    commentDeleteButtonXpath = '//textarea[@ng-reflect-model=\'{0}\']/..//button[text()=\' Delete \']';
-    page = '.page[data-page-number="{0}"]';
-    bookMarkRename = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .outlineItem .bookmark__rename');
-    bookMarkSave = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .bookmark__save');
-    bookMarkDelete = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .bookmark__delete');
-    bookMarkInput = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .node-wrapper .bookmark__input');
-    bookMarkItems = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .outlineItem');
-    mvIndexBtn = protractor.By.id('mvIndexBtn');
-    viewBookmark = protractor.By.id('viewBookmark');
+  contextToolbar: By = by.css('mv-ctx-toolbar .toolbar');
+  commentButton: By = by.css('mv-ctx-toolbar button[title=\'Comment\']');
+  bookmarkButton: By = by.css('#bookmarkButton');
+  annotationTextArea: By = by.css('textarea.expanded');
+  comments: By = by.css('textarea');
+  saveButton: By = by.xpath('//button[text()=\' Save \']');
+  editButton: By = by.xpath('//button[text()=\' Edit \']');
+  commentDeleteButtonXpath = '//textarea[@ng-reflect-model=\'{0}\']/..//button[text()=\' Delete \']';
+  page = '.page[data-page-number="{0}"]';
+  bookMarkRename = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .outlineItem .bookmark__rename');
+  bookMarkSave = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .bookmark__save');
+  bookMarkDelete = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .bookmark__delete');
+  bookMarkInput = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .node-wrapper .bookmark__input');
+  bookMarkItems = protractor.By.css('.outlineWithDeepNesting .bookmarks-tree .outlineItem');
+  mvIndexBtn = protractor.By.id('mvIndexBtn');
+  viewBookmark = protractor.By.id('viewBookmark');
 
   async clickElement(selector: By) {
     const el = await element(selector);
@@ -93,6 +93,10 @@ export class AppPage {
     await this.executeScript(x, y, 0, 0, ['mousedown', 'mousemove', 'mouseup'], 'shapeRectangle', 0);
   }
 
+  async drawBoxOnPdfText(x: number, y: number) {
+    await this.executeScript(x, y, 950, 950, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
+  }
+
   async executeScript(xAxis, yAxis, screenX, screenY, eventList, elementSelector, elementIndex) {
 
     // tslint:disable-next-line:no-shadowed-variable
@@ -102,21 +106,21 @@ export class AppPage {
       const createMouseEvent = (typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) => {
         const mouseEvent = document.createEvent('MouseEvents');
         mouseEvent.initMouseEvent(
-            typeArg,
-            true,
-            true,
-            window,
-            1,
-            screenX,
-            screenY,
-            clientX,
-            clientY,
-            false,
-            false,
-            false,
-            false,
-            0,
-            null
+          typeArg,
+          true,
+          true,
+          window,
+          1,
+          screenX,
+          screenY,
+          clientX,
+          clientY,
+          false,
+          false,
+          false,
+          false,
+          0,
+          null
         );
         return mouseEvent;
       };
@@ -144,9 +148,8 @@ export class AppPage {
   }
 
 
-
   async highLightTextOnPdfPage() {
-    await browser.executeScript( () => {
+    await browser.executeScript(() => {
 
       const range = document.createRange();
       const matchingElement = document.getElementsByClassName('textLayer')[0].children[4];
@@ -177,11 +180,12 @@ export class AppPage {
       // const mouseUp = 	mouseEvent;
 
       const pageHandle = document.getElementsByClassName('textLayer')[0].children[4];
-      pageHandle.dispatchEvent(mouseEvent) ; // ('mouseup', 844,497,937,403)); //mouseUp Event
+      pageHandle.dispatchEvent(mouseEvent); // ('mouseup', 844,497,937,403)); //mouseUp Event
 
     });
 
   }
+
   //
   // async getHighlightPopUp() {
   //   await browser.executeScript(() => {
@@ -197,19 +201,20 @@ export class AppPage {
   // }
 
   async clearBookmarks() {
-      await browser.sleep(1000);
-      await this.toggleIndexButton();
-      await browser.sleep(1000);
-      await element(this.viewBookmark).click();
-      await browser.sleep(1000);
-      await this.deleteBookmarks();
-      await browser.sleep(1000);
-      await this.toggleIndexButton();
+    await browser.sleep(1000);
+    await this.toggleIndexButton();
+    await browser.sleep(1000);
+    await element(this.viewBookmark).click();
+    await browser.sleep(1000);
+    await this.deleteBookmarks();
+    await browser.sleep(1000);
+    await this.toggleIndexButton();
   }
 
   async toggleIndexButton() {
     await element(this.mvIndexBtn).click();
   }
+
   async saveBookmarks() {
     await browser.sleep(5000);
     await element.all(this.bookMarkSave).first().click();
@@ -254,9 +259,9 @@ export class AppPage {
   }
 
   async createBookmarkUsingOverlay() {
-      await browser.sleep(5000);
-      // This is the Bookmark button on the Popup overlay.
-      await element(this.bookmarkButton).click();
+    await browser.sleep(5000);
+    // This is the Bookmark button on the Popup overlay.
+    await element(this.bookmarkButton).click();
   }
 
   async showBookmarks() {
@@ -303,10 +308,10 @@ export class AppPage {
 
   async getAllComments(): Promise<string[]> {
     const comments: string[] = [];
-    await browser.findElements(this.comments).then( async (elements) => {
+    await browser.findElements(this.comments).then(async (elements) => {
       for (const htmlElement of elements) {
-         await htmlElement.getAttribute('ng-reflect-model')
-           .then((a) => comments.push(a));
+        await htmlElement.getAttribute('ng-reflect-model')
+          .then((a) => comments.push(a));
       }
       return comments;
     });
@@ -329,17 +334,17 @@ export class AppPage {
   async isPageDataLoaded(pageNumber: number): Promise<boolean> {
     const cssSel = String.Format(this.page, pageNumber);
     return await element(by.css(cssSel)).getAttribute('data-loaded')
-      .then( (value) => {
-      if (value === 'true') {
-        return true;
-      }
-      return false;
-    });
+      .then((value) => {
+        if (value === 'true') {
+          return true;
+        }
+        return false;
+      });
   }
 
   async highLightTextForBookmarking() {
 
-    await browser.executeScript( () => {
+    await browser.executeScript(() => {
 
       const range = document.createRange();
       const matchingElement = document.getElementsByClassName('textLayer')[0].children[4];
@@ -353,7 +358,7 @@ export class AppPage {
         'mouseup',
         true,
         true,
-         window,
+        window,
         1,
         844,
         497,
@@ -368,7 +373,7 @@ export class AppPage {
       );
 
       const pageHandle = document.getElementsByClassName('textLayer')[0].children[4];
-      pageHandle.dispatchEvent(mouseUpEvent) ; // ('mouseup', 844,497,937,403)); //mouseUp Event
+      pageHandle.dispatchEvent(mouseUpEvent); // ('mouseup', 844,497,937,403)); //mouseUp Event
 
     });
 
