@@ -2,16 +2,12 @@ import {Given, Then, When} from 'cucumber';
 import {RedactPage} from '../pages/redact.po';
 import {GenericMethods} from '../utils/genericMethods';
 import * as mediaviewer from './media-viewer';
-import {DownloadPage} from '../pages/download.po';
 
 const genericMethods = new GenericMethods();
 const redactPage: RedactPage = new RedactPage();
-const downloadPage = new DownloadPage();
 
 When('I click on the Redact button', async () => {
-  await downloadPage.clickMoreOptions();
-  await genericMethods.clickAction('mvRedactBtn');
-  // await redactPage.clickRedact();
+  await redactPage.clickRedact();
 });
 
 Then('I can remove the redaction', async function () {
