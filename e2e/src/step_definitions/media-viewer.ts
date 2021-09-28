@@ -130,7 +130,7 @@ const addComment = async (comment: string) => {
   await page.clickOnSaveButton();
 };
 
-const highLightTextInPdf = async function () {
+export const highLightTextInPdf = async function () {
   await page.waitForPdfToLoad();
   await sleep(5000);
   await toolBar.enableTextHighLightMode();
@@ -193,17 +193,17 @@ const showBookmarks = async function () {
   await page.showBookmarks();
 };
 
-const highLightOnImage = async () => {
+export const highLightOnImage = async () => {
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();
   await page.drawOnImagePage();
 };
 
-const drawOnPdf = async (xAxis: number, yAxis: number) => {
+export const drawOnPdf = async (xAxis: number, yAxis: number) => {
   await page.waitForPdfToLoad();
   await sleep(5000);
   await toolBar.enableDrawHighLightMode();
-  await page.drawOnPDFPage(xAxis, yAxis);
+  await page.drawBoxOnPdfText(xAxis, yAxis);
 };
 
 const deleteComment = async () => {
