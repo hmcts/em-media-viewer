@@ -66,7 +66,12 @@ export class ConvertibleContentViewerComponent implements OnInit, OnDestroy {
 
   // todo move this to common place for media viewer and pdf
   private extractDMStoreDocId(url: string): string {
-    url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
+
+    if (url.includes('/documents/')) {
+      url = url.split('/documents/')[1];
+    } else if (url.includes('/documentsv2/')) {
+      url = url.split('/documentsv2/')[1];
+    }
     return url.replace('/binary', '');
   }
 }
