@@ -13,4 +13,4 @@ Feature: Zoom In/Out Feature
     Examples:
       | pdf_or_image | zoom_option |
       | pdf          | 150%        |
-      | image        |90%        |
+      | image        | 150%        |
