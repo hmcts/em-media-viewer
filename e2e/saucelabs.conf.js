@@ -1,4 +1,5 @@
 const common = require('./tsconfig.e2e.json');
+const argv = minimist(process.argv.slice(2));
 
 const config = {
     framework: 'custom',
@@ -9,7 +10,7 @@ const config = {
     baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
     params: {
         serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
-        targetEnv: common.argv.env || 'local'
+        targetEnv: argv.env || 'local'
     },
     sauceUser: process.env.SAUCE_USERNAME,
     sauceKey: process.env.SAUCE_ACCESS_KEY,
