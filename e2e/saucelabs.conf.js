@@ -1,4 +1,4 @@
-const common = require('./support/common.conf');
+const common = require('./tsconfig.e2e.json');
 
 const config = {
     framework: 'custom',

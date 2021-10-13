@@ -30,7 +30,7 @@
     "test:smoke": "yarn test",
     "test:fullfunctional": "yarn e2e:fullfunctional",
     "test:functional": "yarn e2e:fullfunctional",
-    "test:crossbrowser": "protractor ./e2e/saucelabs.conf.js",
+    "test:crossbrowser": "protractor e2e/saucelabs.conf.js",
     "test:codacy-upload": "cross-env NODE_PATH=. cat ./reports/tests/coverage/ng/lcov.info | codacy-coverage",
     "test:coveralls-upload": "cross-env NODE_PATH=. cat ./reports/tests/coverage/ng/lcov.info | coveralls",
     "test:codecov-upload": "codecov -f ./reports/tests/coverage/ng/lcov.info",
