@@ -24,8 +24,8 @@ withNightlyPipeline(type, product, component) {
   disableLegacyDeployment()
   enableSecurityScan()
   enableSlackNotifications(channel)
-  enableFullFunctionalTest(200)
-  enableCrossBrowserTest(['chrome', 'firefox', 'safari', 'microsoft'])
+//  enableFullFunctionalTest(200)
+  enableCrossBrowserTest(['chrome'])
 
   env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
 
