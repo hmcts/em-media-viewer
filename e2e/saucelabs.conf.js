@@ -1,4 +1,5 @@
 const common = require('./tsconfig.e2e.json');
+const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2));
 
 const config = {
