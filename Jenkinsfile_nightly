@@ -25,6 +25,7 @@ withNightlyPipeline(type, product, component) {
   enableSecurityScan()
   enableSlackNotifications(channel)
   enableFullFunctionalTest(200)
+  enableCrossBrowserTest(['chrome', 'firefox', 'safari', 'microsoft'])
 
   env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
 
@@ -49,6 +50,10 @@ withNightlyPipeline(type, product, component) {
       reportFiles          : 'index.html',
       reportName           : 'MediaViewer Functional Tests'
     ])
+  }
+
+  after('crossBrowserTest') {
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
   }
 
   after('securityScan') {
