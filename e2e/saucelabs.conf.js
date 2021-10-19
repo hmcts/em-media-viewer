@@ -77,7 +77,7 @@ const config = {
                 removeExistingJsonReportFile: true,
                 reportName: 'Media Viewer CrossBrowser Tests',
                 jsonDir: '/reports/crossbrowser/reports',
-                reportPath: './functional-output/crossbrowser/reports'
+                reportPath: './functional-output/crossbrowser/reports',
                 displayDuration: true,
                 durationInMS: false
             }
