@@ -88,6 +88,7 @@
     "nunjucks": "^3.2.0",
     "otp": "^0.1.3",
     "pdfjs-dist": "2.5.207",
+    "protractor-screenshot-utils": "^1.0.5",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
     "scss-bundle": "~2.4.0",
