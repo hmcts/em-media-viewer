@@ -2929,6 +2929,13 @@ cucumber@5.1.0:
     title-case "^2.1.1"
     util-arity "^1.0.2"
     verror "^1.9.0"
+    
+cucumberjs-allure-reporter@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/cucumberjs-allure-reporter/-/cucumberjs-allure-reporter-1.0.3.tgz#1827ae5b4cf53407ae423f2d4b09160224c13030"
+  integrity sha1-GCeuW0z1NAeuQj8tSwkWAiTBMDA=
+  dependencies:
+    allure-js-commons "1.2.0"
 
 cuint@^0.2.2:
   version "0.2.2"

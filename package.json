@@ -139,6 +139,7 @@
     "cucumber-html-report": "0.6.5",
     "cucumber-html-reporter": "^4.0.5",
     "cucumber-pretty": "1.5.0",
+    "cucumberjs-allure-reporter": "1.0.3",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.19.1",
