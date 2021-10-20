@@ -13,6 +13,7 @@ exports.config = {
   exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
   capabilities: {
     'browserName': 'chrome',
+    'chromeOptions': { args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-zygote ', '--disableChecks', '--disable-notifications'] }
   },
 // // Chrome local setup
 //   capabilities: {

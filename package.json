@@ -111,7 +111,8 @@
     "ws": "^7.4.6",
     "xmlhttprequest-ssl": "^1.6.2",
     "xmldom": "^0.5.0",
-    "yargs-parser": "^20.2.7"
+    "yargs-parser": "^20.2.7",
+    "**/**/chromedriver": "^87.0.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.10",
@@ -166,6 +167,12 @@
     "protractor-cucumber-framework": "^6.1.1",
     "protractor-multiple-cucumber-html-reporter-plugin": "1.8.0",
     "sonar-scanner": "^3.1.0",
+    "@stryker-mutator/api": "^3.0.1",
+    "@stryker-mutator/core": "^3.0.1",
+    "@stryker-mutator/html-reporter": "^3.0.1",
+    "@stryker-mutator/karma-runner": "^3.0.1",
+    "@stryker-mutator/mocha-runner": "^3.0.1",
+    "@stryker-mutator/typescript": "^3.0.1",
     "ts-node": "^8.1.0",
     "tsickle": "^0.35.0",
     "tslib": "^1.9.3",
