@@ -101,7 +101,8 @@
               }
             ],
             "styles": [],
-            "scripts": []
+            "scripts": [],
+            "es5BrowserSupport": true
           },
           "configurations": {
             "production": {
