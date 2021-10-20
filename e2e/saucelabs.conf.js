@@ -16,7 +16,9 @@ const config = {
   sauceRegion: 'eu',
   port: 80,
   sauceConnect: true,
-  specs: ['../features/**/*.feature'],
+  specs: [
+    './src/features/*.feature'
+  ],
 
   baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
 
