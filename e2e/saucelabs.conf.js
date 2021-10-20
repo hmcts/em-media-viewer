@@ -57,6 +57,26 @@ const config = {
       sharedTestFiles: false,
       maxInstances: 1
     },
+    {
+      browserName: 'chrome',
+      version: 'latest',
+      platform: 'macOS 10.15',
+      name: 'chrome-mac-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    },
+    {
+      browserName: 'firefox',
+      version: 'latest',
+      platform: 'macOS 10.15',
+      name: 'ff-mac-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    },
   ],
   exclude: [],
 
