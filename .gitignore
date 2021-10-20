@@ -44,3 +44,14 @@ testem.log
 Thumbs.db
 
 api/\.sessions/
+
+reports_json/
+.nyc_output/
+cb_reports/
+report.json
+
+# stryker temp files
+.stryker-tmp
+stryker-tmp/
+stryker.log
+/test/.local-test.env
