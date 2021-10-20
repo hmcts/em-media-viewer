@@ -17,7 +17,7 @@ exports.config = {
   directConnect: true,
   baseUrl: "http://em-showcase-aat.service.core-compute-aat.internal/media-viewer",
   specs: [
-    './src/**/*.feature',
+    './src/features/*.feature',
   ],
   onPrepare: function () {
     require('ts-node').register({

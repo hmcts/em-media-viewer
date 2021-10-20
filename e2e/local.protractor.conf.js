@@ -14,7 +14,7 @@ exports.config = {
   directConnect: true,
   baseUrl: 'http://localhost:1337',
   specs: [
-    './src/**/*.feature',
+    './src/features/*.feature',
   ],
   onPrepare: function () {
     require('ts-node').register({
