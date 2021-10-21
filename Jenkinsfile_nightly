@@ -53,7 +53,14 @@ withNightlyPipeline(type, product, component) {
   }
 
   after('crossBrowserTest') {
-    steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
+    publishHTML([
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : "reports/tests/crossbrowser/",
+      reportFiles          : 'index.html',
+      reportName           : 'Media Viewer Cross Browser Tests'
+    ])
   }
 
   after('securityScan') {
