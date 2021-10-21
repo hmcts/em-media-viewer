@@ -42,7 +42,6 @@
     "e2e": "protractor --webdriverUpdate=false",
     "e2e:local": "yarn webdriver:update && protractor e2e/local.protractor.conf.js",
     "e2e:fullfunctional": "yarn webdriver:update && protractor e2e/ci.protractor.conf.js",
-    "e2e:crossbrowser":"crossbrowser saucelabs.conf.js ${BROWSER_GROUP:-'--all'} -c saucelabs.conf.js --plugins retryFailedStep --steps --grep '@crossbrowser' --reporter mocha-multi",
     "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner",
     "rebuild-node-sass": "npm install node-sass@4.14.1"
   },
