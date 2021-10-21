@@ -1,4 +1,4 @@
-@MediaViewer @Outline
+@MediaViewer @Outline @crossbrowser
 Feature: PDF Viewer outline and bookmark
 
   Background:

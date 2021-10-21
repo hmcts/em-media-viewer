@@ -1,4 +1,4 @@
-@MediaViewer @Annotations
+@MediaViewer @Annotations @crossbrowser
 Feature: Image Viewer Annotations
 
   Background:

@@ -1,4 +1,4 @@
-@MediaViewer @PDF_Image_Rotation
+@MediaViewer @PDF_Image_Rotation @crossbrowser
 Feature: PDF & Image Rotation
 
   Background:

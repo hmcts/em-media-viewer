@@ -1,4 +1,4 @@
-@MediaViewer
+@MediaViewer @crossbrowser
 Feature: Multimedia Video E2E
 
   Background:
