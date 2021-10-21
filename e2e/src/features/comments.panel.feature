@@ -1,4 +1,4 @@
-@MediaViewer
+@MediaViewer @crossbrowser
 Feature: Comments Panel E2E
 
   Background:
