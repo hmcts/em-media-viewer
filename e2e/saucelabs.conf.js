@@ -39,36 +39,52 @@ const config = {
 
   useAllAngular2AppRoots: true,
   multiCapabilities: [
-    // {
-    //   browserName: 'chrome',
-    //   version: 'latest',
-    //   platform: 'Windows 10',
-    //   name: 'chrome-tests',
-    //   tunnelIdentifier: 'MediaViewer',
-    //   extendedDebugging: true,
-    //   shardTestFiles: false,
-    //   maxInstances: 1
-    // },
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'Windows 10',
-      name: 'firefox-win-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
-    {
-      browserName: 'chrome',
-      version: 'latest',
-      platform: 'macOS 10.15',
-      name: 'chrome-mac-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
+
+       {
+         browserName: 'chrome',
+         version: 'latest',
+         platform: 'Windows 10',
+         name: 'chrome-tests',
+         tunnelIdentifier: 'reformtunnel',
+         extendedDebugging: true,
+         shardTestFiles: false,
+         maxInstances: 1
+       },
+
+      {
+        browserName: 'firefox',
+        version: 'latest',
+        platform: 'Windows 10',
+        name: 'firefox-win-tests',
+        tunnelIdentifier: 'reformtunnel',
+        extendedDebugging: true,
+        sharedTestFiles: false,
+        maxInstances: 1
+      },
+
+      {
+        browserName: 'MicrosoftEdge',
+        platform: 'macOS 10.15',
+        version: '90.0',
+        name: 'chromium-tests',
+        tunnelIdentifier: 'reformtunnel',
+        extendedDebugging: true,
+        sharedTestFiles: false,
+        maxInstances: 1
+      },
+
+      {
+        browserName: 'chrome',
+        version: 'latest',
+        platform: 'macOS 10.15',
+        name: 'chrome-mac-tests',
+        tunnelIdentifier: 'reformtunnel',
+        extendedDebugging: true,
+        sharedTestFiles: false,
+        maxInstances: 1
+      },
+
+
     {
       browserName: 'firefox',
       version: 'latest',
@@ -80,6 +96,7 @@ const config = {
       maxInstances: 1
     },
   ],
+
   exclude: [],
 
   cucumberOpts: {
@@ -95,7 +112,7 @@ const config = {
         automaticallyGenerateReport: true,
         removeExistingJsonReportFile: true,
         reportName: 'Media Viewer CrossBrowser Tests',
-        jsonDir: '/reports/crossbrowser/reports',
+        jsonDir: 'reports/crossbrowser/reports',
         reportPath: './functional-output/crossbrowser/reports',
         displayDuration: true,
         durationInMS: false
