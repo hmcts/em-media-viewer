@@ -20,7 +20,7 @@ const config = {
     './src/features/*.feature'
   ],
 
-  baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
+  baseUrl: (env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
 
   params: {
     serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
@@ -96,15 +96,18 @@ const config = {
     // },
   ],
 
-  exclude: [],
-
+  onPrepare: function () {
+    require('ts-node').register({
+      project: require('path').join(__dirname, './tsconfig.e2e.json')
+    });
+  },
   cucumberOpts: {
-    strict: true,
-    format: ['node_modules/cucumber-pretty', 'json:cb_reports/saucelab_results.json'],
-    require: ['./src/step_definitions/*.ts'],
-    tags: ['@crossbrowser'],
     compiler: 'ts:ts-node/register',
+    strict: true,
     plugin: ['pretty'],
+    format: ['node_modules/cucumber-pretty', 'json:cb_reports/saucelab_results.json'],
+    require: ['../e2e/src/step_definitions/*.ts'],
+    tags: ['@crossbrowser'],
   },
   plugins: [
     {
@@ -121,18 +124,17 @@ const config = {
     }
   ],
 
-
-  onPrepare() {
-    const caps = browser.getCapabilities();
-    browser.manage().window()
-    browser.waitForAngularEnabled(false);
-    global.expect = chai.expect;
-    global.assert = chai.assert;
-    global.should = chai.should;
-    global.screenShotUtils = new screenShotUtils({
-      browserInstance: browser
-    });
-  }
+  // onPrepare() {
+  //   const caps = browser.getCapabilities();
+  //   browser.manage().window()
+  //   browser.waitForAngularEnabled(false);
+  //   global.expect = chai.expect;
+  //   global.assert = chai.assert;
+  //   global.should = chai.should;
+  //   global.screenShotUtils = new screenShotUtils({
+  //     browserInstance: browser
+  //   });
+  // }
 };
 
 exports.config = config;
