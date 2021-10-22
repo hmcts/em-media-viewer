@@ -1,8 +1,12 @@
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
+// const chai = require('chai');
+// const chaiAsPromised = require('chai-as-promised');
+// const minimist = require('minimist');
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+import minimist from 'minimist';
+
 chai.use(chaiAsPromised);
 const common = require('./tsconfig.e2e.json');
-const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2));
 var screenShotUtils = require("protractor-screenshot-utils").ProtractorScreenShotUtils;
 
