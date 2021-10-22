@@ -102,7 +102,9 @@ const config = {
     strict: true,
     format: ['node_modules/cucumber-pretty', 'json:cb_reports/saucelab_results.json'],
     require: ['./src/step_definitions/*.ts'],
-    tags: ['@crossbrowser']
+    tags: ['@crossbrowser'],
+    compiler: 'ts:ts-node/register',
+    plugin: ['pretty'],
   },
   plugins: [
     {
