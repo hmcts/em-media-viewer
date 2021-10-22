@@ -39,50 +39,49 @@ const config = {
 
   useAllAngular2AppRoots: true,
   multiCapabilities: [
+    {
+      browserName: 'chrome',
+      version: 'latest',
+      platform: 'Windows 10',
+      name: 'chrome-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      shardTestFiles: false,
+      maxInstances: 1
+    },
 
-       {
-         browserName: 'chrome',
-         version: 'latest',
-         platform: 'Windows 10',
-         name: 'chrome-tests',
-         tunnelIdentifier: 'reformtunnel',
-         extendedDebugging: true,
-         shardTestFiles: false,
-         maxInstances: 1
-       },
+    {
+      browserName: 'firefox',
+      version: 'latest',
+      platform: 'Windows 10',
+      name: 'firefox-win-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    },
 
-      {
-        browserName: 'firefox',
-        version: 'latest',
-        platform: 'Windows 10',
-        name: 'firefox-win-tests',
-        tunnelIdentifier: 'reformtunnel',
-        extendedDebugging: true,
-        sharedTestFiles: false,
-        maxInstances: 1
-      },
+    {
+      browserName: 'MicrosoftEdge',
+      platform: 'macOS 10.15',
+      version: '90.0',
+      name: 'chromium-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    },
 
-      {
-        browserName: 'MicrosoftEdge',
-        platform: 'macOS 10.15',
-        version: '90.0',
-        name: 'chromium-tests',
-        tunnelIdentifier: 'reformtunnel',
-        extendedDebugging: true,
-        sharedTestFiles: false,
-        maxInstances: 1
-      },
-
-      {
-        browserName: 'chrome',
-        version: 'latest',
-        platform: 'macOS 10.15',
-        name: 'chrome-mac-tests',
-        tunnelIdentifier: 'reformtunnel',
-        extendedDebugging: true,
-        sharedTestFiles: false,
-        maxInstances: 1
-      },
+    {
+      browserName: 'chrome',
+      version: 'latest',
+      platform: 'macOS 10.15',
+      name: 'chrome-mac-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    },
 
 
     {
