@@ -20,7 +20,7 @@ const config = {
     './src/features/*.feature'
   ],
 
-  baseUrl: (env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
+  baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
 
   params: {
     serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
