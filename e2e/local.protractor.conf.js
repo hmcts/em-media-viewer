@@ -38,7 +38,9 @@ exports.config = {
         removeExistingJsonReportFile: true,
         reportName: 'MediaViewer Functional Tests',
         jsonDir: './functional-output/reports',
-        reportPath: './functional-output/reports/html'
+        reportPath: './functional-output/reports/html',
+        displayDuration: true,
+        durationInMS: false
       }
     }
   ]
