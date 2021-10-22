@@ -101,7 +101,7 @@ const config = {
   cucumberOpts: {
     strict: true,
     format: ['node_modules/cucumber-pretty', 'json:cb_reports/saucelab_results.json'],
-    require: ['../support/world.js', './src/step_definitions/*.ts'],
+    require: ['./src/step_definitions/*.ts'],
     tags: ['@crossbrowser']
   },
   plugins: [
@@ -111,8 +111,8 @@ const config = {
         automaticallyGenerateReport: true,
         removeExistingJsonReportFile: true,
         reportName: 'Media Viewer CrossBrowser Tests',
-        jsonDir: 'reports/crossbrowser/reports',
-        reportPath: './functional-output/crossbrowser/reports',
+        jsonDir: 'reports/tests/crossbrowser',
+        reportPath: 'reports/tests/crossbrowser',
         displayDuration: true,
         durationInMS: false
       }
