@@ -1,18 +1,10 @@
-import chai from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-import minimist from 'minimist';
-import screenShotUtils from 'protractor-screenshot-utils';
-
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
+const common = require('./tsconfig.e2e.json');
+const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2));
-
-// const chai = require('chai');
-// const chaiAsPromised = require('chai-as-promised');
-// chai.use(chaiAsPromised);
-// const common = require('./tsconfig.e2e.json');
-// const minimist = require('minimist');
-// const argv = minimist(process.argv.slice(2));
-// var screenShotUtils = require("protractor-screenshot-utils").ProtractorScreenShotUtils;
+var screenShotUtils = require("protractor-screenshot-utils").ProtractorScreenShotUtils;
 
 const config = {
   framework: 'custom',
@@ -58,27 +50,27 @@ const config = {
       maxInstances: 1
     },
 
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'Windows 10',
-      name: 'firefox-win-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
+    // {
+    //   browserName: 'firefox',
+    //   version: 'latest',
+    //   platform: 'Windows 10',
+    //   name: 'firefox-win-tests',
+    //   tunnelIdentifier: 'reformtunnel',
+    //   extendedDebugging: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
 
-    {
-      browserName: 'MicrosoftEdge',
-      platform: 'macOS 10.15',
-      version: '90.0',
-      name: 'chromium-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
+    // {
+    //   browserName: 'MicrosoftEdge',
+    //   platform: 'macOS 10.15',
+    //   version: '90.0',
+    //   name: 'chromium-tests',
+    //   tunnelIdentifier: 'reformtunnel',
+    //   extendedDebugging: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
 
     {
       browserName: 'chrome',
@@ -92,16 +84,16 @@ const config = {
     },
 
 
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'macOS 10.15',
-      name: 'ff-mac-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
+    // {
+    //   browserName: 'firefox',
+    //   version: 'latest',
+    //   platform: 'macOS 10.15',
+    //   name: 'ff-mac-tests',
+    //   tunnelIdentifier: 'reformtunnel',
+    //   extendedDebugging: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
   ],
 
   exclude: [],
