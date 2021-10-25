@@ -61,21 +61,7 @@
             "main": "projects/media-viewer/src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/media-viewer/tsconfig.spec.json",
-            "karmaConfig": "projects/media-viewer/karma.conf.js",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "node_modules/govuk_frontend_toolkit/stylesheets",
-                "node_modules/govuk-elements-sass/public/sass"
-              ]
-            },
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "karmaConfig": "projects/media-viewer/karma.conf.js"
           }
         },
         "lint": {
