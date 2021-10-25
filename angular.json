@@ -12,32 +12,8 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/media-viewer/tsconfig.lib.json",
-            "project": "projects/media-viewer/ng-package.json",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "node_modules/govuk_frontend_toolkit/stylesheets",
-                "node_modules/govuk-elements-sass/public/sass"
-              ]
-            },
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/@hmcts/media-viewer/assets",
-                "output": "/assets"
-              },
-              "src/favicon.ico",
-              "src/assets",
-              "src/web.config"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "project": "projects/media-viewer/ng-package.json"
           },
           "configurations": {
             "production": {
@@ -59,7 +35,6 @@
               "src/environments/**"
             ],
             "main": "projects/media-viewer/src/test.ts",
-            "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/media-viewer/tsconfig.spec.json",
             "karmaConfig": "projects/media-viewer/karma.conf.js"
           }
