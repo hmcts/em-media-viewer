@@ -12,6 +12,9 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/media-viewer/tsconfig.lib.json",
             "project": "projects/media-viewer/ng-package.json",
             "stylePreprocessorOptions": {
@@ -56,6 +59,7 @@
               "src/environments/**"
             ],
             "main": "projects/media-viewer/src/test.ts",
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/media-viewer/tsconfig.spec.json",
             "karmaConfig": "projects/media-viewer/karma.conf.js",
             "stylePreprocessorOptions": {
