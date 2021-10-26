@@ -20,10 +20,12 @@ const config = {
     './src/features/*.feature'
   ],
 
-  baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
+  // baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
+  baseUrl: 'https://em-media-viewer-staging.service.core-compute-aat.internal/',
 
   params: {
-    serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
+    // serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
+    serverUrls: 'https://em-media-viewer-staging.service.core-compute-aat.internal/',
     targetEnv: argv.env || 'local',
     //username: process.env.TEST_EMAIL,
     //password: process.env.TEST_PASSWORD,
@@ -43,7 +45,7 @@ const config = {
       browserName: 'chrome',
       version: 'latest',
       platform: 'Windows 10',
-      name: 'chrome-tests',
+      name: 'mediaViewerChromeTests',
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
       shardTestFiles: false,
