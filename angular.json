@@ -106,9 +106,7 @@
                 "output": "/"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": [],
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -174,9 +172,7 @@
                 "node_modules/govuk-elements-sass/public/sass"
               ]
             },
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": [],
             "scripts": [],
             "assets": [
               "src/favicon.ico",
