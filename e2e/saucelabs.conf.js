@@ -12,6 +12,8 @@ const config = {
 
   sauceSeleniumAddress: 'ondemand.eu-central-1.saucelabs.com:443/wd/hub',
 
+  tags: ['MediaViewer'],
+
   host: 'ondemand.eu-central-1.saucelabs.com',
   sauceRegion: 'eu',
   port: 80,
@@ -21,11 +23,11 @@ const config = {
   ],
 
   // baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
-  baseUrl: 'https://em-media-viewer-staging.service.core-compute-aat.internal/',
+  baseUrl: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer',
 
   params: {
     // serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
-    serverUrls: 'https://em-media-viewer-staging.service.core-compute-aat.internal/',
+    serverUrls: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer',
     targetEnv: argv.env || 'local',
     //username: process.env.TEST_EMAIL,
     //password: process.env.TEST_PASSWORD,
