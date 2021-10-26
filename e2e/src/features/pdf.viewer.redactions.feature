@@ -1,4 +1,4 @@
-@MediaViewer @Redaction @crossbrowser
+@MediaViewer @Redaction
 Feature: Redact PDF E2E Tests
 
   Background:
