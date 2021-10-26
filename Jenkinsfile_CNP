@@ -59,6 +59,7 @@ withPipeline(type, product, component) {
   overrideVaultEnvironments(vaultOverrides)
   loadVaultSecrets(secrets)
   enableSecurityScan()
+  //env.TEST_URL may need to be set to: http://em-showcase-aat.service.core-compute-aat.internal/media-viewer
   env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
   enableAksStagingDeployment()
   disableLegacyDeployment()

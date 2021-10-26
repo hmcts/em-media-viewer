@@ -1,10 +1,8 @@
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
-const common = require('./tsconfig.e2e.json');
 const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2));
-var screenShotUtils = require("protractor-screenshot-utils").ProtractorScreenShotUtils;
 
 const config = {
   framework: 'custom',
@@ -22,12 +20,12 @@ const config = {
     './src/features/*.feature'
   ],
 
-  // baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
-  baseUrl: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer',
+  baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
+  // baseUrl: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer',
 
   params: {
-    // serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
-    serverUrls: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer',
+    serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
+    // serverUrls: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer',
     targetEnv: argv.env || 'local',
     //username: process.env.TEST_EMAIL,
     //password: process.env.TEST_PASSWORD,
@@ -47,57 +45,58 @@ const config = {
       browserName: 'chrome',
       version: 'latest',
       platform: 'Windows 10',
-      name: 'mediaViewerChromeTests',
+      name: 'Media Viewer: windows-latest-chrome-tests',
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
+      capturePerformance: true,
       shardTestFiles: false,
       maxInstances: 1
     },
-
-    // {
-    //   browserName: 'firefox',
-    //   version: 'latest',
-    //   platform: 'Windows 10',
-    //   name: 'firefox-win-tests',
-    //   tunnelIdentifier: 'reformtunnel',
-    //   extendedDebugging: true,
-    //   sharedTestFiles: false,
-    //   maxInstances: 1
-    // },
-
-    // {
-    //   browserName: 'MicrosoftEdge',
-    //   platform: 'macOS 10.15',
-    //   version: '90.0',
-    //   name: 'chromium-tests',
-    //   tunnelIdentifier: 'reformtunnel',
-    //   extendedDebugging: true,
-    //   sharedTestFiles: false,
-    //   maxInstances: 1
-    // },
-
     {
       browserName: 'chrome',
       version: 'latest',
       platform: 'macOS 10.15',
-      name: 'chrome-mac-tests',
+      name: 'Media Viewer: macOS-latest-chrome-tests',
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
+      capturePerformance: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    },
+    {
+      browserName: 'firefox',
+      version: 'latest',
+      platform: 'Windows 10',
+      name: 'Media Viewer: windows-latest-firefox-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      capturePerformance: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    },
+    {
+      browserName: 'firefox',
+      version: 'latest',
+      platform: 'macOS 10.15',
+      name: 'Media Viewer: macOS-latest-firefox-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      capturePerformance: true,
       sharedTestFiles: false,
       maxInstances: 1
     },
 
-
-    // {
-    //   browserName: 'firefox',
-    //   version: 'latest',
-    //   platform: 'macOS 10.15',
-    //   name: 'ff-mac-tests',
-    //   tunnelIdentifier: 'reformtunnel',
-    //   extendedDebugging: true,
-    //   sharedTestFiles: false,
-    //   maxInstances: 1
-    // },
+    {
+      browserName: 'MicrosoftEdge',
+      platform: 'macOS 10.15',
+      version: '90.0',
+      name: 'Media Viewer: Windows Latest Microsoft Edge Tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      capturePerformance: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    },
   ],
 
   onPrepare: function () {
@@ -126,19 +125,7 @@ const config = {
         durationInMS: false
       }
     }
-  ],
-
-  // onPrepare() {
-  //   const caps = browser.getCapabilities();
-  //   browser.manage().window().maximize();
-  //   browser.waitForAngularEnabled(false);
-  //   global.expect = chai.expect;
-  //   global.assert = chai.assert;
-  //   global.should = chai.should;
-  //   global.screenShotUtils = new screenShotUtils({
-  //     browserInstance: browser
-  //   });
-  // }
+  ]
 };
 
 exports.config = config;

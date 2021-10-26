@@ -1,4 +1,4 @@
-@MediaViewer @Annotations @crossbrowser
+@MediaViewer @Annotations
 Feature: PDF Viewer Annotations
 
   Background:
