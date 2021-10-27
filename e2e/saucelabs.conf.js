@@ -21,11 +21,9 @@ const config = {
   ],
 
   baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
-  // baseUrl: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer',
 
   params: {
     serverUrls: process.env.TEST_URL || 'http://localhost:3000/',
-    // serverUrls: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer',
     targetEnv: argv.env || 'local',
     //username: process.env.TEST_EMAIL,
     //password: process.env.TEST_PASSWORD,
@@ -50,7 +48,10 @@ const config = {
       extendedDebugging: true,
       capturePerformance: true,
       shardTestFiles: false,
-      maxInstances: 1
+      maxInstances: 1,
+      'chromeOptions': {
+        'args': localOrHeadlessSize('1920,1080')
+      },
     },
     // {
     //   browserName: 'chrome',

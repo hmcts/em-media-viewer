@@ -1,4 +1,4 @@
-@MediaViewer @Zoom_Feature @crossbrowser
+@MediaViewer @Zoom_Feature
 Feature: Zoom In/Out Feature
 
   Background:
