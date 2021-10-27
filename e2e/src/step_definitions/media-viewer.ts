@@ -367,6 +367,8 @@ When(/^the user populate the content search field with a '(.*)'$/, async (text: 
   await genericMethods.sleep(2000);
   await searchPage.clickSearchIcon();
   await genericMethods.sleep(2000);
+  await downloadPage.clickMoreOptions();
+  await genericMethods.sleep(2000);
   await searchPage.searchText(text);
 });
 
