@@ -362,6 +362,7 @@ Then('I verify the amended text has been saved', async () => {
 });
 
 When(/^the user populate the content search field with a '(.*)'$/, async (text: string) => {
+//   TODO: try with genericMethods.clickAction
   await downloadPage.clickMoreOptions();
   await genericMethods.sleep(2000);
   await searchPage.clickSearchIcon();
