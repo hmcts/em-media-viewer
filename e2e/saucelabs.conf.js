@@ -49,9 +49,6 @@ const config = {
       capturePerformance: true,
       shardTestFiles: false,
       maxInstances: 1,
-      'chromeOptions': {
-        'args': localOrHeadlessSize('1920,1080')
-      },
     },
     // {
     //   browserName: 'chrome',

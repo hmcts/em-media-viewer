@@ -9,11 +9,22 @@ exports.config = {
   specs: [
     './src/**/*.e2e-spec.ts'
   ],
-// Firefox local setup
+// Chrome local setup
   exclude: ['./src/**/download.e2e-spec.ts', "./src/**/print.e2e-spec.ts"],
   capabilities: {
     'browserName': 'chrome',
-    'chromeOptions': { args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-zygote ', '--disableChecks', '--disable-notifications'] }
+    'chromeOptions': {
+      args: [
+        '--headless',
+        '--no-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-setuid-sandbox',
+        '--no-zygote ',
+        '--disableChecks',
+        '--disable-notifications',
+        '--window-size=1920,1080'
+      ]
+    }
   },
 // // Chrome local setup
 //   capabilities: {
