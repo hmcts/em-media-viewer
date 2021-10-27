@@ -52,51 +52,62 @@ const config = {
       shardTestFiles: false,
       maxInstances: 1
     },
-    {
-      browserName: 'chrome',
-      version: 'latest',
-      platform: 'macOS 10.15',
-      name: 'Media Viewer: macOS-latest-chrome-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      capturePerformance: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'Windows 10',
-      name: 'Media Viewer: windows-latest-firefox-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      capturePerformance: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'macOS 10.15',
-      name: 'Media Viewer: macOS-latest-firefox-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      capturePerformance: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
+    // {
+    //   browserName: 'chrome',
+    //   version: 'latest',
+    //   platform: 'macOS 10.15',
+    //   name: 'Media Viewer: macOS-latest-chrome-tests',
+    //   tunnelIdentifier: 'reformtunnel',
+    //   extendedDebugging: true,
+    //   capturePerformance: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
+    // {
+    //   browserName: 'firefox',
+    //   version: 'latest',
+    //   platform: 'Windows 10',
+    //   name: 'Media Viewer: windows-latest-firefox-tests',
+    //   tunnelIdentifier: 'reformtunnel',
+    //   extendedDebugging: true,
+    //   capturePerformance: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
+    // {
+    //   browserName: 'firefox',
+    //   version: 'latest',
+    //   platform: 'macOS 10.15',
+    //   name: 'Media Viewer: macOS-latest-firefox-tests',
+    //   tunnelIdentifier: 'reformtunnel',
+    //   extendedDebugging: true,
+    //   capturePerformance: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
 
-    {
-      browserName: 'MicrosoftEdge',
-      platform: 'macOS 10.15',
-      version: '90.0',
-      name: 'Media Viewer: Windows Latest Microsoft Edge Tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      capturePerformance: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
+    // {
+    //   browserName: 'MicrosoftEdge',
+    //   platform: 'macOS 10.15',
+    //   version: '90.0',
+    //   name: 'Media Viewer: macOS-latest-microsoft-edge-tests',
+    //   tunnelIdentifier: 'reformtunnel',
+    //   extendedDebugging: true,
+    //   capturePerformance: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
+    // {
+    //   browserName: 'MicrosoftEdge',
+    //   version: 'latest',
+    //   platform: 'Windows 10',
+    //   name: 'Media Viewer: windows-latest-microsoft-edge-tests',
+    //   tunnelIdentifier: 'reformtunnel',
+    //   extendedDebugging: true,
+    //   capturePerformance: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
   ],
 
   onPrepare: function () {

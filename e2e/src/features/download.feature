@@ -1,4 +1,4 @@
-@MediaViewer @crossbrowser
+@MediaViewer
 Feature: Document Download
 
   Background:
