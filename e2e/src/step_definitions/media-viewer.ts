@@ -362,6 +362,7 @@ Then('I verify the amended text has been saved', async () => {
 });
 
 When(/^the user populate the content search field with a '(.*)'$/, async (text: string) => {
+  await downloadPage.clickMoreOptions();
   await searchPage.clickSearchIcon();
   await searchPage.searchText(text);
 });
