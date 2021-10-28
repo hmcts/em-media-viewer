@@ -134,7 +134,7 @@ const addComment = async (comment: string) => {
 
   await downloadPage.clickMoreOptions();
   await genericMethods.sleep(2000);
-  await page.clickOnCommentButton();
+//   await page.clickOnCommentButton(); Change to: await commentsPanelPage.clickCommentsPanel();
   await genericMethods.sleep(2000);
   await downloadPage.clickMoreOptions();
   await genericMethods.sleep(2000);
@@ -628,7 +628,7 @@ When(/^The user clicks on the Comments Tab$/, async function () {
 When(/^The user clicks on Collate Comments$/, async function () {
   await downloadPage.clickMoreOptions();
   await genericMethods.sleep(2000);
-  await page.clickOnCommentButton();
+  await commentsPanelPage.clickCommentsPanel();
   await genericMethods.sleep(2000);
   await downloadPage.clickMoreOptions();
   await genericMethods.sleep(2000);
