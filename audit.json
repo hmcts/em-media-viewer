@@ -156,6 +156,7 @@
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/govuk-mask-icon.svg_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore",
-  "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore"
+  "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore",
+  "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/runtime.80ab492fe3d778817936.js_GET": "ignore"
 }
 
