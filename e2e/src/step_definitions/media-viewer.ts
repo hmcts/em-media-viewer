@@ -126,6 +126,7 @@ Then('I expect to see the document should be downloaded', async function () {
 
 const addComment = async (comment: string) => {
   await highLightTextInPdf();
+  await page.highLightTextOnPdfPage();
   await page.clickOnCommentButton();
   await page.enterTextInAnnotation(comment);
   await genericMethods.sleep(2000);
