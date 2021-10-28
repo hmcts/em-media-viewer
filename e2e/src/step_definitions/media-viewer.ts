@@ -628,7 +628,7 @@ When(/^The user clicks on the Comments Tab$/, async function () {
 When(/^The user clicks on Collate Comments$/, async function () {
   await downloadPage.clickMoreOptions();
   await genericMethods.sleep(2000);
-  await commentsPanelPage.clickCommentsPanel();
+  await page.clickOnCommentButton();
   await genericMethods.sleep(2000);
   await downloadPage.clickMoreOptions();
   await genericMethods.sleep(2000);
@@ -668,7 +668,10 @@ Then('I expect comments panel should disappear', async function () {
 });
 
 When(/^The user clicks on the show comments panel toggle icon$/, async function () {
-  await commentsPanelPage.clickCommentsToggleIcon();
+  await downloadPage.clickMoreOptions();
   await genericMethods.sleep(2000);
+  await commentsPanelPage.clickCommentsPanel();
+  await genericMethods.sleep(2000);
+  await commentsPanelPage.clickOnCollateCommentsButton();
 });
 
