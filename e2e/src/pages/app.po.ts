@@ -3,6 +3,8 @@ import {By} from '@angular/platform-browser';
 import {String} from 'typescript-string-operations';
 import {GenericMethods} from '../utils/genericMethods';
 
+const genericMethods = new GenericMethods();
+
 const until = protractor.ExpectedConditions;
 
 export class AppPage {
