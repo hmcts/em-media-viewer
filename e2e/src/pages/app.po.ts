@@ -274,8 +274,8 @@ export class AppPage {
   async clickOnCommentButton() {
     // await browser.waitForAngular()  // This feature did not work hence adding sleep.
     await browser.sleep(5000);
-    await element(this.commentButton).click();
-//     await genericMethods.clickAction('mvCommentsBtn'); //This might be needed
+    await genericMethods.clickAction('mvCommentsBtn');
+    //     await element(this.commentButton).click();
   }
 
   async enterTextInAnnotation(text: string) {
