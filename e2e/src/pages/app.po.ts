@@ -278,7 +278,8 @@ export class AppPage {
     // await browser.waitForAngular()  // This feature did not work hence adding sleep.
     await browser.sleep(5000);
 //     await genericMethods.clickAction('mv-ctx-toolbar button[title=\'Comment\']');
-    await element(this.commentButton).click();
+    await genericMethods.clickAction('mvCommentsBtn');
+//     await element(this.commentButton).click();
   }
 
   async enterTextInAnnotation(text: string) {
