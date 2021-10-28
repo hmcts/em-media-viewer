@@ -626,12 +626,6 @@ When(/^The user clicks on the Comments Tab$/, async function () {
 });
 
 When(/^The user clicks on Collate Comments$/, async function () {
-  await downloadPage.clickMoreOptions();
-  await genericMethods.sleep(2000);
-  await page.clickOnCommentButton();
-  await genericMethods.sleep(2000);
-  await downloadPage.clickMoreOptions();
-  await genericMethods.sleep(2000);
   await commentsPanelPage.clickOnCollateCommentsButton();
 });
 
@@ -672,6 +666,5 @@ When(/^The user clicks on the show comments panel toggle icon$/, async function 
   await genericMethods.sleep(2000);
   await commentsPanelPage.clickCommentsPanel();
   await genericMethods.sleep(2000);
-  await commentsPanelPage.clickOnCollateCommentsButton();
 });
 
