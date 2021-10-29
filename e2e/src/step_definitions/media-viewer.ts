@@ -635,11 +635,11 @@ Then(/^There are no comment rows present$/, async function () {
 });
 
 Then(/^The comment summary is displayed$/, async function () {
-//   await commentsPanelPage.assertCommentSummaryPresent();
+  await commentsPanelPage.assertCommentSummaryPresent();
 //   const result = await this.commentsContainerHeader.getText();
-  const result = await genericMethods.clickAction('comment-container');
-  console.log('Result' + result);
-   expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
+//   const result = await genericMethods.clickAction('comment-container');
+//   console.log('Result' + result);
+//   expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
 });
 
 When(/^The user closes the overlay panel$/, async function () {
@@ -670,5 +670,6 @@ When(/^The user clicks on the show comments panel toggle icon$/, async function 
   await genericMethods.sleep(2000);
   await commentsPanelPage.clickCommentsPanel();
   await genericMethods.sleep(2000);
+  await downloadPage.clickMoreOptions();
 });
 
