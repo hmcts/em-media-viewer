@@ -85,19 +85,19 @@ export class CommentsPanelPage extends AppPage {
   }
 
   async assertNoCommentRowsPresent() {
-    const result = await this.commentsContainerHeader.getText();
-//     const result = await genericMethods.clickAction('comment-container');
+//     const result = await this.commentsContainerHeader.getText();
+    const result = await genericMethods.clickAction('comment-container').getText();
     expect(result).to.equal('No comments available');
-    const courtBundleName = await this.courtBundleName.getText();
+//     const courtBundleName = await this.courtBundleName.getText();
+    const courtBundleName = await genericMethods.clickAction('comment-container').getText();
     expect(courtBundleName).to.equal('Bury Metropolitan Council:  TEST COURT BUNDLE');
   }
 
-//   Unused to see if the scenario passes without it
-//   async assertCommentSummaryPresent() {
+  async assertCommentSummaryPresent() {
 //     const result = await this.commentsContainerHeader.getText();
-//     const result = await genericMethods.clickAction('comment-container');
-//     expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
-//   }
+    const result = await genericMethods.clickAction('comment-container').getText();
+    expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
+  }
 
   async closeOverlayPanel() {
     await this.overlayCloseButton.click();
