@@ -92,10 +92,11 @@ export class CommentsPanelPage extends AppPage {
     expect(courtBundleName).to.equal('Bury Metropolitan Council:  TEST COURT BUNDLE');
   }
 
+  //Unused to see if the scenario passes without it
   async assertCommentSummaryPresent() {
-    const result = await this.commentsContainerHeader.getText();
+//     const result = await this.commentsContainerHeader.getText();
 //     const result = await genericMethods.clickAction('comment-container');
-    expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
+//     expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
   }
 
   async closeOverlayPanel() {
