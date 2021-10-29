@@ -93,8 +93,8 @@ export class CommentsPanelPage extends AppPage {
   }
 
   async assertCommentSummaryPresent() {
-//     const result = await this.commentsContainerHeader.getText();
-    const result = await genericMethods.clickAction('comment-container').getText();
+    const result = await this.commentsContainerHeader.getText();
+//     const result = await genericMethods.clickAction('comment-container');
     expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
   }
 
