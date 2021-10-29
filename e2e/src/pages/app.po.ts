@@ -33,8 +33,8 @@ export class AppPage {
 
 
   async showCustomToolbarButtons() {
-    const customToolbarToggle = await element(by.id('toggleCustomToolbar'));
-//     const customToolbarToggle = await genericMethods.clickAction('toggleCustomToolbar'));
+//     const customToolbarToggle = await element(by.id('toggleCustomToolbar'));
+    const customToolbarToggle = await this.waitForElement(by.id('toggleCustomToolbar'));
     const customToolbarOn = await customToolbarToggle.getAttribute('checked');
     if (!customToolbarOn) {
 //       await this.clickElement(by.css('label[for="toggleCustomToolbar"]'));
