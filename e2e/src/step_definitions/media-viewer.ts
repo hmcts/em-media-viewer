@@ -44,6 +44,10 @@ Then('I expect the page header to be {string}', async (text: string) => {
   expect(header).to.equal(text);
 });
 
+When(/^I enable toggle buttons$/, async function () {
+  await page.showCustomToolbarButtons();
+});
+
 When('I click next button on the pdf', async () => {
   await page.selectPdfViewer();
   await page.waitForPdfToLoad();
@@ -579,7 +583,7 @@ When('I enable custom toolbar', async () => {
   await page.showCustomToolbarButtons();
 });
 
-Then('I expect custom toolbar button should be enabled', async () => {
+Then('I expect toolbar buttons should be enabled', async () => {
   await page.waitForElement(by.id('toggleCustomToolbar'));
 });
 
