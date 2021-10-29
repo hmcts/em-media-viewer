@@ -1,4 +1,4 @@
-@MediaViewer @Navigation
+@MediaViewer @Navigation @crossbrowser
 Feature: Navigation
 
   Background:
