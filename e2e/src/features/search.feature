@@ -1,4 +1,4 @@
-@MediaViewer @Search @crossbrowser
+@MediaViewer @Search
 Feature: Search
 
   Background:
