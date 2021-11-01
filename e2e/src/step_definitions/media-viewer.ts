@@ -280,7 +280,7 @@ When('I highlight text on a PDF document', async () => {
   await highLightTextInPdf();
 });
 
-Then('I expect no existing bookmarks present', { timeout: 10000 },async () => {
+Then('I expect no existing bookmarks present', { timeout: 10000 }, async () => {
   await genericMethods.sleep(1000);
   await clearBookmarks();
 });
