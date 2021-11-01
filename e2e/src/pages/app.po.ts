@@ -205,13 +205,13 @@ export class AppPage {
   // }
 
   async clearBookmarks() {
-    await browser.sleep(5000);
+    await browser.sleep(1000);
     await this.toggleIndexButton();
-    await browser.sleep(2000);
+    await browser.sleep(1000);
     await element(this.viewBookmark).click();
-    await browser.sleep(2000);
+    await browser.sleep(1000);
     await this.deleteBookmarks();
-    await browser.sleep(2000);
+    await browser.sleep(1000);
     await this.toggleIndexButton();
   }
 
