@@ -281,7 +281,7 @@ When('I highlight text on a PDF document', async () => {
 });
 
 Then('I expect no existing bookmarks present', async () => {
-  await genericMethods.sleep(10000);
+  await genericMethods.sleep(2000);
   await clearBookmarks();
 });
 
