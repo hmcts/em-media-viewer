@@ -280,7 +280,7 @@ When('I highlight text on a PDF document', async () => {
   await highLightTextInPdf();
 });
 
-Then('I expect no existing bookmarks present', { timeout: 10000 }, async () => {
+Then('I expect no existing bookmarks present', { timeout: 20000 }, async () => {
   await genericMethods.sleep(2000);
   await clearBookmarks();
 });
@@ -314,7 +314,7 @@ Then('I expect {int} bookmark is present in bookmarks list', async (int) => {
 });
 
 Then('I am able to update a bookmark with text {string} and verify it has been updated',
-  { timeout: 10000 },
+  { timeout: 20000 },
   async (string) => {
     await genericMethods.sleep(2000);
     await updateBookmark(string);
