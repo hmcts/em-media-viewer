@@ -83,17 +83,17 @@ const config = {
 //      sharedTestFiles: false,
 //      maxInstances: 1
 //    },
-    {
-      browserName: 'MicrosoftEdge',
-      platform: 'macOS 10.15',
-      version: '90.0',
-      name: 'Media Viewer: macOS-latest-microsoft-edge-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      capturePerformance: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
+//    {
+//      browserName: 'MicrosoftEdge',
+//      platform: 'macOS 10.15',
+//      version: '90.0',
+//      name: 'Media Viewer: macOS-latest-microsoft-edge-tests',
+//      tunnelIdentifier: 'reformtunnel',
+//      extendedDebugging: true,
+//      capturePerformance: true,
+//      sharedTestFiles: false,
+//      maxInstances: 1
+//    },
 //    {
 //      browserName: 'MicrosoftEdge',
 //      version: 'latest',
