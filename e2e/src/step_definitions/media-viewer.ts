@@ -41,7 +41,7 @@ Given('I am on Media Viewer Page', async () => {
 
 Then('I expect the page header to be {string}', async (text: string) => {
   const header = await page.getHeaderText();
-  expect(header).to.equal(text);
+  expect(header.toUpperCase()).to.equal(text);
 });
 
 When(/^I enable toggle buttons$/, async function () {
