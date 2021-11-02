@@ -1,4 +1,4 @@
-@MediaViewer @Bookmarks
+@MediaViewer @Bookmarks @crossbrowser
 Feature: Bookmarks Features Create,Delete and Update
 
   Background:
