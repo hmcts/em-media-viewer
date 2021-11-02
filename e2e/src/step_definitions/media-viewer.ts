@@ -660,7 +660,7 @@ When(/^The user clicks to hide the toggle icon$/, async function () {
 Then('I expect to see comments panel should appear', async function () {
   const result = await commentsPanelPage.getCommentsTabText();
   console.log('Result' + result);
-  expect(result).to.equal('Comments');
+  expect(result).to.equal('Comments' | ' Comments');
 });
 
 When('I click comments panel again', async () => {
