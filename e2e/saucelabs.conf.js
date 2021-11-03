@@ -83,28 +83,28 @@ const config = {
 //      sharedTestFiles: false,
 //      maxInstances: 1
 //    },
-    {
-      browserName: 'firefox',
-      version: 'latest',
-      platform: 'macOS 10.15',
-      name: 'Media Viewer: macOS-latest-firefox-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      capturePerformance: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
 //    {
-//      browserName: 'safari',
+//      browserName: 'firefox',
 //      version: 'latest',
 //      platform: 'macOS 10.15',
-//      name: 'Media Viewer: macOS-latest-safari-tests',
+//      name: 'Media Viewer: macOS-latest-firefox-tests',
 //      tunnelIdentifier: 'reformtunnel',
 //      extendedDebugging: true,
 //      capturePerformance: true,
 //      sharedTestFiles: false,
 //      maxInstances: 1
-//    }
+//    },
+    {
+      browserName: 'safari',
+      version: 'latest',
+      platform: 'macOS 10.15',
+      name: 'Media Viewer: macOS-latest-safari-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      capturePerformance: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    }
 //    {
 //      browserName: 'MicrosoftEdge',
 //      version: 'latest',
