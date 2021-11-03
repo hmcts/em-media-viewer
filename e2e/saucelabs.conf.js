@@ -39,28 +39,28 @@ const config = {
 
   useAllAngular2AppRoots: true,
   multiCapabilities: [
-//    {
-//      browserName: 'chrome',
-//      version: 'latest',
-//      platform: 'Windows 10',
-//      name: 'Media Viewer: windows-latest-chrome-tests',
-//      tunnelIdentifier: 'reformtunnel',
-//      extendedDebugging: true,
-//      capturePerformance: true,
-//      shardTestFiles: false,
-//      maxInstances: 1
-//    },
     {
-      browserName: 'firefox',
+      browserName: 'chrome',
       version: 'latest',
       platform: 'Windows 10',
-      name: 'Media Viewer: windows-latest-firefox-tests',
+      name: 'Media Viewer: windows-latest-chrome-tests',
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
       capturePerformance: true,
-      sharedTestFiles: false,
+      shardTestFiles: false,
       maxInstances: 1
     },
+//    {
+//      browserName: 'firefox',
+//      version: 'latest',
+//      platform: 'Windows 10',
+//      name: 'Media Viewer: windows-latest-firefox-tests',
+//      tunnelIdentifier: 'reformtunnel',
+//      extendedDebugging: true,
+//      capturePerformance: true,
+//      sharedTestFiles: false,
+//      maxInstances: 1
+//    },
 //    {
 //      browserName: 'MicrosoftEdge',
 //      platform: 'macOS 10.15',
@@ -104,7 +104,7 @@ const config = {
 //      capturePerformance: true,
 //      sharedTestFiles: false,
 //      maxInstances: 1
-    }
+//    }
 //    {
 //      browserName: 'MicrosoftEdge',
 //      version: 'latest',
