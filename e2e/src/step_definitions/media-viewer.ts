@@ -200,7 +200,7 @@ const updateBookmark = async function (textToBeUpdated: string) {
 
 const verifyBookmarkTextAfterUpdate = async function (textToBeUpdated: string) {
   const actualUpdatedText = await page.getUpdatedBookMarkName();
-  expect(actualUpdatedText.trim().eq(textToBeUpdated.trim();
+  expect(actualUpdatedText.trim()).eq(textToBeUpdated.trim());
 
   await deleteBookmark();
   await verifyBookmarkCountAfterDelete();
