@@ -281,7 +281,6 @@ When('I highlight text on a PDF document', async () => {
 });
 
 Then('I expect no existing bookmarks present', async () => {
-  await genericMethods.sleep(1000);
   await clearBookmarks();
 });
 
@@ -314,9 +313,7 @@ Then('I expect {int} bookmark is present in bookmarks list', async (int) => {
 });
 
 Then('I am able to update a bookmark with text {string} and verify it has been updated', async (string) => {
-    await genericMethods.sleep(1000);
     await updateBookmark(string);
-    await genericMethods.sleep(1000);
     await verifyBookmarkTextAfterUpdate(string);
 });
 
