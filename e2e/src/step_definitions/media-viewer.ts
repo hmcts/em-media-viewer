@@ -316,7 +316,7 @@ Then('I am able to update a bookmark with text {string} and verify it has been u
     await genericMethods.sleep(1000);
     await updateBookmark(string.trim());
     await genericMethods.sleep(1000);
-    await verifyBookmarkTextAfterUpdate(string);
+    await verifyBookmarkTextAfterUpdate(string.trim());
 });
 
 Then('I am able to delete a bookmark and verify it has been deleted', async () => {
