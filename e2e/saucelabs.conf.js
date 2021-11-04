@@ -64,7 +64,7 @@ const config = {
     {
       browserName: 'MicrosoftEdge',
       platform: 'macOS 10.15',
-      version: '90.0',
+      version: 'latest',
       name: 'Media Viewer: macOS-latest-microsoft-edge-tests',
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
