@@ -96,7 +96,7 @@ const config = {
 //    },
     {
       browserName: 'safari',
-      version: 'latest',
+      version: '13.1',
       platform: 'macOS 10.15',
       name: 'Media Viewer: macOS-latest-safari-tests',
       tunnelIdentifier: 'reformtunnel',
