@@ -233,7 +233,7 @@ export class AppPage {
   async getUpdatedBookMarkName() {
     await browser.sleep(5000);
     const name: String = await element.all(this.bookMarkItems).first().getText();
-    return name.trim();
+    return name;
   }
 
   async getSaveBookMarksCount() {
