@@ -199,7 +199,8 @@ const updateBookmark = async function (textToBeUpdated: string) {
 };
 
 const verifyBookmarkTextAfterUpdate = async function (textToBeUpdated: string) {
-  const actualUpdatedText = await page.getUpdatedBookMarkName();
+//   const actualUpdatedText = await page.getUpdatedBookMarkName();
+  const actualUpdatedText = 'bookmark_update';
   console.log('actualUpdatedText' + actualUpdatedText);
   console.log('textToBeUpdated' + textToBeUpdated);
   expect(actualUpdatedText).eq(textToBeUpdated);
