@@ -104,7 +104,7 @@ const config = {
       capturePerformance: true,
       sharedTestFiles: false,
       maxInstances: 1
-    }
+    },
     {
       browserName: 'MicrosoftEdge',
       version: 'latest',
