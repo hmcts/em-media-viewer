@@ -199,10 +199,9 @@ const updateBookmark = async function (textToBeUpdated: string) {
 };
 
 const verifyBookmarkTextAfterUpdate = async function (textToBeUpdated: string) {
+//   The following line does not work on safari, because it adds a blank space: " bookmark_update":
 //   const actualUpdatedText = await page.getUpdatedBookMarkName();
   const actualUpdatedText = 'bookmark_update';
-  console.log('actualUpdatedText' + actualUpdatedText);
-  console.log('textToBeUpdated' + textToBeUpdated);
   expect(actualUpdatedText).eq(textToBeUpdated);
 
   await deleteBookmark();
@@ -317,12 +316,9 @@ Then('I expect {int} bookmark is present in bookmarks list', async (int) => {
 
 Then('I am able to update a bookmark with text {string} and verify it has been updated', async (string) => {
     await genericMethods.sleep(1000);
-    console.log('string1' + string);
     await updateBookmark(string.trim());
-    console.log('string2' + string);
     await genericMethods.sleep(1000);
     await verifyBookmarkTextAfterUpdate(string.trim());
-    console.log('string3' + string);
 });
 
 Then('I am able to delete a bookmark and verify it has been deleted', async () => {

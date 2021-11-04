@@ -94,28 +94,28 @@ const config = {
 //      sharedTestFiles: false,
 //      maxInstances: 1
 //    },
-    {
-      browserName: 'safari',
-      version: '13.1',
-      platform: 'macOS 10.15',
-      name: 'Media Viewer: macOS-latest-safari-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      capturePerformance: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    }
 //    {
-//      browserName: 'MicrosoftEdge',
-//      version: 'latest',
-//      platform: 'Windows 10',
-//      name: 'Media Viewer: windows-latest-microsoft-edge-tests',
+//      browserName: 'safari',
+//      version: '13.1',
+//      platform: 'macOS 10.15',
+//      name: 'Media Viewer: macOS-latest-safari-tests',
 //      tunnelIdentifier: 'reformtunnel',
 //      extendedDebugging: true,
 //      capturePerformance: true,
 //      sharedTestFiles: false,
 //      maxInstances: 1
 //    }
+    {
+      browserName: 'MicrosoftEdge',
+      version: 'latest',
+      platform: 'Windows 10',
+      name: 'Media Viewer: windows-latest-microsoft-edge-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      capturePerformance: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    }
   ],
 
   onPrepare: function () {
