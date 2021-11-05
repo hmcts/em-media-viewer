@@ -8,9 +8,6 @@ properties([
   ],
   pipelineTriggers([
     cron('H 05 * * *')
-  ]),
-  paramaters([
-    string(name: 'NUM_TESTS_IN_PARALLEL', defaultValue: '1', description: 'The number of tests to run in parallel')
   ])
 ])
 
@@ -31,7 +28,6 @@ withNightlyPipeline(type, product, component) {
   enableCrossBrowserTest()
 
   env.TEST_URL = 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer'
-  env.TEST_E2E_NUM_BROWSERS = params.NUM_TESTS_IN_PARALLEL
 
   after('checkout') {
     sh ("rm -rf node_modules")
