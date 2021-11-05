@@ -35,7 +35,7 @@ const newComment = 'This is comment number 1 new';
 const actual = 'Annotations Ellipsis EM-1814 story test';
 const file = 'src/assets/example.pdf';
 
-Given('I am on Media Viewer Page', async () => {
+Given('I am on Media Viewer Page', { timeout: 10000 }, async () => {
   await genericMethods.sleep(5000);
 });
 
