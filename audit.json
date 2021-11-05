@@ -160,6 +160,9 @@
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/runtime.80ab492fe3d778817936.js_GET": "ignore",
   "10010_Cookie No HttpOnly Flag_http://em-showcase-aat.service.core-compute-aat.internal/sitemap.xml_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/sitemap.xml_GET": "ignore",
-  "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/sitemap.xml_GET": "ignore"
+  "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/sitemap.xml_GET": "ignore",
+  "10010_Cookie No HttpOnly Flag_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
+  "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
+  "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore"
 }
 
