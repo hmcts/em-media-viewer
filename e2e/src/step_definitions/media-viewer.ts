@@ -383,12 +383,12 @@ Then('I verify the amended text has been saved', async () => {
 });
 
 When(/^the user populate the content search field with a '(.*)'$/, async (text: string) => {
-  await downloadPage.clickMoreOptions();
-  await genericMethods.sleep(2000);
+//   await downloadPage.clickMoreOptions();
+//   await genericMethods.sleep(2000);
   await searchPage.clickSearchIcon();
-  await genericMethods.sleep(2000);
-  await downloadPage.clickMoreOptions();
-  await genericMethods.sleep(2000);
+//   await genericMethods.sleep(2000);
+//   await downloadPage.clickMoreOptions();
+//   await genericMethods.sleep(2000);
   await searchPage.searchText(text);
 });
 
@@ -674,10 +674,12 @@ Then('I expect comments panel should disappear', async function () {
 });
 
 When(/^The user clicks on the show comments panel toggle icon$/, async function () {
-  await downloadPage.clickMoreOptions();
-  await genericMethods.sleep(2000);
-  await commentsPanelPage.clickCommentsPanel();
-  await genericMethods.sleep(2000);
-  await downloadPage.clickMoreOptions();
+//   await downloadPage.clickMoreOptions();
+//   await genericMethods.sleep(2000);
+//   await commentsPanelPage.clickCommentsPanel();
+//   await genericMethods.sleep(2000);
+//   await downloadPage.clickMoreOptions();
+   await commentsPanelPage.clickCommentsToggleIcon();
+   await genericMethods.sleep(2000);
 });
 
