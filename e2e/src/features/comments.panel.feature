@@ -26,7 +26,7 @@ Feature: Comments Panel E2E
     When I Search for Comments
     Then No matching results have been found
 
-  @CommentsPanelCollateComments @CommentsTab @ci
+  @CommentsPanelCollateComments @CommentsTab
   Scenario: Collate Comments Overlay Panel
     When The user clicks on the show comments panel toggle icon
     And The user clicks on Collate Comments
