@@ -39,17 +39,17 @@ const config = {
 
   useAllAngular2AppRoots: true,
   multiCapabilities: [
-    {
-      browserName: 'chrome',
-      version: 'latest',
-      platform: 'Windows 10',
-      name: 'Media Viewer: windows-latest-chrome-tests',
-      tunnelIdentifier: 'reformtunnel',
-      extendedDebugging: true,
-      capturePerformance: true,
-      shardTestFiles: false,
-      maxInstances: 1
-    },
+//    {
+//      browserName: 'chrome',
+//      version: 'latest',
+//      platform: 'Windows 10',
+//      name: 'Media Viewer: windows-latest-chrome-tests',
+//      tunnelIdentifier: 'reformtunnel',
+//      extendedDebugging: true,
+//      capturePerformance: true,
+//      shardTestFiles: false,
+//      maxInstances: 1
+//    },
 //    {
 //      browserName: 'firefox',
 //      version: 'latest',
@@ -72,17 +72,17 @@ const config = {
 //      sharedTestFiles: false,
 //      maxInstances: 1
 //    },
-//    {
-//      browserName: 'chrome',
-//      version: 'latest',
-//      platform: 'macOS 10.15',
-//      name: 'Media Viewer: macOS-latest-chrome-tests',
-//      tunnelIdentifier: 'reformtunnel',
-//      extendedDebugging: true,
-//      capturePerformance: true,
-//      sharedTestFiles: false,
-//      maxInstances: 1
-//    },
+    {
+      browserName: 'chrome',
+      version: 'latest',
+      platform: 'macOS 10.15',
+      name: 'Media Viewer: macOS-latest-chrome-tests',
+      tunnelIdentifier: 'reformtunnel',
+      extendedDebugging: true,
+      capturePerformance: true,
+      sharedTestFiles: false,
+      maxInstances: 1
+    },
 //    {
 //      browserName: 'firefox',
 //      version: 'latest',
