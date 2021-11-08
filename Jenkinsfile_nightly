@@ -24,7 +24,7 @@ withNightlyPipeline(type, product, component) {
   disableLegacyDeployment()
   enableSecurityScan()
   enableSlackNotifications(channel)
-//  enableFullFunctionalTest(200)
+  enableFullFunctionalTest(200)
   enableCrossBrowserTest()
 
   env.TEST_URL = 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer'
