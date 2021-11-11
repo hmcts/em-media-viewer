@@ -243,7 +243,7 @@ export class AppPage {
   }
 
   async updateBookmarks(updatedText: string) {
-    browser.sleep(1000);
+    browser.sleep(5000);
     await element.all(this.bookMarkRename).first().click();
     browser.sleep(1000);
     await element.all(this.bookMarkInput).first().clear();
