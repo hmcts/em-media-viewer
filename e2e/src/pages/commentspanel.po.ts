@@ -89,7 +89,7 @@ export class CommentsPanelPage extends AppPage {
     const result = await genericMethods.clickAction('comment-container');
     expect(result).to.equal('No comments available');
     const courtBundleName = await this.courtBundleName.getText();
-    expect(courtBundleName).to.equal('Bury Metropolitan Council:  TEST COURT BUNDLE');
+    expect(courtBundleName).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
   }
 
   async assertCommentSummaryPresent() {
