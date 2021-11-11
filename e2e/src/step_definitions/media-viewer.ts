@@ -370,18 +370,18 @@ Then('I verify the amended text has been saved', async () => {
 });
 
 When(/^the user populate the content search field with a '(.*)'$/, async (text: string) => {
-//   Previous code:
-//   await searchPage.clickSearchIcon();
-//   await searchPage.searchText(text);
-
-//   The following code is needed for this scenario to work on cross-browser tests:
-  await downloadPage.clickMoreOptions();
   await genericMethods.sleep(2000);
   await searchPage.clickSearchIcon();
-  await genericMethods.sleep(2000);
-  await downloadPage.clickMoreOptions();
-  await genericMethods.sleep(2000);
   await searchPage.searchText(text);
+
+//   The following code is needed for this scenario to work on cross-browser tests:
+//   await downloadPage.clickMoreOptions();
+//   await genericMethods.sleep(2000);
+//   await searchPage.clickSearchIcon();
+//   await genericMethods.sleep(2000);
+//   await downloadPage.clickMoreOptions();
+//   await genericMethods.sleep(2000);
+//   await searchPage.searchText(text);
 });
 
 Then(/^clicks on search button$/, async () => {
@@ -636,10 +636,10 @@ Then(/^There are no comment rows present$/, async function () {
 
 Then(/^The comment summary is displayed$/, async function () {
   await commentsPanelPage.assertCommentSummaryPresent();
-//   const result = await this.commentsContainerHeader.getText();
+  const result = await this.commentsContainerHeader.getText();
 //   const result = await genericMethods.clickAction('comment-container');
-//   console.log('Result' + result);
-//   expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
+  console.log('Result = ' + result);
+  expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
 });
 
 When(/^The user closes the overlay panel$/, async function () {
