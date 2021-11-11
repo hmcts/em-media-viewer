@@ -69,8 +69,8 @@ export class SearchPage extends AppPage {
   }
 
   async clickSearchIcon() {
-//     await this.searchIcon.click();
-    await genericMethods.clickAction('mvSearchBtn');
+    await this.searchIcon.click();
+//     await genericMethods.clickAction('mvSearchBtn');
   }
 
   async clickSearchButton() {

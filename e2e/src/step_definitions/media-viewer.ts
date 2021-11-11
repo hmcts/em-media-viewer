@@ -370,16 +370,18 @@ Then('I verify the amended text has been saved', async () => {
 });
 
 When(/^the user populate the content search field with a '(.*)'$/, async (text: string) => {
-  await searchPage.clickSearchIcon();
-  await searchPage.searchText(text);
-//   The following code is needed for this scenario to work on cross-browser tests:
-//   await downloadPage.clickMoreOptions();
-//   await genericMethods.sleep(2000);
+//   Previous code:
 //   await searchPage.clickSearchIcon();
-//   await genericMethods.sleep(2000);
-//   await downloadPage.clickMoreOptions();
-//   await genericMethods.sleep(2000);
 //   await searchPage.searchText(text);
+
+//   The following code is needed for this scenario to work on cross-browser tests:
+  await downloadPage.clickMoreOptions();
+  await genericMethods.sleep(2000);
+  await searchPage.clickSearchIcon();
+  await genericMethods.sleep(2000);
+  await downloadPage.clickMoreOptions();
+  await genericMethods.sleep(2000);
+  await searchPage.searchText(text);
 });
 
 Then(/^clicks on search button$/, async () => {
