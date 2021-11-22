@@ -49,7 +49,7 @@
             tabindex="-1" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvHighlightBtn']"
             [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvHighlightBtn']"
             [class.toggled]="toolbarEvents.highlightModeSubject | async" aria-hidden="true" aria-pressed="false"
-            (click)="onClickHighlightToggle()" data-l10n-id="toggleHighlightButton">
+            (click)="onClickHighlightToggle(); isDropdownMenuOpen = false" data-l10n-id="toggleHighlightButton">
             <span data-l10n-id="highlight_label">Highlight</span>
           </button>
 
@@ -112,7 +112,7 @@
                   title="Search" data-l10n-id="searchbar" class="mv-button mv-toolbar__menu-button--search"
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvSearchBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvSearchBtn']" aria-pressed="false"
-                  (click)="toggleSearchBar()">
+                  (click)="toggleSearchBar(); isDropdownMenuOpen = false">
             <span data-l10n-id="search_label">Search</span>
           </button>
 
@@ -121,14 +121,14 @@
                   class="mv-button mv-toolbar__menu-button--present" title="In-Court Presentation Mode"
                   data-l10n-id="icpMode_label" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvPresentBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvPresentBtn']" aria-pressed="false"
-                  (click)="togglePresentBar()"><span data-l10n-id="icpMode_label">Present</span>
+                  (click)="togglePresentBar(); isDropdownMenuOpen = false"><span data-l10n-id="icpMode_label">Present</span>
           </button>
 
           <button *ngIf="enableRedactions && toolbarButtons.showRedact" [disabled]="icpEnabled" id="mvRedactBtn"
                   #mvRedactBtn title="Redact" data-l10n-id="redact" class="mv-button mv-toolbar__menu-button--redact"
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvRedactBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvRedactBtn']" aria-pressed="false"
-                  (click)="toggleRedactBar()">
+                  (click)="toggleRedactBar(); isDropdownMenuOpen = false">
             <span>Redact</span>
           </button>
 
@@ -136,7 +136,7 @@
                   class="mv-button mv-toolbar__menu-button--grab"
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvGrabBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvGrabBtn']" aria-pressed="false"
-                  (click)="toggleGrabNDrag()">
+                  (click)="toggleGrabNDrag(); isDropdownMenuOpen = false">
             <span>Grab and drag</span>
           </button>
 
@@ -144,7 +144,7 @@
                   #mvDownloadBtn class="mv-button mv-toolbar__menu-button--download" title="Download" data-l10n-id="download"
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDownloadBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDownloadBtn']" aria-pressed="false"
-                  (click)="downloadFile()">
+                  (click)="downloadFile(); isDropdownMenuOpen = false">
             <span>Download</span>
           </button>
 
@@ -152,7 +152,7 @@
                   #mvPrintBtn title="Print" data-l10n-id="print" class="mv-button mv-toolbar__menu-button--print"
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvPrintBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvPrintBtn']" aria-pressed="false"
-                  (click)="printFile()">
+                  (click)="printFile(); isDropdownMenuOpen = false">
             <span>Print</span>
           </button>
 
@@ -160,8 +160,7 @@
                   id="mvCommentsBtn" #mvCommentsBtn class="mv-button mv-toolbar__menu-button--comments" title="Comments"
                   data-l10n-id="comments" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvCommentsBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvCommentsBtn']" aria-pressed="false"
-                  (click)="toggleCommentsPanel()"
-                  (click)="toggleMoreOptions()">
+                  (click)="toggleCommentsPanel(); isDropdownMenuOpen = false">
             <span>Comments</span>
           </button>
         </ng-template>
