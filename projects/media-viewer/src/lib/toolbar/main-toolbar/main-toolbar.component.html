@@ -160,7 +160,8 @@
                   id="mvCommentsBtn" #mvCommentsBtn class="mv-button mv-toolbar__menu-button--comments" title="Comments"
                   data-l10n-id="comments" [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvCommentsBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvCommentsBtn']" aria-pressed="false"
-                  (click)="toggleCommentsPanel()">
+                  (click)="toggleCommentsPanel()"
+                  (click)="toggleMoreOptions()">
             <span>Comments</span>
           </button>
         </ng-template>
