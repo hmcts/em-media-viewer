@@ -29,6 +29,17 @@
   .aui-comment__private-text {
     margin: 0;
   }
+
+  .commentSummaryHeader-button--close {
+    width: 25px;
+    height: 25px;
+    padding-top: 40px;
+    position: absolute;
+    right: 0;
+    &:after {
+      background-image: url(/assets/images/icon-tag-remove-cross.svg);
+    }
+  }
 }
 
 .searchComments {
