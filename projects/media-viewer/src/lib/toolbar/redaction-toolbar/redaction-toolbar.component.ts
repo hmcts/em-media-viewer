@@ -47,6 +47,10 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
     this.toolbarEventService.applyRedactionToDocument();
   }
 
+  toggleRedactBar() {
+      this.toolbarEventService.toggleRedactionMode();
+  }
+
   ngOnDestroy(): void {
     this.$subscription.unsubscribe();
   }

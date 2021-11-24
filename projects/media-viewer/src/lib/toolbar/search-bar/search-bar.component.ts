@@ -101,4 +101,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   public toggleAdvancedSearch(): void {
     this.advancedSearchVisible = !this.advancedSearchVisible;
   }
+
+  public toggleSearchBar() {
+      this.toolbarEvents.searchBarHidden.next(!this.toolbarEvents.searchBarHidden.getValue());
+    }
 }
