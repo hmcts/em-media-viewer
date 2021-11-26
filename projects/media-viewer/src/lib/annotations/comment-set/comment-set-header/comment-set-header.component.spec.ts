@@ -56,10 +56,10 @@ describe('CommentSetHeader', () => {
   });
 
   it('should invert toggleCommentsPanel value', () => {
-      const value = toolbarService.commentsPanelVisible.getValue();
-      const toggleCommentsPanelSpy = spyOn(toolbarService, 'toggleCommentsPanel');
-      component.toggleCommentsPanel();
+    const value = toolbarService.commentsPanelVisible.getValue();
+    const toggleCommentsPanelSpy = spyOn(toolbarService, 'toggleCommentsPanel');
+    component.toggleCommentsPanel();
 
-      expect(toggleCommentsPanelSpy).toHaveBeenCalledWith(!value);
-    });
+    expect(toggleCommentsPanelSpy).toHaveBeenCalledWith(!value);
+  });
 });
