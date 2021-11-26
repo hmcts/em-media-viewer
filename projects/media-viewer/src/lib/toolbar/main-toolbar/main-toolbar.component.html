@@ -31,7 +31,7 @@
                   class="mv-button mv-toolbar__menu-button--index"
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvIndexBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvIndexBtn']" aria-pressed="false"
-                  (click)="toggleSideBar()">
+                  (click)="toggleSideBar(); isDropdownMenuOpen = false">
             <span>Index</span>
           </button>
 
@@ -40,7 +40,7 @@
             [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']"
             [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDrawBtn']"
             [class.toggled]="toolbarEvents.drawModeSubject | async" aria-hidden="true" aria-pressed="false"
-            data-l10n-id="toggleDrawButton" (click)="onClickDrawToggle()">
+            data-l10n-id="toggleDrawButton" (click)="onClickDrawToggle(); isDropdownMenuOpen = false">
             <span data-l10n-id="draw_label">Draw a box</span>
           </button>
 
