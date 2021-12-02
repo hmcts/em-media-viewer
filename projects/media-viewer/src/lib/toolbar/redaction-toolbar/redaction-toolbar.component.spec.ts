@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
@@ -15,6 +16,7 @@ describe('RedactionToolbarComponent', () => {
     toggleRedactionPreview: () => {},
     unmarkAll: () => {},
     applyRedactionToDocument: () => {},
+    toggleRedactionMode: () => {},
   };
 
   beforeEach(() => {
@@ -79,5 +81,12 @@ describe('RedactionToolbarComponent', () => {
     component.redact();
 
     expect(toolbarEvents.applyRedactionToDocument).toHaveBeenCalled();
+  });
+
+  it('should call toggleRedactionMode', () => {
+    const toggleRedactionModeSpy = spyOn(toolbarEvents, 'toggleRedactionMode');
+    component.toggleRedactBar();
+
+    expect(toggleRedactionModeSpy).toHaveBeenCalled();
   });
 });

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
@@ -146,4 +146,14 @@ describe('SearchBarComponent', () => {
     expect(component.resultCount).toBeFalsy();
     expect(component.resultsText).toEqual('No results found');
   });
+
+  it('should toggle searchbar visible', fakeAsync((done) => {
+    component.toggleSearchBar();
+
+    component.toolbarEvents.searchBarHidden.asObservable()
+      .subscribe(
+        searchBarHidden => expect(searchBarHidden).toBeFalsy()
+        , error => done(error)
+      );
+  }));
 });
