@@ -18,7 +18,7 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
   @Output() public readonly showCommentSummaryDialog = new EventEmitter();
 
   tabs: {isFiltered?: boolean; label: string}[] = [];
-  tabSelected = 'comments';
+  tabSelected = '';
   isFiltered: boolean;
   navigationList: Annotation[];
   $subscriptions: Subscription;
