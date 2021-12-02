@@ -163,6 +163,10 @@
   "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/sitemap.xml_GET": "ignore",
   "10010_Cookie No HttpOnly Flag_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
-  "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore"
+  "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
+  "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27Vfgjqrux_10229211109064440.js_GET": "ignore",
+  "10021_X-Content-Type-Options Header Missing_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27Vfgjqrux_10229211109064440.js_GET": "ignore",
+  "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27Vfgjqrux_10229211109064440.js_GET": "ignore",
+  "10109_Modern Web Application_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27Vfgjqrux_10229211109064440.js_GET": "ignore"
 }
 
