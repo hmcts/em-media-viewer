@@ -7,6 +7,11 @@
         {{ tab.label | titlecase }}
       </a>
     </li>
+    <li>
+      <button id="mvCloseBtn" #mvCloseBtn class="mv-button commentSummaryHeader-button--close"
+        title="Close Comments" (click)="toggleCommentsPanel()">
+      </button>
+    </li>
   </ul>
   <div class="govuk-tabs__panel" [hidden]="!tabSelected">
     <ng-container *ngIf="tabSelected === 'comments'">

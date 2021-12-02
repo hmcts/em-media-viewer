@@ -49,6 +49,10 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
     this.tabSelected = tab !== this.tabSelected ? tab : undefined;
   }
 
+  public toggleCommentsPanel() {
+    this.toolbarEvents.toggleCommentsPanel(!this.toolbarEvents.commentsPanelVisible.getValue());
+  }
+
   ngOnDestroy(): void {
     this.$subscriptions.unsubscribe();
   }
