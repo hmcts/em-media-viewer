@@ -61,8 +61,8 @@ export class CommentsPanelPage extends AppPage {
   }
 
   async clickOnCollateCommentsButton() {
-//     await this.collateCommentsButton.click();
-    await genericMethods.clickAction('commentSummary');
+    await this.collateCommentsButton.click();
+    // await genericMethods.clickAction('commentSummary');
   }
 
   async hideCommentsToggle() {
