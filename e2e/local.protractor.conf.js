@@ -8,7 +8,7 @@ exports.config = {
     'browserName' : 'chrome',
     chromeOptions: {
       // 'args': ['--no-sandbox', '--start-maximized', 'use-fake-ui-for-media-stream'],
-      args: ['--headless', '--window-size=1920,1080']
+      args: ['--headless', '--window-size=1920,1080', '--start-maximized']
     }
   },
   directConnect: true,
