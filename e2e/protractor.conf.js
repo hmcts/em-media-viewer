@@ -21,7 +21,8 @@ exports.config = {
         '--disable-setuid-sandbox',
         '--no-zygote ',
         '--disableChecks',
-        '--disable-notifications'
+        '--disable-notifications',
+        '--start-maximized'
       ]
     }
   },
