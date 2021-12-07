@@ -14,6 +14,10 @@ const config = {
 
   windowSize: '1920x1080',
 
+  chromeOptions: {
+    args: ['--headless', '--window-size=1920,1080']
+  },
+
   host: 'ondemand.eu-central-1.saucelabs.com',
   sauceRegion: 'eu',
   port: 80,
@@ -76,9 +80,6 @@ const config = {
 //    },
     {
       browserName: 'chrome',
-      chromeOptions: {
-        args: ['--headless', '--window-size=1920,1080']
-      },
       version: 'latest',
       platform: 'macOS 10.15',
       name: 'Media Viewer: macOS-latest-chrome-tests',
