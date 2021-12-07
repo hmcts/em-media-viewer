@@ -76,6 +76,9 @@ const config = {
 //    },
     {
       browserName: 'chrome',
+      chromeOptions: {
+        args: ['--headless', '--window-size=1920,1080']
+      },
       version: 'latest',
       platform: 'macOS 10.15',
       name: 'Media Viewer: macOS-latest-chrome-tests',
