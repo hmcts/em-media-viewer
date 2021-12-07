@@ -11,7 +11,6 @@ const config = {
   sauceSeleniumAddress: 'ondemand.eu-central-1.saucelabs.com:443/wd/hub',
 
   tags: ['MediaViewer'],
-  windowSize: '1920x1080',
 
   host: 'ondemand.eu-central-1.saucelabs.com',
   sauceRegion: 'eu',
