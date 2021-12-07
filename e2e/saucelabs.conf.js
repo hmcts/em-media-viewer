@@ -12,6 +12,8 @@ const config = {
 
   tags: ['MediaViewer'],
 
+  windowSize: '1920x1080',
+
   host: 'ondemand.eu-central-1.saucelabs.com',
   sauceRegion: 'eu',
   port: 80,
