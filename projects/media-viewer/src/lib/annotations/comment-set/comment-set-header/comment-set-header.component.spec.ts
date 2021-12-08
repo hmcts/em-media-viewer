@@ -4,11 +4,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../../store/reducers/reducers';
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 describe('CommentSetHeader', () => {
   let component: CommentSetHeaderComponent;
   let fixture: ComponentFixture<CommentSetHeaderComponent>;
   let nativeElement;
+  let toolbarService: ToolbarEventService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,6 +27,7 @@ describe('CommentSetHeader', () => {
 
     fixture = TestBed.createComponent(CommentSetHeaderComponent);
     nativeElement = fixture.debugElement.nativeElement;
+    toolbarService = TestBed.get(ToolbarEventService);
     component = fixture.componentInstance;
     component.showCommentSummary = true;
     component.tabSelected = 'comments';
@@ -50,5 +53,13 @@ describe('CommentSetHeader', () => {
     component.tabSelected = 'tab1';
     component.selectTab('tab1');
     expect(component.tabSelected).toBeUndefined();
+  });
+
+  it('should invert toggleCommentsPanel value', () => {
+    const value = toolbarService.commentsPanelVisible.getValue();
+    const toggleCommentsPanelSpy = spyOn(toolbarService, 'toggleCommentsPanel');
+    component.toggleCommentsPanel();
+
+    expect(toggleCommentsPanelSpy).toHaveBeenCalledWith(!value);
   });
 });

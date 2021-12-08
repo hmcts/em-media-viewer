@@ -69,6 +69,13 @@ $button-border-color: #dee0e2;
     }
   }
 
+  .redaction-button--close {
+    width: 175px;
+    &:after {
+      background-image: url(/assets/images/icon-tag-remove-cross.svg);
+    }
+  }
+
   @media (max-width: 340px) {
     .redaction-button--draw,
     .redaction-button--redact,
