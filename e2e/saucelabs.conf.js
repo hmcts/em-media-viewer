@@ -80,8 +80,11 @@ const config = {
 //    },
     {
       browserName: 'chrome',
-      version: 'latest',
-      platform: 'macOS 10.15',
+      browserVersion: 'latest',
+      platformName: 'macOS 10.15',
+      'sauce:options': {
+        args: ['--headless', '--window-size=1920,1080']
+      },
       name: 'Media Viewer: macOS-latest-chrome-tests',
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
