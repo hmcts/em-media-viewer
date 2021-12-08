@@ -83,7 +83,7 @@ const config = {
       browserVersion: 'latest',
       platformName: 'macOS 10.15',
       'sauce:options': {
-        args: ['--headless', '--window-size=1920,1080']
+        screenResolution: '1920x1080'
       },
       name: 'Media Viewer: macOS-latest-chrome-tests',
       tunnelIdentifier: 'reformtunnel',
