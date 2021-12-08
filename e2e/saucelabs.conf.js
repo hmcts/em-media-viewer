@@ -78,20 +78,35 @@ const config = {
 //      sharedTestFiles: false,
 //      maxInstances: 1
 //    },
+    // {
+    //   browserName: 'chrome',
+    //   browserVersion: 'latest',
+    //   platformName: 'macOS 10.15',
+    //   'sauce:options': {
+    //     screenResolution: '1920x1080'
+    //   },
+    //   name: 'Media Viewer: macOS-latest-chrome-tests',
+    //   tunnelIdentifier: 'reformtunnel',
+    //   extendedDebugging: true,
+    //   capturePerformance: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
+
     {
-      browserName: 'chrome',
+      seleniumVersion: '3.8.1',
+      browserName: 'googlechrome',
       browserVersion: 'latest',
-      platformName: 'macOS 10.15',
-      'sauce:options': {
-        screenResolution: '1920x1080'
-      },
+      platformName: 'macOS 10.13',
+      screenResolution: '1920x1080',
       name: 'Media Viewer: macOS-latest-chrome-tests',
-      tunnelIdentifier: 'reformtunnel',
+      tunnelIdentifier: 'MediaViewer',
       extendedDebugging: true,
       capturePerformance: true,
       sharedTestFiles: false,
       maxInstances: 1
     },
+
 //    {
 //      browserName: 'firefox',
 //      version: 'latest',
