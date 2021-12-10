@@ -18,7 +18,7 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
   @Output() public readonly showCommentSummaryDialog = new EventEmitter();
 
   tabs: {isFiltered?: boolean; label: string}[] = [];
-  tabSelected = 'comments';
+  tabSelected = '';
   isFiltered: boolean;
   navigationList: Annotation[];
   $subscriptions: Subscription;
@@ -47,6 +47,10 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
 
   selectTab(tab: string) {
     this.tabSelected = tab !== this.tabSelected ? tab : undefined;
+  }
+
+  public toggleCommentsPanel() {
+    this.toolbarEvents.toggleCommentsPanel(!this.toolbarEvents.commentsPanelVisible.getValue());
   }
 
   ngOnDestroy(): void {
