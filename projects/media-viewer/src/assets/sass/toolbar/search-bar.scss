@@ -19,7 +19,9 @@
 }
 
 .searchbar-button--close {
-  padding-top: 0px;
+  position: absolute;
+  right: 10px;
+  top: 0px;
   padding-bottom: 25px;
   &:after {
     background-image: url(/assets/images/icon-tag-remove-cross.svg);

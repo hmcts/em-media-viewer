@@ -98,7 +98,7 @@ const config = {
       browserName: 'googlechrome',
       browserVersion: 'latest',
       platformName: 'macOS 10.13',
-      screenResolution: '1920x1080',
+      screenResolution: '1280x768',
       name: 'Media Viewer: macOS-latest-chrome-tests',
       tunnelIdentifier: 'MediaViewer',
       extendedDebugging: true,

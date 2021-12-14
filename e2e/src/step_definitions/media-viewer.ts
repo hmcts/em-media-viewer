@@ -660,7 +660,13 @@ When('I click comments panel again', async () => {
   await commentsPanelPage.clickCommentsPanel();
 });
 
+When('I click the close button', async () => {
+  await commentsPanelPage.clickCloseButon();
+  await genericMethods.sleep(2000);
+});
+
 Then('I expect comments panel should disappear', async function () {
+  await downloadPage.clickMoreOptions();
   const result = await commentsPanelPage.getCommentsPanelText();
   expect(result).to.equal('Comments');
 });
