@@ -1,6 +1,5 @@
-import {browser, by, element, ElementArrayFinder, ElementFinder } from 'protractor';
+import {by, element, ElementArrayFinder, ElementFinder } from 'protractor';
 import {AppPage} from './app.po';
-import {By} from '@angular/platform-browser';
 import {expect} from 'chai';
 import {GenericMethods} from '../utils/genericMethods';
 
@@ -113,6 +112,10 @@ export class CommentsPanelPage extends AppPage {
 
   async clickCommentsPanel() {
     await genericMethods.clickAction('mvCommentsBtn');
+  }
+
+  async clickCloseButon() {
+    await genericMethods.clickAction('mvCloseBtn');
   }
 
   async getCommentsTabText() {
