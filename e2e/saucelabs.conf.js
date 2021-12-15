@@ -78,34 +78,34 @@ const config = {
 //      sharedTestFiles: false,
 //      maxInstances: 1
 //    },
-    // {
-    //   browserName: 'chrome',
-    //   browserVersion: 'latest',
-    //   platformName: 'macOS 10.15',
-    //   'sauce:options': {
-    //     screenResolution: '1920x1080'
-    //   },
-    //   name: 'Media Viewer: macOS-latest-chrome-tests',
-    //   tunnelIdentifier: 'reformtunnel',
-    //   extendedDebugging: true,
-    //   capturePerformance: true,
-    //   sharedTestFiles: false,
-    //   maxInstances: 1
-    // },
-
     {
       seleniumVersion: '3.8.1',
-      browserName: 'googlechrome',
+      browserName: 'chrome',
       browserVersion: 'latest',
       platformName: 'macOS 10.13',
       screenResolution: '1280x768',
       name: 'Media Viewer: macOS-latest-chrome-tests',
-      tunnelIdentifier: 'MediaViewer',
+      tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
       capturePerformance: true,
       sharedTestFiles: false,
       maxInstances: 1
     },
+
+    // The following is used to run the crossbrowser tests locally:
+    // {
+    //   seleniumVersion: '3.8.1',
+    //   browserName: 'googlechrome',
+    //   browserVersion: 'latest',
+    //   platformName: 'macOS 10.13',
+    //   screenResolution: '1280x768',
+    //   name: 'Media Viewer: macOS-latest-chrome-tests',
+    //   tunnelIdentifier: 'MediaViewer',
+    //   extendedDebugging: true,
+    //   capturePerformance: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
 
 //    {
 //      browserName: 'firefox',
