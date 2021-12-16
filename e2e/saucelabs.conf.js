@@ -83,7 +83,7 @@ const config = {
       browserName: 'chrome',
       browserVersion: 'latest',
       platformName: 'macOS 10.13',
-      screenResolution: '1920x1080',
+      screenResolution: '1600x1200',
       name: 'Media Viewer: macOS-latest-chrome-tests',
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
