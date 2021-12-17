@@ -1,15 +1,15 @@
 <div class="searchbar govuk-!-padding-3" [hidden]="toolbarEvents.searchBarHidden | async">
   <div class="govuk-grid-row">
-    <button id="mvCloseBtn" #mvCloseBtn class="mv-button searchbar-button--close" title="Close Search" data-l10n-id="mvRedactBtn"
-      (click)="toggleSearchBar()">
-    </button>
     <div class="govuk-grid-column-full">
-      <input class="govuk-input govuk-!-display-inline-block govuk-!-width-three-quarters govuk-!-margin-bottom-1"
+      <input class="govuk-input govuk-!-display-inline-block govuk-!-width-three-quarters govuk-!-margin-bottom-5 govuk-!-margin-top-5"
         type="text" aria-label="Find in document" #findInput [(ngModel)]="searchText" (keydown.escape)="onEscapeKeyPress($event)" (keydown.enter)="onEnterKeyPress($event)" title="Find in document"
         placeholder="Find in document…" tabindex="0" data-l10n-id="find_input" />
       <button class="govuk-button govuk-!-display-inline-block govuk-!-margin-bottom-4" data-module="govuk-button"
-        (click)="search()">
+        (click)="search()" style=" position: absolute; top: 40px; right: 10px; ">
         Search
+      </button>
+      <button id="mvCloseBtn" #mvCloseBtn class="mv-button searchbar-button--close" title="Close Search" data-l10n-id="mvRedactBtn"
+        (click)="toggleSearchBar()">
       </button>
     </div>
   </div>
@@ -24,7 +24,7 @@
     </div>
     <div class="govuk-grid-column-one-quarter">
       <a [routerLink]="" class="govuk-link govuk-link--no-visited-state" (click)="toggleAdvancedSearch()" title="Advanced"
-        data-l10n-id="find_advanced">Advanced</a>
+        data-l10n-id="find_advanced" style=" position: absolute; top: 95px; right: 15px; ">Advanced</a>
     </div>
   </div>
 
