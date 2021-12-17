@@ -626,6 +626,7 @@ When(/^The user clicks on the Comments Tab$/, async function () {
 });
 
 When(/^The user clicks on Collate Comments$/, async function () {
+  await commentsPanelPage.clickOnCommentSubPaneButton();
   await commentsPanelPage.clickOnCollateCommentsButton();
 });
 
