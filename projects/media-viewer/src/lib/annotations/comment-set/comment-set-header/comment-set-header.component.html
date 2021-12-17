@@ -1,8 +1,8 @@
 <div class="govuk-tabs commentSummaryHeader" [ngClass]="{'icp-mode': toolbarEvents.icp.enabled | async}" data-module="govuk-tabs">
   <ul class="govuk-tabs__list">
-    <li *ngFor="let tab of tabs" class="govuk-tabs__list-item govuk-tabs__list-item"
+    <li *ngFor="let tab of tabs; let i = index" class="govuk-tabs__list-item govuk-tabs__list-item"
         [ngClass]="{'govuk-tabs__list-item--selected': tabSelected === tab.label}">
-      <a (click)="selectTab(tab.label)" [routerLink]="" [ngClass]="{'govuk-tabs__list-item--filtered': tab.isFiltered}"
+      <a id="commentSubPane{{ i }}" (click)="selectTab(tab.label)" [routerLink]="" [ngClass]="{'govuk-tabs__list-item--filtered': tab.isFiltered}"
          class="govuk-tabs__tab">
         {{ tab.label | titlecase }}
       </a>
