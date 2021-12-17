@@ -13,6 +13,7 @@ export class CommentsPanelPage extends AppPage {
   filterTabButton: ElementFinder = this.commentTabs.get(1).element(by.css('a'));
   searchTabButton: ElementFinder = this.commentTabs.get(2).element(by.css('a'));
   collateCommentsButton: ElementFinder = element(by.id('commentSummary'));
+  commentSubPaneButton: ElementFinder = element(by.id('commentSubPane0'));
   commentsContainerHeader: ElementFinder = element(by.id('comment-container')).element(by.css('h2'));
   commentsNotAvailable: ElementFinder = element(by.id('comment-container')).element(by.css('h2'));
   courtBundleName: ElementFinder = element(by.id('comment-container')).element(by.css('h2'));
@@ -62,6 +63,10 @@ export class CommentsPanelPage extends AppPage {
 
   async clickOnCollateCommentsButton() {
     await this.collateCommentsButton.click();
+  }
+
+  async clickOnCommentSubPaneButton() {
+    await this.commentSubPaneButton.click();
   }
 
   async hideCommentsToggle() {
