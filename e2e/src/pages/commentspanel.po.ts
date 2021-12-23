@@ -69,6 +69,10 @@ export class CommentsPanelPage extends AppPage {
     await this.commentSubPaneButton.click();
   }
 
+  async clickOnCommentSubPaneButton() {
+    await this.commentSubPaneButton.click();
+  }
+
   async hideCommentsToggle() {
     await this.commentsToggleButton.click();
   }
