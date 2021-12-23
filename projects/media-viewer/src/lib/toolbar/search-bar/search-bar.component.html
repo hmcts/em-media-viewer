@@ -1,6 +1,5 @@
 <div class="searchbar govuk-!-padding-3" [hidden]="toolbarEvents.searchBarHidden | async">
   <div class="govuk-grid-row">
-    
     <div class="govuk-grid-column-full">
       <input class="govuk-input govuk-!-display-inline-block govuk-!-width-three-quarters govuk-!-margin-bottom-5 govuk-!-margin-top-5"
         type="text" aria-label="Find in document" #findInput [(ngModel)]="searchText" (keydown.escape)="onEscapeKeyPress($event)" (keydown.enter)="onEnterKeyPress($event)" title="Find in document"
@@ -10,8 +9,8 @@
         Search
       </button>
       <button id="mvCloseBtn" #mvCloseBtn class="mv-button searchbar-button--close" title="Close Search" data-l10n-id="mvRedactBtn"
-      (click)="toggleSearchBar()">
-    </button>
+        (click)="toggleSearchBar()">
+      </button>
     </div>
   </div>
 
