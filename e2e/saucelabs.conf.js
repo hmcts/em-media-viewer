@@ -41,6 +41,7 @@ const config = {
   sauceKey: process.env.SAUCE_ACCESS_KEY,
   SAUCE_REST_ENDPOINT: 'https://eu-central-1.saucelabs.com/rest/v1/',
   allScriptsTimeout: 111000,
+  maxSessions: 20,
 
 
   useAllAngular2AppRoots: true,
@@ -56,17 +57,18 @@ const config = {
 //      shardTestFiles: false,
 //      maxInstances: 1
 //    },
-//    {
-//      browserName: 'firefox',
-//      version: 'latest',
-//      platform: 'Windows 10',
-//      name: 'Media Viewer: windows-latest-firefox-tests',
-//      tunnelIdentifier: 'reformtunnel',
-//      extendedDebugging: true,
-//      capturePerformance: true,
-//      sharedTestFiles: false,
-//      maxInstances: 1
-//    },
+// {
+//   browserName: 'firefox',
+//   version: 'latest',
+//   platform: 'macOS 10.15',
+//   screenResolution: '1600x1200',
+//   name: 'Media Viewer: macOS-latest-firefox-tests',
+//   tunnelIdentifier: 'MediaViewer', //Change this to reformtunnel before committing!
+//   extendedDebugging: true,
+//   capturePerformance: true,
+//   sharedTestFiles: false,
+//   maxInstances: 1
+// },
 //    {
 //      browserName: 'MicrosoftEdge',
 //      platform: 'macOS 10.15',
@@ -79,45 +81,45 @@ const config = {
 //      maxInstances: 1
 //    },
     {
-      seleniumVersion: '3.8.1',
       browserName: 'chrome',
-      browserVersion: 'latest',
-      platformName: 'macOS 10.13',
+      version: 'latest',
+      platform: 'macOS 10.15',
       screenResolution: '1600x1200',
       name: 'Media Viewer: macOS-latest-chrome-tests',
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
       capturePerformance: true,
       sharedTestFiles: false,
-      maxInstances: 1
+      maxInstances: 2,
+      shardTestFiles: true,
     },
-
-    // The following is used to run the crossbrowser tests locally:
-    // {
-    //   seleniumVersion: '3.8.1',
-    //   browserName: 'googlechrome',
-    //   browserVersion: 'latest',
-    //   platformName: 'macOS 10.13',
-    //   screenResolution: '1920x1080',
-    //   name: 'Media Viewer: macOS-latest-chrome-tests',
-    //   tunnelIdentifier: 'MediaViewer',
-    //   extendedDebugging: true,
-    //   capturePerformance: true,
-    //   sharedTestFiles: false,
-    //   maxInstances: 1
-    // },
-
-//    {
-//      browserName: 'firefox',
-//      version: 'latest',
-//      platform: 'macOS 10.15',
-//      name: 'Media Viewer: macOS-latest-firefox-tests',
-//      tunnelIdentifier: 'reformtunnel',
-//      extendedDebugging: true,
-//      capturePerformance: true,
-//      sharedTestFiles: false,
-//      maxInstances: 1
-//    },
+    {
+     browserName: 'firefox',
+     version: 'latest',
+     platform: 'Windows 10',
+     screenResolution: '1600x1200',
+     name: 'Media Viewer: windows-latest-firefox-tests',
+     tunnelIdentifier: 'reformtunnel',
+     extendedDebugging: true,
+     capturePerformance: true,
+     sharedTestFiles: false,
+     maxInstances: 2,
+     shardTestFiles: true,
+   },
+  //  {
+  //   browserName: 'MicrosoftEdge',
+  //   version: 'latest',
+  //   platform: 'Windows 10',
+  //   screenResolution: '1600x1200',
+  //   name: 'Media Viewer: windows-latest-microsoft-edge-tests',
+  //   tunnelIdentifier: 'MediaViewer', //Change this to reformtunnel before committing!
+  //   extendedDebugging: true,
+  //   capturePerformance: true,
+  //   sharedTestFiles: false,
+  //   maxInstances: 1,
+  //   shardTestFiles: true,
+  //   sequential: true
+  // },
 //    {
 //      browserName: 'safari',
 //      version: '13.1',
@@ -129,17 +131,19 @@ const config = {
 //      sharedTestFiles: false,
 //      maxInstances: 1
 //    },
-//    {
-//      browserName: 'MicrosoftEdge',
-//      version: 'latest',
-//      platform: 'Windows 10',
-//      name: 'Media Viewer: windows-latest-microsoft-edge-tests',
-//      tunnelIdentifier: 'reformtunnel',
-//      extendedDebugging: true,
-//      capturePerformance: true,
-//      sharedTestFiles: false,
-//      maxInstances: 1
-//    }
+    // The following is used to run the crossbrowser tests locally:
+    // {
+    //   browserName: 'chrome',
+    //   platform: 'macOS 10.15',
+    //   version: 'latest',
+    //   screenResolution: '1600x1200',
+    //   name: 'Media Viewer: macOS-latest-chrome-tests',
+    //   tunnelIdentifier: 'MediaViewer',
+    //   extendedDebugging: true,
+    //   capturePerformance: true,
+    //   sharedTestFiles: false,
+    //   maxInstances: 1
+    // },
   ],
 
   onPrepare: function () {
