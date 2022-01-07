@@ -1,6 +1,6 @@
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-chai.use(chaiAsPromised);
+// const chai = require('chai');
+// const chaiAsPromised = require('chai-as-promised');
+// chai.use(chaiAsPromised);
 const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2));
 

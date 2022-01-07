@@ -36,7 +36,6 @@ export class AppPage {
     const customToolbarToggle = await element(by.id('toggleCustomToolbar'));
     const customToolbarOn = await customToolbarToggle.getAttribute('checked');
     if (!customToolbarOn) {
-//       await this.clickElement(by.css('label[for="toggleCustomToolbar"]'));
       await this.clickElement(genericMethods.clickAction('label[for="toggleCustomToolbar"]'));
     }
   }
@@ -243,7 +242,7 @@ export class AppPage {
   }
 
   async updateBookmarks(updatedText: string) {
-    browser.sleep(5000);
+    browser.sleep(1000);
     await element.all(this.bookMarkRename).first().click();
     browser.sleep(1000);
     await element.all(this.bookMarkInput).first().clear();
@@ -277,9 +276,7 @@ export class AppPage {
   async clickOnCommentButton() {
     // await browser.waitForAngular()  // This feature did not work hence adding sleep.
     await browser.sleep(5000);
-//     await genericMethods.clickAction('mv-ctx-toolbar button[title=\'Comment\']');
     await genericMethods.clickAction('mvCommentsBtn');
-//     await element(this.commentButton).click();
   }
 
   async enterTextInAnnotation(text: string) {
