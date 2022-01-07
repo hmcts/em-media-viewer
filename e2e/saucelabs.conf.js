@@ -23,7 +23,11 @@ const config = {
   port: 80,
   sauceConnect: true,
   specs: [
-    './src/features/*.feature'
+    './src/features/bookmarks.feature',
+    './src/features/comments.panel.feature',
+    './src/features/navigation.feature',
+    './src/features/search.feature',
+    './src/features/zoom.feature'
   ],
 
   baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
@@ -89,7 +93,6 @@ const config = {
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
       capturePerformance: true,
-      sharedTestFiles: false,
       maxInstances: 2,
       shardTestFiles: true,
     },
@@ -102,7 +105,6 @@ const config = {
      tunnelIdentifier: 'reformtunnel',
      extendedDebugging: true,
      capturePerformance: true,
-     sharedTestFiles: false,
      maxInstances: 2,
      shardTestFiles: true,
    },
