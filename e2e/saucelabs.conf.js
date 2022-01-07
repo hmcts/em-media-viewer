@@ -23,7 +23,7 @@ const config = {
   port: 80,
   sauceConnect: true,
   specs: [
-    './src/features/bookmarks.feature',
+    // './src/features/bookmarks.feature',
     './src/features/comments.panel.feature',
     './src/features/navigation.feature',
     './src/features/search.feature',
