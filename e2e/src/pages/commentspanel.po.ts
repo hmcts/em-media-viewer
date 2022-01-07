@@ -62,7 +62,6 @@ export class CommentsPanelPage extends AppPage {
 
   async clickOnCollateCommentsButton() {
     await this.collateCommentsButton.click();
-    // await genericMethods.clickAction('commentSummary');
   }
 
   async clickOnCommentSubPaneButton() {
@@ -89,7 +88,6 @@ export class CommentsPanelPage extends AppPage {
   }
 
   async assertNoCommentRowsPresent() {
-//     const result = await genericMethods.clickAction('comment-container');
     const result = await this.commentsContainerHeader.getText();
     expect(result).to.equal('No comments available');
     const courtBundleName = await this.courtBundleName.getText();
@@ -97,9 +95,7 @@ export class CommentsPanelPage extends AppPage {
   }
 
   async assertCommentSummaryPresent() {
-//     const result = await genericMethods.clickAction('comment-container');
     const result = await this.commentsContainerHeader.getText();
-    console.log('Result = ' + result);
     expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
   }
 

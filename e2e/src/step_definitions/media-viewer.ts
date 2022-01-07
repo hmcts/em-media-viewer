@@ -302,9 +302,7 @@ Then('I expect {int} bookmark is present in bookmarks list', async (int) => {
 });
 
 Then('I am able to update a bookmark with text {string} and verify it has been updated', async (string) => {
-    await genericMethods.sleep(1000);
     await updateBookmark(string.trim());
-    await genericMethods.sleep(1000);
     await verifyBookmarkTextAfterUpdate(string.trim());
 });
 
@@ -370,18 +368,8 @@ Then('I verify the amended text has been saved', async () => {
 });
 
 When(/^the user populate the content search field with a '(.*)'$/, async (text: string) => {
-  await genericMethods.sleep(2000);
   await searchPage.clickSearchIcon();
   await searchPage.searchText(text);
-
-//   The following code is needed for this scenario to work on cross-browser tests:
-//   await downloadPage.clickMoreOptions();
-//   await genericMethods.sleep(2000);
-//   await searchPage.clickSearchIcon();
-//   await genericMethods.sleep(2000);
-//   await downloadPage.clickMoreOptions();
-//   await genericMethods.sleep(2000);
-//   await searchPage.searchText(text);
 });
 
 Then(/^clicks on search button$/, async () => {
@@ -637,10 +625,6 @@ Then(/^There are no comment rows present$/, async function () {
 
 Then(/^The comment summary is displayed$/, async function () {
   await commentsPanelPage.assertCommentSummaryPresent();
-//   const result = await this.commentsContainerHeader.getText();
-//   const result = await genericMethods.clickAction('comment-container');
-//   console.log('Result = ' + result);
-//   expect(result).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
 });
 
 When(/^The user closes the overlay panel$/, async function () {
@@ -675,12 +659,5 @@ Then('I expect comments panel should disappear', async function () {
 When(/^The user clicks on the show comments panel toggle icon$/, async function () {
    await commentsPanelPage.clickCommentsToggleIcon();
    await genericMethods.sleep(2000);
-
-   //   The following code is needed for this scenario to work on cross-browser tests:
-   //   await downloadPage.clickMoreOptions();
-   //   await genericMethods.sleep(2000);
-   //   await commentsPanelPage.clickCommentsPanel();
-   //   await genericMethods.sleep(2000);
-   //   await downloadPage.clickMoreOptions();
 });
 
