@@ -93,7 +93,7 @@ const config = {
       tunnelIdentifier: 'reformtunnel',
       extendedDebugging: true,
       capturePerformance: true,
-      maxInstances: 2,
+      maxInstances: 1,
       shardTestFiles: true,
     },
     {
@@ -105,7 +105,7 @@ const config = {
      tunnelIdentifier: 'reformtunnel',
      extendedDebugging: true,
      capturePerformance: true,
-     maxInstances: 2,
+     maxInstances: 1,
      shardTestFiles: true,
    },
   //  {
