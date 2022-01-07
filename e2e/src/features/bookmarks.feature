@@ -1,4 +1,4 @@
-@MediaViewer @Bookmarks @crossbrowser
+@MediaViewer @Bookmarks
 Feature: Bookmarks Features Create,Delete and Update
 
   Background:
@@ -14,7 +14,7 @@ Feature: Bookmarks Features Create,Delete and Update
     And I expect bookmark to be added to the existing list
     And I am able to delete a bookmark and verify it has been deleted
 
-  @ci
+  @ci @crossbrowser
   Scenario: Update a bookmark
     When I highlight text to be bookmarked on the PDF document
     Then I capture the text highlight popup
@@ -22,7 +22,7 @@ Feature: Bookmarks Features Create,Delete and Update
     And I expect bookmark to be added to the existing list
     And I am able to update a bookmark with text 'bookmark_update' and verify it has been updated
 
-  @ci
+  @ci @crossbrowser
   Scenario: Add a bookmark to a highlighted phrase on the PDF
     When I highlight text to be bookmarked on the PDF document
     Then I capture the text highlight popup
