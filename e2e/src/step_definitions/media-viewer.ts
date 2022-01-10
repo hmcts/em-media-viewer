@@ -302,8 +302,8 @@ Then('I expect {int} bookmark is present in bookmarks list', async (int) => {
 });
 
 Then('I am able to update a bookmark with text {string} and verify it has been updated', async (string) => {
-    await updateBookmark(string.trim());
-    await verifyBookmarkTextAfterUpdate(string.trim());
+  await updateBookmark(string.trim());
+  await verifyBookmarkTextAfterUpdate(string.trim());
 });
 
 Then('I am able to delete a bookmark and verify it has been deleted', async () => {
@@ -657,7 +657,7 @@ Then('I expect comments panel should disappear', async function () {
 });
 
 When(/^The user clicks on the show comments panel toggle icon$/, async function () {
-   await commentsPanelPage.clickCommentsToggleIcon();
-   await genericMethods.sleep(2000);
+  await commentsPanelPage.clickCommentsToggleIcon();
+  await genericMethods.sleep(2000);
 });
 

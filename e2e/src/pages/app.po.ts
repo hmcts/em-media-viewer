@@ -1,9 +1,6 @@
 import {$$, browser, by, element, ElementFinder, Locator, protractor} from 'protractor';
 import {By} from '@angular/platform-browser';
 import {String} from 'typescript-string-operations';
-import {GenericMethods} from '../utils/genericMethods';
-
-const genericMethods = new GenericMethods();
 
 const until = protractor.ExpectedConditions;
 
@@ -36,7 +33,7 @@ export class AppPage {
     const customToolbarToggle = await element(by.id('toggleCustomToolbar'));
     const customToolbarOn = await customToolbarToggle.getAttribute('checked');
     if (!customToolbarOn) {
-      await this.clickElement(genericMethods.clickAction('label[for="toggleCustomToolbar"]'));
+      await this.clickElement(by.css('label[for="toggleCustomToolbar"]'));
     }
   }
 
@@ -242,6 +239,7 @@ export class AppPage {
   }
 
   async updateBookmarks(updatedText: string) {
+    await browser.sleep(5000);
     browser.sleep(1000);
     await element.all(this.bookMarkRename).first().click();
     browser.sleep(1000);
@@ -276,7 +274,7 @@ export class AppPage {
   async clickOnCommentButton() {
     // await browser.waitForAngular()  // This feature did not work hence adding sleep.
     await browser.sleep(5000);
-    await genericMethods.clickAction('mvCommentsBtn');
+    await element(this.commentButton).click();
   }
 
   async enterTextInAnnotation(text: string) {
