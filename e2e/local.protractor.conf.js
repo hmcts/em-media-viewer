@@ -5,7 +5,7 @@ exports.config = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   capabilities: {
-    'browserName' : 'chrome',
+    browserName : 'chrome',
     chromeOptions: {
       // 'args': ['--no-sandbox', '--start-maximized', 'use-fake-ui-for-media-stream'],
       args: ['--headless', '--window-size=1920,1080']
@@ -14,7 +14,7 @@ exports.config = {
   directConnect: true,
   baseUrl: 'http://localhost:1337',
   specs: [
-    '../e2e/src/features/*.feature',
+    './src/**/*.feature',
   ],
   onPrepare: function () {
     require('ts-node').register({
@@ -38,9 +38,7 @@ exports.config = {
         removeExistingJsonReportFile: true,
         reportName: 'MediaViewer Functional Tests',
         jsonDir: './functional-output/reports',
-        reportPath: './functional-output/reports',
-        displayDuration: true,
-        durationInMS: false
+        reportPath: './functional-output/reports/html'
       }
     }
   ]
