@@ -5,7 +5,7 @@ exports.config = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   capabilities: {
-    browserName : 'chrome',
+    browserName: 'chrome',
     chromeOptions: {
       // 'args': ['--no-sandbox', '--start-maximized', 'use-fake-ui-for-media-stream'],
       args: ['--headless', '--window-size=1920,1080']
