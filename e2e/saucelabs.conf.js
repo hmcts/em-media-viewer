@@ -1,6 +1,3 @@
-// const chai = require('chai');
-// const chaiAsPromised = require('chai-as-promised');
-// chai.use(chaiAsPromised);
 const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2));
 
@@ -50,40 +47,6 @@ const config = {
 
   useAllAngular2AppRoots: true,
   multiCapabilities: [
-//    {
-//      browserName: 'chrome',
-//      version: 'latest',
-//      platform: 'Windows 10',
-//      name: 'Media Viewer: windows-latest-chrome-tests',
-//      tunnelIdentifier: 'reformtunnel',
-//      extendedDebugging: true,
-//      capturePerformance: true,
-//      shardTestFiles: false,
-//      maxInstances: 1
-//    },
-// {
-//   browserName: 'firefox',
-//   version: 'latest',
-//   platform: 'macOS 10.15',
-//   screenResolution: '1600x1200',
-//   name: 'Media Viewer: macOS-latest-firefox-tests',
-//   tunnelIdentifier: 'MediaViewer', //Change this to reformtunnel before committing!
-//   extendedDebugging: true,
-//   capturePerformance: true,
-//   sharedTestFiles: false,
-//   maxInstances: 1
-// },
-//    {
-//      browserName: 'MicrosoftEdge',
-//      platform: 'macOS 10.15',
-//      version: 'latest',
-//      name: 'Media Viewer: macOS-latest-microsoft-edge-tests',
-//      tunnelIdentifier: 'reformtunnel',
-//      extendedDebugging: true,
-//      capturePerformance: true,
-//      sharedTestFiles: false,
-//      maxInstances: 1
-//    },
     {
       browserName: 'chrome',
       version: 'latest',
@@ -108,31 +71,6 @@ const config = {
      maxInstances: 1,
      shardTestFiles: true,
    },
-  //  {
-  //   browserName: 'MicrosoftEdge',
-  //   version: 'latest',
-  //   platform: 'Windows 10',
-  //   screenResolution: '1600x1200',
-  //   name: 'Media Viewer: windows-latest-microsoft-edge-tests',
-  //   tunnelIdentifier: 'MediaViewer', //Change this to reformtunnel before committing!
-  //   extendedDebugging: true,
-  //   capturePerformance: true,
-  //   sharedTestFiles: false,
-  //   maxInstances: 1,
-  //   shardTestFiles: true,
-  //   sequential: true
-  // },
-//    {
-//      browserName: 'safari',
-//      version: '13.1',
-//      platform: 'macOS 10.15',
-//      name: 'Media Viewer: macOS-latest-safari-tests',
-//      tunnelIdentifier: 'reformtunnel',
-//      extendedDebugging: true,
-//      capturePerformance: true,
-//      sharedTestFiles: false,
-//      maxInstances: 1
-//    },
     // The following is used to run the crossbrowser tests locally:
     // {
     //   browserName: 'chrome',
