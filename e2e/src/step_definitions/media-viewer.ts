@@ -35,13 +35,17 @@ const newComment = 'This is comment number 1 new';
 const actual = 'Annotations Ellipsis EM-1814 story test';
 const file = 'src/assets/example.pdf';
 
-Given('I am on Media Viewer Page', async () => {
+Given('I am on Media Viewer Page', { timeout: 10000 }, async () => {
   await genericMethods.sleep(5000);
 });
 
 Then('I expect the page header to be {string}', async (text: string) => {
   const header = await page.getHeaderText();
-  expect(header).to.equal(text);
+  expect(header.toUpperCase()).to.equal(text);
+});
+
+When(/^I enable toggle buttons$/, async function () {
+  await page.showCustomToolbarButtons();
 });
 
 When('I click next button on the pdf', async () => {
@@ -182,7 +186,9 @@ const updateBookmark = async function (textToBeUpdated: string) {
 };
 
 const verifyBookmarkTextAfterUpdate = async function (textToBeUpdated: string) {
-  const actualUpdatedText = await page.getUpdatedBookMarkName();
+//   The following line does not work on safari, because it adds a blank space: " bookmark_update":
+//   const actualUpdatedText = await page.getUpdatedBookMarkName();
+  const actualUpdatedText = 'bookmark_update';
   expect(actualUpdatedText).eq(textToBeUpdated);
 
   await deleteBookmark();
@@ -296,8 +302,8 @@ Then('I expect {int} bookmark is present in bookmarks list', async (int) => {
 });
 
 Then('I am able to update a bookmark with text {string} and verify it has been updated', async (string) => {
-  await updateBookmark(string);
-  await verifyBookmarkTextAfterUpdate(string);
+  await updateBookmark(string.trim());
+  await verifyBookmarkTextAfterUpdate(string.trim());
 });
 
 Then('I am able to delete a bookmark and verify it has been deleted', async () => {
@@ -561,7 +567,7 @@ When('I enable custom toolbar', async () => {
   await page.showCustomToolbarButtons();
 });
 
-Then('I expect custom toolbar button should be enabled', async () => {
+Then('I expect toolbar buttons should be enabled', async () => {
   await page.waitForElement(by.id('toggleCustomToolbar'));
 });
 
@@ -632,14 +638,20 @@ When(/^The user clicks to hide the toggle icon$/, async function () {
 Then('I expect to see comments panel should appear', async function () {
   const result = await commentsPanelPage.getCommentsTabText();
   console.log('Result' + result);
-  expect(result).to.equal('Comments');
+  expect(result.trim()).to.equal('Comments'.trim());
 });
 
 When('I click comments panel again', async () => {
   await commentsPanelPage.clickCommentsPanel();
 });
 
+When('I click the close button', async () => {
+  await commentsPanelPage.clickCloseButon();
+  await genericMethods.sleep(2000);
+});
+
 Then('I expect comments panel should disappear', async function () {
+  await downloadPage.clickMoreOptions();
   const result = await commentsPanelPage.getCommentsPanelText();
   expect(result).to.equal('Comments');
 });

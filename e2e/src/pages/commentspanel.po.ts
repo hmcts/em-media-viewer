@@ -1,6 +1,5 @@
-import {browser, by, element, ElementArrayFinder, ElementFinder } from 'protractor';
+import {by, element, ElementArrayFinder, ElementFinder } from 'protractor';
 import {AppPage} from './app.po';
-import {By} from '@angular/platform-browser';
 import {expect} from 'chai';
 import {GenericMethods} from '../utils/genericMethods';
 
@@ -92,7 +91,7 @@ export class CommentsPanelPage extends AppPage {
     const result = await this.commentsContainerHeader.getText();
     expect(result).to.equal('No comments available');
     const courtBundleName = await this.courtBundleName.getText();
-    expect(courtBundleName).to.equal('Bury Metropolitan Council:  TEST COURT BUNDLE');
+    expect(courtBundleName).to.equal('Bury Metropolitan Council: TEST COURT BUNDLE');
   }
 
   async assertCommentSummaryPresent() {
@@ -114,6 +113,10 @@ export class CommentsPanelPage extends AppPage {
 
   async clickCommentsPanel() {
     await genericMethods.clickAction('mvCommentsBtn');
+  }
+
+  async clickCloseButon() {
+    await genericMethods.clickAction('mvCloseBtn');
   }
 
   async getCommentsTabText() {

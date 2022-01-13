@@ -25,8 +25,9 @@ withNightlyPipeline(type, product, component) {
   enableSecurityScan()
   enableSlackNotifications(channel)
   enableFullFunctionalTest(200)
+  enableCrossBrowserTest()
 
-  env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
+  env.TEST_URL = 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer'
 
   after('checkout') {
     sh ("rm -rf node_modules")
@@ -48,6 +49,17 @@ withNightlyPipeline(type, product, component) {
       reportDir            : "functional-output/reports/html",
       reportFiles          : 'index.html',
       reportName           : 'MediaViewer Functional Tests'
+    ])
+  }
+
+  after('crossBrowserTest') {
+    publishHTML([
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : "reports/tests/crossbrowser/",
+      reportFiles          : 'index.html',
+      reportName           : 'Media Viewer Cross Browser Tests'
     ])
   }
 
