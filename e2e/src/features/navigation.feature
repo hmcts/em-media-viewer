@@ -10,7 +10,7 @@ Feature: Navigation
     When I enable toggle buttons
     Then I expect toolbar buttons should be enabled
 
-  @PDF_Page_Navigation @ci
+  @PDF_Page_Navigation @ci @crossbrowser
   Scenario Outline: PDF Viewer Page Navigation
     When I click next button on the pdf
     Then I should see next page number should be '<page_number>'
@@ -23,7 +23,7 @@ Feature: Navigation
       | page_number | page_number2 |
       | 2           | 1            |
 
-  @EM-1245
+  @EM-1245 @crossbrowser
   Scenario Outline: Enable page navigation within a file
     When I enter valid page number in page navigation text box:"<page_number>"
     Then I expect the page navigation should take me to the expected "<page_number>"

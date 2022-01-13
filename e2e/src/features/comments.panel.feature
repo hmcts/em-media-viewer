@@ -5,11 +5,11 @@ Feature: Comments Panel E2E
     Given I am on Media Viewer Page
     Then I expect the page header to be "MEDIA VIEWER DEMO"
 
-  @CommentsTab
+  @CommentsTab @crossbrowser
   Scenario: Check whether the comments panel is disappearing or not?
     When The user clicks on the show comments panel
     Then I expect to see comments panel should appear
-    When I click comments panel again
+    When I click the close button
     Then I expect comments panel should disappear
 
   @AddComment
@@ -26,7 +26,7 @@ Feature: Comments Panel E2E
     When I Search for Comments
     Then No matching results have been found
 
-  @CommentsPanelCollateComments @ci
+  @CommentsPanelCollateComments @CommentsTab @ci
   Scenario: Collate Comments Overlay Panel
     When The user clicks on the show comments panel toggle icon
     And The user clicks on Collate Comments

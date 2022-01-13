@@ -20,7 +20,7 @@ Feature: Bookmarks Features Create,Delete and Update
     Then I capture the text highlight popup
     And  I am able to add a bookmark and verify it has been created 1 bookmark
     And I expect bookmark to be added to the existing list
-    And I am able to update a bookmark with text 'bookmark update' and verify it has been updated
+    And I am able to update a bookmark with text 'bookmark_update' and verify it has been updated
 
   @ci
   Scenario: Add a bookmark to a highlighted phrase on the PDF
