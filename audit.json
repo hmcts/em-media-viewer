@@ -191,5 +191,6 @@
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27Vfgjqrux_10231211201155045.js_GET": "ignore",
   "10109_Modern Web Application_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27Vfgjqrux_10231211201155045.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/main.2d204dfc031368665a48.js_GET": "ignore",
-  "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/main.2d204dfc031368665a48.js_GET": "ignore"
+  "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/main.2d204dfc031368665a48.js_GET": "ignore",
+  "10106_HTTP Only Site_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore"
 }
