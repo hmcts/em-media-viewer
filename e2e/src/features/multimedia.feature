@@ -18,8 +18,7 @@ Feature: Multimedia Video E2E Scenarios
     And I click "pause" option
     Then I should see video in "pause" mode
 
-
-  @EM-4131 @forward @ci
+  @rewind @ci
   Scenario: Forward Video
     And I click "rewind" option
     Then I should see video in "rewind" mode
