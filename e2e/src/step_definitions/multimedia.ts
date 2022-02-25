@@ -21,11 +21,11 @@ Then('I should see video in play mode', async function ()  {
   this.attach(screenshots, 'image/png');
 });
 
-When('I click pause option', async () => {
+When('I click {string} option', async (text: string) => {
   await multimediaPage.clickPlayButton();
 });
 
-Then('I should see video in pause mode', async function () {
+Then('I should see video in {string} mode', async function (text: string) {
   await genericMethods.sleep(5000);
   await multimediaPage.clickPlayButton();
   await genericMethods.sleep(5000);

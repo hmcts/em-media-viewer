@@ -1,5 +1,7 @@
 @MediaViewer
-Feature: Multimedia Video E2E
+Feature: Multimedia Video E2E Scenarios
+
+  As a user I want to see multi-media video functionality should work as expected
 
   Background:
     Given I am on Media Viewer Page
@@ -13,5 +15,10 @@ Feature: Multimedia Video E2E
 
   @EM-4000 @pause
   Scenario: Pause Video
-    And I click pause option
-    Then I should see video in pause mode
+    And I click "pause" option
+    Then I should see video in "pause" mode
+
+  @rewind @ci
+  Scenario: Rewind Video
+    And I click "rewind" option
+    Then I should see video in "rewind" mode
