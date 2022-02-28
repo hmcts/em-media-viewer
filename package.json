@@ -52,7 +52,7 @@
     "@angular-devkit/core": "^13.2.5",
     "@angular/animations": "^7.2.15",
     "@angular/cdk": "^7.3.7",
-    "@angular/cli": "^7.3.9",
+    "@angular/cli": "^13.2.5",
     "@angular/common": "^7.2.15",
     "@angular/compiler": "^13.2.4",
     "@angular/compiler-cli": "^13.2.4",
@@ -83,6 +83,7 @@
     "chai-smoothie": "^0.3.2",
     "config": "^3.3.4",
     "core-js": "^2.6.5",
+    "cucumber": "^6.0.5",
     "cucumberjs-allure-reporter": "^1.0.3",
     "engine.io": "^6.1.3",
     "eslint": "^8.9.0",
@@ -95,7 +96,7 @@
     "govuk-frontend": "^3.11.0",
     "hammerjs": "^2.0.8",
     "ini": "2.0.0",
-    "istanbul-instrumenter-loader": "^3.0.1",
+    "istanbul-instrumenter-loader": "^2.0.0",
     "lodash": "^4.17.21",
     "mime": "^3.0.0",
     "moment-timezone": "^0.5.28",
@@ -153,10 +154,9 @@
     "codelyzer": "^5.0.1",
     "coveralls": "^3.0.3",
     "cross-env": "^7.0.3",
-    "cucumber": "5.1.0",
     "cucumber-html-report": "0.6.5",
     "cucumber-html-reporter": "^4.0.5",
-    "cucumber-pretty": "1.5.0",
+    "cucumber-pretty": "^6.0.1",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
@@ -181,6 +181,7 @@
     "tslint": "^5.20.1",
     "typescript": "^4.5.5",
     "typescript-string-operations": "^1.3.1",
-    "webdriver-manager": "^12.1.7"
+    "webdriver-manager": "^12.1.7",
+    "yarn-audit-fix": "^9.1.2"
   }
 }
