@@ -139,9 +139,9 @@
     "xmldom": "^0.5.0",
     "yargs-parser": "^20.2.7",
     "**/**/chromedriver": "^87.0.5",
-    "**/ansi-regex": "^6.0.1",
+    "**/ansi-regex": "5.0.1",
     "**/lodash": "4.17.21",
-    "**/mime": "1.4.1"
+    "**/mime": "3.0.0"
   },
   "devDependencies": {
     "@ngrx/schematics": "^8.6.0",
