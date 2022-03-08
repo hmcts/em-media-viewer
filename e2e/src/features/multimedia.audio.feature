@@ -11,7 +11,7 @@ Feature: Multimedia Audio E2E
     And I click "play" option
     Then I should see "audio" in play mode
 
-  @EM-4018 @pause
+  @EM-4018 @pause @ci
   Scenario: Pause Video
     And I click "pause" option
     Then I should see "audio" in "pause" mode
