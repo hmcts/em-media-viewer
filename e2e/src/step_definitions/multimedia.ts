@@ -15,7 +15,7 @@ When('I click {string} option', async (text: string) => {
   await multimediaPage.clickPlayButton();
 });
 
-Then('I should see {string} in play mode', async function ()  {
+Then('I should see {string} in play mode', async function (text: string)  {
   await genericMethods.sleep(5000);
   const screenshots = await browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
