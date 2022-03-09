@@ -11,21 +11,17 @@ When('I select the multimedia option', async () => {
   await genericMethods.sleep(5000);
 });
 
-When('I click play option', async () => {
+When('I click {string} option', async (text: string) => {
   await multimediaPage.clickPlayButton();
 });
 
-Then('I should see video in play mode', async function ()  {
+Then('I should see {string} in play mode', async function (text: string)  {
   await genericMethods.sleep(5000);
   const screenshots = await browser.takeScreenshot();
   this.attach(screenshots, 'image/png');
 });
 
-When('I click {string} option', async (text: string) => {
-  await multimediaPage.clickPlayButton();
-});
-
-Then('I should see video in {string} mode', async function (text: string) {
+Then('I should see {string} in {string} mode', async function (text: string, text1: string) {
   await genericMethods.sleep(5000);
   await multimediaPage.clickPlayButton();
   await genericMethods.sleep(5000);
