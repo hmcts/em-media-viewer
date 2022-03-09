@@ -10,15 +10,15 @@ Feature: Multimedia Video E2E Scenarios
 
   @EM-4000 @play @ci
   Scenario: Check whether the video player is working or not?
-    And I click play option
-    Then I should see video in play mode
+    And I click "play" option
+    Then I should see "video" in play mode
 
   @EM-4000 @pause
   Scenario: Pause Video
     And I click "pause" option
-    Then I should see video in "pause" mode
+    Then I should see "video" in "pause" mode
 
   @rewind @ci
   Scenario: Rewind Video
     And I click "rewind" option
-    Then I should see video in "rewind" mode
+    Then I should see "video" in "rewind" mode
