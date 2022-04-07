@@ -43,7 +43,7 @@
     "e2e:local": "yarn webdriver:update && protractor e2e/local.protractor.conf.js",
     "e2e:fullfunctional": "yarn webdriver:update && protractor e2e/ci.protractor.conf.js",
     "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner",
-    "rebuild-node-sass": "npm install node-sass@7.0.1"
+    "rebuild-node-sass": "npm install node-sass@4.14.1"
   },
   "dependencies": {
     "@angular/animations": "^7.2.15",
@@ -83,7 +83,7 @@
     "moment-timezone": "^0.5.28",
     "mutable-div": "0.0.11",
     "ngx-chips": "^1.9.8",
-    "node-sass": "^7.0.1",
+    "node-sass": "^4.14.1",
     "nodemon": "^1.19.0",
     "nunjucks": "^3.2.0",
     "otp": "^0.1.3",
