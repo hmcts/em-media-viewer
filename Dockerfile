@@ -1,8 +1,8 @@
-FROM hmctspublic.azurecr.io/base/node:12-alpine as base
+FROM hmctspublic.azurecr.io/base/node:14-alpine as base
 
 # Update & Install theses apps.
 USER root
-RUN apk update && apk upgrade && apk add --no-cache rsync
+RUN apk update && apk upgrade && apk add --no-cache rsync && apk add python2 make g++
 
 USER hmcts
 
