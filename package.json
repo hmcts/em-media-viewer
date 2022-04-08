@@ -67,6 +67,7 @@
     "@ngrx/store-devtools": "^7.4.0",
     "@nguniversal/express-engine": "^7.1.1",
     "@nguniversal/module-map-ngfactory-loader": "^7.1.1",
+    "@reactivex/rxjs": "^6.6.7",
     "@swimlane/ngx-datatable": "^16.0.2",
     "angular-tree-component": "^8.5.6",
     "axios": "^0.21.1",

@@ -595,6 +595,13 @@
   resolved "https://registry.npmjs.org/@protobufjs/utf8/-/utf8-1.1.0.tgz"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
+"@reactivex/rxjs@^6.6.7":
+  version "6.6.7"
+  resolved "https://registry.yarnpkg.com/@reactivex/rxjs/-/rxjs-6.6.7.tgz#52ab48f989aba9cda2b995acc904a43e6e1b3b40"
+  integrity sha512-xZIV2JgHhWoVPm3uVcFbZDRVJfx2hgqmuTX7J4MuKaZ+j5jN29agniCPBwrlCmpA15/zLKcPi7/bogt0ZwOFyA==
+  dependencies:
+    tslib "^1.9.0"
+
 "@schematics/angular@7.3.10":
   version "7.3.10"
   resolved "https://registry.npmjs.org/@schematics/angular/-/angular-7.3.10.tgz"
