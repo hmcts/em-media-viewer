@@ -3,18 +3,18 @@ const LATEST_WINDOWS = 'Windows 10';
 
 module.exports = {
   multiCapabilities: [
-    // {
-    //   browserName: 'chrome',
-    //   version: 'latest',
-    //   platform: LATEST_WINDOWS,
-    //   screenResolution: '1600x1200',
-    //   name: 'Media Viewer Tests:Mac Chrome',
-    //   tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
-    //   extendedDebugging: true,
-    //   capturePerformance: true,
-    //   sharedTestFiles: true,
-    //   maxInstances: 1
-    // },
+    {
+      browserName: 'chrome',
+      version: 'latest',
+      platform: LATEST_WINDOWS,
+      screenResolution: '1600x1200',
+      name: 'Media Viewer Tests:Mac Chrome',
+      tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
+      extendedDebugging: true,
+      capturePerformance: true,
+      sharedTestFiles: true,
+      maxInstances: 1
+    },
     // {
     //   browserName: 'firefox',
     //   version: 'latest',
