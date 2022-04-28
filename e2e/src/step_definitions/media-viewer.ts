@@ -14,6 +14,8 @@ import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
 
+const supportedBrowsers = require('./supportedBrowsers');
+
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
 const toolBar = new ToolBar();
@@ -35,7 +37,7 @@ const newComment = 'This is comment number 1 new';
 const actual = 'Annotations Ellipsis EM-1814 story test';
 const file = 'src/assets/example.pdf';
 
-Given('I am on Media Viewer Page', { timeout: 10000 }, async () => {
+Given('I am on Media Viewer Page', {timeout: 10000}, async () => {
   await genericMethods.sleep(5000);
 });
 
@@ -520,11 +522,19 @@ When(/^I use the "([^"]*)" viewer "(.*) feature$/, async function (viewerType: s
 When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: string) {
   switch (viewerType) {
     case 'pdf' :
-      await zoomPage.selectPdfViewer();
+      if (supportedBrowsers.multiCapabilities.BROWSER_NAME === 'safari') {
+        await zoomPage.selectPdfViewer();
+      } else {
+        await zoomPage.selectPdfViewer();
+      }
       break;
 
     case 'image' :
-      await zoomPage.selectImageViewer();
+      if (supportedBrowsers.multiCapabilities.BROWSER_NAME === 'safari') {
+        await zoomPage.selectImageViewer();
+      } else {
+        await zoomPage.selectImageViewer();
+      }
       break;
 
     default:
