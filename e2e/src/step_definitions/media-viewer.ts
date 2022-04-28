@@ -35,7 +35,7 @@ const newComment = 'This is comment number 1 new';
 const actual = 'Annotations Ellipsis EM-1814 story test';
 const file = 'src/assets/example.pdf';
 
-Given('I am on Media Viewer Page', { timeout: 10000 }, async () => {
+Given('I am on Media Viewer Page', {timeout: 10000}, async () => {
   await genericMethods.sleep(5000);
 });
 
@@ -520,11 +520,20 @@ When(/^I use the "([^"]*)" viewer "(.*) feature$/, async function (viewerType: s
 When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: string) {
   switch (viewerType) {
     case 'pdf' :
-      await zoomPage.selectPdfViewer();
+      console.log('Browser Name::->\n' + browser.browserName);
+      if (browser.browserName === 'safari') {
+        await zoomPage.selectPdfViewer();
+      } else {
+        await zoomPage.selectPdfViewer();
+      }
       break;
 
     case 'image' :
-      await zoomPage.selectImageViewer();
+      if (browser.browserName === 'safari') {
+        await zoomPage.selectImageViewer();
+      } else {
+        await zoomPage.selectImageViewer();
+      }
       break;
 
     default:
@@ -537,11 +546,19 @@ When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: st
 Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOption: string, viewerType: string) => {
   switch (viewerType) {
     case 'pdf' :
-      await zoomInOutPdf(zoomOption);
+      if (browser.browserName === 'safari') {
+        await zoomInOutPdf(zoomOption);
+      } else {
+        await zoomInOutPdf(zoomOption);
+      }
       break;
 
     case 'image' :
-      await imageZoomInOut(zoomOption);
+      if (browser.browserName === 'safari') {
+        await imageZoomInOut(zoomOption);
+      } else {
+        await imageZoomInOut(zoomOption);
+      }
       break;
 
     default:

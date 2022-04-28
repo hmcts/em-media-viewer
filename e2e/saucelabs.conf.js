@@ -62,10 +62,15 @@ const config = {
   ],
 
   onPrepare() {
-    const caps = browser.getCapabilities();
-    browser.manage()
-      .window()
-      .maximize();
+    // const caps = browser.getCapabilities();
+    // browser.manage()
+    //   .window()
+    //   .maximize();
+
+    browser.getCapabilities().then(function (cap) {
+      browser.browserName = cap.caps_.browserName;
+    });
+
     browser.waitForAngularEnabled(false);
 
     tsNode.register({
