@@ -14,7 +14,7 @@ import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
 
-const supportedBrowsers = require('./supportedBrowsers');
+const supportedBrowsers = require('/e2e/supportedBrowsers');
 
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
