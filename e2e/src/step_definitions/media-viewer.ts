@@ -547,11 +547,19 @@ When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: st
 Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOption: string, viewerType: string) => {
   switch (viewerType) {
     case 'pdf' :
-      await zoomInOutPdf(zoomOption);
+      if (supportedBrowsers.multiCapabilities.BROWSER_NAME === 'safari') {
+        await zoomInOutPdf(zoomOption);
+      } else {
+        await zoomInOutPdf(zoomOption);
+      }
       break;
 
     case 'image' :
-      await imageZoomInOut(zoomOption);
+      if (supportedBrowsers.multiCapabilities.BROWSER_NAME === 'safari') {
+        await imageZoomInOut(zoomOption);
+      } else {
+        await imageZoomInOut(zoomOption);
+      }
       break;
 
     default:
