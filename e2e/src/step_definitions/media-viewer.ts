@@ -14,8 +14,6 @@ import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
 
-const supportedBrowsers = require('/e2e/supportedBrowsers');
-
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
 const toolBar = new ToolBar();
@@ -522,7 +520,8 @@ When(/^I use the "([^"]*)" viewer "(.*) feature$/, async function (viewerType: s
 When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: string) {
   switch (viewerType) {
     case 'pdf' :
-      if (supportedBrowsers.multiCapabilities.browserName === 'safari') {
+      console.log('Browser Name::->\n' + browser.browserName);
+      if (browser.browserName === 'safari') {
         await zoomPage.selectPdfViewer();
       } else {
         await zoomPage.selectPdfViewer();
@@ -530,7 +529,7 @@ When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: st
       break;
 
     case 'image' :
-      if (supportedBrowsers.multiCapabilities.browserName === 'safari') {
+      if (browser.browserName === 'safari') {
         await zoomPage.selectImageViewer();
       } else {
         await zoomPage.selectImageViewer();
@@ -547,7 +546,7 @@ When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: st
 Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOption: string, viewerType: string) => {
   switch (viewerType) {
     case 'pdf' :
-      if (supportedBrowsers.multiCapabilities.browserName === 'safari') {
+      if (browser.browserName === 'safari') {
         await zoomInOutPdf(zoomOption);
       } else {
         await zoomInOutPdf(zoomOption);
@@ -555,7 +554,7 @@ Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOptio
       break;
 
     case 'image' :
-      if (supportedBrowsers.multiCapabilities.browserName === 'safari') {
+      if (browser.browserName === 'safari') {
         await imageZoomInOut(zoomOption);
       } else {
         await imageZoomInOut(zoomOption);
