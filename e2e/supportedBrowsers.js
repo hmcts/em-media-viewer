@@ -6,7 +6,7 @@ module.exports = {
     {
       browserName: 'chrome',
       version: 'latest',
-      platform: LATEST_WINDOWS,
+      platform: LATEST_MAC,
       screenResolution: '1600x1200',
       name: 'Media Viewer Tests:Mac Chrome',
       tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
@@ -29,7 +29,7 @@ module.exports = {
     {
       browserName: 'chrome',
       version: 'latest',
-      platform: LATEST_MAC,
+      platform: LATEST_WINDOWS,
       screenResolution: '1600x1200',
       name: 'Media Viewer Tests:Windows Chrome',
       tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
