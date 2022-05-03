@@ -13,8 +13,7 @@ import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
-// @ts-ignore
-import {BrowserType, TestScenarioName} from '../common/constants';
+const {BrowserType, TestScenarioName} = require('../constants/constants');
 
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
