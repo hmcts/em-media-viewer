@@ -6,13 +6,25 @@ module.exports = {
     {
       browserName: 'chrome',
       version: 'latest',
-      platform: LATEST_WINDOWS,
+      platform: LATEST_MAC,
       screenResolution: '1600x1200',
-      name: 'Media Viewer Tests:Mac Chrome',
+      name: 'MV XB Tests:Mac Chrome',
       tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
       extendedDebugging: true,
       capturePerformance: true,
       sharedTestFiles: true,
+      maxInstances: 1
+    },
+    {
+      browserName: 'chrome',
+      version: 'latest',
+      platform: LATEST_WINDOWS,
+      screenResolution: '1600x1200',
+      name: 'MV XB Tests:Windows Chrome',
+      tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
+      extendedDebugging: true,
+      capturePerformance: true,
+      sharedTestFiles: false,
       maxInstances: 1
     },
     // {
@@ -26,24 +38,13 @@ module.exports = {
     //   sharedTestFiles: false,
     //   maxInstances: 1
     // },
-    {
-      browserName: 'chrome',
-      version: 'latest',
-      platform: LATEST_MAC,
-      screenResolution: '1600x1200',
-      name: 'Media Viewer Tests:Windows Chrome',
-      tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
-      extendedDebugging: true,
-      capturePerformance: true,
-      sharedTestFiles: false,
-      maxInstances: 1
-    },
+
     {
       browserName: 'firefox',
       version: 'latest',
       platform: LATEST_WINDOWS,
       screenResolution: '1600x1200',
-      name: 'Media Viewer Tests:Windows Firefox',
+      name: 'MV XB Tests:Windows Firefox',
       tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
       extendedDebugging: true,
       capturePerformance: true,
@@ -54,7 +55,7 @@ module.exports = {
       browserName: 'safari',
       platform: LATEST_MAC,
       version: 'latest',
-      name: 'Media Viewer Tests:Mac Safari',
+      name: 'MV XB Tests:Mac Safari',
       tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
       seleniumVersion: '3.141.59',
       screenResolution: '1400x1050',
@@ -67,7 +68,7 @@ module.exports = {
     //   browserName: 'MicrosoftEdge',
     //   version: 'latest',
     //   platform: LATEST_WINDOWS,
-    //   name: 'Media Viewer Tests Windows Edge',
+    //   name: 'MV XB Tests:Windows Edge',
     //   tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
     //   extendedDebugging: true,
     //   capturePerformance: true,
