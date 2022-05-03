@@ -67,8 +67,8 @@ const config = {
     //   .window()
     //   .maximize();
 
-    browser.getCapabilities().then(function (cap) {
-      browser.browserName = cap.caps_.browserName;
+    browser.getCapabilities().then(function (caps) {
+      browser.browserName = caps.get('browserName');
     });
 
     browser.waitForAngularEnabled(false);

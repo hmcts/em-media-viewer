@@ -13,6 +13,7 @@ import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
+const {BrowserType, TestScenarioName} = require('../common/constants');
 
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
@@ -49,17 +50,21 @@ When(/^I enable toggle buttons$/, async function () {
 });
 
 When('I click next button on the pdf', async () => {
-  await page.selectPdfViewer();
-  await page.waitForPdfToLoad();
-  await navigatePage.goToNextPage();
-  await genericMethods.sleep(5000);
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    await page.selectPdfViewer();
+    await page.waitForPdfToLoad();
+    await navigatePage.goToNextPage();
+    await genericMethods.sleep(5000);
+  }
 });
 
 When('I click previous button on the pdf', async () => {
-  await page.selectPdfViewer();
-  await page.waitForPdfToLoad();
-  await navigatePage.goToPreviousPage();
-  await genericMethods.sleep(5000);
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    await page.selectPdfViewer();
+    await page.waitForPdfToLoad();
+    await navigatePage.goToPreviousPage();
+    await genericMethods.sleep(5000);
+  }
 });
 
 When(/^I enter valid page number in page navigation text box:"([^"]*)"$/, async (num: number) => {
@@ -67,17 +72,21 @@ When(/^I enter valid page number in page navigation text box:"([^"]*)"$/, async 
 });
 
 Then('I should see next page number should be {string}', async (expected: string) => {
-  const value = await navigatePage.pageNumber.getAttribute('value');
-  expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    const value = await navigatePage.pageNumber.getAttribute('value');
+    expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
+  }
 });
 
 
 Then(/^I expect the page navigation should take me to the expected "([^"]*)"$/, async function (expected: string) {
-  const value = await navigatePage.pageNumber.getAttribute('value');
-  expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
-  expect(await page.isPageDataLoaded(parseInt(value, 10))).to.equal(true);
-  const screenshot = await browser.takeScreenshot();
-  this.attach(screenshot, 'image/png');
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    const value = await navigatePage.pageNumber.getAttribute('value');
+    expect(parseInt(value, 10)).to.equal(parseInt(expected, 10));
+    expect(await page.isPageDataLoaded(parseInt(value, 10))).to.equal(true);
+    const screenshot = await browser.takeScreenshot();
+    this.attach(screenshot, 'image/png');
+  }
 });
 
 
@@ -368,25 +377,33 @@ Then('I verify the amended text has been saved', async () => {
 });
 
 When(/^the user populate the content search field with a '(.*)'$/, async (text: string) => {
-  await searchPage.clickSearchIcon();
-  await searchPage.searchText(text);
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    await searchPage.clickSearchIcon();
+    await searchPage.searchText(text);
+  }
 });
 
 Then(/^clicks on search button$/, async () => {
-  await searchPage.clickSearchButton();
-  await genericMethods.sleep(5000);
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    await searchPage.clickSearchButton();
+    await genericMethods.sleep(5000);
+  }
 });
 
 Then(/^the "([^"]*)" are displayed and highlighted to the user$/, async (searchCount: string) => {
-  const count: string = await searchPage.getSearchCount();
-  expect(count).to.equal(searchCount);
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    const count: string = await searchPage.getSearchCount();
+    expect(count).to.equal(searchCount);
+  }
 });
 
 When(/^the section of the document is viewable to the user$/, async function () {
-  await searchPage.clickFindIndex();
-  await genericMethods.sleep(1000);
-  const viewableDoc = await browser.takeScreenshot();
-  this.attach(viewableDoc, 'image/png');
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    await searchPage.clickFindIndex();
+    await genericMethods.sleep(1000);
+    const viewableDoc = await browser.takeScreenshot();
+    this.attach(viewableDoc, 'image/png');
+  }
 });
 
 Then(/^I must rotate the "(.*)" document$/, async (viewerType: string) => {
@@ -520,8 +537,8 @@ When(/^I use the "([^"]*)" viewer "(.*) feature$/, async function (viewerType: s
 When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: string) {
   switch (viewerType) {
     case 'pdf' :
-      console.log('Browser Name::->\n' + browser.browserName);
-      if (browser.browserName === 'safari') {
+      if ((browser.browserName === BrowserType.SAFARI)) {
+        await genericMethods.sleep(2000);
         await zoomPage.selectPdfViewer();
       } else {
         await zoomPage.selectPdfViewer();
@@ -529,7 +546,8 @@ When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: st
       break;
 
     case 'image' :
-      if (browser.browserName === 'safari') {
+      if ((browser.browserName === BrowserType.SAFARI)) {
+        await genericMethods.sleep(2000);
         await zoomPage.selectImageViewer();
       } else {
         await zoomPage.selectImageViewer();
@@ -546,7 +564,8 @@ When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: st
 Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOption: string, viewerType: string) => {
   switch (viewerType) {
     case 'pdf' :
-      if (browser.browserName === 'safari') {
+      if ((browser.browserName === BrowserType.SAFARI)) {
+        await genericMethods.sleep(2000);
         await zoomInOutPdf(zoomOption);
       } else {
         await zoomInOutPdf(zoomOption);
@@ -554,7 +573,8 @@ Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOptio
       break;
 
     case 'image' :
-      if (browser.browserName === 'safari') {
+      if ((browser.browserName === BrowserType.SAFARI)) {
+        await genericMethods.sleep(2000);
         await imageZoomInOut(zoomOption);
       } else {
         await imageZoomInOut(zoomOption);
@@ -593,10 +613,12 @@ Then('I expect custom toolbar should be enabled', async () => {
 });
 
 When(/^The user clicks on the show comments panel$/, async function () {
-  await downloadPage.clickMoreOptions();
-  await genericMethods.sleep(2000);
-  await commentsPanelPage.clickCommentsPanel();
-  await genericMethods.sleep(2000);
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    await downloadPage.clickMoreOptions();
+    await genericMethods.sleep(2000);
+    await commentsPanelPage.clickCommentsPanel();
+    await genericMethods.sleep(2000);
+  }
 });
 
 // I expect to see the comments filter and search tabs
@@ -653,9 +675,11 @@ When(/^The user clicks to hide the toggle icon$/, async function () {
 });
 
 Then('I expect to see comments panel should appear', async function () {
-  const result = await commentsPanelPage.getCommentsTabText();
-  console.log('Result' + result);
-  expect(result.trim()).to.equal('Comments'.trim());
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    const result = await commentsPanelPage.getCommentsTabText();
+    console.log('Result' + result);
+    expect(result.trim()).to.equal('Comments'.trim());
+  }
 });
 
 When('I click comments panel again', async () => {
@@ -663,14 +687,18 @@ When('I click comments panel again', async () => {
 });
 
 When('I click the close button', async () => {
-  await commentsPanelPage.clickCloseButon();
-  await genericMethods.sleep(2000);
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    await commentsPanelPage.clickCloseButon();
+    await genericMethods.sleep(2000);
+  }
 });
 
 Then('I expect comments panel should disappear', async function () {
-  await downloadPage.clickMoreOptions();
-  const result = await commentsPanelPage.getCommentsPanelText();
-  expect(result).to.equal('Comments');
+  if ((browser.browserName !== BrowserType.SAFARI)) {
+    await downloadPage.clickMoreOptions();
+    const result = await commentsPanelPage.getCommentsPanelText();
+    expect(result).to.equal('Comments');
+  }
 });
 
 When(/^The user clicks on the show comments panel toggle icon$/, async function () {
