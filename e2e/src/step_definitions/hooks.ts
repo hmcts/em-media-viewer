@@ -1,7 +1,10 @@
-import { After, Before, HookScenarioResult, Status } from 'cucumber';
-import { browser } from 'protractor';
+import {After, Before, HookScenarioResult, Status} from 'cucumber';
+import {browser} from 'protractor';
 
-Before(async function () {
+Before(async function (scenario) {
+  console.log(`Starting scenario ==>:: ${scenario.sourceLocation.uri}:${scenario.sourceLocation.line} (${scenario.pickle.name})`);
+  // @ts-ignore
+  globalThis.scenarioName = scenario.pickle.name;
   await browser.driver.manage().window().maximize();
   await browser.waitForAngularEnabled(false);
   await browser.driver.navigate().to(browser.baseUrl);
