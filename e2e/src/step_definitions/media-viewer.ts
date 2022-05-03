@@ -13,6 +13,8 @@ import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
+// @ts-ignore
+import {BrowserType, TestScenarioName} from '../common/constants';
 
 const page = new AppPage();
 const navigatePage: NavigatePage = new NavigatePage();
@@ -520,8 +522,9 @@ When(/^I use the "([^"]*)" viewer "(.*) feature$/, async function (viewerType: s
 When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: string) {
   switch (viewerType) {
     case 'pdf' :
-      console.log('Browser Name::->\n' + browser.browserName);
-      if (browser.browserName === 'safari') {
+      // @ts-ignore
+      if ((browser.browserName === BrowserType.SAFARI) && (globalThis.scenarioName === TestScenarioName.ZOOM_INOUT)) {
+        await genericMethods.sleep(3000);
         await zoomPage.selectPdfViewer();
       } else {
         await zoomPage.selectPdfViewer();
@@ -529,7 +532,9 @@ When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: st
       break;
 
     case 'image' :
-      if (browser.browserName === 'safari') {
+      // @ts-ignore
+      if ((browser.browserName === BrowserType.SAFARI && globalThis.scenarioName === TestScenarioName.ZOOM_INOUT)) {
+        await genericMethods.sleep(3000);
         await zoomPage.selectImageViewer();
       } else {
         await zoomPage.selectImageViewer();
@@ -546,7 +551,8 @@ When(/^I use zoom feature for "([^"]*)" viewer$/, async function (viewerType: st
 Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOption: string, viewerType: string) => {
   switch (viewerType) {
     case 'pdf' :
-      if (browser.browserName === 'safari') {
+      // @ts-ignore
+      if ((browser.browserName === BrowserType.SAFARI && globalThis.scenarioName === TestScenarioName.ZOOM_INOUT)) {
         await zoomInOutPdf(zoomOption);
       } else {
         await zoomInOutPdf(zoomOption);
@@ -554,7 +560,8 @@ Then(/^I must able to zoom by defined zoom_option:(.*), (.*)$/, async (zoomOptio
       break;
 
     case 'image' :
-      if (browser.browserName === 'safari') {
+      // @ts-ignore
+      if ((browser.browserName === BrowserType.SAFARI && globalThis.scenarioName === TestScenarioName.ZOOM_INOUT)) {
         await imageZoomInOut(zoomOption);
       } else {
         await imageZoomInOut(zoomOption);

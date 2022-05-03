@@ -26,7 +26,7 @@ const config = {
   host: 'ondemand.eu-central-1.saucelabs.com',
   sauceRegion: 'eu',
   port: 80,
-  processes:23,
+  processes: 23,
   sauceConnect: true,
   // sauceProxy: 'http://proxyout.reform.hmcts.net:8080',  // Proxy for the REST API
   sauceUser: process.env.SAUCE_USERNAME,
@@ -67,8 +67,9 @@ const config = {
     //   .window()
     //   .maximize();
 
-    browser.getCapabilities().then(function (cap) {
-      browser.browserName = cap.caps_.browserName;
+    browser.getCapabilities().then(function (caps) {
+      browser.browserName = caps.get('browserName');
+
     });
 
     browser.waitForAngularEnabled(false);
