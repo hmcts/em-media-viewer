@@ -1805,12 +1805,12 @@
     "@angular-devkit/schematics" "13.3.5"
     jsonc-parser "3.0.0"
 
-"@swimlane/ngx-datatable@^16.0.2":
-  version "16.1.1"
-  resolved "https://registry.npmjs.org/@swimlane/ngx-datatable/-/ngx-datatable-16.1.1.tgz"
-  integrity sha512-h2A9xC/jo314eC/CzA19aoY/YadhdTupolCwpgB9Cbw3sDRi3x/LeGsdLSV0bj3XBKQUB3DA/gPuASKYuhm8iA==
+"@swimlane/ngx-datatable@^20.0.0":
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/@swimlane/ngx-datatable/-/ngx-datatable-20.0.0.tgz#843933b6015be46d9625e04afde6ac1030d303f3"
+  integrity sha512-fok9xzOA5UqhmoRKHpEz25k2wXD/ZGtAAeTQqkn/FpyLgPtdWV2OF/wNIyIZaDJ8jBlNoeHTnJnkDONnFGV93A==
   dependencies:
-    tslib "^1.9.0"
+    tslib "^2.0.0"
 
 "@teppeis/multimaps@^1.1.0":
   version "1.1.0"
