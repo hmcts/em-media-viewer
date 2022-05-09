@@ -13,6 +13,7 @@ import {ZoomPage} from '../pages/zoom.po';
 import {OutlinePage} from '../pages/outline.po';
 import {CommentsPanelPage} from '../pages/commentspanel.po';
 import {DownloadPage} from '../pages/download.po';
+
 const {BrowserType, TestScenarioName} = require('../common/constants');
 
 const page = new AppPage();
@@ -613,7 +614,13 @@ Then('I expect custom toolbar should be enabled', async () => {
 });
 
 When(/^The user clicks on the show comments panel$/, async function () {
-  if ((browser.browserName !== BrowserType.SAFARI)) {
+  if ((browser.browserName === BrowserType.SAFARI)) {
+    await genericMethods.sleep(2000);
+    await downloadPage.clickMoreOptions();
+    await genericMethods.sleep(2000);
+    await commentsPanelPage.clickCommentsPanel();
+    await genericMethods.sleep(1000);
+  } else {
     await downloadPage.clickMoreOptions();
     await genericMethods.sleep(2000);
     await commentsPanelPage.clickCommentsPanel();
@@ -675,9 +682,12 @@ When(/^The user clicks to hide the toggle icon$/, async function () {
 });
 
 Then('I expect to see comments panel should appear', async function () {
-  if ((browser.browserName !== BrowserType.SAFARI)) {
+  if ((browser.browserName === BrowserType.SAFARI)) {
     const result = await commentsPanelPage.getCommentsTabText();
-    console.log('Result' + result);
+    await genericMethods.sleep(1000);
+    expect(result.trim()).to.equal('Comments'.trim());
+  } else {
+    const result = await commentsPanelPage.getCommentsTabText();
     expect(result.trim()).to.equal('Comments'.trim());
   }
 });
@@ -687,14 +697,23 @@ When('I click comments panel again', async () => {
 });
 
 When('I click the close button', async () => {
-  if ((browser.browserName !== BrowserType.SAFARI)) {
+  if ((browser.browserName === BrowserType.SAFARI)) {
+    await genericMethods.sleep(1000);
+    await commentsPanelPage.clickCloseButon();
+    await genericMethods.sleep(2000);
+  } else {
     await commentsPanelPage.clickCloseButon();
     await genericMethods.sleep(2000);
   }
 });
 
 Then('I expect comments panel should disappear', async function () {
-  if ((browser.browserName !== BrowserType.SAFARI)) {
+  if ((browser.browserName === BrowserType.SAFARI)) {
+    await downloadPage.clickMoreOptions();
+    await genericMethods.sleep(2000);
+    const result = await commentsPanelPage.getCommentsPanelText();
+    expect(result).to.equal('Comments');
+  } else {
     await downloadPage.clickMoreOptions();
     const result = await commentsPanelPage.getCommentsPanelText();
     expect(result).to.equal('Comments');
