@@ -265,14 +265,14 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/platform-server@^7.2.15":
-  version "7.2.16"
-  resolved "https://registry.npmjs.org/@angular/platform-server/-/platform-server-7.2.16.tgz"
-  integrity sha512-I6i4oy543iKiUHRzCMp/SuAOPP7WPMcVKz8sNwtWbI2mT2i5dihK9fBLOYoMVSYN5oL7yVEd/9dkcp881/ojxg==
+"@angular/platform-server@^13.3.6":
+  version "13.3.6"
+  resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-13.3.6.tgz#6b252ae9398dcc6b7c20b7337e49f3c64ca0d3f8"
+  integrity sha512-SpbtZFrs34/sNyIifpFqfWyTVSD3Ns7SZQb/dx3S8KEoeHG1iEHY6NUWRfLSAbEXYvuLmMln05Ef1NrXLXTQ5Q==
   dependencies:
-    domino "^2.1.0"
-    tslib "^1.9.0"
-    xhr2 "^0.1.4"
+    domino "^2.1.2"
+    tslib "^2.3.0"
+    xhr2 "^0.2.0"
 
 "@angular/router@^13.3.6":
   version "13.3.6"
@@ -1622,10 +1622,10 @@
     "@nguniversal/common" "13.1.1"
     tslib "^2.3.0"
 
-"@nguniversal/module-map-ngfactory-loader@^7.1.1":
-  version "7.1.1"
-  resolved "https://registry.npmjs.org/@nguniversal/module-map-ngfactory-loader/-/module-map-ngfactory-loader-7.1.1.tgz"
-  integrity sha512-cZaxdY64C5xPwbE3qqEQGmnKIEgIA57JTozAsT1gvlxNYwssxTlhCYT0HQcqNfNBBjf3xdqXTfRPC7lfpE4qWA==
+"@nguniversal/module-map-ngfactory-loader@^8.2.6":
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/@nguniversal/module-map-ngfactory-loader/-/module-map-ngfactory-loader-8.2.6.tgz#0edc07c4437566970392c9bca1d13b8964971cb0"
+  integrity sha512-YcxXSrDZt6iDR+YbesJvprNpHd1nRLeThJwAFlcwvK/GVGSyKeWV6eqk3bRkBkgkw8OwaG/4lOQ4aofxQw+13w==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -4770,7 +4770,7 @@ domhandler@^4.3.1:
   dependencies:
     domelementtype "^2.2.0"
 
-domino@^2.1.0, domino@^2.1.6:
+domino@^2.1.2, domino@^2.1.6:
   version "2.1.6"
   resolved "https://registry.npmjs.org/domino/-/domino-2.1.6.tgz"
   integrity sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ==
@@ -13127,10 +13127,10 @@ xdg-basedir@^3.0.0:
   resolved "https://registry.npmjs.org/xdg-basedir/-/xdg-basedir-3.0.0.tgz"
   integrity sha1-SWsswQnsqNus/i3HK2A8F8WHCtQ=
 
-xhr2@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.npmjs.org/xhr2/-/xhr2-0.1.4.tgz"
-  integrity sha1-f4dliEdxbbUCYyOBL4GMras4el8=
+xhr2@^0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/xhr2/-/xhr2-0.2.1.tgz#4e73adc4f9cfec9cbd2157f73efdce3a5f108a93"
+  integrity sha512-sID0rrVCqkVNUn8t6xuv9+6FViXjUVXq8H5rWOH2rz9fDNQEd4g0EA2XlcEdJXRz5BMEn4O1pJFdT+z4YHhoWw==
 
 xml-name-validator@^4.0.0:
   version "4.0.0"
