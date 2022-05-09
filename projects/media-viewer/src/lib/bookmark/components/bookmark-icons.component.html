@@ -10,7 +10,8 @@
         <div class="bookmark__here"
            [style.width]="16 * zoom + 'px'"
            [style.height]="24 * zoom + 'px'"
-           [style.top]="bMrk.yCoordinate * zoom + 'px'"
+           [style.top]="bMrk.yCoordinate * zoom + top + 'px'"
+           [style.left]=" left +'px'"
            [title]="bMrk.name">
         </div>
       </ng-container>
