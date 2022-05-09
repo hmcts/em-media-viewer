@@ -164,7 +164,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "ngrx-store-freeze": "^0.2.4",
     "pa11y-ci": "^2.4.0",
-    "protractor": "^5.4.2",
+    "protractor": "^7.0.0",
     "protractor-cucumber-framework": "^6.1.1",
     "protractor-multiple-cucumber-html-reporter-plugin": "1.8.0",
     "sonar-scanner": "^3.1.0",
