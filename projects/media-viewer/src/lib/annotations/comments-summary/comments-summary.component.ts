@@ -18,8 +18,8 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
 
   @Input() title: string;
   @Input() contentType: string;
-  @ViewChild('outerContainer') container: ElementRef;
-  @ViewChild('commentContainer') commentsTable: ElementRef;
+  @ViewChild('outerContainer', {static: false}) container: ElementRef;
+  @ViewChild('commentContainer', {static: false}) commentsTable: ElementRef;
   public comments$: Observable<any>;
   public filtersFg: FormGroup;
   private $subscriptions: Subscription;
