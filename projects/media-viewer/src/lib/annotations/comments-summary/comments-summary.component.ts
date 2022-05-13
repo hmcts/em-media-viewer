@@ -50,6 +50,9 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
     });
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary));
     this.buildCheckBoxForm();
+  }
+
+  ngAfterViewInit() {
     this.container.nativeElement.focus();
   }
 
