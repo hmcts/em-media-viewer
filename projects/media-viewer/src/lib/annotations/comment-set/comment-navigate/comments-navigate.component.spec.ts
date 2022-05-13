@@ -16,7 +16,7 @@ describe('CommentsNavigateComponent', () => {
   class TestHostComponent {
     annotationList = [];
 
-    @ViewChild(CommentsNavigateComponent) commentsNavigateComponent;
+    @ViewChild(CommentsNavigateComponent, {static: false}) commentsNavigateComponent;
   }
 
   let hostComponent: TestHostComponent;
