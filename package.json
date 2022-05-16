@@ -38,7 +38,7 @@
     "lint": "ng lint",
     "clean": "rimraf reports",
     "stub:annotations": "node api/annotation-stubs.js &",
-    "webdriver:update": "webdriver-manager update --versions.chrome 2.44",
+    "webdriver:update": "webdriver-manager update --versions.chrome 97.0.4692.71",
     "e2e": "protractor --webdriverUpdate=false",
     "e2e:local": "yarn webdriver:update && protractor e2e/local.protractor.conf.js",
     "e2e:fullfunctional": "yarn webdriver:update && protractor e2e/ci.protractor.conf.js",
