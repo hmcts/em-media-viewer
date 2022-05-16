@@ -26,8 +26,8 @@ export class MultimediaPlayerComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() loadStatus = new EventEmitter<ResponseType>();
 
-  @ViewChild('downloadLink') downloadLink: ElementRef;
-  @ViewChild('videoPlayer') videoPlayer: ElementRef;
+  @ViewChild('downloadLink', {static: false}) downloadLink: ElementRef;
+  @ViewChild('videoPlayer', {static: false}) videoPlayer: ElementRef;
 
   playbackMsg = 'loading';
 

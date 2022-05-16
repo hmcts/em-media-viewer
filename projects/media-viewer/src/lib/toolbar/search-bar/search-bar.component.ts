@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
 
-  @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
+  @ViewChild('findInput', {static: true}) findInput: ElementRef<HTMLInputElement>;
 
   highlightAll = true;
   matchCase = false;

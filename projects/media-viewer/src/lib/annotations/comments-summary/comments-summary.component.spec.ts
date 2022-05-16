@@ -59,7 +59,7 @@ describe('CommentsSummaryComponent', () => {
   it('should set focus on container', () => {
     spyOn(component.container.nativeElement, 'focus');
 
-    component.ngOnInit();
+    component.ngAfterViewInit();
 
     expect(component.container.nativeElement.focus).toHaveBeenCalled();
   });

@@ -40,7 +40,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   errorMessage: string;
 
-  @ViewChild('img') img: ElementRef;
+  @ViewChild('img', {static: false}) img: ElementRef;
   rotation = 0;
   zoom = 1;
 
