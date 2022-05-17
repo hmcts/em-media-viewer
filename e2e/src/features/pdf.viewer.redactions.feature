@@ -8,7 +8,7 @@ Feature: Redact PDF E2E Tests
     And I clear all the redactions using the clear all button
     Then all the redactions should be cleared
 
-  @EM-4020
+  @EM-4020 @crossbrowser
   Scenario: Redacting text and then removing the redaction
     Given I click on redact text
     When I highlight text on a PDF document
