@@ -69,6 +69,7 @@ const config = {
 
     browser.getCapabilities().then(function (caps) {
       browser.browserName = caps.get('browserName');
+      console.log("Browser-->::" + browser.browserName);
     });
 
     browser.waitForAngularEnabled(false);
