@@ -214,6 +214,13 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/material@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-8.0.0.tgz#21dd15c318d1e29eb4d1a2dd888ddb027897eb49"
+  integrity sha512-c7O7GhZd46xF2WB6T/YPam5lJkTgQLdIS53IqwZIFhL427+SEfPvejVzRnVfZCI3NdrKiWt/5VsvtQZwWzlGvw==
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/platform-browser-dynamic@8.0.0":
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-8.0.0.tgz#c15f394579ff44f3752033de58edc1afa5065d59"
@@ -471,30 +478,30 @@
     lodash "^4.17.11"
     path "^0.12.7"
 
-"@ngrx/effects@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.npmjs.org/@ngrx/effects/-/effects-7.4.0.tgz"
-  integrity sha512-YjgB17WnLCBDPjAkHduKWsLFSGLZryPaTjY3EIvMF+WTRPDlgC5SAv2n7p3YIei6g6IYcEvOwLWBqZHFUXTgBw==
+"@ngrx/effects@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-8.0.0.tgz#56da399423c2d8c690d9f38971f5fd4234ee8bb2"
+  integrity sha512-8ho26Cq1Kh+mrIhoq5fHmXYXdyeng8vabVJ+9GooFJBCNGNuE43nfFWH6x9ksXOpA075iGE5SMPEw6KceTX2eg==
 
-"@ngrx/router-store@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.npmjs.org/@ngrx/router-store/-/router-store-7.4.0.tgz"
-  integrity sha512-ZpwTO1/ha3pxO7NV3jIfnwipBN1A719IjAOgrcmI8Ut06VH3HY/7JVFTkwLN/FyuHvl4EOlAVYmMAblmrymUWA==
+"@ngrx/router-store@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/router-store/-/router-store-8.0.0.tgz#62467c69a0b2cf77848cd580fa9dbad9b0e5d5e8"
+  integrity sha512-bNyOfsfC2ZsXaMGS9TPO5dyw0tRf+FyrzC9hx6ZJa71usCaQu+UVg2p7tseTNZ7jc6W1Yx+82f/QbLQDwOp5fQ==
 
 "@ngrx/schematics@^8.6.0":
   version "8.6.1"
   resolved "https://registry.npmjs.org/@ngrx/schematics/-/schematics-8.6.1.tgz"
   integrity sha512-2IRoudd0iSHOVMk4waXJmw9JtZM7x0tX6afZQdI/AGaoRj05PzjPPIipXTp9L/pKMByoE7hfAloXWxiBY7w4QQ==
 
-"@ngrx/store-devtools@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.npmjs.org/@ngrx/store-devtools/-/store-devtools-7.4.0.tgz"
-  integrity sha512-ZmPpquprBYUozbLuLMLZzUhI+LnMNGMNg8x1ij9yDxXWQADcJm1Zu7kouYE1r5SoCYxKfwJ3Ia1VQfS3A5S8dw==
+"@ngrx/store-devtools@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-8.0.0.tgz#bb8e736e20183ea4d75acc588b14fb40ccf3e85c"
+  integrity sha512-T2yWwoE7agTjvSGQNMkANrbBUMjTtnNUw2v0TC6Ms3Rp8Gdhrgjh0n3bve401P+FeQ1EBygnk7LTCaQ5H/MP0g==
 
-"@ngrx/store@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.npmjs.org/@ngrx/store/-/store-7.4.0.tgz"
-  integrity sha512-kwTUHgfgBeAL4RQBjZO46z9v4Xzg8PXAgY4WwXdt3zUk1tF4ZvijMleFvFRUoiJJfxF/UM6jgIZ/yGrX2dXQuA==
+"@ngrx/store@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-8.0.0.tgz#f9b37a133c2cdf96e5f1da850f873ec62b642113"
+  integrity sha512-FpffcUV50Pd3X+xwswEvMDABr+OfbkPCBmD3tU9we6vVqMTIYSW0YyNtQUtblPbzIhb+pH8HV3YuGdFA+zQMYw==
 
 "@ngtools/json-schema@^1.1.0":
   version "1.1.0"
