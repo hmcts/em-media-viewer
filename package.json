@@ -63,7 +63,7 @@
     "@hmcts/nodejs-healthcheck": "^1.7.0",
     "@hmcts/properties-volume": "^0.0.13",
     "@ngrx/effects": "8.0.0",
-    "@ngrx/router-store": "^7.4.0",
+    "@ngrx/router-store": "8.0.0",
     "@ngrx/store": "8.0.0",
     "@ngrx/store-devtools": "8.0.0",
     "@nguniversal/express-engine": "^7.1.1",
