@@ -34,10 +34,11 @@ const config = {
   SAUCE_REST_ENDPOINT: 'https://eu-central-1.saucelabs.com/rest/v1/',
 
   specs: [
-    './src/features/comments.panel.feature',
-    './src/features/navigation.feature',
-    './src/features/search.feature',
-    './src/features/zoom.feature'
+    // './src/features/comments.panel.feature',
+    // './src/features/navigation.feature',
+    // './src/features/search.feature',
+    // './src/features/zoom.feature',
+    './src/features/pdf.viewer.redactions.feature'
   ],
 
   baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
