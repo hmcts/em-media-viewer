@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.7.13",
+  "version": "2.7.15",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -54,6 +54,7 @@
     "@angular/core": "8.0.0",
     "@angular/forms": "8.0.0",
     "@angular/http": "^7.2.15",
+    "@angular/material": "8.0.0",
     "@angular/platform-browser": "8.0.0",
     "@angular/platform-browser-dynamic": "8.0.0",
     "@angular/platform-server": "8.0.0",
