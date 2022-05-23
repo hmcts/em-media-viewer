@@ -3,6 +3,7 @@ const path = require('path');
 const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2));
 const supportedBrowsers = require('./supportedBrowsers');
+const {browser} = require("protractor");
 
 const config = {
   framework: 'custom',
@@ -69,6 +70,7 @@ const config = {
 
     browser.getCapabilities().then(function (caps) {
       browser.browserName = caps.get('browserName');
+      console.log('Browser-->::' + browser.browserName);
     });
 
     browser.waitForAngularEnabled(false);
