@@ -2,6 +2,8 @@ import {Given, Then, When} from 'cucumber';
 import {RedactPage} from '../pages/redact.po';
 import {GenericMethods} from '../utils/genericMethods';
 import * as mediaviewer from './media-viewer';
+import {browser} from 'protractor';
+const {BrowserType, TestScenarioName} = require('../common/constants');
 
 const genericMethods = new GenericMethods();
 const redactPage: RedactPage = new RedactPage();
@@ -11,21 +13,40 @@ When('I click on the Redact button', async () => {
 });
 
 Then('I can remove the redaction', async function () {
-  await redactPage.removeRedactionMethod();
+  if (browser.browserName === BrowserType.SAFARI) {
+    await genericMethods.sleep(1000);
+    await redactPage.removeRedactionMethod();
+  } else {
+    await redactPage.removeRedactionMethod();
+  }
 });
 
 When('I can ensure the area has been redacted', async function () {
-  await redactPage.visibleRedaction();
+  if (browser.browserName === BrowserType.SAFARI) {
+    await genericMethods.sleep(1000);
+    await redactPage.visibleRedaction();
+  } else {
+    await redactPage.visibleRedaction();
+  }
+
 });
 
 Then('I can ensure the redaction has been removed', async function () {
-  await genericMethods.sleep(5000);
-  await redactPage.visibleRedaction();
+  if (browser.browserName === BrowserType.SAFARI) {
+    await genericMethods.sleep(5000);
+    await redactPage.visibleRedaction();
+  } else {
+    await genericMethods.sleep(5000);
+    await redactPage.visibleRedaction();
+  }
 });
 
 
 Given('I click on redact text', async function () {
-  await redactPage.clickText();
+  if ((browser.browserName === BrowserType.SAFARI)) {
+    await genericMethods.sleep(2000);
+    await redactPage.clickText();
+  }
 });
 
 Given('I click on draw a box', async function () {
