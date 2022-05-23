@@ -276,7 +276,12 @@ Then('I should be able to add comment for the highlight', async () => {
 });
 
 When('I highlight text on a PDF document', async () => {
-  await highLightTextInPdf();
+  if (browser.browserName === BrowserType.SAFARI) {
+    await genericMethods.sleep(1000);
+    await highLightTextInPdf();
+  } else {
+    await highLightTextInPdf();
+  }
 });
 
 Then('I expect no existing bookmarks present', async () => {
