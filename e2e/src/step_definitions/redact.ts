@@ -43,7 +43,10 @@ Then('I can ensure the redaction has been removed', async function () {
 
 
 Given('I click on redact text', async function () {
-  if ((browser.browserName === BrowserType.SAFARI)) {
+  const browserType = browser.browserName;
+  console.log(' Browser 2-->::' + browserType);
+  if ((browserType === BrowserType.SAFARI)) {
+    console.log(' Browser 3-->::' + browserType);
     await genericMethods.sleep(2000);
     await redactPage.clickText();
   }
