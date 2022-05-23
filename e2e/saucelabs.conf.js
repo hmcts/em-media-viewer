@@ -3,7 +3,6 @@ const path = require('path');
 const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2));
 const supportedBrowsers = require('./supportedBrowsers');
-const {browser} = require("protractor");
 
 const config = {
   framework: 'custom',
