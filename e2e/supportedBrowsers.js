@@ -56,7 +56,7 @@ module.exports = {
       version: 'latest',
       name: 'Media Viewer Tests:Mac Safari',
       tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
-      // seleniumVersion: '3.141.59',
+      seleniumVersion: '4.0.0',
       screenResolution: '1400x1050',
       extendedDebugging: true,
       capturePerformance: true,
