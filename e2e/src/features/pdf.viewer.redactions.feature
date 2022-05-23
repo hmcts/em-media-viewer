@@ -8,7 +8,7 @@ Feature: Redact PDF E2E Tests
     And I clear all the redactions using the clear all button
     Then all the redactions should be cleared
 
-  @EM-4020 @crossbrowser
+  @EM-4020
   Scenario: Redacting text and then removing the redaction
     Given I click on redact text
     When I highlight text on a PDF document
@@ -24,7 +24,7 @@ Feature: Redact PDF E2E Tests
     Then I can remove the redaction
     And I can ensure the redaction has been removed
 
-  @EM-4020 @ci
+  @EM-4020 @ci @crossbrowser
   Scenario: Testing the preview redactions button
     Given that I have created both a text and box redaction
     When I preview the document with the redactions
@@ -38,7 +38,7 @@ Feature: Redact PDF E2E Tests
     When I save the document with the redactions
 #    Then the document should be saved
 
-  @EM-4020 @ci
+  @EM-4020 @ci @crossbrowser
   Scenario: Testing the clear all redactions button
     Given that I have created both a text and box redaction
     When I clear all the redactions using the clear all button
