@@ -24,7 +24,7 @@ Feature: Redact PDF E2E Tests
     Then I can remove the redaction
     And I can ensure the redaction has been removed
 
-  @EM-4020 @ci
+  @EM-4020 @ci @crossbrowser
   Scenario: Testing the preview redactions button
     Given that I have created both a text and box redaction
     When I preview the document with the redactions
