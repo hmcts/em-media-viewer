@@ -37,7 +37,8 @@ const config = {
     './src/features/comments.panel.feature',
     './src/features/navigation.feature',
     './src/features/search.feature',
-    './src/features/zoom.feature'
+    './src/features/zoom.feature',
+    './src/features/pdf.viewer.redactions.feature'
   ],
 
   baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
