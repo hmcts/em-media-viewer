@@ -74,7 +74,7 @@
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "config": "^3.3.4",
-    "core-js": "^3.22.7",
+    "core-js": "2.5.7",
     "exception-formatter": "^2.1.2",
     "formidable": "^1.2.1",
     "glob": "^7.1.4",
@@ -99,7 +99,7 @@
     "uuid": "^3.4.0",
     "ws": "^7.4.6",
     "xmlhttprequest-ssl": "^1.6.2",
-    "zone.js": "^0.11.5"
+    "zone.js": "^0.11.3"
   },
   "resolutions": {
     "glob-parent": "^5.1.2",
