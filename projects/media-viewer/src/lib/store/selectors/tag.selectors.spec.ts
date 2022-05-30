@@ -94,7 +94,7 @@ describe('Tags selectors', () => {
         StoreModule.forFeature('media-viewer', reducers),
       ],
     });
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
     spyOn(store, 'dispatch').and.callThrough();
   });
 
