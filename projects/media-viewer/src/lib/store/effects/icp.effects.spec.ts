@@ -36,7 +36,7 @@ describe('Icp Effects', () => {
         provideMockActions(() => actions$)
       ]
     });
-    effects = TestBed.get(IcpEffects);
+    effects = TestBed.inject(IcpEffects);
   });
 
 
