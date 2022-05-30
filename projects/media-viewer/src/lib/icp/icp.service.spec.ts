@@ -115,7 +115,8 @@ describe('Icp Service', () => {
       spyOn(service, 'becomePresenter');
       spyOn(service, 'stopPresenting');
       spyOn(service, 'leavePresentation');
-      spyOn(presenterService, 'update');
+      // Commenting out the next line, because it is causing an error: "<spyOn> : update has already been spied upon"
+      // spyOn(presenterService, 'update');
       spyOn(followerService, 'update');
       spyOn(service, 'clientDisconnected');
 
@@ -145,7 +146,8 @@ describe('Icp Service', () => {
 
     spyOn(service.sessionSubscription, 'unsubscribe');
     spyOn(presenterService, 'update');
-    spyOn(followerService, 'update');
+    // Commenting out the next line, because it is causing an error: "<spyOn> : update has already been spied upon"
+    // spyOn(followerService, 'update');
 
     service.unsubscribeSession();
 
