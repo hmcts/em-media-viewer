@@ -2025,13 +2025,6 @@ amdefine@>=0.0.4:
   resolved "https://registry.npmjs.org/amdefine/-/amdefine-1.0.1.tgz"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular-tree-component@9.0.0-beta.0:
-  version "9.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/angular-tree-component/-/angular-tree-component-9.0.0-beta.0.tgz#dcc83a7f0596c942ddb4f5de72755176f08bc267"
-  integrity sha512-BRgMKpNrat4odT7sEIy9G+W1nNONXsoXSGrT/z4NcTcRCm8AI/aD1kVNkDdIgFDTFooc7YLb2GFp87fF9qHwyg==
-  dependencies:
-    tslib "^1.10.0"
-
 ansi-align@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/ansi-align/-/ansi-align-2.0.0.tgz"

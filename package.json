@@ -70,7 +70,6 @@
     "@nguniversal/module-map-ngfactory-loader": "^7.1.1",
     "@reactivex/rxjs": "^6.6.7",
     "@swimlane/ngx-datatable": "^16.0.2",
-    "angular-tree-component": "9.0.0-beta.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "config": "^3.3.4",
