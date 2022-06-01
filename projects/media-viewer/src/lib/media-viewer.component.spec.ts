@@ -20,6 +20,14 @@ import { CommentService } from './annotations/comment-set/comment/comment.servic
 import {reducers} from './store/reducers/reducers';
 import * as fromRedactActions from './store/actions/redaction.actions';
 import * as fromAnnoActions from './store/actions/annotation.actions';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TagInputModule } from 'ngx-chips';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { TreeModule } from 'angular-tree-component';
+import { MutableDivModule } from 'mutable-div';
 
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
@@ -48,7 +56,16 @@ describe('MediaViewerComponent', () => {
         AnnotationsModule,
         StoreModule.forRoot({}),
         StoreModule.forFeature('media-viewer', reducers),
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule,
+        HttpClientModule,
+        HttpClientTestingModule,
+        TagInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        TreeModule.forRoot(),
+        MutableDivModule
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
