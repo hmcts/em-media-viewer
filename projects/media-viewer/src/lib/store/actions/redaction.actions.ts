@@ -43,8 +43,10 @@ export class LoadRedactionFailure implements Action {
 export class SaveRedaction implements Action {
   readonly type = SAVE_REDACTION;
   constructor(public payload: Redaction) {
-    //If secure mode is enabled (which adds "documentsv2" to the documentId), get rid of it in the payload 
-    payload.documentId = payload.documentId.includes('/documentsv2/') ? payload.documentId.split('/documentsv2/')[1] : payload.documentId;
+    if (payload.documentId !== undefined) {
+      // If secure mode is enabled (which adds "documentsv2" to the documentId), get rid of it in the payload
+      payload.documentId = payload.documentId.includes('/documentsv2/') ? payload.documentId.split('/documentsv2/')[1] : payload.documentId;
+    }
   }
 }
 
