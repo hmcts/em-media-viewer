@@ -44,7 +44,8 @@ describe('Bookmarks selectors', () => {
 
     store.pipe(select(fromSelectors.getBookmarkInfo)).subscribe(value => {
 
-      const expected = { pageNumber: 0, xCoordinate: 100, yCoordinate: 200, previous: 'id2', documentId: 'documentId' };
+      // Update the test to include secure mode ('documentId' -> '/documentsv2/documentId')
+      const expected = { pageNumber: 0, xCoordinate: 100, yCoordinate: 200, previous: 'id2', documentId: '/documentsv2/documentId' };
       expect(value).toEqual(expected);
       done();
     });
