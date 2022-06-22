@@ -41,7 +41,7 @@ export const getBookmarkInfo = createSelector(
       xCoordinate: pdfPosition.left,
       yCoordinate: pages[pdfPosition.pageNumber].styles.height - (pdfPosition.top * pages[pdfPosition.pageNumber].viewportScale),
       previous: bookmarkNodes.length > 0 ? bookmarkNodes[bookmarkNodes.length - 1].id : undefined,
-      documentId: '/documentsv2/' + docId
+      documentId: docId
     };
   }
 );

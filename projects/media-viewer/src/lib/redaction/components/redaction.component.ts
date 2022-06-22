@@ -74,8 +74,7 @@ export class RedactionComponent implements OnInit, OnDestroy {
   }
 
   saveRedaction(page: number, rectangles: Rectangle[]) {
-    // Save redactions using the secure mode request that includes "documentsv2"
-    const redaction = { page, rectangles, redactionId: uuid(), documentId: '/documentsv2/' + this.documentId };
+    const redaction = { page, rectangles, redactionId: uuid(), documentId: this.documentId };
     this.store.dispatch(new fromRedactionActions.SaveRedaction(redaction));
   }
 

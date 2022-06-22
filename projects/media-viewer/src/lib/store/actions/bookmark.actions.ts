@@ -34,12 +34,7 @@ export class LoadBookmarksFailure implements Action {
 
 export class CreateBookmark implements Action {
   readonly type = CREATE_BOOKMARK;
-  constructor(public payload: Bookmark) {
-    if (payload.documentId !== undefined) {
-      // If secure mode is enabled (which adds "documentsv2" to the documentId), get rid of it in the payload
-      payload.documentId = payload.documentId.includes('/documentsv2/') ? payload.documentId.split('/documentsv2/')[1] : payload.documentId;
-    }
-  }
+  constructor(public payload: Bookmark) { }
 }
 
 export class CreateBookmarkSuccess implements Action {
