@@ -16,8 +16,8 @@ describe('BookmarksApiService', () => {
       providers: [BookmarksApiService],
       imports: [HttpClientTestingModule]
     });
-    service = TestBed.get(BookmarksApiService);
-    mockHttpClient = TestBed.get(HttpTestingController);
+    service = TestBed.inject(BookmarksApiService);
+    mockHttpClient = TestBed.inject(HttpTestingController);
   });
 
   it('should get bookmarks', fakeAsync((done) => {
