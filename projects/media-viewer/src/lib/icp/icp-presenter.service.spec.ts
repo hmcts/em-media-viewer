@@ -46,8 +46,8 @@ describe('Icp Presenter Service', () => {
         {provide: IcpUpdateService, useValue: mockUpdateService}]
     });
 
-    presenterService = TestBed.inject(IcpPresenterService);
-    updateService = TestBed.inject(IcpUpdateService);
+    presenterService = TestBed.get(IcpPresenterService);
+    updateService = TestBed.get(IcpUpdateService);
   });
 
   it('should be created', () => {

@@ -26,9 +26,9 @@ describe('IcpSessionApiService', () => {
       ]
     });
 
-    api = TestBed.inject(IcpSessionApiService);
+    api = TestBed.get(IcpSessionApiService);
     api.ICP_SESSION_API = '/my-context-path';
-    httpMock = TestBed.inject(HttpTestingController);
+    httpMock = TestBed.get(HttpTestingController);
   });
 
   it('should be created', inject([IcpSessionApiService], (service: IcpSessionApiService) => {
