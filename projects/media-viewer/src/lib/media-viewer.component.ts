@@ -155,14 +155,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     if (changes.url) {
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
-      const documentId2 = this.extractDMStoreDocId(this.url);
-      console.log("documentId2: "+documentId2)
-
-      this.url = "/documentsv2/"+this.url;
-      console.log("URL: "+this.url)
-      var documentId = this.extractDMStoreDocId(this.url);
-      console.log("documentId: "+documentId)
-
+      const documentId = this.extractDMStoreDocId(this.url);
       this.store.dispatch(new fromDocumentActions.SetDocumentId(documentId));
       if (this.enableAnnotations && !(this.multimediaContent || this.unsupportedContent)) {
         this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(documentId));
