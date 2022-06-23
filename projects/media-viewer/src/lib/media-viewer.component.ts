@@ -242,7 +242,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   onDocumentTitleChange(title: string) {
     this.documentTitle = title;
   }
-  
+
   // If secure mode is enabled (which adds "documentsv2" to the documentId), get rid of it
   private extractDMStoreDocId(url: string): string {
     url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
