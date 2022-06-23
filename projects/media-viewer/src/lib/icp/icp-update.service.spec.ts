@@ -41,7 +41,7 @@ describe('UpdateService', () => {
       providers: [IcpUpdateService, { provide: SocketService, useValue: mockSocketService }]
     });
 
-    updateService = TestBed.inject(IcpUpdateService);
+    updateService = TestBed.get(IcpUpdateService);
   });
 
   it('should be created', inject([IcpUpdateService], (service: IcpUpdateService) => {
