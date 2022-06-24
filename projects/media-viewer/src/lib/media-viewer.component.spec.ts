@@ -135,6 +135,14 @@ describe('MediaViewerComponent', () => {
     expect(component.documentTitle).toBeNull();
   });
 
+  it('should delete /documentsv2/ from documentId to test secure mode', () => {
+    component.url = '/documentsv2/test-url';
+    component.ngOnChanges({
+      url: new SimpleChange('/documentsv2/test-url', 'test-url', false),
+    });
+    expect(component.documentId).toEqual('test-url');
+  });
+
   it('should not set annotations$ when annotations disabled', () => {
     component.contentType = 'pdf';
     component.annotationSet$ = null;
@@ -214,7 +222,7 @@ describe('MediaViewerComponent', () => {
   });
 
   it('should set annotationApiUrl', () => {
-     const api = TestBed.inject(AnnotationApiService);
+     const api = TestBed.get(AnnotationApiService);
      component.contentType = 'pdf';
      const ANNOTATION_API_URL = 'annotation-api-url';
      component.annotationApiUrl = ANNOTATION_API_URL;
@@ -334,7 +342,7 @@ describe('MediaViewerComponent', () => {
       const mockHeight = 'calc(100vh - 25px)';
       component.height = mockHeight;
 
-      const toolbarEvents = TestBed.inject(ToolbarEventService);
+      const toolbarEvents = TestBed.get(ToolbarEventService);
       toolbarEvents.redactionMode.next(true);
       fixture.detectChanges();
 
@@ -343,7 +351,7 @@ describe('MediaViewerComponent', () => {
 
     it('should re-calc viewHeight when component moved and height input param omitted', () => {
       const viewerHeight = component.viewerHeight;
-      const toolbarEvents = TestBed.inject(ToolbarEventService);
+      const toolbarEvents = TestBed.get(ToolbarEventService);
 
       toolbarEvents.redactionMode.next(true);
       fixture.detectChanges();

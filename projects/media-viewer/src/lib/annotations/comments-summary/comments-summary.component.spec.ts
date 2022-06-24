@@ -51,7 +51,7 @@ describe('CommentsSummaryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentsSummaryComponent);
     component = fixture.componentInstance;
-    printService = TestBed.inject(PrintService);
+    printService = TestBed.get(PrintService);
 
     fixture.detectChanges();
   });
