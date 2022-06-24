@@ -85,7 +85,7 @@
     "moment-timezone": "^0.5.28",
     "mutable-div": "0.0.11",
     "ngx-chips": "^1.9.8",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "nodemon": "^1.19.0",
     "nunjucks": "^3.2.0",
     "otp": "^0.1.3",
