@@ -135,6 +135,14 @@ describe('MediaViewerComponent', () => {
     expect(component.documentTitle).toBeNull();
   });
 
+  it('should delete /documentsv2/ from documentId to test secure mode', () => {
+    component.url = '/documentsv2/test-url';
+    component.ngOnChanges({
+      url: new SimpleChange('/documentsv2/test-url', 'test-url', false),
+    });
+    expect(component.documentId).toEqual('test-url');
+  });
+
   it('should not set annotations$ when annotations disabled', () => {
     component.contentType = 'pdf';
     component.annotationSet$ = null;
