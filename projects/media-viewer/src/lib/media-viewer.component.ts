@@ -98,7 +98,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   hasScrollBar: boolean;
   typeException = false;
   hasDifferentPageSize$: Observable<boolean>;
-  documentId: string;
 
   private $subscriptions: Subscription;
   private prevOffset: number;
@@ -156,13 +155,13 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     if (changes.url) {
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
-      this.documentId = this.extractDMStoreDocId(this.url);
-      this.store.dispatch(new fromDocumentActions.SetDocumentId(this.documentId));
+      const documentId = this.extractDMStoreDocId(this.url);
+      this.store.dispatch(new fromDocumentActions.SetDocumentId(documentId));
       if (this.enableAnnotations && !(this.multimediaContent || this.unsupportedContent)) {
-        this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(this.documentId));
+        this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(documentId));
       }
       if (this.enableRedactions && !(this.multimediaContent || this.unsupportedContent)) {
-        this.store.dispatch(new fromRedactActions.LoadRedactions(this.documentId));
+        this.store.dispatch(new fromRedactActions.LoadRedactions(documentId));
       }
       if (this.contentType === 'image') {
         this.documentTitle = null;
@@ -244,10 +243,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     this.documentTitle = title;
   }
 
-  // If secure mode is enabled (which adds "documentsv2" to the documentId), get rid of it
   private extractDMStoreDocId(url: string): string {
     url = url.includes('/documents/') ? url.split('/documents/')[1] : url;
-    url = url.includes('/documentsv2/') ? url.split('/documentsv2/')[1] : url;
     return url.replace('/binary', '');
   }
 

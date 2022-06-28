@@ -54,10 +54,10 @@ describe('Icp Service', () => {
         {provide: IcpFollowerService, useValue: mockParticipantService},
       ]
     });
-    service = TestBed.get(IcpService);
-    updateService = TestBed.get(IcpUpdateService);
-    presenterService = TestBed.get(IcpPresenterService);
-    followerService = TestBed.get(IcpFollowerService);
+    service = TestBed.inject(IcpService);
+    updateService = TestBed.inject(IcpUpdateService);
+    presenterService = TestBed.inject(IcpPresenterService);
+    followerService = TestBed.inject(IcpFollowerService);
   });
 
   it('should be created', () => {
@@ -115,7 +115,8 @@ describe('Icp Service', () => {
       spyOn(service, 'becomePresenter');
       spyOn(service, 'stopPresenting');
       spyOn(service, 'leavePresentation');
-      spyOn(presenterService, 'update');
+      // Commenting out the next line, because it is causing an error: "<spyOn> : update has already been spied upon"
+      // spyOn(presenterService, 'update');
       spyOn(followerService, 'update');
       spyOn(service, 'clientDisconnected');
 
@@ -145,7 +146,8 @@ describe('Icp Service', () => {
 
     spyOn(service.sessionSubscription, 'unsubscribe');
     spyOn(presenterService, 'update');
-    spyOn(followerService, 'update');
+    // Commenting out the next line, because it is causing an error: "<spyOn> : update has already been spied upon"
+    // spyOn(followerService, 'update');
 
     service.unsubscribeSession();
 
