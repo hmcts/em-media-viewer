@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.7.17-RC.1",
+  "version": "2.8.2",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
@@ -26,11 +26,11 @@
     "socket.io-client": "^3.1.1"
   },
   "peerDependencies": {
-    "@angular/animations": "8.0.0",
-    "@angular/common": "8.0.0",
-    "@angular/core": "8.0.0",
-    "@angular/forms": "8.0.0",
-    "@angular/platform-browser": "8.0.0",
+    "@angular/animations": "9.1.13",
+    "@angular/common": "9.1.13",
+    "@angular/core": "9.1.13",
+    "@angular/forms": "9.1.13",
+    "@angular/platform-browser": "9.1.13",
     "@ngrx/effects": "^7.4.0",
     "@ngrx/router-store": "^7.4.0",
     "@ngrx/store": "^7.4.0",
