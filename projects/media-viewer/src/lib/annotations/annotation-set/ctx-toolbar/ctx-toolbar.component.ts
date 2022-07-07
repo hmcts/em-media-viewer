@@ -71,6 +71,11 @@ export class CtxToolbarComponent implements OnChanges {
 
   addOrEditComment() {
     this.addOrEditCommentEvent.emit();
+    setTimeout(() => {
+      if (!location.hash) {
+        document.getElementById('viewerContainer').scrollBy(0, 1);
+      }
+    }, 10);
   }
 
   createBookmark() {
