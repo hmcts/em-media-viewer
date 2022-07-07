@@ -61,12 +61,8 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
     this.annoEntities$ = this.store.pipe(select(fromSelectors.getAnnotationEntities));
     this.subscriptions.push(
       this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
-        setTimeout(() =>
-        {
-          this.redrawComments();
-          this.showCommentsPanel = toggle;
-        },
-        200);
+        this.redrawComments();
+        this.showCommentsPanel = toggle;
       })
     );
     this.subscriptions.push(this.toolbarEvents.rotateSubject.subscribe(rotate => this.rotateDocument()));
