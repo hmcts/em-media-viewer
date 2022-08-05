@@ -35,7 +35,7 @@ describe('RedactionToolbarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RedactionToolbarComponent);
     component = fixture.componentInstance;
-    toolbarEvents = TestBed.inject(ToolbarEventService);
+    toolbarEvents = TestBed.get(ToolbarEventService);
     fixture.detectChanges();
   });
 

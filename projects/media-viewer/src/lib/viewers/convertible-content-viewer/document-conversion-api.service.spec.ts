@@ -12,8 +12,8 @@ describe('DocumentConversionApiService', () => {
       providers: [DocumentConversionApiService],
       imports: [HttpClientTestingModule]
     });
-    api = TestBed.inject(DocumentConversionApiService);
-    httpMock = TestBed.inject(HttpTestingController);
+    api = TestBed.get(DocumentConversionApiService);
+    httpMock = TestBed.get(HttpTestingController);
   });
 
   it('should convert', fakeAsync((done) => {
