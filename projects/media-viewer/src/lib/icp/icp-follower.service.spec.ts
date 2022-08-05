@@ -35,7 +35,7 @@ describe('Icp Follower Service', () => {
         {provide: IcpUpdateService, useValue: mockUpdateService}]
     });
 
-    followerService = TestBed.inject(IcpFollowerService);
+    followerService = TestBed.get(IcpFollowerService);
   });
 
   it('should be created', () => {
