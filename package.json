@@ -98,7 +98,9 @@
     "uuid": "^3.4.0",
     "ws": "^7.4.6",
     "xmlhttprequest-ssl": "^1.6.2",
-    "zone.js": "^0.11.3"
+    "zone.js": "^0.11.3",
+    "@hmcts/nodejs-logging": "3.0.4",
+    "request-promise-native": "1.0.9"
   },
   "resolutions": {
     "glob-parent": "^5.1.2",
