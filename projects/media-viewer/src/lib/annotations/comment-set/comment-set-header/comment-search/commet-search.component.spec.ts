@@ -17,7 +17,7 @@ describe('CommentSearch', () => {
   class TestHostComponent {
     annotations = [] ;
 
-    @ViewChild(CommentSearchComponent) commentSearchComponent: CommentSearchComponent;
+    @ViewChild(CommentSearchComponent, {static: false}) commentSearchComponent: CommentSearchComponent;
   }
 
   let hostComponent: TestHostComponent;

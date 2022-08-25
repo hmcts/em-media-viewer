@@ -51,7 +51,7 @@ describe('CommentsSummaryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentsSummaryComponent);
     component = fixture.componentInstance;
-    printService = TestBed.get(PrintService);
+    printService = TestBed.inject(PrintService);
 
     fixture.detectChanges();
   });
@@ -59,7 +59,7 @@ describe('CommentsSummaryComponent', () => {
   it('should set focus on container', () => {
     spyOn(component.container.nativeElement, 'focus');
 
-    component.ngOnInit();
+    component.ngAfterViewInit();
 
     expect(component.container.nativeElement.focus).toHaveBeenCalled();
   });
