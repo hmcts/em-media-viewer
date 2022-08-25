@@ -12,7 +12,7 @@ export class CustomToolbarComponent implements OnInit {
   search: boolean;
   currentPageNumber = 1;
 
-  @ViewChild('zoomSelect', {static: false}) zoomSelect: ElementRef;
+  @ViewChild('zoomSelect') zoomSelect: ElementRef;
 
   constructor() { }
 

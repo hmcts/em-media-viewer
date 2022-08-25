@@ -12,8 +12,8 @@ describe('RotationApiService', () => {
       providers: [RotationApiService],
       imports: [HttpClientTestingModule]
     });
-    api = TestBed.inject(RotationApiService);
-    httpMock = TestBed.inject(HttpTestingController);
+    api = TestBed.get(RotationApiService);
+    httpMock = TestBed.get(HttpTestingController);
   });
 
   it('should get rotation', fakeAsync((done) => {
