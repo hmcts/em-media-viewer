@@ -33,7 +33,7 @@ describe('ParticipantsListComponent', () => {
     fixture = TestBed.createComponent(ParticipantsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    toolbarEvents = TestBed.inject(ToolbarEventService);
+    toolbarEvents = TestBed.get(ToolbarEventService);
   });
 
   it('should create', () => {
