@@ -1,0 +1,81 @@
+{
+  "positionType": "Manually Created",
+  "claimantRepresentedQuestion": "No",
+  "respondentCollection": [
+    {
+      "id": "4e994932-436b-44fe-b891-ef3243a08b56",
+      "value": {
+        "respondent_name": "Resp1",
+        "responseContinue": "Yes",
+        "responseReceived": "Yes",
+        "responseStruckOut": "No",
+        "respondent_ACAS_no": "Employer already in touch",
+        "respondent_address": {
+          "Country": "United Kingdom",
+          "PostCode": "S2 1RS",
+          "PostTown": "Sheffield",
+          "AddressLine1": "66 Beaumont Road North"
+        },
+        "respondent_ACAS_question": "No",
+        "responseRespondentAddress": {
+        }
+      }
+    }
+  ],
+  "respondent": "Resp1",
+  "tribunalCorrespondenceDX": "DX 742940 Leeds 75",
+  "claimantOtherType": {
+  },
+  "tribunalCorrespondenceFax": "01264 785136",
+  "caseType": "Single",
+  "feeGroupReference": "123453222211",
+  "claimantIndType": {
+    "claimant_gender": "Male",
+    "claimant_title1": "Mr",
+    "claimant_last_name": "Perla",
+    "claimant_first_names": "Phani",
+    "claimant_date_of_birth": "1977-02-09"
+  },
+  "claimant_TypeOfClaimant": "Individual",
+  "tribunalCorrespondenceEmail": "LeedsET@justice.gov.uk",
+  "tribunalCorrespondenceAddress": {
+    "PostCode": "LS1 5ES",
+    "PostTown": "Leeds",
+    "AddressLine1": "4th Floor",
+    "AddressLine2": "City Exchange",
+    "AddressLine3": "11 Albion Street"
+  },
+  "representativeClaimantType": {
+  },
+  "claimant": "Phani Perla",
+  "dateToPosition": "2021-11-23",
+  "claimantWorkAddress": {
+    "claimant_work_address": {
+      "Country": "United Kingdom",
+      "PostCode": "S2 1RS",
+      "PostTown": "Sheffield",
+      "AddressLine1": "66 Beaumont Road North"
+    }
+  },
+  "multipleFlag": "No",
+  "currentPosition": "Manually Created",
+  "receiptDate": "2021-01-12",
+  "caseSource": "Manually Created",
+  "tribunalCorrespondenceTelephone": "0113 245 9741",
+  "claimantWorkAddressQuestion": "Yes",
+  "claimantType": {
+    "claimant_addressUK": {
+      "Country": "United Kingdom",
+      "PostCode": "E14 3XA",
+      "PostTown": "London",
+      "AddressLine1": "Flat 19",
+      "AddressLine2": "Vermeer Court",
+      "AddressLine3": "1 Rembrandt Close"
+    },
+    "claimant_phone_number": "07931773772",
+    "claimant_email_address": "kumar.perlaa@gmail.com",
+    "claimant_contact_preference": "Post"
+  },
+  "flagsImageFileName": "EMP-TRIB-000000000.jpg",
+  "targetHearingDate": "2021-07-11"
+}
