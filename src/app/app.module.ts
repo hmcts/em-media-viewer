@@ -10,8 +10,6 @@ import {EffectsModule} from '@ngrx/effects';
 import {environment} from '../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {storeFreeze} from 'ngrx-store-freeze';
-import { TreeModule } from 'angular-tree-component';
-
 // enforces immutability
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -26,7 +24,6 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     RouterModule,
     RoutingModule,
     BrowserTransferStateModule,
-    TreeModule.forRoot(),
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
     !environment.production ?
