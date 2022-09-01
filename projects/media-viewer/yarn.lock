@@ -19,6 +19,14 @@
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-3.4.9.tgz#fcf01997bbc9f7c09ae5f91383af076d466594e1"
   integrity sha512-XDwyIlt/47l2kWLTzw/mtrpLdB+GPSskR2n/PIcPn+VYhVO77rGhRncIR5GPU0KRzXuqkDO+J5qqrG0Y8P6jzQ==
 
+angular-tree-component@^8.5.6:
+  version "8.5.6"
+  resolved "https://registry.yarnpkg.com/angular-tree-component/-/angular-tree-component-8.5.6.tgz#b32ea769e17b8e4462b31b5b67c17269a7295fa5"
+  integrity sha512-cxNem6872diZz9kIGqrjSJbKt0P3WSq9wTqZIeVJ8zsddI4Y6ShAVZlZNXUMRyJq246c9pJ6JJEAOzKVLk9xgA==
+  dependencies:
+    lodash "^4.17.11"
+    mobx "^4.15.1"
+
 backo2@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/backo2/-/backo2-1.0.2.tgz#31ab1ac8b129363463e35b3ebb69f4dfcfba7947"
@@ -73,6 +81,16 @@ has-cors@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/has-cors/-/has-cors-1.1.0.tgz#5e474793f7ea9843d1bb99c23eef49ff126fff39"
   integrity sha1-XkdHk/fqmEPRu5nCPu9J/xJv/zk=
+
+lodash@^4.17.11:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+
+mobx@^4.15.1:
+  version "4.15.7"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-4.15.7.tgz#933281268c3b4658b6cf2526e872cf78ea48ab95"
+  integrity sha512-X4uQvuf2zYKHVO5kRT5Utmr+J9fDnRgxWWnSqJ4oiccPTQU38YG+/O3nPmOhUy4jeHexl7XJJpWDBgEnEfp+8w==
 
 ms@2.1.2:
   version "2.1.2"
