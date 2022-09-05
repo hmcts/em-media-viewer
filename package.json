@@ -11,7 +11,7 @@
     "setup:demo": "yarn build && yarn copy:demo-files",
     "package": "yarn build:lib && yarn copy:lib-files && yarn npm-pack",
     "build": "yarn build:lib && yarn build:demo",
-    "build:lib": "cd projects/media-viewer && yarn install && ng build --prod",
+    "build:lib": "cd projects/media-viewer && npx handpick --target=devDependencies --manager=yarn && ng build --prod",
     "build:demo": "ng build media-viewer-demo-app --prod",
     "copy:lib-files": "yarn copy:lib-js-dependencies && yarn copy:lib-assets && yarn copy:docs",
     "copy:demo-files": "yarn copy:demo-js-dependencies && yarn copy:demo-assets",
