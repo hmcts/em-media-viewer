@@ -85,7 +85,7 @@ describe('BookmarksComponent', () => {
   it('should move bookmarks', () => {
     spyOn(store, 'dispatch');
     const node = {
-      documentId: '86dc297a-0153-44c0-b996-f563c1ff112a',
+      documentId: 'fcfb6521-6e91-4312-b9ee-8af6b10c4013',
       id: 'id1',
       index: 0,
       name: 'new bookmark',
