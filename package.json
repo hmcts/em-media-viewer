@@ -59,7 +59,6 @@
     "@angular/platform-browser-dynamic": "8.0.0",
     "@angular/platform-server": "8.0.0",
     "@angular/router": "8.0.0",
-    "@hmcts/frontend": "^0.0.39-alpha",
     "@hmcts/nodejs-healthcheck": "^1.7.0",
     "@hmcts/properties-volume": "^0.0.13",
     "@ngrx/effects": "^7.4.0",

@@ -446,11 +446,6 @@
   resolved "https://registry.npmjs.org/@hmcts/eslint-config/-/eslint-config-1.4.0.tgz"
   integrity sha1-5xNFfO43WKQzlMKXSROIWqropBs=
 
-"@hmcts/frontend@^0.0.39-alpha":
-  version "0.0.39-alpha"
-  resolved "https://registry.npmjs.org/@hmcts/frontend/-/frontend-0.0.39-alpha.tgz"
-  integrity sha512-M1364rFLuvktYz5+jVjJ5ZmNUx0/SgoAvH3RsIaT2wFqFf92emuiRyXqax5oSEC5kM9Jpw0rcxEcRbBJWMoglg==
-
 "@hmcts/nodejs-healthcheck@^1.7.0":
   version "1.7.0"
   resolved "https://registry.npmjs.org/@hmcts/nodejs-healthcheck/-/nodejs-healthcheck-1.7.0.tgz"
