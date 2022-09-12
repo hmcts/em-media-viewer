@@ -56,7 +56,6 @@ If you're writing your own toolbar styles then do not import those
 ```
 // Import GOV.UK Frontend
 @import "~govuk-frontend/govuk/all";
-@import "~@hmcts/frontend/all";
 // Import Media Viewer Styles
 @import "~media-viewer/src/assets/all"; // use this to import all the styles 
 ```
