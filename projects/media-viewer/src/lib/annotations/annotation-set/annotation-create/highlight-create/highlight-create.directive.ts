@@ -25,10 +25,10 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   $subscription: Subscription;
 
   constructor(private element: ElementRef<HTMLElement>,
-              private toolbarEvents: ToolbarEventService,
-              private viewerEvents: ViewerEventService,
-              private highlightService: HighlightCreateService,
-              private store: Store<fromStore.AnnotationSetState>) {}
+    private toolbarEvents: ToolbarEventService,
+    private viewerEvents: ViewerEventService,
+    private highlightService: HighlightCreateService,
+    private store: Store<fromStore.AnnotationSetState>) { }
 
   ngOnInit() {
     this.$subscription = this.store.select(fromDocument.getPages).subscribe(pages => {
@@ -83,8 +83,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
           for (let i = 0; i < clientRects.length; i++) {
             const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
             var findSelecttionRectangle = selectionRectangles.find(rect => rect.width === selectionRectangle.width && rect.x === selectionRectangle.x)
-            if(!findSelecttionRectangle)
-            {
+            if (!findSelecttionRectangle) {
               selectionRectangles.push(selectionRectangle);
             }
           }
