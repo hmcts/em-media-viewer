@@ -82,7 +82,11 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
           const selectionRectangles: Rectangle[] = [];
           for (let i = 0; i < clientRects.length; i++) {
             const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
-            selectionRectangles.push(selectionRectangle);
+            var findSelecttionRectangle = selectionRectangles.find(rect => rect.width === selectionRectangle.width && rect.x === selectionRectangle.x)
+            if(!findSelecttionRectangle)
+            {
+              selectionRectangles.push(selectionRectangle);
+            }
           }
           return selectionRectangles;
         }
