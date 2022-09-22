@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "makefile": "yarn package && yarn start:ng;",
     "start:ng": "ng serve --proxy-config proxy.config.js",
     "start:api": "node ./dist/api/server.js",
     "setup": "yarn setup:api && yarn setup:demo",
