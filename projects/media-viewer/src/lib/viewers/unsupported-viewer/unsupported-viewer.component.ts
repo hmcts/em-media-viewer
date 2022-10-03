@@ -17,7 +17,7 @@ export class UnsupportedViewerComponent implements OnInit, OnDestroy {
   @Output() loadStatus = new EventEmitter<ResponseType>();
   @Output() unsupportedViewerException = new EventEmitter<ViewerException>();
 
-  @ViewChild('downloadLink', {static: false}) downloadLink: ElementRef;
+  @ViewChild('downloadLink') downloadLink: ElementRef;
 
   private subscriptions: Subscription[] = [];
   private viewerException: ViewerException;

@@ -32,7 +32,7 @@ describe('Annotations Effects', () => {
       ]
     });
 
-    effects = TestBed.inject(AnnotationEffects);
+    effects = TestBed.get(AnnotationEffects);
 
   });
 

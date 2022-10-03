@@ -18,8 +18,8 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
 
   @Input() title: string;
   @Input() contentType: string;
-  @ViewChild('outerContainer', {static: false}) container: ElementRef;
-  @ViewChild('commentContainer', {static: false}) commentsTable: ElementRef;
+  @ViewChild('outerContainer') container: ElementRef;
+  @ViewChild('commentContainer') commentsTable: ElementRef;
   public comments$: Observable<any>;
   public filtersFg: FormGroup;
   private $subscriptions: Subscription;
@@ -50,9 +50,6 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
     });
     this.comments$ = this.store.pipe(select(fromSelectors.getCommentSummary));
     this.buildCheckBoxForm();
-  }
-
-  ngAfterViewInit() {
     this.container.nativeElement.focus();
   }
 
