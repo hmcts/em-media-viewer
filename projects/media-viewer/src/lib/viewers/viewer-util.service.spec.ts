@@ -17,8 +17,8 @@ describe('ViewerUtilService', () => {
         HttpClientTestingModule
       ]
     });
-    service = TestBed.inject(ViewerUtilService);
-    httpMock = TestBed.inject(HttpTestingController);
+    service = TestBed.get(ViewerUtilService);
+    httpMock = TestBed.get(HttpTestingController);
   });
 
   it('should be created',
