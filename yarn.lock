@@ -436,6 +436,15 @@
     js-yaml "^3.8.4"
     superagent "5"
 
+"@hmcts/nodejs-logging@3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@hmcts/nodejs-logging/-/nodejs-logging-3.0.4.tgz#82418571e85f0a275e021f53008195accc55e3b9"
+  integrity sha512-42JgVVxxMI9JD+lnKkBcwIYAiJM/mIUlSLlqs8uVqnzHG/JdMhg1g6cYWqWc3UIhxl2KS+n8y4bh09nLC47nSA==
+  dependencies:
+    moment "^2.19.3"
+    on-finished "^2.3.0"
+    winston "^2.4.5"
+
 "@hmcts/nodejs-logging@^3.0.0", "@hmcts/nodejs-logging@^3.0.1":
   version "3.0.2"
   resolved "https://registry.npmjs.org/@hmcts/nodejs-logging/-/nodejs-logging-3.0.2.tgz"
@@ -8818,6 +8827,15 @@ request-promise-core@1.1.4:
   integrity sha512-TTbAfBBRdWD7aNNOoVOBH4pN/KigV6LyapYNNlAPA8JwbovRti1E88m3sYAwsLi5ryhPKsE9APwnjFTgdUjTpw==
   dependencies:
     lodash "^4.17.19"
+
+request-promise-native@1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/request-promise-native/-/request-promise-native-1.0.9.tgz#e407120526a5efdc9a39b28a5679bf47b9d9dc28"
+  integrity sha512-wcW+sIUiWnKgNY0dqCpOZkUbF/I+YPi+f09JZIDa39Ec+q82CpSYniDp+ISgTTbKmnpJWASeJBPZmoxH84wt3g==
+  dependencies:
+    request-promise-core "1.1.4"
+    stealthy-require "^1.1.1"
+    tough-cookie "^2.3.3"
 
 request-promise@^4.x:
   version "4.2.6"
