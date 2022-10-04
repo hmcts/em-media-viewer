@@ -61,6 +61,7 @@
     "@hmcts/frontend": "^0.0.39-alpha",
     "@hmcts/nodejs-healthcheck": "^1.7.0",
     "@hmcts/properties-volume": "^0.0.13",
+    "@hmcts/nodejs-logging": "3.0.4",
     "@ngrx/effects": "^7.4.0",
     "@ngrx/router-store": "^7.4.0",
     "@ngrx/store": "^7.4.0",
@@ -98,7 +99,8 @@
     "uuid": "^3.4.0",
     "ws": "^7.4.6",
     "xmlhttprequest-ssl": "^1.6.2",
-    "zone.js": "^0.11.3"
+    "zone.js": "^0.11.3",
+    "request-promise-native": "1.0.9"
   },
   "resolutions": {
     "glob-parent": "^5.1.2",
