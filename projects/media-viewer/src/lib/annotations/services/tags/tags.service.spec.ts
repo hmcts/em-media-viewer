@@ -18,8 +18,8 @@ describe('TagsService', () => {
       ],
     });
 
-    httpMock = TestBed.inject(HttpTestingController);
-    tagsService = TestBed.inject(TagsServices);
+    httpMock = TestBed.get(HttpTestingController);
+    tagsService = TestBed.get(TagsServices);
   });
 
   afterEach(() => {
