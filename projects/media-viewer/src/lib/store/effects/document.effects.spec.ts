@@ -23,7 +23,7 @@ describe('Document Effects', () => {
         provideMockActions(() => actions$)
       ]
     });
-    effects = TestBed.inject(DocumentEffects);
+    effects = TestBed.get(DocumentEffects);
   });
 
   describe('convert$', () => {

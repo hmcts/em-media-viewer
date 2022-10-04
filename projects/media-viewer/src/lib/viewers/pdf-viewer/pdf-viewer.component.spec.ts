@@ -95,7 +95,7 @@ describe('PdfViewerComponent', () => {
     printService = fixture.debugElement.injector.get(PrintService);
     viewerEvents = fixture.debugElement.injector.get(ViewerEventService);
     wrapperFactory = fixture.debugElement.injector.get(PdfJsWrapperFactory);
-    icpService = TestBed.inject(IcpService);
+    icpService = TestBed.get(IcpService);
     spyOn(wrapperFactory, 'create').and.returnValue(mockWrapper);
     component.ngOnChanges({
       url: new SimpleChange(null, component.url, true)
