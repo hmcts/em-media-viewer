@@ -215,5 +215,6 @@
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/styles.9f2320e0a19611275a43.css_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/polyfills.4d05bd2f136fcbab56c0.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/scripts.14207270827bb2e6e777.js_GET": "ignore",
-  "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore"
+  "90033_Loosely Scoped Cookie_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
+  "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/polyfills.4d05bd2f136fcbab56c0.js_GET": "ignore"
 }
