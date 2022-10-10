@@ -63,7 +63,7 @@ exports.config = {
                 options: {mochaFile: './functional-output/result.xml'}
             },
             mochawesome: {
-                stdout: './functional-output/ecm-e2e-mochawesome-stdout.log',
+                stdout: './functional-output/mv-e2e-mochawesome-stdout.log',
                 options: {
                     reportDir: config.TestOutputDir || './functional-output',
                     reportFilename: 'mv-e2e-result',
