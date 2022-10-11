@@ -153,7 +153,7 @@ describe('HighlightCreateDirective', () => {
     directive.allPages = { '1': { ...page } };
     spyOn(viewerEvents, 'textSelected');
     const rectangle = { x: 20, y: 50, height: 20, width: 10 };
-    spyOn(highlightService, 'applyRotation').and.returnValue(rectangle, rectangle);
+    spyOn(highlightService, 'applyRotation').and.returnValues(rectangle, rectangle);
     const id = any(String) as any;
     const { height, width } = page.styles;
     directive.zoom = 0.5;
