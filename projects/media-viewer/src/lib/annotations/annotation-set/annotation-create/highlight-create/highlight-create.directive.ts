@@ -12,7 +12,7 @@ import * as fromAnnotationActions from '../../../../store/actions/annotation.act
 import { HighlightCreateService } from './highlight-create.service';
 
 @Directive({
-  selector: '[mvCreateTextHighlight]',
+  selector: '[mvCreateTextHighlight]'
 })
 export class HighlightCreateDirective implements OnInit, OnDestroy {
   pageHeight: number;
@@ -29,7 +29,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     private viewerEvents: ViewerEventService,
     private highlightService: HighlightCreateService,
     private store: Store<fromStore.AnnotationSetState>
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.$subscription = this.store.select(fromDocument.getPages).subscribe((pages) => {
@@ -83,6 +83,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
         const clientRects = range.getClientRects();
 
         if (clientRects) {
+
           const parentRect = localElement.parentElement.getBoundingClientRect();
           const selectionRectangles: Rectangle[] = [];
           for (let i = 0; i < clientRects.length; i++) {
