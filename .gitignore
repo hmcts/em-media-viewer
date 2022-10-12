@@ -55,4 +55,5 @@ report.json
 stryker-tmp/
 stryker.log
 /test/.local-test.env
+.vscode/launch.json
 functional-output/

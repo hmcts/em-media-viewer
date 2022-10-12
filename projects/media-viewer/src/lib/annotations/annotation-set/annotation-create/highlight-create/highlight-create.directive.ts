@@ -15,7 +15,6 @@ import { HighlightCreateService } from './highlight-create.service';
   selector: '[mvCreateTextHighlight]'
 })
 export class HighlightCreateDirective implements OnInit, OnDestroy {
-
   pageHeight: number;
   pageWidth: number;
   zoom: number;
@@ -24,14 +23,16 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
 
   $subscription: Subscription;
 
-  constructor(private element: ElementRef<HTMLElement>,
-              private toolbarEvents: ToolbarEventService,
-              private viewerEvents: ViewerEventService,
-              private highlightService: HighlightCreateService,
-              private store: Store<fromStore.AnnotationSetState>) {}
+  constructor(
+    private element: ElementRef<HTMLElement>,
+    private toolbarEvents: ToolbarEventService,
+    private viewerEvents: ViewerEventService,
+    private highlightService: HighlightCreateService,
+    private store: Store<fromStore.AnnotationSetState>
+  ) { }
 
   ngOnInit() {
-    this.$subscription = this.store.select(fromDocument.getPages).subscribe(pages => {
+    this.$subscription = this.store.select(fromDocument.getPages).subscribe((pages) => {
       if (pages[1]) {
         this.allPages = pages;
       }
@@ -56,9 +57,13 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
 
   @HostListener('mousedown', ['$event'])
   onPdfViewerClick(event: MouseEvent) {
-    this.store.dispatch(new fromAnnotationActions.SelectedAnnotation({
-      annotationId: '', selected: false, editable: false
-    }));
+    this.store.dispatch(
+      new fromAnnotationActions.SelectedAnnotation({
+        annotationId: '',
+        selected: false,
+        editable: false,
+      })
+    );
     this.viewerEvents.clearCtxToolbar();
   }
 
@@ -78,11 +83,17 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
         const clientRects = range.getClientRects();
 
         if (clientRects) {
+
           const parentRect = localElement.parentElement.getBoundingClientRect();
           const selectionRectangles: Rectangle[] = [];
           for (let i = 0; i < clientRects.length; i++) {
             const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
-            selectionRectangles.push(selectionRectangle);
+            const findSelecttionRectangle = selectionRectangles.find(
+              (rect) => rect.width === selectionRectangle.width && rect.x === selectionRectangle.x
+            );
+            if (!findSelecttionRectangle) {
+              selectionRectangles.push(selectionRectangle);
+            }
           }
           return selectionRectangles;
         }
@@ -96,7 +107,16 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     const top = rect.top - parentRect.top;
     const left = rect.left - parentRect.left;
 
-    let rectangle = this.highlightService.applyRotation(this.pageHeight, this.pageWidth, height, width, top, left, this.rotate, this.zoom);
+    let rectangle = this.highlightService.applyRotation(
+      this.pageHeight,
+      this.pageWidth,
+      height,
+      width,
+      top,
+      left,
+      this.rotate,
+      this.zoom
+    );
     rectangle = { id: uuid(), ...rectangle };
 
     return rectangle as Rectangle;
