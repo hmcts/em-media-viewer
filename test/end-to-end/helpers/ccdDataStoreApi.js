@@ -13,7 +13,7 @@ async function createCaseInCcd(dataLocation = 'ccd-case-basic-data.json') {
     console.log(error);
   });
   const caseId = JSON.parse(saveCaseResponse).id;
-  logger.info('Created case==>:: %s', caseId);
+  logger.info('CCD Case==>:: %s', caseId);
   return caseId;
 }
 
