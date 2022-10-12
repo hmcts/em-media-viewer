@@ -10,6 +10,6 @@ module.exports = async function () {
   await I.fillField('username', testConfig.TestEnvCWUser);
   await I.fillField('password', testConfig.TestEnvCWPassword);
   await I.click('input[value="Sign in"]');
-  await I.wait(testConfig.TestTimeToWaitForText);
+  await I.wait(10);
   await I.waitForText('Case list', testConfig.TestTimeToWaitForText);
 };
