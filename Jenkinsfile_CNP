@@ -82,7 +82,7 @@ withPipeline(type, product, component) {
       keepAll              : true,
       reportDir            : "functional-output/",
       reportFiles          : 'mv-e2e-result.html',
-      reportName           : 'Smoke Test'
+      reportName           : 'PREVIEW Smoke Test'
     ])
   }
 
@@ -93,7 +93,7 @@ withPipeline(type, product, component) {
               keepAll              : true,
               reportDir            : "functional-output/reports/html",
               reportFiles          : 'index.html',
-              reportName           : 'Functional Tests'
+              reportName           : 'PREVIEW Functional Test'
       ])
   }
 
@@ -104,7 +104,7 @@ withPipeline(type, product, component) {
       keepAll              : true,
       reportDir            : "functional-output/",
       reportFiles          : 'mv-e2e-result.html',
-      reportName           : 'Smoke Test'
+      reportName           : 'AAT Smoke Test'
     ])
   }
 
@@ -115,7 +115,7 @@ withPipeline(type, product, component) {
       keepAll              : true,
       reportDir            : "functional-output/reports/html",
       reportFiles          : 'index.html',
-      reportName           : 'Functional Tests'
+      reportName           : 'AAT Functional Test'
     ])
   }
 }
