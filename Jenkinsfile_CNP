@@ -80,8 +80,8 @@ withPipeline(type, product, component) {
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
       keepAll              : true,
-      reportDir            : "functional-output/reports/html",
-      reportFiles          : 'index.html',
+      reportDir            : "functional-output/",
+      reportFiles          : 'mv-e2e-result.html',
       reportName           : 'PREVIEW Smoke Test'
     ])
   }
@@ -102,8 +102,8 @@ withPipeline(type, product, component) {
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
       keepAll              : true,
-      reportDir            : "functional-output/reports/smoke/",
-      reportFiles          : 'index.html',
+      reportDir            : "functional-output/",
+      reportFiles          : 'mv-e2e-result.html',
       reportName           : 'AAT Smoke Test'
     ])
   }
