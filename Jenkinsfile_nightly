@@ -46,7 +46,7 @@ withNightlyPipeline(type, product, component) {
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
       keepAll              : true,
-      reportDir            : "functional-output/reports/",
+      reportDir            : "functional-output/reports/html",
       reportFiles          : 'index.html',
       reportName           : 'Functional Tests'
     ])
