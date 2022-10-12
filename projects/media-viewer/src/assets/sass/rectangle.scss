@@ -7,16 +7,13 @@ mv-anno-rectangle {
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
+    font-weight: bolder;
   }
 
   .rectangle:active {
     cursor: grabbing;
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
-  }
-
-  .selected.rectangle {
-    opacity: 0.5;
   }
 
   .grabNDrag {
