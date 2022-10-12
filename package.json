@@ -27,6 +27,7 @@
     "test": "cd projects/media-viewer; ng test",
     "test:coverage": "yarn test",
     "test:a11y": "yarn test",
+    "test:smoke": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --grep @smoke --steps --reporter mocha-multi",
     "test:fullfunctional": "yarn e2e:fullfunctional",
     "test:functional": "yarn e2e:fullfunctional",
     "test:crossbrowser": "protractor e2e/saucelabs.conf.js",
@@ -43,7 +44,6 @@
     "e2e:fullfunctional": "yarn webdriver:update && protractor e2e/ci.protractor.conf.js",
     "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner",
     "rebuild-node-sass": "yarn add node-sass@^4.14.1",
-    "test-smoke": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --grep @smoke --steps --reporter mocha-multi",
     "test-e2e": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --grep @e2e --steps --reporter mocha-multi"
   },
   "dependencies": {

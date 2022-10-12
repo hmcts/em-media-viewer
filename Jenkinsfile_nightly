@@ -46,9 +46,9 @@ withNightlyPipeline(type, product, component) {
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
       keepAll              : true,
-      reportDir            : "functional-output/reports/html",
+      reportDir            : "functional-output/reports/",
       reportFiles          : 'index.html',
-      reportName           : 'MediaViewer Functional Tests'
+      reportName           : 'Functional Tests'
     ])
   }
 
@@ -59,7 +59,7 @@ withNightlyPipeline(type, product, component) {
       keepAll              : true,
       reportDir            : "reports/tests/crossbrowser/",
       reportFiles          : 'index.html',
-      reportName           : 'Media Viewer Cross Browser Tests'
+      reportName           : 'Cross Browser Tests'
     ])
   }
 
@@ -70,7 +70,7 @@ withNightlyPipeline(type, product, component) {
       keepAll              : true,
       reportDir            : "reports/tests/",
       reportFiles          : 'activescan.html',
-      reportName           : 'MediaViewer ZAP Security Scan Report'
+      reportName           : 'ZAP Security Scan'
     ])
   }
 }
