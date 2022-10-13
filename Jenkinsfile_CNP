@@ -75,6 +75,17 @@ withPipeline(type, product, component) {
     yarnBuilder.yarn('build')
   }
 
+  after('smoketest:preview') {
+    publishHTML([
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : "functional-output/",
+      reportFiles          : 'mv-e2e-result.html',
+      reportName           : 'PREVIEW Smoke Test'
+    ])
+  }
+
   after('functionalTest:preview') {
       publishHTML([
               allowMissing         : true,
@@ -84,6 +95,17 @@ withPipeline(type, product, component) {
               reportFiles          : 'index.html',
               reportName           : 'PREVIEW Functional Test'
       ])
+  }
+
+  after('smoketest:aat') {
+    publishHTML([
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : "functional-output/",
+      reportFiles          : 'mv-e2e-result.html',
+      reportName           : 'AAT Smoke Test'
+    ])
   }
 
   after('functionalTest:aat') {
