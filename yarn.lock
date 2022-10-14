@@ -4492,13 +4492,13 @@ eslint-plugin-import@^2.19.1:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-mocha@10.0.4:
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-mocha/-/eslint-plugin-mocha-10.0.4.tgz#b129a1aef8312e8ceaf1b35ff0367f93e917d90a"
-  integrity sha512-8wzAeepVY027oBHz/TmBmUr7vhVqoC1KTFeDybFLhbaWKx+aQ7fJJVuUsqcUy+L+G+XvgQBJY+cbAf7hl5DF7Q==
+eslint-plugin-mocha@10.0.5:
+  version "10.0.5"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-mocha/-/eslint-plugin-mocha-10.0.5.tgz#c3b1e9f59c01063566d8e64b64226533376ffccd"
+  integrity sha512-H5xuD5NStlpaKLqUWYC5BsMx8fHgrIYsdloFbONUTc2vgVNiJcWdKoX29Tt0BO75QgAltplPLIziByMozGGixA==
   dependencies:
     eslint-utils "^3.0.0"
-    ramda "^0.28.0"
+    rambda "^7.1.0"
 
 eslint-plugin-node@^10.0.0:
   version "10.0.0"
@@ -10339,6 +10339,11 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
+rambda@^7.1.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/rambda/-/rambda-7.3.0.tgz#90e440ead53030a216093865d8d97997a80868ca"
+  integrity sha512-RFVofZYaG2TaVcxjnM0ejdVWf/59rFq1f57OGnjP3GT/bthzFw0GVr5rkP9PKbVlEuF/Y7bOVPLfiiYfxq/EWQ==
+
 ramda@^0.23.0:
   version "0.23.0"
   resolved "https://registry.npmjs.org/ramda/-/ramda-0.23.0.tgz"
@@ -10348,11 +10353,6 @@ ramda@^0.27.1:
   version "0.27.1"
   resolved "https://registry.npmjs.org/ramda/-/ramda-0.27.1.tgz"
   integrity sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==
-
-ramda@^0.28.0:
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.28.0.tgz#acd785690100337e8b063cab3470019be427cc97"
-  integrity sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
