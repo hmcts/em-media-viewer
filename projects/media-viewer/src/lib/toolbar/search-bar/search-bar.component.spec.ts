@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
   let fixture: ComponentFixture<SearchBarComponent>;
-  let nativeElement, searchInput, findNext;
+  let nativeElement, searchInput;
 
   beforeEach(() => {
     return TestBed.configureTestingModule({
@@ -143,7 +143,7 @@ describe('SearchBarComponent', () => {
     setTimeout(() => {
       const findNext = component.findNext.nativeElement;
       const findNextSpy = spyOn(findNext, 'focus');
-      expect(findNextSpy).toHaveBeenCalled()
+      expect(findNextSpy).toHaveBeenCalled();
     }, 100);
   });
 
