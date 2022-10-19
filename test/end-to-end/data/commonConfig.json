@@ -1,0 +1,7 @@
+{
+  "goButton": "form button[type=\"submit\"]",
+  "addNewButton": "Add new",
+  "shortDescription": "Upload Document Check",
+  "continue": "Continue",
+  "submit": "Submit"
+}
