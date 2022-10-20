@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 export class SearchBarComponent implements OnInit, OnDestroy {
 
   @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
+  @ViewChild('findNext') findNext: ElementRef<HTMLAnchorElement>;
 
   highlightAll = true;
   matchCase = false;
@@ -87,14 +88,19 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.resultsText = this.resultCount > 0
       ? `Found ${results.current} of ${results.total}`
       : 'No results found';
+    if (this.resultCount && this.resultCount > 0) {
+      setTimeout(() => {
+        this.findNext.nativeElement.focus();
+      }, 200);
+    }
   }
 
   public onEscapeKeyPress(e: KeyboardEvent): void {
-      this.toolbarEvents.searchBarHidden.next(true);
+    this.toolbarEvents.searchBarHidden.next(true);
   }
 
   public onEnterKeyPress(e: KeyboardEvent): void {
-      this.search();
+    this.search();
   }
 
 
@@ -103,6 +109,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   public toggleSearchBar() {
-      this.toolbarEvents.searchBarHidden.next(!this.toolbarEvents.searchBarHidden.getValue());
-    }
+    this.toolbarEvents.searchBarHidden.next(!this.toolbarEvents.searchBarHidden.getValue());
+  }
 }

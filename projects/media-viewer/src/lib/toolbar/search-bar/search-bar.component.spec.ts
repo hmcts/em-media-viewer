@@ -24,6 +24,7 @@ describe('SearchBarComponent', () => {
     component = fixture.componentInstance;
     nativeElement = fixture.debugElement.nativeElement;
     searchInput = component.findInput.nativeElement;
+
     searchInput.value = 'searchTerm';
 
     fixture.detectChanges();
@@ -139,6 +140,11 @@ describe('SearchBarComponent', () => {
     component.toolbarEvents.searchResultsCountSubject.next({ current: 1, total: 4 });
     expect(component.resultCount).toBeTruthy();
     expect(component.resultsText).toEqual('Found 1 of 4');
+    setTimeout(() => {
+      const findNext = component.findNext.nativeElement;
+      const findNextSpy = spyOn(findNext, 'focus');
+      expect(findNextSpy).toHaveBeenCalled();
+    }, 100);
   });
 
   it('should set search result count with no results found', () => {
