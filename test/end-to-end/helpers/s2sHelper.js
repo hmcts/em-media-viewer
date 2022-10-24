@@ -29,7 +29,6 @@ async function getServiceToken() {
   expect(s2sResponse.status).to.eql(200)
   logger.info("S2S Service Token==>::" + serviceToken);
   return serviceToken;
-
 }
 
 module.exports = {
