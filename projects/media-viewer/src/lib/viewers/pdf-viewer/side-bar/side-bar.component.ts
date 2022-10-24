@@ -28,8 +28,8 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   $subscription: Subscription;
 
   constructor(private viewerEvents: ViewerEventService,
-              private store: Store<BookmarksState>
-  ) {}
+    private store: Store<BookmarksState>
+  ) { }
 
   ngOnInit(): void {
     this.bookmarkNodes$ = this.store.pipe(select(bookmarksSelectors.getBookmarkNodes));
@@ -60,7 +60,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     this.store.pipe(select(bookmarksSelectors.getBookmarkInfo), take(1))
       .subscribe((bookmarkInfo) => {
         this.store.dispatch(new CreateBookmark({
-          ...bookmarkInfo, name: 'new bookmark', id: uuid()
+          ...bookmarkInfo, name: '', id: uuid()
         } as any));
       });
   }
