@@ -37,19 +37,19 @@ def vaultOverrides = [
 ]
 
 def secrets = [
+  'em-showcase-${env}': [
+    secret('ccd-user-email', 'CCD_CASEWORKER_E2E_EMAIL'),
+    secret('ccd-user-password', 'CCD_CASEWORKER_E2E_PASSWORD'),
+    secret('microservicekey-ccd-gw', 'MICROSERVICE_CCD_GW'),
+    secret('idam-client-secret', 'IDAM_CLIENT_SECRET')
+  ],
 
-  's2s-${env}'  : [
+  's2s-${env}'        : [
     secret('microservicekey-em-gw', 'S2S_KEY')
   ],
-  'rpa-${env}'  : [
+  'rpa-${env}'        : [
     secret('show-oauth2-token', 'IDAM_SECRET')
-  ],
-        'em-showcase-${env}': [
-          secret('ccd-user-email', 'CCD_CASEWORKER_E2E_EMAIL'),
-          secret('ccd-user-password', 'CCD_CASEWORKER_E2E_PASSWORD'),
-          secret('microservicekey-ccd-gw', 'MICROSERVICE_CCD_GW'),
-          secret('idam-client-secret', 'IDAM_CLIENT_SECRET')
-        ],
+  ]
 
 ]
 
