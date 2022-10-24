@@ -6,7 +6,7 @@ import { TreeNode } from 'angular-tree-component';
 import { DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmark.actions';
 import { Bookmark, BookmarkNode } from '../../../../store/models/bookmarks.interface';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmark.selectors';
-import { AnnotationSetState} from '../../../../store/reducers/annotations.reducer';
+import { AnnotationSetState } from '../../../../store/reducers/annotations.reducer';
 import { DocumentPages } from '../../../../store/reducers/document.reducer';
 import * as fromDocument from '../../../../store/selectors/document.selectors';
 import * as fromBookmarks from '../../../../store/reducers/bookmarks.reducer';
@@ -23,7 +23,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Output() goToDestination = new EventEmitter<any[]>();
 
-  pageLookup:  {[pageId: number]: DocumentPages } = {};
+  pageLookup: { [pageId: number]: DocumentPages } = {};
   editableBookmark: string;
   BOOKMARK_CHAR_LIMIT = 30;
 
@@ -34,7 +34,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   $subscription: Subscription;
 
-  constructor(private store: Store<fromBookmarks.BookmarksState|AnnotationSetState>) {}
+  constructor(private store: Store<fromBookmarks.BookmarksState | AnnotationSetState>) { }
 
   ngOnInit(): void {
     this.$subscription = this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
@@ -70,7 +70,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     }
     const toNext = this.getSibling(to, to.index + 1);
     if (toNext) {
-      movedBookmarks = [ ...movedBookmarks, { ...toNext, previous: node.id }];
+      movedBookmarks = [...movedBookmarks, { ...toNext, previous: node.id }];
     }
     this.store.dispatch(new MoveBookmark(movedBookmarks));
   }
@@ -89,11 +89,13 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   updateBookmark(bookmark: Bookmark, name) {
     const editedBookmark = {
-      ... bookmark,
+      ...bookmark,
       name
     };
-    this.store.dispatch(new UpdateBookmark(editedBookmark));
-    this.editableBookmark = undefined;
+    if (name) {
+      this.store.dispatch(new UpdateBookmark(editedBookmark));
+      this.editableBookmark = undefined;
+    }
   }
 
   goToBookmark(bookmark: Bookmark) {
