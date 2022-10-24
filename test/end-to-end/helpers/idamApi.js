@@ -33,7 +33,7 @@ async function getUserToken() {
     }
   });
 
-  logger.debug(JSON.parse(authTokenResponse)['access_token']);
+  logger.info("Token ::" + JSON.parse(authTokenResponse)['access_token']);
   return JSON.parse(authTokenResponse)['access_token'];
 }
 
