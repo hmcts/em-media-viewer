@@ -11,9 +11,8 @@ const {I} = inject();
 
 async function createCaseInCcd(dataLocation = 'ccd-case-basic-data.json') {
   const saveCaseResponse = await createECMCase(dataLocation).catch(error => {
-    console.log(error);
+    console.log(" I am breaking here++>::" + error);
   });
-  console.log(" Case Data::==>" + JSON.stringify(saveCaseResponse).toString())
   const caseId = JSON.parse(saveCaseResponse).id;
   logger.info('CCD Case==>:: %s', caseId);
   return caseId;
@@ -21,8 +20,12 @@ async function createCaseInCcd(dataLocation = 'ccd-case-basic-data.json') {
 
 async function createECMCase(dataLocation = 'ccd-case-basic-data.json') {
   const authToken = await idamApi.getUserToken();
+  console.log(" Auth Toke ==> ::" + authToken);
+
   const userId = await idamApi.getUserId(authToken);
+  console.log(" User ID ==> ::" + userId);
   const serviceToken = await s2sService.getServiceToken();
+  console.log(" Service Token ==> ::" + serviceToken);
 
   const ccdApiUrl = `http://ccd-data-store-api-${env}.service.core-compute-${env}.internal`;
   const ccdStartCasePath = `/caseworkers/${userId}/jurisdictions/EMPLOYMENT/case-types/Leeds/event-triggers/initiateCase/token`;
