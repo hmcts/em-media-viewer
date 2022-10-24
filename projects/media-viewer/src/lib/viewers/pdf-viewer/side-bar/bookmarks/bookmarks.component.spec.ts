@@ -41,7 +41,7 @@ describe('BookmarksComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookmarksComponent ],
+      declarations: [BookmarksComponent],
       providers: [
         provideMockStore({ initialState })
       ],
@@ -63,7 +63,7 @@ describe('BookmarksComponent', () => {
   it('should delete bookmark', () => {
     spyOn(store, 'dispatch');
     const bookmarkNode = {
-      parent: { children: [{}]},
+      parent: { children: [{}] },
       index: 0,
       data: { id: 'bookmarkId', children: [] }
     } as any;
@@ -75,11 +75,20 @@ describe('BookmarksComponent', () => {
 
   it('should update bookmark', () => {
     spyOn(store, 'dispatch');
-    const mockBookmark = {name: 'Bookmark name', id: 'id'} as any;
+    const mockBookmark = { name: 'Bookmark name', id: 'id' } as any;
     const newName = 'Bookmark new name';
     component.updateBookmark(mockBookmark, newName);
     mockBookmark.name = newName;
     expect(store.dispatch).toHaveBeenCalledWith(new fromActions.UpdateBookmark(mockBookmark));
+  });
+
+  it('should not update bookmark name is null or empty', () => {
+    spyOn(store, 'dispatch');
+    const mockBookmark = { name: 'Bookmark name', id: 'id' } as any;
+    const newName = '';
+    component.updateBookmark(mockBookmark, newName);
+    mockBookmark.name = newName;
+    expect(store.dispatch).not.toHaveBeenCalled();
   });
 
   it('should move bookmarks', () => {
