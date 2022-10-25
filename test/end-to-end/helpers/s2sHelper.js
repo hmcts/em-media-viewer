@@ -6,12 +6,10 @@ const logger = Logger.getLogger('helpers/s2sHelper.js');
 const env = testConfig.TestEnv;
 const {I} = inject();
 const {expect} = require('chai');
+const s2sBaseUrl = `http://rpe-service-auth-provider-${env}.service.core-compute-${env}.internal/testing-support/lease`;
 
 async function getServiceToken() {
   const serviceSecret = testConfig.TestS2SAuthSecret;
-  console.log ("S2S Secret" + testConfig.TestS2SAuthSecret );
-  const s2sBaseUrl = `http://rpe-service-auth-provider-${env}.service.core-compute-${env}.internal/testing-support/lease`;
-
   const oneTimePassword = require('otp')({
     secret: serviceSecret
   }).totp();
@@ -21,14 +19,16 @@ async function getServiceToken() {
   let s2sHeaders = {
     'Content-Type': 'application/json'
   };
+
   let s2sPayload = {
     'microservice': 'ccd_gw',
     'oneTimePassword': oneTimePassword
   }
+
   const s2sResponse = await I.sendPostRequest(s2sBaseUrl, s2sPayload, s2sHeaders);
   let serviceToken = s2sResponse.data;
   expect(s2sResponse.status).to.eql(200)
-  logger.info("S2S Service Token==>::" + serviceToken);
+  logger.info("S2S Token==>::" + serviceToken);
   return serviceToken;
 }
 
