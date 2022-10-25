@@ -22,12 +22,8 @@ async function createCaseInCcd(dataLocation = 'ccd-case-basic-data.json') {
 
 async function createECMCase(dataLocation = 'ccd-case-basic-data.json') {
   const authToken = await idamApi.getUserToken();
-  console.log(" Inside CCD Auth Token ==> ::" + authToken);
-
   const userId = await idamApi.getUserId(authToken);
-  console.log(" inside CCD User ID ==> ::" + userId);
   const serviceToken = await s2sService.getServiceToken();
-  console.log(" Inside CCD Service Token ==> ::" + serviceToken);
 
   const ccdApiUrl = `http://ccd-data-store-api-${env}.service.core-compute-${env}.internal`;
   const ccdStartCasePath = `/caseworkers/${userId}/jurisdictions/EMPLOYMENT/case-types/Leeds/event-triggers/initiateCase/token`;
@@ -71,7 +67,6 @@ async function createECMCase(dataLocation = 'ccd-case-basic-data.json') {
   const saveCaseResponse = await request(saveCaseOptions);
   return saveCaseResponse;
 }
-
 
 module.exports = {
   createCaseInCcd,
