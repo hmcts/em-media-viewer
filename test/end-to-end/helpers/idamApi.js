@@ -11,6 +11,7 @@ async function getUserToken() {
   const password = testConfig.TestEnvCWPassword;
   const redirectUri = testConfig.RedirectUri;
   const idamClientSecret = testConfig.TestIdamClientSecret;
+  console.log ("IDAM Client Secret" + testConfig.TestIdamClientSecret);
   const idamBaseUrl = testConfig.IdamBaseUrl;
   const idamCodePath = `/oauth2/authorize?response_type=code&client_id=xuiwebapp&redirect_uri=${redirectUri}`;
 
