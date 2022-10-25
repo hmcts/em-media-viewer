@@ -9,7 +9,8 @@ const {expect} = require('chai');
 
 async function getServiceToken() {
   const serviceSecret = testConfig.TestS2SAuthSecret;
-  const s2sBaseUrl = `http://rpe-service-auth-provider-${env}.service.core-compute-${env}.internal/lease`;
+  console.log ("S2S Secret" + testConfig.TestS2SAuthSecret );
+  const s2sBaseUrl = `http://rpe-service-auth-provider-${env}.service.core-compute-${env}.internal/testing-support/lease`;
 
   const oneTimePassword = require('otp')({
     secret: serviceSecret
