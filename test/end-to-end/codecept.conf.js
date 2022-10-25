@@ -35,7 +35,7 @@ exports.config = {
             require: './helpers/PuppeteerHelper.js'
         },
       REST: {
-        endpoint: ''
+        endpoint: 'https://idam-api.aat.platform.hmcts.net/loginUser'
       },
       JSONResponse: {
         requestHelper: 'REST',
