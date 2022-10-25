@@ -4,6 +4,7 @@ const request = requestModule.defaults();
 const testConfig = require('../../config.js');
 const logger = Logger.getLogger('helpers/idamApi.js');
 const env = testConfig.TestEnv;
+const {I} = inject();
 
 async function getUserToken() {
   const username = testConfig.TestEnvCWUser;
