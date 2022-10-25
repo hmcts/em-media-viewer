@@ -62,6 +62,8 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
   ]
 }
 
+println "Secret Name" + secretName
+
 withPipeline(type, product, component) {
   enableSlackNotifications(channel)
   overrideVaultEnvironments(vaultOverrides)

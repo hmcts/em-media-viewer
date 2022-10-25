@@ -6,52 +6,36 @@ const logger = Logger.getLogger('helpers/idamApi.js');
 const env = testConfig.TestEnv;
 const {I} = inject();
 
+const username = testConfig.TestEnvCWUser;
+const password = testConfig.TestEnvCWPassword;
+const idamBaseUrl = `https://idam-api.${env}.platform.hmcts.net/loginUser`;
+const getUserIdurl = `https://idam-api.${env}.platform.hmcts.net/details`;
+
 async function getUserToken() {
-  const username = testConfig.TestEnvCWUser;
-  const password = testConfig.TestEnvCWPassword;
-  const redirectUri = testConfig.RedirectUri;
-  const idamClientSecret = testConfig.TestIdamClientSecret;
-  console.log ("IDAM Client Secret" + testConfig.TestIdamClientSecret);
-  const idamBaseUrl = testConfig.IdamBaseUrl;
-  const idamCodePath = `/oauth2/authorize?response_type=code&client_id=xuiwebapp&redirect_uri=${redirectUri}`;
 
-  const codeResponse = await request.post({
-    uri: idamBaseUrl + idamCodePath,
-    headers: {
-      Authorization: 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64'),
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  }).catch(error => {
-    console.log(error);
-  });
-
-  const code = JSON.parse(codeResponse).code;
-  const idamAuthPath = `/oauth2/token?grant_type=authorization_code&client_id=xuiwebapp&client_secret=${idamClientSecret}&redirect_uri=${redirectUri}&code=${code}`;
-
-  const authTokenResponse = await request.post({
-    uri: idamBaseUrl + idamAuthPath,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  });
-
-  logger.info("Token ::" + JSON.parse(authTokenResponse)['access_token']);
-  return JSON.parse(authTokenResponse)['access_token'];
+  let payload = querystring.stringify({
+    username: `${username}`,
+    password: `${password}`,
+  })
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+  const authTokenResponse = await I.sendPostRequest(idamBaseUrl, payload, headers);
+  expect(authTokenResponse.status).to.eql(200);
+  const authToken = authTokenResponse.data.access_token;
+  logger.info ("IDAM Token::==>" +authToken);
+  return authToken;
 }
 
 async function getUserId(authToken) {
-  const idamBaseUrl = testConfig.IdamBaseUrl;
-  const idamDetailsPath = '/details';
-
-  const userDetails = await request.get({
-    uri: idamBaseUrl + idamDetailsPath,
-    headers: {
-      Authorization: `Bearer ${authToken}`
-    }
-  });
-
-  logger.debug(JSON.parse(userDetails).id);
-  return JSON.parse(userDetails).id;
+  let getIDAMUserID =
+    {
+      'Authorization': `Bearer ${authToken}`
+    };
+  const userDetails = await I.sendGetRequest(getUserIdurl, getIDAMUserID);
+  const userId = userDetails.data.id;
+  console.log("IDAM User ID:: =>" + userId);
+  return userId;
 }
 
 module.exports = {

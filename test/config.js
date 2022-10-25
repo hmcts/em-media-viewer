@@ -17,5 +17,5 @@ module.exports = {
   TestIdamClientSecret: process.env.IDAM_CLIENT_SECRET || '',
   TestS2SAuthSecret: process.env.MICROSERVICE_CCD_GW || '',
   // TestIdamClientSecret: process.env.IDAM_SECRET || '',
-  // TestS2SAuthSecret1: process.env.S2S_KEY || ''
+  // TestS2SAuthSecret: process.env.S2S_KEY || ''
 };
