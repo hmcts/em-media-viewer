@@ -2,6 +2,7 @@ const {Logger} = require('@hmcts/nodejs-logging');
 const requestModule = require('request-promise-native');
 const request = requestModule.defaults();
 const testConfig = require('../../config.js');
+const totp = require("totp-generator")
 const logger = Logger.getLogger('helpers/s2sHelper.js');
 const env = testConfig.TestEnv;
 const {I} = inject();
@@ -10,9 +11,12 @@ const s2sBaseUrl = `http://rpe-service-auth-provider-${env}.service.core-compute
 
 async function getServiceToken() {
   const serviceSecret = testConfig.TestS2SAuthSecret;
-  const oneTimePassword = require('otp')({
-    secret: serviceSecret
-  }).totp();
+
+  // const oneTimePassword = require('otp')({
+  //   secret: serviceSecret
+  // }).totp();
+
+  const oneTimePassword = totp(serviceSecret, {digits: 6, period: 30});
 
   console.log("checking OTP => :" + oneTimePassword);
 
