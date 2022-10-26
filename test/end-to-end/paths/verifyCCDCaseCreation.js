@@ -10,5 +10,5 @@ Scenario('Create CCD Case for MV...', async ({I}) => {
   caseNumber = await createCaseInCcd('test/end-to-end/data/ccd-case-basic-data.json');
   await submittedState(I, caseNumber);
 
-}).tag('@smoke')
+}).tag('@e2e')
   .retry(testConfig.TestRetryScenarios);
