@@ -1,7 +1,11 @@
 {
   "goButton": "form button[type=\"submit\"]",
   "addNewButton": "Add new",
+  "addNewBtn": "//button[text()='Add new']",
+  "documentsTab": "//div[text()='Documents']",
   "shortDescription": "Upload Document Check",
+  "uploadImageDesc": "Upload Image Check",
   "continue": "Continue",
-  "submit": "Submit"
+  "submit": "Submit",
+  "submitButton": "//button[text()='Submit']"
 }
