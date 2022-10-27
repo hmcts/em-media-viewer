@@ -8,13 +8,13 @@ const s2sService = require('./s2sHelper');
 const logger = Logger.getLogger('helpers/ccdDataStoreApi.js');
 const env = testConfig.TestEnv;
 const {I} = inject();
+let caseId;
 
 async function createCaseInCcd(dataLocation = 'ccd-case-basic-data.json') {
   const saveCaseResponse = await createECMCase(dataLocation).catch(error => {
     console.log(error);
   });
-  const caseId = JSON.parse(saveCaseResponse).id;
-  logger.info('CCD Case==>:: %s', caseId);
+  caseId = JSON.parse(saveCaseResponse).id;
   return caseId;
 }
 
@@ -65,7 +65,6 @@ async function createECMCase(dataLocation = 'ccd-case-basic-data.json') {
   const saveCaseResponse = await request(saveCaseOptions);
   return saveCaseResponse;
 }
-
 
 module.exports = {
   createCaseInCcd,
