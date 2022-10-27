@@ -4,7 +4,6 @@ const commonConfig = require('../../data/commonConfig.json');
 module.exports = async function (searchKeyword, numberOfFindings) {
 
   const I = this;
-  await I.click(commonConfig.documentsTab);
   await I.click(commonConfig.examplePdfLink);
   await I.wait(5);
   await I.switchToNextTab(1);

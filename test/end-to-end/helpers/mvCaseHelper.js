@@ -24,9 +24,8 @@ async function uploadWorDoc(I, caseId, eventName) {
   await I.uploadWordDoc();
 }
 
-async function mediaViewerContentSearch(I, caseId, searchKeyword, noOfFindings) {
-  await I.authenticateWithIdam();
-  await I.amOnPage('/case-details/' + caseId);
+async function mediaViewerContentSearch(I, caseId, eventName, searchKeyword, noOfFindings) {
+  await uploadPdf(I, caseId, eventName);
   await I.executeMVSearchContent(searchKeyword, noOfFindings);
 }
 
