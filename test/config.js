@@ -15,5 +15,5 @@ module.exports = {
   TestForAccessibility: process.env.TESTS_FOR_ACCESSIBILITY === 'true',
   TestForCrossBrowser: process.env.TESTS_FOR_CROSS_BROWSER === 'true',
   TestIdamClientSecret: process.env.IDAM_CLIENT_SECRET || '',
-  TestS2SAuthSecret: process.env.SERVICE_SECRET || '',
+  TestS2SAuthSecret: process.env.MICROSERVICE_CCD_GW || ''
 };
