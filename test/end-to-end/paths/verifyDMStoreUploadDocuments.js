@@ -1,0 +1,28 @@
+const testConfig = require('./../../config');
+const {createCaseInCcd} = require("../helpers/ccdDataStoreApi");
+const {ccdEvents} = require('../pages/common/constants.js');
+const {uploadPdf, uploadJpeg, uploadWorDoc, submittedState} = require("../helpers/ccdCaseHelper");
+let caseId;
+
+Feature('DM Store Upload Documents Scenarios');
+BeforeSuite(async ({I}) => caseId = await createCaseInCcd('test/end-to-end/data/ccd-case-basic-data.json'));
+
+Scenario('Upload PDF Document', async ({I}) => {
+  await uploadPdf(I, caseId, ccdEvents.UPLOAD_DOCUMENT);
+
+}).tag('@ci')
+  .tag('@nightly')
+  .retry(testConfig.TestRetryScenarios);
+
+Scenario('Dm Store Upload Image Scenario', async ({I}) => {
+  await uploadJpeg(I, caseId, ccdEvents.UPLOAD_DOCUMENT);
+
+}).tag('@ci')
+  .tag('@nightly')
+  .retry(testConfig.TestRetryScenarios);
+
+Scenario('Dm Store Upload Word Document Scenario', async ({I}) => {
+  await uploadWorDoc(I, caseId, ccdEvents.UPLOAD_DOCUMENT);
+
+}).tag('@nightly')
+  .retry(testConfig.TestRetryScenarios);
