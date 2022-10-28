@@ -15,6 +15,7 @@ async function createCaseInCcd(dataLocation = 'ccd-case-basic-data.json') {
     console.log(error);
   });
   caseId = JSON.parse(saveCaseResponse).id;
+  logger.info('CCD Case==>:: %s', caseId);
   return caseId;
 }
 
