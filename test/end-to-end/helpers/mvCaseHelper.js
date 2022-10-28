@@ -24,9 +24,15 @@ async function uploadWorDoc(I, caseId, eventName) {
   await I.uploadWordDoc();
 }
 
-async function mediaViewerContentSearch(I, caseId, eventName, searchKeyword, noOfFindings) {
+async function mvContentSearchTest(I, caseId, eventName, searchKeyword, noOfFindings) {
   await uploadPdf(I, caseId, eventName);
-  await I.executeMVSearchContent(searchKeyword, noOfFindings);
+  await I.executeContentSearchTest(searchKeyword, noOfFindings);
+}
+
+async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, searchKeyword, noOfFindings) {
+  await I.authenticateWithIdam();
+  await I.amOnPage('/case-details/' + caseId);
+  await I.navigateSearchResultsTest(searchKeyword, noOfFindings);
 }
 
 module.exports = {
@@ -34,5 +40,6 @@ module.exports = {
   uploadPdf,
   uploadJpeg,
   uploadWorDoc,
-  mediaViewerContentSearch
+  mvContentSearchTest,
+  navigateSearchResultsUsingPreviousNextLinksTest
 }
