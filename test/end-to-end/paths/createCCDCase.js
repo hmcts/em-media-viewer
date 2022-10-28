@@ -1,6 +1,6 @@
 const testConfig = require('./../../config');
 const {createCaseInCcd} = require("../helpers/ccdDataStoreApi");
-const {submittedState} = require("../helpers/ccdCaseHelper");
+const {submittedState} = require("../helpers/mvCaseHelper");
 let caseNumber;
 
 Feature('Create CCD Case ');

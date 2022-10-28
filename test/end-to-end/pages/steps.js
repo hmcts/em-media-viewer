@@ -9,6 +9,7 @@ module.exports = () => {
     chooseNextStep: steps.nextStep.nextStep,
     uploadPdfDoc: steps.uploadDocument.uploadPdfDocument,
     uploadImage: steps.uploadDocument.uploadImageJpeg,
-    uploadWordDoc: steps.uploadDocument.uploadWordDocument
+    uploadWordDoc: steps.uploadDocument.uploadWordDocument,
+    executeMVSearchContent: steps.search.search
   });
 };

@@ -7,5 +7,10 @@
   "uploadImageDesc": "Upload Image Check",
   "continue": "Continue",
   "submit": "Submit",
-  "submitButton": "//button[text()='Submit']"
+  "submitButton": "//button[text()='Submit']",
+  "tabName": "#Documents",
+  "examplePdfLink": "//a[text()=\" example.pdf \"]",
+  "searchIcon": "#mvSearchBtn",
+  "searchKeyword": "SSCS",
+  "searchButton": "//button[text()='Search']"
 }

@@ -7,7 +7,13 @@ const states = {
   ACCEPTED: 'Accepted'
 };
 
+const mvData = {
+  "CONTENT_SEARCH_KEYWORD": 'SSCS',
+  "NUMBER_OF_FINDINGS": 'Found 1 of 4'
+};
+
 module.exports = {
   ccdEvents,
-  states
+  states,
+  mvData
 };

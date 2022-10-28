@@ -24,9 +24,15 @@ async function uploadWorDoc(I, caseId, eventName) {
   await I.uploadWordDoc();
 }
 
+async function mediaViewerContentSearch(I, caseId, eventName, searchKeyword, noOfFindings) {
+  await uploadPdf(I, caseId, eventName);
+  await I.executeMVSearchContent(searchKeyword, noOfFindings);
+}
+
 module.exports = {
   submittedState,
   uploadPdf,
   uploadJpeg,
-  uploadWorDoc
+  uploadWorDoc,
+  mediaViewerContentSearch
 }
