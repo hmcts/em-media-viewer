@@ -10,6 +10,7 @@ module.exports = () => {
     uploadPdfDoc: steps.uploadDocument.uploadPdfDocument,
     uploadImage: steps.uploadDocument.uploadImageJpeg,
     uploadWordDoc: steps.uploadDocument.uploadWordDocument,
-    executeMVSearchContent: steps.search.search
+    executeContentSearchTest: steps.search.contentSearch,
+    navigateSearchResultsTest:steps.search.navigateSearchResults
   });
 };
