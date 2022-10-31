@@ -35,11 +35,18 @@ async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, search
   await I.navigateSearchResultsTest(searchKeyword, noOfFindings);
 }
 
+async function searchResultsNotFoundTest(I, caseId, eventName, searchKeyword, noOfFindings) {
+  await I.authenticateWithIdam();
+  await I.amOnPage('/case-details/' + caseId);
+  await I.executeContentSearchTest(searchKeyword, noOfFindings);
+}
+
 module.exports = {
   submittedState,
   uploadPdf,
   uploadJpeg,
   uploadWorDoc,
   mvContentSearchTest,
+  searchResultsNotFoundTest,
   navigateSearchResultsUsingPreviousNextLinksTest
 }

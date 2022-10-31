@@ -2,7 +2,7 @@ const testConfig = require('./../../config');
 const {navigateSearchResultsUsingPreviousNextLinksTest} = require("../helpers/mvCaseHelper");
 const {createCaseInCcd} = require("../helpers/ccdDataStoreApi");
 const {ccdEvents, mvData} = require('../pages/common/constants.js');
-const {mvContentSearchTest} = require("../helpers/mvCaseHelper");
+const {mvContentSearchTest, searchResultsNotFoundTest} = require("../helpers/mvCaseHelper");
 let caseId;
 
 Feature('Search Feature');
@@ -22,3 +22,9 @@ Scenario('Navigate search results using previous/next links ', async ({I}) => {
 }).tag('@ci')
   .tag('@nightly')
   .retry(testConfig.TestRetryScenarios);
+
+Scenario('Search results not found scenario', async ({I}) => {
+  await searchResultsNotFoundTest(I, '1666937695867834', ccdEvents.UPLOAD_DOCUMENT, mvData.SEARCH_RESULTS_NOT_FOUND, mvData.NO_RESULTS_FOUND);
+
+}).tag('@nightly')
+  .retry(testConfig.TestRetryScenarios)
