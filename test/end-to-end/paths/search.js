@@ -24,7 +24,7 @@ Scenario('Navigate search results using previous/next links ', async ({I}) => {
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Search results not found scenario', async ({I}) => {
-  await searchResultsNotFoundTest(I, '1666937695867834', ccdEvents.UPLOAD_DOCUMENT, mvData.SEARCH_RESULTS_NOT_FOUND, mvData.NO_RESULTS_FOUND);
+  await searchResultsNotFoundTest(I, caseId, ccdEvents.UPLOAD_DOCUMENT, mvData.SEARCH_RESULTS_NOT_FOUND, mvData.NO_RESULTS_FOUND);
 
 }).tag('@nightly')
   .retry(testConfig.TestRetryScenarios)
