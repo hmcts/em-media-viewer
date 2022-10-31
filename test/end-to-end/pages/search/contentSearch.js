@@ -1,9 +1,15 @@
 'use strict'
 const commonConfig = require('../../data/commonConfig.json');
+const testConfig = require("../../../config");
+const {mvData} = require("../common/constants");
 
 module.exports = async function (searchKeyword, numberOfFindings) {
 
   const I = this;
+  if (mvData.SEARCH_RESULTS_NOT_FOUND === searchKeyword) {
+    await I.click(commonConfig.documentsTab);
+    await I.waitForText('example.pdf', testConfig.TestTimeToWaitForText);
+  }
   await I.click(commonConfig.examplePdfLink);
   await I.wait(5);
   await I.switchToNextTab(1);
