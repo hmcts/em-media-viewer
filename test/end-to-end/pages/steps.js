@@ -4,13 +4,14 @@ const requireDirectory = require('require-directory');
 const steps = requireDirectory(module);
 
 module.exports = () => {
-  return actor({
-    authenticateWithIdam: steps.idam.signIn,
-    chooseNextStep: steps.nextStep.nextStep,
-    uploadPdfDoc: steps.uploadDocument.uploadPdfDocument,
-    uploadImage: steps.uploadDocument.uploadImageJpeg,
-    uploadWordDoc: steps.uploadDocument.uploadWordDocument,
-    executeContentSearchTest: steps.search.contentSearch,
-    navigateSearchResultsTest:steps.search.navigateSearchResults
-  });
+    return actor({
+        authenticateWithIdam: steps.idam.signIn,
+        chooseNextStep: steps.nextStep.nextStep,
+        uploadPdfDoc: steps.uploadDocument.uploadPdfDocument,
+        uploadImage: steps.uploadDocument.uploadImageJpeg,
+        uploadWordDoc: steps.uploadDocument.uploadWordDocument,
+        executeContentSearchTest: steps.search.contentSearch,
+        navigateSearchResultsTest: steps.search.navigateSearchResults,
+        pdfViewerZoomTest: steps.zoom.pdfViewerZoom
+    });
 };

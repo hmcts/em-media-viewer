@@ -1,3 +1,5 @@
+const {mvData} = require("../pages/common/constants");
+
 async function submittedState(I, caseId) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -41,6 +43,17 @@ async function searchResultsNotFoundTest(I, caseId, eventName, searchKeyword, no
   await I.executeContentSearchTest(searchKeyword, noOfFindings);
 }
 
+async function pdfViewerZoomInOutTest(I, caseId, eventName, uploadDocType) {
+  if (uploadDocType === mvData.PDF_DOCUMENT) {
+    await uploadPdf(I, caseId, eventName);
+    await I.pdfViewerZoomTest();
+
+  } else {
+    await uploadJpeg(I, caseId, eventName);
+    await I.pdfViewerZoomTest();
+  }
+}
+
 module.exports = {
   submittedState,
   uploadPdf,
@@ -48,5 +61,6 @@ module.exports = {
   uploadWorDoc,
   mvContentSearchTest,
   searchResultsNotFoundTest,
+  pdfViewerZoomInOutTest,
   navigateSearchResultsUsingPreviousNextLinksTest
 }

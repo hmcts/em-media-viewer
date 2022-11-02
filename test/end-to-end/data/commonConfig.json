@@ -6,6 +6,8 @@
   "searchButton": "//button[text()='Search']",
   "nextLink": "//a[text()='Next']",
   "prevLink": "//a[text()='Prev']",
+  "zoomOut": "#mvPlusBtn",
+  "zoomIn": "#mvMinusBtn",
   "addNewButton": "Add new",
   "shortDescription": "Upload Document Check",
   "uploadImageDesc": "Upload Image Check",
