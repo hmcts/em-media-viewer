@@ -10,8 +10,7 @@ BeforeSuite(async ({I}) => caseId = await createCaseInCcd('test/end-to-end/data/
 Scenario('Upload PDF Document', async ({I}) => {
   await uploadPdf(I, caseId, ccdEvents.UPLOAD_DOCUMENT);
 
-}).tag('@99')
-  .tag('@nightly')
+}).tag('@nightly')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Dm Store Upload Image Scenario', async ({I}) => {
