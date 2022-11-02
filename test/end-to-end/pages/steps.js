@@ -11,6 +11,7 @@ module.exports = () => {
     uploadImage: steps.uploadDocument.uploadImageJpeg,
     uploadWordDoc: steps.uploadDocument.uploadWordDocument,
     executeContentSearchTest: steps.search.contentSearch,
-    navigateSearchResultsTest:steps.search.navigateSearchResults
+    navigateSearchResultsTest:steps.search.navigateSearchResults,
+    navigateSearchResultsUsingEnterTest:steps.search.searchResultsNavigationUsingEnter
   });
 };
