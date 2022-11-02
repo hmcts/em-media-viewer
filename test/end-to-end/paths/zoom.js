@@ -18,6 +18,5 @@ Scenario('PDF Viewer Zoom In/Out', async ({I}) => {
 Scenario('Image Viewer Zoom In/Out', async ({I}) => {
   await pdfViewerZoomInOutTest(I, caseId, ccdEvents.UPLOAD_DOCUMENT, mvData.IMAGE_DOCUMENT);
 
-}).tag('@ci')
-  .tag('@nightly')
+}).tag('@nightly')
   .retry(testConfig.TestRetryScenarios)
