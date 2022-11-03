@@ -12,6 +12,7 @@ module.exports = () => {
     uploadWordDoc: steps.uploadDocument.uploadWordDocument,
     executeContentSearchTest: steps.search.contentSearch,
     searchResultsNavigationUsingPreviousAndNextLinksTest:steps.search.navigateSearchResults,
-    navigateSearchResultsUsingEnterTest:steps.search.searchResultsNavigationUsingEnter
+    navigateSearchResultsUsingEnterTest:steps.search.searchResultsNavigationUsingEnter,
+    pdfViewerZoomTest: steps.zoom.pdfViewerZoom
   });
 };
