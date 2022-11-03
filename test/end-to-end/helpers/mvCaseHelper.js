@@ -26,7 +26,7 @@ async function uploadWorDoc(I, caseId, eventName) {
   await I.uploadWordDoc();
 }
 
-async function mvContentSearchTest(I, caseId, eventName, searchKeyword, noOfFindings) {
+async function contentSearchTest(I, caseId, eventName, searchKeyword, noOfFindings) {
   await uploadPdf(I, caseId, eventName);
   await I.executeContentSearchTest(searchKeyword, noOfFindings);
 }
@@ -34,13 +34,19 @@ async function mvContentSearchTest(I, caseId, eventName, searchKeyword, noOfFind
 async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, searchKeyword, noOfFindings) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
-  await I.navigateSearchResultsTest(searchKeyword, noOfFindings);
+  await I.searchResultsNavigationUsingPreviousAndNextLinksTest(searchKeyword, noOfFindings);
 }
 
 async function searchResultsNotFoundTest(I, caseId, eventName, searchKeyword, noOfFindings) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
   await I.executeContentSearchTest(searchKeyword, noOfFindings);
+}
+
+async function enterShouldJumpViewerToNextSearchResultTest(I, caseId, searchKeyword, noOfFindings) {
+  await I.authenticateWithIdam();
+  await I.amOnPage('/case-details/' + caseId);
+  await I.navigateSearchResultsUsingEnterTest(searchKeyword, noOfFindings);
 }
 
 async function pdfViewerZoomInOutTest(I, caseId, eventName, uploadDocType) {
@@ -59,8 +65,9 @@ module.exports = {
   uploadPdf,
   uploadJpeg,
   uploadWorDoc,
-  mvContentSearchTest,
+  contentSearchTest,
   searchResultsNotFoundTest,
+  enterShouldJumpViewerToNextSearchResultTest,
   pdfViewerZoomInOutTest,
   navigateSearchResultsUsingPreviousNextLinksTest
 }
