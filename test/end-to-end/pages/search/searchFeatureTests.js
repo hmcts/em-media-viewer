@@ -3,11 +3,11 @@ const commonConfig = require('../../data/commonConfig.json');
 const testConfig = require("../../../config");
 const {mvData} = require("../common/constants");
 
-let contentSearchTest = async (searchKeyword, numberOfFindings) => {
+let contentSearch = async (searchKeyword, numberOfFindings) => {
   await documentTabToClickSearchButton(searchKeyword, numberOfFindings);
 };
 
-let navigateSearchResultsUsingPreviousAndNextLinksTest = async (searchKeyword, numberOfFindings) => {
+let navigateSearchResultsUsingPreviousAndNextLinks = async (searchKeyword, numberOfFindings) => {
   const I = this;
   await documentTabToClickSearchButton(searchKeyword, numberOfFindings);
 
@@ -18,12 +18,12 @@ let navigateSearchResultsUsingPreviousAndNextLinksTest = async (searchKeyword, n
   await I.seeTextEquals(mvData.NUMBER_OF_FINDINGS, '#findResultsCount');
 };
 
-let EnterShouldJumpViewerToNextSearchResultTest = async (searchKeyword, numberOfFindings) => {
+let EnterShouldJumpViewerToNextSearchResult = async (searchKeyword, numberOfFindings) => {
   const I = this;
   await documentTabToClickSearchButton(searchKeyword, numberOfFindings);
 
   await I.pressKey('Enter');
-  await I.wait(5);
+  await I.wait(testConfig.TestTimeToWait);
   await I.seeTextEquals(mvData.VALIDATE_SEARCH_RESULTS_COUNT, '#findResultsCount');
 };
 
@@ -34,7 +34,7 @@ let documentTabToClickSearchButton = async (searchKeyword, numberOfFindings) => 
   await I.waitForText('example.pdf', testConfig.TestTimeToWaitForText);
 
   await I.click(commonConfig.examplePdfLink);
-  await I.wait(5);
+  await I.wait(testConfig.TestTimeToWait);
   await I.switchToNextTab(1);
   let currentPage = await I.grabCurrentUrl();
   console.log("Current Page Url=>::" + currentPage);
@@ -46,7 +46,7 @@ let documentTabToClickSearchButton = async (searchKeyword, numberOfFindings) => 
 };
 
 module.exports = {
-  contentSearchTest,
-  EnterShouldJumpViewerToNextSearchResultTest,
-  navigateSearchResultsUsingPreviousAndNextLinksTest
+  contentSearch,
+  EnterShouldJumpViewerToNextSearchResult,
+  navigateSearchResultsUsingPreviousAndNextLinks
 };
