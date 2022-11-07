@@ -10,9 +10,9 @@ module.exports = () => {
     uploadPdfDoc: steps.uploadDocument.uploadPdfDocument,
     uploadImage: steps.uploadDocument.uploadImageJpeg,
     uploadWordDoc: steps.uploadDocument.uploadWordDocument,
-    executeContentSearchTest: steps.search.contentSearch,
-    searchResultsNavigationUsingPreviousAndNextLinksTest:steps.search.navigateSearchResults,
-    navigateSearchResultsUsingEnterTest:steps.search.searchResultsNavigationUsingEnter,
+    executeContentSearchTest: steps.search.searchFeatureTests,
+    searchResultsNavigationUsingPreviousAndNextLinksTest: steps.search.searchFeatureTests,
+    navigateSearchResultsUsingEnterTest: steps.search.searchFeatureTests,
     pdfViewerZoomTest: steps.zoom.pdfViewerZoom
   });
 };

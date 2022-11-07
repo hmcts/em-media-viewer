@@ -27,7 +27,7 @@ Scenario('Navigate search results using previous/next links ', async ({I}) => {
 Scenario('Search results not found scenario', async ({I}) => {
   await searchResultsNotFoundTest(I, caseId, ccdEvents.UPLOAD_DOCUMENT, mvData.SEARCH_RESULTS_NOT_FOUND, mvData.NO_RESULTS_FOUND);
 
-}).tag('@nightly')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios)
 
 Scenario('Enter should jump viewer to next search result', async ({I}) => {
