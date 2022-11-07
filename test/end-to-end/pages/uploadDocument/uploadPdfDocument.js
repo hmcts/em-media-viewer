@@ -12,6 +12,6 @@ module.exports = async function () {
   await I.fillField('#documentCollection_0_shortDescription', commonConfig.shortDescription);
   await I.click(commonConfig.continue);
   await I.click(commonConfig.submitButton);
-  await I.click(commonConfig.documentsTab);
-  await I.waitForText('example.pdf', testConfig.TestTimeToWaitForText);
+  // await I.click(commonConfig.documentsTab);
+  // await I.waitForText('example.pdf', testConfig.TestTimeToWaitForText);
 };
