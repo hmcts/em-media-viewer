@@ -11,7 +11,7 @@ properties([
   ]),
   parameters([
     string(name: 'ENVIRONMENT', defaultValue: 'aat', description: 'Environment to test'),
-    string(name: 'ExUI_URL_TO_TEST', defaultValue: 'https://manage-case.aat.platform.hmcts.net/', description: 'The ExUI Url you want to run Media Viewer end to end tests'),
+    string(name: 'ExUI_URL_TO_TEST', defaultValue: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer', description: 'The ExUI Url you want to run Media Viewer end to end tests'),
     string(name: 'IDAM_API_URL', defaultValue: 'https://idam-api.aat.platform.hmcts.net', description: 'The Url of IDAM'),
     string(name: 'S2S_PROVIDER_URL', defaultValue: 'http://rpe-service-auth-provider-aat.service.core-compute-aat.internal', description: 'The Url of S2S provider'),
     string(name: 'CCD_DATA_STORE_URL', defaultValue: 'http://ccd-data-store-api-aat.service.core-compute-aat.internal', description: 'The Url of ccd data store'),
@@ -35,13 +35,13 @@ def vaultOverrides = [
 ]
 
 def secrets = [
-  's2s-${params.ENVIRONMENT}': [
+  "s2s-${params.ENVIRONMENT}": [
     secret('microservicekey-em-gw', 'S2S_KEY')
   ],
-  'rpa-${params.ENVIRONMENT}': [
+  "rpa-${params.ENVIRONMENT}": [
     secret('show-oauth2-token', 'IDAM_SECRET')
   ],
-  'em-showcase-${params.ENVIRONMENT}': [
+  "em-showcase-${params.ENVIRONMENT}": [
     secret('ccd-user-email', 'CCD_CASEWORKER_E2E_EMAIL'),
     secret('ccd-user-password', 'CCD_CASEWORKER_E2E_PASSWORD'),
     secret('microservicekey-ccd-gw', 'MICROSERVICE_CCD_GW'),
@@ -73,7 +73,7 @@ withNightlyPipeline(type, product, component) {
   enableFullFunctionalTest(60)
   enableCrossBrowserTest()
 
-  env.TEST_URL = 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer'
+//  env.TEST_URL = 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer'
 
   after('checkout') {
     sh ("rm -rf node_modules")
