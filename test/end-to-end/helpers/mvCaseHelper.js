@@ -26,37 +26,39 @@ async function uploadWorDoc(I, caseId, eventName) {
   await I.uploadWordDoc();
 }
 
-async function contentSearchTest(I, caseId, eventName, searchKeyword, noOfFindings) {
+async function contentSearch(I, caseId, eventName, searchKeyword, noOfFindings) {
   await uploadPdf(I, caseId, eventName);
-  await I.executeContentSearchTest(searchKeyword, noOfFindings);
+  await I.executeCommonSteps();
+  await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
-async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, searchKeyword, noOfFindings) {
+async function navigateSearchResultsUsingPreviousNextLinks(I, caseId, searchKeyword, noOfFindings) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
-  await I.searchResultsNavigationUsingPreviousAndNextLinksTest(searchKeyword, noOfFindings);
+  await I.executeCommonSteps();
+  await I.searchResultsNavigationUsingPreviousAndNextLinks(searchKeyword, noOfFindings);
 }
 
-async function searchResultsNotFoundTest(I, caseId, eventName, searchKeyword, noOfFindings) {
+async function searchResultsNotFound(I, caseId, eventName, searchKeyword, noOfFindings) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
-  await I.executeContentSearchTest(searchKeyword, noOfFindings);
+  await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
-async function enterShouldJumpViewerToNextSearchResultTest(I, caseId, searchKeyword, noOfFindings) {
+async function enterShouldJumpViewerToNextSearchResultsScenario(I, caseId, searchKeyword, noOfFindings) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
-  await I.navigateSearchResultsUsingEnterTest(searchKeyword, noOfFindings);
+  await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
 }
 
-async function pdfViewerZoomInOutTest(I, caseId, eventName, uploadDocType) {
+async function pdfViewerZoomInOut(I, caseId, eventName, uploadDocType) {
   if (uploadDocType === mvData.PDF_DOCUMENT) {
     await uploadPdf(I, caseId, eventName);
-    await I.pdfViewerZoomTest();
+    await I.executePdfViewerZoom();
 
   } else {
     await uploadJpeg(I, caseId, eventName);
-    await I.pdfViewerZoomTest();
+    await I.executePdfViewerZoom();
   }
 }
 
@@ -65,9 +67,9 @@ module.exports = {
   uploadPdf,
   uploadJpeg,
   uploadWorDoc,
-  contentSearchTest,
-  searchResultsNotFoundTest,
-  enterShouldJumpViewerToNextSearchResultTest,
-  pdfViewerZoomInOutTest,
-  navigateSearchResultsUsingPreviousNextLinksTest
+  contentSearch,
+  searchResultsNotFound,
+  pdfViewerZoomInOut,
+  navigateSearchResultsUsingPreviousNextLinks,
+  enterShouldJumpViewerToNextSearchResultsScenario
 }
