@@ -6,23 +6,17 @@ async function submittedState(I, caseId) {
 }
 
 async function uploadPdf(I, caseId, eventName) {
-  await I.authenticateWithIdam();
-  await I.amOnPage('/case-details/' + caseId);
-  await I.chooseNextStep(eventName, 3);
+  await uploadDocumentEvent(I, caseId, eventName);
   await I.uploadPdfDoc();
 }
 
 async function uploadJpeg(I, caseId, eventName) {
-  await I.authenticateWithIdam();
-  await I.amOnPage('/case-details/' + caseId);
-  await I.chooseNextStep(eventName, 3);
+  await uploadDocumentEvent(I, caseId, eventName);
   await I.uploadImage();
 }
 
 async function uploadWorDoc(I, caseId, eventName) {
-  await I.authenticateWithIdam();
-  await I.amOnPage('/case-details/' + caseId);
-  await I.chooseNextStep(eventName, 3);
+  await uploadDocumentEvent(I, caseId, eventName);
   await I.uploadWordDoc();
 }
 
@@ -71,6 +65,12 @@ async function openPDFDocInMediaViewer(I, caseId) {
   await I.openPdfInMediaViewer();
 }
 
+async function uploadDocumentEvent(I, caseId, eventName) {
+  await I.authenticateWithIdam();
+  await I.amOnPage('/case-details/' + caseId);
+  await I.chooseNextStep(eventName, 3)
+}
+
 module.exports = {
   submittedState,
   uploadPdf,
@@ -81,6 +81,7 @@ module.exports = {
   pdfViewerZoomInOut,
   pdfViewerPageNavigationTest,
   openPDFDocInMediaViewer,
+  uploadDocumentEvent,
   navigateSearchResultsUsingPreviousNextLinks,
   enterShouldJumpViewerToNextSearchResultsScenario
 }

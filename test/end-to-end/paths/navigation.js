@@ -1,6 +1,6 @@
 const testConfig = require('./../../config');
 const {createCaseInCcd} = require("../helpers/ccdDataStoreApi");
-const {ccdEvents, mvData} = require('../pages/common/constants.js');
+const {ccdEvents} = require('../pages/common/constants.js');
 const {pdfViewerPageNavigationTest} = require("../helpers/mvCaseHelper");
 let caseId;
 
