@@ -14,6 +14,7 @@ module.exports = () => {
     searchResultsNavigationUsingPreviousAndNextLinks: steps.search.searchResultsNavigationUsingNextAndPrevious,
     enterShouldJumpViewerToNextSearchResult: steps.search.enterShouldJumpViewerToNextSearchResults,
     executePdfViewerZoom: steps.zoom.pdfViewerZoom,
-    executeCommonSteps: steps.commonSteps.stepsFromDocumentTabToSearch
+    openPdfInMediaViewer: steps.commonSteps.viewPdfDocInMediaViewer,
+    pdfViewerPageNavigation:steps.navigation.pdfViewerNavigation
   });
 };
