@@ -8,7 +8,7 @@ module.exports = {
   TestShowBrowserWindow: process.env.SHOW_BROWSER_WINDOW || false,
   TestRetryFeatures: process.env.RETRY_FEATURES || 0,
   TestRetryScenarios: process.env.RETRY_SCENARIOS || 2,
-  TestPathToRun: process.env.E2E_TEST_PATH || './paths/**/*.js',
+  TestPathToRun: process.env.E2E_TEST_PATH || './mvFeatures/**/*.js',
   TestOutputDir: process.env.E2E_OUTPUT_DIR || './functional-output',
   PageLoading: parseInt(process.env.E2E_TEST_TIME_TO_WAIT_FOR_PAGE_LOADING || 60),
   TestTimeToWaitForText: parseInt(process.env.E2E_TEST_TIME_TO_WAIT_FOR_TEXT || 30),

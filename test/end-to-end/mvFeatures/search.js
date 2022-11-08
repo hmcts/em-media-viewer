@@ -17,7 +17,7 @@ Scenario('Search Text in Document & validate total number of findings count', as
   .tag('@nightly')
   .retry(testConfig.TestRetryScenarios);
 
-Scenario('Navigate search results using previous/next links ', async ({I}) => {
+Scenario('Navigate search results using previous/next link ', async ({I}) => {
   await navigateSearchResultsUsingPreviousNextLinks(I, caseId, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS);
 
 }).tag('@ci')
