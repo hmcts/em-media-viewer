@@ -20,23 +20,23 @@ async function uploadWorDoc(I, caseId, eventName) {
   await I.uploadWordDoc();
 }
 
-async function contentSearch(I, caseId, eventName, searchKeyword, noOfFindings) {
+async function contentSearchTest(I, caseId, eventName, searchKeyword, noOfFindings) {
   await uploadPdf(I, caseId, eventName);
   await I.openPdfInMediaViewer();
   await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
-async function navigateSearchResultsUsingPreviousNextLinks(I, caseId, searchKeyword, noOfFindings) {
+async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, searchKeyword, noOfFindings) {
   await openPDFDocInMediaViewer(I, caseId);
   await I.searchResultsNavigationUsingPreviousAndNextLinks(searchKeyword, noOfFindings);
 }
 
-async function searchResultsNotFound(I, caseId, eventName, searchKeyword, noOfFindings) {
+async function searchResultsNotFoundTest(I, caseId, eventName, searchKeyword, noOfFindings) {
   await openPDFDocInMediaViewer(I, caseId);
   await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
-async function enterShouldJumpViewerToNextSearchResultsScenario(I, caseId, searchKeyword, noOfFindings) {
+async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKeyword, noOfFindings) {
   await openPDFDocInMediaViewer(I, caseId);
   await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
 }
@@ -46,7 +46,7 @@ async function pdfViewerPageNavigationTest(I, caseId) {
   await I.pdfViewerPageNavigation();
 }
 
-async function pdfViewerZoomInOut(I, caseId, eventName, uploadDocType) {
+async function pdfViewerZoomInOutTest(I, caseId, eventName, uploadDocType) {
   if (uploadDocType === mvData.PDF_DOCUMENT) {
     await uploadPdf(I, caseId, eventName);
     await I.openPdfInMediaViewer();
@@ -76,12 +76,12 @@ module.exports = {
   uploadPdf,
   uploadJpeg,
   uploadWorDoc,
-  contentSearch,
-  searchResultsNotFound,
-  pdfViewerZoomInOut,
+  contentSearchTest,
+  searchResultsNotFoundTest,
+  pdfViewerZoomInOutTest,
   pdfViewerPageNavigationTest,
   openPDFDocInMediaViewer,
   uploadDocumentEvent,
-  navigateSearchResultsUsingPreviousNextLinks,
-  enterShouldJumpViewerToNextSearchResultsScenario
+  navigateSearchResultsUsingPreviousNextLinksTest,
+  enterShouldJumpViewerToNextSearchResultsTest
 }

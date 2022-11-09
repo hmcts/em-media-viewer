@@ -15,6 +15,6 @@ module.exports = () => {
     enterShouldJumpViewerToNextSearchResult: steps.search.enterShouldJumpViewerToNextSearchResults,
     executePdfViewerZoom: steps.zoom.pdfViewerZoom,
     openPdfInMediaViewer: steps.commonSteps.viewPdfDocInMediaViewer,
-    pdfViewerPageNavigation:steps.navigation.pdfViewerNavigation
+    pdfViewerPageNavigation:steps.navigationMV.pdfViewerNavigation
   });
 };
