@@ -59,6 +59,16 @@ async function pdfViewerZoomInOutTest(I, caseId, eventName, uploadDocType) {
   }
 }
 
+async function downloadPdfDocFromMVTest(I, caseId) {
+  await openPDFDocInMediaViewer(I, caseId);
+  await I.downloadPdfDocument();
+}
+
+async function printDocumentFromMVTest(I, caseId) {
+  await openPDFDocInMediaViewer(I, caseId);
+  await I.MvPrintDocument();
+}
+
 async function openPDFDocInMediaViewer(I, caseId) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -76,12 +86,14 @@ module.exports = {
   uploadPdf,
   uploadJpeg,
   uploadWorDoc,
-  contentSearchTest,
-  searchResultsNotFoundTest,
-  pdfViewerZoomInOutTest,
-  pdfViewerPageNavigationTest,
   openPDFDocInMediaViewer,
   uploadDocumentEvent,
+  contentSearchTest,
+  searchResultsNotFoundTest,
+  downloadPdfDocFromMVTest,
+  pdfViewerZoomInOutTest,
+  printDocumentFromMVTest,
+  pdfViewerPageNavigationTest,
   navigateSearchResultsUsingPreviousNextLinksTest,
   enterShouldJumpViewerToNextSearchResultsTest
 }

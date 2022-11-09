@@ -11,6 +11,7 @@
   "moveDown": "#mvDownBtn",
   "moveUp": "#mvUpBtn",
   "pageNumber": "//*[@id='pageNumber']",
+  "moreOptionsButton": "#mvMoreOptionsBtn",
   "addNewButton": "Add new",
   "shortDescription": "Upload Document Check",
   "uploadImageDesc": "Upload Image Check",
