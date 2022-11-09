@@ -4,7 +4,7 @@ const {ccdEvents, mvData} = require('../pages/common/constants.js');
 const {pdfViewerPageNavigationTest, pdfViewerZoomInOutTest} = require("../helpers/mvCaseHelper");
 let caseId;
 
-Feature('Zoom & Navigation Feature Scenarios');
+Feature('Zoom & Navigation Feature');
 
 BeforeSuite(async ({I}) => caseId = await createCaseInCcd('test/end-to-end/data/ccd-case-basic-data.json'));
 
@@ -21,7 +21,7 @@ Scenario('Image Viewer Zoom In/Out', async ({I}) => {
 }).tag('@nightly')
   .retry(testConfig.TestRetryScenarios)
 
-Scenario('Pdf viewer page navigation using move-up & move down buttons', async ({I}) => {
+Scenario('Pdf viewer page navigation', async ({I}) => {
   await pdfViewerPageNavigationTest(I, caseId);
 
 }).tag('@ci')
