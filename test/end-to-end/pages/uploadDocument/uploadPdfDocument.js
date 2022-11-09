@@ -3,7 +3,6 @@ const commonConfig = require('../../data/commonConfig.json');
 const testConfig = require("../../../config");
 
 module.exports = async function () {
-
   const I = this;
   await I.see('Upload Document');
   await I.retry(2).click(commonConfig.addNewBtn);
@@ -12,6 +11,4 @@ module.exports = async function () {
   await I.fillField('#documentCollection_0_shortDescription', commonConfig.shortDescription);
   await I.click(commonConfig.continue);
   await I.click(commonConfig.submitButton);
-  await I.click(commonConfig.documentsTab);
-  await I.waitForText('example.pdf', testConfig.TestTimeToWaitForText);
 };
