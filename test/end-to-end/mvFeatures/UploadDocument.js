@@ -4,7 +4,7 @@ const {ccdEvents} = require('../pages/common/constants.js');
 const {uploadPdf, uploadJpeg, uploadWorDoc} = require("../helpers/mvCaseHelper");
 let caseId;
 
-Feature('DM Store Upload Documents Scenarios');
+Feature('DM Store Upload Document Scenarios');
 BeforeSuite(async ({I}) => caseId = await createCaseInCcd('test/end-to-end/data/ccd-case-basic-data.json'));
 
 Scenario('Upload PDF Document', async ({I}) => {

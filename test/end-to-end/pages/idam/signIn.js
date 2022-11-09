@@ -3,7 +3,6 @@
 const testConfig = require('../../../config');
 
 module.exports = async function () {
-
   const I = this;
   await I.amOnPage('/', testConfig.PageLoading);
   await I.waitForText('Sign in');

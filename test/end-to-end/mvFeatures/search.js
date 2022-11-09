@@ -1,5 +1,5 @@
 const testConfig = require('./../../config');
-const {enterShouldJumpViewerToNextSearchResultTest} = require("../helpers/mvCaseHelper");
+const {enterShouldJumpViewerToNextSearchResultsTest} = require("../helpers/mvCaseHelper");
 const {navigateSearchResultsUsingPreviousNextLinksTest} = require("../helpers/mvCaseHelper");
 const {createCaseInCcd} = require("../helpers/ccdDataStoreApi");
 const {ccdEvents, mvData} = require('../pages/common/constants.js');
@@ -17,7 +17,7 @@ Scenario('Search Text in Document & validate total number of findings count', as
   .tag('@nightly')
   .retry(testConfig.TestRetryScenarios);
 
-Scenario('Navigate search results using previous/next links ', async ({I}) => {
+Scenario('Navigate search results using previous/next link ', async ({I}) => {
   await navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS);
 
 }).tag('@ci')
@@ -31,7 +31,7 @@ Scenario('Search results not found scenario', async ({I}) => {
   .retry(testConfig.TestRetryScenarios)
 
 Scenario('Enter should jump viewer to next search result', async ({I}) => {
-  await enterShouldJumpViewerToNextSearchResultTest(I, caseId, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS);
+  await enterShouldJumpViewerToNextSearchResultsTest(I, caseId, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS);
 
 }).tag('@nightly')
   .tag('@em-1619')

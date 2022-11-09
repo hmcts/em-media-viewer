@@ -15,6 +15,7 @@ const mvData = {
   "NO_RESULTS_FOUND": 'No results found',
   "PDF_DOCUMENT": 'pdf',
   "IMAGE_DOCUMENT": 'jpeg',
+  "PAGE_NAVIGATION_NUMBER":'2'
 
 };
 
