@@ -7,27 +7,27 @@ const {contentSearchTest, searchResultsNotFoundTest} = require("../helpers/mvCas
 Feature('Search Feature');
 
 Scenario('Search Text in Document & validate total number of findings count', async ({I}) => {
-  await contentSearchTest(I, mvData.CASE_ID, ccdEvents.UPLOAD_DOCUMENT, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS, mvData.PDF_DOCUMENT);
+  await contentSearchTest(I, mvData.CASE_ID, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
   .tag('@nightly')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Navigate search results using previous/next link ', async ({I}) => {
-  await navigateSearchResultsUsingPreviousNextLinksTest(I, mvData.CASE_ID, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS);
+  await navigateSearchResultsUsingPreviousNextLinksTest(I, mvData.CASE_ID, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
   .tag('@nightly')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Search results not found scenario', async ({I}) => {
-  await searchResultsNotFoundTest(I, mvData.CASE_ID, ccdEvents.UPLOAD_DOCUMENT, mvData.SEARCH_RESULTS_NOT_FOUND, mvData.NO_RESULTS_FOUND);
+  await searchResultsNotFoundTest(I, mvData.CASE_ID, mvData.SEARCH_RESULTS_NOT_FOUND, mvData.NO_RESULTS_FOUND, mvData.PDF_DOCUMENT);
 
 }).tag('@nightly')
   .retry(testConfig.TestRetryScenarios)
 
 Scenario('Enter should jump viewer to next search result', async ({I}) => {
-  await enterShouldJumpViewerToNextSearchResultsTest(I, mvData.CASE_ID, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS);
+  await enterShouldJumpViewerToNextSearchResultsTest(I, mvData.CASE_ID, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS, mvData.PDF_DOCUMENT);
 
 }).tag('@nightly')
   .tag('@em-1619')

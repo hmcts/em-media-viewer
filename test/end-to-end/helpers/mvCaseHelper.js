@@ -20,7 +20,7 @@ async function uploadWorDoc(I, caseId, eventName) {
   await I.uploadWordDoc();
 }
 
-async function contentSearchTest(I, caseId, eventName, searchKeyword, noOfFindings, mediaType) {
+async function contentSearchTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.executeContentSearch(searchKeyword, noOfFindings);
 }
@@ -30,7 +30,7 @@ async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, search
   await I.searchResultsNavigationUsingPreviousAndNextLinks(searchKeyword, noOfFindings);
 }
 
-async function searchResultsNotFoundTest(I, caseId, eventName, searchKeyword, noOfFindings, mediaType) {
+async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.executeContentSearch(searchKeyword, noOfFindings);
 }
