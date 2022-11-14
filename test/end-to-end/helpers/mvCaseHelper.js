@@ -73,6 +73,11 @@ async function pdfAndImageRotationTest(I, caseId, mediaType) {
   await I.rotatePdfAndJpg();
 }
 
+async function createABookmarksTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.createBookMark();
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -107,5 +112,6 @@ module.exports = {
   pdfViewerPageNavigationTest,
   pdfAndImageRotationTest,
   navigateSearchResultsUsingPreviousNextLinksTest,
-  enterShouldJumpViewerToNextSearchResultsTest
+  enterShouldJumpViewerToNextSearchResultsTest,
+  createABookmarksTest
 }
