@@ -5,20 +5,20 @@ const {pdfViewerPageNavigationTest, pdfViewerZoomInOutTest} = require("../helper
 Feature('Zoom & Navigation Feature');
 
 Scenario('PDF Viewer Zoom In/Out', async ({I}) => {
-  await pdfViewerZoomInOutTest(I, mvData.CASE_ID, ccdEvents.UPLOAD_DOCUMENT, mvData.PDF_DOCUMENT);
+  await pdfViewerZoomInOutTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
   .tag('@nightly')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Image Viewer Zoom In/Out', async ({I}) => {
-  await pdfViewerZoomInOutTest(I, mvData.CASE_ID, ccdEvents.UPLOAD_DOCUMENT, mvData.IMAGE_DOCUMENT);
+  await pdfViewerZoomInOutTest(I, mvData.CASE_ID, mvData.IMAGE_DOCUMENT);
 
 }).tag('@nightly')
   .retry(testConfig.TestRetryScenarios)
 
 Scenario('Pdf viewer page navigation', async ({I}) => {
-  await pdfViewerPageNavigationTest(I, mvData.CASE_ID);
+  await pdfViewerPageNavigationTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
   .tag('@nightly')
@@ -26,7 +26,7 @@ Scenario('Pdf viewer page navigation', async ({I}) => {
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Enable page navigation with in a file', async ({I}) => {
-  await pdfViewerPageNavigationTest(I, mvData.CASE_ID);
+  await pdfViewerPageNavigationTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@xb')
   .tag('@nightly')

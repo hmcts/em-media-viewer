@@ -21,69 +21,68 @@ async function uploadWorDoc(I, caseId, eventName) {
 }
 
 async function contentSearchTest(I, caseId, eventName, searchKeyword, noOfFindings, mediaType) {
-  await uploadPdf(I, caseId, eventName);
-  await I.openMediaTypeInMediaViewer(mediaType);
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
 async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  await openPDFDocInMediaViewer(I, caseId, mediaType);
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.searchResultsNavigationUsingPreviousAndNextLinks(searchKeyword, noOfFindings);
 }
 
 async function searchResultsNotFoundTest(I, caseId, eventName, searchKeyword, noOfFindings, mediaType) {
-  await openPDFDocInMediaViewer(I, caseId, mediaType);
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
 async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  await openPDFDocInMediaViewer(I, caseId, mediaType);
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
 }
 
 async function pdfViewerPageNavigationTest(I, caseId, mediaType) {
-  await openPDFDocInMediaViewer(I, caseId, mediaType);
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.pdfViewerPageNavigation();
 }
 
-async function pdfViewerZoomInOutTest(I, caseId, eventName, mediaType) {
+async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
   if (mediaType === 'example.pdf') {
-    await openPDFDocInMediaViewer(I, caseId, mediaType)
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
     await I.executePdfViewerZoom();
 
   } else {
-    await openPDFDocInMediaViewer(I, caseId, mediaType)
-    await I.openMediaTypeInMediaViewer(mediaType);
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
+    await I.openCaseDocumentsInMV(mediaType);
     await I.executePdfViewerZoom();
   }
 }
 
 async function downloadPdfDocFromMVTest(I, caseId, mediaType) {
-  await openPDFDocInMediaViewer(I, caseId, mediaType);
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.downloadPdfDocument();
 }
 
 async function printDocumentFromMVTest(I, caseId, mediaType) {
-  await openPDFDocInMediaViewer(I, caseId, mediaType);
-  await I.MvPrintDocument();
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.mvPrintDocument();
 }
 
 
 async function pdfAndImageRotationTest(I, caseId, mediaType) {
-  await openPDFDocInMediaViewer(I, caseId, mediaType);
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.rotatePdfAndJpg();
 }
 
-async function openPDFDocInMediaViewer(I, caseId, mediaType) {
+async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
 
   if (mediaType === mvData.PDF_DOCUMENT) {
-    await I.openMediaTypeInMediaViewer(mediaType);
+    await I.openCaseDocumentsInMV(mediaType);
   } else if (mediaType === mvData.IMAGE_DOCUMENT) {
-    await I.openMediaTypeInMediaViewer(mediaType);
+    await I.openCaseDocumentsInMV(mediaType);
   } else {
-    console.warn("Media Viewer does not support  document type");
+    console.warn("Media Viewer does not support the input document type" + mediaType);
   }
 }
 
@@ -98,7 +97,7 @@ module.exports = {
   uploadPdf,
   uploadJpeg,
   uploadWorDoc,
-  // openPDFDocInMediaViewer,
+  // openCaseDocumentsInMediaViewer,
   // uploadDocumentEvent,
   contentSearchTest,
   searchResultsNotFoundTest,

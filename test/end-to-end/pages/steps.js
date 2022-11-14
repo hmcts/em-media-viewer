@@ -14,10 +14,10 @@ module.exports = () => {
     searchResultsNavigationUsingPreviousAndNextLinks: steps.search.searchResultsNavigationUsingNextAndPrevious,
     enterShouldJumpViewerToNextSearchResult: steps.search.enterShouldJumpViewerToNextSearchResults,
     executePdfViewerZoom: steps.zoom.pdfViewerZoom,
-    openMediaTypeInMediaViewer: steps.commonSteps.viewPdfDocInMediaViewer,
+    openCaseDocumentsInMV: steps.openCaseDocsInMv.openCaseDocsInMV,
     pdfViewerPageNavigation: steps.navigationMV.pdfViewerNavigation,
     downloadPdfDocument: steps.downloadAndPrint.mvDownload,
-    MvPrintDocument: steps.downloadAndPrint.mvPrint,
-    rotatePdfAndJpg:steps.pdfAndImageRotate.pdfAndImageRotation
+    mvPrintDocument: steps.downloadAndPrint.mvPrint,
+    rotatePdfAndJpg: steps.pdfAndImageRotate.pdfAndImageRotation
   });
 };
