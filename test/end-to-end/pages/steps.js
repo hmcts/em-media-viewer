@@ -18,6 +18,7 @@ module.exports = () => {
     pdfViewerPageNavigation: steps.navigationMV.pdfViewerNavigation,
     downloadPdfDocument: steps.downloadAndPrint.mvDownload,
     mvPrintDocument: steps.downloadAndPrint.mvPrint,
-    rotatePdfAndJpg: steps.pdfAndImageRotate.pdfAndImageRotation
+    rotatePdfAndJpg: steps.pdfAndImageRotate.pdfAndImageRotation,
+    createBookMark: steps.bookMarks.createBookmarks
   });
 };
