@@ -73,9 +73,14 @@ async function pdfAndImageRotationTest(I, caseId, mediaType) {
   await I.rotatePdfAndJpg();
 }
 
-async function createABookmarksTest(I, caseId, mediaType) {
+async function createBookmarkTest(I, caseId, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.createBookMark();
+}
+
+async function deleteBookmarkTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.clearBookMarks();
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
@@ -102,8 +107,6 @@ module.exports = {
   uploadPdf,
   uploadJpeg,
   uploadWorDoc,
-  // openCaseDocumentsInMediaViewer,
-  // uploadDocumentEvent,
   contentSearchTest,
   searchResultsNotFoundTest,
   downloadPdfDocFromMVTest,
@@ -113,5 +116,6 @@ module.exports = {
   pdfAndImageRotationTest,
   navigateSearchResultsUsingPreviousNextLinksTest,
   enterShouldJumpViewerToNextSearchResultsTest,
-  createABookmarksTest
+  createBookmarkTest,
+  deleteBookmarkTest
 }

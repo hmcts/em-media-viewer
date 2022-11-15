@@ -23,5 +23,11 @@
   "searchIcon": "#mvSearchBtn",
   "searchKeyword": "SSCS",
   "mvHighLight": "#mvHighlightBtn",
-  "bookMarksButton": "bookmarkButton"
+  "bookMarksButton": "#bookmarkButton",
+  "addBookmarkButton": "#addBookmark",
+  "bookMarksIndex": "#mvIndexBtn",
+  "viewBookmark": "#viewBookmark",
+  "bookmarksCount": ".outlineWithDeepNesting .bookmarks-tree .outlineItem",
+  "bookMarksCss": ".outlineItem",
+  "deleteBookmarkCss": ".outlineWithDeepNesting .bookmarks-tree .bookmark__delete"
 }
