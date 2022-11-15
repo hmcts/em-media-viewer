@@ -1,21 +1,18 @@
 const testConfig = require('./../../config');
 const {downloadPdfDocFromMVTest, printDocumentFromMVTest} = require("../helpers/mvCaseHelper");
-const {createCaseInCcd} = require("../helpers/ccdDataStoreApi");
-let caseId;
+const {mvData} = require('../pages/common/constants.js');
 
-Feature('Download And Print Feature');
-
-BeforeSuite(async ({I}) => caseId = await createCaseInCcd('test/end-to-end/data/ccd-case-basic-data.json'));
+Feature('Media Viewer Download And Print Feature');
 
 Scenario('Download PDF Document from Media Viewer', async ({I}) => {
-  await downloadPdfDocFromMVTest(I, caseId);
+  await downloadPdfDocFromMVTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
   .tag('@nightly')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Print PDF Document from Media Viewer', async ({I}) => {
-  await printDocumentFromMVTest(I, caseId);
+  await printDocumentFromMVTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
   .tag('@nightly')
