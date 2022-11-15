@@ -12,6 +12,8 @@
   "moveUp": "#mvUpBtn",
   "pageNumber": "//*[@id='pageNumber']",
   "moreOptionsButton": "#mvMoreOptionsBtn",
+  "rotateRightBtn": "#mvRotateRightBtn",
+  "rotateLeftBtn": "#mvRotateLeftBtn",
   "addNewButton": "Add new",
   "shortDescription": "Upload Document Check",
   "uploadImageDesc": "Upload Image Check",
@@ -19,5 +21,6 @@
   "submit": "Submit",
   "submitButton": "//button[text()='Submit']",
   "searchIcon": "#mvSearchBtn",
-  "searchKeyword": "SSCS"
+  "searchKeyword": "SSCS",
+  "mvHighLight": "#mvHighlightBtn"
 }
