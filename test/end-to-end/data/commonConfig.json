@@ -22,5 +22,6 @@
   "submitButton": "//button[text()='Submit']",
   "searchIcon": "#mvSearchBtn",
   "searchKeyword": "SSCS",
-  "mvHighLight": "#mvHighlightBtn"
+  "mvHighLight": "#mvHighlightBtn",
+  "bookMarksButton": "bookmarkButton"
 }
