@@ -10,17 +10,17 @@ BeforeSuite(async ({I}) => caseId = await createCaseInCcd('test/end-to-end/data/
 Scenario('Upload PDF Document', async ({I}) => {
   await uploadPdf(I, caseId, ccdEvents.UPLOAD_DOCUMENT);
 
-}).tag('@nightly')
+}).tag('@np')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Dm Store Upload Image Scenario', async ({I}) => {
   await uploadJpeg(I, caseId, ccdEvents.UPLOAD_DOCUMENT);
 
-}).tag('@nightly')
+}).tag('@np')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Dm Store Upload Word Document Scenario', async ({I}) => {
   await uploadWorDoc(I, caseId, ccdEvents.UPLOAD_DOCUMENT);
 
-}).tag('@nightly')
+}).tag('@np')
   .retry(testConfig.TestRetryScenarios);

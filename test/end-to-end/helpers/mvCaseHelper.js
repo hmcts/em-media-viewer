@@ -83,6 +83,13 @@ async function deleteBookmarkTest(I, caseId, mediaType) {
   await I.clearBookMarks();
 }
 
+async function updateBookmarkTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.createBookMark();
+  await I.updateBookMarks();
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -117,5 +124,6 @@ module.exports = {
   navigateSearchResultsUsingPreviousNextLinksTest,
   enterShouldJumpViewerToNextSearchResultsTest,
   createBookmarkTest,
-  deleteBookmarkTest
+  deleteBookmarkTest,
+  updateBookmarkTest
 }

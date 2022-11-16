@@ -18,7 +18,8 @@ const mvData = {
   "NO_RESULTS_FOUND": 'No results found',
   "PDF_DOCUMENT": 'example.pdf',
   "IMAGE_DOCUMENT": 'Quote.jpg',
-  "PAGE_NAVIGATION_NUMBER": '2'
+  "PAGE_NAVIGATION_NUMBER": '2',
+  "BOOKMARK_UPDATE":'Bookmark update'
 };
 
 module.exports = {

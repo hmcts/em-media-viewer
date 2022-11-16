@@ -8,12 +8,12 @@ Scenario('Download PDF Document from Media Viewer', async ({I}) => {
   await downloadPdfDocFromMVTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
-  .tag('@nightly')
+  .tag('@np')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Print PDF Document from Media Viewer', async ({I}) => {
   await printDocumentFromMVTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
-  .tag('@nightly')
+  .tag('@np')
   .retry(testConfig.TestRetryScenarios);
