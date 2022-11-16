@@ -19,6 +19,8 @@ module.exports = () => {
     downloadPdfDocument: steps.downloadAndPrint.mvDownload,
     mvPrintDocument: steps.downloadAndPrint.mvPrint,
     rotatePdfAndJpg: steps.pdfAndImageRotate.pdfAndImageRotation,
-    createBookMark: steps.bookMarks.createBookmarks
+    createBookMark: steps.bookMarks.createBookmarks,
+    mvDeleteBookmark: steps.bookMarks.deleteBookMark,
+    clearBookMarks: steps.bookMarks.clearBookmarkss
   });
 };
