@@ -10,25 +10,25 @@ Scenario('Search Text in Document & validate total number of findings count', as
   await contentSearchTest(I, mvData.CASE_ID, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
-  .tag('@nightly')
+  .tag('@np')
   .retry(testConfig.TestRetryScenarios);
 
-Scenario('Navigate search results using previous/next link ', async ({I}) => {
+Scenario('Navigate search results using previous & next links ', async ({I}) => {
   await navigateSearchResultsUsingPreviousNextLinksTest(I, mvData.CASE_ID, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
-  .tag('@nightly')
+  .tag('@np')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Search results not found scenario', async ({I}) => {
   await searchResultsNotFoundTest(I, mvData.CASE_ID, mvData.SEARCH_RESULTS_NOT_FOUND, mvData.NO_RESULTS_FOUND, mvData.PDF_DOCUMENT);
 
-}).tag('@nightly')
+}).tag('@np')
   .retry(testConfig.TestRetryScenarios)
 
 Scenario('Enter should jump viewer to next search result', async ({I}) => {
   await enterShouldJumpViewerToNextSearchResultsTest(I, mvData.CASE_ID, mvData.CONTENT_SEARCH_KEYWORD, mvData.NUMBER_OF_FINDINGS, mvData.PDF_DOCUMENT);
 
-}).tag('@nightly')
+}).tag('@np')
   .tag('@em-1619')
   .retry(testConfig.TestRetryScenarios)
