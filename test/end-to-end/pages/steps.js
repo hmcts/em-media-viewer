@@ -21,6 +21,7 @@ module.exports = () => {
     rotatePdfAndJpg: steps.pdfAndImageRotate.pdfAndImageRotation,
     createBookMark: steps.bookMarks.createBookmarks,
     mvDeleteBookmark: steps.bookMarks.deleteBookMark,
-    clearBookMarks: steps.bookMarks.clearBookmarkss
+    clearBookMarks: steps.bookMarks.clearBookmarkss,
+    updateBookMarks: steps.bookMarks.updateBookMark
   });
 };
