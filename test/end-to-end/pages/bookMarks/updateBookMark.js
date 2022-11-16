@@ -17,4 +17,6 @@ module.exports = async function () {
 
   await I.click(commonConfig.bookMarkSave);
   await I.wait(testConfig.BookmarksWait);
+  const screenshotName = Date.now() + 'updateBookmark' + '.png';
+  await I.saveScreenshot(screenshotName, true);
 }
