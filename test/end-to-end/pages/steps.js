@@ -22,6 +22,7 @@ module.exports = () => {
     createBookMark: steps.bookMarks.createBookmarks,
     mvDeleteBookmark: steps.bookMarks.deleteBookMark,
     clearBookMarks: steps.bookMarks.clearBookmarkss,
-    updateBookMarks: steps.bookMarks.updateBookMark
+    updateBookMarks: steps.bookMarks.updateBookMark,
+    addEmptyBookmarks: steps.bookMarks.addAnEmptyBookMarks
   });
 };

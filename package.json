@@ -42,8 +42,8 @@
     "webdriver:update": "webdriver-manager update --versions.chrome 2.44",
     "e2e": "protractor --webdriverUpdate=false",
     "e2e:local": "yarn webdriver:update && protractor e2e/local.protractor.conf.js",
-    "e2e:fullfunctional_Protr": "yarn webdriver:update && protractor e2e/ci.protractor.conf.js",
-    "e2e:fullfunctional": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --grep @ci --steps --reporter mocha-multi",
+    "e2e:fullfunctional": "yarn webdriver:update && protractor e2e/ci.protractor.conf.js",
+    "e2e:fullfunctional_CodeceptJS": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --grep @ci --steps --reporter mocha-multi",
     "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner",
     "rebuild-node-sass": "yarn add node-sass@^4.14.1"
   },
