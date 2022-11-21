@@ -1,7 +1,7 @@
 const testConfig = require('./../../config');
 const {enterShouldJumpViewerToNextSearchResultsTest} = require("../helpers/mvCaseHelper");
 const {navigateSearchResultsUsingPreviousNextLinksTest} = require("../helpers/mvCaseHelper");
-const {ccdEvents, mvData} = require('../pages/common/constants.js');
+const {mvData} = require('../pages/common/constants.js');
 const {contentSearchTest, searchResultsNotFoundTest} = require("../helpers/mvCaseHelper");
 
 Feature('Search Feature');

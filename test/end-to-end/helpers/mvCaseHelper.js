@@ -96,6 +96,16 @@ async function addEmptyBookmarksTest(I, caseId, mediaType) {
   await I.addEmptyBookmarks();
 }
 
+async function multiMediaAudioTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.mvAudioScenario();
+}
+
+async function multiMediaAudioPauseAndRewindTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.clearBookMarks();
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -103,6 +113,8 @@ async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   if (mediaType === mvData.PDF_DOCUMENT) {
     await I.openCaseDocumentsInMV(mediaType);
   } else if (mediaType === mvData.IMAGE_DOCUMENT) {
+    await I.openCaseDocumentsInMV(mediaType);
+  } else if (mediaType === mvData.AUDIO_MP3) {
     await I.openCaseDocumentsInMV(mediaType);
   } else {
     console.warn("Media Viewer does not support the input document type" + mediaType);
@@ -132,5 +144,7 @@ module.exports = {
   createBookmarkTest,
   deleteBookmarkTest,
   updateBookmarkTest,
-  addEmptyBookmarksTest
+  addEmptyBookmarksTest,
+  multiMediaAudioTest,
+  multiMediaAudioPauseAndRewindTest
 }
