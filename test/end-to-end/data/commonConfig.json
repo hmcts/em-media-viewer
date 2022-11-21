@@ -21,6 +21,7 @@
   "submit": "Submit",
   "submitButton": "//button[text()='Submit']",
   "searchIcon": "#mvSearchBtn",
+  "multimediaAudioBtn": "#mv-multimedia-player",
   "searchKeyword": "SSCS",
   "mvHighLight": "#mvHighlightBtn",
   "bookMarksButton": "#bookmarkButton",
