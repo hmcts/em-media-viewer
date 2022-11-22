@@ -40,9 +40,9 @@ async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKey
   await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
 }
 
-async function pdfViewerPageNavigationTest(I, caseId, mediaType) {
+async function pdfViewerPageNavigationTest(I, caseId, mediaType,pageNoToNavigate) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  await I.pdfViewerPageNavigation();
+  await I.pdfViewerPageNavigation(pageNoToNavigate);
 }
 
 async function pdfViewerZoomInOutTest(I, caseId, mediaType) {

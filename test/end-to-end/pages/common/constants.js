@@ -20,6 +20,7 @@ const mvData = {
   "IMAGE_DOCUMENT": 'Quote.jpg',
   "AUDIO_MP3":"nicemelody.mp3",
   "PAGE_NAVIGATION_NUMBER": '2',
+  "PAGE_NUMBER_TO_NAVIGATE":'3',
   "BOOKMARK_UPDATE":'Bookmark update'
 };
 
