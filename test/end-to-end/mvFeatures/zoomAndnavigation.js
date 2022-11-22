@@ -18,16 +18,16 @@ Scenario('Image Viewer Zoom In & Out', async ({I}) => {
   .retry(testConfig.TestRetryScenarios)
 
 Scenario('Pdf viewer page navigation', async ({I}) => {
-  await pdfViewerPageNavigationTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+  await pdfViewerPageNavigationTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT, mvData.PAGE_NAVIGATION_NUMBER);
 
 }).tag('@ci')
   .tag('@np')
   .tag('@xb')
   .retry(testConfig.TestRetryScenarios);
 
-Scenario('Enable page navigation with in a file', async ({I}) => {
-  await pdfViewerPageNavigationTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+Scenario('Enable page navigation based on user input', async ({I}) => {
+  await pdfViewerPageNavigationTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT, mvData.PAGE_NUMBER_TO_NAVIGATE);
 
 }).tag('@xb')
-  .tag('@np')
+  .tag('@ci')
   .retry(testConfig.TestRetryScenarios);
