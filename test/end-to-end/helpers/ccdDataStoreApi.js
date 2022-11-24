@@ -7,7 +7,6 @@ const idamApi = require('./idamApi');
 const s2sService = require('./s2sHelper');
 const logger = Logger.getLogger('helpers/ccdDataStoreApi.js');
 const env = testConfig.TestEnv;
-const {I} = inject();
 let caseId;
 
 async function createCaseInCcd(dataLocation = 'ccd-case-basic-data.json') {
