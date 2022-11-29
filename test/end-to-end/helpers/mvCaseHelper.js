@@ -106,6 +106,16 @@ async function multiMediaAudioPauseAndRewindTest(I, caseId, mediaType) {
   await I.clearBookMarks();
 }
 
+async function highlightTextTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.annotationsHighlightText();
+}
+
+async function addCommentTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.annotationsAddComment();
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -146,5 +156,7 @@ module.exports = {
   updateBookmarkTest,
   addEmptyBookmarksTest,
   multiMediaAudioTest,
-  multiMediaAudioPauseAndRewindTest
+  multiMediaAudioPauseAndRewindTest,
+  highlightTextTest,
+  addCommentTest
 }

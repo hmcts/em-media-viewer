@@ -14,7 +14,7 @@ module.exports = async function (pageToNavigate) {
     await I.clearField(commonConfig.pageNumber);
     await I.fillField(commonConfig.pageNumber, pageToNavigate);
     await I.click('#viewerContainer')
-    await I.wait(testConfig.BookmarksWait);
+    await I.wait(testConfig.BookmarksAndAnnotationsWait);
     await I.seeInField(commonConfig.pageNumber, pageToNavigate);
   }
 };

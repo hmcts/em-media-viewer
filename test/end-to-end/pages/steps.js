@@ -24,7 +24,10 @@ module.exports = () => {
     clearBookMarks: steps.bookMarks.clearBookmarkss,
     updateBookMarks: steps.bookMarks.updateBookMark,
     addEmptyBookmarks: steps.bookMarks.addAnEmptyBookMarks,
-    mvAudioScenario:steps.multiMediaAudioAndVideo.multiMediaAudio
+    mvAudioScenario:steps.multiMediaAudioAndVideo.multiMediaAudio,
+    annotationsHighlightText:steps.pdfViewerAnnotations.highlightPdfText,
+    annotationsAddComment:steps.pdfViewerAnnotations.addComment,
+    clearExistingHighLights:steps.pdfViewerAnnotations.clearExistingTextHighlights,
 
   });
 };
