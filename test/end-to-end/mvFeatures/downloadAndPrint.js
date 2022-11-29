@@ -2,7 +2,7 @@ const testConfig = require('./../../config');
 const {downloadPdfDocFromMVTest, printDocumentFromMVTest} = require("../helpers/mvCaseHelper");
 const {mvData} = require('../pages/common/constants.js');
 
-Feature('Media Viewer Download And Print Feature');
+Feature('Download And Print Feature');
 
 Scenario('Download PDF Document from Media Viewer', async ({I}) => {
   await downloadPdfDocFromMVTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
