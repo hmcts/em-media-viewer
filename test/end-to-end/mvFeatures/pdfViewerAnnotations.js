@@ -2,7 +2,7 @@ const testConfig = require('./../../config');
 const {highlightTextTest, addCommentTest} = require("../helpers/mvCaseHelper");
 const {mvData} = require('../pages/common/constants.js');
 
-Feature('Annotations - Pdf viewer Feature');
+Feature('Annotations & Comments Feature');
 
 Scenario('Annotations - Ability to highlight and draw box on pdf document', async ({I}) => {
   await highlightTextTest(I, mvData.ANNOTATIONS_BOOKMARKS_CASE, mvData.PDF_DOCUMENT, 0, 0);
