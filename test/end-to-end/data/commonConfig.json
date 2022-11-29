@@ -32,6 +32,7 @@
   "commentPopup": "//*[@title='Comment']",
   "firstCommentXp":"//*[@name='content']",
   "firstComment1":"First Comment1",
+  "selectTextToHighlight":"//span[text()='Apelydd']",
   "bookmarksCount": ".outlineWithDeepNesting .bookmarks-tree .outlineItem",
   "highLightTextCount": "mv-annotation-set .rectangle",
   "bookMarksCss": ".outlineItem",
