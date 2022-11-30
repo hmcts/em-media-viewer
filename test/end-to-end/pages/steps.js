@@ -27,6 +27,7 @@ module.exports = () => {
     mvAudioScenario:steps.multiMediaAudioAndVideo.multiMediaAudio,
     annotationsHighlightText:steps.pdfViewerAnnotations.highlightPdfText,
     annotationsAddComment:steps.pdfViewerAnnotations.addComment,
+    selectTextToHighlight:steps.highLightPdfText.highLighText,
     clearExistingHighLights:steps.pdfViewerAnnotations.clearExistingTextHighlights,
 
   });

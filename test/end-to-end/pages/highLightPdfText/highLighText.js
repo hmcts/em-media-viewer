@@ -2,14 +2,13 @@
 const commonConfig = require('../../data/commonConfig.json');
 const testConfig = require("../../../config");
 
-module.exports = async function () {
-
+module.exports = async function (pageNumber, text, childIndex) {
   const I = this;
   await I.click(commonConfig.mvHighLight);
 
-  await I.executeScript(async () => {
+  await I.executeScript(function (pageNumber, text, childIndex) {
     const range = document.createRange();
-    const matchingElement = document.evaluate("//span[text()='Apelydd']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    const matchingElement = document.evaluate('//span[text()=\'Apelydd\']', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     // const matchingElement = document.getElementsByClassName('textLayer')[0].children[0];
     range.selectNodeContents(matchingElement);
     const sel = window.getSelection();
@@ -19,13 +18,9 @@ module.exports = async function () {
     const mouseUpEvent = document.createEvent('MouseEvents');
     mouseUpEvent.initEvent('mouseup', true, true)
     // mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 844, 497, 937, 403, false, false, false, false, 0, null);
-    const pageHandle = document.getElementsByClassName('textLayer')[0].children[10];
+    const pageHandle = document.getElementsByClassName('textLayer')[0].children[childIndex];
     pageHandle.dispatchEvent(mouseUpEvent);
   });
 
-  await I.retry(2).click(commonConfig.highLightPopup)
-  await I.retry(2).click(commonConfig.commentPopup);
-  await I.fillField(commonConfig.firstCommentXp, commonConfig.firstComment1);
-  await I.retry(3).click('//button[@class="govuk-button" and contains(text(), "Save")]');
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 }
