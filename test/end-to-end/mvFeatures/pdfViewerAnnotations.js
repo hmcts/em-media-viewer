@@ -4,17 +4,17 @@ const {mvData} = require('../pages/common/constants.js');
 
 Feature('Annotations & Comments Feature');
 
-Scenario('Annotations - Ability to highlight and draw box on pdf document', async ({I}) => {
+Scenario('Ability to highlight and draw box on pdf document', async ({I}) => {
   await highlightTextTest(I, mvData.ANNOTATIONS_BOOKMARKS_CASE, mvData.PDF_DOCUMENT, 0, 0);
 
 }).tag('@ci')
   .tag('@np')
   .retry(testConfig.TestRetryScenarios);
 
-Scenario('Annotations - Highlight text and add a single comment', async ({I}) => {
+Scenario('Highlight text and add a comment', async ({I}) => {
   await addCommentTest(I, mvData.ANNOTATIONS_BOOKMARKS_CASE, mvData.PDF_DOCUMENT);
 
-}).tag('@wip')
+}).tag('@ci')
   .tag('@np')
   .retry(testConfig.TestRetryScenarios);
 
