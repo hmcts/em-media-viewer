@@ -16,19 +16,19 @@ module.exports = () => {
     executePdfViewerZoom: steps.zoom.pdfViewerZoom,
     openCaseDocumentsInMV: steps.openCaseDocsInMv.openCaseDocsInMV,
     pdfViewerPageNavigation: steps.navigationMV.pdfViewerNavigation,
-    downloadPdfDocument: steps.downloadAndPrint.mvDownload,
-    mvPrintDocument: steps.downloadAndPrint.mvPrint,
-    rotatePdfAndJpg: steps.pdfAndImageRotate.pdfAndImageRotation,
+    downloadPdfDocument: steps.printAndDownload.mvDownload,
+    mvPrintDocument: steps.printAndDownload.mvPrint,
+    rotatePdfAndJpg: steps.rotate.pdfAndImageRotation,
     createBookMark: steps.bookMarks.createBookmarks,
     mvDeleteBookmark: steps.bookMarks.deleteBookMark,
     clearBookMarks: steps.bookMarks.clearBookmarkss,
     updateBookMarks: steps.bookMarks.updateBookMark,
     addEmptyBookmarks: steps.bookMarks.addAnEmptyBookMarks,
     mvAudioScenario:steps.multiMediaAudioAndVideo.multiMediaAudio,
-    annotationsHighlightText:steps.pdfViewerAnnotations.highlightPdfText,
-    annotationsAddComment:steps.pdfViewerAnnotations.addComment,
-    selectTextToHighlight:steps.highLightPdfText.highLighText,
-    clearExistingHighLights:steps.pdfViewerAnnotations.clearExistingTextHighlights,
+    annotationsHighlightText:steps.annotationsAndComments.highlightPdfText,
+    annotationsAddComment:steps.annotationsAndComments.addComment,
+    clearExistingHighLights:steps.annotationsAndComments.clearExistingTextHighlights,
+    selectTextToHighlight:steps.highLightPdfText.highLighText
 
   });
 };
