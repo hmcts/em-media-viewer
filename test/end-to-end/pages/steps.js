@@ -26,9 +26,11 @@ module.exports = () => {
     addEmptyBookmarks: steps.bookMarks.addAnEmptyBookMarks,
     mvAudioScenario:steps.multiMediaAudioAndVideo.multiMediaAudio,
     annotationsHighlightText:steps.annotationsAndComments.highlightPdfText,
-    annotationsAddComment:steps.annotationsAndComments.addComment,
+    createAnnotation:steps.annotationsAndComments.addComment,
+    deleteAnnotation:steps.annotationsAndComments.deleteAnnotations,
     clearExistingHighLights:steps.annotationsAndComments.clearExistingTextHighlights,
-    selectTextToHighlight:steps.highLightPdfText.highLighText
+    selectTextToHighlight:steps.highLightPdfText.highLighText,
+    deleteAllComments:steps.annotationsAndComments.deleteExistingComments,
 
   });
 };

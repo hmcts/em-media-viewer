@@ -87,18 +87,13 @@ class JSWait extends codecept_helper {
     return helper
       ._locate(selector)
       .then(els => {
-        console.log('COunt:::---->' + els.length);
+        console.log('Count:::---->' + els.length);
         return els.length;
       })
       .catch(err => {
         throw err;
       });
   }
-
-  async getHelper() {
-    return await this.helpers['WebDriver'] || this.helpers['Puppeteer'];
-  }
-
 }
 
 module.exports = JSWait;
