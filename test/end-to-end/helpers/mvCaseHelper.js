@@ -113,7 +113,12 @@ async function highlightTextTest(I, caseId, mediaType) {
 
 async function addCommentTest(I, caseId, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  await I.annotationsAddComment();
+  await I.createAnnotation();
+}
+
+async function deleteAnnotationTest(I, caseId, mediaType, comment) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.deleteAnnotation(comment);
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
@@ -158,5 +163,6 @@ module.exports = {
   multiMediaAudioTest,
   multiMediaAudioPauseAndRewindTest,
   highlightTextTest,
-  addCommentTest
+  addCommentTest,
+  deleteAnnotationTest
 }
