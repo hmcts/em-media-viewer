@@ -4,7 +4,7 @@ const {pdfViewerPageNavigationTest, pdfViewerZoomInOutTest} = require("../helper
 
 Feature('Zoom & Navigation Feature');
 
-Scenario('PDF Viewer Zoom In & Out', async ({I}) => {
+Scenario('Pdf Viewer Zoom In & Out', async ({I}) => {
   await pdfViewerZoomInOutTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')

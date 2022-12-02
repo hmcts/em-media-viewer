@@ -31,13 +31,18 @@
   "highLightPopup": "//*[contains(@class, 'leftButton')]",
   "commentPopup": "//*[@title='Comment']",
   "firstCommentXp":"//*[@name='content']",
-  "firstComment1":"First Comment1",
+  "firstComment1":"Comment1",
   "selectTextToHighlight":"//span[text()='Apelydd']",
+  "commentsCount": "p.commentText",
+  "commentsBtn": ".dropdown-menu #mvCommentsBtn",
   "bookmarksCount": ".outlineWithDeepNesting .bookmarks-tree .outlineItem",
   "highLightTextCount": "mv-annotation-set .rectangle",
   "bookMarksCss": ".outlineItem",
   "deleteBookmarkCss": ".outlineWithDeepNesting .bookmarks-tree .bookmark__delete",
   "bookMarkRename": ".outlineWithDeepNesting .bookmarks-tree .outlineItem .bookmark__rename",
   "bookMarkSave": ".outlineWithDeepNesting .bookmarks-tree .bookmark__save",
-  "bookMarkInput": ".outlineWithDeepNesting .bookmarks-tree .node-wrapper .bookmark__input"
+  "bookMarkInput": ".outlineWithDeepNesting .bookmarks-tree .node-wrapper .bookmark__input",
+  "deleteAnnotationBtn": "//*[contains(@class, 'govuk-button--secondary')]",
+  "deleteAnnotationText":"//p[@class ='commentText' and contains (text(), 'Comment1')]",
+  "deletedComment": "p.commentText"
 }
