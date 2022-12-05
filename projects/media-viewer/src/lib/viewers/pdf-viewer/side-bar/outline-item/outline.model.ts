@@ -6,6 +6,7 @@ export interface Outline {
   italic: boolean;
   items: {}[];
   newWindow: any;
+  pageNumber: number;
   title: string;
   unsafeUrl: any;
   url: any;

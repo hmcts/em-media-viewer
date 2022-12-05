@@ -8,8 +8,14 @@
      [style.font-weight]="outline.bold ? 'bold' : ''"
      [style.font-style]="outline.italic ? 'italic' : ''"
      tabindex="0">
-    {{ outline.title }}
+    <div style="text-align:left;">
+      {{ outline.title }}
+      <span style="float:right;">
+        {{ outline.pageNumber }}
+      </span>
+    </div>
   </a>
+  
   <div *ngIf="outline.items.length > 0" class="outlineItems">
     <div *ngFor="let outline of outline.items">
       <mv-outline-item
