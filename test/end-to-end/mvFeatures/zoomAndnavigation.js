@@ -28,6 +28,5 @@ Scenario('Pdf viewer page navigation', async ({I}) => {
 Scenario('Enable page navigation based on user input', async ({I}) => {
   await pdfViewerPageNavigationTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT, mvData.PAGE_NUMBER_TO_NAVIGATE);
 
-}).tag('@xb')
-  .tag('@ci')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
