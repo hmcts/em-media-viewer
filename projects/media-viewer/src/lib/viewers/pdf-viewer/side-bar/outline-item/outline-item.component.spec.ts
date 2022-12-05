@@ -14,6 +14,7 @@ describe('OutlineItemComponent', () => {
     italic: true,
     items: [],
     newWindow: '',
+    pageNumber: 0,
     title: 'Outline',
     unsafeUrl: '',
     url: '',
