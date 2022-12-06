@@ -13,5 +13,5 @@ module.exports = async function () {
   await I.retry(2).click(commonConfig.commentsSearchBtn)
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 
-  await I.seeTextEquals(mvData.ASSERT_COMMENTS_SEARCH_COUNT, commonConfig.assertCommentsSearchCountXp);
+  await I.see(mvData.ASSERT_COMMENTS_SEARCH_COUNT);
 }
