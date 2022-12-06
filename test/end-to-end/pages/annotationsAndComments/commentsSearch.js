@@ -8,7 +8,7 @@ module.exports = async function () {
   await I.retry(2).click(commonConfig.commentsSearchLink)
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.clearField(commonConfig.searchCommentsInput);
-  await I.fillField(commonConfig.searchCommentsInput, commonConfig.firstComment1);
+  await I.fillField(commonConfig.searchCommentsInput, mvData.UPDATED_COMMENT);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.retry(2).click(commonConfig.commentsSearchBtn)
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
