@@ -1,29 +1,25 @@
 import { Injectable } from '@angular/core';
 import { SocketService } from './socket.service';
 import { IcpParticipant, IcpScreenUpdate, IcpSession } from './icp.interfaces';
+import { from, of } from 'rxjs';
+import { IcpEvents } from './icp.events';
 
 @Injectable()
 export class IcpUpdateService {
 
-  SESSION_JOINED = '[Icp] Client Joined Session';
-  CLIENT_DISCONNECTED = '[Icp] Client Disconnected From Session';
-  NEW_PARTICIPANT_JOINED = '[Icp] New Participant Joined Session';
-  REMOVE_PARTICIPANT = '[Icp] Remove Participant from List';
-  PARTICIPANTS_UPDATED = '[Icp] Participants List Updated';
-  UPDATE_PRESENTER = '[Icp] New Presenter Starts Presenting';
-  PRESENTER_UPDATED =  '[Icp] Presenter Updated';
-  UPDATE_SCREEN = '[Icp] Update Screen';
-  SCREEN_UPDATED = '[Icp] Screen Updated';
-
   session: IcpSession;
 
-  constructor(private socket: SocketService) {}
+  constructor(private socket: SocketService) { }
 
   joinSession(username: string, session: IcpSession) {
     this.session = session;
-    this.socket.connect();
-    this.socket.join({...this.session, username});
-    return this.socket.listen(this.SESSION_JOINED);
+    this.socket.connect(session.connectionUrl)
+    this.socket.connected().subscribe(isConnected => {
+      if (isConnected) {
+        this.socket.join({ ...this.session, username });
+      }
+    });
+    return this.socket.listen(IcpEvents.SESSION_JOINED);
   }
 
   leaveSession() {
@@ -31,39 +27,39 @@ export class IcpUpdateService {
   }
 
   newParticipantJoined() {
-    return this.socket.listen(this.NEW_PARTICIPANT_JOINED);
+    return this.socket.listen(IcpEvents.NEW_PARTICIPANT_JOINED);
   }
 
   clientDisconnected() {
-    return this.socket.listen(this.CLIENT_DISCONNECTED);
+    return this.socket.listen(IcpEvents.CLIENT_DISCONNECTED);
   }
 
   removeParticipant(participantId) {
-    this.socket.emit(this.REMOVE_PARTICIPANT, {
+    this.socket.emit(IcpEvents.REMOVE_PARTICIPANT, {
       participantId: participantId, caseId: this.session.caseId
     });
   }
 
   participantListUpdated() {
-    return this.socket.listen(this.PARTICIPANTS_UPDATED);
+    return this.socket.listen(IcpEvents.PARTICIPANTS_UPDATED);
   }
 
   updatePresenter(presenter: IcpParticipant) {
-    this.socket.emit(this.UPDATE_PRESENTER, {
+    this.socket.emit(IcpEvents.UPDATE_PRESENTER, {
       ...this.session, presenterId: presenter.id, presenterName: presenter.username
     });
   }
 
   presenterUpdated() {
-    return this.socket.listen(this.PRESENTER_UPDATED);
+    return this.socket.listen(IcpEvents.PRESENTER_UPDATED);
   }
 
   updateScreen(screen: IcpScreenUpdate) {
-    const update = { body: screen, sessionId: this.session.sessionId };
-    this.socket.emit(this.UPDATE_SCREEN, update);
+    const update = { body: screen, caseId: this.session.caseId };
+    this.socket.emit(IcpEvents.UPDATE_SCREEN, update);
   }
 
   screenUpdated() {
-    return this.socket.listen(this.SCREEN_UPDATED);
+    return this.socket.listen(IcpEvents.SCREEN_UPDATED);
   }
 }
