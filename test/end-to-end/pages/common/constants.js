@@ -21,6 +21,7 @@ const mvData = {
   "PAGE_NAVIGATION_NUMBER": '2',
   "PAGE_NUMBER_TO_NAVIGATE":'3',
   "BOOKMARK_UPDATE":'Bookmark update',
+  "UPDATED_COMMENT":'Phani Perla',
   "DELETE_ANNOTATION":"Comment1"
 };
 

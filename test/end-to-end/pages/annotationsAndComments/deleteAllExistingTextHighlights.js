@@ -5,7 +5,6 @@ const testConfig = require("../../../config");
 
 module.exports = async function () {
   const I = this;
-  await I.wait(testConfig.BookmarksAndAnnotationsWait);
 
   await I.executeScript(async () => {
     const range = document.createRange();
