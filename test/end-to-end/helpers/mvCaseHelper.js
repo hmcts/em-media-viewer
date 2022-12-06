@@ -121,6 +121,12 @@ async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) 
   await I.deleteComments(comment, updatedComment);
 }
 
+async function collateCommentsTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.clickCommentsPanel();
+  await I.collateComments();
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -164,5 +170,6 @@ module.exports = {
   multiMediaAudioPauseAndRewindTest,
   highlightTextTest,
   addCommentTest,
-  deleteCommentTest
+  deleteCommentTest,
+  collateCommentsTest
 }

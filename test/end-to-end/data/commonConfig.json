@@ -46,5 +46,7 @@
   "editButton": "div.aui-comment__footer.commentBtns > button:nth-child(1)",
   "clearFiledXp": "//*[@name='content']",
   "deleteAnnotationText":"//p[@class ='commentText' and contains (text(), 'Comment1')]",
-  "deletedComment": "p.commentText"
+  "deletedComment": "p.commentText",
+  "commentsLink": "#commentSubPane0",
+  "commentsSummaryBtn": "#commentSummary"
 }

@@ -30,6 +30,8 @@ module.exports = () => {
     deleteComments:steps.annotationsAndComments.deleteComments,
     deleteAllExistingTextHighlights:steps.annotationsAndComments.deleteAllExistingTextHighlights,
     deleteAllExistingComments:steps.annotationsAndComments.deleteAllExistingComments,
-    clickCommentsPanel:steps.annotationsAndComments.clickCommentsPanel
+    clickCommentsPanel:steps.annotationsAndComments.clickCommentsPanel,
+    collateComments:steps.annotationsAndComments.collateComments,
+
   });
 };
