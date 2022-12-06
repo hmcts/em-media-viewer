@@ -48,5 +48,9 @@
   "deleteAnnotationText":"//p[@class ='commentText' and contains (text(), 'Comment1')]",
   "deletedComment": "p.commentText",
   "commentsLink": "#commentSubPane0",
-  "commentsSummaryBtn": "#commentSummary"
+  "commentsSummaryBtn": "#commentSummary",
+  "commentsSearchLink": "#commentSubPane2",
+  "searchCommentsInput": "#search-comments-input",
+  "commentsSearchBtn": "mv-comment-search > button",
+  "assertCommentsSearchCountXp": "//span[@class =\"comment-search__item\" and contains(text(), \"Showing 1 of 1\") ]"
 }

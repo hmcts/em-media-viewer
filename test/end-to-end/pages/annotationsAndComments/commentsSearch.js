@@ -1,0 +1,17 @@
+'use strict'
+const commonConfig = require('../../data/commonConfig.json');
+const testConfig = require("../../../config");
+const {mvData} = require("../common/constants");
+
+module.exports = async function () {
+  const I = this;
+  await I.retry(2).click(commonConfig.commentsSearchLink)
+  await I.wait(testConfig.BookmarksAndAnnotationsWait);
+  await I.clearField(commonConfig.searchCommentsInput);
+  await I.fillField(commonConfig.searchCommentsInput, commonConfig.firstComment1);
+  await I.wait(testConfig.BookmarksAndAnnotationsWait);
+  await I.retry(2).click(commonConfig.commentsSearchBtn)
+  await I.wait(testConfig.BookmarksAndAnnotationsWait);
+
+  await I.seeTextEquals(mvData.ASSERT_COMMENTS_SEARCH_COUNT, commonConfig.assertCommentsSearchCountXp);
+}

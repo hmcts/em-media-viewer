@@ -127,6 +127,12 @@ async function collateCommentsTest(I, caseId, mediaType) {
   await I.collateComments();
 }
 
+async function commentsSearchTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.clickCommentsPanel();
+  await I.commentsSearch();
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -171,5 +177,7 @@ module.exports = {
   highlightTextTest,
   addCommentTest,
   deleteCommentTest,
-  collateCommentsTest
+  collateCommentsTest,
+  commentsSearchTest
+
 }

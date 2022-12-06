@@ -32,6 +32,7 @@ module.exports = () => {
     deleteAllExistingComments:steps.annotationsAndComments.deleteAllExistingComments,
     clickCommentsPanel:steps.annotationsAndComments.clickCommentsPanel,
     collateComments:steps.annotationsAndComments.collateComments,
+    commentsSearch:steps.annotationsAndComments.commentsSearch
 
   });
 };
