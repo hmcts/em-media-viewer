@@ -115,8 +115,16 @@ const setupConfig = {
         },
         firefox: {
             browsers: getBrowserConfig('firefox')
-        }
+        },
+      safari: {
+        browsers: getBrowserConfig('safari')
+      }
+
     },
+    // parallel: {
+    //   chunks: 2,
+    //   browsers: ['chrome']
+    // },
     name: 'MV Cross Browser Tests'
 };
 

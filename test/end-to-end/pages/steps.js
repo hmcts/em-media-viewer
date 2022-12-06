@@ -25,12 +25,11 @@ module.exports = () => {
     updateBookMarks: steps.bookMarks.updateBookMark,
     addEmptyBookmarks: steps.bookMarks.addAnEmptyBookMarks,
     mvAudioScenario:steps.multiMediaAudioAndVideo.multiMediaAudio,
-    annotationsHighlightText:steps.annotationsAndComments.highlightPdfText,
-    createAnnotation:steps.annotationsAndComments.addComment,
-    deleteAnnotation:steps.annotationsAndComments.deleteAnnotations,
-    clearExistingHighLights:steps.annotationsAndComments.clearExistingTextHighlights,
-    selectTextToHighlight:steps.highLightPdfText.highLighText,
-    deleteAllComments:steps.annotationsAndComments.deleteExistingComments,
-
+    highlightPdfText:steps.annotationsAndComments.highlightPdfText,
+    addComments:steps.annotationsAndComments.addComments,
+    deleteComments:steps.annotationsAndComments.deleteComments,
+    deleteAllExistingTextHighlights:steps.annotationsAndComments.deleteAllExistingTextHighlights,
+    deleteAllExistingComments:steps.annotationsAndComments.deleteAllExistingComments,
+    clickCommentsPanel:steps.annotationsAndComments.clickCommentsPanel
   });
 };
