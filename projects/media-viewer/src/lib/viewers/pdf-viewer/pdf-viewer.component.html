@@ -4,7 +4,8 @@
              [zoom]="zoom"
              [rotate]="rotation"
              [outline]="documentOutline"
-             [annotationsEnabled]="enableAnnotations">
+             [annotationsEnabled]="enableAnnotations"
+             [currentPageNumber]="pdfWrapper.getPageNumber()">
 </mv-side-bar>
 <mv-comment-set-header
   *ngIf="enableAnnotations"

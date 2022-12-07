@@ -28,8 +28,11 @@
 <div id="sidebarContent">
   <div id="outlineView" class="outlineWithDeepNesting">
     <div class="outlineItem" *ngIf="selectedView === 'outline'">
-      <mv-outline-item *ngFor="let outlineItem of outline"
+      <mv-outline-item *ngFor="let outlineItem of outline; index as i"
                        [outline]="outlineItem"
+                       [currentPageNumber]="currentPageNumber"
+                       [isCurrentSection]= "outline[i+1] === undefined ? outlineItem.pageNumber <= currentPageNumber : outlineItem.pageNumber <= currentPageNumber && (outline[i+1].pageNumber > currentPageNumber)"
+                       [endPage]="outline[i+1] === undefined ? undefined : outline[i+1].pageNumber"
                        (navigationEvent)="goToDestination($event)"></mv-outline-item>
     </div>
     <div *ngIf="annotationsEnabled && selectedView === 'bookmarks'"

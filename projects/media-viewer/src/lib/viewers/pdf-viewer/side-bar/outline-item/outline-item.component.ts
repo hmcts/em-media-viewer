@@ -8,12 +8,18 @@ import { Outline } from './outline.model';
 export class OutlineItemComponent implements OnInit {
 
   @Input() outline: Outline;
+  @Input() currentPageNumber: Number;
+  @Input() isCurrentSection: boolean;
+  @Input() endPage: Number;
   @Output() navigationEvent = new EventEmitter();
 
   showOutlineItems: boolean;
 
   ngOnInit() {
     this.showOutlineItems = true;
+    if (this.endPage === undefined) {
+      this.endPage = Number.MAX_SAFE_INTEGER;
+    }
   }
 
   goToDestination(destination: any) {

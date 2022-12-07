@@ -21,6 +21,8 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() url: string;
   @Input() zoom: number;
   @Input() rotate: number;
+  @Input() currentPageNumber: number;
+
 
   selectedView = 'outline';
   bookmarkNodes$: Observable<BookmarkNode[]>;
