@@ -104,17 +104,17 @@ export class PdfJsWrapper {
     }
   }
 
-  private async setOutlinePageNumbers(pdfDocument, outline: Outline[]) {
-    outline.forEach ( async (elem: Outline) => {
-      await this.setOutlinePageNumbersRec(pdfDocument, elem);
+  private async setOutlinePageNumbers(pdfDocument, outlineArray: Outline[]) {
+    outlineArray.forEach ( async (outline: Outline) => {
+      await this.setOutlinePageNumbersRec(pdfDocument, outline);
     });
   }
 
   private async setOutlinePageNumbersRec(pdfDocument, outline: Outline) {
     outline.pageNumber = await this.getOutlinePageNo(pdfDocument, outline);
-    outline.items.forEach( async (element: Outline) => {
-      element.pageNumber = await this.getOutlinePageNo(pdfDocument, element);
-      this.setOutlinePageNumbersRec(pdfDocument, element);
+    outline.items.forEach( async (outlineItem: Outline) => {
+      outlineItem.pageNumber = await this.getOutlinePageNo(pdfDocument, outlineItem);
+      this.setOutlinePageNumbersRec(pdfDocument, outlineItem);
     });
   }
 

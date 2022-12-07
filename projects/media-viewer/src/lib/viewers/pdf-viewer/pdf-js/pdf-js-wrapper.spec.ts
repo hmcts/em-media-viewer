@@ -7,6 +7,7 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { Outline } from '../side-bar/outline-item/outline.model';
 import { PdfPosition } from '../../../store/reducers/document.reducer';
 
+
 describe('PdfJsWrapper', () => {
 
   let downloadManager;
@@ -84,10 +85,14 @@ describe('PdfJsWrapper', () => {
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
     const outlineSpy = spyOn(wrapper, 'setOutlinePageNumbers');
-    const mockOutline =  [{ dest: [{num: 254, gen: 0, } , {name: 'Fit', }, ], items:
-      [{dest: [{num: 254, gen: 0, }, {name: 'Fit', }, ], items: [], },
-      { dest: [{num: 1, gen: 0, }, {name: 'Fit', }, ], items: [ ], }, ], }, ];
-    const mockDocument = { numPages: 10, getOutline: () => (mockOutline), getMetadata: () => ({ info: { Title: 'Title' }})};
+    const outlineArray: Outline[] = [];
+    const outline: Outline = <Outline> {};
+    outline.dest = [{num: 254, gen: 0, } , {name: 'Fit', }, ];
+    outline.items = [];
+    outline.items.push(outline);
+    outlineArray.push(outline);
+
+    const mockDocument = { numPages: 10, getOutline: () => (outlineArray), getMetadata: () => ({ info: { Title: 'Title' }})};
 
     spyOnProperty(pdfjsLib, 'getDocument')
       .and.returnValue(() => ({ promise: Promise.resolve(mockDocument)}));
@@ -95,7 +100,7 @@ describe('PdfJsWrapper', () => {
     wrapper.loadDocument('document-url');
     tick();
 
-    expect(outlineSpy).toHaveBeenCalledWith(mockDocument, mockOutline);
+    expect(outlineSpy).toHaveBeenCalledWith(mockDocument, outlineArray);
     expect(pdfViewerSpy).toHaveBeenCalledWith(mockDocument);
     expect(newDocumentLoadInitSpy).toHaveBeenCalledTimes(1);
     expect(documentLoadedSpy).toHaveBeenCalledTimes(1);
