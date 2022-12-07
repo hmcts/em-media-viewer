@@ -200,7 +200,6 @@ describe('ImageViewerComponent', () => {
     inject([Store,], (store) => {
       spyOn(store, 'dispatch');
       spyOn(viewerEvents, 'clearCtxToolbar');
-      debugger;
       component.onImageViewerClick(event as any);
 
       expect(store.dispatch).toHaveBeenCalledWith(new SelectedAnnotation({
