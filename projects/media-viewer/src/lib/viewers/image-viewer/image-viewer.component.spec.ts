@@ -12,13 +12,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import * as fromDocument from '../../store/actions/document.actions';
 import { SelectedAnnotation } from '../../store/actions/annotation.actions';
 import { of } from 'rxjs';
+import { ViewerEventService } from '../viewer-event.service';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
   let fixture: ComponentFixture<ImageViewerComponent>;
   let nativeElement;
-  const DOCUMENT_URL = 'document-url';
-  const viewerEvents = { textSelected: () => { }, clearCtxToolbar: () => { } } as any;
+  const DOCUMENT_URL = 'document-url';E
   const allPages = {
     '1': {
       scaleRotation: { rotation: 0, scale: 1 },
@@ -196,16 +196,15 @@ describe('ImageViewerComponent', () => {
     })
   );
 
-  it('should deselect annotation and context toolbar', () => {
-    inject([Store], (store) => {
-      spyOn(store, 'dispatch');
-      spyOn(viewerEvents, 'clearCtxToolbar');
-      component.onImageViewerClick(event as any);
+  it('should deselect annotation and context toolbar', inject([Store, ViewerEventService], (store, viewerEvents) => {
+    spyOn(store, 'dispatch');
+    spyOn(viewerEvents, 'clearCtxToolbar');
+    component.onImageViewerClick(event as any);
 
-      expect(store.dispatch).toHaveBeenCalledWith(new SelectedAnnotation({
-        annotationId: '', selected: false, editable: false
-      }));
-      expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled();
-    });
-  });
+    expect(store.dispatch).toHaveBeenCalledWith(new SelectedAnnotation({
+      annotationId: '', selected: false, editable: false
+    }));
+    expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled();
+  })
+  );
 });
