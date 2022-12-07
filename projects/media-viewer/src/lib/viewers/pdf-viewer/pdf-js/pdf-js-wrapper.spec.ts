@@ -86,10 +86,13 @@ describe('PdfJsWrapper', () => {
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
     const outlineSpy = spyOn(wrapper, 'setOutlinePageNumbers');
     const outlineArray: Outline[] = [];
+    const outlineItem: Outline = <Outline> {};
+    outlineItem.dest = [{num: 254, gen: 0, } , {name: 'Fit', }, ];
+    outlineItem.items = [];
     const outline: Outline = <Outline> {};
     outline.dest = [{num: 254, gen: 0, } , {name: 'Fit', }, ];
     outline.items = [];
-    outline.items.push(outline);
+    outline.items.push(outlineItem);
     outlineArray.push(outline);
 
     const mockDocument = { numPages: 10, getOutline: () => (outlineArray), getMetadata: () => ({ info: { Title: 'Title' }})};
