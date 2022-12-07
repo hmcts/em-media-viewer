@@ -22,7 +22,8 @@ const mvData = {
   "PAGE_NUMBER_TO_NAVIGATE":'3',
   "BOOKMARK_UPDATE":'Bookmark update',
   "UPDATED_COMMENT":'Phani Perla',
-  "DELETE_ANNOTATION":"Comment1"
+  "DELETE_ANNOTATION":"Comment1",
+  "ASSERT_COMMENTS_SEARCH_COUNT":'Showing 1 of 1'
 };
 
 module.exports = {
