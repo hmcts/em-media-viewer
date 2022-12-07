@@ -44,6 +44,7 @@ def secrets = [
   "em-showcase-${params.ENVIRONMENT}": [
     secret('ccd-user-email', 'CCD_CASEWORKER_E2E_EMAIL'),
     secret('ccd-user-password', 'CCD_CASEWORKER_E2E_PASSWORD'),
+    secret('microservicekey-ccd-gw', 'MICROSERVICE_CCD_GW'),
     secret('idam-client-secret', 'IDAM_CLIENT_SECRET')
   ]
 ]
