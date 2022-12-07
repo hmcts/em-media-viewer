@@ -25,7 +25,7 @@ describe('ImageViewerComponent', () => {
       styles: { height: 1122, left: 341, width: 793 }
     }
   };
-  const event = { clientX: 50, clientY: 40, preventDefault: () => { }, target: { className: "pageContainer" } };
+  const event = { clientX: 50, clientY: 40, preventDefault: () => { }, target: { className: 'pageContainer' } };
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -197,7 +197,7 @@ describe('ImageViewerComponent', () => {
   );
 
   it('should deselect annotation and context toolbar', () => {
-    inject([Store,], (store) => {
+    inject([Store], (store) => {
       spyOn(store, 'dispatch');
       spyOn(viewerEvents, 'clearCtxToolbar');
       component.onImageViewerClick(event as any);
@@ -206,6 +206,6 @@ describe('ImageViewerComponent', () => {
         annotationId: '', selected: false, editable: false
       }));
       expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled();
-    })
+    });
   });
 });
