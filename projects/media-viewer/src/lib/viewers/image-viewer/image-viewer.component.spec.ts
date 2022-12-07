@@ -18,13 +18,7 @@ describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
   let fixture: ComponentFixture<ImageViewerComponent>;
   let nativeElement;
-  const DOCUMENT_URL = 'document-url';E
-  const allPages = {
-    '1': {
-      scaleRotation: { rotation: 0, scale: 1 },
-      styles: { height: 1122, left: 341, width: 793 }
-    }
-  };
+  const DOCUMENT_URL = 'document-url';
   const event = { clientX: 50, clientY: 40, preventDefault: () => { }, target: { className: 'pageContainer' } };
   beforeEach(() => {
     TestBed.configureTestingModule({
