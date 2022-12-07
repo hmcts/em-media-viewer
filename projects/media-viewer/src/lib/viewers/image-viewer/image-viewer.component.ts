@@ -81,7 +81,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @HostListener('mousedown', ['$event'])
   onImageViewerClick(event: MouseEvent) {
-    debugger;
     const classNme = (event.target as Element).className;
     if (classNme.startsWith('pageContainer')) {
       this.store.dispatch(
