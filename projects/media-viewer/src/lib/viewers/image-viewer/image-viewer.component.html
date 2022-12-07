@@ -7,7 +7,7 @@
      [ngStyle]="{ height: height }"
      [ngClass]="{ 'grabNDrag': enableGrabNDrag }"
      *ngIf="url && !errorMessage">
-  <div #imageContainer mvCreateTextHighlight id="image-container"
+  <div #imageContainer id="image-container"
        [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations, 'show-comments-panel': showCommentsPanel }"
        [style.height.px]="imageHeight">
     <img #img

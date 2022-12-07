@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   OnDestroy,
@@ -20,10 +21,12 @@ import { ToolbarButtonVisibilityService } from '../../toolbar/toolbar-button-vis
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
 import * as fromDocument from '../../store/actions/document.actions';
+import * as fromAnnotationActions from '../../store/actions/annotation.actions';
+import { ViewerEventService } from '../viewer-event.service';
 
 @Component({
-    selector: 'mv-image-viewer',
-    templateUrl: './image-viewer.component.html'
+  selector: 'mv-image-viewer',
+  templateUrl: './image-viewer.component.html'
 })
 export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 
@@ -60,7 +63,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     private readonly printService: PrintService,
     private readonly viewerUtilService: ViewerUtilService,
     public readonly toolbarEvents: ToolbarEventService,
-    public readonly toolbarButtons: ToolbarButtonVisibilityService
+    public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    private viewerEvents: ViewerEventService,
   ) { }
 
   ngOnInit(): void {
@@ -73,6 +77,22 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag),
       this.toolbarEvents.commentsPanelVisible.subscribe(toggle => this.showCommentsPanel = toggle)
     );
+  }
+
+  @HostListener('mousedown', ['$event'])
+  onImageViewerClick(event: MouseEvent) {
+    debugger;
+    const classNme = (event.target as Element).className;
+    if (classNme.startsWith('pageContainer')) {
+      this.store.dispatch(
+        new fromAnnotationActions.SelectedAnnotation({
+          annotationId: '',
+          selected: false,
+          editable: false,
+        })
+      );
+      this.viewerEvents.clearCtxToolbar();
+    }
   }
 
   ngOnDestroy(): void {
@@ -140,11 +160,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
   onLoadError(url) {
     this.response = this.viewerUtilService.validateFile(url)
       .subscribe(
-      next => next,
-      error => {
-        this.viewerException = new ViewerException(error.name,
-          {httpResponseCode: error.status, message: error.message});
-      });
+        next => next,
+        error => {
+          this.viewerException = new ViewerException(error.name,
+            { httpResponseCode: error.status, message: error.message });
+        });
 
     this.errorMessage = `Could not load the image "${this.url}"`;
     this.mediaLoadStatus.emit(ResponseType.FAILURE);
