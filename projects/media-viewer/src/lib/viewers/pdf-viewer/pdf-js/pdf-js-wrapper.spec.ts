@@ -83,10 +83,11 @@ describe('PdfJsWrapper', () => {
     const pdfViewerSpy = spyOn(mockViewer, 'setDocument');
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
-    const mockOutline =  [{ dest: [{num: 254, gen: 0,},{name: "Fit",},],items: 
-      [{dest: [{num: 254,gen: 0,},{name: "Fit",},],items: [],},
-      { dest: [{num: 1,gen: 0,}, {name: "Fit",},],items: [ ],},],},];
-    const mockDocument = { numPages: 10, getOutline: () => {mockOutline}, getMetadata: () => ({ info: { Title: 'Title' }})};
+    const outlineSpy = spyOn(wrapper, 'setOutlinePageNumbers');
+    const mockOutline =  [{ dest: [{num: 254, gen: 0, } , {name: 'Fit', }, ], items:
+      [{dest: [{num: 254, gen: 0, }, {name: 'Fit', }, ], items: [], },
+      { dest: [{num: 1, gen: 0, }, {name: 'Fit', }, ], items: [ ], }, ], }, ];
+    const mockDocument = { numPages: 10, getOutline: () => (mockOutline), getMetadata: () => ({ info: { Title: 'Title' }})};
 
     spyOnProperty(pdfjsLib, 'getDocument')
       .and.returnValue(() => ({ promise: Promise.resolve(mockDocument)}));
@@ -94,6 +95,7 @@ describe('PdfJsWrapper', () => {
     wrapper.loadDocument('document-url');
     tick();
 
+    expect(outlineSpy).toHaveBeenCalledWith(mockDocument, mockOutline);
     expect(pdfViewerSpy).toHaveBeenCalledWith(mockDocument);
     expect(newDocumentLoadInitSpy).toHaveBeenCalledTimes(1);
     expect(documentLoadedSpy).toHaveBeenCalledTimes(1);
