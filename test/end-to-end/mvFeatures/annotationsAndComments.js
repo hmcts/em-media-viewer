@@ -1,5 +1,5 @@
 const testConfig = require('./../../config');
-const {collateCommentsTest, commentsSearchTest} = require("../helpers/mvCaseHelper");
+const {collateCommentsTest, commentsSearchTest, addMultipleCommentsTest} = require("../helpers/mvCaseHelper");
 const {highlightTextTest, addCommentTest, deleteCommentTest} = require("../helpers/mvCaseHelper");
 const {mvData} = require('../pages/common/constants.js');
 
@@ -37,6 +37,13 @@ Scenario('Annotations: Search Comment Text', async ({I}) => {
   await commentsSearchTest(I, mvData.ANNOTATIONS_BOOKMARKS_CASE, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
+  .tag('@np')
+  .retry(testConfig.TestRetryScenarios);
+
+Scenario('Add multiple comments on multiples pages', async ({I}) => {
+  await addMultipleCommentsTest(I, mvData.ANNOTATIONS_BOOKMARKS_CASE, mvData.PDF_DOCUMENT);
+
+}).tag('@wip')
   .tag('@np')
   .retry(testConfig.TestRetryScenarios);
 

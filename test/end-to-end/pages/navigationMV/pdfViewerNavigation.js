@@ -10,9 +10,7 @@ module.exports = async function (pageToNavigate) {
     await I.retry(2).click(commonConfig.moveDown);
     await I.click('#viewerContainer')
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
-    if (testConfig.TestForCrossBrowser!==true) {
-      await I.seeInField(commonConfig.pageNumber, mvData.PAGE_NAVIGATION_NUMBER);
-    }
+      // await I.seeInField(commonConfig.pageNumber, mvData.PAGE_NAVIGATION_NUMBER);
   } else {
     await I.clearField(commonConfig.pageNumber);
     await I.fillField(commonConfig.pageNumber, pageToNavigate);
