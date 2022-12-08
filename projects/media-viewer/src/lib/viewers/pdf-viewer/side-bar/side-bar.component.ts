@@ -66,4 +66,13 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
         } as any));
       });
   }
+
+  isViewedItem(current: Outline, next: Outline): boolean {
+    return next === undefined ? current.pageNumber <= this.currentPageNumber : 
+      current.pageNumber <= this.currentPageNumber && (next.pageNumber > this.currentPageNumber);
+  }
+
+  findEndPage(next: Outline): number {
+    return next === undefined ? Number.MAX_SAFE_INTEGER : next.pageNumber;
+  }
 }

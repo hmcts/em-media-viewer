@@ -31,8 +31,8 @@
       <mv-outline-item *ngFor="let outlineItem of outline; index as i"
                        [outline]="outlineItem"
                        [currentPageNumber]="currentPageNumber"
-                       [isCurrentSection]= "outline[i+1] === undefined ? outlineItem.pageNumber <= currentPageNumber : outlineItem.pageNumber <= currentPageNumber && (outline[i+1].pageNumber > currentPageNumber)"
-                       [endPage]="outline[i+1] === undefined ? undefined : outline[i+1].pageNumber"
+                       [isCurrentSection]= "isViewedItem(outline, outline[i+1])"
+                       [endPage]="findEndPage()"
                        (navigationEvent)="goToDestination($event)"></mv-outline-item>
     </div>
     <div *ngIf="annotationsEnabled && selectedView === 'bookmarks'"

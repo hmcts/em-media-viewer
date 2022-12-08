@@ -17,9 +17,6 @@ export class OutlineItemComponent implements OnInit {
 
   ngOnInit() {
     this.showOutlineItems = true;
-    if (this.endPage === undefined) {
-      this.endPage = Number.MAX_SAFE_INTEGER;
-    }
   }
 
   goToDestination(destination: any) {
@@ -30,6 +27,15 @@ export class OutlineItemComponent implements OnInit {
 
   toggleOutline() {
     this.showOutlineItems = !this.showOutlineItems;
+  }
+
+  isViewedItem(current: Outline, next: Outline): boolean {
+    return next === undefined ? current.pageNumber <= this.currentPageNumber && this.endPage > this.currentPageNumber : 
+      current.pageNumber <= this.currentPageNumber && (next.pageNumber > this.currentPageNumber);
+  }
+
+  findEndPage(next: Outline): number {
+    return next === undefined ? Number.MAX_SAFE_INTEGER : next.pageNumber;
   }
 
   showHighlightOutlineCss() {

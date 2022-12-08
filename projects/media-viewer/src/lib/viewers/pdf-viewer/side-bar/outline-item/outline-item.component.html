@@ -22,8 +22,8 @@
       <mv-outline-item
         [outline]="outlineItem" 
         [currentPageNumber]= "currentPageNumber" 
-        [isCurrentSection]= "outline.items[i+1] === undefined ? outlineItem.pageNumber <= currentPageNumber && endPage > currentPageNumber : outlineItem.pageNumber <= currentPageNumber && (outline.items[i+1].pageNumber > currentPageNumber)"
-        [endPage]="outline.items[i+1] === undefined ? undefined : outline.items[i+1].pageNumber"
+        [isCurrentSection]= "isViewedItem(outlineItem, outline.items[i+1])"
+        [endPage]="findEndPage(outline.items[i+1])"
         (navigationEvent)="goToDestination($event)">
       </mv-outline-item>
     </div>
