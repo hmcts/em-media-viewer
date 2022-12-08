@@ -31,4 +31,8 @@ export class OutlineItemComponent implements OnInit {
   toggleOutline() {
     this.showOutlineItems = !this.showOutlineItems;
   }
+
+  showHighlightOutlineCss() {
+    return this.isCurrentSection ? 'highlightedOutlineItem' : 'outlineItem';
+  }
 }

@@ -7,9 +7,9 @@
      (keyup.enter)="goToDestination(outline?.dest)"
      [style.font-weight]="outline.bold ? 'bold' : ''"
      [style.font-style]="outline.italic ? 'italic' : ''"
-     [ngStyle]="{'background-color': (isCurrentSection) ? 'white' : 'transparent'}"
+     [ngClass]="showHighlightOutlineCss()"
      tabindex="0">
-    <div style="text-align:left;" [ngStyle]="{'color': (isCurrentSection) ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)'}">
+    <div style="text-align:left;" [ngClass]="showHighlightOutlineCss()">
       {{ outline.title }}
       <span style="float:right;">
         {{ outline.pageNumber }}
