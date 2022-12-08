@@ -95,7 +95,7 @@ describe('PdfJsWrapper', () => {
     outline.items.push(outlineItem);
     outlineArray.push(outline);
 
-    const mockDocument = { numPages: 10, getOutline: () => (outlineArray), getMetadata: () => ({ info: { Title: 'Title' }})};
+    const mockDocument = { numPages: 10, getOutline: () => (outlineArray), getPageIndex: ({}) => (0) , getMetadata: () => ({ info: { Title: 'Title' }})};
 
     spyOnProperty(pdfjsLib, 'getDocument')
       .and.returnValue(() => ({ promise: Promise.resolve(mockDocument)}));
