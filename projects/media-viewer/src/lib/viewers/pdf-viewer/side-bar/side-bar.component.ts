@@ -68,7 +68,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   isViewedItem(current: Outline, next: Outline): boolean {
-    return next === undefined ? current.pageNumber <= this.currentPageNumber : 
+    return next === undefined ? current.pageNumber <= this.currentPageNumber :
       current.pageNumber <= this.currentPageNumber && (next.pageNumber > this.currentPageNumber);
   }
 
