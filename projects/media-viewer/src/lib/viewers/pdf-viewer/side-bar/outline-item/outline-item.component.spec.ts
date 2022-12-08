@@ -65,7 +65,6 @@ describe('OutlineItemComponent', () => {
   });
 
   it('should identify if currently viewed item', () => {
-    const outline = <Outline> {};
     outline.pageNumber = 1;
     component.currentPageNumber = 1;
     component.endPage = 3;
@@ -85,10 +84,10 @@ describe('OutlineItemComponent', () => {
     expect(component.isViewedItem(outline, nextOutline)).toBe(false);
   });
 
-  it('should find the ending page number'), () => {
+  it('should find the ending page number', () => {
     expect(component.findEndPage(undefined)).toBe(Number.MAX_SAFE_INTEGER);
     const nextOutline = <Outline> {};
     nextOutline.pageNumber = Math.floor(Math.random() * 10000);
     expect(component.findEndPage(nextOutline)).toBe(nextOutline.pageNumber);
-  }
+  });
 });

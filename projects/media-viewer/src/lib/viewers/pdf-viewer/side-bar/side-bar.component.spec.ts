@@ -109,10 +109,10 @@ describe('SideBarComponent', () => {
     expect(component.isViewedItem(outline, nextOutline)).toBe(false);
   });
 
-  it('should find the ending page number'), () => {
+  it('should find the ending page number', () => {
     expect(component.findEndPage(undefined)).toBe(Number.MAX_SAFE_INTEGER);
     const nextOutline = <Outline> {};
     nextOutline.pageNumber = Math.floor(Math.random() * 10000);
     expect(component.findEndPage(nextOutline)).toBe(nextOutline.pageNumber);
-  }
+  });
 });
