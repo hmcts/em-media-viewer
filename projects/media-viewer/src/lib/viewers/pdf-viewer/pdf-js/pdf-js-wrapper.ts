@@ -106,19 +106,19 @@ export class PdfJsWrapper {
 
   private async setOutlinePageNumbers(pdfDocument, outlineArray: Outline[]) {
     outlineArray.forEach ( async (outline: Outline) => {
-      await this.setOutlinePageNumbersRec(pdfDocument, outline);
+      await this.setNestedOutlinePageNumbers(pdfDocument, outline);
     });
   }
 
-  private async setOutlinePageNumbersRec(pdfDocument, outline: Outline) {
-    outline.pageNumber = await this.getOutlinePageNo(pdfDocument, outline);
+  private async setNestedOutlinePageNumbers(pdfDocument, outline: Outline) {
+    outline.pageNumber = await this.getOutlinePageNumber(pdfDocument, outline);
     outline.items.forEach( async (outlineItem: Outline) => {
-      outlineItem.pageNumber = await this.getOutlinePageNo(pdfDocument, outlineItem);
-      this.setOutlinePageNumbersRec(pdfDocument, outlineItem);
+      outlineItem.pageNumber = await this.getOutlinePageNumber(pdfDocument, outlineItem);
+      this.setNestedOutlinePageNumbers(pdfDocument, outlineItem);
     });
   }
 
-  private async getOutlinePageNo(pdfDocument, outline: Outline): Promise <number> {
+  private async getOutlinePageNumber(pdfDocument, outline: Outline): Promise <number> {
     const dest = outline.dest;
     const pageIndex = await pdfDocument.getPageIndex(dest[0]);
     return Number(pageIndex) + 1;
