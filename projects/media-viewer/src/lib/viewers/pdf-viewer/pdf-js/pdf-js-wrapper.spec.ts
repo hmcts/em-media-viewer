@@ -84,6 +84,7 @@ describe('PdfJsWrapper', () => {
     const pdfViewerSpy = spyOn(mockViewer, 'setDocument');
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
+    const outlineSpy = spyOn(wrapper, 'setOutlinePageNumbers').and.callThrough();
     const outlineArray: Outline[] = [];
     const outlineItem: Outline = <Outline> {};
     outlineItem.dest = [{num: 254, gen: 0, } , {name: 'Fit', }, ];
@@ -102,6 +103,7 @@ describe('PdfJsWrapper', () => {
     wrapper.loadDocument('document-url');
     tick();
 
+    expect(outlineSpy).toHaveBeenCalledWith(mockDocument, outlineArray);
     expect(pdfViewerSpy).toHaveBeenCalledWith(mockDocument);
     expect(newDocumentLoadInitSpy).toHaveBeenCalledTimes(1);
     expect(documentLoadedSpy).toHaveBeenCalledTimes(1);
