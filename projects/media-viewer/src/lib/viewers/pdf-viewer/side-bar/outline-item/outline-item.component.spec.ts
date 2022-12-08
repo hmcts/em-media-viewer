@@ -63,4 +63,32 @@ describe('OutlineItemComponent', () => {
 
     expect(navigateSpy).not.toHaveBeenCalled();
   });
+
+  it('should identify if currently viewed item', () => {
+    const outline = <Outline> {};
+    outline.pageNumber = 1;
+    component.currentPageNumber = 1;
+    component.endPage = 3;
+    expect(component.isViewedItem(outline, undefined)).toBe(true);
+    component.currentPageNumber = 2;
+    expect(component.isViewedItem(outline, undefined)).toBe(true);
+    component.currentPageNumber = 0;
+    expect(component.isViewedItem(outline, undefined)).toBe(false);
+    component.currentPageNumber = 3;
+    expect(component.isViewedItem(outline, undefined)).toBe(false);
+
+    const nextOutline = <Outline> {};
+    nextOutline.pageNumber = 2;
+    component.currentPageNumber = 1;
+    expect(component.isViewedItem(outline, nextOutline)).toBe(true);
+    component.currentPageNumber = 2;
+    expect(component.isViewedItem(outline, nextOutline)).toBe(false);
+  });
+
+  it('should find the ending page number'), () => {
+    expect(component.findEndPage(undefined)).toBe(Number.MAX_SAFE_INTEGER);
+    const nextOutline = <Outline> {};
+    nextOutline.pageNumber = Math.floor(Math.random() * 10000);
+    expect(component.findEndPage(nextOutline)).toBe(nextOutline.pageNumber);
+  }
 });

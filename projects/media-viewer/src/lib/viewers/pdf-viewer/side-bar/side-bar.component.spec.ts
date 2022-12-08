@@ -10,6 +10,7 @@ import { PdfPositionUpdate } from '../../../store/actions/document.actions';
 import { ViewerEventService } from '../../viewer-event.service';
 import * as fromDocument from '../../../store/actions/document.actions';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmark.actions';
+import { Outline } from './outline-item/outline.model';
 
 describe('SideBarComponent', () => {
   let component: SideBarComponent;
@@ -89,4 +90,29 @@ describe('SideBarComponent', () => {
       expect(dispatchSpy).toHaveBeenCalledWith(new LoadBookmarks());
     })
   );
+
+  it('should identify if currently viewed item', () => {
+    const outline = <Outline> {};
+    outline.pageNumber = 1;
+    component.currentPageNumber = 1;
+    expect(component.isViewedItem(outline, undefined)).toBe(true);
+    component.currentPageNumber = 2;
+    expect(component.isViewedItem(outline, undefined)).toBe(true);
+    component.currentPageNumber = 0;
+    expect(component.isViewedItem(outline, undefined)).toBe(false);
+
+    const nextOutline = <Outline> {};
+    nextOutline.pageNumber = 2;
+    component.currentPageNumber = 1;
+    expect(component.isViewedItem(outline, nextOutline)).toBe(true);
+    component.currentPageNumber = 2;
+    expect(component.isViewedItem(outline, nextOutline)).toBe(false);
+  });
+
+  it('should find the ending page number'), () => {
+    expect(component.findEndPage(undefined)).toBe(Number.MAX_SAFE_INTEGER);
+    const nextOutline = <Outline> {};
+    nextOutline.pageNumber = Math.floor(Math.random() * 10000);
+    expect(component.findEndPage(nextOutline)).toBe(nextOutline.pageNumber);
+  }
 });
