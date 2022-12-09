@@ -133,6 +133,11 @@ async function commentsSearchTest(I, caseId, mediaType) {
   await I.commentsSearch();
 }
 
+async function addMultipleCommentsTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.addMultipleComments();
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -178,6 +183,7 @@ module.exports = {
   addCommentTest,
   deleteCommentTest,
   collateCommentsTest,
-  commentsSearchTest
+  commentsSearchTest,
+  addMultipleCommentsTest
 
 }
