@@ -7,7 +7,7 @@ Feature('Redact Feature');
 Scenario('Mark Content For Redaction', async ({I}) => {
   await markContentForRedactionTest(I, mvData.REDACTION_CASE, mvData.PDF_DOCUMENT);
 
-}).tag('@ci')
+}).tag('@np')
   .tag('@wip')
   .retry(testConfig.TestRetryScenarios);
 
