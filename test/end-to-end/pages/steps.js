@@ -33,7 +33,16 @@ module.exports = () => {
     clickCommentsPanel:steps.annotationsAndComments.clickCommentsPanel,
     collateComments:steps.annotationsAndComments.collateComments,
     commentsSearch:steps.annotationsAndComments.commentsSearch,
-    addMultipleComments:steps.annotationsAndComments.addMultipleComments
+    addMultipleComments:steps.annotationsAndComments.addMultipleComments,
+    clickRedactMenu:steps.redact.clickRedactMenu,
+    redactContentUsingDrawBox:steps.redact.redactContentUsingDrawBox,
+    redactTextUsingDrawBox:steps.redact.redactTextUsingDrawBox,
+    clearAllRedactions:steps.redact.clearAllRedactions,
+    redactionsPreview:steps.redact.redactionsPreview,
+    verifyWhetherTheRedactionAreVisibleOrNot:steps.redact.verifyWhetherTheRedactionAreVisibleOrNot,
+    redactText:steps.redact.redactText,
+    markContentForRedaction:steps.redact.markContentForRedaction,
+    redactContentUsingRedactText:steps.redact.redactContentUsingRedactText
 
   });
 };

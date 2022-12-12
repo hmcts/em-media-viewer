@@ -31,7 +31,7 @@ class PuppeteerHelper extends Helper {
     }
   }
   async getHelper() {
-    const page = this.helpers[helperName].page;
+    const page = await this.helpers[helperName].page;
     return page;
   }
 }
