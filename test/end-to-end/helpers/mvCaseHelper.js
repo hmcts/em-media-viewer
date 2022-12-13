@@ -138,6 +138,16 @@ async function addMultipleCommentsTest(I, caseId, mediaType) {
   await I.addMultipleComments();
 }
 
+async function markContentForRedactionTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.markContentForRedaction(mvData.REDACT_CONTENT1);
+}
+
+async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.redactContentUsingRedactText(mvData.REDACT_CONTENT1);
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -184,6 +194,8 @@ module.exports = {
   deleteCommentTest,
   collateCommentsTest,
   commentsSearchTest,
-  addMultipleCommentsTest
+  addMultipleCommentsTest,
+  markContentForRedactionTest,
+  redactContentUsingRedactTextTest
 
 }
