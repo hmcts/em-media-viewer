@@ -42,7 +42,8 @@ module.exports = () => {
     verifyWhetherTheRedactionAreVisibleOrNot:steps.redact.verifyWhetherTheRedactionAreVisibleOrNot,
     redactText:steps.redact.redactText,
     markContentForRedaction:steps.redact.markContentForRedaction,
-    redactContentUsingRedactText:steps.redact.redactContentUsingRedactText
+    redactContentUsingRedactText:steps.redact.redactContentUsingRedactText,
+    navigateIndexBundleDocument:steps.indexAndOutline.navigateIndexBundleDocument
 
   });
 };
