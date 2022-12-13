@@ -40,7 +40,7 @@ async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKey
   await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
 }
 
-async function pdfViewerPageNavigationTest(I, caseId, mediaType,pageNoToNavigate) {
+async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigate) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.pdfViewerPageNavigation(pageNoToNavigate);
 }
@@ -133,6 +133,26 @@ async function commentsSearchTest(I, caseId, mediaType) {
   await I.commentsSearch();
 }
 
+async function addMultipleCommentsTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.addMultipleComments();
+}
+
+async function markContentForRedactionTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.markContentForRedaction(mvData.REDACT_CONTENT1);
+}
+
+async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.redactContentUsingRedactText(mvData.REDACT_CONTENT1);
+}
+
+async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, assertBundlePage) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.navigateIndexBundleDocument(bundlePageName, assertBundlePage);
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -178,6 +198,10 @@ module.exports = {
   addCommentTest,
   deleteCommentTest,
   collateCommentsTest,
-  commentsSearchTest
+  commentsSearchTest,
+  addMultipleCommentsTest,
+  markContentForRedactionTest,
+  redactContentUsingRedactTextTest,
+  navigateBundleDocsUsingPageIndexTest
 
 }

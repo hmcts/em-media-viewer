@@ -32,7 +32,18 @@ module.exports = () => {
     deleteAllExistingComments:steps.annotationsAndComments.deleteAllExistingComments,
     clickCommentsPanel:steps.annotationsAndComments.clickCommentsPanel,
     collateComments:steps.annotationsAndComments.collateComments,
-    commentsSearch:steps.annotationsAndComments.commentsSearch
+    commentsSearch:steps.annotationsAndComments.commentsSearch,
+    addMultipleComments:steps.annotationsAndComments.addMultipleComments,
+    clickRedactMenu:steps.redact.clickRedactMenu,
+    redactContentUsingDrawBox:steps.redact.redactContentUsingDrawBox,
+    redactTextUsingDrawBox:steps.redact.redactTextUsingDrawBox,
+    clearAllRedactions:steps.redact.clearAllRedactions,
+    redactionsPreview:steps.redact.redactionsPreview,
+    verifyWhetherTheRedactionAreVisibleOrNot:steps.redact.verifyWhetherTheRedactionAreVisibleOrNot,
+    redactText:steps.redact.redactText,
+    markContentForRedaction:steps.redact.markContentForRedaction,
+    redactContentUsingRedactText:steps.redact.redactContentUsingRedactText,
+    navigateIndexBundleDocument:steps.indexAndOutline.navigateIndexBundleDocument
 
   });
 };

@@ -11,7 +11,7 @@ properties([
   ]),
   parameters([
     string(name: 'ENVIRONMENT', defaultValue: 'aat', description: 'Environment to test'),
-    string(name: 'ExUI_URL_TO_TEST', defaultValue: 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer', description: 'The ExUI Url you want to run Media Viewer end to end tests'),
+    string(name: 'ExUI_URL_TO_TEST', defaultValue: 'https://manage-case.aat.platform.hmcts.net', description: 'The ExUI Url you want to run Media Viewer end to end tests'),
     string(name: 'IDAM_API_URL', defaultValue: 'https://idam-api.aat.platform.hmcts.net', description: 'The Url of IDAM'),
     string(name: 'S2S_PROVIDER_URL', defaultValue: 'http://rpe-service-auth-provider-aat.service.core-compute-aat.internal', description: 'The Url of S2S provider'),
     string(name: 'CCD_DATA_STORE_URL', defaultValue: 'http://ccd-data-store-api-aat.service.core-compute-aat.internal', description: 'The Url of ccd data store'),
@@ -44,6 +44,7 @@ def secrets = [
   "em-showcase-${params.ENVIRONMENT}": [
     secret('ccd-user-email', 'CCD_CASEWORKER_E2E_EMAIL'),
     secret('ccd-user-password', 'CCD_CASEWORKER_E2E_PASSWORD'),
+    secret('microservicekey-ccd-gw', 'MICROSERVICE_CCD_GW'),
     secret('idam-client-secret', 'IDAM_CLIENT_SECRET')
   ]
 ]

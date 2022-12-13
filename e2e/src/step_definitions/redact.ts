@@ -7,6 +7,8 @@ const genericMethods = new GenericMethods();
 const redactPage: RedactPage = new RedactPage();
 
 When('I click on the Redact button', async () => {
+  await redactPage.clickMoreOptionsButton();
+  await genericMethods.sleep(5000);
   await redactPage.clickRedact();
 });
 
