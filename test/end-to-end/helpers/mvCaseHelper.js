@@ -40,7 +40,7 @@ async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKey
   await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
 }
 
-async function pdfViewerPageNavigationTest(I, caseId, mediaType,pageNoToNavigate) {
+async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigate) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.pdfViewerPageNavigation(pageNoToNavigate);
 }
@@ -148,6 +148,11 @@ async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
   await I.redactContentUsingRedactText(mvData.REDACT_CONTENT1);
 }
 
+async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, assertBundlePage) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.navigateIndexBundleDocument(bundlePageName, assertBundlePage);
+}
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -196,6 +201,7 @@ module.exports = {
   commentsSearchTest,
   addMultipleCommentsTest,
   markContentForRedactionTest,
-  redactContentUsingRedactTextTest
+  redactContentUsingRedactTextTest,
+  navigateBundleDocsUsingPageIndexTest
 
 }
