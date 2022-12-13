@@ -8,7 +8,7 @@ const genericMethods = new GenericMethods();
 const {expect} = require('chai');
 
 export class RedactPage extends AppPage {
-  redact = by.id('mvRedactBtn');
+  redact = by.xpath('//*[contains(@class, \'dropdown-menu\')]//*[@id=\'mvRedactBtn\']');
   drawABox = by.id('toggleDrawButton');
   clickRedaction = by.css('mv-annotation .rectangle');
   clickRedactText = by.id('toggleHighlightButton');
@@ -17,11 +17,17 @@ export class RedactPage extends AppPage {
   previewButton = by.id('mvPreviewBtn');
   changeDoc = by.css('app-media-viewer-wrapper .govuk-details__summary-text');
   saveButton = by.id('#mvDownloadBtn');
+  mvMoreOptionsBtn = by.id('mvMoreOptionsBtn');
+
 
   async clickRedact() {
     await this.clickElement(this.redact);
   }
 
+
+  async clickMoreOptionsButton() {
+    await this.clickElement(this.mvMoreOptionsBtn);
+  }
   async clickBox() {
     await this.clickElement(this.drawABox);
   }

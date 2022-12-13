@@ -52,5 +52,12 @@
   "commentsSearchLink": "#commentSubPane2",
   "searchCommentsInput": "#search-comments-input",
   "commentsSearchBtn": "mv-comment-search > button",
-  "assertCommentsSearchCountXp": "//span[@class =\"comment-search__item\" and contains(text(), \"Showing 1 of 1\")]"
+  "assertCommentsSearchCountXp": "//span[@class =\"comment-search__item\" and contains(text(), \"Showing 1 of 1\")]",
+  "redactDrawBox": "#toggleDrawButton",
+  "redactMenu":".dropdown-menu #mvRedactBtn",
+  "clearAllRedaction":"#mvClearBtn",
+  "previewBtn":"#mvPreviewBtn",
+  "redactTextBtn": "#toggleHighlightButton",
+  "redactionsCount":"mv-annotation .rectangle",
+  "redactContent": "//span[text()='continues to disrupt the peace of Verona, a city in northern Italy. A brawl between the']"
 }
