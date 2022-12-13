@@ -7,9 +7,9 @@ module.exports = () => {
   return actor({
     authenticateWithIdam: steps.idam.signIn,
     chooseNextStep: steps.nextStep.nextStep,
-    uploadPdfDoc: steps.uploadDocument.uploadPdfDocument,
-    uploadImage: steps.uploadDocument.uploadImageJpeg,
-    uploadWordDoc: steps.uploadDocument.uploadWordDocument,
+    uploadPdfDoc: steps.dmStore.uploadPdfDocument,
+    uploadImage: steps.dmStore.uploadImageJpeg,
+    uploadWordDoc: steps.dmStore.uploadWordDocument,
     executeContentSearch: steps.search.contentSearch,
     searchResultsNavigationUsingPreviousAndNextLinks: steps.search.searchResultsNavigationUsingNextAndPrevious,
     enterShouldJumpViewerToNextSearchResult: steps.search.enterShouldJumpViewerToNextSearchResults,
