@@ -62,5 +62,7 @@
   "redactContent": "//span[text()='continues to disrupt the peace of Verona, a city in northern Italy. A brawl between the']",
   "index": "#mvIndexBtn",
   "indexPageList": "mv-outline-item > div > a",
-  "indexPageXp": "//a[@tabindex='0' and contains(text(), 'Index Page')]"
+  "indexPageXp": "//a[@tabindex='0' and contains(text(), 'Index Page')]",
+  "redactContentUsingDrawBoxXp": "div:nth-child(1) > div.textLayer",
+  "redactTextCss": "div.textLayer"
 }
