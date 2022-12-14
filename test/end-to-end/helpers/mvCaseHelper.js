@@ -138,9 +138,9 @@ async function addMultipleCommentsTest(I, caseId, mediaType) {
   await I.addMultipleComments();
 }
 
-async function markContentForRedactionTest(I, caseId, mediaType) {
+async function markContentForRedactionUsingDrawBoxTest(I, caseId, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  await I.markContentForRedaction(mvData.REDACT_CONTENT1);
+  await I.markContentForRedaction();
 }
 
 async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
@@ -205,7 +205,7 @@ module.exports = {
   collateCommentsTest,
   commentsSearchTest,
   addMultipleCommentsTest,
-  markContentForRedactionTest,
+  markContentForRedactionUsingDrawBoxTest,
   redactContentUsingRedactTextTest,
   navigateBundleDocsUsingPageIndexTest,
   navigateNestedDocsUsingIndexTest

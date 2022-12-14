@@ -67,6 +67,7 @@
   "parentDocumentName": "B. Section B - Applications and Orders",
   "parentPageNumber": "7",
   "lastParentName": "E. Section D - Care Plans",
-  "lastParentNumber": "19"
-
+  "lastParentNumber": "19",
+  "redactContentUsingDrawBoxXp": "div:nth-child(1) > div.textLayer",
+  "redactTextCss": "div.textLayer"
 }
