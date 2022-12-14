@@ -43,7 +43,8 @@ module.exports = () => {
     redactText:steps.redact.redactText,
     markContentForRedaction:steps.redact.markContentForRedaction,
     redactContentUsingRedactText:steps.redact.redactContentUsingRedactText,
-    navigateIndexBundleDocument:steps.indexAndOutline.navigateIndexBundleDocument
+    navigateIndexBundleDocument:steps.indexAndOutline.navigateIndexBundleDocument,
+    navigateIndexNestedDocument:steps.indexAndOutline.navigateIndexNestedDocument
 
   });
 };

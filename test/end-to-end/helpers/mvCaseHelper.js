@@ -148,9 +148,14 @@ async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
   await I.redactContentUsingRedactText(mvData.REDACT_CONTENT1);
 }
 
-async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, assertBundlePage) {
+async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, bundlePageNumber, assertBundlePage) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  await I.navigateIndexBundleDocument(bundlePageName, assertBundlePage);
+  await I.navigateIndexBundleDocument(bundlePageName, bundlePageNumber, assertBundlePage);
+}
+
+async function navigateNestedDocsUsingIndexTest(I, caseId, mediaType, nestedPageName, nestedPageNumber, pageContent) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.navigateIndexNestedDocument(nestedPageName, nestedPageNumber, pageContent);
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
@@ -202,6 +207,7 @@ module.exports = {
   addMultipleCommentsTest,
   markContentForRedactionTest,
   redactContentUsingRedactTextTest,
-  navigateBundleDocsUsingPageIndexTest
+  navigateBundleDocsUsingPageIndexTest,
+  navigateNestedDocsUsingIndexTest
 
 }
