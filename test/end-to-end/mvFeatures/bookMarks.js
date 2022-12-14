@@ -29,5 +29,5 @@ Scenario('Update Bookmark', async ({I}) => {
 Scenario('Add an empty bookmark', async ({I}) => {
   await addEmptyBookmarksTest(I, mvData.ANNOTATIONS_BOOKMARKS_CASE, mvData.PDF_DOCUMENT);
 
-}).tag('@np')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
