@@ -35,7 +35,6 @@ module.exports = () => {
     commentsSearch:steps.annotationsAndComments.commentsSearch,
     addMultipleComments:steps.annotationsAndComments.addMultipleComments,
     clickRedactMenu:steps.redact.clickRedactMenu,
-    redactContentUsingDrawBox:steps.redact.redactContentUsingDrawBox,
     redactTextUsingDrawBox:steps.redact.redactTextUsingDrawBox,
     clearAllRedactions:steps.redact.clearAllRedactions,
     redactionsPreview:steps.redact.redactionsPreview,

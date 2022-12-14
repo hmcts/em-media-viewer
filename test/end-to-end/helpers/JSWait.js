@@ -86,7 +86,6 @@ class JSWait extends codecept_helper {
     return helper
       ._locate(selector)
       .then(els => {
-        console.log('Count:::---->' + els.length);
         return els.length;
       })
       .catch(err => {
