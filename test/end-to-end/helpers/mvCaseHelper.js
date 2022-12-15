@@ -145,7 +145,27 @@ async function markContentForRedactionUsingDrawBoxTest(I, caseId, mediaType) {
 
 async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  await I.redactContentUsingRedactText(mvData.REDACT_CONTENT1);
+  await I.redactContentUsingRedactText();
+}
+
+async function createRedactionsUsingDrawBoxAndRedactText(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.CreateRedactionsUsingDrawboxAndRedactText();
+}
+
+async function redactTextAndThenRemovingRedactionTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.redactTextAndThenRemoveRedaction();
+}
+
+async function previewAllRedactionsTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.previewAllRedactions();
+}
+
+async function saveAllRedactionsTest(I, caseId, mediaType) {
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.saveAllRedactions();
 }
 
 async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, bundlePageNumber, assertBundlePage) {
@@ -208,6 +228,10 @@ module.exports = {
   markContentForRedactionUsingDrawBoxTest,
   redactContentUsingRedactTextTest,
   navigateBundleDocsUsingPageIndexTest,
-  navigateNestedDocsUsingIndexTest
+  navigateNestedDocsUsingIndexTest,
+  redactTextAndThenRemovingRedactionTest,
+  createRedactionsUsingDrawBoxAndRedactText,
+  previewAllRedactionsTest,
+  saveAllRedactionsTest
 
 }

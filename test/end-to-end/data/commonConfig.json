@@ -59,6 +59,8 @@
   "previewBtn":"#mvPreviewBtn",
   "redactTextBtn": "#toggleHighlightButton",
   "redactionsCount":"mv-annotation .rectangle",
+  "deleteRedactionsXp": "//span[text()='Remove']",
+  "saveReductions": "//*[contains(@class, 'redaction-button--download')]",
   "redactContent": "//span[text()='continues to disrupt the peace of Verona, a city in northern Italy. A brawl between the']",
   "index": "#mvIndexBtn",
   "indexPageList": "mv-outline-item > div > a",
