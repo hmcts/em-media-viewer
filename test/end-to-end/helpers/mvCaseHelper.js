@@ -170,6 +170,8 @@ async function saveAllRedactionsTest(I, caseId, mediaType) {
 
 async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, bundlePageNumber, assertBundlePage) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  let url = await I.grabCurrentUrl();
+  console.log(`Current URL is [${url}]`);
   await I.navigateIndexBundleDocument(bundlePageName, bundlePageNumber, assertBundlePage);
 }
 
