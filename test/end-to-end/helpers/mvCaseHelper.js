@@ -178,7 +178,7 @@ async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   let env = process.env.TEST_URL;
   console.log("Jenkins Env Url===>::"  + env);
 
-  if (await getEnvironment() !== 'local' || env.includes('preview')) {
+  if (await getEnvironment() !== 'local' || env.includes('pr')) {
     await I.authenticateWithIdam();
     await I.amOnPage('/case-details/' + caseId);
 
