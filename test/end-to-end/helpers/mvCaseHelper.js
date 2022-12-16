@@ -1,4 +1,5 @@
 const {mvData} = require("../pages/common/constants");
+const testConfig = require('./../../config');
 
 async function submittedState(I, caseId) {
   await I.authenticateWithIdam();
@@ -174,18 +175,26 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  await I.authenticateWithIdam();
-  await I.amOnPage('/case-details/' + caseId);
+  if (await getEnvironment() !== 'local') {
+    await I.authenticateWithIdam();
+    await I.amOnPage('/case-details/' + caseId);
 
-  if (mediaType === mvData.PDF_DOCUMENT) {
-    await I.openCaseDocumentsInMV(mediaType);
-  } else if (mediaType === mvData.IMAGE_DOCUMENT) {
-    await I.openCaseDocumentsInMV(mediaType);
-  } else if (mediaType === mvData.AUDIO_MP3) {
-    await I.openCaseDocumentsInMV(mediaType);
+    if (mediaType === mvData.PDF_DOCUMENT) {
+      await I.openCaseDocumentsInMV(mediaType);
+    } else if (mediaType === mvData.IMAGE_DOCUMENT) {
+      await I.openCaseDocumentsInMV(mediaType);
+    } else if (mediaType === mvData.AUDIO_MP3) {
+      await I.openCaseDocumentsInMV(mediaType);
+    } else {
+      console.warn("Media Viewer does not support the input document type" + mediaType);
+    }
   } else {
-    console.warn("Media Viewer does not support the input document type" + mediaType);
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoading);
   }
+}
+
+async function getEnvironment() {
+  return testConfig.TestUrl.includes('local') ? 'local' : 'aat';
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {
