@@ -175,23 +175,18 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  let env = process.env.TEST_URL;
-  console.log("Jenkins Env Url===>::"  + env);
-
-  if (await getEnvironment() !== 'local' || env.includes('pr')) {
+  if (process.env.TEST_URL.includes('pr')) {
+    console.log("Executing Tests in Preview Environment")
+    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoading);
+  } else if (await getEnvironment() !== 'local') {
+    console.log("Executing Tests in AAt Environment")
     await I.authenticateWithIdam();
     await I.amOnPage('/case-details/' + caseId);
-
     if (mediaType === mvData.PDF_DOCUMENT) {
       await I.openCaseDocumentsInMV(mediaType);
-    } else if (mediaType === mvData.IMAGE_DOCUMENT) {
-      await I.openCaseDocumentsInMV(mediaType);
-    } else if (mediaType === mvData.AUDIO_MP3) {
-      await I.openCaseDocumentsInMV(mediaType);
-    } else {
-      console.warn("Media Viewer does not support the input document type" + mediaType);
     }
   } else {
+    console.log("Executing Tests in LOCAL Environment")
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoading);
   }
 }
