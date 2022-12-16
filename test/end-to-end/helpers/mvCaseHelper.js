@@ -189,7 +189,6 @@ async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
       console.warn("Media Viewer does not support the input document type" + mediaType);
     }
   } else {
-    console.log('Executing the tests in local environment ==>::' + await getEnvironment());
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoading);
   }
 }
