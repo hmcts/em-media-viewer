@@ -175,7 +175,10 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  if (await getEnvironment() !== 'local') {
+  let env = process.env.TEST_URL;
+  console.log("Jenkins Env Url===>::"  + env);
+
+  if (await getEnvironment() !== 'local' && env.includes('preview')) {
     await I.authenticateWithIdam();
     await I.amOnPage('/case-details/' + caseId);
 
