@@ -179,7 +179,7 @@ async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   if (process.env.TEST_URL.includes('pr')) {
     console.log("Executing Tests in Preview Environment");
     await I.amOnPage(process.env.TEST_URL, testConfig.PageLoading);
-  } else if (await getEnvironment() !== 'local') {
+  } else if (testConfig.TestUrl.includes('aat')) {
     console.log("Executing Tests in AAt Environment");
     await I.authenticateWithIdam();
     await I.amOnPage('/case-details/' + caseId);
