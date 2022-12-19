@@ -175,18 +175,19 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
+
   if (process.env.TEST_URL.includes('pr')) {
-    console.log("Executing Tests in Preview Environment")
+    console.log("Executing Tests in Preview Environment");
     await I.amOnPage(process.env.TEST_URL, testConfig.PageLoading);
   } else if (await getEnvironment() !== 'local') {
-    console.log("Executing Tests in AAt Environment")
+    console.log("Executing Tests in AAt Environment");
     await I.authenticateWithIdam();
     await I.amOnPage('/case-details/' + caseId);
     if (mediaType === mvData.PDF_DOCUMENT) {
       await I.openCaseDocumentsInMV(mediaType);
     }
   } else {
-    console.log("Executing Tests in LOCAL Environment")
+    console.log("Executing Tests in LOCAL Environment");
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoading);
   }
 }
