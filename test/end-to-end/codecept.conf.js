@@ -5,7 +5,7 @@ exports.config = {
     output: `${process.cwd()}/${config.TestOutputDir}`,
     helpers: {
         Puppeteer: {
-            url: process.env.TEST_URL || config.TestUrl,
+            url: config.TestUrl,
             waitForTimeout: 40000,
             getPageTimeout: 40000,
             waitForAction: 1000,
@@ -57,8 +57,7 @@ exports.config = {
     mocha: {
         reporterOptions: {
             'codeceptjs-cli-reporter': {
-                stdout: '-',
-                options:{steps:true}
+                stdout: '-'
             },
             'mocha-junit-reporter': {
                 stdout: '-',
