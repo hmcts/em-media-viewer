@@ -176,6 +176,7 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   let currentUrl = await I.grabCurrentUrl();
+  console.log("Environment Url ==>::\n" + currentUrl);
   let previewUrl = currentUrl.split('-')[3];
 
   if (previewUrl === 'pr') {
