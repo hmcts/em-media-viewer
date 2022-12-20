@@ -175,18 +175,17 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  if (await getEnvironment() !== 'local') {
+  let currentUrl = await I.grabCurrentUrl();
+  console.log("Environment Url ==>::\n" + currentUrl);
+  let previewUrl = currentUrl.split('-')[3];
+
+  if (previewUrl === 'pr') {
+    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoading);
+  } else if (await getEnvironment() !== 'local') {
     await I.authenticateWithIdam();
     await I.amOnPage('/case-details/' + caseId);
-
     if (mediaType === mvData.PDF_DOCUMENT) {
       await I.openCaseDocumentsInMV(mediaType);
-    } else if (mediaType === mvData.IMAGE_DOCUMENT) {
-      await I.openCaseDocumentsInMV(mediaType);
-    } else if (mediaType === mvData.AUDIO_MP3) {
-      await I.openCaseDocumentsInMV(mediaType);
-    } else {
-      console.warn("Media Viewer does not support the input document type" + mediaType);
     }
   } else {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoading);
