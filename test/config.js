@@ -10,7 +10,7 @@ module.exports = {
   TestRetryScenarios: process.env.RETRY_SCENARIOS || 1,
   TestPathToRun: process.env.E2E_TEST_PATH || './mvFeatures/**/*.js',
   TestOutputDir: process.env.E2E_OUTPUT_DIR || './functional-output',
-  PageLoading: parseInt(process.env.E2E_TEST_TIME_TO_WAIT_FOR_PAGE_LOADING || 60),
+  PageLoadTime: parseInt(process.env.E2E_TEST_TIME_TO_WAIT_FOR_PAGE_LOADING || 60),
   TestTimeToWaitForText: parseInt(process.env.E2E_TEST_TIME_TO_WAIT_FOR_TEXT || 30),
   TestTimeToWait: parseInt(process.env.E2E_TEST_TIME_TO_WAIT_FOR_TEXT || 5),
   BookmarksAndAnnotationsWait: parseInt(process.env.E2E_TEST_TIME_TO_WAIT_FOR_TEXT || 3),
