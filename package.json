@@ -43,7 +43,7 @@
     "e2e": "protractor --webdriverUpdate=false",
     "e2e:local": "yarn webdriver:update && protractor e2e/local.protractor.conf.js",
     "e2e:fullfunctional_PT": "yarn webdriver:update && protractor e2e/ci.protractor.conf.js",
-    "e2e:fullfunctional": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --grep @ci --steps --reporter mocha-multi",
+    "e2e:fullfunctional": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --grep @Test99 --steps --reporter mocha-multi",
     "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner",
     "rebuild-node-sass": "yarn add node-sass@^4.14.1",
     "test:crossbrowser": "NODE_PATH=. codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} -c test/end-to-end/saucelabs.conf.js --plugins retryFailedStep --steps --grep '@xb' --reporter mocha-multi"

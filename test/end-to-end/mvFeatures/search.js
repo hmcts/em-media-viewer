@@ -23,7 +23,7 @@ Scenario('Navigate search results using previous & next links ', async ({I}) => 
 Scenario('Search results not found scenario', async ({I}) => {
   await searchResultsNotFoundTest(I, mvData.CASE_ID, mvData.SEARCH_RESULTS_NOT_FOUND, mvData.NO_RESULTS_FOUND, mvData.PDF_DOCUMENT);
 
-}).tag('@ci')
+}).tag('@Test99')
   .retry(testConfig.TestRetryScenarios)
 
 Scenario('Enter should jump viewer to next search result', async ({I}) => {
