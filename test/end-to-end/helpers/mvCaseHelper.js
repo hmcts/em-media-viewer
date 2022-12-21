@@ -176,7 +176,9 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] === 'pr') {
+  // if condition must be true to  execute tests on Preview.
+  // only bookmark tests are tested on preview and it's working as expected
+  if (process.env.TEST_URL.split('-')[3]!== 'pr') {
     console.log('Execute Tests in PREVIEW Environment');
     // await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
   } else if (await getEnvironment() !== 'local') {
