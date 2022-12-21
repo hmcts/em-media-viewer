@@ -178,7 +178,7 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   if (process.env.TEST_URL.split('-')[3] === 'pr') {
     console.log('Execute Tests in PREVIEW Environment');
-    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
+    // await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
   } else if (await getEnvironment() !== 'local') {
     console.log('Execute Tests in AAT Environment');
     await I.authenticateWithIdam();
@@ -235,5 +235,4 @@ module.exports = {
   createRedactionsUsingDrawBoxAndRedactText,
   previewAllRedactionsTest,
   saveAllRedactionsTest
-
 }
