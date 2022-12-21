@@ -76,6 +76,7 @@ async function pdfAndImageRotationTest(I, caseId, mediaType) {
 
 async function createBookmarkTest(I, caseId, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  await I.clearBookMarks();
   await I.createBookMark();
 }
 
@@ -175,21 +176,23 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  let environment = process.env.TEST_URL;
-  console.log("Environment Url ==>::\n" + environment);
-  let environmentName = environment.split('-')[3];
+  let envUrl = process.env.TEST_URL;
+  console.log("Environment Url ==>::\n" + envUrl);
+  let envUrl1 = envUrl.split('-')[3];
 
-  if (environmentName === 'pr') {
-    console.log('PREVIEW Execution' + environmentName);
-    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoading);
+  if (envUrl1 === 'pr') {
+    console.log('Execute Tests in PREVIEW Environment');
+    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
   } else if (await getEnvironment() !== 'local') {
+    console.log('Execute Tests in AAT Environment');
     await I.authenticateWithIdam();
     await I.amOnPage('/case-details/' + caseId);
     if (mediaType === mvData.PDF_DOCUMENT) {
       await I.openCaseDocumentsInMV(mediaType);
     }
   } else {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoading);
+    console.log('Execute Tests in LOCAL Environment');
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
   }
 }
 
