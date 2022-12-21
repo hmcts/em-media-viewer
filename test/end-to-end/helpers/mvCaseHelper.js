@@ -37,12 +37,11 @@ async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, search
 
 async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
   if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.executeContentSearch(searchKeyword, noOfFindings);
+    await navigatePreviewUrl(I);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.executeContentSearch(searchKeyword, noOfFindings);
   }
+  await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
 async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
@@ -96,50 +95,42 @@ async function pdfAndImageRotationTest(I, caseId, mediaType) {
 
 async function createBookmarkTest(I, caseId, mediaType) {
   if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.clearBookMarks();
-    await I.createBookMark();
+    await navigatePreviewUrl(I);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clearBookMarks();
-    await I.createBookMark();
   }
+  await I.clearBookMarks();
+  await I.createBookMark();
 }
 
 async function deleteBookmarkTest(I, caseId, mediaType) {
   if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.clearBookMarks();
+    await navigatePreviewUrl(I);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clearBookMarks();
   }
+  await I.clearBookMarks();
 }
 
 async function updateBookmarkTest(I, caseId, mediaType) {
   if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.clearBookMarks();
-    await I.createBookMark();
-    await I.updateBookMarks();
+    await navigatePreviewUrl(I);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clearBookMarks();
-    await I.createBookMark();
-    await I.updateBookMarks();
   }
+  await I.clearBookMarks();
+  await I.createBookMark();
+  await I.updateBookMarks();
 }
 
 async function addEmptyBookmarksTest(I, caseId, mediaType) {
   if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.clearBookMarks();
-    await I.addEmptyBookmarks();
+    await navigatePreviewUrl(I);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clearBookMarks();
-    await I.addEmptyBookmarks();
   }
+  await I.clearBookMarks();
+  await I.addEmptyBookmarks();
 }
 
 async function multiMediaAudioTest(I, caseId, mediaType) {
@@ -255,6 +246,10 @@ async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
 
 async function getEnvironment() {
   return testConfig.PreviewEnv.includes('local') ? 'local' : 'aat';
+}
+
+async function navigatePreviewUrl(I) {
+  await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime)
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {
