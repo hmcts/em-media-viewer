@@ -176,11 +176,7 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  let envUrl = process.env.TEST_URL;
-  console.log("Environment Url ==>::\n" + envUrl);
-  let envUrl1 = envUrl.split('-')[3];
-
-  if (envUrl1 === 'pr') {
+  if (process.env.TEST_URL.split('-')[3] === 'pr') {
     console.log('Execute Tests in PREVIEW Environment');
     await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
   } else if (await getEnvironment() !== 'local') {
