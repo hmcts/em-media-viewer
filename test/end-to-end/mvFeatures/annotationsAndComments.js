@@ -1,6 +1,12 @@
 const testConfig = require('./../../config');
-const {collateCommentsTest, commentsSearchTest, addMultipleCommentsTest} = require("../helpers/mvCaseHelper");
-const {highlightTextTest, addCommentTest, deleteCommentTest} = require("../helpers/mvCaseHelper");
+const {
+  collateCommentsTest,
+  commentsSearchTest,
+  addMultipleCommentsTest,
+  highlightTextTest,
+  addCommentTest,
+  deleteCommentTest
+} = require("../helpers/mvCaseHelper");
 const {mvData} = require('../pages/common/constants.js');
 
 Feature('Annotations & Comments Feature');

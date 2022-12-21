@@ -21,7 +21,6 @@ Scenario('Pdf viewer page navigation', async ({I}) => {
   await pdfViewerPageNavigationTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT, mvData.PAGE_NAVIGATION_NUMBER);
 
 }).tag('@ci')
-  .tag('@np')
   .tag('@xb')
   .retry(testConfig.TestRetryScenarios);
 
