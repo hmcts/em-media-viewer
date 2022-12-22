@@ -66,8 +66,8 @@ withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
   enableSecurityScan()
   env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
-  onNonPR() {
-    env.RUN_E2E_TESTS =false
+  onPR() {
+    env.SKIP_E2E=true
   }
   enableAksStagingDeployment()
   disableLegacyDeployment()
