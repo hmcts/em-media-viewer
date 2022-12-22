@@ -94,13 +94,23 @@ async function pdfAndImageRotationTest(I, caseId, mediaType) {
 }
 
 async function createBookmarkTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await navigatePreviewUrl(I);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  console.log('PR Env Flag==>::' + testConfig.PrEnv)
+  console.log('Jenkins PR Env Flag::==>' + process.env.SKIP_E2E)
+
+  if (testConfig.PrEnv!==true) {
+    console.log('Executing Tests in AAT')
+  }else {
+    console.log('NOT Executing Tests in PREVIEW')
   }
-  await I.clearBookMarks();
-  await I.createBookMark();
+
+
+  // if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
+  //   await navigatePreviewUrl(I);
+  // } else {
+  //   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  // }
+  // await I.clearBookMarks();
+  // await I.createBookMark();
 }
 
 async function deleteBookmarkTest(I, caseId, mediaType) {
@@ -113,14 +123,21 @@ async function deleteBookmarkTest(I, caseId, mediaType) {
 }
 
 async function updateBookmarkTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await navigatePreviewUrl(I);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+
+  if (testConfig.PrEnv!==true) {
+    console.log('updateBookmarkTest==> Executing Tests in AAT')
+  }else {
+    console.log('updateBookmarkTest==> NOT Executing Tests in PREVIEW')
   }
-  await I.clearBookMarks();
-  await I.createBookMark();
-  await I.updateBookMarks();
+
+  // if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
+  //   await navigatePreviewUrl(I);
+  // } else {
+  //   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  // }
+  // await I.clearBookMarks();
+  // await I.createBookMark();
+  // await I.updateBookMarks();
 }
 
 async function addEmptyBookmarksTest(I, caseId, mediaType) {
