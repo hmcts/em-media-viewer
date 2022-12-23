@@ -139,12 +139,18 @@ describe('BoxHighlightCreateComponent', () => {
 
   describe('updateHighlight', () => {
     it('should update the box highlight creator', () => {
-      const updateEvent = { offsetX: 100, offsetY: 100 } as MouseEvent;
+      const updateHighlightSpy = spyOn(component, 'updateHighlight').and.callThrough();
+      const nativeElementDiv = fixture.debugElement.query(By.css('div')).nativeElement;
+      spyOn(nativeElementDiv as any, 'getBoundingClientRect').and.returnValue({top: 0, left: 0});
+
+      const updateEvent = new MouseEvent('mousemove', { clientX: 100, clientY: 100 });
       component.drawStartX = 60;
       component.drawStartY = 50;
       fixture.detectChanges();
 
-      component.updateHighlight(updateEvent);
+      nativeElementDiv.dispatchEvent(updateEvent);
+
+      expect(updateHighlightSpy).toHaveBeenCalled();
 
       expect(component.width).toBe(40);
       expect(component.height).toBe(50);
@@ -153,14 +159,19 @@ describe('BoxHighlightCreateComponent', () => {
     });
 
     it('should not update the box highlight when offsetX is 0', () => {
-      const updateEvent = { offsetX: 0, offsetY: 100 } as MouseEvent;
+      const updateHighlightSpy = spyOn(component, 'updateHighlight').and.callThrough();
+      const nativeElementDiv = fixture.debugElement.query(By.css('div')).nativeElement;
+      spyOn(nativeElementDiv as any, 'getBoundingClientRect').and.returnValue({top: 0, left: 0});
+
+      const updateEvent = new MouseEvent('mousemove', { clientX: 0, clientY: 100 });
       component.width = 100;
       component.height = 150;
       component.top = 50;
       component.left = 350;
       fixture.detectChanges();
+      nativeElementDiv.dispatchEvent(updateEvent);
 
-      component.updateHighlight(updateEvent);
+      expect(updateHighlightSpy).toHaveBeenCalled();
 
       expect(component.width).toBe(100);
       expect(component.height).toBe(150);
@@ -169,14 +180,20 @@ describe('BoxHighlightCreateComponent', () => {
     });
 
     it('should not update the box highlight when offsetY is 0', () => {
-      const updateEvent = { offsetX: 100, offsetY: 0 } as MouseEvent;
+      const updateHighlightSpy = spyOn(component, 'updateHighlight').and.callThrough();
+      const nativeElementDiv = fixture.debugElement.query(By.css('div')).nativeElement;
+      spyOn(nativeElementDiv as any, 'getBoundingClientRect').and.returnValue({top: 0, left: 0});
+
+      const updateEvent = new MouseEvent('mousemove', { clientX: 100, clientY: 0 });
       component.width = 100;
       component.height = 150;
       component.top = 50;
       component.left = 350;
       fixture.detectChanges();
 
-      component.updateHighlight(updateEvent);
+      nativeElementDiv.dispatchEvent(updateEvent);
+
+      expect(updateHighlightSpy).toHaveBeenCalled();
 
       expect(component.width).toBe(100);
       expect(component.height).toBe(150);
