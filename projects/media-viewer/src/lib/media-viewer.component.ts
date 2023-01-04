@@ -161,7 +161,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       if (this.enableAnnotations && !(this.multimediaContent || this.unsupportedContent)) {
         this.store.dispatch(new fromAnnoActions.LoadAnnotationSet(this.documentId));
       }
-      if (this.enableRedactions && !(this.multimediaContent || this.unsupportedContent)) {
+      if (this.enableRedactions && !(this.multimediaContent || this.unsupportedContent) && this.documentId) {
         this.store.dispatch(new fromRedactActions.LoadRedactions(this.documentId));
       }
       if (this.contentType === 'image') {
