@@ -194,6 +194,19 @@ describe('MediaViewerComponent', () => {
     expect(store.dispatch).not.toHaveBeenCalledWith(new fromRedactActions.LoadRedactions('new-url'));
   }));
 
+  it('should not load redactions when document id is empty', inject([Store], (store) => {
+    spyOn(store, 'dispatch');
+    component.url = 'new-url';
+    component.enableRedactions = true;
+    spyOn(component as any, 'extractDMStoreDocId').and.returnValue('');
+
+    component.ngOnChanges({
+      url: new SimpleChange('old-url', 'new-url', false)
+    });
+
+    expect(store.dispatch).not.toHaveBeenCalledWith(new fromRedactActions.LoadRedactions('new-url'));
+  }));
+
   it('should load redactions when not playing multimedia', inject([Store], (store) => {
     spyOn(store, 'dispatch');
     component.url = 'new-url';
