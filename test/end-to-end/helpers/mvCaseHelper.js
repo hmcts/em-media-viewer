@@ -36,13 +36,12 @@ async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, search
 }
 
 async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.executeContentSearch(searchKeyword, noOfFindings);
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.executeContentSearch(searchKeyword, noOfFindings);
   }
+  await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
 async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
@@ -74,17 +73,21 @@ async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
 }
 
 async function downloadPdfDocFromMVTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.downloadPdfDocument();
   }
+  await I.downloadPdfDocument();
 }
 
 async function printDocumentFromMVTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.mvPrintDocument();
   }
+  await I.mvPrintDocument();
 }
 
 async function pdfAndImageRotationTest(I, caseId, mediaType) {
@@ -95,51 +98,43 @@ async function pdfAndImageRotationTest(I, caseId, mediaType) {
 }
 
 async function createBookmarkTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.clearBookMarks();
-    await I.createBookMark();
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clearBookMarks();
-    await I.createBookMark();
   }
+  await I.clearBookMarks();
+  await I.createBookMark();
 }
 
 async function deleteBookmarkTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.clearBookMarks();
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clearBookMarks();
   }
+  await I.clearBookMarks();
 }
 
 async function updateBookmarkTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.clearBookMarks();
-    await I.createBookMark();
-    await I.updateBookMarks();
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clearBookMarks();
-    await I.createBookMark();
-    await I.updateBookMarks();
   }
+  await I.clearBookMarks();
+  await I.createBookMark();
+  await I.updateBookMarks();
 }
 
 async function addEmptyBookmarksTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] === 'pr' || await getEnvironment() === 'local') {
-    await I.amOnPage(testConfig.PreviewEnv, testConfig.PageLoadTime);
-    await I.clearBookMarks();
-    await I.addEmptyBookmarks();
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clearBookMarks();
-    await I.addEmptyBookmarks();
   }
+  await I.clearBookMarks();
+  await I.addEmptyBookmarks();
 }
 
 async function multiMediaAudioTest(I, caseId, mediaType) {
@@ -153,47 +148,59 @@ async function multiMediaAudioPauseAndRewindTest(I, caseId, mediaType) {
 }
 
 async function highlightTextTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.highlightPdfText();
   }
+  await I.highlightPdfText();
 }
 
 async function addCommentTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.addComments();
   }
+  await I.addComments();
 }
 
 async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.deleteComments(comment, updatedComment);
   }
+  await I.deleteComments(comment, updatedComment);
 }
 
 async function collateCommentsTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clickCommentsPanel();
-    await I.collateComments();
   }
+  await I.clickCommentsPanel();
+  await I.collateComments();
 }
 
 async function commentsSearchTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.clickCommentsPanel();
-    await I.commentsSearch();
   }
+  await I.clickCommentsPanel();
+  await I.commentsSearch();
 }
 
 async function addMultipleCommentsTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.addMultipleComments();
   }
+  await I.addMultipleComments();
 }
 
 async function markContentForRedactionUsingDrawBoxTest(I, caseId, mediaType) {
@@ -239,10 +246,12 @@ async function saveAllRedactionsTest(I, caseId, mediaType) {
 }
 
 async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, assertBundlePage) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.navigateIndexBundleDocument(bundlePageName, assertBundlePage);
   }
+  await I.navigateIndexBundleDocument(bundlePageName, assertBundlePage);
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
@@ -254,7 +263,7 @@ async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
 }
 
 async function getEnvironment() {
-  return testConfig.PreviewEnv.includes('local') ? 'local' : 'aat';
+  return testConfig.PreviewOrLocalEnvUrl.includes('local') ? 'local' : 'aat';
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {
