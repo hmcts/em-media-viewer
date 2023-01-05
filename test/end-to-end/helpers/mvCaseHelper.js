@@ -172,8 +172,9 @@ async function highlightTextTest(I, caseId, mediaType) {
 }
 
 async function addCommentTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
-    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+  if (testConfig.ExecuteTestsOnPRAndLocal=== testConfig.ExecuteTestsOnPRAndLocal) {
+    console.log("Jenkins PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Config PREVIEW FLAG==>::" + testConfig.ExecuteTestsOnPRAndLocal);
     console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
