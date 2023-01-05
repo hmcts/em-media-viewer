@@ -37,6 +37,7 @@ async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, search
 
 async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -60,6 +61,7 @@ async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigat
 
 async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
   if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     if (mediaType === 'example.pdf') {
       await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
       await I.executePdfViewerZoom();
@@ -74,6 +76,7 @@ async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
 
 async function downloadPdfDocFromMVTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -83,6 +86,7 @@ async function downloadPdfDocFromMVTest(I, caseId, mediaType) {
 
 async function printDocumentFromMVTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -99,6 +103,8 @@ async function pdfAndImageRotationTest(I, caseId, mediaType) {
 
 async function createBookmarkTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -109,6 +115,8 @@ async function createBookmarkTest(I, caseId, mediaType) {
 
 async function deleteBookmarkTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -118,6 +126,8 @@ async function deleteBookmarkTest(I, caseId, mediaType) {
 
 async function updateBookmarkTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -129,6 +139,8 @@ async function updateBookmarkTest(I, caseId, mediaType) {
 
 async function addEmptyBookmarksTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -149,6 +161,9 @@ async function multiMediaAudioPauseAndRewindTest(I, caseId, mediaType) {
 
 async function highlightTextTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("CONFIG FLAG==>::" + process.env.ExecuteTestsOnPRAndLocal);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -158,6 +173,8 @@ async function highlightTextTest(I, caseId, mediaType) {
 
 async function addCommentTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -167,6 +184,8 @@ async function addCommentTest(I, caseId, mediaType) {
 
 async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -176,6 +195,8 @@ async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) 
 
 async function collateCommentsTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -186,6 +207,8 @@ async function collateCommentsTest(I, caseId, mediaType) {
 
 async function commentsSearchTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -196,6 +219,8 @@ async function commentsSearchTest(I, caseId, mediaType) {
 
 async function addMultipleCommentsTest(I, caseId, mediaType) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -247,6 +272,7 @@ async function saveAllRedactionsTest(I, caseId, mediaType) {
 
 async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, assertBundlePage) {
   if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+    console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
@@ -256,6 +282,7 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
+  console.log("Executing Tests on AAT==>::" + await I.grabCurrentUrl());
   await I.amOnPage('/case-details/' + caseId);
   if (mediaType === mvData.PDF_DOCUMENT) {
     await I.openCaseDocumentsInMV(mediaType);
