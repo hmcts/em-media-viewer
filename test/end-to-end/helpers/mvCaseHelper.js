@@ -160,9 +160,7 @@ async function multiMediaAudioPauseAndRewindTest(I, caseId, mediaType) {
 }
 
 async function highlightTextTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
-    console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
-    console.log("CONFIG FLAG==>::" + process.env.ExecuteTestsOnPRAndLocal);
+  if (process.env.TEST_URL.split('-')[3] === 'pr') {
     console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
@@ -172,9 +170,8 @@ async function highlightTextTest(I, caseId, mediaType) {
 }
 
 async function addCommentTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal=== testConfig.ExecuteTestsOnPRAndLocal) {
+  if (process.env.TEST_URL.split('-')[3] === 'pr') {
     console.log("Jenkins PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
-    console.log("Config PREVIEW FLAG==>::" + testConfig.ExecuteTestsOnPRAndLocal);
     console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
   } else {
@@ -184,7 +181,7 @@ async function addCommentTest(I, caseId, mediaType) {
 }
 
 async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (process.env.TEST_URL.split('-')[3] === 'pr') {
     console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
     console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
@@ -195,7 +192,7 @@ async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) 
 }
 
 async function collateCommentsTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (process.env.TEST_URL.split('-')[3] === 'pr') {
     console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
     console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
@@ -207,7 +204,7 @@ async function collateCommentsTest(I, caseId, mediaType) {
 }
 
 async function commentsSearchTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (process.env.TEST_URL.split('-')[3] === 'pr') {
     console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
     console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
@@ -219,7 +216,7 @@ async function commentsSearchTest(I, caseId, mediaType) {
 }
 
 async function addMultipleCommentsTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (process.env.TEST_URL.split('-')[3] === 'pr') {
     console.log("PREVIEW FLAG==>::" + process.env.EXECUTE_E2E);
     console.log("Executing Tests on PREVIEW==>::" + await I.grabCurrentUrl());
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
