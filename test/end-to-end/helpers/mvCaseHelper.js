@@ -23,14 +23,18 @@ async function uploadWorDoc(I, caseId, eventName) {
 }
 
 async function contentSearchTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.executeContentSearch(searchKeyword, noOfFindings);
   }
 }
 
 async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment ==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.searchResultsNavigationUsingPreviousAndNextLinks(searchKeyword, noOfFindings);
   }
@@ -39,8 +43,8 @@ async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, search
 async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
   if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
     console.log('Environment==>::' + await I.grabCurrentUrl());
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -48,25 +52,28 @@ async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings,
 }
 
 async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
   }
 }
 
 async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigate) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.pdfViewerPageNavigation(pageNoToNavigate);
   }
 }
 
 async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (process.env.TEST_URL.split('-')[3] !== 'pr') {
     if (mediaType === 'example.pdf') {
       await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
       await I.executePdfViewerZoom();
-
     } else {
       await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
       await I.openCaseDocumentsInMV(mediaType);
@@ -76,8 +83,10 @@ async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
 }
 
 async function downloadPdfDocFromMVTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -85,8 +94,10 @@ async function downloadPdfDocFromMVTest(I, caseId, mediaType) {
 }
 
 async function printDocumentFromMVTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -94,7 +105,9 @@ async function printDocumentFromMVTest(I, caseId, mediaType) {
 }
 
 async function pdfAndImageRotationTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.rotatePdfAndJpg();
   }
@@ -227,42 +240,54 @@ async function addMultipleCommentsTest(I, caseId, mediaType) {
 }
 
 async function markContentForRedactionUsingDrawBoxTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.markContentForRedaction();
   }
 }
 
 async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.redactContentUsingRedactText();
   }
 }
 
 async function createRedactionsUsingDrawBoxAndRedactText(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.CreateRedactionsUsingDrawboxAndRedactText();
   }
 }
 
 async function redactTextAndThenRemovingRedactionTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.redactTextAndThenRemoveRedaction();
   }
 }
 
 async function previewAllRedactionsTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.previewAllRedactions();
   }
 }
 
 async function saveAllRedactionsTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr' || await getEnvironment() !== 'local') {
+  if (previewEnv) {
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.saveAllRedactions();
   }

@@ -8,7 +8,6 @@ Scenario('Rotate Pdf viewer document', async ({I}) => {
   await pdfAndImageRotationTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
-  .tag('@np')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Rotate Image viewer document', async ({I}) => {
