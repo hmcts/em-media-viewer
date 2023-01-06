@@ -37,8 +37,10 @@ async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, search
 }
 
 async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -99,8 +101,10 @@ async function pdfAndImageRotationTest(I, caseId, mediaType) {
 }
 
 async function createBookmarkTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -109,8 +113,10 @@ async function createBookmarkTest(I, caseId, mediaType) {
 }
 
 async function deleteBookmarkTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -118,8 +124,10 @@ async function deleteBookmarkTest(I, caseId, mediaType) {
 }
 
 async function updateBookmarkTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -129,8 +137,10 @@ async function updateBookmarkTest(I, caseId, mediaType) {
 }
 
 async function addEmptyBookmarksTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -149,8 +159,10 @@ async function multiMediaAudioPauseAndRewindTest(I, caseId, mediaType) {
 }
 
 async function highlightTextTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -158,18 +170,32 @@ async function highlightTextTest(I, caseId, mediaType) {
 }
 
 async function addCommentTest(I, caseId, mediaType) {
-  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  if (previewEnv) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  }
   await I.addComments();
 }
 
 async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) {
-  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  if (previewEnv) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  }
   await I.deleteComments(comment, updatedComment);
 }
 
 async function collateCommentsTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -178,8 +204,10 @@ async function collateCommentsTest(I, caseId, mediaType) {
 }
 
 async function commentsSearchTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -188,8 +216,10 @@ async function commentsSearchTest(I, caseId, mediaType) {
 }
 
 async function addMultipleCommentsTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -239,8 +269,10 @@ async function saveAllRedactionsTest(I, caseId, mediaType) {
 }
 
 async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, assertBundlePage) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
+  if (previewEnv) {
     await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -248,18 +280,11 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  if (previewEnv) {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime); // PR
-    console.log('Environment1==>::' + process.env.TEST_URL);
-    console.log('Environment2==>::' + await I.grabCurrentUrl());
-    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
-  } else {
-    await I.authenticateWithIdam();
-    console.log('Environment==>::' + await I.grabCurrentUrl());
-    await I.amOnPage('/case-details/' + caseId);
-    if (mediaType === mvData.PDF_DOCUMENT) {
-      await I.openCaseDocumentsInMV(mediaType);
-    }
+  await I.authenticateWithIdam();
+  console.log('Environment==>::' + await I.grabCurrentUrl());
+  await I.amOnPage('/case-details/' + caseId);
+  if (mediaType === mvData.PDF_DOCUMENT) {
+    await I.openCaseDocumentsInMV(mediaType);
   }
 }
 
@@ -269,6 +294,16 @@ async function getEnvironment() {
 
 async function previewEnv() {
   return process.env.TEST_URL.split('-')[3] ? 'pr' : 'aat';
+}
+
+async function executeTestsOnPreview(I, caseId, mediaType) {
+  if (previewEnv) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
+  }
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {
