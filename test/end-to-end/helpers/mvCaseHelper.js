@@ -1,5 +1,6 @@
 const {mvData} = require("../pages/common/constants");
 const testConfig = require('./../../config');
+const commonConfig = require('../data/commonConfig.json');
 
 async function submittedState(I, caseId) {
   await I.authenticateWithIdam();
@@ -247,10 +248,11 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] === 'pr') {
-    await I.amOnPage(process.env.TEST_UR, testConfig.PageLoadTime); // PR
+  if (previewEnv) {
+    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime); // PR
     console.log('Environment1==>::' + process.env.TEST_URL);
     console.log('Environment2==>::' + await I.grabCurrentUrl());
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
   } else {
     await I.authenticateWithIdam();
     console.log('Environment==>::' + await I.grabCurrentUrl());
@@ -263,6 +265,10 @@ async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
 
 async function getEnvironment() {
   return testConfig.PreviewOrLocalEnvUrl.includes('local') ? 'local' : 'aat';
+}
+
+async function previewEnv() {
+  return process.env.TEST_URL.split('-')[3] ? 'pr' : 'aat';
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {
