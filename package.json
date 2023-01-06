@@ -28,7 +28,7 @@
     "test": "cd projects/media-viewer; ng test",
     "test:coverage": "yarn test",
     "test:a11y": "yarn test",
-    "test:smoke": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/ --grep @smoke --steps --reporter mocha-multi",
+    "test:smoke": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/codecept.smoke.conf.js --grep @smoke --steps --reporter mocha-multi",
     "test:fullfunctional": "yarn e2e:fullfunctional",
     "test:functional": "yarn e2e:fullfunctional",
     "test:crossbrowser_PT": "protractor e2e/saucelabs.conf.js",
