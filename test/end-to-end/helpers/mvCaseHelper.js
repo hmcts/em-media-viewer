@@ -157,20 +157,12 @@ async function highlightTextTest(I, caseId, mediaType) {
 }
 
 async function addCommentTest(I, caseId, mediaType) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  }
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.addComments();
 }
 
 async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) {
-  if (testConfig.ExecuteTestsOnPRAndLocal === true) {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  }
+  await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.deleteComments(comment, updatedComment);
 }
 
@@ -255,10 +247,17 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
-  await I.authenticateWithIdam();
-  await I.amOnPage('/case-details/' + caseId);
-  if (mediaType === mvData.PDF_DOCUMENT) {
-    await I.openCaseDocumentsInMV(mediaType);
+  if (process.env.TEST_URL.split('-')[3] === 'pr') {
+    await I.amOnPage(process.env.TEST_UR, testConfig.PageLoadTime); // PR
+    console.log('Environment1==>::' + process.env.TEST_URL);
+    console.log('Environment2==>::' + await I.grabCurrentUrl());
+  } else {
+    await I.authenticateWithIdam();
+    console.log('Environment==>::' + await I.grabCurrentUrl());
+    await I.amOnPage('/case-details/' + caseId);
+    if (mediaType === mvData.PDF_DOCUMENT) {
+      await I.openCaseDocumentsInMV(mediaType);
+    }
   }
 }
 
