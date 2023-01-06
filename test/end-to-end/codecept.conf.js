@@ -58,7 +58,7 @@ exports.config = {
         reporterOptions: {
             'codeceptjs-cli-reporter': {
                 stdout: '-',
-                options:{steps:true}
+                options: {steps: true}
             },
             'mocha-junit-reporter': {
                 stdout: '-',
