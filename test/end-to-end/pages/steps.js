@@ -7,9 +7,9 @@ module.exports = () => {
   return actor({
     authenticateWithIdam: steps.idam.signIn,
     chooseNextStep: steps.nextStep.nextStep,
-    uploadPdfDoc: steps.uploadDocument.uploadPdfDocument,
-    uploadImage: steps.uploadDocument.uploadImageJpeg,
-    uploadWordDoc: steps.uploadDocument.uploadWordDocument,
+    uploadPdfDoc: steps.dmStore.uploadPdfDocument,
+    uploadImage: steps.dmStore.uploadImageJpeg,
+    uploadWordDoc: steps.dmStore.uploadWordDocument,
     executeContentSearch: steps.search.contentSearch,
     searchResultsNavigationUsingPreviousAndNextLinks: steps.search.searchResultsNavigationUsingNextAndPrevious,
     enterShouldJumpViewerToNextSearchResult: steps.search.enterShouldJumpViewerToNextSearchResults,
@@ -24,7 +24,7 @@ module.exports = () => {
     clearBookMarks: steps.bookMarks.clearBookmarkss,
     updateBookMarks: steps.bookMarks.updateBookMark,
     addEmptyBookmarks: steps.bookMarks.addAnEmptyBookMarks,
-    mvAudioScenario:steps.multiMediaAudioAndVideo.multiMediaAudio,
+    mvAudioScenario:steps.multiMedia.multiMediaAudio,
     highlightPdfText:steps.annotationsAndComments.highlightPdfText,
     addComments:steps.annotationsAndComments.addComments,
     deleteComments:steps.annotationsAndComments.deleteComments,
@@ -32,7 +32,21 @@ module.exports = () => {
     deleteAllExistingComments:steps.annotationsAndComments.deleteAllExistingComments,
     clickCommentsPanel:steps.annotationsAndComments.clickCommentsPanel,
     collateComments:steps.annotationsAndComments.collateComments,
-    commentsSearch:steps.annotationsAndComments.commentsSearch
+    commentsSearch:steps.annotationsAndComments.commentsSearch,
+    addMultipleComments:steps.annotationsAndComments.addMultipleComments,
+    clickRedactMenu:steps.redact.clickRedactMenu,
+    redactTextUsingDrawBox:steps.redact.redactTextUsingDrawBox,
+    clearAllRedactions:steps.redact.clearAllRedactions,
+    redactionsPreview:steps.redact.redactionsPreview,
+    verifyWhetherTheRedactionAreVisibleOrNot:steps.redact.verifyWhetherTheRedactionAreVisibleOrNot,
+    redactText:steps.redact.redactText,
+    markContentForRedaction:steps.redact.markContentForRedaction,
+    redactContentUsingRedactText:steps.redact.redactContentUsingRedactText,
+    CreateRedactionsUsingDrawboxAndRedactText:steps.redact.CreateRedactionsUsingDrawboxAndRedactText,
+    redactTextAndThenRemoveRedaction:steps.redact.redactTextAndThenRemoveRedaction,
+    previewAllRedactions:steps.redact.previewAllRedactions,
+    saveAllRedactions:steps.redact.saveAllRedactions,
+    navigateIndexBundleDocument:steps.indexAndOutline.navigateIndexBundleDocument
 
   });
 };

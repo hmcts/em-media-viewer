@@ -1,8 +1,11 @@
 const testConfig = require('./../../config');
-const {enterShouldJumpViewerToNextSearchResultsTest} = require("../helpers/mvCaseHelper");
-const {navigateSearchResultsUsingPreviousNextLinksTest} = require("../helpers/mvCaseHelper");
+const {
+  enterShouldJumpViewerToNextSearchResultsTest,
+  navigateSearchResultsUsingPreviousNextLinksTest,
+  contentSearchTest,
+  searchResultsNotFoundTest
+} = require("../helpers/mvCaseHelper");
 const {mvData} = require('../pages/common/constants.js');
-const {contentSearchTest, searchResultsNotFoundTest} = require("../helpers/mvCaseHelper");
 
 Feature('Search Feature');
 
@@ -23,7 +26,7 @@ Scenario('Navigate search results using previous & next links ', async ({I}) => 
 Scenario('Search results not found scenario', async ({I}) => {
   await searchResultsNotFoundTest(I, mvData.CASE_ID, mvData.SEARCH_RESULTS_NOT_FOUND, mvData.NO_RESULTS_FOUND, mvData.PDF_DOCUMENT);
 
-}).tag('@np')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios)
 
 Scenario('Enter should jump viewer to next search result', async ({I}) => {
