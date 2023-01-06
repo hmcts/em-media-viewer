@@ -33,21 +33,21 @@ export class SocketService implements OnDestroy {
       };
 
       socket.onmessage = (event: MessageEvent) => {
-        console.log("onmessage");
-        const eventData = JSON.parse(event.data)
+        console.log('onmessage');
+        const eventData = JSON.parse(event.data);
         if (eventData.data && eventData.data.eventName) {
-          this.messageEventHandller(eventData.data.eventName, eventData.data.data)
+          this.messageEventHandller(eventData.data.eventName, eventData.data.data);
         }
       };
 
       socket.onerror = (event: Event) => {
-        console.log("onerror");
+        console.log('onerror');
       };
 
       socket.onclose = (event: CloseEvent) => {
-        console.log("onclose");
+        console.log('onclose');
       };
-    })
+    });
   }
 
   connected(): Observable<boolean> {
@@ -65,7 +65,7 @@ export class SocketService implements OnDestroy {
 
   emit(event: string, data: any) {
     this.socket.send(JSON.stringify({
-      type: "event",
+      type: 'event',
       event,
       data
     }));
@@ -92,7 +92,6 @@ export class SocketService implements OnDestroy {
         return this.screenUpdated$.asObservable();
       }
       default: {
-        //statements;
         break;
       }
     }
