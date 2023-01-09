@@ -235,23 +235,27 @@ async function getEnvironment() {
 
 async function previewEnv() {
   console.log("Environment Url==>::\n" + process.env.TEST_URL);
-  return process.env.TEST_URL.split('-')[3] ? 'pr' : 'aat';
+  let url = process.env.TEST_URL;
+  console.log("Environment Url==>::\n" + url.split('-')[3]);
+  return url.includes('-preview');
 }
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
   console.log("Jenkins url==> " + process.env.TEST_URL);
   console.log("Config url==> " + testConfig.TestUrl);
-  console.log("URL==>::\n" + await previewEnv());
-  await I.wait(10);
+  await I.wait(5);
 
-  console.log("Grab URL==>::\n" + await I.grabCurrentUrl());
-  if (await previewEnv()!== 'pr') {
+  let url = await I.grabCurrentUrl();
+  console.log("Running Environment==>::\n" + url);
+
+  if(url.includes('-preview') || process.env.TEST_URL.includes('-preview')) {
+    console.log("PREVIEW==>::\n" + process.env.TEST_URL);
+    console.log("PREVIEW2==>::\n" + url);
+    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+  } else {
     console.log("AAT==>::\n");
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
-  } else {
-    console.log("PREVIEW==>::\n" + process.env.TEST_URL);
-    await I.amOnPage('/', testConfig.PageLoadTime);
-    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
   }
 }
 
