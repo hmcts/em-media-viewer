@@ -68,6 +68,7 @@ withNightlyPipeline(type, product, component) {
   loadVaultSecrets(secrets)
 
   disableLegacyDeployment()
+  env.TEST_URL = params.ExUI_URL_TO_TEST
   enableSecurityScan()
   enableSlackNotifications(channel)
   enableFullFunctionalTest(60)
