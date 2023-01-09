@@ -24,7 +24,7 @@ module.exports = () => {
     clearBookMarks: steps.bookMarks.clearBookmarkss,
     updateBookMarks: steps.bookMarks.updateBookMark,
     addEmptyBookmarks: steps.bookMarks.addAnEmptyBookMarks,
-    mvAudioScenario:steps.multiMediaAudioAndVideo.multiMediaAudio,
+    mvAudioScenario:steps.multiMedia.multiMediaAudio,
     highlightPdfText:steps.annotationsAndComments.highlightPdfText,
     addComments:steps.annotationsAndComments.addComments,
     deleteComments:steps.annotationsAndComments.deleteComments,
