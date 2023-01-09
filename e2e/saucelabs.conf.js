@@ -40,7 +40,7 @@ const config = {
     './src/features/zoom.feature'
   ],
 
-  baseUrl: (process.env.TEST_E2E_URL || 'http://localhost:3000/').replace('https', 'http'),
+  baseUrl: (process.env.TEST_URL || 'http://localhost:3000/').replace('https', 'http'),
   allScriptsTimeout: 220000,
   useAllAngular2AppRoots: true,
   multiCapabilities: supportedBrowsers.multiCapabilities,
