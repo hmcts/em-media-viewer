@@ -65,11 +65,11 @@ withPipeline(type, product, component) {
   overrideVaultEnvironments(vaultOverrides)
   loadVaultSecrets(secrets)
   enableSecurityScan()
-  env.EXECUTE_E2E=false
-  env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
-  onPR{
-  env.EXECUTE_E2E=true
-  }
+//  env.EXECUTE_E2E=false
+//  env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
+//  onPR{
+//  env.EXECUTE_E2E=true
+//  }
   enableAksStagingDeployment()
   disableLegacyDeployment()
 
