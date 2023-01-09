@@ -236,7 +236,7 @@ async function previewEnv() {
 async function executeTestsOnPreview(I, caseId, mediaType) {
   if (process.env.TEST_URL.includes('-preview')) {
     console.log("Executing Tests in PREVIEW==>::");
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
     await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
   } else {
     console.log("Executing Tests in AAT")
