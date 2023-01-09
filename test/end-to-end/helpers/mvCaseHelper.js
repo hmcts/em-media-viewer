@@ -2,6 +2,9 @@ const {mvData} = require("../pages/common/constants");
 const testConfig = require('./../../config');
 const commonConfig = require('../data/commonConfig.json');
 
+async function loginTest(I) {
+  await I.authenticateWithIdam();
+}
 async function submittedState(I, caseId) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -236,7 +239,7 @@ async function previewEnv() {
 async function executeTestsOnPreview(I, caseId, mediaType) {
   if (process.env.TEST_URL.includes('-preview')) {
     console.log("Executing Tests in PREVIEW==>::");
-    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
     await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
   } else {
     console.log("Executing Tests in AAT")
@@ -252,6 +255,7 @@ async function uploadDocumentEvent(I, caseId, eventName) {
 }
 
 module.exports = {
+  loginTest,
   submittedState,
   uploadPdf,
   uploadJpeg,

@@ -5,7 +5,7 @@ exports.config = {
     output: `${process.cwd()}/${config.TestOutputDir}`,
     helpers: {
         Puppeteer: {
-            url: config.TestUrl || process.env.TEST_URL,
+            url: config.TestUrl1 || config.TestUrl,
             waitForTimeout: 40000,
             getPageTimeout: 40000,
             waitForAction: 1000,
