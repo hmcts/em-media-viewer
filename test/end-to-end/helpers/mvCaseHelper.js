@@ -151,57 +151,33 @@ async function addMultipleCommentsTest(I, caseId, mediaType) {
 }
 
 async function markContentForRedactionUsingDrawBoxTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.markContentForRedaction();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.markContentForRedaction();
 }
 
 async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.redactContentUsingRedactText();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactContentUsingRedactText();
 }
 
 async function createRedactionsUsingDrawBoxAndRedactText(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.CreateRedactionsUsingDrawboxAndRedactText();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.CreateRedactionsUsingDrawboxAndRedactText();
 }
 
 async function redactTextAndThenRemovingRedactionTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.redactTextAndThenRemoveRedaction();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactTextAndThenRemoveRedaction();
 }
 
 async function previewAllRedactionsTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.previewAllRedactions();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.previewAllRedactions();
 }
 
 async function saveAllRedactionsTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.saveAllRedactions();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.saveAllRedactions();
 }
 
 async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, assertBundlePage) {
