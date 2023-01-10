@@ -5,6 +5,7 @@ const commonConfig = require('../data/commonConfig.json');
 async function loginTest(I) {
   await I.authenticateWithIdam();
 }
+
 async function submittedState(I, caseId) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -26,21 +27,13 @@ async function uploadWorDoc(I, caseId, eventName) {
 }
 
 async function contentSearchTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.executeContentSearch(searchKeyword, noOfFindings);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
 async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.searchResultsNavigationUsingPreviousAndNextLinks(searchKeyword, noOfFindings);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.searchResultsNavigationUsingPreviousAndNextLinks(searchKeyword, noOfFindings);
 }
 
 async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
@@ -49,12 +42,8 @@ async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings,
 }
 
 async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
 }
 
 async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigate) {
@@ -240,6 +229,7 @@ async function executeTestsOnPreview(I, caseId, mediaType) {
   if (process.env.TEST_URL.includes('-preview')) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
     await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log('Environment==>::' + await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
