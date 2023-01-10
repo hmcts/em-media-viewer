@@ -56,13 +56,8 @@ async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigat
 }
 
 async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.executePdfViewerZoom();
-  }
-
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.executePdfViewerZoom();
 }
 
 async function downloadPdfDocFromMVTest(I, caseId, mediaType) {
@@ -76,12 +71,8 @@ async function printDocumentFromMVTest(I, caseId, mediaType) {
 }
 
 async function pdfAndImageRotationTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.rotatePdfAndJpg();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.rotatePdfAndJpg();
 }
 
 async function createBookmarkTest(I, caseId, mediaType) {
