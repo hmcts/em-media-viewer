@@ -187,6 +187,7 @@ async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundle
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
+  console.log(await I.grabCurrentUrl());
   await I.amOnPage('/case-details/' + caseId);
   if (mediaType === mvData.PDF_DOCUMENT) {
     await I.openCaseDocumentsInMV(mediaType);
@@ -213,7 +214,6 @@ async function executeTestsOnPreview(I, caseId, mediaType) {
 
 async function uploadDocumentEvent(I, caseId, eventName) {
   await I.authenticateWithIdam();
-  console.log(await I.grabCurrentUrl());
   await I.amOnPage('/case-details/' + caseId);
   await I.chooseNextStep(eventName, 3)
 }
