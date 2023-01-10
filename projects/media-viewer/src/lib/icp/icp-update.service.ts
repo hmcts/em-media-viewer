@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SocketService } from './socket.service';
 import { IcpParticipant, IcpScreenUpdate, IcpSession } from './icp.interfaces';
-import { from, of } from 'rxjs';
 import { IcpEvents } from './icp.events';
 
 @Injectable()
