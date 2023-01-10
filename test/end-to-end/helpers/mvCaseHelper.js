@@ -229,6 +229,7 @@ async function executeTestsOnPreview(I, caseId, mediaType) {
   if (process.env.TEST_URL.includes('-preview')) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
     await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log(await I.grabCurrentUrl());
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
@@ -236,6 +237,7 @@ async function executeTestsOnPreview(I, caseId, mediaType) {
 
 async function uploadDocumentEvent(I, caseId, eventName) {
   await I.authenticateWithIdam();
+  console.log(await I.grabCurrentUrl());
   await I.amOnPage('/case-details/' + caseId);
   await I.chooseNextStep(eventName, 3)
 }
