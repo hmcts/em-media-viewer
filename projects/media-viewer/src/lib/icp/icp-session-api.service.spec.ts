@@ -12,7 +12,8 @@ describe('IcpSessionApiService', () => {
   const session: IcpSession = {
     caseId: 'caseId',
     sessionId: 'sessionId',
-    dateOfHearing: new Date()
+    dateOfHearing: new Date(),
+    connectionUrl: ''
   };
   const username = 'name';
 

@@ -1,8 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, from, Observable, of, Subject, Subscription } from 'rxjs';
-import socketio from 'socket.io-client/dist/socket.io.js';
-import { switchMap } from 'rxjs/operators';
-import { getViewComponent } from '@angular/core/src/render3/discovery_utils';
 import { IcpEvents } from './icp.events';
 import { IcpParticipant } from './icp.interfaces';
 
@@ -11,7 +8,7 @@ export class SocketService implements OnDestroy {
 
   private socket: WebSocket;
   subscription: Subscription;
-  private connected$ = new BehaviorSubject<boolean>(false);
+  connected$ = new BehaviorSubject<boolean>(false);
   private sessionJoined$ = new Subject();
   private presenterUpdated$ = new Subject();
   private clientDisconnected$ = new Subject();
