@@ -8,7 +8,6 @@ Scenario('Pdf Viewer Zoom In & Out', async ({I}) => {
   await pdfViewerZoomInOutTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
-  .tag('@np')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Image Viewer Zoom In & Out', async ({I}) => {
