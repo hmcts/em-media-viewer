@@ -128,5 +128,11 @@ describe('SocketService', () => {
     expect(nextSpy).toHaveBeenCalled();
   });
 
+  it('connected should be observable', () => {
+    const nextSpy = spyOn(socketService.connected$, 'asObservable');
+    socketService.connected();
+    expect(nextSpy).toHaveBeenCalled();
+  });
+
 });
 
