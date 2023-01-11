@@ -68,5 +68,6 @@
   "indexPageXp": "//a[@tabindex='0' and contains(text(), 'Index Page')]",
   "redactContentUsingDrawBoxXp": "div:nth-child(1) > div.textLayer",
   "redactTextCss": "div.textLayer",
+  "previewRedactTextCss": "div:nth-child(1) > div.textLayer",
   "assertEnvTestData": "//a[text()='Media Viewer Demo']"
 }
