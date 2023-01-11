@@ -64,37 +64,37 @@ describe('SocketService', () => {
 
   it('message event handler should call presenter updated', () => {
     const nextSpy = spyOn(socketService.presenterUpdated$, 'next');
-    socketService.messageEventHandller("IcpPresenterUpdated", { test: "hello" });
+    socketService.messageEventHandller('IcpPresenterUpdated', { test: 'hello' });
     expect(nextSpy).toHaveBeenCalled();
   });
 
   it('message event handler should call client disconnected', () => {
     const nextSpy = spyOn(socketService.clientDisconnected$, 'next');
-    socketService.messageEventHandller("IcpClientDisconnectedFromSession", { test: "hello" });
+    socketService.messageEventHandller('IcpClientDisconnectedFromSession', { test: 'hello' });
     expect(nextSpy).toHaveBeenCalled();
   });
 
   it('message event handler should call participant updated', () => {
     const nextSpy = spyOn(socketService.participantUpdated$, 'next');
-    socketService.messageEventHandller("IcpParticipantsListUpdated", { test: "hello" });
+    socketService.messageEventHandller('IcpParticipantsListUpdated', { test: 'hello' });
     expect(nextSpy).toHaveBeenCalled();
   });
 
   it('message event handler should call participant updated', () => {
     const nextSpy = spyOn(socketService.participantUpdated$, 'next');
-    socketService.messageEventHandller("IcpParticipantsListUpdated", { test: "hello" });
+    socketService.messageEventHandller('IcpParticipantsListUpdated', { test: 'hello' });
     expect(nextSpy).toHaveBeenCalled();
   });
 
   it('message event handler should call new participant joined', () => {
     const nextSpy = spyOn(socketService.newParticipantJoined$, 'next');
-    socketService.messageEventHandller("IcpNewParticipantJoinedSession", { test: "hello" });
+    socketService.messageEventHandller('IcpNewParticipantJoinedSession', { test: 'hello' });
     expect(nextSpy).toHaveBeenCalled();
   });
 
   it('message event handler should call screen updated', () => {
     const nextSpy = spyOn(socketService.screenUpdated$, 'next');
-    socketService.messageEventHandller("IcpScreenUpdated", { test: "hello" });
+    socketService.messageEventHandller('IcpScreenUpdated', { test: "hello" });
     expect(nextSpy).toHaveBeenCalled();
   });
 
