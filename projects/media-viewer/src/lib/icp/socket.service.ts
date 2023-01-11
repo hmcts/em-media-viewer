@@ -9,12 +9,12 @@ export class SocketService implements OnDestroy {
   private socket: WebSocket;
   subscription: Subscription;
   connected$ = new BehaviorSubject<boolean>(false);
-  private sessionJoined$ = new Subject();
-  private presenterUpdated$ = new Subject();
-  private clientDisconnected$ = new Subject();
-  private participantUpdated$ = new Subject();
-  private newParticipantJoined$ = new Subject();
-  private screenUpdated$ = new Subject();
+  sessionJoined$ = new Subject();
+  presenterUpdated$ = new Subject();
+  clientDisconnected$ = new Subject();
+  participantUpdated$ = new Subject();
+  newParticipantJoined$ = new Subject();
+  screenUpdated$ = new Subject();
 
   constructor() { }
 
