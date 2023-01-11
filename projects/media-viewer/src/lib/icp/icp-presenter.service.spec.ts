@@ -22,7 +22,8 @@ describe('Icp Presenter Service', () => {
   const session: IcpSession = {
     caseId: 'caseId',
     sessionId: 'sessionId',
-    dateOfHearing: new Date()
+    dateOfHearing: new Date(),
+    connectionUrl: ''
   };
   const participant: IcpParticipant = {
     id: 'id',

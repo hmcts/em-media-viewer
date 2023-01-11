@@ -6,7 +6,7 @@ describe('Icp actions', () => {
   describe('Set Case Id', () => {
     it('should create an action', () => {
       const action = new fromIcp.SetCaseId('caseId');
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: fromIcp.SET_CASE_ID,
         payload: 'caseId'
       });
@@ -17,7 +17,7 @@ describe('Icp actions', () => {
     describe('Load Session', () => {
       it('should create an action', () => {
         const action = new fromIcp.LoadIcpSession('caseId');
-        expect({...action}).toEqual({
+        expect({ ...action }).toEqual({
           type: fromIcp.LOAD_ICP_SESSION,
           payload: 'caseId'
         });
@@ -28,7 +28,7 @@ describe('Icp actions', () => {
       it('should create an action', () => {
         const error: any = 'some error';
         const action = new fromIcp.LoadIcpSessionFailure(error);
-        expect({...action}).toEqual({
+        expect({ ...action }).toEqual({
           type: fromIcp.LOAD_ICP_SESSION_FAIL,
           payload: error
         });
@@ -44,11 +44,12 @@ describe('Icp actions', () => {
           session: {
             sessionId: 'sessionId',
             caseId: 'caseId',
-            dateOfHearing: new Date()
+            dateOfHearing: new Date(),
+            connectionUrl: 'url-connectionstring'
           }
         };
         const action = new fromIcp.JoinIcpSocketSession(payload);
-        expect({...action}).toEqual({
+        expect({ ...action }).toEqual({
           type: fromIcp.JOIN_ICP_SOCKET_SESSION,
           payload: payload
         });
@@ -70,12 +71,13 @@ describe('Icp actions', () => {
             session: {
               sessionId: 'sessionId',
               caseId: 'caseId',
-              dateOfHearing: new Date()
+              dateOfHearing: new Date(),
+              connectionUrl: 'url-connectionstring'
             }
           };
 
           const action = new fromIcp.IcpSocketSessionJoined(payload);
-          expect({...action}).toEqual({
+          expect({ ...action }).toEqual({
             type: fromIcp.ICP_SOCKET_SESSION_JOINED,
             payload: payload
           });
@@ -87,7 +89,7 @@ describe('Icp actions', () => {
   describe('Leave Socket Session', () => {
     it('should create an action', () => {
       const action = new fromIcp.LeaveIcpSocketSession();
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: fromIcp.LEAVE_ICP_SOCKET_SESSION
       });
     });
@@ -95,9 +97,9 @@ describe('Icp actions', () => {
 
   describe('Presenter Updated', () => {
     it('should create an action', () => {
-      const payload: IcpParticipant = {id: 'id', username: 'name'};
+      const payload: IcpParticipant = { id: 'id', username: 'name' };
       const action = new fromIcp.IcpPresenterUpdated(payload);
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: fromIcp.ICP_PRESENTER_UPDATED,
         payload: payload
       });
@@ -106,9 +108,9 @@ describe('Icp actions', () => {
 
   describe('Participant List Updated', () => {
     it('should create an action', () => {
-      const payload = [{'participantId': 'name'}];
+      const payload = [{ 'participantId': 'name' }];
       const action = new fromIcp.IcpParticipantListUpdated(payload);
-      expect({...action}).toEqual({
+      expect({ ...action }).toEqual({
         type: fromIcp.ICP_PARTICIPANT_LIST_UPDATED,
         payload: payload
       });

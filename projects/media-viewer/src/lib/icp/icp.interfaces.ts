@@ -11,6 +11,7 @@ export interface IcpSession {
   sessionId: string;
   caseId: string;
   dateOfHearing: Date;
+  connectionUrl: string;
 }
 
 export interface IcpParticipant {
