@@ -1,6 +1,7 @@
 {
   "goButton": "form button[type=\"submit\"]",
-  "examplePdfLink": "//a[text()=\" example.pdf \"]",
+  "examplePdfLink_Original": "//a[text()=\" example.pdf \"]",
+  "examplePdfLink": "//a[@class='ng-star-inserted' and contains(text(), 'example.pdf')]",
   "addNewBtn": "//button[text()='Add new']",
   "documentsTab": "//div[text()='Documents']",
   "searchButton": "//button[text()='Search']",
@@ -68,5 +69,6 @@
   "indexPageXp": "//a[@tabindex='0' and contains(text(), 'Index Page')]",
   "redactContentUsingDrawBoxXp": "div:nth-child(1) > div.textLayer",
   "redactTextCss": "div.textLayer",
+  "previewRedactTextCss": "div:nth-child(1) > div.textLayer",
   "assertEnvTestData": "//a[text()='Media Viewer Demo']"
 }
