@@ -58,7 +58,7 @@ describe('SocketService', () => {
 
   it('message event handler should call session joined', () => {
     const nextSpy = spyOn(socketService.sessionJoined$, 'next');
-    socketService.messageEventHandller("IcpClientJoinedSession", { test: "hello" });
+    socketService.messageEventHandller('IcpClientJoinedSession', { test: 'hello' });
     expect(nextSpy).toHaveBeenCalled();
   });
 
@@ -94,7 +94,7 @@ describe('SocketService', () => {
 
   it('message event handler should call screen updated', () => {
     const nextSpy = spyOn(socketService.screenUpdated$, 'next');
-    socketService.messageEventHandller('IcpScreenUpdated', { test: "hello" });
+    socketService.messageEventHandller('IcpScreenUpdated', { test: 'hello' });
     expect(nextSpy).toHaveBeenCalled();
   });
 
