@@ -82,7 +82,10 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateHighlight({ offsetX, offsetY }) {
+  updateHighlight({currentTarget, clientX, clientY}) {
+    const rect = currentTarget.getBoundingClientRect(),
+    offsetX = clientX - rect.left,
+    offsetY = clientY - rect.top;
     if (this.drawStartX > 0 && this.drawStartY > 0) {
       this.height = Math.abs(offsetY - this.drawStartY);
       this.width = Math.abs(offsetX - this.drawStartX);

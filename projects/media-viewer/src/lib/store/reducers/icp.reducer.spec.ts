@@ -13,7 +13,8 @@ const icpState = {
   session: {
     sessionId: 'sessionId',
     caseId: 'caseId',
-    dateOfHearing: new Date()
+    dateOfHearing: new Date(),
+    connectionUrl: 'url-connectionstring'
   },
   client: {id: 'clientId', username: 'name'},
   presenter: {id: 'presenterId', username: 'name'},

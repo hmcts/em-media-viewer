@@ -32,6 +32,7 @@ import { SetCaseId } from '../../store/actions/icp.actions';
 import * as fromDocumentsSelector from '../../store/selectors/document.selectors';
 import { IcpState } from '../../icp/icp.interfaces';
 import { ViewerEventService } from '../viewer-event.service';
+import { IcpService } from '../../icp/icp.service';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -86,6 +87,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     private readonly printService: PrintService,
     public readonly toolbarEvents: ToolbarEventService,
     private readonly viewerEvents: ViewerEventService,
+    private icpService: IcpService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject.pipe(tap(() => {
