@@ -56,6 +56,8 @@
   "commentsSearchBtn": "mv-comment-search > button",
   "assertCommentsSearchCountXp": "//span[@class =\"comment-search__item\" and contains(text(), \"Showing 1 of 1\")]",
   "redactDrawBox": "#toggleDrawButton",
+  "redactPageButton": "#redactPageButton",
+  "page3": "//*[@class ='page' and @data-page-number ='3']",
   "redactMenu":".dropdown-menu #mvRedactBtn",
   "clearAllRedaction":"#mvClearBtn",
   "previewBtn":"#mvPreviewBtn",

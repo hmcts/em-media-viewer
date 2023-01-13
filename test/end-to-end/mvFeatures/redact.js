@@ -3,6 +3,8 @@ const {
   markContentForRedactionUsingDrawBoxTest,
   redactContentUsingRedactTextTest,
   redactTextAndThenRemovingRedactionTest,
+  redactFirstPageTest,
+  redactMultiplePagesTest,
   createRedactionsUsingDrawBoxAndRedactText,
   previewAllRedactionsTest,
   saveAllRedactionsTest
@@ -43,6 +45,18 @@ Scenario('Save redactions to download', async ({I}) => {
 
 Scenario('Redact text and then removing the redaction', async ({I}) => {
   await redactTextAndThenRemovingRedactionTest(I, mvData.REDACTION_CASE, mvData.PDF_DOCUMENT);
+
+}).tag('@ci')
+  .retry(testConfig.TestRetryScenarios);
+
+Scenario('Redact first page', async ({I}) => {
+  await redactFirstPageTest(I, mvData.REDACTION_CASE, mvData.PDF_DOCUMENT);
+
+}).tag('@ci')
+  .retry(testConfig.TestRetryScenarios);
+
+Scenario('Redact multiple pages', async ({I}) => {
+  await redactMultiplePagesTest(I, mvData.REDACTION_CASE, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
   .retry(testConfig.TestRetryScenarios);

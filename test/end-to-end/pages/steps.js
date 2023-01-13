@@ -41,6 +41,8 @@ module.exports = () => {
     verifyWhetherTheRedactionAreVisibleOrNot:steps.redact.verifyWhetherTheRedactionAreVisibleOrNot,
     redactText:steps.redact.redactText,
     markContentForRedaction:steps.redact.markContentForRedaction,
+    redactFirstPage:steps.redact.redactFirstPage,
+    redactMultiplePages:steps.redact.redactMultiplePages,
     redactContentUsingRedactText:steps.redact.redactContentUsingRedactText,
     CreateRedactionsUsingDrawboxAndRedactText:steps.redact.CreateRedactionsUsingDrawboxAndRedactText,
     redactTextAndThenRemoveRedaction:steps.redact.redactTextAndThenRemoveRedaction,
