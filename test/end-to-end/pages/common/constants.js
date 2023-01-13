@@ -28,7 +28,11 @@ const mvData = {
   "ASSERT_COMMENTS_SEARCH_COUNT":'Showing 1 of 1',
   "REDACT_CONTENT1":'continues to disrupt the peace of Verona, a city in northern Italy. A brawl between the',
   "BUNDLE_DOCUMENT_NAME_TO_NAVIGATE":'Index Page',
-  "ASSERT_BUNDLE_DOC_NAME":'INDEX'
+  "OUTLINE_PAGE_NUMBER_TO_NAVIGATE":'2',
+  "ASSERT_BUNDLE_DOC_NAME":'INDEX',
+  "NESTED_DOCUMENT_NAME_TO_NAVIGATE":'Prepared Discharge Final Order',
+  "NESTED_PAGE_NUMBER_TO_NAVIGATE":'8',
+  "NESTED_PAGE_CONTENT":'Children',
 };
 
 module.exports = {
