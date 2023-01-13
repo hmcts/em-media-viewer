@@ -181,9 +181,14 @@ async function saveAllRedactionsTest(I, caseId, mediaType) {
   await I.saveAllRedactions();
 }
 
-async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, assertBundlePage) {
+async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, bundlePageNumber, assertBundlePage) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.navigateIndexBundleDocument(bundlePageName, assertBundlePage);
+  await I.navigateIndexBundleDocument(bundlePageName, bundlePageNumber, assertBundlePage);
+}
+
+async function navigateNestedDocsUsingIndexTest(I, caseId, mediaType, nestedPageName, nestedPageNumber, pageContent) {
+  await executeTestsOnPreview(I, caseId, mediaType)
+  await I.navigateIndexNestedDocument(nestedPageName, nestedPageNumber, pageContent);
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
@@ -249,6 +254,7 @@ module.exports = {
   markContentForRedactionUsingDrawBoxTest,
   redactContentUsingRedactTextTest,
   navigateBundleDocsUsingPageIndexTest,
+  navigateNestedDocsUsingIndexTest,
   redactTextAndThenRemovingRedactionTest,
   redactFirstPageTest,
   redactMultiplePagesTest,
