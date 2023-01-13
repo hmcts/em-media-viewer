@@ -4,8 +4,9 @@ export interface Outline {
   count: number;
   dest: {}[];
   italic: boolean;
-  items: {}[];
+  items: Outline[];
   newWindow: any;
+  pageNumber: number;
   title: string;
   unsafeUrl: any;
   url: any;

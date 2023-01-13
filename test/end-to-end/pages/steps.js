@@ -42,6 +42,8 @@ module.exports = () => {
     redactText:steps.redact.redactText,
     markContentForRedaction:steps.redact.markContentForRedaction,
     redactContentUsingRedactText:steps.redact.redactContentUsingRedactText,
+    navigateIndexBundleDocument:steps.indexAndOutline.navigateIndexBundleDocument,
+    navigateIndexNestedDocument:steps.indexAndOutline.navigateIndexNestedDocument,
     CreateRedactionsUsingDrawboxAndRedactText:steps.redact.CreateRedactionsUsingDrawboxAndRedactText,
     redactTextAndThenRemoveRedaction:steps.redact.redactTextAndThenRemoveRedaction,
     previewAllRedactions:steps.redact.previewAllRedactions,

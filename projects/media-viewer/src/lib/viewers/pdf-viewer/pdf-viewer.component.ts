@@ -258,4 +258,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   private goToDestination(destination: any[]) {
     this.pdfWrapper.navigateTo(destination);
   }
+
+  getCurrentPageNumber(): number {
+    return this.pdfWrapper.getPageNumber();
+  }
 }

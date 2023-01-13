@@ -32,7 +32,7 @@ html[dir='rtl'] .outlineItem > .outlineItems {
 .attachmentsItem > button {
   text-decoration: none;
   display:inline-block;
-  width: calc(100% - 50px); /* Subtract the right padding (left, in RTL mode)
+  width: calc(100% - 1.5em); /* Subtract the right padding (left, in RTL mode)
                               of the container. */
   height: auto;
   margin-bottom: 1px;
@@ -45,6 +45,11 @@ html[dir='rtl'] .outlineItem > .outlineItems {
   -ms-user-select: none;
   user-select: none;
   white-space: normal;
+}
+
+.highlightedOutlineItem {
+  background-color: white;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .attachmentsItem > button {
