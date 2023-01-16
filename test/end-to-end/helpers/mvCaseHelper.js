@@ -183,7 +183,6 @@ async function navigateNestedDocsUsingIndexTest(I, caseId, mediaType, nestedPage
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
-  console.log(await I.grabCurrentUrl());
   await I.amOnPage('/case-details/' + caseId);
   if (mediaType === mvData.PDF_DOCUMENT) {
     await I.openCaseDocumentsInMV(mediaType);
@@ -199,7 +198,9 @@ async function previewEnv() {
 }
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
-  if (process.env.TEST_URL.includes('-preview')) {
+  if (process.env.TEST_URL.includes(mvData.EXUI_ENV)) {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+  } else if (process.env.TEST_URL.includes('-preview')) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
     await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
     console.log(await I.grabCurrentUrl());
