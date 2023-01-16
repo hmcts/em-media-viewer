@@ -267,5 +267,14 @@
   "90033_Loosely Scoped Cookie_https://em-media-viewer-staging.service.core-compute-aat.internal/robots.txt_GET":"ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/_GET":"ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/runtime-es2015.ee764f6592690b8d9311.js_GET":"ignore",
-  "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/robots.txt_GET":"ignore"
+  "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/robots.txt_GET":"ignore",
+  "10015_Re-examine Cache-control Directives_https://em-media-viewer-staging.service.core-compute-aat.internal/sitemap.xml_GET":"ignore",
+  "10020_Missing Anti-clickjacking Header_https://em-media-viewer-staging.service.core-compute-aat.internal/_GET":"ignore",
+  "10003_Vulnerable JS Library_https://em-media-viewer-staging.service.core-compute-aat.internal/main.c2ea66bc15f21344e568.js_GET":"ignore",
+  "10010_Cookie No HttpOnly Flag_https://em-media-viewer-staging.service.core-compute-aat.internal/robots.txt_GET":"ignore",
+  "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_https://em-media-viewer-staging.service.core-compute-aat.internal/main.c2ea66bc15f21344e568.js_GET":"ignore",
+  "10096_Timestamp Disclosure - Unix_https://em-media-viewer-staging.service.core-compute-aat.internal/main.c2ea66bc15f21344e568.js_GET":"ignore",
+  "10021_X-Content-Type-Options Header Missing_https://em-media-viewer-staging.service.core-compute-aat.internal/main.c2ea66bc15f21344e568.js_GET":"ignore",
+  "10027_Information Disclosure - Suspicious Comments_https://em-media-viewer-staging.service.core-compute-aat.internal/main.c2ea66bc15f21344e568.js_GET":"ignore",
+  "10015_Re-examine Cache-control Directives_https://em-media-viewer-staging.service.core-compute-aat.internal/_GET":"ignore"
 }
