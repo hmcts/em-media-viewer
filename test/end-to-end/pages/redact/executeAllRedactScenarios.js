@@ -6,15 +6,29 @@ module.exports = async function () {
   const I = this;
   await I.clearAllRedactions();
   await I.clickRedactMenu();
-  await I.click(commonConfig.redactTextBtn);
-  await I.redactText();
-
   await I.click(commonConfig.redactDrawBox);
   await I.dragAndDrop(commonConfig.redactTextCss, commonConfig.redactTextCss)
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
-
   await I.redactionsPreview();
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.verifyWhetherTheRedactionAreVisibleOrNot();
-  await I.refreshPage();
+
+  //2nd Test
+  await I.clearAllRedactions();
+  await I.click(commonConfig.redactTextBtn);
+  await I.redactText();
+  await I.redactionsPreview();
+  await I.verifyWhetherTheRedactionAreVisibleOrNot();
+
+
+  //3rd Test
+  await I.clearAllRedactions();
+  await I.click(commonConfig.redactTextBtn);
+  await I.redactText();
+  await I.click(commonConfig.redactDrawBox);
+  await I.dragAndDrop(commonConfig.redactTextCss, commonConfig.redactTextCss)
+  await I.wait(testConfig.BookmarksAndAnnotationsWait);
+  await I.redactionsPreview();
+  await I.wait(testConfig.BookmarksAndAnnotationsWait);
+  await I.verifyWhetherTheRedactionAreVisibleOrNot();
 }

@@ -61,13 +61,13 @@ Scenario('Unmark all content (marked for redaction)', async ({I}) => {
   .retry(testConfig.TestRetryScenarios);
 
 Scenario(' Redact Scenarios ==>::' +
-  '1.Mark Content For Redaction Using Draw Box Function' +
-  '2.Redact Content Using Redact Text Function' +
-  '3. Create Redactions Using Draw Box and Redact Text Functions' +
-  '4. Preview all content marked for redaction' +
-  '5. Save redactions to download' +
-  '6. Redact text and then removing the redaction' +
-  '7.Done', async ({I}) => {
+  '1.Mark Content For Redaction Using Draw Box Function\n' +
+  '2.Redact Content Using Redact Text Function\n' +
+  '3. Create Redactions Using Draw Box and Redact Text Functions\n' +
+  '4. Preview all content marked for redaction\n' +
+  '5. Save redactions to download\n' +
+  '6. Redact text and then removing the redaction\n' +
+  '7.Done\n', async ({I}) => {
   await executeAllRedactScenarios(I, mvData.REDACTION_CASE, mvData.PDF_DOCUMENT);
 
 }).tag('@pr')

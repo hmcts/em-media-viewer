@@ -12,4 +12,5 @@ module.exports = async function () {
   await I.redactionsPreview();
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.verifyWhetherTheRedactionAreVisibleOrNot();
+    await I.refreshPage();
 }

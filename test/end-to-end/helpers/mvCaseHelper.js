@@ -140,6 +140,15 @@ async function addMultipleCommentsTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.addMultipleComments();
 }
+async function executeAllRedactScenarios(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.markContentForRedaction();
+  await I.redactContentUsingRedactText();
+  await I.CreateRedactionsUsingDrawboxAndRedactText();
+  await I.previewAllRedactions();
+  await I.saveAllRedactions();
+  await I.redactTextAndThenRemoveRedaction();
+}
 
 async function markContentForRedactionUsingDrawBoxTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
@@ -250,5 +259,6 @@ module.exports = {
   redactTextAndThenRemovingRedactionTest,
   createRedactionsUsingDrawBoxAndRedactText,
   previewAllRedactionsTest,
-  saveAllRedactionsTest
+  saveAllRedactionsTest,
+  executeAllRedactScenarios
 }
