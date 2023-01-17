@@ -33,7 +33,8 @@ const mvData = {
   "NESTED_DOCUMENT_NAME_TO_NAVIGATE":'Prepared Discharge Final Order',
   "NESTED_PAGE_NUMBER_TO_NAVIGATE":'8',
   "NESTED_PAGE_CONTENT":'Children',
-  "EXUI_ENV":'xui'
+  "EXUI_PR_ENV":'xui',
+  "PREVIEW_ENV":'-preview'
 };
 
 module.exports = {
