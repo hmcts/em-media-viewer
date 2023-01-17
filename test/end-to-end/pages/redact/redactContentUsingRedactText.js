@@ -9,4 +9,5 @@ module.exports = async function () {
   await I.redactText();
   await I.redactionsPreview();
   await I.verifyWhetherTheRedactionAreVisibleOrNot();
+  await I.refreshPage();
 }
