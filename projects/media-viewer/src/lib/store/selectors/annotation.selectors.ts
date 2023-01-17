@@ -120,7 +120,11 @@ export const getCommentSummary = createSelector(
   (commentSummary = [], filters) => {
     const comments = StoreUtils.filterCommentsSummary(commentSummary, filters.filters);
     if (comments.length) {
-      return comments.map((comment) => {
+      const savedComments  = comments.filter((comment) => {
+        return comment.createdByDetails !== undefined;
+      }
+      );
+      return savedComments.map((comment) => {
         return {
           page: comment.page,
           user: comment.createdByDetails.forename.concat(' ').concat(comment.createdByDetails.surname),

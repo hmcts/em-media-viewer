@@ -91,13 +91,37 @@ export class PdfJsWrapper {
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
 
-      this.documentOutline = await pdfDocument.getOutline();
+      const outline = await pdfDocument.getOutline();
+
+      await this.setOutlinePageNumbers(pdfDocument, outline);
+
+      this.documentOutline = outline;
       this.outlineLoaded.next(this.documentOutline);
       const pdfMetaData = await pdfDocument.getMetadata();
       this.setCurrentPDFTitle(pdfMetaData.info.Title);
     } catch (e) {
       this.documentLoadFailed.next(e);
     }
+  }
+
+  private async setOutlinePageNumbers(pdfDocument, outlineArray: Outline[]) {
+    outlineArray.forEach ( async (outline: Outline) => {
+      await this.setNestedOutlinePageNumbers(pdfDocument, outline);
+    });
+  }
+
+  private async setNestedOutlinePageNumbers(pdfDocument, outline: Outline) {
+    outline.pageNumber = await this.getOutlinePageNumber(pdfDocument, outline);
+    outline.items.forEach( async (outlineItem: Outline) => {
+      outlineItem.pageNumber = await this.getOutlinePageNumber(pdfDocument, outlineItem);
+      this.setNestedOutlinePageNumbers(pdfDocument, outlineItem);
+    });
+  }
+
+  private async getOutlinePageNumber(pdfDocument, outline: Outline): Promise <number> {
+    const dest = outline.dest;
+    const pageIndex = await pdfDocument.getPageIndex(dest[0]);
+    return Number(pageIndex) + 1;
   }
 
   public downloadFile(url: string, filename: string): void {

@@ -21,6 +21,8 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() url: string;
   @Input() zoom: number;
   @Input() rotate: number;
+  @Input() currentPageNumber: number;
+
 
   selectedView = 'outline';
   bookmarkNodes$: Observable<BookmarkNode[]>;
@@ -63,5 +65,14 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
           ...bookmarkInfo, name: '', id: uuid()
         } as any));
       });
+  }
+
+  isViewedItem(current: Outline, next: Outline): boolean {
+    return next === undefined ? current.pageNumber <= this.currentPageNumber :
+      current.pageNumber <= this.currentPageNumber && (next.pageNumber > this.currentPageNumber);
+  }
+
+  findEndPage(next: Outline): number {
+    return next === undefined ? Number.MAX_SAFE_INTEGER : next.pageNumber;
   }
 }
