@@ -1,5 +1,5 @@
 module.exports = {
-  TestUrl: process.env.TEST_URL || 'http://localhost:3000',
+  TestUrl: (process.env.TEST_URL || 'http://localhost:3000') || 'https://manage-case.aat.platform.hmcts.net',
   TestUrl1: process.env.TEST_E2E_URL || 'https://manage-case.aat.platform.hmcts.net',
   PreviewOrLocalEnvUrl: process.env.TEST_URL || 'http://localhost:3000',
   IdamBaseUrl: process.env.IDAM_URL || 'https://idam-api.aat.platform.hmcts.net',
