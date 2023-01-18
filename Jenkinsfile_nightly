@@ -59,7 +59,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 withNightlyPipeline(type, product, component) {
-  env.TEST_E2E_URL = params.ExUI_URL
+  env.TEST_URL = params.ExUI_URL
   env.IDAM_URL = params.IDAM_API_URL
   env.S2S_PROVIDER = params.S2S_PROVIDER_URL
   env.CCD_DATA_STORE_API_URL = params.CCD_DATA_STORE_URL
