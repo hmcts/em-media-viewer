@@ -199,7 +199,7 @@ async function previewEnv() {
 }
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
-  if (process.env.TEST_URL.includes(mvData.EXUI_PR_ENV)) {
+  if (process.env.TEST_E2E_URL.includes(mvData.EXUI_PR_ENV)) {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   } else if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV)) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
