@@ -1,5 +1,4 @@
 'use strict';
-
 const testConfig = require('../../../config');
 
 module.exports = async function () {
