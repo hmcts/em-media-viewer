@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { SocketService } from './socket.service';
 import { IcpUpdateService } from './icp-update.service';
 import { IcpParticipant, IcpScreenUpdate, IcpSession } from './icp.interfaces';
+import { of } from 'rxjs';
 
 describe('UpdateService', () => {
 
@@ -11,7 +12,8 @@ describe('UpdateService', () => {
   const session: IcpSession = {
     caseId: 'caseId',
     sessionId: 'sessionId',
-    dateOfHearing: new Date()
+    dateOfHearing: new Date(),
+    connectionUrl: ''
   };
   const participant: IcpParticipant = {
     id: 'id',
@@ -29,11 +31,12 @@ describe('UpdateService', () => {
   };
 
   const mockSocketService = {
-    connect: () => {},
-    join: () => {},
-    leave: () => {},
-    emit: () => {},
-    listen: () => {},
+    connect: () => { },
+    join: () => { },
+    leave: () => { },
+    emit: () => { },
+    listen: () => { },
+    connected: () => { },
   } as any;
 
   beforeEach(() => {
@@ -53,12 +56,14 @@ describe('UpdateService', () => {
       spyOn(socketService, 'connect');
       spyOn(socketService, 'join');
       spyOn(socketService, 'listen');
+      spyOn(socketService, 'connected').and.returnValue(of(true));
 
       updateService.joinSession(username, session);
       expect(updateService.session).toEqual(session);
       expect(socketService.connect).toHaveBeenCalled();
       expect(socketService.join).toHaveBeenCalled();
       expect(socketService.listen).toHaveBeenCalled();
+      expect(socketService.connected).toHaveBeenCalled();
     }));
 
   it('should leave session',

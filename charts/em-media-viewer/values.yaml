@@ -15,7 +15,7 @@ nodejs:
     DM_STORE_APP_URL: "http://dm-store-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
     HRS_API_URL: "http://em-hrs-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
     ANNOTATION_API_URL: "http://em-anno-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
-    ICP_API_URL: "http://em-icp-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    ICP_API_URL: "https://em-icp-{{ .Values.global.environment }}.platform.hmcts.net"
     IDAM_URL: "https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net"
     S2S_URL: "http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
     NPA_URL: "http://em-npa-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"

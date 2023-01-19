@@ -10,13 +10,16 @@ import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { RouterTestingModule } from '@angular/router/testing';
 import * as fromDocument from '../../store/actions/document.actions';
+import { SelectedAnnotation } from '../../store/actions/annotation.actions';
+import { of } from 'rxjs';
+import { ViewerEventService } from '../viewer-event.service';
 
 describe('ImageViewerComponent', () => {
   let component: ImageViewerComponent;
   let fixture: ComponentFixture<ImageViewerComponent>;
   let nativeElement;
   const DOCUMENT_URL = 'document-url';
-
+  const event = { clientX: 50, clientY: 40, preventDefault: () => { }, target: { className: 'pageContainer' } };
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -51,7 +54,7 @@ describe('ImageViewerComponent', () => {
       toolbarEvents.rotateSubject.next(90);
 
       expect(component.rotation).toBe(90);
-  }));
+    }));
 
   describe('zoom operation', () => {
 
@@ -59,14 +62,14 @@ describe('ImageViewerComponent', () => {
       inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
         toolbarEvents.zoomSubject.next(0.5);
         expect(component.zoom).toBe(0.5);
-    }));
+      }));
 
     it('should zoom image by factor of 2',
       inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
         toolbarEvents.zoomSubject.next(2);
 
         expect(component.zoom).toBe(2);
-    }));
+      }));
 
     it('should zoom image by maximum value 5',
       inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
@@ -74,7 +77,7 @@ describe('ImageViewerComponent', () => {
         toolbarEvents.stepZoomSubject.next(0.1);
 
         expect(component.zoom).toBe(5);
-    }));
+      }));
 
     it('should zoom image by minimum value 0.1',
       inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
@@ -82,16 +85,16 @@ describe('ImageViewerComponent', () => {
         toolbarEvents.stepZoomSubject.next(-0.1);
 
         expect(component.zoom).toBe(0.1);
-    }));
+      }));
   });
 
   it('should trigger print', inject([PrintService, ToolbarEventService],
     (printService: PrintService, toolbarEvents: ToolbarEventService) => {
-    const printSpy = spyOn(printService, 'printDocumentNatively');
-    toolbarEvents.printSubject.next();
+      const printSpy = spyOn(printService, 'printDocumentNatively');
+      toolbarEvents.printSubject.next();
 
-    expect(printSpy).toHaveBeenCalledWith(DOCUMENT_URL);
-  }));
+      expect(printSpy).toHaveBeenCalledWith(DOCUMENT_URL);
+    }));
 
   it('should trigger download',
     inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
@@ -105,7 +108,7 @@ describe('ImageViewerComponent', () => {
       expect(document.createElement).toHaveBeenCalledWith('a');
       expect(anchor.href).toContain(DOCUMENT_URL);
       expect(anchor.download).toBe('download-filename');
-  }));
+    }));
 
   it('when url changes the error message is reset', () => {
     component.errorMessage = 'errox';
@@ -136,7 +139,7 @@ describe('ImageViewerComponent', () => {
 
       expect(component.showCommentsPanel).toBeTruthy();
       expect(imageContainer.nativeElement.className).toContain('show-comments-panel');
-  }));
+    }));
 
   it('should hide comments panel',
     inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
@@ -148,7 +151,7 @@ describe('ImageViewerComponent', () => {
 
       expect(component.showCommentsPanel).toBeFalsy();
       expect(imageContainer.nativeElement.className).not.toContain('show-comments-panel');
-  }));
+    }));
 
   it('should emit toggleCommentsSummary event', () => {
     const commentSummarySpy = spyOn(component.toolbarEvents.showCommentSummary, 'next');
@@ -185,5 +188,17 @@ describe('ImageViewerComponent', () => {
       component.initAnnoPage(img);
       expect(store.dispatch).toHaveBeenCalledWith(new fromDocument.AddPages(payload));
     })
+  );
+
+  it('should deselect annotation and context toolbar', inject([Store, ViewerEventService], (store, viewerEvents) => {
+    spyOn(store, 'dispatch');
+    spyOn(viewerEvents, 'clearCtxToolbar');
+    component.onImageViewerClick(event as any);
+
+    expect(store.dispatch).toHaveBeenCalledWith(new SelectedAnnotation({
+      annotationId: '', selected: false, editable: false
+    }));
+    expect(viewerEvents.clearCtxToolbar).toHaveBeenCalled();
+  })
   );
 });

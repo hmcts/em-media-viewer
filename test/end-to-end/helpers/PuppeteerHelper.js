@@ -30,6 +30,10 @@ class PuppeteerHelper extends Helper {
       helper.click(tabTitle);
     }
   }
+  async getHelper() {
+    const page = await this.helpers[helperName].page;
+    return page;
+  }
 }
 
 module.exports = PuppeteerHelper;

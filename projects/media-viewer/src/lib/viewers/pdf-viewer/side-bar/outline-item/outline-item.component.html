@@ -7,13 +7,24 @@
      (keyup.enter)="goToDestination(outline?.dest)"
      [style.font-weight]="outline.bold ? 'bold' : ''"
      [style.font-style]="outline.italic ? 'italic' : ''"
+     [ngClass]="showHighlightOutlineCss()"
      tabindex="0">
-    {{ outline.title }}
+    <div style="text-align:left;" [ngClass]="showHighlightOutlineCss()">
+      {{ outline.title }}
+      <span style="float:right;">
+        {{ outline.pageNumber }}
+      </span>
+    </div>
   </a>
+  
   <div *ngIf="outline.items.length > 0" class="outlineItems">
-    <div *ngFor="let outline of outline.items">
+    <div *ngFor="let outlineItem of outline.items; index as i">
       <mv-outline-item
-        [outline]="outline" (navigationEvent)="goToDestination($event)">
+        [outline]="outlineItem" 
+        [currentPageNumber]= "currentPageNumber" 
+        [isCurrentSection]= "isViewedItem(outlineItem, outline.items[i+1])"
+        [endPage]="findEndPage(outline.items[i+1])"
+        (navigationEvent)="goToDestination($event)">
       </mv-outline-item>
     </div>
   </div>

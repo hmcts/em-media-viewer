@@ -20,6 +20,6 @@ module.exports = async function () {
     pageHandle.dispatchEvent(mouseUpEvent);
   });
 
-  await I.wait(testConfig.TestTimeToWait);
+  await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.click(commonConfig.bookMarksButton);
 }
