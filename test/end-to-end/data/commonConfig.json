@@ -56,6 +56,7 @@
   "commentsSearchBtn": "mv-comment-search > button",
   "assertCommentsSearchCountXp": "//span[@class =\"comment-search__item\" and contains(text(), \"Showing 1 of 1\")]",
   "redactDrawBox": "#toggleDrawButton",
+  "drawBox": "#mvDrawBtn",
   "redactMenu":".dropdown-menu #mvRedactBtn",
   "clearAllRedaction":"#mvClearBtn",
   "previewBtn":"#mvPreviewBtn",
@@ -75,5 +76,7 @@
   "redactContentUsingDrawBoxXp": "div:nth-child(1) > div.textLayer",
   "redactTextCss": "div.textLayer",
   "previewRedactTextCss": "div:nth-child(1) > div.textLayer",
-  "assertEnvTestData": "//a[text()='Media Viewer Demo']"
+  "assertEnvTestData": "//a[text()='Media Viewer Demo']",
+  "saveButton": "//button[@class=\"govuk-button\" and contains(text(), \"Save\")]",
+  "nonTextualHighlightCss": "//div[@class =\"rectangle\" and (@tabindex=\"0\")]"
 }
