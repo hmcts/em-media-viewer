@@ -186,8 +186,8 @@ async function nonTextualHighlightAndAddACommentTest(I, caseId, mediaType) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.nonTextualHighlightAndComment();
   }
-  await I.nonTextualHighlightAndComment();
 }
 
 async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
@@ -195,9 +195,9 @@ async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.deleteAllExistingNonTextualHighlights();
+    await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
   }
-  await I.deleteAllExistingNonTextualHighlights();
-  await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
 }
 
 async function deleteNonTextualCommentTest(I, caseId, mediaType) {
@@ -205,9 +205,8 @@ async function deleteNonTextualCommentTest(I, caseId, mediaType) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.deleteAllExistingNonTextualHighlights();
   }
-  await I.deleteAllExistingNonTextualHighlights();
-
 }
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
