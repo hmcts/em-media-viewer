@@ -47,6 +47,10 @@ module.exports = () => {
     CreateRedactionsUsingDrawboxAndRedactText:steps.redact.CreateRedactionsUsingDrawboxAndRedactText,
     redactTextAndThenRemoveRedaction:steps.redact.redactTextAndThenRemoveRedaction,
     previewAllRedactions:steps.redact.previewAllRedactions,
-    saveAllRedactions:steps.redact.saveAllRedactions
+    saveAllRedactions:steps.redact.saveAllRedactions,
+    highlightOnImage:steps.annotationsAndComments.highlightOnImage,
+    nonTextualHighlightAndComment:steps.annotationsAndComments.nonTextualHighlightAndComment,
+    deleteAllExistingNonTextualHighlights:steps.annotationsAndComments.deleteAllExistingNonTextualHighlights
+
   });
 };
