@@ -26,11 +26,12 @@
     "socket.io-client": "^3.1.1"
   },
   "peerDependencies": {
-    "@angular/animations": "^7.2.15",
-    "@angular/common": "^7.2.15",
-    "@angular/core": "^7.2.15",
-    "@angular/forms": "^7.2.15",
-    "@angular/platform-browser": "^7.2.15",
+    "@angular/animations": "^8.2.14",
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "@angular/forms": "^8.2.14",
+    "@angular/platform-browser": "^8.2.14",
+    "@angular/material": "^8.2.14",
     "@ngrx/effects": "^7.4.0",
     "@ngrx/router-store": "^7.4.0",
     "@ngrx/store": "^7.4.0",

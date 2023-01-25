@@ -31,7 +31,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Output() select = new EventEmitter<Rectangle>();
   @Output() update = new EventEmitter<Rectangle>();
 
-  @ViewChild('rectElement') viewRect: ElementRef;
+  @ViewChild('rectElement', {static: false}) viewRect: ElementRef;
 
   private subscriptions: Subscription[] = [];
   _selected: boolean;
