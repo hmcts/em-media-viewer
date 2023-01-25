@@ -1449,10 +1449,15 @@
   dependencies:
     "@types/chai" "*"
 
-"@types/chai@*", "@types/chai@4", "@types/chai@^4.2.15":
+"@types/chai@*", "@types/chai@4":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.4.tgz#e913e8175db8307d78b4e8fa690408ba6b65dee4"
   integrity sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==
+
+"@types/chai@4.2.15":
+  version "4.2.15"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.15.tgz#b7a6d263c2cecf44b6de9a051cf496249b154553"
+  integrity sha512-rYff6FI+ZTKAPkJUoyz7Udq3GaoDZnxYDEvdEdFZASiA7PoErltHezDishqQiSDWrGxvxmplH304jyzQmjp0AQ==
 
 "@types/component-emitter@^1.2.10":
   version "1.2.11"
