@@ -194,6 +194,5 @@
     "webdriver-manager": "^12.1.7",
     "webdriverio": "7.19.4",
     "when": "3.7.8"
-  },
-  "packageManager": "yarn@3.3.1"
+  }
 }
