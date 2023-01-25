@@ -58,7 +58,7 @@ enum ConvertibleContentTypes {
 })
 export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit, AfterViewChecked {
 
-  @ViewChild('viewerRef') viewerRef: ElementRef;
+  @ViewChild('viewerRef', {static: false}) viewerRef: ElementRef;
 
   @Input() url;
   @Input() downloadFileName: string;

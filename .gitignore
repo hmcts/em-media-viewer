@@ -38,6 +38,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+.scannerwork/*
 
 # System Files
 .DS_Store
@@ -57,3 +58,13 @@ stryker.log
 /test/.local-test.env
 .vscode/launch.json
 functional-output/
+
+# yarn
+.yarn/*
+.yarn/cache/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
