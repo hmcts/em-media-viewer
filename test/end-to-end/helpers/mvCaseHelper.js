@@ -200,6 +200,15 @@ async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
   }
 }
 
+async function updateNonTextualCommentTest(I, caseId, mediaType, comment, updatedComment) {
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.updateNonTextualComments();
+  }
+}
+
 async function deleteNonTextualCommentTest(I, caseId, mediaType) {
   if (await previewEnv()) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
@@ -275,5 +284,6 @@ module.exports = {
   saveAllRedactionsTest,
   nonTextualHighlightAndAddACommentTest,
   deleteNonTextualCommentTest,
-  nonTextualHighlightUsingDrawBoxTest
+  nonTextualHighlightUsingDrawBoxTest,
+  updateNonTextualCommentTest
 }

@@ -50,6 +50,7 @@ module.exports = () => {
     saveAllRedactions:steps.redact.saveAllRedactions,
     highlightOnImage:steps.annotationsAndComments.highlightOnImage,
     nonTextualHighlightAndComment:steps.annotationsAndComments.nonTextualHighlightAndComment,
+    updateNonTextualComments:steps.annotationsAndComments.updateNonTextualComments,
     deleteAllExistingNonTextualHighlights:steps.annotationsAndComments.deleteAllExistingNonTextualHighlights
 
   });
