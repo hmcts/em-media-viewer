@@ -243,13 +243,6 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/http@^7.2.15":
-  version "7.2.16"
-  resolved "https://registry.yarnpkg.com/@angular/http/-/http-7.2.16.tgz#f05337dd56faa86ce05b0dc378218a00fb337040"
-  integrity sha512-yvjbNyzFSmmz4UTjCdy5M8mk0cZqf9TvSf8yN5UVIwtw4joyuUdlgJCuin0qSbQOKIf/JjHoofpO2JkPCGSNww==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/platform-browser-dynamic@^8.2.14":
   version "8.2.14"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-8.2.14.tgz#4439a79fe10ec45170e6940a28835e9ff0918950"
@@ -1262,10 +1255,10 @@
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-7.4.0.tgz#7d1977538cf85e42ab48fd648acdfbc8b52f93d3"
   integrity sha512-YjgB17WnLCBDPjAkHduKWsLFSGLZryPaTjY3EIvMF+WTRPDlgC5SAv2n7p3YIei6g6IYcEvOwLWBqZHFUXTgBw==
 
-"@ngrx/router-store@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/router-store/-/router-store-7.4.0.tgz#69c085bda3022117169f87ed5753b951de7d376d"
-  integrity sha512-ZpwTO1/ha3pxO7NV3jIfnwipBN1A719IjAOgrcmI8Ut06VH3HY/7JVFTkwLN/FyuHvl4EOlAVYmMAblmrymUWA==
+"@ngrx/router-store@^9.0.0":
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/router-store/-/router-store-9.2.1.tgz#8ca43f7347d9db9ce57625dbf7ff0bd8f0896f84"
+  integrity sha512-r7IS7OqvM2/4HO2lDP96r0zMMgiF2iNXFJF38DMstGEp23BlRkcsNz+2PSgNT8B1YgTUjUAbtnhCSRxs/kl5kw==
 
 "@ngrx/schematics@^8.6.0":
   version "8.6.1"
