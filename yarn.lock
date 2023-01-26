@@ -1250,10 +1250,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@ngrx/effects@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-7.4.0.tgz#7d1977538cf85e42ab48fd648acdfbc8b52f93d3"
-  integrity sha512-YjgB17WnLCBDPjAkHduKWsLFSGLZryPaTjY3EIvMF+WTRPDlgC5SAv2n7p3YIei6g6IYcEvOwLWBqZHFUXTgBw==
+"@ngrx/effects@^9.0.0":
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-9.2.1.tgz#dffee80e933f8bc9e2ef98950d93feac4f6d4b0a"
+  integrity sha512-qWOnRYHdKzjCvcH6WOKra+KPlrMyS9ahoVvOSboJK7S3xzj9Pp5mgtcDBXqN9LlPbXDEzjZjFDJQMAtlP4c3Ig==
 
 "@ngrx/router-store@^9.0.0":
   version "9.2.1"
