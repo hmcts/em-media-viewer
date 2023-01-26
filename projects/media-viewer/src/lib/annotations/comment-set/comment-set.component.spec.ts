@@ -246,7 +246,7 @@ describe('CommentSetComponent', () => {
     component.height = 100;
     component.zoom = 1;
     fixture.detectChanges();
-    toolbarEvent = TestBed.get(ToolbarEventService);
+    toolbarEvent = TestBed.inject(ToolbarEventService);
   });
 
   it('should delete the comment for the annotation', () => {

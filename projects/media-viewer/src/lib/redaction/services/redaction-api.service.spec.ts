@@ -12,8 +12,8 @@ describe('RedactionApiService', () => {
       providers: [RedactionApiService],
       imports: [HttpClientTestingModule]
     });
-    api = TestBed.get(RedactionApiService);
-    httpMock = TestBed.get(HttpTestingController);
+    api = TestBed.inject(RedactionApiService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('get redaction markups', fakeAsync((done) => {

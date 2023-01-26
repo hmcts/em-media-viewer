@@ -36,7 +36,7 @@ describe('Redaction Effects', () => {
         provideMockActions(() => actions$)
       ]
     });
-    effects = TestBed.get(RedactionEffects);
+    effects = TestBed.inject(RedactionEffects);
   });
 
   describe('LoadRedactions', () => {
