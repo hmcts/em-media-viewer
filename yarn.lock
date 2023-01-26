@@ -1270,10 +1270,10 @@
   resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-7.4.0.tgz#5a73469c70322351c4224f4529c5123f587a5997"
   integrity sha512-ZmPpquprBYUozbLuLMLZzUhI+LnMNGMNg8x1ij9yDxXWQADcJm1Zu7kouYE1r5SoCYxKfwJ3Ia1VQfS3A5S8dw==
 
-"@ngrx/store@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-7.4.0.tgz#525a343aa45d7f6ca60f3301a23a27669c14bbce"
-  integrity sha512-kwTUHgfgBeAL4RQBjZO46z9v4Xzg8PXAgY4WwXdt3zUk1tF4ZvijMleFvFRUoiJJfxF/UM6jgIZ/yGrX2dXQuA==
+"@ngrx/store@^9.0.0":
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-9.2.1.tgz#a05934bb83344efe669e52acd90b17ebe10c4ab4"
+  integrity sha512-18mLKH7CAi5+F1zYbbxoCDKE8piCxZkwOoPlXEsq/LBKrZvYIvOeSlEXMjiUp3cCL3QOT27QvWIqQkIuE9b7mg==
 
 "@ngtools/webpack@8.3.29":
   version "8.3.29"
