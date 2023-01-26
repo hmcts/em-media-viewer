@@ -23,7 +23,7 @@ describe('ConfirmActionDialogComponent', () => {
       }]
     });
 
-    toolbarEvents = TestBed.get(ToolbarEventService);
+    toolbarEvents = TestBed.inject(ToolbarEventService);
   });
 
   beforeEach(() => {

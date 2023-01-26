@@ -27,7 +27,7 @@ describe('CommentSetHeader', () => {
 
     fixture = TestBed.createComponent(CommentSetHeaderComponent);
     nativeElement = fixture.debugElement.nativeElement;
-    toolbarService = TestBed.get(ToolbarEventService);
+    toolbarService = TestBed.inject(ToolbarEventService);
     component = fixture.componentInstance;
     component.showCommentSummary = true;
     component.tabSelected = 'comments';
