@@ -70,12 +70,7 @@ export class PdfJsWrapper {
   }
 
   public async loadDocument(documentUrl: string) {
-    const loadingTask = pdfjsLib.getDocument({
-      url: documentUrl,
-      cMapUrl: 'assets/minified/cmaps',
-      cMapPacked: true,
-      withCredentials: true
-    });
+    const loadingTask = this.createLoadingTask(documentUrl);
 
     loadingTask.onProgress = ({ loaded, total }) => {
       this.documentLoadProgress.next({ loaded, total });
@@ -102,6 +97,15 @@ export class PdfJsWrapper {
     } catch (e) {
       this.documentLoadFailed.next(e);
     }
+  }
+
+  private createLoadingTask(documentUrl: string) {
+    return pdfjsLib.getDocument({
+      url: documentUrl,
+      cMapUrl: 'assets/minified/cmaps',
+      cMapPacked: true,
+      withCredentials: true
+    });
   }
 
   private async setOutlinePageNumbers(pdfDocument, outlineArray: Outline[]) {
