@@ -35,7 +35,7 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   @Output() delete = new EventEmitter<Annotation>();
   @Output() annotationClick = new EventEmitter<SelectionAnnotation>();
 
-  @ViewChild('container') container: ElementRef;
+  @ViewChild('container', {static: false}) container: ElementRef;
 
   constructor(
     private readonly toolbarEvents: ToolbarEventService,
