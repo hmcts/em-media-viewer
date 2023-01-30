@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ParticipantsListComponent } from './participants-list.component';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 import { StoreModule } from '@ngrx/store';
@@ -17,7 +17,7 @@ describe('ParticipantsListComponent', () => {
     commentsPanelVisible: new BehaviorSubject(false)
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ParticipantsListComponent ],
       imports: [
