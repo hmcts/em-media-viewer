@@ -73,7 +73,7 @@ withNightlyPipeline(type, product, component) {
   enableFullFunctionalTest(60)
   enableCrossBrowserTest()
 
-  after('checkout') {
+  afterSuccess('checkout') {
     sh ("rm -rf node_modules")
     sh ("yarn cache clean")
     sh ('npm rebuild node-sass')
@@ -81,11 +81,11 @@ withNightlyPipeline(type, product, component) {
     sh ('yarn setup')
   }
 
-  after('build') {
+  afterSuccess('build') {
     yarnBuilder.yarn('build')
   }
 
-  after('functionalTest') {
+  afterAlways('functionalTest') {
     publishHTML([
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
@@ -96,7 +96,7 @@ withNightlyPipeline(type, product, component) {
     ])
   }
 
-  after('crossBrowserTest') {
+  afterAlways('crossBrowserTest') {
     publishHTML([
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
@@ -107,7 +107,7 @@ withNightlyPipeline(type, product, component) {
     ])
   }
 
-  after('securityScan') {
+  afterAlways('securityScan') {
     publishHTML([
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
