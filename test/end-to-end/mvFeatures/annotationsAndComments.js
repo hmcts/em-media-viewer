@@ -44,7 +44,7 @@ Scenario('Annotations: Search Comment Text', async ({I}) => {
 Scenario('Add multiple comments on multiples pages', async ({I}) => {
   await addMultipleCommentsTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@wip')
+}).tag('@wip-nw')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Delete a comment', async ({I}) => {
