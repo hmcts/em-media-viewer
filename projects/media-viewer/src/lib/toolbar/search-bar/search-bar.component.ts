@@ -9,8 +9,8 @@ import { Subscription } from 'rxjs';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
 
-  @ViewChild('findInput') findInput: ElementRef<HTMLInputElement>;
-  @ViewChild('findNext') findNext: ElementRef<HTMLAnchorElement>;
+  @ViewChild('findInput', { static: true }) findInput: ElementRef<HTMLInputElement>;
+  @ViewChild('findNext', { static: false }) findNext: ElementRef<HTMLAnchorElement>;
 
   highlightAll = true;
   matchCase = false;
@@ -91,7 +91,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     if (this.resultCount && this.resultCount > 0) {
       setTimeout(() => {
         this.findNext.nativeElement.focus();
-      }, 200);
+      }, 1000);
     }
   }
 

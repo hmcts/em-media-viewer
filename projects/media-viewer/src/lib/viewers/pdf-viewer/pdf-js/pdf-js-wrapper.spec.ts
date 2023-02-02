@@ -67,10 +67,10 @@ describe('PdfJsWrapper', () => {
     const pdfViewerSpy = spyOn(mockViewer, 'setDocument');
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
-    const mockDocument = { numPages: 10, getOutline: () => {}, getMetadata: () => ({ info: { Title: 'Title' }})};
+    const mockDocument = { numPages: 10, getOutline: () => [], getMetadata: () => ({ info: { Title: 'Title' }})};
 
-    spyOnProperty(pdfjsLib, 'getDocument')
-      .and.returnValue(() => ({ promise: Promise.resolve(mockDocument)}));
+    spyOn(wrapper, 'createLoadingTask')
+      .and.returnValue({ promise: Promise.resolve(mockDocument)});
 
     wrapper.loadDocument('document-url');
     tick();
@@ -97,8 +97,8 @@ describe('PdfJsWrapper', () => {
 
     const mockDocument = { numPages: 10, getOutline: () => (outlineArray), getPageIndex: ({}) => (0) , getMetadata: () => ({ info: { Title: 'Title' }})};
 
-    spyOnProperty(pdfjsLib, 'getDocument')
-      .and.returnValue(() => ({ promise: Promise.resolve(mockDocument)}));
+    spyOn(wrapper, 'createLoadingTask')
+      .and.returnValue({promise: Promise.resolve(mockDocument)});
 
     wrapper.loadDocument('document-url');
     tick();
@@ -114,7 +114,7 @@ describe('PdfJsWrapper', () => {
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
     const documentLoadFailedSpy = spyOn(wrapper.documentLoadFailed, 'next').and.callThrough();
-    spyOnProperty(pdfjsLib, 'getDocument').and.returnValue(() => ({ promise: Promise.reject(new Error('x'))}));
+    spyOn(wrapper, 'createLoadingTask').and.returnValue({ promise: Promise.reject(new Error('x'))});
 
     wrapper.loadDocument('document-url');
     tick();

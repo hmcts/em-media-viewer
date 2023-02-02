@@ -34,7 +34,8 @@ const mvData = {
   "NESTED_PAGE_NUMBER_TO_NAVIGATE":'8',
   "NESTED_PAGE_CONTENT":'Children',
   "EXUI_PR_ENV":'xui',
-  "PREVIEW_ENV":'-preview'
+  "PREVIEW_ENV":'em-media-viewer-pr',
+  "STAGING_ENV":'em-media-viewer-staging'
 };
 
 module.exports = {

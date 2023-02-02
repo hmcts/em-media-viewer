@@ -37,7 +37,7 @@ describe('Bookmark Effects', () => {
         provideMockActions(() => actions$)
       ]
     });
-    effects = TestBed.get(BookmarksEffects);
+    effects = TestBed.inject(BookmarksEffects);
   });
 
   describe('getBookmarks$', () => {
