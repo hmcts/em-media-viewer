@@ -44,6 +44,7 @@ export class ToolbarEventService {
   public readonly redactionPreview = new Subject<boolean>();
   public readonly applyRedactToDocument = new Subject();
   public readonly clearAllRedactMarkers = new Subject();
+  public readonly redactWholePage = new Subject();
 
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly searchBarHidden = new BehaviorSubject(true);
@@ -166,6 +167,10 @@ export class ToolbarEventService {
 
   public applyRedactionToDocument(): void {
     this.applyRedactToDocument.next();
+  }
+
+  public redactPage(): void {
+    this.redactWholePage.next();
   }
 
   public toggleCommentsPanel(isVisible: boolean) {
