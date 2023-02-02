@@ -1,7 +1,7 @@
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Subscription, BehaviorSubject } from 'rxjs';
+import { Subscription, BehaviorSubject, Subject } from 'rxjs';
 
 import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
 import { HighlightCreateService } from '../highlight-create/highlight-create.service';
@@ -13,6 +13,8 @@ describe('BoxHighlightCreateComponent', () => {
   let nativeElement: HTMLElement;
   const mockHighlightService = { saveAnnotation: () => {}, applyRotation: () => {} };
   const drawModeSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  const redactWholePageSubject$ = new Subject();
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -22,7 +24,8 @@ describe('BoxHighlightCreateComponent', () => {
         {
           provide: ToolbarEventService,
           useValue: {
-            drawModeSubject: drawModeSubject$.asObservable()
+            drawModeSubject: drawModeSubject$.asObservable(),
+            redactWholePage: redactWholePageSubject$.asObservable()
           }
         },
         {
@@ -65,6 +68,15 @@ describe('BoxHighlightCreateComponent', () => {
 
         expect(component.defaultHeight).toBe('100%');
         expect(component.defaultWidth).toBe('100%');
+      })
+    );
+
+    it('should set whole page',
+      inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
+        redactWholePageSubject$.next();
+        component.ngOnInit();
+
+        expect(component.wholePage).toBe(true);
       })
     );
   });
@@ -263,5 +275,27 @@ describe('BoxHighlightCreateComponent', () => {
         expect(component.height).toBe(20);
       })
     );
+
+    it('should create whole page highlight',
+    inject([HighlightCreateService], (highlightService: HighlightCreateService) => {
+      component.wholePage = true;
+      fixture.detectChanges();
+
+        spyOn(component.saveSelection, 'emit');
+        spyOn(highlightService, 'applyRotation');
+
+        component.initHighlight({offsetX: 30, offsetY: 30});
+
+        expect(highlightService.applyRotation).toHaveBeenCalledWith(400, 200, 400, 200, 0, 0, 0, 1);
+
+        expect(component.saveSelection.emit).toHaveBeenCalled();
+        expect(component.drawStartX).toBe(-1);
+        expect(component.drawStartY).toBe(-1);
+        expect(component.display).toBe('none');
+        expect(component.width).toBe(0);
+        expect(component.height).toBe(0);
+        expect(component.wholePage).toBe(false);
+    })
+  );
   });
 });

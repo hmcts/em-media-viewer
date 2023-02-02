@@ -20,7 +20,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   @Output() saveSelection = new EventEmitter<{ rectangles: Rectangle[], page: number }>();
 
-  @ViewChild('boxHighlight') highlight: ElementRef;
+  @ViewChild('boxHighlight', {static: false}) highlight: ElementRef;
 
   drawStartX = -1;
   drawStartY = -1;
@@ -34,6 +34,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   defaultWidth: string;
   position: string;
   backgroundColor = 'none';
+  wholePage: boolean;
 
   private subscriptions: Subscription[] = [];
 
@@ -45,6 +46,9 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
       this.toolbarEvents.drawModeSubject.subscribe(drawMode => {
         this.defaultHeight = drawMode ? '100%' : '0px';
         this.defaultWidth = drawMode ? '100%' : '0px';
+      }),
+      this.toolbarEvents.redactWholePage.subscribe(() => {
+        this.wholePage = true;
       })
     ];
   }
@@ -56,6 +60,10 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   }
 
   initHighlight({ offsetX, offsetY }) {
+    if (this.wholePage) {
+      this.highlightPage();
+      return;
+    }
     this.position = 'absolute';
     this.backgroundColor = 'yellow';
     this.drawStartX = offsetX;
@@ -110,5 +118,14 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.display = 'none';
     this.width = 0;
     this.height = 0;
+    this.wholePage = false;
+  }
+
+  private highlightPage() {
+    this.height = this.pageHeight;
+    this.width = this.pageWidth;
+    this.top = 0;
+    this.left = 0;
+    this.createHighlight();
   }
 }

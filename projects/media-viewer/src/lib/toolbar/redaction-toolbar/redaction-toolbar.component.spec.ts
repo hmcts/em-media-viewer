@@ -16,6 +16,7 @@ describe('RedactionToolbarComponent', () => {
     toggleRedactionPreview: () => {},
     unmarkAll: () => {},
     applyRedactionToDocument: () => {},
+    redactPage: () => {},
     toggleRedactionMode: () => {},
   };
 
@@ -35,7 +36,7 @@ describe('RedactionToolbarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RedactionToolbarComponent);
     component = fixture.componentInstance;
-    toolbarEvents = TestBed.get(ToolbarEventService);
+    toolbarEvents = TestBed.inject(ToolbarEventService);
     fixture.detectChanges();
   });
 
@@ -81,6 +82,16 @@ describe('RedactionToolbarComponent', () => {
     component.redact();
 
     expect(toolbarEvents.applyRedactionToDocument).toHaveBeenCalled();
+  });
+
+  it('should redact page', () => {
+    spyOn(toolbarEvents, 'redactPage');
+    spyOn(toolbarEvents.drawModeSubject, 'next');
+
+    component.redactPage();
+
+    expect(toolbarEvents.redactPage).toHaveBeenCalled();
+    expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalled();
   });
 
   it('should call toggleRedactionMode', () => {

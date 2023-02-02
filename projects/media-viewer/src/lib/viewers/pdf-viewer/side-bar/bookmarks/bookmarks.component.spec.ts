@@ -6,11 +6,12 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { BookmarksComponent } from './bookmarks.component';
 import { Bookmark } from '../../../../store/models/bookmarks.interface';
 import * as fromActions from '../../../../store/actions/bookmark.actions';
+import { State } from 'projects/media-viewer/src/lib/store/reducers/reducers';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
   let fixture: ComponentFixture<BookmarksComponent>;
-  let store: MockStore<any>;
+  let store: Store<State>;
   const initialState = {
     'media-viewer': {
       bookmarks: {
@@ -52,7 +53,7 @@ describe('BookmarksComponent', () => {
 
     fixture = TestBed.createComponent(BookmarksComponent);
     component = fixture.componentInstance;
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
     fixture.detectChanges();
   });
 
