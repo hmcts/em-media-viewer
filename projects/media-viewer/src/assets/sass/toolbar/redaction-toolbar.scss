@@ -30,6 +30,16 @@ $button-border-color: #dee0e2;
     }
   }
 
+  .redaction-button--redact-page {
+    width: 150px;
+    border-left: 1px solid $button-border-color;
+    &:after {
+      background-image: url(/assets/images/icon-page.svg);
+      background-position: 15px 50%;
+      background-size: 15px 19px;
+    }
+  }
+
   .redaction-button--redact {
     width: 140px;
     &:after {
