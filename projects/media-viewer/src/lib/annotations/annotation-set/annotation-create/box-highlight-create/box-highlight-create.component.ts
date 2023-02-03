@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
 import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
@@ -20,7 +20,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 
   @Output() saveSelection = new EventEmitter<{ rectangles: Rectangle[], page: number }>();
 
-  @ViewChild('boxHighlight', {static: false}) highlight: ElementRef;
+  @ViewChild('boxHighlight', { static: false }) highlight: ElementRef;
 
   drawStartX = -1;
   drawStartY = -1;
@@ -39,7 +39,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(private readonly toolbarEvents: ToolbarEventService,
-              private readonly highlightService: HighlightCreateService) {}
+    private readonly highlightService: HighlightCreateService) { }
 
   ngOnInit(): void {
     this.subscriptions = [
@@ -90,10 +90,10 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateHighlight({currentTarget, clientX, clientY}) {
+  updateHighlight({ currentTarget, clientX, clientY }) {
     const rect = currentTarget.getBoundingClientRect(),
-    offsetX = clientX - rect.left,
-    offsetY = clientY - rect.top;
+      offsetX = clientX - rect.left,
+      offsetY = clientY - rect.top;
     if (this.drawStartX > 0 && this.drawStartY > 0) {
       this.height = Math.abs(offsetY - this.drawStartY);
       this.width = Math.abs(offsetX - this.drawStartX);
