@@ -77,7 +77,7 @@ withNightlyPipeline(type, product, component) {
     sh ("rm -rf node_modules")
     sh ("yarn cache clean")
     sh ('npm rebuild node-sass')
-    sh ('yarn install --force')
+    sh ('yarn install')
     sh ('yarn setup')
   }
 
