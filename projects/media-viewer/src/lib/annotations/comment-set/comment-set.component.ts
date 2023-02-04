@@ -83,6 +83,7 @@ export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
     if (this.subscriptions.length > 0) {
       this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }
+    this.commentComponents?.destroy();
   }
 
   public onSelect(annotationId: SelectionAnnotation) {
