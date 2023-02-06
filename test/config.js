@@ -1,7 +1,6 @@
 module.exports = {
   TestUrl: process.env.TEST_URL || 'http://localhost:3000',
   TestUrl1: process.env.TEST_E2E_URL || 'https://manage-case.aat.platform.hmcts.net',
-  PreviewOrLocalEnvUrl: process.env.TEST_URL || 'http://localhost:3000',
   IdamBaseUrl: process.env.IDAM_URL || 'https://idam-api.aat.platform.hmcts.net',
   RedirectUri: process.env.REDIRECT_URI || `https://manage-case.aat.platform.hmcts.net/oauth2/callback`,
   S2SProvider: process.env.S2S_PROVIDER || 'http://rpe-service-auth-provider-aat.service.core-compute-aat.internal',
@@ -22,6 +21,5 @@ module.exports = {
   TestForAccessibility: process.env.TESTS_FOR_ACCESSIBILITY === 'true',
   TestForCrossBrowser: process.env.TESTS_FOR_CROSS_BROWSER === 'true',
   TestIdamClientSecret: process.env.IDAM_CLIENT_SECRET || '',
-  TestS2SAuthSecret: process.env.MICROSERVICE_CCD_GW || '',
-  ExecuteTestsOnPRAndLocal: process.env.EXECUTE_E2E || true
+  TestS2SAuthSecret: process.env.MICROSERVICE_CCD_GW || ''
 };
