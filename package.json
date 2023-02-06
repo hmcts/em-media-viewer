@@ -24,7 +24,7 @@
     "copy:license": "cross-env NODE_PATH=. cp ./README.md dist/media-viewer",
     "copy:readme": "cross-env NODE_PATH=. cp ./LICENSE dist/media-viewer",
     "publish:dist": "yarn package && cd dist/media-viewer && yarn publish",
-    "npm-pack": "cd dist/media-viewer && yarn pack",
+    "npm-pack": "cd dist/media-viewer && touch yarn.lock && yarn pack",
     "test": "cd projects/media-viewer; ng test",
     "test:coverage": "yarn test",
     "test:a11y": "yarn test",
