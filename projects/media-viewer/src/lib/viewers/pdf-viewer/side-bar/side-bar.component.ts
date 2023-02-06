@@ -6,7 +6,7 @@ import * as bookmarksSelectors from '../../../store/selectors/bookmark.selectors
 import { BookmarkNode } from '../../../store/models/bookmarks.interface';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmark.actions';
 import { take } from 'rxjs/operators';
-import { v4 as uuid } from 'uuid';
+import uuid from 'uuid';
 import { ViewerEventService } from '../../viewer-event.service';
 import { BookmarksState } from '../../../store/reducers/bookmarks.reducer';
 

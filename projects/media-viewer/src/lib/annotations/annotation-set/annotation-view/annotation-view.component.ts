@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
-import { v4 as uuid } from 'uuid';
+import uuid from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
 import moment from 'moment-timezone';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
 import * as fromActions from '../../../store/actions/annotation.actions';
-import {SelectionAnnotation} from '../../models/event-select.model';
-import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
+import { SelectionAnnotation } from '../../models/event-select.model';
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Comment } from '../../comment-set/comment/comment.model';
 
 @Component({
@@ -17,7 +17,7 @@ import { Comment } from '../../comment-set/comment/comment.model';
 export class AnnotationViewComponent {  // todo rename this to selection vew c
 
   @Input() set annotation(value) {
-      this.anno = {...value};
+    this.anno = { ...value };
   }
   anno: Annotation;
   selected: boolean;
@@ -35,12 +35,12 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   @Output() delete = new EventEmitter<Annotation>();
   @Output() annotationClick = new EventEmitter<SelectionAnnotation>();
 
-  @ViewChild('container', {static: false}) container: ElementRef;
+  @ViewChild('container', { static: false }) container: ElementRef;
 
   constructor(
     private readonly toolbarEvents: ToolbarEventService,
     private store: Store<fromStore.AnnotationSetState>
-  ) {}
+  ) { }
 
   public onSelect() {
     const annotationId = this.anno.id || this.anno.redactionId;
@@ -48,7 +48,7 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
-    const annotation = {...this.anno};
+    const annotation = { ...this.anno };
     annotation.rectangles = annotation.rectangles.filter(r => r.id !== rectangle.id);
     annotation.rectangles.push(rectangle);
     this.update.emit(annotation);
