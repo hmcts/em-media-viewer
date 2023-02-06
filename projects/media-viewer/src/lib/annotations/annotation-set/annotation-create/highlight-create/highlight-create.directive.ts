@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
-import uuid from 'uuid';
+import { v1 as uuid } from 'uuid';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
