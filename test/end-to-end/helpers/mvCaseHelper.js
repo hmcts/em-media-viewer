@@ -161,6 +161,16 @@ async function redactTextAndThenRemovingRedactionTest(I, caseId, mediaType) {
   await I.redactTextAndThenRemoveRedaction();
 }
 
+async function redactFirstPageTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactFirstPage();
+}
+
+async function redactMultiplePagesTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactMultiplePages();
+}
+
 async function previewAllRedactionsTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.previewAllRedactions();
@@ -246,6 +256,8 @@ module.exports = {
   navigateBundleDocsUsingPageIndexTest,
   navigateNestedDocsUsingIndexTest,
   redactTextAndThenRemovingRedactionTest,
+  redactFirstPageTest,
+  redactMultiplePagesTest,
   createRedactionsUsingDrawBoxAndRedactText,
   previewAllRedactionsTest,
   saveAllRedactionsTest
