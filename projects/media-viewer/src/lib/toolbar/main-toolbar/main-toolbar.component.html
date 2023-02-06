@@ -77,7 +77,6 @@
             <div id="mvZoomBtn" #mvZoomBtn class="mv-toolbar__menu-button--zoom" aria-pressed="false"
               [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvZoomBtn']"
               [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvZoomBtn']">
-              <span>Zoom</span>
               <button [disabled]="toolbarEvents.zoomValueSubject.value == 0.1" id="mvMinusBtn"
                 class="mv-toolbar__menu-button--zoom-out button-image" title="Zoom Out" data-l10n-id="zoom_out"
                 (click)="stepZoom(-0.1)"><span></span></button>
@@ -113,7 +112,6 @@
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvSearchBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvSearchBtn']" aria-pressed="false"
                   (click)="toggleSearchBar(); isDropdownMenuOpen = false">
-            <span data-l10n-id="search_label">Search</span>
           </button>
 
           <button *ngIf="enableICP && toolbarButtons.showPresentationMode && isPdf()"
@@ -133,7 +131,7 @@
           </button>
 
           <button *ngIf="toolbarButtons.showGrabNDragButton" [disabled]="icpEnabled" id="mvGrabBtn" #mvGrabBtn
-                  class="mv-button mv-toolbar__menu-button--grab"
+                  class="mv-button mv-toolbar__menu-button--grab" title="Grab and drag"
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvGrabBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvGrabBtn']" aria-pressed="false"
                   (click)="toggleGrabNDrag(); isDropdownMenuOpen = false">
@@ -145,7 +143,6 @@
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDownloadBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDownloadBtn']" aria-pressed="false"
                   (click)="downloadFile(); isDropdownMenuOpen = false">
-            <span>Download</span>
           </button>
 
           <button *ngIf="toolbarButtons.showPrint" [disabled]="icpEnabled || redactionEnabled" id="mvPrintBtn"
@@ -153,7 +150,6 @@
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvPrintBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvPrintBtn']" aria-pressed="false"
                   (click)="printFile(); isDropdownMenuOpen = false">
-            <span>Print</span>
           </button>
 
           <button *ngIf="enableAnnotations && toolbarButtons.showCommentSummary" [disabled]="redactionEnabled"
@@ -163,6 +159,7 @@
                   (click)="toggleCommentsPanel(); isDropdownMenuOpen = false">
             <span>Comments</span>
           </button>
+
         </ng-template>
       </div>
       <mv-search-bar></mv-search-bar>
