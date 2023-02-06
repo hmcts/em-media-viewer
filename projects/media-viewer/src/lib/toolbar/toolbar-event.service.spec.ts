@@ -1,4 +1,4 @@
-import {ToolbarEventService} from './toolbar-event.service';
+import { ToolbarEventService } from './toolbar-event.service';
 
 describe('Toolbar Event Service', () => {
   let service: ToolbarEventService;
@@ -11,13 +11,13 @@ describe('Toolbar Event Service', () => {
     service = null;
   });
   it('should create', () => {
-      expect(service).toBeTruthy();
+    expect(service).toBeTruthy();
   });
   it('should turn off drawMode if HighlightMode is toggled on', () => {
-      service.highlightModeSubject.next(false);
-      service.drawModeSubject.next(true);
-      service.toggleHighlightMode();
-      expect(service.drawModeSubject.getValue()).toBeFalsy();
+    service.highlightModeSubject.next(false);
+    service.drawModeSubject.next(true);
+    service.toggleHighlightMode();
+    expect(service.drawModeSubject.getValue()).toBeFalsy();
   });
   it('should turn off drawMode if drawMode is toggled off', () => {
     service.drawModeSubject.next(true);
@@ -34,6 +34,7 @@ describe('Toolbar Event Service', () => {
     service.drawModeSubject.next(false);
     service.toggleDrawMode();
     expect(service.highlightModeSubject.getValue()).toBeFalsy();
+    expect(service.grabNDrag.getValue()).toBeFalsy();
   });
 
   it('should set toggleCommentsSummary to true if comment summary is toggled off', () => {
@@ -54,6 +55,7 @@ describe('Toolbar Event Service', () => {
     service.reset();
     expect(service.zoomValueSubject.getValue()).toBe(1);
     expect(service.drawModeSubject.getValue()).toBeFalsy();
+    expect(service.grabNDrag.getValue()).toBeFalsy();
   });
 
   it('should toggle comments panel', () => {
