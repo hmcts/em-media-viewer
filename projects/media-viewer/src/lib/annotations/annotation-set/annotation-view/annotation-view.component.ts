@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
-import { v1 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
 import moment from 'moment-timezone';
