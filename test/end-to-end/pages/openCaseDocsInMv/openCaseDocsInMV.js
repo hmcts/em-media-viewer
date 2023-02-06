@@ -11,4 +11,5 @@ module.exports = async function (mediaType) {
   await I.retry(3).click(commonConfig.examplePdfLink);
   await I.waitForText(mediaType, testConfig.TestTimeToWaitForText);
   await I.switchToNextTab(1);
+  await I.wait(testConfig.TestTimeToWait);
 };

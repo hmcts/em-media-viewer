@@ -77,5 +77,8 @@
   "redactContentUsingDrawBoxXp": "div:nth-child(1) > div.textLayer",
   "redactTextCss": "div.textLayer",
   "previewRedactTextCss": "div:nth-child(1) > div.textLayer",
-  "assertEnvTestData": "//a[text()='Media Viewer Demo']"
+  "assertEnvTestData": "//a[text()='Media Viewer Demo']",
+  "saveButton": "//button[@class=\"govuk-button\" and contains(text(), \"Save\")]",
+  "nonTextualHighlightCss": "//div[@class =\"rectangle\" and (@tabindex=\"0\")]",
+  "drawBox": "#mvDrawBtn"
 }
