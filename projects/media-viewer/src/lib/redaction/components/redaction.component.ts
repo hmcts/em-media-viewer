@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import uuid from 'uuid';
+import { v1 as uuid } from 'uuid';
 import { filter, take } from 'rxjs/operators';
 
 import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';

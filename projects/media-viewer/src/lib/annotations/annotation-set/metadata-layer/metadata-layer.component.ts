@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
-import uuid from 'uuid';
+import { v1 as uuid } from 'uuid';
 
 import * as fromStore from '../../../store/reducers/reducers';
 import * as fromDocument from '../../../store/selectors/document.selectors';
