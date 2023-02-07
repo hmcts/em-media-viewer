@@ -34,6 +34,7 @@ const mvData = {
   "NESTED_PAGE_CONTENT":'Children',
   "EXUI_PR_ENV":'xui',
   "PREVIEW_ENV":'em-media-viewer-pr',
+  "LOCAL_ENV":'local',
   "STAGING_ENV":'em-media-viewer-staging'
 };
 

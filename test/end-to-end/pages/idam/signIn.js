@@ -7,7 +7,7 @@ module.exports = async function () {
   if (process.env.TEST_URL.includes(mvData.STAGING_ENV)) {
     await I.amOnPage(testConfig.TestUrl1, testConfig.PageLoadTime);
   } else {
-    await I.amOnPage('/', testConfig.PageLoadTime);
+    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
   }
 
   await I.waitForText('Sign in');
