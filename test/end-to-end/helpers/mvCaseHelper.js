@@ -243,7 +243,7 @@ async function previewEnv() {
 }
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
-  if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV) && process.env.TEST_URL.includes('-preview')) {
+  if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV) || process.env.TEST_URL.includes(mvData.LOCAL_ENV)) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
     await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
     console.log(await I.grabCurrentUrl());
