@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
+import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { RedactionApiService } from '../../redaction/services/redaction-api.service';
 import * as redactionActions from '../actions/redaction.actions';
 import { HttpResponse } from '@angular/common/http';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 @Injectable()
 export class RedactionEffects {
   constructor(
     private actions$: Actions,
     private redactionApiService: RedactionApiService,
+    private toolbarEvents: ToolbarEventService
   ) { }
 
   @Effect()
@@ -39,6 +41,20 @@ export class RedactionEffects {
         catchError(error => {
           return of(new redactionActions.SaveRedactionFailure(error));
         }));
+    }));
+
+  @Effect()
+  saveBulkRedaction$ = this.actions$.pipe(
+    ofType(redactionActions.SAVE_BULK_REDACTION),
+    map((action: redactionActions.SaveRedaction) => action.payload),
+    exhaustMap((redaction) => {
+      return this.redactionApiService.saveBulkRedaction(redaction).pipe(
+        tap(() => this.toolbarEvents.redactAllInProgressSubject.next(false))).pipe(map(resp => {
+          return new redactionActions.SaveBulkRedactionSuccess(resp);
+        }),
+          catchError(error => {
+            return of(new redactionActions.SaveRedactionFailure(error));
+          }));
     }));
 
   @Effect()
