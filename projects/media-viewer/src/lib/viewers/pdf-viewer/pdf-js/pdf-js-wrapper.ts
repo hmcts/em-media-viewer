@@ -50,7 +50,12 @@ export class PdfJsWrapper {
       if (event.state !== FindState.PENDING) {
         this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
         if (event?.source?.selected?.pageIdx !== -1 && event.matchesCount.total > 0) {
-          this.toolbarEvents.redactionSerachSubject.next({ page: event?.source?.selected?.pageIdx, matchedIndex: event?.source?.selected?.matchIdx, matchesCount: event.matchesCount.total } as RedactionSearch)
+          this.toolbarEvents.redactionSerachSubject.next({
+            page: event?.source?.selected?.pageIdx,
+            matchedIndex: event?.source?.selected?.matchIdx,
+            matchesCount: event.matchesCount.total
+          } as RedactionSearch
+          );
         }
       }
     });

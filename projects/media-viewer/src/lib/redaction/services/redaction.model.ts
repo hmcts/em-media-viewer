@@ -8,5 +8,5 @@ export interface Redaction {
 }
 
 export interface BulkRedaction {
-  searchRedactions: Redaction[]
+  searchRedactions: Redaction[];
 }

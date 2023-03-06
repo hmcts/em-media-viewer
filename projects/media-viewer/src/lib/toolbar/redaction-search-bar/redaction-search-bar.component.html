@@ -15,6 +15,7 @@
         ></button>
       </div>
       <input
+        id="search_input"
         class="govuk-input govuk-!-width-three-quarters govuk-!-display-inline-block govuk-!-margin-top-5"
         type="text"
         aria-label="Find in document"
@@ -22,13 +23,14 @@
         title="Find in document"
         placeholder="Redact from search..."
         tabindex="0"
-        data-l10n-id="find_input"
+        data-l10n-id="search_input"
         [(ngModel)]="searchText"
         (keydown.escape)="onEscapeKeyPress($event)"
         (keydown.enter)="onEnterKeyPress($event)"
       />
       <div class="redaction-search-buttons-area">
         <button
+          id="mvSearchAllBtn"
           class="govuk-button govuk-!-margin-bottom-0"
           data-module="govuk-button"
           (click)="search()"
@@ -37,6 +39,7 @@
           Search
         </button>
         <button
+          id="mvRedactAllBtn"
           class="govuk-button govuk-!-margin-left-2 govuk-!-margin-bottom-0"
           data-module="govuk-button"
           (click)="search(false)"
@@ -49,7 +52,7 @@
         class="govuk-grid-column-three-quarters govuk-!-padding-left-0 govuk-!-padding-top-2 redaction-status-text"
       >
         <span
-          id="findResultsCount"
+          id="findRedactResultsCount"
           class="govuk-grid-column-full govuk-!-margin-right-4 govuk-!-margin-left-0 govuk-!-padding-left-0"
           ><h4
             class="govuk-!-display-inline-block govuk-!-margin-top-0 govuk-!-margin-bottom-1"
@@ -61,7 +64,7 @@
         >
         <span>
           <h5
-            id="findResultsCount"
+            id="redactAllInProgressCount"
             class="govuk-!-display-inline-block govuk-!-margin-top-0 govuk-!-margin-bottom-1"
           >
             {{ redactAllInProgress ? redactAllText : "" }}

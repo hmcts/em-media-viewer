@@ -6,7 +6,7 @@ module.exports = {
   S2SProvider: process.env.S2S_PROVIDER || 'http://rpe-service-auth-provider-aat.service.core-compute-aat.internal',
   CCDDataStoreApi: process.env.CCD_DATA_STORE_API_URL || 'http://ccd-data-store-api-aat.service.core-compute-aat.internal',
   TestEnv: process.env.RUNNING_ENV || 'aat',
-  TestShowBrowserWindow: process.env.SHOW_BROWSER_WINDOW || false,
+  TestShowBrowserWindow: process.env.SHOW_BROWSER_WINDOW || true,
   TestRetryFeatures: process.env.RETRY_FEATURES || 0,
   TestRetryScenarios: process.env.RETRY_SCENARIOS || 1,
   TestPathToRun: process.env.E2E_TEST_PATH || './mvFeatures/**/*.js',

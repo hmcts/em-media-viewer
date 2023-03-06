@@ -1,5 +1,4 @@
-import { BulkRedaction } from './../../redaction/services/redaction.model';
-import { Redaction } from './../../../../../../dist/media-viewer/lib/redaction/services/redaction.model.d';
+import { BulkRedaction, Redaction } from './../../redaction/services/redaction.model';
 import { SearchResultsCount } from './../toolbar-event.service';
 import { PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
 import { element } from 'protractor';
@@ -34,15 +33,15 @@ export class RedactionSearchBarComponent implements OnInit {
   resultsText = '';
   searchText = '';
   resultCount = 0;
-  redactElements: RedactRectangle[] = []
+  redactElements: RedactRectangle[] = [];
   pageHeight: number;
   pageWidth: number;
   zoom: number;
   rotate: number;
   allPages: object;
-  redactAll: boolean = false;
-  openSearchModal: boolean = false;
-  redactAllInProgress: boolean = false;
+  redactAll: boolean;
+  openSearchModal: boolean;
+  redactAllInProgress: boolean;
   redactAllText?: string;
 
 
@@ -54,7 +53,7 @@ export class RedactionSearchBarComponent implements OnInit {
     private store: Store<fromStore.State>,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     public readonly toolbarEvents: ToolbarEventService,
-    public readonly highlightService: HighlightCreateService
+    public readonly highlightService: HighlightCreateService,
   ) { }
 
   public ngOnInit(): void {
@@ -71,8 +70,8 @@ export class RedactionSearchBarComponent implements OnInit {
       this.toolbarEvents.searchResultsCountSubject.subscribe(results => this.setSearchResultsCount(results))
     );
     this.subscriptions.push(this.toolbarEvents.openRedactionSearch.subscribe(isOpen => this.openSearchModal = isOpen));
-    this.subscriptions.push(this.toolbarEvents.redactAllInProgressSubject.subscribe(inProgress => this.redactAllInProgress = inProgress));
-
+    this.subscriptions.push(this.toolbarEvents.redactAllInProgressSubject
+      .subscribe(inProgress => this.redactAllInProgress = inProgress));
   }
 
   ngOnDestroy(): void {
@@ -97,7 +96,7 @@ export class RedactionSearchBarComponent implements OnInit {
       this.toolbarEvents.redactAllInProgressSubject.next(true);
     }
     if (reset) {
-      this.redactElements = []
+      this.redactElements = [];
     }
     this.toolbarEvents.search({
       searchTerm: this.searchText,
@@ -109,14 +108,16 @@ export class RedactionSearchBarComponent implements OnInit {
     });
   }
 
-  saveRedaction(redactRectangle: RedactRectangle[]) {
-    const redaction = redactRectangle.map(ele => { return { page: ele.page, rectangles: ele.rectangles, redactionId: uuid(), documentId: this.documentId } as Redaction })
+  private saveRedaction(redactRectangle: RedactRectangle[]) {
+    const redaction = redactRectangle.map(ele => {
+      return { page: ele.page, rectangles: ele.rectangles, redactionId: uuid(), documentId: this.documentId } as Redaction;
+    });
     this.store.dispatch(new fromRedactionActions.SaveBulkRedaction({ searchRedactions: redaction } as BulkRedaction));
   }
 
-  existInRedactElements(pageNumber: number, matechedIndex: number, rectangles: Rectangle[]): boolean {
+  private existInRedactElements(pageNumber: number, matechedIndex: number, rectangles: Rectangle[]): boolean {
     if (this.redactElements && this.redactElements.length > 0) {
-      const pagesFound = this.redactElements.find(element => element.page == pageNumber && element.matchedIndex === matechedIndex)
+      const pagesFound = this.redactElements.find(re => re.page === pageNumber && re.matchedIndex === matechedIndex);
       const pageRectangles = pagesFound?.rectangles;
       if (!pageRectangles || pageRectangles.length <= 0) {
         return false;
@@ -125,7 +126,8 @@ export class RedactionSearchBarComponent implements OnInit {
       let matchesRectangles = 0;
       for (let rectIndx = 0; rectIndx < pageRectangles.length; rectIndx++) {
         const retangle = pageRectangles[rectIndx];
-        const foundRectangle = rectangles.find(re => re.width == retangle.width && re.height === retangle.height && re.x === retangle.x && re.y === retangle.y)
+        const foundRectangle = rectangles.find(re => re.width === retangle.width &&
+          re.height === retangle.height && re.x === retangle.x && re.y === retangle.y);
         if (foundRectangle) {
           matchesRectangles++;
         }
@@ -137,7 +139,7 @@ export class RedactionSearchBarComponent implements OnInit {
   }
 
   onCloseSearchModal() {
-    this.toolbarEvents.openRedactionSearch.next(false)
+    this.toolbarEvents.openRedactionSearch.next(false);
   }
 
 
@@ -151,19 +153,21 @@ export class RedactionSearchBarComponent implements OnInit {
   private redactAllSearched(results: RedactionSearch): void {
     const $this = this;
     const intervalId = setInterval(function () {
-      const element = document.getElementsByClassName('highlight selected');
-      if (element && element.length > 0) {
+      const highlightElement = document.getElementsByClassName('highlight selected');
+      if (highlightElement && highlightElement.length > 0) {
         clearInterval(intervalId);
         $this.resultCount = results.matchesCount;
         const pageNumber = results.page + 1;
         const rectangles = $this.getRectangles(pageNumber);
 
-        if (rectangles && $this.redactElements.length <= $this.resultCount && !$this.existInRedactElements(pageNumber, results.matchedIndex, rectangles)) {
+        if (rectangles && $this.redactElements.length <= $this.resultCount
+          && !$this.existInRedactElements(pageNumber, results.matchedIndex, rectangles)) {
           $this.redactElements.push({ page: pageNumber, matchedIndex: results?.matchedIndex, rectangles } as RedactRectangle);
           $this.CreateRedactAllText();
         }
 
-        if ($this.redactAll && $this.resultCount && $this.resultCount > 0 && rectangles && $this.redactElements.length < $this.resultCount) {
+        if ($this.redactAll && $this.resultCount && $this.resultCount > 0
+          && rectangles && $this.redactElements.length < $this.resultCount) {
           $this.search(false);
         }
 
@@ -200,11 +204,11 @@ export class RedactionSearchBarComponent implements OnInit {
     const selectedHighLightedElements = document.getElementsByClassName('highlight selected');
 
     if (selectedHighLightedElements && selectedHighLightedElements.length > 0) {
-      const range = document.createRange();
-      range.selectNodeContents(selectedHighLightedElements[0] as HTMLElement);
+      const docRange = document.createRange();
+      docRange.selectNodeContents(selectedHighLightedElements[0] as HTMLElement);
       const selection = window.getSelection();
       selection?.removeAllRanges();
-      selection?.addRange(range);
+      selection?.addRange(docRange);
 
       if (selection.rangeCount && !selection.isCollapsed) {
         const range = selection.getRangeAt(0).cloneRange();

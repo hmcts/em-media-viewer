@@ -17,7 +17,7 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
   hasRedactions = false;
 
   private subscriptions: Subscription[] = [];
-  redactionAllInProgress: boolean = false;
+  redactionAllInProgress: boolean;
 
   constructor(public readonly toolbarEventService: ToolbarEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
@@ -33,7 +33,7 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
   }
 
   onRedactAllSearch() {
-    this.toolbarEventService.openRedactionSearch.next(true)
+    this.toolbarEventService.openRedactionSearch.next(true);
   }
 
   toggleTextRedactionMode() {

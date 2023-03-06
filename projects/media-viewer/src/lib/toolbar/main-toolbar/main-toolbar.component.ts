@@ -35,7 +35,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public icpEnabled = false;
   public redactionEnabled = false;
   public showCommentsPanel: boolean;
-  public redactAllInProgress: boolean = false;
+  public redactAllInProgress: boolean;
 
   public pageNumber = 1;
   public pageCount = 0;

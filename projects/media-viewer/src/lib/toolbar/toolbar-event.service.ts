@@ -46,7 +46,7 @@ export class ToolbarEventService {
   public readonly applyRedactToDocument = new Subject();
   public readonly clearAllRedactMarkers = new Subject();
   public readonly redactWholePage = new Subject();
-  public readonly redactionSerachSubject = new Subject<RedactionSearch>()
+  public readonly redactionSerachSubject = new Subject<RedactionSearch>();
   public readonly redactAllInProgressSubject = new BehaviorSubject(false);
   public readonly openRedactionSearch = new Subject<boolean>();
 

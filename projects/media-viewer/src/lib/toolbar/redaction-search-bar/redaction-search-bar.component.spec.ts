@@ -1,19 +1,39 @@
+import { Store } from '@ngrx/store';
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { DebugElement, inject } from '@angular/core';
 
 import { RedactionSearchBarComponent } from './redaction-search-bar.component';
+import { provideMockStore } from '@ngrx/store/testing';
+import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
+import { SearchResultsCount, ToolbarEventService } from '../toolbar-event.service';
+import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { Subject } from 'rxjs';
+import { RedactionSearch } from './redaction-search.model';
 
 describe('RedactionSearchBarComponent', () => {
   let component: RedactionSearchBarComponent;
   let fixture: ComponentFixture<RedactionSearchBarComponent>;
+  const redactionSerachSubject: Subject<RedactionSearch> = new Subject<RedactionSearch>();
+  const searchResultsCountSubject: Subject<SearchResultsCount> = new Subject<SearchResultsCount>();
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RedactionSearchBarComponent ]
+      declarations: [RedactionSearchBarComponent],
+      providers: [
+        provideMockStore({}),
+        HighlightCreateService,
+        {
+          provide: ToolbarEventService,
+          useValue: {
+            redactionSerachSubject: redactionSerachSubject.asObservable(),
+            searchResultsCountSubject: searchResultsCountSubject.asObservable()
+          }
+        },
+        ToolbarButtonVisibilityService
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,7 +42,18 @@ describe('RedactionSearchBarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should search with reset set to true', () => {
+    spyOn(component.toolbarEvents, 'search');
+    component.search(true);
+    expect(component.toolbarEvents.search).toHaveBeenCalledTimes(1);
+    expect(component.redactAll).toBeFalse();
+  });
+
+  it('should search with reset set false', () => {
+    spyOn(component.toolbarEvents, 'search');
+    component.search(false);
+    expect(component.toolbarEvents.search).toHaveBeenCalledTimes(1);
+    expect(component.redactAll).toBeTrue();
+    expect(component.redactElements).toEqual([]);
   });
 });
