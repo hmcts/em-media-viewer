@@ -55,6 +55,4 @@ describe('RedactionSearchBarComponent', () => {
     expect(component.redactAll).toBeTrue();
     expect(component.redactElements).toEqual([]);
   });
-
-  
 });
