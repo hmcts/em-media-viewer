@@ -24,8 +24,7 @@ describe('RedactionSearchBarComponent', () => {
         provideMockStore({}),
         HighlightCreateService,
         {
-          provide: ToolbarEventService,
-          useValue: {
+          provider: ToolbarEventService, useValue: {
             redactionSerachSubject: redactionSerachSubject.asObservable(),
             searchResultsCountSubject: searchResultsCountSubject.asObservable()
           }
@@ -56,4 +55,6 @@ describe('RedactionSearchBarComponent', () => {
     expect(component.redactAll).toBeTrue();
     expect(component.redactElements).toEqual([]);
   });
+
+  
 });
