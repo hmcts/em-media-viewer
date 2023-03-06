@@ -7,17 +7,10 @@ module.exports = async function () {
   await I.click(commonConfig.mvHighLight);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 
-  await I.executeScript(async () => {
-    const range = document.createRange();
-    const matchingElement = document.getElementsByClassName('textLayer')[0].children[3];
-    range.selectNodeContents(matchingElement);
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-    const mouseUpEvent = document.createEvent('MouseEvents');
-    mouseUpEvent.initEvent('mouseup', true, true)
-    const pageHandle = document.getElementsByClassName('textLayer')[0].children[3];
-    pageHandle.dispatchEvent(mouseUpEvent);
-  });
+  const startX = 330.03125;
+  const startY = 362.3125;
+  const endX = 400;
+  const endY = 362.3125;
+  const compeleted = await I.getTextSelectionByCoorindates(startX, startY, endX, endY)
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 }
