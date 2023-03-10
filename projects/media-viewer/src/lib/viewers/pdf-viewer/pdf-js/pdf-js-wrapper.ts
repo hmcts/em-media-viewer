@@ -88,7 +88,7 @@ export class PdfJsWrapper {
 
       const outline = await pdfDocument.getOutline();
 
-      if (outline != null) {
+      if (outline) {
         await this.setOutlinePageNumbers(pdfDocument, outline);
       }
 
