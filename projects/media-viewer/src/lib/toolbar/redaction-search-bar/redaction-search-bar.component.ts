@@ -53,7 +53,7 @@ export class RedactionSearchBarComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.subscription = this.toolbarEvents.redactionSerachSubject.subscribe((results: RedactionSearch) => this.redactAllSearched(results))
+    this.subscription = this.toolbarEvents.redactionSerachSubject.subscribe((results: RedactionSearch) => this.redactAllSearched(results));
     this.subscription.add(this.store.pipe(select(fromDocument.getDocumentId)).subscribe(docId => this.documentId = docId));
     this.subscription.add(this.store.pipe(select(fromDocument.getPages)).subscribe((pages) => {
       if (pages[1]) {

@@ -96,7 +96,8 @@ describe('RedactionSearchBarComponent', () => {
     spyOn(document, 'getElementsByClassName').withArgs('highlight selected').and.returnValue([element] as any);
     const range = jasmine.createSpyObj<Range>('Range', ['setStart', 'setEnd', 'getBoundingClientRect', 'cloneRange', 'selectNodeContents']);
     spyOn(document, 'createRange').and.returnValue(range);
-    const selection = jasmine.createSpyObj<Selection>('Selection', ['addRange', 'getRangeAt', 'removeAllRanges'], { rangeCount: 1, isCollapsed: false });
+    const selection = jasmine.createSpyObj<Selection>('Selection', ['addRange', 'getRangeAt', 'removeAllRanges'],
+      { rangeCount: 1, isCollapsed: false });
 
     const range2 = jasmine.createSpyObj<Range>('Range', ['setStart', 'setEnd', 'getBoundingClientRect', 'cloneRange', 'selectNodeContents', 'getClientRects']);
     selection.getRangeAt.and.returnValue(range2);
