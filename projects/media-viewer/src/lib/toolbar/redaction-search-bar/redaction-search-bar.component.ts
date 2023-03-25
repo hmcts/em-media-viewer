@@ -1,21 +1,17 @@
 import { BulkRedaction, Redaction } from './../../redaction/services/redaction.model';
 import { SearchResultsCount } from './../toolbar-event.service';
-import { PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
-import { element } from 'protractor';
-
 import { RedactionSearch, RedactRectangle } from './redaction-search.model';
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
-import { select, Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/reducers';
-import * as fromDocument from '../../store/selectors/document.selectors';
 import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
+import * as fromDocument from '../../store/selectors/document.selectors';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import uuid from 'uuid';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
-import { id } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'mv-redaction-search-bar',
@@ -45,7 +41,7 @@ export class RedactionSearchBarComponent implements OnInit {
   redactAllText?: string;
 
 
-  private subscriptions: Subscription[] = [];
+  private subscription: Subscription;
   private documentId: string;
   public advancedSearchVisible = false;
 
@@ -57,27 +53,23 @@ export class RedactionSearchBarComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.subscriptions.push(
-      this.toolbarEvents.redactionSerachSubject.subscribe((results: RedactionSearch) => this.redactAllSearched(results))
-    );
-    this.subscriptions.push(this.store.pipe(select(fromDocument.getDocumentId)).subscribe(docId => this.documentId = docId));
-    this.subscriptions.push(this.store.select(fromDocument.getPages).subscribe((pages) => {
+    this.subscription = this.toolbarEvents.redactionSerachSubject.subscribe((results: RedactionSearch) => this.redactAllSearched(results))
+    this.subscription.add(this.store.pipe(select(fromDocument.getDocumentId)).subscribe(docId => this.documentId = docId));
+    this.subscription.add(this.store.pipe(select(fromDocument.getPages)).subscribe((pages) => {
       if (pages[1]) {
         this.allPages = pages;
       }
     }));
-    this.subscriptions.push(
+    this.subscription.add(
       this.toolbarEvents.searchResultsCountSubject.subscribe(results => this.setSearchResultsCount(results))
     );
-    this.subscriptions.push(this.toolbarEvents.openRedactionSearch.subscribe(isOpen => this.openSearchModal = isOpen));
-    this.subscriptions.push(this.toolbarEvents.redactAllInProgressSubject
+    this.subscription.add(this.toolbarEvents.openRedactionSearch.subscribe(isOpen => this.openSearchModal = isOpen));
+    this.subscription.add(this.toolbarEvents.redactAllInProgressSubject
       .subscribe(inProgress => this.redactAllInProgress = inProgress));
   }
 
   ngOnDestroy(): void {
-    for (const subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -122,7 +114,6 @@ export class RedactionSearchBarComponent implements OnInit {
       if (!pageRectangles || pageRectangles.length <= 0) {
         return false;
       }
-
       let matchesRectangles = 0;
       for (let rectIndx = 0; rectIndx < pageRectangles.length; rectIndx++) {
         const retangle = pageRectangles[rectIndx];
@@ -151,37 +142,47 @@ export class RedactionSearchBarComponent implements OnInit {
   }
 
   private redactAllSearched(results: RedactionSearch): void {
+    console.log('redactAllSearched', results);
     const $this = this;
-    const intervalId = setInterval(function () {
+    const intervalId = setInterval(() => {
       const highlightElement = document.getElementsByClassName('highlight selected');
+      console.log('highlightElement', highlightElement);
       if (highlightElement && highlightElement.length > 0) {
         clearInterval(intervalId);
-        $this.resultCount = results.matchesCount;
-        const pageNumber = results.page + 1;
-        const rectangles = $this.getRectangles(pageNumber);
-
-        if (rectangles && $this.redactElements.length <= $this.resultCount
-          && !$this.existInRedactElements(pageNumber, results.matchedIndex, rectangles)) {
-          $this.redactElements.push({ page: pageNumber, matchedIndex: results?.matchedIndex, rectangles } as RedactRectangle);
-          $this.CreateRedactAllText();
-        }
-
-        if ($this.redactAll && $this.resultCount && $this.resultCount > 0
-          && rectangles && $this.redactElements.length < $this.resultCount) {
-          $this.search(false);
-        }
-
-        if ($this.redactAll && $this.resultCount && $this.redactElements.length === $this.resultCount) {
-          $this.redactAll = false;
-          $this.redactAllText = null;
-          $this.saveRedaction($this.redactElements);
-        }
+        $this.redactAllSearchedTick(results);
       }
     }, 100);
   }
 
+
+  private redactAllSearchedTick(results: RedactionSearch): void {
+    const highlightElement = document.getElementsByClassName('highlight selected');
+    if (highlightElement && highlightElement.length > 0) {
+      this.resultCount = results.matchesCount;
+      const pageNumber = results.page + 1;
+      const rectangles = this.getRectangles(pageNumber);
+      if (rectangles && this.redactElements.length <= this.resultCount
+        && !this.existInRedactElements(pageNumber, results.matchedIndex, rectangles)) {
+        this.redactElements.push({ page: pageNumber, matchedIndex: results?.matchedIndex, rectangles } as RedactRectangle);
+        this.CreateRedactAllText();
+      }
+      if (this.redactAll && this.resultCount && this.resultCount > 0
+        && rectangles && this.redactElements.length < this.resultCount) {
+        console.log('redactAll', this.redactAll, 'resultCount', this.resultCount, 'redactElements', this.redactElements.length, 'trigger search');
+        this.search(false);
+      }
+
+      if (this.redactAll && this.resultCount && this.redactElements.length === this.resultCount) {
+        console.log('redactAll', this.redactAll, 'resultCount', this.resultCount, 'redactElements', this.redactElements.length, 'saveRedaction');
+        this.redactAll = false;
+        this.redactAllText = null;
+        this.saveRedaction(this.redactElements);
+      }
+    }
+  }
+
   private CreateRedactAllText() {
-    this.redactAllText = `${this.redactElements.length} of ${this.resultCount} `;
+    this.redactAllText = `${this.redactElements.length} of ${this.resultCount}`;
   }
 
   public onEscapeKeyPress(e: KeyboardEvent): void {
@@ -202,14 +203,12 @@ export class RedactionSearchBarComponent implements OnInit {
     this.zoom = parseFloat(this.allPages[page].scaleRotation.scale);
     this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
     const selectedHighLightedElements = document.getElementsByClassName('highlight selected');
-
     if (selectedHighLightedElements && selectedHighLightedElements.length > 0) {
       const docRange = document.createRange();
       docRange.selectNodeContents(selectedHighLightedElements[0] as HTMLElement);
       const selection = window.getSelection();
       selection?.removeAllRanges();
       selection?.addRange(docRange);
-
       if (selection.rangeCount && !selection.isCollapsed) {
         const range = selection.getRangeAt(0).cloneRange();
         const clientRects = range.getClientRects();
@@ -226,6 +225,7 @@ export class RedactionSearchBarComponent implements OnInit {
               selectionRectangles.push(selectionRectangle);
             }
           }
+
           return selectionRectangles;
         }
       }
