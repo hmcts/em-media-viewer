@@ -176,7 +176,7 @@ describe('RedactionSearchBarComponent', () => {
 
   it('should close the searchbar on escape', fakeAsync(() => {
 
-    component.toolbarEvents.searchBarHidden.next(false);
+    component.toolbarEvents.searchBarHidden.next(true);
     tick(200);
     component.findInput = jasmine.createSpyObj<ElementRef>('ElementRef', ['nativeElement']);
     component.findInput.nativeElement = jasmine.createSpyObj<HTMLInputElement>('HTMLInputElement', ['focus', 'dispatchEvent']);
@@ -191,5 +191,25 @@ describe('RedactionSearchBarComponent', () => {
     fixture.detectChanges();
 
     expect(searchbar.getAttribute('hidden')).toBeDefined();
+  }));
+
+  it('searchbar on F3', fakeAsync(() => {
+
+    const searchBarHiddenSpy = spyOn(component.toolbarEvents.searchBarHidden, 'next').and.callThrough();
+
+    component.findInput = jasmine.createSpyObj<ElementRef>('ElementRef', ['nativeElement']);
+    component.findInput.nativeElement = jasmine.createSpyObj<HTMLInputElement>('HTMLInputElement', ['focus', 'dispatchEvent']);
+    searchInput = component.findInput.nativeElement;
+    fixture.detectChanges();
+    const searchbar = nativeElement.querySelector('.searchbar');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
+
+    const event = new KeyboardEvent('keydown', { code: 'F3' });
+    tick(200);
+    component.onWindowKeyDown(event);
+    fixture.detectChanges();
+
+    expect(searchBarHiddenSpy).toHaveBeenCalled();
+    flush();
   }));
 });
