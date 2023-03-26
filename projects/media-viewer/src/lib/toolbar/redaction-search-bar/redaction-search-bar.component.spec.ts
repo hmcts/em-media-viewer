@@ -30,7 +30,7 @@ describe('RedactionSearchBarComponent', () => {
   let nativeElement, searchInput;
 
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [RedactionSearchBarComponent],
       imports: [
@@ -74,7 +74,7 @@ describe('RedactionSearchBarComponent', () => {
 
 
     fixture.detectChanges();
-  }));
+  });
 
 
   it('should search with reset set to true', inject([Store], (store) => {
