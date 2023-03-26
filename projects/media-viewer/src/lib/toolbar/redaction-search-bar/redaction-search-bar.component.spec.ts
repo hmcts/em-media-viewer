@@ -211,7 +211,7 @@ describe('RedactionSearchBarComponent', () => {
 
     expect(searchBarHiddenSpy).toHaveBeenCalled();
     flush();
-  })); //searchResultsCountSubject
+  }));
 
   it('should show search results count', fakeAsync(() => {
 
