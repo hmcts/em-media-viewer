@@ -25,7 +25,10 @@ describe('Redaction Effects', () => {
     redactionId: 'redactionId', documentId: 'documentId', page: 1, rectangles: []
   };
 
-  const bulkRedaction: BulkRedaction = { searchRedactions: [{ redactionId: 'redactionId', documentId: 'documentId', page: 1, rectangles: [] } as Redaction] };
+  const bulkRedaction: BulkRedaction = {
+    searchRedactions:
+      [{ redactionId: 'redactionId', documentId: 'documentId', page: 1, rectangles: [] } as Redaction]
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
