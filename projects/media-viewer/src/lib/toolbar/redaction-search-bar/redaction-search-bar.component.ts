@@ -21,7 +21,6 @@ import { HighlightCreateService } from '../../annotations/annotation-set/annotat
 export class RedactionSearchBarComponent implements OnInit {
 
   @ViewChild('findInput', { static: true }) findInput: ElementRef<HTMLInputElement>;
-  @ViewChild('findNext', { static: false }) findNext: ElementRef<HTMLAnchorElement>;
 
   highlightAll = true;
   matchCase = false;
@@ -116,14 +115,13 @@ export class RedactionSearchBarComponent implements OnInit {
       }
       let matchesRectangles = 0;
       for (let rectIndx = 0; rectIndx < pageRectangles.length; rectIndx++) {
-        const retangle = pageRectangles[rectIndx];
-        const foundRectangle = rectangles.find(re => re.width === retangle.width &&
-          re.height === retangle.height && re.x === retangle.x && re.y === retangle.y);
+        const rectangle = pageRectangles[rectIndx];
+        const foundRectangle = rectangles.find(re => re.width === rectangle.width &&
+          re.height === rectangle.height && re.x === rectangle.x && re.y === rectangle.y);
         if (foundRectangle) {
           matchesRectangles++;
         }
       }
-
       return pageRectangles.length === matchesRectangles;
     }
     return false;

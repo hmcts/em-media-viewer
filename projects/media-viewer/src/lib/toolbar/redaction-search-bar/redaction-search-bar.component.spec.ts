@@ -8,6 +8,9 @@ import { Subject, of } from 'rxjs';
 import { RedactionSearch } from './redaction-search.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
+import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
+import { ElementRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 describe('RedactionSearchBarComponent', () => {
   let component: RedactionSearchBarComponent;
@@ -24,6 +27,7 @@ describe('RedactionSearchBarComponent', () => {
     dispatch: (actualAction) => { },
     pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
   } as any;
+  let nativeElement, searchInput;
 
 
   beforeEach(waitForAsync(() => {
@@ -32,6 +36,7 @@ describe('RedactionSearchBarComponent', () => {
       imports: [
         StoreModule.forRoot({}),
         StoreModule.forFeature('media-viewer', reducers),
+        FormsModule
       ],
       providers: [
         {
@@ -44,6 +49,7 @@ describe('RedactionSearchBarComponent', () => {
             searchResultsCountSubject: searchResultsCountSubject.asObservable(),
             openRedactionSearch: openRedactionSearch.asObservable(),
             redactAllInProgressSubject: { next: () => { }, asObservable: () => { }, subscribe: () => { } },
+            searchBarHidden: { next: () => { } },
             search: () => { },
           }
         },
@@ -54,6 +60,8 @@ describe('RedactionSearchBarComponent', () => {
       .compileComponents();
     fixture = TestBed.createComponent(RedactionSearchBarComponent);
     component = fixture.componentInstance;
+    component.openSearchModal = true;
+    fixture.detectChanges();
     component.allPages = {
       2: {
         numberOfPages: 2,
@@ -62,6 +70,9 @@ describe('RedactionSearchBarComponent', () => {
         viewportScale: 1
       }
     };
+    nativeElement = fixture.debugElement.nativeElement;
+
+
     fixture.detectChanges();
   }));
 
@@ -102,12 +113,12 @@ describe('RedactionSearchBarComponent', () => {
     const range2 = jasmine.createSpyObj<Range>('Range', ['setStart', 'setEnd', 'getBoundingClientRect', 'cloneRange', 'selectNodeContents', 'getClientRects']);
     selection.getRangeAt.and.returnValue(range2);
     range2.cloneRange.and.returnValue(range2);
-    const domRect = jasmine.createSpyObj<DOMRect>('DOMRect', [], { top: 100, left: 100, height: 100, width: 100 });
+    const domRect = jasmine.createSpyObj<DOMRect>('DOMRect', [], { x: 100, y: 100, height: 100, width: 100 });
     range2.getClientRects.and.returnValue([domRect] as any);
     htmlElement.getBoundingClientRect.and.returnValue(domRect);
     spyOn(window, 'getSelection').and.returnValue(selection);
 
-    spyOn(mockHighlightService, 'applyRotation').and.returnValue({ top: 100, left: 100, height: 100, width: 100 } as any);
+    spyOn(mockHighlightService, 'applyRotation').and.returnValue({ x: 100, y: 100, height: 100, width: 100 } as any);
     spyOn(store, 'dispatch').and.callThrough();
 
 
@@ -119,4 +130,66 @@ describe('RedactionSearchBarComponent', () => {
     expect(component.redactAll).toBeFalse();
     expect(store.dispatch).toHaveBeenCalledTimes(1);
   })));
+
+  it('should redact search text if does not already exists', inject([Store], fakeAsync((store) => {
+    const redactionSearch: RedactionSearch = {
+      matchedIndex: 1,
+      matchesCount: 1,
+      page: 1
+    };
+    component.redactAll = true;
+
+    component.redactElements = [{
+      page: 2,
+      matchedIndex: 1,
+      rectangles: [{ x: 100, y: 100, height: 100, width: 100, annotationId: 'annotationId' } as Rectangle]
+    }];
+    const htmlElement = jasmine.createSpyObj<HTMLElement>('HTMLElement', ['getBoundingClientRect'], { parentElement: null });
+    const htmlElement2 = jasmine.createSpyObj<HTMLElement>('HTMLElement', ['getBoundingClientRect'], { parentElement: htmlElement });
+    const element = jasmine.createSpyObj<Element>('Element', ['getBoundingClientRect'], { parentElement: htmlElement2 });
+    spyOn(document, 'getElementsByClassName').withArgs('highlight selected').and.returnValue([element] as any);
+    const range = jasmine.createSpyObj<Range>('Range', ['setStart', 'setEnd', 'getBoundingClientRect', 'cloneRange', 'selectNodeContents']);
+    spyOn(document, 'createRange').and.returnValue(range);
+    const selection = jasmine.createSpyObj<Selection>('Selection', ['addRange', 'getRangeAt', 'removeAllRanges'],
+      { rangeCount: 1, isCollapsed: false });
+
+    const range2 = jasmine.createSpyObj<Range>('Range', ['setStart', 'setEnd', 'getBoundingClientRect', 'cloneRange', 'selectNodeContents', 'getClientRects']);
+    selection.getRangeAt.and.returnValue(range2);
+    range2.cloneRange.and.returnValue(range2);
+    const domRect = jasmine.createSpyObj<DOMRect>('DOMRect', [], { x: 100, y: 100, height: 100, width: 100 });
+    range2.getClientRects.and.returnValue([domRect] as any);
+    htmlElement.getBoundingClientRect.and.returnValue(domRect);
+    spyOn(window, 'getSelection').and.returnValue(selection);
+
+    spyOn(mockHighlightService, 'applyRotation').and.returnValue({ x: 100, y: 100, height: 100, width: 100 } as any);
+    spyOn(store, 'dispatch').and.callThrough();
+
+
+    redactionSerachSubject.next(redactionSearch);
+    tick(100);
+
+
+    expect(component.redactAllText).toBeNull();
+    expect(component.redactAll).toBeFalse();
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+  })));
+
+  it('should close the searchbar on escape', fakeAsync(() => {
+
+    component.toolbarEvents.searchBarHidden.next(false);
+    tick(200);
+    component.findInput = jasmine.createSpyObj<ElementRef>('ElementRef', ['nativeElement']);
+    component.findInput.nativeElement = jasmine.createSpyObj<HTMLInputElement>('HTMLInputElement', ['focus', 'dispatchEvent']);
+    searchInput = component.findInput.nativeElement;
+    fixture.detectChanges();
+
+    const searchbar = nativeElement.querySelector('.searchbar');
+    expect(searchbar.getAttribute('hidden')).toBeNull();
+
+    const event = new KeyboardEvent('keydown', { 'key': 'Escape' });
+    searchInput.dispatchEvent(event);
+    fixture.detectChanges();
+
+    expect(searchbar.getAttribute('hidden')).toBeDefined();
+  }));
 });
