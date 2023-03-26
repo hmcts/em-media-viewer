@@ -211,5 +211,15 @@ describe('RedactionSearchBarComponent', () => {
 
     expect(searchBarHiddenSpy).toHaveBeenCalled();
     flush();
+  })); //searchResultsCountSubject
+
+  it('should show search results count', fakeAsync(() => {
+
+    const searchResultsCount = { current: 1, total: 1 };
+    searchResultsCountSubject.next(searchResultsCount);
+    fixture.detectChanges();
+
+    expect(component.resultCount).toEqual(searchResultsCount.total);
+    expect(component.resultsText).toEqual(`${searchResultsCount.total} results founds`);
   }));
 });
