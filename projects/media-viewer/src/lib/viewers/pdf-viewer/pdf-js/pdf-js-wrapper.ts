@@ -47,22 +47,28 @@ export class PdfJsWrapper {
     this.pdfViewer.eventBus.on('rotationchanging', (e) => this.emitDocumentInfo(e));
 
     this.pdfViewer.eventBus.on('updatefindcontrolstate', event => {
-      if (event.state !== FindState.PENDING) {
-        this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
-        if (event?.source?.selected?.pageIdx !== -1 && event.matchesCount.total > 0) {
-          this.toolbarEvents.redactionSerachSubject.next({
-            page: event?.source?.selected?.pageIdx,
-            matchedIndex: event?.source?.selected?.matchIdx,
-            matchesCount: event.matchesCount.total
-          } as RedactionSearch
-          );
-        }
-      }
+      console.log('updatefindcontrolstate', event);
+      this.sendSearchDetails(event);
     });
     this.pdfViewer.eventBus.on('updatefindmatchescount', event => {
       this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
     });
     this.zoomValue = 1;
+  }
+
+  sendSearchDetails(event: any) {
+    if (event.state !== FindState.PENDING) {
+      this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
+      if (event?.source?.selected?.pageIdx !== -1 && event.matchesCount.total > 0) {
+        console.log('updatefindcontrolstate', event);
+        this.toolbarEvents.redactionSerachSubject.next({
+          page: event?.source?.selected?.pageIdx,
+          matchedIndex: event?.source?.selected?.matchIdx,
+          matchesCount: event.matchesCount.total
+        } as RedactionSearch
+        );
+      }
+    }
   }
 
   private emitDocumentInfo(e) {

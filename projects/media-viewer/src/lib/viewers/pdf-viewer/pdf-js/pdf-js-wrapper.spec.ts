@@ -14,6 +14,7 @@ describe('PdfJsWrapper', () => {
   let mockViewer;
   let wrapper;
   let mockStore;
+  let toolbarEventService;
 
   beforeEach(() => {
     downloadManager = new pdfjsViewer.DownloadManager({});
@@ -28,24 +29,28 @@ describe('PdfJsWrapper', () => {
         dispatch: () => {
         }
       },
-      setDocument: () => {},
+      setDocument: () => { },
       linkService: {
-        setDocument: () => {},
-        navigateTo: () => {}
+        setDocument: () => { },
+        navigateTo: () => { }
       },
       findController: {
-        executeCommand: () => {}
+        executeCommand: () => { }
       }
     };
 
     mockStore = {
-      dispatch: () => {}
+      dispatch: () => { }
     };
 
+    toolbarEventService = new ToolbarEventService();
+
+    // toolbarEvents.setCurrentPageInputValueSubject =
+    // toolbarEvents.searchResultsCountSubject = { next: () => { } };
     wrapper = new PdfJsWrapper(
       mockViewer,
       downloadManager,
-      new ToolbarEventService(),
+      toolbarEventService,
       new Subject<string>(),
       new Subject<DocumentLoadProgress>(),
       new Subject<any>(),
@@ -67,10 +72,10 @@ describe('PdfJsWrapper', () => {
     const pdfViewerSpy = spyOn(mockViewer, 'setDocument');
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
-    const mockDocument = { numPages: 10, getOutline: () => [], getMetadata: () => ({ info: { Title: 'Title' }})};
+    const mockDocument = { numPages: 10, getOutline: () => [], getMetadata: () => ({ info: { Title: 'Title' } }) };
 
     spyOn(wrapper, 'createLoadingTask')
-      .and.returnValue({ promise: Promise.resolve(mockDocument)});
+      .and.returnValue({ promise: Promise.resolve(mockDocument) });
 
     wrapper.loadDocument('document-url');
     tick();
@@ -86,19 +91,19 @@ describe('PdfJsWrapper', () => {
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
     const outlineSpy = spyOn(wrapper, 'setOutlinePageNumbers').and.callThrough();
     const outlineArray: Outline[] = [];
-    const outlineItem: Outline = <Outline> {};
-    outlineItem.dest = [{num: 254, gen: 0, } , {name: 'Fit', }, ];
+    const outlineItem: Outline = <Outline>{};
+    outlineItem.dest = [{ num: 254, gen: 0, }, { name: 'Fit', }];
     outlineItem.items = [];
-    const outline: Outline = <Outline> {};
-    outline.dest = [{num: 254, gen: 0, } , {name: 'Fit', }, ];
+    const outline: Outline = <Outline>{};
+    outline.dest = [{ num: 254, gen: 0, }, { name: 'Fit', }];
     outline.items = [];
     outline.items.push(outlineItem);
     outlineArray.push(outline);
 
-    const mockDocument = { numPages: 10, getOutline: () => (outlineArray), getPageIndex: ({}) => (0) , getMetadata: () => ({ info: { Title: 'Title' }})};
+    const mockDocument = { numPages: 10, getOutline: () => (outlineArray), getPageIndex: ({ }) => (0), getMetadata: () => ({ info: { Title: 'Title' } }) };
 
     spyOn(wrapper, 'createLoadingTask')
-      .and.returnValue({promise: Promise.resolve(mockDocument)});
+      .and.returnValue({ promise: Promise.resolve(mockDocument) });
 
     wrapper.loadDocument('document-url');
     tick();
@@ -114,7 +119,7 @@ describe('PdfJsWrapper', () => {
     const newDocumentLoadInitSpy = spyOn(wrapper.documentLoadInit, 'next').and.callThrough();
     const documentLoadedSpy = spyOn(wrapper.documentLoaded, 'next').and.callThrough();
     const documentLoadFailedSpy = spyOn(wrapper.documentLoadFailed, 'next').and.callThrough();
-    spyOn(wrapper, 'createLoadingTask').and.returnValue({ promise: Promise.reject(new Error('x'))});
+    spyOn(wrapper, 'createLoadingTask').and.returnValue({ promise: Promise.reject(new Error('x')) });
 
     wrapper.loadDocument('document-url');
     tick();
@@ -251,5 +256,22 @@ describe('PdfJsWrapper', () => {
   it('should get the current pdf document title', () => {
     wrapper.documentTitle = 'Document Title';
     expect(wrapper.getCurrentPDFTitle()).toEqual('Document Title');
+  });
+
+  it('dispatch updatefindcontrolstate', () => {
+
+    const searchResultsCountSubjectNext = spyOn(toolbarEventService.searchResultsCountSubject, 'next').and.callThrough();
+    const redactionSerachSubjectNext = spyOn(toolbarEventService.redactionSerachSubject, 'next').and.callThrough();
+    wrapper.sendSearchDetails({
+      state: 0,
+      matchesCount: { total: 1 },
+      source: {
+        selected:
+          { pageIdx: 1, matchIdx: 1 },
+      }
+    });
+
+    expect(searchResultsCountSubjectNext).toHaveBeenCalled();
+    expect(redactionSerachSubjectNext).toHaveBeenCalled();
   });
 });
