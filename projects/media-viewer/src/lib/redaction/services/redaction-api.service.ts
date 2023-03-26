@@ -31,7 +31,7 @@ export class RedactionApiService {
 
   public saveBulkRedaction(body): Observable<BulkRedaction> {
     return this.httpClient
-      .post<Redaction>(this.markupsSearchApiUrl, body, { observe: 'response', withCredentials: true })
+      .post<Redaction[]>(this.markupsSearchApiUrl, body, { observe: 'response', withCredentials: true })
       .pipe(
         map(response => response.body),
         catchError(() => [])

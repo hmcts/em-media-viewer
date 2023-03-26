@@ -59,6 +59,11 @@ export class SaveRedactionFailure implements Action {
   constructor(public payload: any) { }
 }
 
+export class SaveBulkRedactionFailure implements Action {
+  readonly type = SAVE_BULK_REDACTION_FAIL;
+  constructor(public payload: any) { }
+}
+
 export class SaveBulkRedaction implements Action {
   readonly type = SAVE_BULK_REDACTION;
   constructor(public payload: BulkRedaction) { }

@@ -53,7 +53,7 @@ export class RedactionEffects {
           return new redactionActions.SaveBulkRedactionSuccess(resp);
         }),
           catchError(error => {
-            return of(new redactionActions.SaveRedactionFailure(error));
+            return of(new redactionActions.SaveBulkRedactionFailure(error));
           }));
     }));
 
