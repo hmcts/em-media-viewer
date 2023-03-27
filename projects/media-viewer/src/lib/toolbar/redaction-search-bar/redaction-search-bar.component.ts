@@ -139,11 +139,9 @@ export class RedactionSearchBarComponent implements OnInit {
   }
 
   private redactAllSearched(results: RedactionSearch): void {
-    console.log('redactAllSearched', results);
     const $this = this;
     const intervalId = setInterval(() => {
       const highlightElement = document.getElementsByClassName('highlight selected');
-      console.log('highlightElement', highlightElement);
       if (highlightElement && highlightElement.length > 0) {
         clearInterval(intervalId);
         $this.redactAllSearchedTick(results);
@@ -165,12 +163,10 @@ export class RedactionSearchBarComponent implements OnInit {
       }
       if (this.redactAll && this.resultCount && this.resultCount > 0
         && rectangles && this.redactElements.length < this.resultCount) {
-        console.log('redactAll', this.redactAll, 'resultCount', this.resultCount, 'redactElements', this.redactElements.length, 'trigger search');
         this.search(false);
       }
 
       if (this.redactAll && this.resultCount && this.redactElements.length === this.resultCount) {
-        console.log('redactAll', this.redactAll, 'resultCount', this.resultCount, 'redactElements', this.redactElements.length, 'saveRedaction');
         this.redactAll = false;
         this.redactAllText = null;
         this.saveRedaction(this.redactElements);
