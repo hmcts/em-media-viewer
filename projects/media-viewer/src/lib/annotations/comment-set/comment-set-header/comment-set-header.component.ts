@@ -7,11 +7,13 @@ import * as fromAnnoSelector from '../../../store/selectors/annotation.selectors
 import { combineLatest, Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { CommentService } from '../comment/comment.service';
+import { ProviderAst } from '@angular/compiler';
 
 @Component({
   selector: 'mv-comment-set-header',
   templateUrl: './comment-set-header.component.html',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [CommentService]
 })
 export class CommentSetHeaderComponent implements OnInit, OnDestroy {
 
