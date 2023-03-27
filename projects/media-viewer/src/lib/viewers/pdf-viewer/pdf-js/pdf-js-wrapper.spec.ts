@@ -45,8 +45,6 @@ describe('PdfJsWrapper', () => {
 
     toolbarEventService = new ToolbarEventService();
 
-    // toolbarEvents.setCurrentPageInputValueSubject =
-    // toolbarEvents.searchResultsCountSubject = { next: () => { } };
     wrapper = new PdfJsWrapper(
       mockViewer,
       downloadManager,

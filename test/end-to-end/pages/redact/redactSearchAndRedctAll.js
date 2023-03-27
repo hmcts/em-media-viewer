@@ -12,15 +12,4 @@ module.exports = async function () {
   await I.redactFillSearchInput();
   await I.clickRedactSearchButton();
   await I.clickRedactAllButton();
-
-
-  // await I.redactionsPreview();
-  // await I.wait(testConfig.BookmarksAndAnnotationsWait);
-
-  // while (i < await I.getBookmarksCount(commonConfig.redactionsCount)) {
-  //   await I.click(commonConfig.redactionsCount);
-  //   await I.wait(testConfig.BookmarksAndAnnotationsWait);
-  //   await I.click(commonConfig.deleteRedactionsXp);
-  // }
-  // await I.refreshPage();
 }

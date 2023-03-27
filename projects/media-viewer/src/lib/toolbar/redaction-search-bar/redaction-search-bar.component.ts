@@ -75,7 +75,6 @@ export class RedactionSearchBarComponent implements OnInit {
   public onWindowKeyDown(e: KeyboardEvent): void {
     if (e.code === 'F3' || (e.ctrlKey && e.code === 'KeyF')) {
       e.preventDefault();
-      console.log('F3');
       this.toolbarEvents.searchBarHidden.next(false);
       setTimeout(() => this.findInput.nativeElement.focus(), 200);
     }
