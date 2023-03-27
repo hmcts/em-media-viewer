@@ -21,7 +21,6 @@ describe('CommentSetHeader', () => {
         StoreModule.forRoot({})],
       declarations: [CommentSetHeaderComponent],
       providers: [
-        CommentService
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
