@@ -13,14 +13,13 @@ import { ProviderAst } from '@angular/compiler';
   selector: 'mv-comment-set-header',
   templateUrl: './comment-set-header.component.html',
   encapsulation: ViewEncapsulation.None,
-  providers: [CommentService]
 })
 export class CommentSetHeaderComponent implements OnInit, OnDestroy {
 
   @Input() public showCommentSummary: boolean;
   @Output() public readonly showCommentSummaryDialog = new EventEmitter();
-  
-  marginToComment : boolean 
+
+  marginToComment: boolean;
   tabs: {isFiltered?: boolean; label: string}[] = [];
   tabSelected = '';
   isFiltered: boolean;
@@ -28,7 +27,7 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
   $subscriptions: Subscription;
 
   constructor(private store: Store<fromStore.State>,
-              private commentService : CommentService,
+              private commentService: CommentService,
               public toolbarEvents: ToolbarEventService) {}
 
   ngOnInit(): void {
@@ -52,10 +51,10 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
 
   selectTab(tab: string) {
     this.tabSelected = tab !== this.tabSelected ? tab : undefined;
-    if(this.tabSelected){
-      this.commentService.createMarginToCommentEvent(this.marginToComment = true); 
-    }else {
-      this.commentService.createMarginToCommentEvent(this.marginToComment = false); 
+    if (this.tabSelected) {
+      this.commentService.createMarginToCommentEvent(this.marginToComment = true);
+    } else {
+      this.commentService.createMarginToCommentEvent(this.marginToComment = false);
     }
   }
 

@@ -51,7 +51,7 @@ export class CommentService {
     this.onCommentChange(this.commentSetComponent.commentComponents.some(comment => comment.hasUnsavedChanges === true));
   }
 
-  createMarginToCommentEvent(margin: boolean){
+  createMarginToCommentEvent(margin: boolean) {
     this.marginToCommentEmitter.next(margin);
   }
 }

@@ -5,6 +5,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../../store/reducers/reducers';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { CommentService } from '../comment/comment.service';
 
 describe('CommentSetHeader', () => {
   let component: CommentSetHeaderComponent;
@@ -20,7 +21,7 @@ describe('CommentSetHeader', () => {
         StoreModule.forRoot({})],
       declarations: [CommentSetHeaderComponent],
       providers: [
-
+        CommentService
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
