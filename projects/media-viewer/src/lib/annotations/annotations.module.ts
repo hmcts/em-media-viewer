@@ -34,7 +34,6 @@ import {FilterPipe} from './pipes/filter/filter.pipe';
 import {UnsnakePipe} from './pipes/unsnake/unsnake.pipe';
 import {SharedModule} from '../shared/shared.module';
 import { MetadataLayerComponent } from './annotation-set/metadata-layer/metadata-layer.component';
-import { CommentService } from './comment-set/comment/comment.service';
 
 @NgModule({
   imports: [
@@ -80,7 +79,6 @@ import { CommentService } from './comment-set/comment/comment.service';
     BookmarksApiService,
     CommentSetRenderService,
     HighlightCreateService,
-    CommentService,
     TagsServices
   ],
   exports: [
