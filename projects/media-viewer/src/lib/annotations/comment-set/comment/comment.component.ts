@@ -46,6 +46,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   pageHeight: number;
   hasUnsavedChanges = false;
   selected: boolean;
+  marginToComment : boolean ; 
   searchString: string;
   public tagItems: TagsModel[];
 
@@ -76,6 +77,9 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
     this.subscriptions = this.store.select(fromSelector.getComponentSearchText)
       .pipe(distinctUntilChanged()).subscribe(searchString => this.searchString = searchString);
     this.reRenderComments();
+    this.commentService.marginToCommentEmitter.subscribe((value) =>{
+      this.marginToComment = value
+    })
   }
 
   ngAfterContentInit(): void {
@@ -86,6 +90,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    this.commentService.marginToCommentEmitter.unsubscribe
   }
 
   @Input()

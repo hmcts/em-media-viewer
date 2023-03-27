@@ -9,6 +9,7 @@ import { CommentComponent } from './comment.component';
 export class CommentService {
 
   public readonly unsavedChanges = new Subject<boolean>();
+  public readonly marginToCommentEmitter = new Subject<boolean>();
   commentSetComponent: CommentSetComponent;
 
   setCommentSet(commentSetComponent) {
@@ -48,5 +49,9 @@ export class CommentService {
 
   allCommentsSaved(): void {
     this.onCommentChange(this.commentSetComponent.commentComponents.some(comment => comment.hasUnsavedChanges === true));
+  }
+
+  createMarginToCommentEvent(margin: boolean){
+    this.marginToCommentEmitter.next(margin);
   }
 }

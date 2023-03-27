@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
@@ -6,6 +6,7 @@ import * as fromTagSelectors from '../../../store/selectors/tag.selectors';
 import * as fromAnnoSelector from '../../../store/selectors/annotation.selectors';
 import { combineLatest, Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { CommentService } from '../comment/comment.service';
 
 @Component({
   selector: 'mv-comment-set-header',
@@ -16,7 +17,8 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
 
   @Input() public showCommentSummary: boolean;
   @Output() public readonly showCommentSummaryDialog = new EventEmitter();
-
+  
+  marginToComment : boolean 
   tabs: {isFiltered?: boolean; label: string}[] = [];
   tabSelected = '';
   isFiltered: boolean;
@@ -24,6 +26,7 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
   $subscriptions: Subscription;
 
   constructor(private store: Store<fromStore.State>,
+              private commentService : CommentService,
               public toolbarEvents: ToolbarEventService) {}
 
   ngOnInit(): void {
@@ -47,6 +50,11 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
 
   selectTab(tab: string) {
     this.tabSelected = tab !== this.tabSelected ? tab : undefined;
+    if(this.tabSelected){
+      this.commentService.createMarginToCommentEvent(this.marginToComment = true); 
+    }else {
+      this.commentService.createMarginToCommentEvent(this.marginToComment = false); 
+    }
   }
 
   public toggleCommentsPanel() {
