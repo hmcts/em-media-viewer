@@ -16,7 +16,7 @@ import {SelectionAnnotation} from '../../models/event-select.model';
 import {CommentService} from './comment.service';
 import {TagsModel} from '../../models/tags.model';
 import {TagsServices} from '../../services/tags/tags.services';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
@@ -46,9 +46,10 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
   pageHeight: number;
   hasUnsavedChanges = false;
   selected: boolean;
-  marginToComment: boolean ;
   searchString: string;
   public tagItems: TagsModel[];
+  marginToComment$: Observable<boolean> ;
+
 
 
   @Output() commentClick = new EventEmitter<SelectionAnnotation>();
@@ -77,9 +78,7 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
     this.subscriptions = this.store.select(fromSelector.getComponentSearchText)
       .pipe(distinctUntilChanged()).subscribe(searchString => this.searchString = searchString);
     this.reRenderComments();
-    this.commentService.marginToCommentEmitter.subscribe((value) => {
-      this.marginToComment = value;
-    });
+    this.marginToComment$ = this.commentService.marginToCommentEmitter.asObservable();
   }
 
   ngAfterContentInit(): void {

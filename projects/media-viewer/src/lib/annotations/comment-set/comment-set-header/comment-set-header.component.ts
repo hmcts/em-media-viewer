@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../../store/reducers/reducers';
@@ -51,9 +51,11 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
   selectTab(tab: string) {
     this.tabSelected = tab !== this.tabSelected ? tab : undefined;
     if (this.tabSelected) {
-      this.commentService.createMarginToCommentEvent(this.marginToComment = true);
+      this.marginToComment = true;
+      this.commentService.createMarginToCommentEvent(this.marginToComment);
     } else {
-      this.commentService.createMarginToCommentEvent(this.marginToComment = false);
+      this.marginToComment = false;
+      this.commentService.createMarginToCommentEvent(this.marginToComment);
     }
   }
 

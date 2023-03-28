@@ -63,4 +63,18 @@ describe('CommentSetHeader', () => {
 
     expect(toggleCommentsPanelSpy).toHaveBeenCalledWith(!value);
   });
+
+  it('should set marginToComment to true if tab is selected', () => {
+    component.tabSelected = 'comments';
+    component.selectTab('tab1');
+    expect(component.marginToComment).toBeTruthy();
+  });
+
+  it('should set marginToComment to false if tab is not selected', () => {
+    component.tabSelected = 'tab1';
+    component.selectTab('tab1');
+    expect(component.marginToComment).toBeFalsy();
+  });
+
+
 });
