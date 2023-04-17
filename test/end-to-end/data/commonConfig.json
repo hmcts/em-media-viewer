@@ -59,6 +59,7 @@
   "redactPageButton": "#redactPageButton",
   "page3": "//*[@class ='page' and @data-page-number ='3']",
   "redactMenu":"#mvRedactBtn",
+  "redactMenuDropdown":".dropdown-menu #mvRedactBtn",
   "clearAllRedaction":"#mvClearBtn",
   "previewBtn":"#mvPreviewBtn",
   "redactTextBtn": "#toggleHighlightButton",

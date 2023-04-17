@@ -9,6 +9,10 @@ module.exports = async function () {
   if (visible === 0) {
     await I.click(commonConfig.moreOptionsButton)
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
+    await I.click(commonConfig.redactMenuDropdown);
+  }
+  else {
+    await I.click(commonConfig.redactMenu);
   }
   await I.click(commonConfig.redactMenu);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
