@@ -249,9 +249,7 @@ async function executeTestsOnPreview(I, caseId, mediaType) {
   //   console.log(await I.grabCurrentUrl());
   // } else {
     await I.amOnPage('https://manage-case.aat.platform.hmcts.net');
-    console.log(await I.grabCurrentUrl());
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    console.log(await I.grabCurrentUrl());
   // }
 }
 
