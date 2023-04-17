@@ -243,14 +243,13 @@ async function previewEnv() {
 }
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
-  // if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV) || process.env.TEST_URL.includes(mvData.LOCAL_ENV)) {
-  //   await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  //   await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
-  //   console.log(await I.grabCurrentUrl());
-  // } else {
-    await I.amOnPage('https://manage-case.aat.platform.hmcts.net');
+  if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV) || process.env.TEST_URL.includes(mvData.LOCAL_ENV)) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log(await I.grabCurrentUrl());
+  } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  // }
+  }
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {
