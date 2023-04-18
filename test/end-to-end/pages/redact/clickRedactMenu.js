@@ -14,6 +14,5 @@ module.exports = async function () {
   else {
     await I.click(commonConfig.redactMenu);
   }
-  await I.click(commonConfig.redactMenu);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 }
