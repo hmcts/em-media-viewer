@@ -16,7 +16,7 @@ Feature('Redact Feature');
 Scenario('Mark Content For Redaction Using Draw Box Function ', async ({I}) => {
   await markContentForRedactionUsingDrawBoxTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@test99')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Redact Content Using Redact Text Function', async ({I}) => {
