@@ -16,7 +16,7 @@ Feature('Redact Feature');
 Scenario('Mark Content For Redaction Using Draw Box Function ', async ({I}) => {
   await markContentForRedactionUsingDrawBoxTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@ci')
+}).tag('@test99')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Redact Content Using Redact Text Function', async ({I}) => {
@@ -52,13 +52,13 @@ Scenario('Redact text and then removing the redaction', async ({I}) => {
 Scenario('Redact first page', async ({I}) => {
   await redactFirstPageTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@fnd')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Redact multiple pages', async ({I}) => {
   await redactMultiplePagesTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@fnd')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Unmark selected content (marked for redaction)', async ({I}) => {
