@@ -52,13 +52,13 @@ Scenario('Redact text and then removing the redaction', async ({I}) => {
 Scenario('Redact first page', async ({I}) => {
   await redactFirstPageTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@fnd')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Redact multiple pages', async ({I}) => {
   await redactMultiplePagesTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@fnd')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Unmark selected content (marked for redaction)', async ({I}) => {
