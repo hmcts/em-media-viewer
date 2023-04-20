@@ -81,7 +81,7 @@ describe('MainToolbarComponent', () => {
   }));
 
   it('should toggle sidebar open', fakeAsync((done) => {
-    component.toggleSideBar();
+    component.toggleIndexSideBar();
 
     component.toolbarEvents.sidebarOpen.asObservable()
       .subscribe(

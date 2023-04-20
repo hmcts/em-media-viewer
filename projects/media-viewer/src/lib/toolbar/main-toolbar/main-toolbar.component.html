@@ -31,8 +31,17 @@
                   class="mv-button mv-toolbar__menu-button--index"
                   [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvIndexBtn']"
                   [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvIndexBtn']" aria-pressed="false"
-                  (click)="toggleSideBar(); isDropdownMenuOpen = false">
+                  (click)="toggleIndexSideBar(); isDropdownMenuOpen = false">
             <span>Index</span>
+          </button>
+
+           
+          <button *ngIf="toolbarButtons.showSidebar" id="mvBookmarksBtn" title="Bookmarks" data-l10n-id="index" #mvIndexBtn
+          class="mv-button mv-toolbar__menu-button--bookmarks"
+          [class.button-hidden-on-toolbar]="mvToolbarMain.offsetWidth < widthRequiredForBtn['mvIndexBtn']"
+          [class.button-hidden-on-dropdown]="mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvIndexBtn']" aria-pressed="false"
+          (click)="toggleBookmarksSideBar(); isDropdownMenuOpen = false">
+            <span>Bookmarks</span>
           </button>
 
           <button *ngIf="toolbarButtons.showDrawButton" [disabled]="icpEnabled || redactionEnabled" id="mvDrawBtn"
