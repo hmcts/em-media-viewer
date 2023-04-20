@@ -235,7 +235,7 @@ describe('MediaViewerComponent', () => {
   });
 
   it('should set annotationApiUrl', () => {
-     const api = TestBed.get(AnnotationApiService);
+     const api = TestBed.inject(AnnotationApiService);
      component.contentType = 'pdf';
      const ANNOTATION_API_URL = 'annotation-api-url';
      component.annotationApiUrl = ANNOTATION_API_URL;
@@ -355,7 +355,7 @@ describe('MediaViewerComponent', () => {
       const mockHeight = 'calc(100vh - 25px)';
       component.height = mockHeight;
 
-      const toolbarEvents = TestBed.get(ToolbarEventService);
+      const toolbarEvents = TestBed.inject(ToolbarEventService);
       toolbarEvents.redactionMode.next(true);
       fixture.detectChanges();
 
@@ -364,7 +364,7 @@ describe('MediaViewerComponent', () => {
 
     it('should re-calc viewHeight when component moved and height input param omitted', () => {
       const viewerHeight = component.viewerHeight;
-      const toolbarEvents = TestBed.get(ToolbarEventService);
+      const toolbarEvents = TestBed.inject(ToolbarEventService);
 
       toolbarEvents.redactionMode.next(true);
       fixture.detectChanges();

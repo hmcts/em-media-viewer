@@ -12,7 +12,8 @@ describe('IcpSessionApiService', () => {
   const session: IcpSession = {
     caseId: 'caseId',
     sessionId: 'sessionId',
-    dateOfHearing: new Date()
+    dateOfHearing: new Date(),
+    connectionUrl: ''
   };
   const username = 'name';
 
@@ -26,9 +27,9 @@ describe('IcpSessionApiService', () => {
       ]
     });
 
-    api = TestBed.get(IcpSessionApiService);
+    api = TestBed.inject(IcpSessionApiService);
     api.ICP_SESSION_API = '/my-context-path';
-    httpMock = TestBed.get(HttpTestingController);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', inject([IcpSessionApiService], (service: IcpSessionApiService) => {

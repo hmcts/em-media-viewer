@@ -19,7 +19,8 @@ describe('Icp Effects', () => {
   const session: IcpSession = {
     caseId: 'caseId',
     sessionId: 'sessionId',
-    dateOfHearing: new Date()
+    dateOfHearing: new Date(),
+    connectionUrl: 'url-connectionstring'
   };
 
   beforeEach(() => {
@@ -36,16 +37,16 @@ describe('Icp Effects', () => {
         provideMockActions(() => actions$)
       ]
     });
-    effects = TestBed.get(IcpEffects);
+    effects = TestBed.inject(IcpEffects);
   });
 
 
   describe('loadIcpSession$', () => {
     it('should return a JoinSocketSession', () => {
-      const payload = {session: session, username: 'name'};
+      const payload = { session: session, username: 'name' };
       const action = new icpActions.LoadIcpSession(session.caseId);
       icpApi.loadSession.and.returnValue(of(payload));
-      const completion = new icpActions.JoinIcpSocketSession({session: session, username: 'name'});
+      const completion = new icpActions.JoinIcpSocketSession({ session: session, username: 'name' });
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
       expect(effects.loadIcpSession$).toBeObservable(expected);

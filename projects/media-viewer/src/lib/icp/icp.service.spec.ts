@@ -34,7 +34,8 @@ describe('Icp Service', () => {
   const session: IcpSession = {
     caseId: 'caseId',
     sessionId: 'sessionId',
-    dateOfHearing: new Date()
+    dateOfHearing: new Date(),
+    connectionUrl: ''
   };
   const participant: IcpParticipant = {
     id: 'id',
@@ -54,10 +55,10 @@ describe('Icp Service', () => {
         {provide: IcpFollowerService, useValue: mockParticipantService},
       ]
     });
-    service = TestBed.get(IcpService);
-    updateService = TestBed.get(IcpUpdateService);
-    presenterService = TestBed.get(IcpPresenterService);
-    followerService = TestBed.get(IcpFollowerService);
+    service = TestBed.inject(IcpService);
+    updateService = TestBed.inject(IcpUpdateService);
+    presenterService = TestBed.inject(IcpPresenterService);
+    followerService = TestBed.inject(IcpFollowerService);
   });
 
   it('should be created', () => {
@@ -116,7 +117,6 @@ describe('Icp Service', () => {
       spyOn(service, 'stopPresenting');
       spyOn(service, 'leavePresentation');
       spyOn(presenterService, 'update');
-      spyOn(followerService, 'update');
       spyOn(service, 'clientDisconnected');
 
       service.setUpSessionSubscriptions();
@@ -145,7 +145,6 @@ describe('Icp Service', () => {
 
     spyOn(service.sessionSubscription, 'unsubscribe');
     spyOn(presenterService, 'update');
-    spyOn(followerService, 'update');
 
     service.unsubscribeSession();
 

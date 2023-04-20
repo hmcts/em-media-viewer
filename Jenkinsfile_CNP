@@ -25,7 +25,7 @@ env.DOCASSEMBLY_URL = "http://dg-docassembly-aat.service.core-compute-aat.intern
 env.DM_STORE_APP_URL = "http://dm-store-aat.service.core-compute-aat.internal"
 env.HRS_API_URL = "http://em-hrs-api-aat.service.core-compute-aat.internal"
 env.ANNOTATION_API_URL = "http://em-anno-aat.service.core-compute-aat.internal"
-env.ICP_API_URL = "http://em-icp-aat.service.core-compute-aat.internal"
+env.ICP_API_URL = "https://em-icp.aat.platform.hmcts.net"
 env.NPA_URL = "http://em-npa-aat.service.core-compute-aat.internal"
 env.IDAM_URL = "http://idam-api.aat.platform.hmcts.net"
 env.S2S_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
@@ -73,7 +73,7 @@ withPipeline(type, product, component) {
   enableAksStagingDeployment()
   disableLegacyDeployment()
 
-  after('checkout') {
+  afterSuccess('checkout') {
       sh ("rm -rf node_modules")
       sh ("yarn cache clean")
       sh ('npm rebuild node-sass')
@@ -81,11 +81,11 @@ withPipeline(type, product, component) {
       sh ('yarn setup')
   }
 
-  after('build') {
+  afterSuccess('build') {
     yarnBuilder.yarn('build')
   }
 
-  after('smoketest:preview') {
+  afterAlways('smoketest:preview') {
     publishHTML([
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
@@ -96,7 +96,7 @@ withPipeline(type, product, component) {
     ])
   }
 
-  after('functionalTest:preview') {
+  afterAlways('functionalTest:preview') {
       publishHTML([
               allowMissing         : true,
               alwaysLinkToLastBuild: true,
@@ -107,7 +107,7 @@ withPipeline(type, product, component) {
       ])
   }
 
-  after('smoketest:aat') {
+  afterAlways('smoketest:aat') {
     publishHTML([
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
@@ -118,7 +118,7 @@ withPipeline(type, product, component) {
     ])
   }
 
-  after('functionalTest:aat') {
+  afterAlways('functionalTest:aat') {
       publishHTML([
               allowMissing         : true,
               alwaysLinkToLastBuild: true,

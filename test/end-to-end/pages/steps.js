@@ -41,12 +41,18 @@ module.exports = () => {
     verifyWhetherTheRedactionAreVisibleOrNot:steps.redact.verifyWhetherTheRedactionAreVisibleOrNot,
     redactText:steps.redact.redactText,
     markContentForRedaction:steps.redact.markContentForRedaction,
+    redactFirstPage:steps.redact.redactFirstPage,
+    redactMultiplePages:steps.redact.redactMultiplePages,
     redactContentUsingRedactText:steps.redact.redactContentUsingRedactText,
+    navigateIndexBundleDocument:steps.indexAndOutline.navigateIndexBundleDocument,
+    navigateIndexNestedDocument:steps.indexAndOutline.navigateIndexNestedDocument,
     CreateRedactionsUsingDrawboxAndRedactText:steps.redact.CreateRedactionsUsingDrawboxAndRedactText,
     redactTextAndThenRemoveRedaction:steps.redact.redactTextAndThenRemoveRedaction,
     previewAllRedactions:steps.redact.previewAllRedactions,
     saveAllRedactions:steps.redact.saveAllRedactions,
-    navigateIndexBundleDocument:steps.indexAndOutline.navigateIndexBundleDocument
-
+    highlightOnImage:steps.annotationsAndComments.highlightOnImage,
+    nonTextualHighlightAndComment:steps.annotationsAndComments.nonTextualHighlightAndComment,
+    updateNonTextualComments:steps.annotationsAndComments.updateNonTextualComments,
+    deleteAllExistingNonTextualHighlights:steps.annotationsAndComments.deleteAllExistingNonTextualHighlights
   });
 };

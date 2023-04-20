@@ -34,7 +34,7 @@ describe('IcpToolbarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(IcpToolbarComponent);
     component = fixture.componentInstance;
-    toolbarEvents = TestBed.get(ToolbarEventService);
+    toolbarEvents = TestBed.inject(ToolbarEventService);
     fixture.detectChanges();
   });
 

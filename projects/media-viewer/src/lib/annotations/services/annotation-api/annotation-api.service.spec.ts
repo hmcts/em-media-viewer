@@ -173,9 +173,9 @@ describe('AnnotationApiService', () => {
       ]
     });
 
-    api = TestBed.get(AnnotationApiService);
+    api = TestBed.inject(AnnotationApiService);
     api.annotationApiUrl = '/my-context-path';
-    httpMock = TestBed.get(HttpTestingController);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('should createAnnotationSet', fakeAsync((done) => {

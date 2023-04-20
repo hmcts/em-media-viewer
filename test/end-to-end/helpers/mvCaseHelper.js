@@ -2,6 +2,10 @@ const {mvData} = require("../pages/common/constants");
 const testConfig = require('./../../config');
 const commonConfig = require('../data/commonConfig.json');
 
+async function loginTest(I) {
+  await I.authenticateWithIdam();
+}
+
 async function submittedState(I, caseId) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
@@ -23,21 +27,13 @@ async function uploadWorDoc(I, caseId, eventName) {
 }
 
 async function contentSearchTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.executeContentSearch(searchKeyword, noOfFindings);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.executeContentSearch(searchKeyword, noOfFindings);
 }
 
 async function navigateSearchResultsUsingPreviousNextLinksTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.searchResultsNavigationUsingPreviousAndNextLinks(searchKeyword, noOfFindings);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.searchResultsNavigationUsingPreviousAndNextLinks(searchKeyword, noOfFindings);
 }
 
 async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
@@ -46,17 +42,13 @@ async function searchResultsNotFoundTest(I, caseId, searchKeyword, noOfFindings,
 }
 
 async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.enterShouldJumpViewerToNextSearchResult(searchKeyword, noOfFindings);
 }
 
 async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigate) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
     await I.pdfViewerPageNavigation(pageNoToNavigate);
@@ -64,16 +56,8 @@ async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigat
 }
 
 async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
-  if (process.env.TEST_URL.split('-')[3] !== 'pr') {
-    if (mediaType === 'example.pdf') {
-      await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
-      await I.executePdfViewerZoom();
-    } else {
-      await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
-      await I.openCaseDocumentsInMV(mediaType);
-      await I.executePdfViewerZoom();
-    }
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.executePdfViewerZoom();
 }
 
 async function downloadPdfDocFromMVTest(I, caseId, mediaType) {
@@ -87,12 +71,8 @@ async function printDocumentFromMVTest(I, caseId, mediaType) {
 }
 
 async function pdfAndImageRotationTest(I, caseId, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.rotatePdfAndJpg();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.rotatePdfAndJpg();
 }
 
 async function createBookmarkTest(I, caseId, mediaType) {
@@ -162,87 +142,113 @@ async function addMultipleCommentsTest(I, caseId, mediaType) {
 }
 
 async function markContentForRedactionUsingDrawBoxTest(I, caseId, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.markContentForRedaction();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.markContentForRedaction();
 }
 
 async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.redactContentUsingRedactText();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactContentUsingRedactText();
 }
 
 async function createRedactionsUsingDrawBoxAndRedactText(I, caseId, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.CreateRedactionsUsingDrawboxAndRedactText();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.CreateRedactionsUsingDrawboxAndRedactText();
 }
 
 async function redactTextAndThenRemovingRedactionTest(I, caseId, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.redactTextAndThenRemoveRedaction();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactTextAndThenRemoveRedaction();
+}
+
+async function redactFirstPageTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactFirstPage();
+}
+
+async function redactMultiplePagesTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactMultiplePages();
 }
 
 async function previewAllRedactionsTest(I, caseId, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.previewAllRedactions();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.previewAllRedactions();
 }
 
 async function saveAllRedactionsTest(I, caseId, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(testConfig.PreviewOrLocalEnvUrl, testConfig.PageLoadTime);
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.saveAllRedactions();
+}
+
+async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, bundlePageNumber, assertBundlePage) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.navigateIndexBundleDocument(bundlePageName, bundlePageNumber, assertBundlePage);
+}
+
+async function navigateNestedDocsUsingIndexTest(I, caseId, mediaType, nestedPageName, nestedPageNumber, pageContent) {
+  await executeTestsOnPreview(I, caseId, mediaType)
+  await I.navigateIndexNestedDocument(nestedPageName, nestedPageNumber, pageContent);
+}
+
+async function nonTextualHighlightAndAddACommentTest(I, caseId, mediaType) {
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
   } else {
     await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.saveAllRedactions();
+    await I.nonTextualHighlightAndComment();
   }
 }
 
-async function navigateBundleDocsUsingPageIndexTest(I, caseId, mediaType, bundlePageName, assertBundlePage) {
-  await executeTestsOnPreview(I, caseId, mediaType);
-  await I.navigateIndexBundleDocument(bundlePageName, assertBundlePage);
+async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.deleteAllExistingNonTextualHighlights();
+    await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
+  }
 }
+
+async function updateNonTextualCommentTest(I, caseId, mediaType, comment, updatedComment) {
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.updateNonTextualComments();
+  }
+}
+
+async function deleteNonTextualCommentTest(I, caseId, mediaType) {
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.deleteAllExistingNonTextualHighlights();
+  }
+}
+
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
-  console.log('Environment==>::' + await I.grabCurrentUrl());
+  console.log(await I.grabCurrentUrl());
   await I.amOnPage('/case-details/' + caseId);
   if (mediaType === mvData.PDF_DOCUMENT) {
     await I.openCaseDocumentsInMV(mediaType);
   }
 }
 
-async function getEnvironment() {
-  return testConfig.PreviewOrLocalEnvUrl.includes('local') ? 'local' : 'aat';
-}
-
 async function previewEnv() {
-  return process.env.TEST_URL.split('-')[3] ? 'pr' : 'aat';
+  return process.env.TEST_URL.includes(mvData.PREVIEW_ENV);
 }
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
-  if (await previewEnv() === 'pr') {
-    await I.amOnPage(process.env.TEST_URL, testConfig.PageLoadTime);
+  if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV) || process.env.TEST_URL.includes(mvData.LOCAL_ENV)) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
     await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+    console.log(await I.grabCurrentUrl());
   } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType)
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   }
 }
 
@@ -253,6 +259,7 @@ async function uploadDocumentEvent(I, caseId, eventName) {
 }
 
 module.exports = {
+  loginTest,
   submittedState,
   uploadPdf,
   uploadJpeg,
@@ -281,8 +288,15 @@ module.exports = {
   markContentForRedactionUsingDrawBoxTest,
   redactContentUsingRedactTextTest,
   navigateBundleDocsUsingPageIndexTest,
+  navigateNestedDocsUsingIndexTest,
   redactTextAndThenRemovingRedactionTest,
+  redactFirstPageTest,
+  redactMultiplePagesTest,
   createRedactionsUsingDrawBoxAndRedactText,
   previewAllRedactionsTest,
-  saveAllRedactionsTest
+  saveAllRedactionsTest,
+  nonTextualHighlightAndAddACommentTest,
+  nonTextualHighlightUsingDrawBoxTest,
+  updateNonTextualCommentTest,
+  deleteNonTextualCommentTest
 }

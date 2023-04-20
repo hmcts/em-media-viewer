@@ -26,9 +26,10 @@ const routes: Routes = [{
     CommonModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes, {
-      scrollPositionRestoration: 'enabled',
-      anchorScrolling: 'enabled'
-    }),
+    scrollPositionRestoration: 'enabled',
+    anchorScrolling: 'enabled',
+    relativeLinkResolution: 'legacy'
+}),
     HttpClientModule,
     ReactiveFormsModule,
     MediaViewerModule,

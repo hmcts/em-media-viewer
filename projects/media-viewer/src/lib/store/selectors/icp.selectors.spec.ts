@@ -5,10 +5,11 @@ import * as fromSelectors from './icp.selectors';
 import * as fromActions from '../actions/icp.actions';
 
 const icpState = {
-  session : {
+  session: {
     caseId: 'caseId',
     sessionId: 'sessionId',
-    dateOfHearing: new Date()
+    dateOfHearing: new Date(),
+    connectionUrl: 'url-connectionstring'
   },
   client: {
     id: 'clientId',
@@ -18,10 +19,10 @@ const icpState = {
     id: 'presenterId',
     username: 'name'
   },
-  participants: [ {
+  participants: [{
     id: 'participantId',
     username: 'name'
-  } ]
+  }]
 };
 
 describe('Icp selectors', () => {
@@ -33,7 +34,7 @@ describe('Icp selectors', () => {
         StoreModule.forFeature('media-viewer', reducers),
       ],
     });
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
     spyOn(store, 'dispatch').and.callThrough();
   });
 
@@ -130,7 +131,7 @@ describe('Icp selectors', () => {
     it('should return the participants list', () => {
       let result;
       store.pipe(select(fromSelectors.getParticipants)).subscribe(value => result = value);
-      store.dispatch(new fromActions.IcpParticipantListUpdated({'participantId': 'name'}));
+      store.dispatch(new fromActions.IcpParticipantListUpdated({ 'participantId': 'name' }));
       expect(result).toEqual(icpState.participants);
     });
   });

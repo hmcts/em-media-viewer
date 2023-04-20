@@ -44,6 +44,7 @@ export class ToolbarEventService {
   public readonly redactionPreview = new Subject<boolean>();
   public readonly applyRedactToDocument = new Subject();
   public readonly clearAllRedactMarkers = new Subject();
+  public readonly redactWholePage = new Subject();
 
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly searchBarHidden = new BehaviorSubject(true);
@@ -61,6 +62,7 @@ export class ToolbarEventService {
     this.highlightModeSubject.next(false);
     this.drawModeSubject.next(false);
     this.showCommentSummary.next(false);
+    this.grabNDrag.next(false);
   }
 
   // Function to inform Observers that highlightMode has been enabled
@@ -68,6 +70,7 @@ export class ToolbarEventService {
     // Highlight and Draw states are mutually exclusive
     if (this.highlightModeSubject.getValue() === false) {
       this.drawModeSubject.next(false);
+      this.grabNDrag.next(false);
       this.highlightModeSubject.next(true);
     } else {
       this.highlightModeSubject.next(false);
@@ -78,6 +81,7 @@ export class ToolbarEventService {
   public toggleDrawMode(): void {
     if (this.drawModeSubject.getValue() === false) {
       this.highlightModeSubject.next(false);
+      this.grabNDrag.next(false);
       this.drawModeSubject.next(true);
     } else {
       this.drawModeSubject.next(false);
@@ -153,7 +157,13 @@ export class ToolbarEventService {
   }
 
   public toggleRedactionMode(): void {
-    this.redactionMode.next(!this.redactionMode.getValue());
+    if (this.redactionMode.getValue() === false) {
+      this.drawModeSubject.next(false);
+      this.grabNDrag.next(false);
+      this.redactionMode.next(true);
+    } else {
+      this.redactionMode.next(false);
+    }
   }
 
   public toggleRedactionPreview(viewMode: boolean): void {
@@ -166,6 +176,10 @@ export class ToolbarEventService {
 
   public applyRedactionToDocument(): void {
     this.applyRedactToDocument.next();
+  }
+
+  public redactPage(): void {
+    this.redactWholePage.next();
   }
 
   public toggleCommentsPanel(isVisible: boolean) {

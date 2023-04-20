@@ -5,6 +5,11 @@
     <span data-l10n-id="toggleDrawButton_label">Draw a box</span>
   </button>
 
+  <button id="redactPageButton" class="mv-button redaction-button--redact-page" title="Redact Page"
+    data-l10n-id="redactPageButton" (click)="redactPage()">
+    <span data-l10n-id="redactPageButton_label">Redact page</span>
+  </button>
+
   <button *ngIf="toolbarButtons.showHighlightButton" id="toggleHighlightButton"
     class="mv-button redaction-button--redact" aria-pressed="false" title="Redact text"
     data-l10n-id="toggleTextRedactionButton" (click)="toggleTextRedactionMode()">
