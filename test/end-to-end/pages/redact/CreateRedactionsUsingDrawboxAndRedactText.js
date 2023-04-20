@@ -10,7 +10,7 @@ module.exports = async function () {
   await I.redactText();
 
   await I.click(commonConfig.redactDrawBox);
-  await I.dragAndDrop(commonConfig.redactTextCss, commonConfig.redactTextCss)
+  await I.dragAndDrop(commonConfig.redactContentUsingDrawBoxXp, commonConfig.redactContentUsingDrawBoxXp2)
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 
   await I.redactionsPreview();
