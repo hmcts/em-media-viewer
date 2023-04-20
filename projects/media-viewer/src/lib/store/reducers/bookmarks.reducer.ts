@@ -98,7 +98,8 @@ export function bookmarksReducer (state = initialBookmarksState,
 
       Object.entries(removeBookmarksByPage).forEach(
         ([pageNumber, bmrkIds]) => {
-          bookmarkPageEntities[pageNumber] = bookmarkPageEntities[pageNumber].filter(bookmarkId => bmrkIds.includes(bookmarkId));
+          bookmarkPageEntities[pageNumber]
+          = bookmarkPageEntities[pageNumber].filter(bookmark => !bmrkIds.includes(bookmark.id));
         }
       );
 
