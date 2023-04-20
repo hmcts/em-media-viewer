@@ -58,7 +58,8 @@
   "redactDrawBox": "#toggleDrawButton",
   "redactPageButton": "#redactPageButton",
   "page3": "//*[@class ='page' and @data-page-number ='3']",
-  "redactMenu":".dropdown-menu #mvRedactBtn",
+  "redactMenu":"#mvRedactBtn",
+  "redactMenuDropdown":".dropdown-menu #mvRedactBtn",
   "clearAllRedaction":"#mvClearBtn",
   "previewBtn":"#mvPreviewBtn",
   "redactTextBtn": "#toggleHighlightButton",
@@ -74,8 +75,12 @@
   "parentPageNumber": "7",
   "lastParentName": "E. Section D - Care Plans",
   "lastParentNumber": "19",
-  "redactContentUsingDrawBoxXp": "div:nth-child(1) > div.textLayer",
+  "redactContentUsingDrawBoxXp": "div:nth-child(1) > div.textLayer > span:nth-child(1)",
+  "redactContentUsingDrawBoxXp2": "div:nth-child(1) > div.textLayer > span:nth-child(2)",
   "redactTextCss": "div.textLayer",
   "previewRedactTextCss": "div:nth-child(1) > div.textLayer",
-  "assertEnvTestData": "//a[text()='Media Viewer Demo']"
+  "assertEnvTestData": "//a[text()='Media Viewer Demo']",
+  "saveButton": "//button[@class=\"govuk-button\" and contains(text(), \"Save\")]",
+  "nonTextualHighlightCss": "//div[@class =\"rectangle\" and (@tabindex=\"0\")]",
+  "drawBox": "#mvDrawBtn"
 }

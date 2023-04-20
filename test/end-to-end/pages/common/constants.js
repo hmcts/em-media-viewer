@@ -9,9 +9,8 @@ const states = {
 
 const mvData = {
   "CASE_ID": '1668060663599319',
-  "REDACTION_CASE": '1668060663599319',
-  "REDACTION_CASE_Original": '1669032750353156',
-  "PREVIEW_TEST_DATA":'1670929989411639',
+  "INDEX_AND_OUTLINE":'1670929989411639',
+  "IMAGE_VIEWER_CASE":"1653642705436811",
   "CONTENT_SEARCH_KEYWORD": 'Applicant',
   "NUMBER_OF_FINDINGS": 'Found 1 of 11',
   "VALIDATE_SEARCH_RESULTS_COUNT": 'Found 2 of 11',
@@ -35,6 +34,7 @@ const mvData = {
   "NESTED_PAGE_CONTENT":'Children',
   "EXUI_PR_ENV":'xui',
   "PREVIEW_ENV":'em-media-viewer-pr',
+  "LOCAL_ENV":'local',
   "STAGING_ENV":'em-media-viewer-staging'
 };
 
