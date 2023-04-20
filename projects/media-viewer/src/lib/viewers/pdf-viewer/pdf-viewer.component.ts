@@ -53,6 +53,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   @Input() enableRedactions: boolean;
   @Input() enableICP: boolean;
   @Input() annotationSet: AnnotationSet | null;
+  @Input() enableRedactSearch: AnnotationSet | null;
 
   @Input() height: string;
   pageHeights = [];

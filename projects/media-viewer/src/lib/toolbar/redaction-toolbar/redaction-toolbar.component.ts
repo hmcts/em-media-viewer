@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { select, Store } from '@ngrx/store';
 import * as fromRedactSelectors from '../../store/selectors/redaction.selectors';
@@ -12,6 +12,8 @@ import { ThisReceiver } from '@angular/compiler';
   templateUrl: './redaction-toolbar.component.html'
 })
 export class RedactionToolbarComponent implements OnInit, OnDestroy {
+
+  @Input() showRedactSearch: boolean;
 
   preview = false;
   hasRedactions = false;
