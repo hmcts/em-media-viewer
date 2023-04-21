@@ -26,15 +26,16 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() enableICP = false;
   @Input() contentType = null;
 
-  @ViewChild('zoomSelect', {static: false}) public zoomSelect: ElementRef;
-  @ViewChild('mvToolbarMain', {static: false}) public mvToolbarMain: ElementRef<HTMLElement>;
-  @ViewChild('dropdownMenu', {static: false}) public mvMenuItems: ElementRef<HTMLElement>;
+  @ViewChild('zoomSelect', { static: false }) public zoomSelect: ElementRef;
+  @ViewChild('mvToolbarMain', { static: false }) public mvToolbarMain: ElementRef<HTMLElement>;
+  @ViewChild('dropdownMenu', { static: false }) public mvMenuItems: ElementRef<HTMLElement>;
 
   private readonly subscriptions: Subscription[] = [];
 
   public icpEnabled = false;
   public redactionEnabled = false;
   public showCommentsPanel: boolean;
+  public redactAllInProgress: boolean;
 
   public pageNumber = 1;
   public pageCount = 0;
@@ -80,6 +81,9 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       }),
       this.toolbarEvents.redactionMode.subscribe(enabled => {
         this.redactionEnabled = enabled;
+      }),
+      this.toolbarEvents.redactAllInProgressSubject.subscribe(disable => {
+        this.redactAllInProgress = disable;
       }),
     );
   }

@@ -82,5 +82,12 @@
   "assertEnvTestData": "//a[text()='Media Viewer Demo']",
   "saveButton": "//button[@class=\"govuk-button\" and contains(text(), \"Save\")]",
   "nonTextualHighlightCss": "//div[@class =\"rectangle\" and (@tabindex=\"0\")]",
-  "drawBox": "#mvDrawBtn"
+  "drawBox": "#mvDrawBtn",
+  "redactFromSearchBtn": "#mvRedactFromSearchBtn",
+  "redactSearchInput": "#search_input",
+  "redactSearchInputText": "matt",
+  "searchAllBtn": "#mvSearchAllBtn",
+  "redactAllBtn": "#mvRedactAllBtn",
+  "findRedactResultsCount" : "#findRedactResultsCount",
+  "rectangleClass" : ".rectangle"
 }
