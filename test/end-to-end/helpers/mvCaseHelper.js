@@ -1,4 +1,4 @@
-const {mvData} = require("../pages/common/constants");
+const { mvData } = require("../pages/common/constants");
 const testConfig = require('./../../config');
 const commonConfig = require('../data/commonConfig.json');
 
@@ -151,6 +151,11 @@ async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
   await I.redactContentUsingRedactText();
 }
 
+async function redactSearchAndRedctAllTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactSearchAndRedctAll();
+}
+
 async function createRedactionsUsingDrawBoxAndRedactText(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.CreateRedactionsUsingDrawboxAndRedactText();
@@ -298,5 +303,6 @@ module.exports = {
   nonTextualHighlightAndAddACommentTest,
   nonTextualHighlightUsingDrawBoxTest,
   updateNonTextualCommentTest,
-  deleteNonTextualCommentTest
+  deleteNonTextualCommentTest,
+  redactSearchAndRedctAllTest
 }

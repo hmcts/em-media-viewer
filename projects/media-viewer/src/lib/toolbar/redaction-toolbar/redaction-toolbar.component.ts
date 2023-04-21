@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { select, Store } from '@ngrx/store';
 import * as fromRedactSelectors from '../../store/selectors/redaction.selectors';
 import * as fromStore from '../../store/reducers/reducers';
 import { Subscription } from 'rxjs';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'mv-redaction-toolbar',
@@ -12,18 +13,29 @@ import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.ser
 })
 export class RedactionToolbarComponent implements OnInit, OnDestroy {
 
+  @Input() showRedactSearch: boolean;
+
   preview = false;
   hasRedactions = false;
-  $subscription: Subscription;
+
+  private subscriptions: Subscription[] = [];
+  redactionAllInProgress: boolean;
 
   constructor(public readonly toolbarEventService: ToolbarEventService,
-              public readonly toolbarButtons: ToolbarButtonVisibilityService,
-              private store: Store<fromStore.AnnotationSetState>) {}
+    public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    private store: Store<fromStore.AnnotationSetState>) { }
 
   ngOnInit(): void {
-    this.$subscription = this.store.pipe(select(fromRedactSelectors.getRedactionArray)).subscribe(redactions => {
+    this.subscriptions.push(this.store.pipe(select(fromRedactSelectors.getRedactionArray)).subscribe(redactions => {
       this.hasRedactions = !!redactions.redactions.length;
-    });
+    }));
+    this.subscriptions.push(this.toolbarEventService.redactAllInProgressSubject.subscribe(inprogress => {
+      this.redactionAllInProgress = inprogress;
+    }));
+  }
+
+  onRedactAllSearch() {
+    this.toolbarEventService.openRedactionSearch.next(true);
   }
 
   toggleTextRedactionMode() {
@@ -48,7 +60,7 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
   }
 
   toggleRedactBar() {
-      this.toolbarEventService.toggleRedactionMode();
+    this.toolbarEventService.toggleRedactionMode();
   }
 
   redactPage() {
@@ -57,6 +69,8 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.$subscription.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 }
