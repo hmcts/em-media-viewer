@@ -4,10 +4,7 @@ const testConfig = require("../../../config");
 
 module.exports = async function () {
   const I = this;
-
-  await I.clickRedactMenu();
-  await I.click(commonConfig.clearAllRedaction);
-  await I.wait(testConfig.BookmarksAndAnnotationsWait);
-  await I.refreshPage();
+  await I.retry(2).click(commonConfig.redactSearchInput);
+  await I.fillField(commonConfig.redactSearchInput, commonConfig.redactSearchInputText);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 }

@@ -7,7 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../reducers/reducers';
 import { RedactionEffects } from './redaction.effects';
 import { RedactionApiService } from '../../redaction/services/redaction-api.service';
-import { Redaction } from '../../redaction/services/redaction.model';
+import { BulkRedaction, Redaction } from '../../redaction/services/redaction.model';
 
 describe('Redaction Effects', () => {
   let actions$;
@@ -17,11 +17,17 @@ describe('Redaction Effects', () => {
     'deleteAllMarkers',
     'deleteRedaction',
     'saveRedaction',
-    'getRedactions'
+    'getRedactions',
+    'saveBulkRedaction'
   ]);
 
   const redaction: Redaction = {
     redactionId: 'redactionId', documentId: 'documentId', page: 1, rectangles: []
+  };
+
+  const bulkRedaction: BulkRedaction = {
+    searchRedactions:
+      [{ redactionId: 'redactionId', documentId: 'documentId', page: 1, rectangles: [] } as Redaction]
   };
 
   beforeEach(() => {
@@ -76,6 +82,26 @@ describe('Redaction Effects', () => {
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
       expect(effects.saveRedaction$).toBeObservable(expected);
+    });
+  });
+
+  describe('SaveBulkRedaction', () => {
+    it('should return a SaveBulkRedactionSuccess', () => {
+      const action = new redactActions.SaveBulkRedaction(bulkRedaction);
+      redactionApi.saveBulkRedaction.and.returnValue(of(bulkRedaction));
+      const completion = new redactActions.SaveBulkRedactionSuccess(bulkRedaction);
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.saveBulkRedaction$).toBeObservable(expected);
+    });
+
+    it('should return a SaveBulkRedactionFailure', () => {
+      const action = new redactActions.SaveBulkRedaction(bulkRedaction);
+      redactionApi.saveBulkRedaction.and.returnValue(throwError('problem saving redaction'));
+      const completion = new redactActions.SaveBulkRedactionFailure('problem saving redaction');
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.saveBulkRedaction$).toBeObservable(expected);
     });
   });
 

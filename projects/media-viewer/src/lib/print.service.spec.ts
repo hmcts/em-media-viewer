@@ -30,13 +30,16 @@ describe('PrintService', () => {
       close: () => {},
       document: {
         close: () => {},
-        write: () => {}
+        write: () => {},
+        body: {
+        appendChild: () => {}
+        }
       }
-    } as Window;
+    } as unknown as Window;
 
     const windowSpy = spyOn(window, 'open').and.returnValue(windowMock);
     const printSpy = spyOn(windowMock, 'print');
-    const writeSpy = spyOn(windowMock.document, 'write');
+    const writeSpy = spyOn(windowMock.document.body, 'appendChild');
     const element = document.createElement('p');
     element.innerText = 'Hello';
 
@@ -44,7 +47,7 @@ describe('PrintService', () => {
 
     expect(windowSpy).toHaveBeenCalledWith('', '', `left=0,top=0,width=100,height=100,toolbar=0,scrollbars=0,status=0`);
     expect(printSpy).toHaveBeenCalled();
-    expect(writeSpy).toHaveBeenCalledWith('Hello');
+    expect(writeSpy).toHaveBeenCalledWith(element);
   }));
 
 });

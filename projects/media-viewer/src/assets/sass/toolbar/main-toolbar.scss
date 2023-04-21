@@ -18,7 +18,6 @@
       display: block;
       clear: both;
     }
-
   }
 
   .mv-toolbar-main {
@@ -52,8 +51,6 @@
     display: none;
   }
 }
-
-
 
 .mv-toolbar__menu-button--index {
   width: 100px;
@@ -151,7 +148,7 @@
 }
 
 .mv-toolbar__menu-button--page {
-  width: 220px;
+  width: 215px;
   height: 30px;
   padding-top: 10px;
   span:first-of-type {
@@ -160,7 +157,7 @@
 }
 
 .mv-toolbar__menu-button--zoom {
-  width: 190px;
+  width: 135px;
   span:first-of-type {
     margin-left: 8px;
     margin-right: 0px;
@@ -191,15 +188,15 @@
 
 .mv-toolbar__menu-button--zoom-out {
   &:after {
-    left: 64px;
-    right: 110px;
+    left: 14px;
+    right: 105px;
     background-image: url(/assets/images/search-minus.svg);
   }
 }
 
 .mv-toolbar__menu-button--zoom-in {
   &:after {
-    left: 157px;
+    left: 105px;
     right: 14px;
     background-image: url(/assets/images/search-plus.svg);
   }
@@ -251,7 +248,14 @@
 }
 
 .mv-toolbar__menu-button--search {
-  width: 115px;
+  width: 25px;
+  &:after {
+    background-image: url(/assets/images/search.svg);
+  }
+}
+
+.redaction-button--search {
+  width: 10%;
   &:after {
     background-image: url(/assets/images/search.svg);
   }
@@ -281,14 +285,14 @@
 }
 
 .mv-toolbar__menu-button--download {
-  width: 135px;
+  width: 25px;
   &:after {
     background-image: url(/assets/images/download-button.svg);
   }
 }
 
 .mv-toolbar__menu-button--print {
-  width: 100px;
+  width: 25px;
   &:after {
     background-image: url(/assets/images/printer.svg);
   }
@@ -330,12 +334,13 @@
 
 /* remove up and down arrows from page number field as there are already up and down icons on the toolbar
 /* Chrome, Safari, Edge, Opera */
-#pageNumber ::-webkit-outer-spin-button, #pageNumber::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+#pageNumber ::-webkit-outer-spin-button,
+#pageNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 /* Firefox */
-#pageNumber[type=number] {
+#pageNumber[type="number"] {
   -moz-appearance: textfield;
 }
 

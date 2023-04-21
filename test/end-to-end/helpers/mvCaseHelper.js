@@ -1,4 +1,4 @@
-const {mvData} = require("../pages/common/constants");
+const { mvData } = require("../pages/common/constants");
 const testConfig = require('./../../config');
 const commonConfig = require('../data/commonConfig.json');
 
@@ -151,6 +151,11 @@ async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
   await I.redactContentUsingRedactText();
 }
 
+async function redactSearchAndRedctAllTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.redactSearchAndRedctAll();
+}
+
 async function createRedactionsUsingDrawBoxAndRedactText(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.CreateRedactionsUsingDrawboxAndRedactText();
@@ -191,6 +196,44 @@ async function navigateNestedDocsUsingIndexTest(I, caseId, mediaType, nestedPage
   await I.navigateIndexNestedDocument(nestedPageName, nestedPageNumber, pageContent);
 }
 
+async function nonTextualHighlightAndAddACommentTest(I, caseId, mediaType) {
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.nonTextualHighlightAndComment();
+  }
+}
+
+async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.deleteAllExistingNonTextualHighlights();
+    await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
+  }
+}
+
+async function updateNonTextualCommentTest(I, caseId, mediaType, comment, updatedComment) {
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.updateNonTextualComments();
+  }
+}
+
+async function deleteNonTextualCommentTest(I, caseId, mediaType) {
+  if (await previewEnv()) {
+    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  } else {
+    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
+    await I.deleteAllExistingNonTextualHighlights();
+  }
+}
+
+
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
   console.log(await I.grabCurrentUrl());
@@ -200,16 +243,12 @@ async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   }
 }
 
-async function getEnvironment() {
-  return testConfig.PreviewOrLocalEnvUrl.includes('local') ? 'local' : 'aat';
-}
-
 async function previewEnv() {
-  return process.env.TEST_URL.includes('-preview');
+  return process.env.TEST_URL.includes(mvData.PREVIEW_ENV);
 }
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
-  if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV) && process.env.TEST_URL.includes('-preview')) {
+  if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV) || process.env.TEST_URL.includes(mvData.LOCAL_ENV)) {
     await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
     await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
     console.log(await I.grabCurrentUrl());
@@ -260,5 +299,10 @@ module.exports = {
   redactMultiplePagesTest,
   createRedactionsUsingDrawBoxAndRedactText,
   previewAllRedactionsTest,
-  saveAllRedactionsTest
+  saveAllRedactionsTest,
+  nonTextualHighlightAndAddACommentTest,
+  nonTextualHighlightUsingDrawBoxTest,
+  updateNonTextualCommentTest,
+  deleteNonTextualCommentTest,
+  redactSearchAndRedctAllTest
 }

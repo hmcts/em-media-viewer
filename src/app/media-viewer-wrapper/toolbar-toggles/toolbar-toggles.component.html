@@ -1,13 +1,56 @@
-<table style="float: right; margin-top: 15px;">
+<table style="float: right; margin-top: 15px">
   <tr>
     <ng-container *ngIf="toggleToolbar.getValue()">
-      <td><app-toggle [label]="'search'" (toggleButtonOverrides)="toggleButtonOverrides('showSearchBar', $event)"></app-toggle></td>
-      <td><app-toggle [label]="'navigate'" (toggleButtonOverrides)="toggleButtonOverrides('showNavigation', $event)"></app-toggle></td>
-      <td><app-toggle [label]="'rotate'" (toggleButtonOverrides)="toggleButtonOverrides('showRotate', $event)"></app-toggle></td>
-      <td><app-toggle [label]="'zoom'" (toggleButtonOverrides)="toggleButtonOverrides('showZoom', $event)"></app-toggle></td>
-      <td><app-toggle [label]="'print'" (toggleButtonOverrides)="toggleButtonOverrides('showPrint', $event)"></app-toggle></td>
-      <td><app-toggle [label]="'download'" (toggleButtonOverrides)="toggleButtonOverrides('showDownload', $event)"></app-toggle></td>
-      <td><app-toggle [label]="'comments'" (toggleButtonOverrides)="toggleButtonOverrides('showCommentSummary', $event)"></app-toggle></td>
+      <td>
+        <app-toggle
+          [label]="'search'"
+          (toggleButtonOverrides)="
+            toggleButtonOverrides('showSearchBar', $event)
+          "
+        ></app-toggle>
+      </td>
+      <td>
+        <app-toggle
+          [label]="'navigate'"
+          (toggleButtonOverrides)="
+            toggleButtonOverrides('showNavigation', $event)
+          "
+        ></app-toggle>
+      </td>
+      <td>
+        <app-toggle
+          [label]="'rotate'"
+          (toggleButtonOverrides)="toggleButtonOverrides('showRotate', $event)"
+        ></app-toggle>
+      </td>
+      <td>
+        <app-toggle
+          [label]="'zoom'"
+          (toggleButtonOverrides)="toggleButtonOverrides('showZoom', $event)"
+        ></app-toggle>
+      </td>
+      <td>
+        <app-toggle
+          [label]="'print'"
+          (toggleButtonOverrides)="toggleButtonOverrides('showPrint', $event)"
+        ></app-toggle>
+      </td>
+      <td>
+        <app-toggle
+          [label]="'download'"
+          (toggleButtonOverrides)="
+            toggleButtonOverrides('showDownload', $event)
+          "
+        ></app-toggle>
+      </td>
+      <td>
+        <app-toggle
+          [label]="'comments'"
+          (toggleButtonOverrides)="
+            toggleButtonOverrides('showCommentSummary', $event)
+          "
+        ></app-toggle>
+      </td>
     </ng-container>
     <td>
       <div class="govuk-grid-row">
@@ -16,8 +59,13 @@
         </div>
         <div class="govuk-grid-column-full">
           <label for="toggleAnnotations" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleAnnotations" [checked]="toggleAnnotations.getValue()"
-                   (change)="toggleAnnotations.next($event.target.checked)" aria-label="annotate">
+            <input
+              type="checkbox"
+              id="toggleAnnotations"
+              [checked]="toggleAnnotations.getValue()"
+              (change)="toggleAnnotations.next($event.target.checked)"
+              aria-label="annotate"
+            />
             <span class="slider round"></span>
           </label>
         </div>
@@ -30,8 +78,13 @@
         </div>
         <div class="govuk-grid-column-full">
           <label for="toggleRedact" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleRedact" [checked]="toggleRedaction.getValue()"
-                   (change)="toggleRedaction.next($event.target.checked)" aria-label="redact">
+            <input
+              type="checkbox"
+              id="toggleRedact"
+              [checked]="toggleRedaction.getValue()"
+              (change)="toggleRedaction.next($event.target.checked)"
+              aria-label="redact"
+            />
             <span class="slider round"></span>
           </label>
         </div>
@@ -44,8 +97,13 @@
         </div>
         <div class="govuk-grid-column-full">
           <label for="toggleICP" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleICP" [checked]="toggleICP.getValue()"
-                   (change)="toggleICP.next($event.target.checked)" aria-label="icp">
+            <input
+              type="checkbox"
+              id="toggleICP"
+              [checked]="toggleICP.getValue()"
+              (change)="toggleICP.next($event.target.checked)"
+              aria-label="icp"
+            />
             <span class="slider round"></span>
           </label>
         </div>
@@ -58,8 +116,32 @@
         </div>
         <div class="govuk-grid-column-full">
           <label for="toggleMultimedia" class="switch govuk-!-margin-right-2">
-            <input type="checkbox" id="toggleMultimedia" [checked]="toggleMultimediaPlayer.getValue()"
-                   (change)="toggleMultimediaPlayer.next($event.target.checked)" aria-label="toggleMultimedia">
+            <input
+              type="checkbox"
+              id="toggleMultimedia"
+              [checked]="toggleMultimediaPlayer.getValue()"
+              (change)="toggleMultimediaPlayer.next($event.target.checked)"
+              aria-label="toggleMultimedia"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <span class="govuk-!-font-weight-bold">Search Redact</span>
+        </div>
+        <div class="govuk-grid-column-full">
+          <label for="toggleRedactSearch" class="switch govuk-!-margin-right-2">
+            <input
+              type="checkbox"
+              id="toggleRedactSearch"
+              [checked]="toggleSearchRedact.getValue()"
+              (change)="toggleSearchRedact.next($event.target.checked)"
+              aria-label="toggleRedactSearch"
+            />
             <span class="slider round"></span>
           </label>
         </div>

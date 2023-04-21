@@ -79,4 +79,18 @@ describe('Toolbar Event Service', () => {
     expect(commentsToggleSpy).toHaveBeenCalledWith(false);
   });
 
+  it('should toggle redaction mode off', () => {
+    service.redactionMode.next(false);
+    service.toggleRedactionMode();
+    expect(service.drawModeSubject.getValue()).toBeFalsy();
+    expect(service.grabNDrag.getValue()).toBeFalsy();
+    expect(service.redactionMode.getValue()).toBeTruthy();
+  });
+
+  it('should toggle redaction mode on', () => {
+    service.redactionMode.next(true);
+    service.toggleRedactionMode();
+    expect(service.redactionMode.getValue()).toBeFalsy();
+  });
+
 });
