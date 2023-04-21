@@ -1,11 +1,13 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { RedactionApiService } from './redaction-api.service';
+import { BulkRedaction } from './redaction.model';
 
 describe('RedactionApiService', () => {
   let httpMock: HttpTestingController;
   let api: RedactionApiService;
   const redaction = { redactionId: 'redaction-id', documentId: 'document-id', page: 1, rectangles: [] };
+  const bulkRedaction: BulkRedaction = { searchRedactions: [redaction] };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,7 +22,7 @@ describe('RedactionApiService', () => {
     api.getRedactions('document-id')
       .subscribe((response) => {
         expect(response.body[0].documentId).toBe('document-id');
-        }, error => done(error));
+      }, error => done(error));
 
     const req = httpMock.expectOne('/api/markups/document-id');
     expect(req.request.method).toBe('GET');
@@ -61,7 +63,7 @@ describe('RedactionApiService', () => {
   }));
 
   it('should apply redactions', fakeAsync((done) => {
-    const blobResp = new Blob(['blob'], { type : 'application/json' });
+    const blobResp = new Blob(['blob'], { type: 'application/json' });
     const redactPaylod = { redactions: [redaction], documentId: 'document-id' };
     api.redact(redactPaylod).subscribe((response) => {
       expect(response.body).toEqual(blobResp);
@@ -72,5 +74,18 @@ describe('RedactionApiService', () => {
     expect(req.request.body.documentId).toBe('document-id');
     expect(req.request.body).toBe(redactPaylod);
     req.flush(blobResp);
+  }));
+
+  it('should save bulk redaction markup', fakeAsync((done) => {
+    api.saveBulkRedaction(bulkRedaction).subscribe((response) => {
+      expect(response).toEqual(bulkRedaction);
+    }, error => done(error));
+
+    const req = httpMock.expectOne('/api/markups/search');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body.searchRedactions[0].documentId).toBe('document-id');
+    expect(req.request.body.searchRedactions[0].redactionId).toBe('redaction-id');
+    expect(req.request.body.searchRedactions[0].page).toBe(1);
+    req.flush(bulkRedaction);
   }));
 });
