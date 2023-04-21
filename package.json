@@ -12,7 +12,7 @@
     "setup:demo": "yarn build && yarn copy:demo-files",
     "package": "yarn build:lib && yarn copy:lib-files && yarn npm-pack",
     "build": "yarn build:lib && yarn build:demo",
-    "build:lib": "cd projects/media-viewer && npx handpick --target=devDependencies --manager=yarn && ng build --prod",
+    "build:lib": "cd projects/media-viewer && yarn install && ng build --prod",
     "build:demo": "ng build media-viewer-demo-app --prod",
     "copy:lib-files": "yarn copy:lib-js-dependencies && yarn copy:lib-assets && yarn copy:docs",
     "copy:demo-files": "yarn copy:demo-js-dependencies && yarn copy:demo-assets",
@@ -24,7 +24,7 @@
     "copy:license": "cross-env NODE_PATH=. cp ./README.md dist/media-viewer",
     "copy:readme": "cross-env NODE_PATH=. cp ./LICENSE dist/media-viewer",
     "publish:dist": "yarn package && cd dist/media-viewer && yarn publish",
-    "npm-pack": "cd dist/media-viewer && yarn pack",
+    "npm-pack": "cd dist/media-viewer && touch yarn.lock && yarn pack",
     "test": "cd projects/media-viewer; ng test",
     "test:coverage": "yarn test",
     "test:a11y": "yarn test",
@@ -192,5 +192,6 @@
     "webdriver-manager": "^12.1.7",
     "webdriverio": "7.19.4",
     "when": "3.7.8"
-  }
+  },
+  "packageManager": "yarn@3.4.1"
 }
