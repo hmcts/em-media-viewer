@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import * as icpEvents from './icp-event.service';
 import { participantsListVisible } from './icp-event.service';
+import { RedactionSearch } from './redaction-search-bar/redaction-search.model';
 
 // Toolbar Custom-Event Types
 export type HighlightMode = boolean;
@@ -45,6 +46,9 @@ export class ToolbarEventService {
   public readonly applyRedactToDocument = new Subject();
   public readonly clearAllRedactMarkers = new Subject();
   public readonly redactWholePage = new Subject();
+  public readonly redactionSerachSubject = new Subject<RedactionSearch>();
+  public readonly redactAllInProgressSubject = new BehaviorSubject(false);
+  public readonly openRedactionSearch = new Subject<boolean>();
 
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly searchBarHidden = new BehaviorSubject(true);
@@ -164,6 +168,7 @@ export class ToolbarEventService {
     } else {
       this.redactionMode.next(false);
     }
+    this.openRedactionSearch.next(false);
   }
 
   public toggleRedactionPreview(viewMode: boolean): void {

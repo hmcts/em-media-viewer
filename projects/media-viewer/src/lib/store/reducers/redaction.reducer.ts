@@ -1,7 +1,8 @@
+import { map } from 'rxjs/operators';
 import * as fromRedaction from '../actions/redaction.actions';
 import * as fromAnnotations from '../actions/annotation.actions';
-import {StoreUtils} from '../store-utils';
-import {SelectionAnnotation} from '../../annotations/models/event-select.model';
+import { StoreUtils } from '../store-utils';
+import { SelectionAnnotation } from '../../annotations/models/event-select.model';
 import { Redaction } from '../../redaction/services/redaction.model'; // todo rename
 
 
@@ -21,7 +22,7 @@ export const initialRedactionState: RedactionState = {
   documentId: undefined
 };
 
-export function redactionReducer (
+export function redactionReducer(
   state = initialRedactionState,
   action: fromRedaction.RedactionActions | fromAnnotations.AnnotationsActions
 ): RedactionState {
@@ -51,7 +52,7 @@ export function redactionReducer (
     }
 
     case fromRedaction.SAVE_REDACTION_SUCCESS: {
-      const { payload } =  action;
+      const { payload } = action;
       const redactionEntities = {
         ...state.redactionEntities,
         [payload.redactionId]: payload
@@ -64,7 +65,20 @@ export function redactionReducer (
         redactionPageEntities
       };
     }
-
+    case fromRedaction.SAVE_BULK_REDACTION_SUCCESS: {
+      const payloadResult = Object.assign({}, ...action.payload.searchRedactions.map((x) => ({ [x.redactionId]: x })));
+      const redactionEntities = {
+        ...state.redactionEntities,
+        ...payloadResult
+      };
+      const redactionArray = Object.keys(redactionEntities).map(key => redactionEntities[key]);
+      const redactionPageEntities = StoreUtils.groupByKeyEntities(redactionArray, 'page');
+      return {
+        ...state,
+        redactionEntities,
+        redactionPageEntities
+      };
+    }
     case fromRedaction.SELECT_REDACTION:
     case fromAnnotations.SELECT_ANNOTATION: {
       return {
