@@ -88,6 +88,26 @@ describe('MainToolbarComponent', () => {
         sidebarOpen => expect(sidebarOpen).toBeTruthy()
         , error => done(error)
       );
+    component.toolbarEvents.sidebarOutlineView.asObservable()
+      .subscribe(
+        sidebarOutlineView => expect(sidebarOutlineView).toBeTruthy()
+        , error => done(error)
+      );  
+  }));
+
+  it('should toggle bookmarks sidebar open', fakeAsync((done) => {
+    component.toggleBookmarksSideBar();
+
+    component.toolbarEvents.sidebarOpen.asObservable()
+      .subscribe(
+        sidebarOpen => expect(sidebarOpen).toBeTruthy()
+        , error => done(error)
+      );
+    component.toolbarEvents.sidebarOutlineView.asObservable()
+      .subscribe(
+        sidebarOutlineView => expect(sidebarOutlineView).toBeFalsy()
+        , error => done(error)
+      );  
   }));
 
   it('should not show searchbar', fakeAsync((done) => {
