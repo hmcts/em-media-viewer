@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import moment from 'moment-timezone';
 
 
@@ -16,7 +16,7 @@ import { Annotation } from '../../annotation-view/annotation.model';
 export class HighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,
-              private store: Store<fromStore.AnnotationSetState>) {}
+    private store: Store<fromStore.AnnotationSetState>) { }
 
   saveAnnotation(rectangles: Rectangle[], page: number) {
     this.store.pipe(select(fromSelectors.getDocumentIdSetId), take(1)).subscribe(anoSetDocId => {
@@ -40,7 +40,7 @@ export class HighlightCreateService {
     });
   }
 
-  applyRotation(pageHeight, pageWidth, offsetHeight, offsetWidth, offsetTop, offsetLeft, rotate, zoom ) {
+  applyRotation(pageHeight, pageWidth, offsetHeight, offsetWidth, offsetTop, offsetLeft, rotate, zoom) {
     const { x, y, width, height } = {
       x: +(offsetLeft / zoom).toFixed(2),
       y: +(offsetTop / zoom).toFixed(2),

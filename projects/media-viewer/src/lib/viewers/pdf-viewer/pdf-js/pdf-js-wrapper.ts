@@ -1,3 +1,4 @@
+import { RedactionSearch } from './../../../toolbar/redaction-search-bar/redaction-search.model';
 import * as pdfjsLib from 'pdfjs-dist';
 import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
@@ -34,26 +35,38 @@ export class PdfJsWrapper {
     public readonly outlineLoaded: Subject<Outline>,
     public readonly documentLoadFailed: Subject<Error>,
     public readonly pageRendered: Subject<PageEvent[]>,
-    public readonly positionUpdated: Subject<{ location: PdfPosition }>,
+    public readonly positionUpdated: Subject<{ location: PdfPosition }>
   ) {
     this.pdfViewer.eventBus.on('updateviewarea', e => positionUpdated.next(e));
     this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPageInputValueSubject.next(e.pageNumber));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
 
-    this.pdfViewer.eventBus.on('pagerendered', e => {}); // not used left for future convenience
+    this.pdfViewer.eventBus.on('pagerendered', e => { }); // not used left for future convenience
     this.pdfViewer.eventBus.on('pagesloaded', (e) => this.emitDocumentInfo(e));
-    this.pdfViewer.eventBus.on('scalechanging', (e) =>  this.emitDocumentInfo(e));
+    this.pdfViewer.eventBus.on('scalechanging', (e) => this.emitDocumentInfo(e));
     this.pdfViewer.eventBus.on('rotationchanging', (e) => this.emitDocumentInfo(e));
 
     this.pdfViewer.eventBus.on('updatefindcontrolstate', event => {
-      if (event.state !== FindState.PENDING) {
-        this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
-      }
+      this.sendSearchDetails(event);
     });
     this.pdfViewer.eventBus.on('updatefindmatchescount', event => {
       this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
     });
     this.zoomValue = 1;
+  }
+
+  sendSearchDetails(event: any) {
+    if (event.state !== FindState.PENDING) {
+      this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
+      if (event?.source?.selected?.pageIdx !== -1 && event.matchesCount.total > 0) {
+        this.toolbarEvents.redactionSerachSubject.next({
+          page: event?.source?.selected?.pageIdx,
+          matchedIndex: event?.source?.selected?.matchIdx,
+          matchesCount: event.matchesCount.total
+        } as RedactionSearch
+        );
+      }
+    }
   }
 
   private emitDocumentInfo(e) {
@@ -111,20 +124,20 @@ export class PdfJsWrapper {
   }
 
   private async setOutlinePageNumbers(pdfDocument, outlineArray: Outline[]) {
-    outlineArray.forEach ( async (outline: Outline) => {
+    outlineArray.forEach(async (outline: Outline) => {
       await this.setNestedOutlinePageNumbers(pdfDocument, outline);
     });
   }
 
   private async setNestedOutlinePageNumbers(pdfDocument, outline: Outline) {
     outline.pageNumber = await this.getOutlinePageNumber(pdfDocument, outline);
-    outline.items.forEach( async (outlineItem: Outline) => {
+    outline.items.forEach(async (outlineItem: Outline) => {
       outlineItem.pageNumber = await this.getOutlinePageNumber(pdfDocument, outlineItem);
       this.setNestedOutlinePageNumbers(pdfDocument, outlineItem);
     });
   }
 
-  private async getOutlinePageNumber(pdfDocument, outline: Outline): Promise <number> {
+  private async getOutlinePageNumber(pdfDocument, outline: Outline): Promise<number> {
     const dest = outline.dest;
     const pageIndex = await pdfDocument.getPageIndex(dest[0]);
     return Number(pageIndex) + 1;
