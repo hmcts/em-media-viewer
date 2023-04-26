@@ -110,14 +110,12 @@ mv-anno-comment {
     color: $govuk-secondary-text-colour;
   }
 
-
   .aui-comment__footer {
     font-size: .1px;
 
     .govuk-button {
       margin-right: govuk-spacing(2);
     }
-
   }
 
   .mvTextHighlight {
@@ -125,6 +123,6 @@ mv-anno-comment {
   }
 
   .stylestoggle {
-    margin-top: 35%
-  } 
+    margin-top: 15em;
+  }
 }

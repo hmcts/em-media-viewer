@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CommentSetComponent } from '../comment-set.component';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import { CommentComponent } from './comment.component';
@@ -9,7 +9,7 @@ import { CommentComponent } from './comment.component';
 export class CommentService {
 
   public readonly unsavedChanges = new Subject<boolean>();
-  public readonly marginToCommentEmitter = new Subject<boolean>();
+  public readonly marginToCommentEmitter = new BehaviorSubject<boolean>(false);
   commentSetComponent: CommentSetComponent;
 
   setCommentSet(commentSetComponent) {
