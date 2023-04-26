@@ -18,7 +18,6 @@
       display: block;
       clear: both;
     }
-
   }
 
   .mv-toolbar-main {
@@ -52,8 +51,6 @@
     display: none;
   }
 }
-
-
 
 .mv-toolbar__menu-button--index {
   width: 100px;
@@ -257,6 +254,13 @@
   }
 }
 
+.redaction-button--search {
+  width: 10%;
+  &:after {
+    background-image: url(/assets/images/search.svg);
+  }
+}
+
 .mv-toolbar__menu-button--present {
   width: 120px;
   &:after {
@@ -330,12 +334,13 @@
 
 /* remove up and down arrows from page number field as there are already up and down icons on the toolbar
 /* Chrome, Safari, Edge, Opera */
-#pageNumber ::-webkit-outer-spin-button, #pageNumber::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+#pageNumber ::-webkit-outer-spin-button,
+#pageNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 /* Firefox */
-#pageNumber[type=number] {
+#pageNumber[type="number"] {
   -moz-appearance: textfield;
 }
 

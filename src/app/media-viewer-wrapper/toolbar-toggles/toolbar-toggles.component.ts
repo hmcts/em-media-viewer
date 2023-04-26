@@ -19,6 +19,7 @@ export class ToolbarTogglesComponent {
   @Output() toggleICP = new BehaviorSubject(true);
   @Output() toggleMultimediaPlayer = new BehaviorSubject(true);
   @Output() showCommentSummary = new BehaviorSubject(false);
+  @Output() toggleSearchRedact = new BehaviorSubject(false);
 
   toolbarButtonOverrides = {};
 
