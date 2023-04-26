@@ -8,6 +8,7 @@
      *ngIf="url && !errorMessage">
   <div #imageContainer id="image-container"
        mvGrabNDrag [dragX]="imageContainer" [dragEnabled]="enableGrabNDrag"
+       (scroll)="$event"
        [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations, 'show-comments-panel': showCommentsPanel }">
     <img #img
          [src]="url"
