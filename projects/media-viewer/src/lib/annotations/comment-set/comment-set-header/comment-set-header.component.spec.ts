@@ -5,6 +5,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from '../../../store/reducers/reducers';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { CommentService } from '../comment/comment.service';
 
 describe('CommentSetHeader', () => {
   let component: CommentSetHeaderComponent;
@@ -20,7 +21,7 @@ describe('CommentSetHeader', () => {
         StoreModule.forRoot({})],
       declarations: [CommentSetHeaderComponent],
       providers: [
-
+        CommentService
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -62,4 +63,18 @@ describe('CommentSetHeader', () => {
 
     expect(toggleCommentsPanelSpy).toHaveBeenCalledWith(!value);
   });
+
+  it('should set marginToComment to true if tab is selected', () => {
+    component.tabSelected = 'comments';
+    component.selectTab('tab1');
+    expect(component.marginToComment).toBeTruthy();
+  });
+
+  it('should set marginToComment to false if tab is not selected', () => {
+    component.tabSelected = 'tab1';
+    component.selectTab('tab1');
+    expect(component.marginToComment).toBeFalsy();
+  });
+
+
 });
