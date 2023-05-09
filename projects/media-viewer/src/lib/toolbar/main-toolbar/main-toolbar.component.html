@@ -63,14 +63,14 @@
             *ngIf="toolbarButtons.showSidebar" 
             id="mvBookmarksBtn" 
             title="Bookmarks" 
-            data-l10n-id="index" 
-            #mvIndexBtn
+            data-l10n-id="bookmarks" 
+            #mvBookmarksBtn
             class="mv-button mv-toolbar__menu-button--bookmarks"
             [class.button-hidden-on-toolbar]="
-              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvIndexBtn']
+              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvBookmarksBtn']
             "
             [class.button-hidden-on-dropdown]="
-              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvIndexBtn']
+              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvBookmarksBtn']
             " 
             aria-pressed="false"
             [disabled]="redactAllInProgress"
