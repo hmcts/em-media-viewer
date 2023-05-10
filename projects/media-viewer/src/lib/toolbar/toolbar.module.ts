@@ -12,6 +12,7 @@ export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.serv
 export { ToolbarEventService } from './toolbar-event.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { RouterModule } from '@angular/router';
+import { HighlightToolbarComponent } from './highlight-toolbar/highlight-toolbar.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { RouterModule } from '@angular/router';
     MainToolbarComponent,
     RedactionToolbarComponent,
     IcpToolbarComponent,
-    RedactionSearchBarComponent
+    RedactionSearchBarComponent,
+    HighlightToolbarComponent
   ],
   providers: [
     ToolbarButtonVisibilityService,
@@ -31,7 +33,8 @@ import { RouterModule } from '@angular/router';
     SearchBarComponent,
     RedactionToolbarComponent,
     IcpToolbarComponent,
-    RedactionSearchBarComponent
+    RedactionSearchBarComponent,
+    HighlightToolbarComponent
   ],
   imports: [
     CommonModule,

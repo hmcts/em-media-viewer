@@ -17,20 +17,22 @@ export class AnnotationApiService {
 
   constructor(
     private readonly httpClient: HttpClient
-  ) {}
+  ) { }
 
   public getAnnotationSet(documentId: string): Observable<any> { // todo add model
     const fixedUrl = `${this.annotationSetsFullUrl}/filter?documentId=${documentId}`;
     return this.httpClient
-      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
+      .get<AnnotationSet>(fixedUrl, { observe: 'response', withCredentials: true });
   }
 
   public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
     return this.httpClient
-      .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
+      .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response', withCredentials: true })
       .pipe(
         map(response => response.body),
-        catchError(() => [])
+        catchError(error => {
+          return []
+        })
       );
   }
 
@@ -57,13 +59,13 @@ export class AnnotationApiService {
     const url = `${this.annotationFullsUrl}/${annotationId}`;
 
     return this.httpClient
-      .delete<null>(url, { observe: 'response' , withCredentials: true })
+      .delete<null>(url, { observe: 'response', withCredentials: true })
       .pipe(map(response => response.body));
   }
 
   public postAnnotation(annotation: Partial<Annotation>): Observable<Annotation> {
     return this.httpClient
-      .post<Annotation>(this.annotationFullsUrl, annotation, { observe: 'response' , withCredentials: true })
+      .post<Annotation>(this.annotationFullsUrl, annotation, { observe: 'response', withCredentials: true })
       .pipe(map(response => response.body));
   }
 

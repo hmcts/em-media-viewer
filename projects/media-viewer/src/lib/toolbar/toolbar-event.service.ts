@@ -20,10 +20,21 @@ export interface SearchResultsCount {
   total: number;
 }
 
+export enum SearchType {
+  Redact = "Redact",
+  Highlight = "Highlight",
+}
+
+export interface SearchMode {
+  modeType: SearchType;
+  isOpen: boolean;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ToolbarEventService {
 
   public readonly highlightModeSubject = new BehaviorSubject<HighlightMode>(false);
+  public readonly highlightToolbarSubject = new BehaviorSubject<HighlightMode>(false);
   public readonly drawModeSubject = new BehaviorSubject<DrawMode>(false);
   public readonly rotateSubject = new Subject<number>();
   public readonly searchSubject = new Subject<SearchOperation>();
@@ -44,11 +55,12 @@ export class ToolbarEventService {
   public readonly redactionMode = new BehaviorSubject(false);
   public readonly redactionPreview = new Subject<boolean>();
   public readonly applyRedactToDocument = new Subject();
+
   public readonly clearAllRedactMarkers = new Subject();
   public readonly redactWholePage = new Subject();
   public readonly redactionSerachSubject = new Subject<RedactionSearch>();
   public readonly redactAllInProgressSubject = new BehaviorSubject(false);
-  public readonly openRedactionSearch = new Subject<boolean>();
+  public readonly openRedactionSearch = new BehaviorSubject<SearchMode | null>(null);
 
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly searchBarHidden = new BehaviorSubject(true);
@@ -64,6 +76,7 @@ export class ToolbarEventService {
     this.setCurrentPageSubject.next(1);
     this.zoomValueSubject.next(1);
     this.highlightModeSubject.next(false);
+    this.highlightToolbarSubject.next(false);
     this.drawModeSubject.next(false);
     this.showCommentSummary.next(false);
     this.grabNDrag.next(false);
@@ -72,12 +85,12 @@ export class ToolbarEventService {
   // Function to inform Observers that highlightMode has been enabled
   public toggleHighlightMode(): void {
     // Highlight and Draw states are mutually exclusive
-    if (this.highlightModeSubject.getValue() === false) {
+    if (this.highlightToolbarSubject.getValue() === false) {
       this.drawModeSubject.next(false);
       this.grabNDrag.next(false);
-      this.highlightModeSubject.next(true);
+      this.highlightToolbarSubject.next(true);
     } else {
-      this.highlightModeSubject.next(false);
+      this.highlightToolbarSubject.next(false);
     }
   }
 
@@ -85,6 +98,7 @@ export class ToolbarEventService {
   public toggleDrawMode(): void {
     if (this.drawModeSubject.getValue() === false) {
       this.highlightModeSubject.next(false);
+      this.highlightToolbarSubject.next(false);
       this.grabNDrag.next(false);
       this.drawModeSubject.next(true);
     } else {
@@ -168,7 +182,7 @@ export class ToolbarEventService {
     } else {
       this.redactionMode.next(false);
     }
-    this.openRedactionSearch.next(false);
+    this.openRedactionSearch.next({ modeType: SearchType.Redact, isOpen: false });
   }
 
   public toggleRedactionPreview(viewMode: boolean): void {

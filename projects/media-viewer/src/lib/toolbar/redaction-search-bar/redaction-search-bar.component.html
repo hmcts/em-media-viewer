@@ -21,7 +21,7 @@
         aria-label="Find in document"
         #findInput
         title="Find in document"
-        placeholder="Redact from search..."
+        placeholder="{{ titleText }} from search..."
         tabindex="0"
         data-l10n-id="search_input"
         [(ngModel)]="searchText"
@@ -45,7 +45,7 @@
           (click)="search(false)"
           [disabled]="redactAllInProgress"
         >
-          Redact all
+          {{ titleText }} all
         </button>
       </div>
       <div
@@ -58,7 +58,7 @@
             class="govuk-!-display-inline-block govuk-!-margin-top-0 govuk-!-margin-bottom-1"
             *ngIf="redactAllInProgress"
           >
-            Redacting in progress
+            {{ inProgessText }} in progress
           </h4>
           {{ redactAllInProgress ? "" : resultsText }}</span
         >

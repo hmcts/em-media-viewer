@@ -1,0 +1,40 @@
+<div class="redaction">
+  <label class="govuk-label redaction-title" data-l10n-id="redaction_options"
+    >Hightlight options</label
+  >
+  <button
+    id="toggleDrawButton"
+    class="mv-button redaction-button--draw"
+    title="Draw a box"
+    data-l10n-id="toggleDrawButton"
+    (click)="onHighlight()"
+    [disabled]="redactionAllInProgress"
+  >
+    <span data-l10n-id="toggleDrawButton_label">Higlight text</span>
+  </button>
+
+  <button
+    id="mvRedactFromSearchBtn"
+    title="From search"
+    data-l10n-id="fromSearchButton"
+    class="mv-button redaction-button--search"
+    (click)="onAllSearch()"
+    [disabled]="redactionAllInProgress"
+  >
+    <span style="width: 5rem" data-l10n-id="fromSearchButton_label"
+      >From search</span
+    >
+  </button>
+
+  <button
+    id="mvCloseBtn"
+    #mvCloseBtn
+    class="mv-button redaction-button--close"
+    title="Close Redaction"
+    data-l10n-id="mvRedactBtn"
+    (click)="onClose()"
+    [disabled]="redactionAllInProgress"
+  >
+    <span data-l10n-id="Close Redaction">Close Highlight</span>
+  </button>
+</div>

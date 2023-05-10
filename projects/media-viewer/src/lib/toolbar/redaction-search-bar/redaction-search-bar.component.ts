@@ -1,5 +1,5 @@
 import { BulkRedaction, Redaction } from './../../redaction/services/redaction.model';
-import { SearchResultsCount } from './../toolbar-event.service';
+import { SearchMode, SearchResultsCount, SearchType } from './../toolbar-event.service';
 import { RedactionSearch, RedactRectangle } from './redaction-search.model';
 import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -12,6 +12,8 @@ import * as fromDocument from '../../store/selectors/document.selectors';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import uuid from 'uuid';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
+import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
+import { Annotation } from '../../annotations/annotation-set/annotation-view/annotation.model';
 
 @Component({
   selector: 'mv-redaction-search-bar',
@@ -38,11 +40,15 @@ export class RedactionSearchBarComponent implements OnInit {
   openSearchModal: boolean;
   redactAllInProgress: boolean;
   redactAllText?: string;
+  searchType: SearchType
+  inProgessText: string;
+  titleText: string;
 
 
   private subscription: Subscription;
   private documentId: string;
   public advancedSearchVisible = false;
+
 
   constructor(
     private store: Store<fromStore.State>,
@@ -62,7 +68,13 @@ export class RedactionSearchBarComponent implements OnInit {
     this.subscription.add(
       this.toolbarEvents.searchResultsCountSubject.subscribe(results => this.setSearchResultsCount(results))
     );
-    this.subscription.add(this.toolbarEvents.openRedactionSearch.subscribe(isOpen => this.openSearchModal = isOpen));
+    this.subscription.add(this.toolbarEvents.openRedactionSearch.subscribe((searchMode: SearchMode) => {
+      if (searchMode) {
+        this.openSearchModal = searchMode.isOpen;
+        this.searchType = searchMode.modeType;
+        this.modeText();
+      }
+    }));
     this.subscription.add(this.toolbarEvents.redactAllInProgressSubject
       .subscribe(inProgress => this.redactAllInProgress = inProgress));
   }
@@ -98,6 +110,17 @@ export class RedactionSearchBarComponent implements OnInit {
     });
   }
 
+  modeText(): void {
+    if (this.searchType === SearchType.Highlight) {
+      this.inProgessText = 'Highlighting';
+      this.titleText = 'Highlight';
+    }
+    else if (this.searchType === SearchType.Redact) {
+      this.inProgessText = 'Redacting';
+      this.titleText = 'Redact';
+    }
+  }
+
   private saveRedaction(redactRectangle: RedactRectangle[]) {
     const redaction = redactRectangle.map(ele => {
       return { page: ele.page, rectangles: ele.rectangles, redactionId: uuid(), documentId: this.documentId } as Redaction;
@@ -127,7 +150,7 @@ export class RedactionSearchBarComponent implements OnInit {
   }
 
   onCloseSearchModal() {
-    this.toolbarEvents.openRedactionSearch.next(false);
+    this.toolbarEvents.openRedactionSearch.next({ isOpen: false, modeType: this.searchType });
   }
 
 
@@ -169,7 +192,15 @@ export class RedactionSearchBarComponent implements OnInit {
       if (this.redactAll && this.resultCount && this.redactElements.length === this.resultCount) {
         this.redactAll = false;
         this.redactAllText = null;
-        this.saveRedaction(this.redactElements);
+        if (this.searchType === SearchType.Redact) {
+          this.saveRedaction(this.redactElements);
+        }
+        else if (this.searchType === SearchType.Highlight) {
+          this.redactElements.forEach(ele => {
+            this.highlightService.saveAnnotation(ele.rectangles, ele.page);
+          });
+          //this.highlightService.saveAnnotationSet(this.redactElements);
+        }
       }
     }
   }
