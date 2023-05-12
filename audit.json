@@ -280,6 +280,7 @@
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/_GET":"ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/favicon.ico_GET": "ignore",
+  "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/runtime-es2015.626432e334ccf76bdeb8.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/polyfills-es5.78f6b78989b4b912e5da.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/runtime-es5.2215abb7432650f700e3.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/main-es2015.cad7eef3e94ccd343c39.js_GET": "ignore",
