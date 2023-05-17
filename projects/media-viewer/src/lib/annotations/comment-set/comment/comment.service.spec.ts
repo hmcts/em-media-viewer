@@ -88,4 +88,20 @@ describe('CommentService', () => {
 
     expect(commentService.hasUnsavedComments(annotation)).toBeFalsy();
   });
+
+  it('should update marginToCommentEmitter status to true', () => {
+    spyOn(commentService.marginToCommentEmitter, 'next');
+    commentService.createMarginToCommentEvent(true);
+
+    expect(commentService.marginToCommentEmitter.next).toHaveBeenCalledTimes(1);
+    expect(commentService.marginToCommentEmitter.next).toHaveBeenCalledWith(true);
+  });
+
+  it('should update marginToCommentEmitter status to false', () => {
+    spyOn(commentService.marginToCommentEmitter, 'next');
+    commentService.createMarginToCommentEvent(false);
+
+    expect(commentService.marginToCommentEmitter.next).toHaveBeenCalledTimes(1);
+    expect(commentService.marginToCommentEmitter.next).toHaveBeenCalledWith(false);
+  });
 });
