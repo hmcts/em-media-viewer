@@ -6,7 +6,7 @@ import * as bookmarksSelectors from '../../../store/selectors/bookmark.selectors
 import { BookmarkNode } from '../../../store/models/bookmarks.interface';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmark.actions';
 import { take } from 'rxjs/operators';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { ViewerEventService } from '../../viewer-event.service';
 import { BookmarksState } from '../../../store/reducers/bookmarks.reducer';
 
@@ -68,6 +68,9 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   isViewedItem(current: Outline, next: Outline): boolean {
+    if (current.pageNumber === this.currentPageNumber) {
+      return true;
+    }
     return next === undefined ? current.pageNumber <= this.currentPageNumber :
       current.pageNumber <= this.currentPageNumber && (next.pageNumber > this.currentPageNumber);
   }
