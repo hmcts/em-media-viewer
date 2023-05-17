@@ -60,6 +60,14 @@
   }
 }
 
+.mv-toolbar__menu-button--bookmarks {
+  width: 140px;
+  &:after {
+    background-image: url(/assets/images/toolbarButton-bookmarkDark.png);
+    background-size: 18px 14px;
+  }
+}
+
 .mv-toolbar__menu-button--draw {
   width: 140px;
   &:after {

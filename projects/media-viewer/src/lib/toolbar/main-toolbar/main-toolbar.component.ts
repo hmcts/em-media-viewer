@@ -114,8 +114,22 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.toolbarEvents.toggleDrawMode();
   }
 
-  public toggleSideBar() {
-    this.toolbarEvents.sidebarOpen.next(!this.toolbarEvents.sidebarOpen.getValue());
+  public toggleIndexSideBar() {
+    const sidebarOpen = this.toolbarEvents.sidebarOpen.getValue();
+    const sidebarView = this.toolbarEvents.sidebarOutlineView.getValue();
+    if (!(sidebarOpen && !sidebarView)) {
+      this.toolbarEvents.toggleSideBar(!sidebarOpen);
+    }
+    this.toolbarEvents.toggleSideBarView(true);
+  }
+
+  public toggleBookmarksSideBar() {
+    const sidebarOpen = this.toolbarEvents.sidebarOpen.getValue();
+    const sidebarView = this.toolbarEvents.sidebarOutlineView.getValue();
+    if (!(sidebarOpen && sidebarView)) {
+      this.toolbarEvents.toggleSideBar(!sidebarOpen);
+    }
+    this.toolbarEvents.toggleSideBarView(false);
   }
 
   public togglePresentBar() {

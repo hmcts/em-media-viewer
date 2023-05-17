@@ -51,6 +51,8 @@ export class ToolbarEventService {
   public readonly openRedactionSearch = new Subject<boolean>();
 
   public readonly sidebarOpen = new BehaviorSubject(false);
+  public readonly sidebarOutlineView = new BehaviorSubject(true);
+
   public readonly searchBarHidden = new BehaviorSubject(true);
   public readonly commentsPanelVisible = new BehaviorSubject(false);
 
@@ -158,6 +160,10 @@ export class ToolbarEventService {
 
   toggleSideBar(toggle: boolean) {
     this.sidebarOpen.next(toggle);
+  }
+
+  toggleSideBarView(toggle: boolean) {
+    this.sidebarOutlineView.next(toggle);
   }
 
   public toggleRedactionMode(): void {
