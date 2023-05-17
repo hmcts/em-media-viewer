@@ -26,6 +26,7 @@
   "searchKeyword": "SSCS",
   "mvHighLight": "#mvHighlightBtn",
   "bookMarksButton": "#bookmarkButton",
+  "bookmarksToolbarButton": "#mvBookmarksBtn",
   "addBookmarkButton": "#addBookmark",
   "bookMarksIndex": "#mvIndexBtn",
   "viewBookmark": "#viewBookmark",

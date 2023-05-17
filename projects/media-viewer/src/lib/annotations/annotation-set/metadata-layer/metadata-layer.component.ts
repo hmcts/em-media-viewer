@@ -84,6 +84,7 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
           yCoordinate: rectangle.y
         } as any));
         this.toolbarEvents.toggleSideBar(true);
+        this.toolbarEvents.toggleSideBarView(false);
         this.highlightService.resetHighlight();
         this.rectangles = undefined;
 
