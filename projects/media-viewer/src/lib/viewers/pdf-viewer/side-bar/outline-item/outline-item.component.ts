@@ -30,6 +30,9 @@ export class OutlineItemComponent implements OnInit {
   }
 
   isViewedItem(current: Outline, next: Outline): boolean {
+    if (current.pageNumber === this.currentPageNumber) {
+      return true;
+    }
     return next === undefined ? current.pageNumber <= this.currentPageNumber && this.endPage > this.currentPageNumber :
       current.pageNumber <= this.currentPageNumber && (next.pageNumber > this.currentPageNumber);
   }
