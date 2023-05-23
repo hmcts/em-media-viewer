@@ -41,8 +41,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   private sortMode: String;
 
-  private readonly _customSort = "CUSTOM";
-  private readonly _positionSort = "POSITION";
+  private readonly _customSort = 'CUSTOM';
+  private readonly _positionSort = 'POSITION';
 
   constructor(private store: Store<fromBookmarks.BookmarksState | AnnotationSetState>) { }
 
@@ -61,7 +61,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.bookmarkNodes && !(this.sortMode === this.customSort)) {
+    if (changes.bookmarkNodes && !(this.sortMode === this.customSort)) {
       this.sortBookmarks();
     }
   }
@@ -172,24 +172,24 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   private sortBookmarks() {
-    switch(this.sortMode) { 
-      case this.customSort: { 
+    switch (this.sortMode) {
+      case this.customSort: {
          this.customSortBookmarks();
-         break; 
-      } 
-      case this.positionSort: { 
-        this.positionSortBookmarks(); 
-         break; 
-      } 
-      default: { 
-         this.customSortBookmarks(); 
-         break; 
-      } 
-   } 
+         break;
+      }
+      case this.positionSort: {
+        this.positionSortBookmarks();
+         break;
+      }
+      default: {
+         this.customSortBookmarks();
+         break;
+      }
+   }
   }
 
   private positionSortBookmarks() {
-    this.bookmarkNodes.sort((x,y) => x.pageNumber === y.pageNumber ? x.yCoordinate - y.yCoordinate : x.pageNumber - y.pageNumber);
+    this.bookmarkNodes.sort((a, b) => a.pageNumber === b.pageNumber ? a.yCoordinate - b.yCoordinate : a.pageNumber - b.pageNumber);
     this.tree.treeModel.update();
     this.setDragNDrop(false);
   }
