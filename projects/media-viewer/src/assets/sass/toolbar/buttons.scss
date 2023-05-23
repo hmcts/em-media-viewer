@@ -168,6 +168,30 @@ html[dir='rtl'] .splitToolbarButtonSeparator {
   transition-timing-function: ease;
 }
 
+.bookmark__sort__custom {
+  background: url(/assets/images/icon-bookmarks-custom.png) center center no-repeat;
+  filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg) brightness(107%) contrast(101%);
+  border-radius: 2px;
+  border: 1px ridge #D3D3D3;
+  width: 2em;
+  height: 2em;
+  background-size: 2em 2em;
+  margin: 2px 0px 0px 5px;
+  padding: 2px;
+}
+
+.bookmark__sort__position {
+  background: url(/assets/images/icon-bookmarks-position.png) center center no-repeat;
+  filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg) brightness(107%) contrast(101%);
+  border-radius: 2px;
+  border: 1px ridge #D3D3D3;
+  width: 2em;
+  height: 2em;
+  background-size: 2em 2em;
+  margin: 2px 0px 0px 5px;
+  padding: 2px;
+}
+
 .toolbarButton,
 .dropdownToolbarButton,
 .secondaryToolbarButton,
