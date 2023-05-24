@@ -37,7 +37,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   $subscription: Subscription;
 
   @ViewChild(TreeComponent)
-  private tree: TreeComponent;
+  tree: TreeComponent;
 
   private sortMode: String;
 
@@ -61,7 +61,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.bookmarkNodes && !(this.sortMode === this.customSort)) {
+    if (changes.bookmarkNodes && this.sortMode !== this.customSort) {
       this.sortBookmarks();
     }
   }
@@ -75,7 +75,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   onAddBookmarkClick() {
-    this.customSortBookmarks();
     this.store.pipe(select(bookmarksSelectors.getBookmarkInfo), take(1))
       .subscribe((bookmarkInfo) => {
         this.store.dispatch(new CreateBookmark({

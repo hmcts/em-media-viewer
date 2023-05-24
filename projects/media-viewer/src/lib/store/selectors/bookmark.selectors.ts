@@ -40,7 +40,7 @@ export const getBookmarkInfo = createSelector(
       pageNumber: pdfPosition.pageNumber - 1,
       xCoordinate: pdfPosition.left,
       yCoordinate: pages[pdfPosition.pageNumber].styles.height - (pdfPosition.top * pages[pdfPosition.pageNumber].viewportScale),
-      previous: bookmarkNodes.length > 0 ? bookmarkNodes[bookmarkNodes.length - 1].id : undefined,
+      previous: bookmarkNodes.length > 0 ? bookmarkNodes.sort((a,b) => a.index-b.index)[bookmarkNodes.length - 1].id : undefined,
       documentId: docId
     };
   }
