@@ -6,3 +6,7 @@ export interface Redaction {
   page?: number;
   rectangles?: Rectangle[];
 }
+
+export interface BulkRedaction {
+  searchRedactions: Redaction[];
+}

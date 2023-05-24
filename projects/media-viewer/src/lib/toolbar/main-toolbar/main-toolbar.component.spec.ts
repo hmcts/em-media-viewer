@@ -81,11 +81,31 @@ describe('MainToolbarComponent', () => {
   }));
 
   it('should toggle sidebar open', fakeAsync((done) => {
-    component.toggleSideBar();
+    component.toggleIndexSideBar();
 
     component.toolbarEvents.sidebarOpen.asObservable()
       .subscribe(
         sidebarOpen => expect(sidebarOpen).toBeTruthy()
+        , error => done(error)
+      );
+    component.toolbarEvents.sidebarOutlineView.asObservable()
+      .subscribe(
+        sidebarOutlineView => expect(sidebarOutlineView).toBeTruthy()
+        , error => done(error)
+      );
+  }));
+
+  it('should toggle bookmarks sidebar open', fakeAsync((done) => {
+    component.toggleBookmarksSideBar();
+
+    component.toolbarEvents.sidebarOpen.asObservable()
+      .subscribe(
+        sidebarOpen => expect(sidebarOpen).toBeTruthy()
+        , error => done(error)
+      );
+    component.toolbarEvents.sidebarOutlineView.asObservable()
+      .subscribe(
+        sidebarOutlineView => expect(sidebarOutlineView).toBeFalsy()
         , error => done(error)
       );
   }));

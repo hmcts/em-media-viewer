@@ -26,6 +26,7 @@
   "searchKeyword": "SSCS",
   "mvHighLight": "#mvHighlightBtn",
   "bookMarksButton": "#bookmarkButton",
+  "bookmarksToolbarButton": "#mvBookmarksBtn",
   "addBookmarkButton": "#addBookmark",
   "bookMarksIndex": "#mvIndexBtn",
   "viewBookmark": "#viewBookmark",
@@ -83,5 +84,12 @@
   "saveButton": "//button[@class=\"govuk-button\" and contains(text(), \"Save\")]",
   "nonTextualHighlightCss": "//div[@class =\"rectangle\" and (@tabindex=\"0\")]",
   "drawBox": "#mvDrawBtn",
-  "highlightQuerySelector": "[title='Highlight']"
+  "highlightQuerySelector": "[title='Highlight']",
+  "redactFromSearchBtn": "#mvRedactFromSearchBtn",
+  "redactSearchInput": "#search_input",
+  "redactSearchInputText": "matt",
+  "searchAllBtn": "#mvSearchAllBtn",
+  "redactAllBtn": "#mvRedactAllBtn",
+  "findRedactResultsCount" : "#findRedactResultsCount",
+  "rectangleClass" : ".rectangle"
 }

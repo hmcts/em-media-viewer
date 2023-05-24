@@ -1,8 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import uuid from 'uuid';
-import {filter, take} from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
+import { filter, take } from 'rxjs/operators';
 
 import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
 import * as fromStore from '../../store/reducers/reducers';
@@ -35,15 +35,15 @@ export class RedactionComponent implements OnInit, OnDestroy {
   private $subscription: Subscription;
 
   constructor(private store: Store<fromStore.State>,
-              private readonly viewerEvents: ViewerEventService,
-              private toolbarEvents: ToolbarEventService) {}
+    private readonly viewerEvents: ViewerEventService,
+    private toolbarEvents: ToolbarEventService) { }
 
   ngOnInit(): void {
     this.redactionsPerPage$ = this.store.pipe(select(fromSelectors.getRedactionsPerPage));
     this.selectedRedaction$ = this.store.pipe(select(fromSelectors.getSelected));
     this.$subscription = this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode);
     this.$subscription.add(this.store.pipe(select(fromSelectors.getRedactedDocumentInfo), filter(value => !!value))
-          .subscribe(redactedDocInfo => this.downloadDocument(redactedDocInfo)));
+      .subscribe(redactedDocInfo => this.downloadDocument(redactedDocInfo)));
     this.$subscription.add(this.store.pipe(select(fromDocument.getDocumentId)).subscribe(docId => this.documentId = docId));
     this.$subscription.add(this.viewerEvents.textHighlight.subscribe(highlight => this.markTextRedaction(highlight)));
     this.toolbarEvents.applyRedactToDocument.subscribe(() => {

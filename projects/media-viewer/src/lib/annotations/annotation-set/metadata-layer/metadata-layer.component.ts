@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 import * as fromStore from '../../../store/reducers/reducers';
 import * as fromDocument from '../../../store/selectors/document.selectors';
@@ -36,7 +36,7 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
     private store: Store<fromStore.AnnotationSetState>,
     private readonly highlightService: HighlightCreateService,
     private readonly toolbarEvents: ToolbarEventService,
-    private readonly viewerEvents: ViewerEventService) {}
+    private readonly viewerEvents: ViewerEventService) { }
 
   ngOnInit(): void {
     this.$subscriptions = this.store.pipe(select(fromDocument.getPages))
@@ -84,13 +84,14 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
           yCoordinate: rectangle.y
         } as any));
         this.toolbarEvents.toggleSideBar(true);
+        this.toolbarEvents.toggleSideBarView(false);
         this.highlightService.resetHighlight();
         this.rectangles = undefined;
 
       });
   }
 
-  saveAnnotation({ rectangles, page }: { rectangles: Rectangle[], page: any}) {
+  saveAnnotation({ rectangles, page }: { rectangles: Rectangle[], page: any }) {
     this.highlightService.saveAnnotation(rectangles, page);
     this.toolbarEvents.drawModeSubject.next(false);
   }
