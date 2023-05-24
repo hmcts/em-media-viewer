@@ -16,7 +16,7 @@ jobs:
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
 
       - name: List dependencies
-				run: cat yarn.lock | base64 > yarn.lock.b64
+        run: cat yarn.lock | base64 > yarn.lock.b64
 
       - name: Prepare request payload
         run: |
