@@ -82,15 +82,14 @@ describe('BookmarksComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch CreateBookmark action',
-  inject([Store], fakeAsync((store) => {
+  it('should dispatch CreateBookmark action', fakeAsync(() => {
 
     spyOn(store, 'dispatch');
     component.onAddBookmarkClick();
     tick();
 
     expect(store.dispatch).toHaveBeenCalled();
-  }))
+  })
 );
 
   it('should delete bookmark', () => {
