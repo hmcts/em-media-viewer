@@ -171,25 +171,25 @@ html[dir='rtl'] .splitToolbarButtonSeparator {
 .bookmark__sort__custom {
   background: url(/assets/images/icon-bookmarks-custom.png) center center no-repeat;
   filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg) brightness(107%) contrast(101%);
-  border-radius: 2px;
-  border: 1px ridge #D3D3D3;
-  width: 2em;
-  height: 2em;
-  background-size: 2em 2em;
-  margin: 2px 0px 0px 5px;
-  padding: 2px;
+  border-radius: 0.2em;
+  border: 0.1em ridge #D3D3D3;
+  width: 1.5em;
+  height: 1.5em;
+  background-size: 1.5em 1.5em;
+  margin: 0.2em 0em 0em 0.5em;
+  padding: 0.2px;
 }
 
 .bookmark__sort__position {
   background: url(/assets/images/icon-bookmarks-position.png) center center no-repeat;
   filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg) brightness(107%) contrast(101%);
-  border-radius: 2px;
-  border: 1px ridge #D3D3D3;
-  width: 2em;
-  height: 2em;
-  background-size: 2em 2em;
-  margin: 2px 0px 0px 5px;
-  padding: 2px;
+  border-radius: 0.2em;
+  border: 0.1em ridge #D3D3D3;
+  width: 1.5em;
+  height: 1.5em;
+  background-size: 1.5em 1.5em;
+  margin: 0.2em 0em 0em 0.5em;
+  padding: 0.2em;
 }
 
 .toolbarButton,
