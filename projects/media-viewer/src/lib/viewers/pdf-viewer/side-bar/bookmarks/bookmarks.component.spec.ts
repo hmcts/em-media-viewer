@@ -1,4 +1,4 @@
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
@@ -12,10 +12,37 @@ describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
   let fixture: ComponentFixture<BookmarksComponent>;
   let store: Store<State>;
+
+  const bookmarkNode = {
+    parent: { children: [{}] },
+    index: 0,
+    data: { id: 'bookmarkId', children: [] }
+  } as any;
+
+  const bookmarks = [
+    { id: 1, name: 'root1', next: 4, index: 0 },
+    { id: 2, name: 'child1', parent: 1, next: 3, index: 1 },
+    { id: 3, name: 'child2', parent: 1, previous: 2, index: 2 },
+    { id: 5, name: 'child2.1', parent: 4, next: 6, index: 3 },
+    { id: 7, name: 'subsub', parent: 6, index: 4 },
+    { id: 4, name: 'root2', previous: 1, index: 5 },
+    { id: 6, name: 'child2.2', parent: 4, previous: 5, index: 6 }
+  ] as any;
+
+  const treeModelMock = jasmine.createSpyObj('TreeModel', {
+    'update' : null,
+    'getNodeById' : bookmarkNode
+  },
+    {
+      nodes: bookmarks
+    }
+  );
+
   const initialState = {
     'media-viewer': {
       bookmarks: {
-        editableBookmark: '123'
+        editableBookmark: '123',
+        bookmarkEntities: {}
       },
       document: {
         pages: {
@@ -25,20 +52,11 @@ describe('BookmarksComponent', () => {
               height: 300
             }
           }
-        }
+        },
+        pdfPosition: { pageNumber: 1, top: 50, left: 30, rotation: 0, scale: 1 }
       }
     }
   };
-
-  const bookmarks = [
-    { id: 1, name: 'root1', next: 4 },
-    { id: 2, name: 'child1', parent: 1, next: 3 },
-    { id: 3, name: 'child2', parent: 1, previous: 2 },
-    { id: 5, name: 'child2.1', parent: 4, next: 6 },
-    { id: 7, name: 'subsub', parent: 6 },
-    { id: 4, name: 'root2', previous: 1 },
-    { id: 6, name: 'child2.2', parent: 4, previous: 5 }
-  ] as any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,19 +73,28 @@ describe('BookmarksComponent', () => {
     component = fixture.componentInstance;
     store = TestBed.inject(Store);
     fixture.detectChanges();
+    component.bookmarkNodes = bookmarks;
+    component.tree = jasmine.createSpyObj('TreeComponent', ['treeModel']);
+    component.tree.treeModel = treeModelMock;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should dispatch CreateBookmark action',
+  inject([Store], fakeAsync((store) => {
+
+    spyOn(store, 'dispatch');
+    component.onAddBookmarkClick();
+    tick();
+
+    expect(store.dispatch).toHaveBeenCalled();
+  }))
+);
+
   it('should delete bookmark', () => {
     spyOn(store, 'dispatch');
-    const bookmarkNode = {
-      parent: { children: [{}] },
-      index: 0,
-      data: { id: 'bookmarkId', children: [] }
-    } as any;
     component.deleteBookmark(bookmarkNode);
     expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
       deleted: ['bookmarkId'], updated: undefined
