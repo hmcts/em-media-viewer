@@ -44,6 +44,9 @@ jobs:
         run: |
           ls -lah payload.json.gz
 
+      - name: test call to ardoq adapter
+        run: curl --location --request GET 'https://dtsse-ardoq-adapter.platform.hmcts.net/health'
+
       - name: post deps to ardoq app
         run: |
           curl --location --request POST '${{ secrets.ARDOQ_ADAPTER_URL }}' \
