@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
 
 import { CreateBookmark, DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmark.actions';
-import { Bookmark, BookmarkNode } from '../../../../store/models/bookmarks.interface';
+import { Bookmark } from '../../../../store/models/bookmarks.interface';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmark.selectors';
 import { AnnotationSetState } from '../../../../store/reducers/annotations.reducer';
 import { DocumentPages } from '../../../../store/reducers/document.reducer';
@@ -39,7 +39,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   @ViewChild(TreeComponent)
   tree: TreeComponent;
 
-  private sortMode: String;
+  private sortMode: string;
 
   private readonly _customSort = 'CUSTOM';
   private readonly _positionSort = 'POSITION';
@@ -165,7 +165,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     return this._positionSort;
   }
 
-  sort(mode: String) {
+  sort(mode: string) {
     this.sortMode = mode;
     this.sortBookmarks();
   }

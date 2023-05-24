@@ -20,13 +20,23 @@ describe('BookmarksComponent', () => {
   } as any;
 
   const bookmarks = [
-    { id: 1, name: 'root1', next: 4, index: 0 },
-    { id: 2, name: 'child1', parent: 1, next: 3, index: 1 },
-    { id: 3, name: 'child2', parent: 1, previous: 2, index: 2 },
-    { id: 5, name: 'child2.1', parent: 4, next: 6, index: 3 },
-    { id: 7, name: 'subsub', parent: 6, index: 4 },
-    { id: 4, name: 'root2', previous: 1, index: 5 },
-    { id: 6, name: 'child2.2', parent: 4, previous: 5, index: 6 }
+    { id: 1, name: 'root1', next: 4, index: 0, pageNumber: 1, yCoordinate: 70 },
+    { id: 2, name: 'child1', parent: 1, next: 3, index: 1, pageNumber: 1, yCoordinate: 50 },
+    { id: 3, name: 'child2', parent: 1, previous: 2, index: 2, pageNumber: 2, yCoordinate: 50 },
+    { id: 5, name: 'child2.1', parent: 4, next: 6, index: 3, pageNumber: 4, yCoordinate: 30 },
+    { id: 7, name: 'subsub', parent: 6, index: 4, pageNumber: 6, yCoordinate: 50 },
+    { id: 4, name: 'root2', previous: 1, index: 5, pageNumber: 5, yCoordinate: 50 },
+    { id: 6, name: 'child2.2', parent: 4, previous: 5, index: 6, pageNumber: 3, yCoordinate: 50 }
+  ] as any;
+
+  const orderedBookmarks = [
+    { id: 2, name: 'child1', parent: 1, next: 3, index: 1, pageNumber: 1, yCoordinate: 50 },
+    { id: 1, name: 'root1', next: 4, index: 0, pageNumber: 1, yCoordinate: 70 },
+    { id: 3, name: 'child2', parent: 1, previous: 2, index: 2, pageNumber: 2, yCoordinate: 50 },
+    { id: 6, name: 'child2.2', parent: 4, previous: 5, index: 6, pageNumber: 3, yCoordinate: 50 },
+    { id: 5, name: 'child2.1', parent: 4, next: 6, index: 3, pageNumber: 4, yCoordinate: 30 },
+    { id: 4, name: 'root2', previous: 1, index: 5, pageNumber: 5, yCoordinate: 50 },
+    { id: 7, name: 'subsub', parent: 6, index: 4, pageNumber: 6, yCoordinate: 50 }
   ] as any;
 
   const treeModelMock = jasmine.createSpyObj('TreeModel', {
@@ -142,6 +152,18 @@ describe('BookmarksComponent', () => {
     const mockId = '123';
     component.editBookmark(mockId);
     expect(component.editableBookmark).toEqual(mockId);
+  });
+
+  it('should sort by position', () => {
+    component.sort(component.positionSort);
+    expect(component.bookmarkNodes).toEqual(orderedBookmarks);
+  });
+
+  it('should sort by position', () => {
+    component.sort(component.positionSort);
+    expect(component.bookmarkNodes).toEqual(orderedBookmarks);
+    component.sort(component.customSort);
+    expect(component.bookmarkNodes).toEqual(bookmarks);
   });
 
   describe('goToBookmark', () => {
