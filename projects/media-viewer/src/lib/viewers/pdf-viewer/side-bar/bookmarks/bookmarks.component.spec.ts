@@ -169,7 +169,7 @@ describe('BookmarksComponent', () => {
   it('should default to custom sort', () => {
     component.sort(component.positionSort);
     expect(component.bookmarkNodes).toEqual(orderedBookmarks);
-    component.sort("UNKNOWN SORT MODE");
+    component.sort('UNKNOWN SORT MODE');
     expect(component.bookmarkNodes).toEqual(bookmarks);
   });
 
