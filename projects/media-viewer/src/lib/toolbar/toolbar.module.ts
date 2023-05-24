@@ -1,4 +1,5 @@
- import { NgModule } from '@angular/core';
+import { RedactionSearchBarComponent } from './redaction-search-bar/redaction-search-bar.component';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
@@ -18,7 +19,8 @@ import { RouterModule } from '@angular/router';
     SearchBarComponent,
     MainToolbarComponent,
     RedactionToolbarComponent,
-    IcpToolbarComponent
+    IcpToolbarComponent,
+    RedactionSearchBarComponent
   ],
   providers: [
     ToolbarButtonVisibilityService,
@@ -28,7 +30,8 @@ import { RouterModule } from '@angular/router';
     MainToolbarComponent,
     SearchBarComponent,
     RedactionToolbarComponent,
-    IcpToolbarComponent
+    IcpToolbarComponent,
+    RedactionSearchBarComponent
   ],
   imports: [
     CommonModule,

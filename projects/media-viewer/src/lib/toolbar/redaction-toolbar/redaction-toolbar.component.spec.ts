@@ -5,19 +5,24 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { RedactionToolbarComponent } from './redaction-toolbar.component';
 import { ToolbarEventService } from '../toolbar-event.service';
+import { RedactionSearch } from '../redaction-search-bar/redaction-search.model';
+import { Subject } from 'rxjs';
 
 describe('RedactionToolbarComponent', () => {
   let component: RedactionToolbarComponent;
   let fixture: ComponentFixture<RedactionToolbarComponent>;
   let toolbarEvents: ToolbarEventService;
+  const redactAllInProgressSubject: Subject<RedactionSearch> = new Subject<RedactionSearch>();
+
   const toolbarEventsMock = {
-    highlightModeSubject: { next: () => {} },
-    drawModeSubject: { next: () => {} },
-    toggleRedactionPreview: () => {},
-    unmarkAll: () => {},
-    applyRedactionToDocument: () => {},
-    redactPage: () => {},
-    toggleRedactionMode: () => {},
+    highlightModeSubject: { next: () => { } },
+    drawModeSubject: { next: () => { } },
+    toggleRedactionPreview: () => { },
+    unmarkAll: () => { },
+    applyRedactionToDocument: () => { },
+    redactPage: () => { },
+    toggleRedactionMode: () => { },
+    redactAllInProgressSubject: redactAllInProgressSubject.asObservable()
   };
 
   beforeEach(() => {
@@ -30,7 +35,7 @@ describe('RedactionToolbarComponent', () => {
       ],
       providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,41 +1,107 @@
 <div class="redaction">
-  <label class="govuk-label redaction-title" data-l10n-id="redaction_options">Redaction options</label>
-  <button id="toggleDrawButton" class="mv-button redaction-button--draw" title="Draw a box"
-    data-l10n-id="toggleDrawButton" (click)="toggleDrawMode()">
+  <label class="govuk-label redaction-title" data-l10n-id="redaction_options"
+    >Redaction options</label
+  >
+  <button
+    id="toggleDrawButton"
+    class="mv-button redaction-button--draw"
+    title="Draw a box"
+    data-l10n-id="toggleDrawButton"
+    (click)="toggleDrawMode()"
+    [disabled]="redactionAllInProgress"
+  >
     <span data-l10n-id="toggleDrawButton_label">Draw a box</span>
   </button>
 
-  <button id="redactPageButton" class="mv-button redaction-button--redact-page" title="Redact Page"
-    data-l10n-id="redactPageButton" (click)="redactPage()">
+  <button
+    id="redactPageButton"
+    class="mv-button redaction-button--redact-page"
+    title="Redact Page"
+    data-l10n-id="redactPageButton"
+    (click)="redactPage()"
+    [disabled]="redactionAllInProgress"
+  >
     <span data-l10n-id="redactPageButton_label">Redact page</span>
   </button>
+  <button
+    *ngIf="showRedactSearch"
+    id="mvRedactFromSearchBtn"
+    title="From search"
+    data-l10n-id="fromSearchButton"
+    class="mv-button redaction-button--search"
+    (click)="onRedactAllSearch()"
+    [disabled]="redactionAllInProgress"
+  >
+    <span style="width: 5rem" data-l10n-id="fromSearchButton_label"
+      >From search</span
+    >
+  </button>
 
-  <button *ngIf="toolbarButtons.showHighlightButton" id="toggleHighlightButton"
-    class="mv-button redaction-button--redact" aria-pressed="false" title="Redact text"
-    data-l10n-id="toggleTextRedactionButton" (click)="toggleTextRedactionMode()">
+  <button
+    *ngIf="toolbarButtons.showHighlightButton"
+    id="toggleHighlightButton"
+    class="mv-button redaction-button--redact"
+    aria-pressed="false"
+    title="Redact text"
+    data-l10n-id="toggleTextRedactionButton"
+    (click)="toggleTextRedactionMode()"
+    [disabled]="redactionAllInProgress"
+  >
     <span data-l10n-id="toggleTextRedactionButton_label">Redact text</span>
   </button>
 
-  <button [disabled]="!hasRedactions" id="mvClearBtn" #mvClearBtn class="mv-button redaction-button--clear" aria-pressed="false" title="Clear all"
-    data-l10n-id="toggleClearAllButton" (click)="unmarkAll()">
+  <button
+    [disabled]="!hasRedactions || redactionAllInProgress"
+    id="mvClearBtn"
+    #mvClearBtn
+    class="mv-button redaction-button--clear"
+    aria-pressed="false"
+    title="Clear all"
+    data-l10n-id="toggleClearAllButton"
+    (click)="unmarkAll()"
+  >
     <span data-l10n-id="Clear all">Clear all</span>
   </button>
 
-  <button [disabled]="!hasRedactions" id="mvPreviewBtn" class="mv-button" [class.redaction-button--preview]="!preview"
-    [class.redaction-button--hide-preview]="preview" redaction-button--preview aria-pressed="false" title="Preview"
-    data-l10n-id="togglePreviewButton" (click)="togglePreview()">
+  <button
+    [disabled]="!hasRedactions || redactionAllInProgress"
+    id="mvPreviewBtn"
+    class="mv-button"
+    [class.redaction-button--preview]="!preview"
+    [class.redaction-button--hide-preview]="preview"
+    redaction-button--preview
+    aria-pressed="false"
+    title="Preview"
+    data-l10n-id="togglePreviewButton"
+    (click)="togglePreview()"
+  >
     <span *ngIf="!preview" data-l10n-id="redaction-preview_label">Preview</span>
-    <span *ngIf="preview" data-l10n-id="redaction-hide-preview_label">Hide preview</span>
+    <span *ngIf="preview" data-l10n-id="redaction-hide-preview_label"
+      >Hide preview</span
+    >
   </button>
 
-  <button [disabled]="!hasRedactions" id="mvRedactBtn" class="mv-button redaction-button--download" aria-pressed="false" title="Redact"
-    data-l10n-id="mvRedactBtn" (click)="redact()">
+  <button
+    [disabled]="!hasRedactions || redactionAllInProgress"
+    id="mvRedactBtn"
+    class="mv-button redaction-button--download"
+    aria-pressed="false"
+    title="Redact"
+    data-l10n-id="mvRedactBtn"
+    (click)="redact()"
+  >
     <span data-l10n-id="Save Document">Save document</span>
   </button>
 
-  <button id="mvCloseBtn" #mvCloseBtn class="mv-button redaction-button--close" title="Close Redaction" data-l10n-id="mvRedactBtn"
-    (click)="toggleRedactBar()">
+  <button
+    id="mvCloseBtn"
+    #mvCloseBtn
+    class="mv-button redaction-button--close"
+    title="Close Redaction"
+    data-l10n-id="mvRedactBtn"
+    (click)="toggleRedactBar()"
+    [disabled]="redactionAllInProgress"
+  >
     <span data-l10n-id="Close Redaction">Close Redaction</span>
   </button>
-
 </div>

@@ -6,9 +6,10 @@ import * as bookmarksSelectors from '../../../store/selectors/bookmark.selectors
 import { BookmarkNode } from '../../../store/models/bookmarks.interface';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmark.actions';
 import { take } from 'rxjs/operators';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { ViewerEventService } from '../../viewer-event.service';
 import { BookmarksState } from '../../../store/reducers/bookmarks.reducer';
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-side-bar',
@@ -27,17 +28,22 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   selectedView = 'outline';
   bookmarkNodes$: Observable<BookmarkNode[]>;
 
-  $subscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(private viewerEvents: ViewerEventService,
-    private store: Store<BookmarksState>
+    private store: Store<BookmarksState>,
+    private readonly toolbarEvents: ToolbarEventService
   ) { }
 
   ngOnInit(): void {
     this.bookmarkNodes$ = this.store.pipe(select(bookmarksSelectors.getBookmarkNodes));
-    this.$subscription = this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
-      .subscribe(editable => this.selectedView = editable ? 'bookmarks' : this.selectedView);
-  }
+    this.subscriptions.push(this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
+      .subscribe(editable => this.selectedView = editable ? 'bookmarks' : this.selectedView));
+    this.subscriptions.push(
+      this.toolbarEvents.sidebarOutlineView.subscribe(toggle => {
+        this.selectedView = toggle ? 'outline' : 'bookmarks';
+      })
+    );  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.url && this.url) {
@@ -46,7 +52,9 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.$subscription.unsubscribe();
+    if (this.subscriptions.length > 0) {
+      this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    }
   }
 
   goToDestination(destination: any[]) {
@@ -68,6 +76,9 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   isViewedItem(current: Outline, next: Outline): boolean {
+    if (current.pageNumber === this.currentPageNumber) {
+      return true;
+    }
     return next === undefined ? current.pageNumber <= this.currentPageNumber :
       current.pageNumber <= this.currentPageNumber && (next.pageNumber > this.currentPageNumber);
   }
