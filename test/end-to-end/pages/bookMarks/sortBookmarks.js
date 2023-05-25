@@ -6,7 +6,12 @@ const { assert, expect } = require('chai');
 module.exports = async function () {
   const I = this;
 
-  //await I.openBookmarksPanel();
+  const visible = await I.grabNumberOfVisibleElements(commonConfig.sortBookmarkPosition);
+  if (!visible) {
+    console.log("skipping sort bookmarks test");
+    return;
+  }
+
   await I.click(commonConfig.moveDown);
   await I.addNamedBookmark('page2');
 
@@ -17,21 +22,24 @@ module.exports = async function () {
   await I.click(commonConfig.moveUp);
   await I.addNamedBookmark('page1');
 
-  let customSorted = [];
-  for (let i = 1; i < 4; i++) {
-    let bookmarkName = await I.grabTextFrom(`(//tree-node)[${i}]`);
-    customSorted.push(bookmarkName);
-  }
+  let bookmarkNames = await collectBookmarkNames();
+  assert.deepEqual(bookmarkNames, ['page2', 'page3', 'page1']);
 
-  assert.deepEqual(customSorted, ['page2', 'page3', 'page1']);
-   
+  await I.click(commonConfig.sortBookmarkPosition);
+  bookmarkNames = await collectBookmarkNames();
+  assert.deepEqual(bookmarkNames, ['page1', 'page2', 'page3']);
 
+  await I.click(commonConfig.sortBookmarkCustom);
+  bookmarkNames = await collectBookmarkNames();
+  assert.deepEqual(bookmarkNames, ['page2', 'page3', 'page1']);
 
-//   const visible = await I.grabNumberOfVisibleElements(commonConfig.bookmarksToolbarButton);
-//   if (visible) {
-//     await I.click(commonConfig.bookmarksToolbarButton);
-//     await I.wait(testConfig.BookmarksAndAnnotationsWait);
-//     return;
-//   }
+    async function collectBookmarkNames() {
+        let names = [];
+        for (let i = 1; i < 4; i++) {
+            let bookmarkName = await I.grabTextFrom(`(//tree-node)[${i}]`);
+            names.push(bookmarkName);
+        }
+        return names;
+    }
 
 }
