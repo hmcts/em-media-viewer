@@ -1,7 +1,7 @@
 'use strict'
 const commonConfig = require('../../data/commonConfig.json');
 const testConfig = require("../../../config");
-const { assert } = require('chai');
+const { assert, expect } = require('chai');
 
 module.exports = async function () {
   const I = this;
@@ -18,12 +18,12 @@ module.exports = async function () {
   await I.addNamedBookmark('page1');
 
   let customSorted = [];
-  for (let i = 0; i < 2; i++) {
-    let bookmarkName = await I.grabTextFrom(`(${commonConfig.bookmarksCount})[${i}]`);
+  for (let i = 1; i < 4; i++) {
+    let bookmarkName = await I.grabTextFrom(`(//*[@id="bookmarkContainer"]/mv-bookmarks/tree-root/tree-viewport/div/div/tree-node-collection/div/tree-node)[${i}]`);
     customSorted.push(bookmarkName);
   }
 
-  assert.equal(customSorted, ['page2', 'page3', 'page1']);
+  assert.deepEqual(customSorted, ['page2', 'page3', 'page1']);
    
 
 
