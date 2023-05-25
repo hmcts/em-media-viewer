@@ -19,7 +19,7 @@ module.exports = async function () {
 
   let customSorted = [];
   for (let i = 1; i < 4; i++) {
-    let bookmarkName = await I.grabTextFrom(`(//*[@id="bookmarkContainer"]/mv-bookmarks/tree-root/tree-viewport/div/div/tree-node-collection/div/tree-node)[${i}]`);
+    let bookmarkName = await I.grabTextFrom(`(//tree-node)[${i}]`);
     customSorted.push(bookmarkName);
   }
 
