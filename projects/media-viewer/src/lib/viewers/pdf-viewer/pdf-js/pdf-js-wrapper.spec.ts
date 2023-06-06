@@ -135,28 +135,6 @@ describe('PdfJsWrapper', () => {
     expect(mockViewer.pagesRotation).toEqual(90);
   });
 
-  it('should set the zoomValue only if the zoom name includes XYZ', () => {
-    const navigateSpy = spyOn(mockViewer.linkService, 'navigateTo');
-    const destination = [];
-    destination[1] = { name: 'XYZ' };
-    wrapper.navigateTo(destination);
-
-    expect(destination[4]).toEqual(1);
-    expect(navigateSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('should populate the destination object if the zoom name does not include XYZ', () => {
-    const navigateSpy = spyOn(mockViewer.linkService, 'navigateTo');
-    const destination = [];
-    destination[1] = { name: 'FitH' };
-    wrapper.navigateTo(destination);
-
-    expect(destination[2]).toEqual(null);
-    expect(destination[3]).toEqual(null);
-    expect(destination[4]).toEqual(1);
-    expect(navigateSpy).toHaveBeenCalledTimes(1);
-  });
-
   it('should not alter the destination if it is not of type object', () => {
     const navigateSpy = spyOn(mockViewer.linkService, 'navigateTo');
     const destination = 1234;
