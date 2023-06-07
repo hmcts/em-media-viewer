@@ -6,10 +6,8 @@ import { SideBarComponent } from './side-bar.component';
 import { OutlineItemComponent } from './outline-item/outline-item.component';
 import { reducers } from '../../../store/reducers/reducers';
 import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
-import { PdfPositionUpdate } from '../../../store/actions/document.actions';
 import { ViewerEventService } from '../../viewer-event.service';
-import * as fromDocument from '../../../store/actions/document.actions';
-import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmark.actions';
+import { LoadBookmarks } from '../../../store/actions/bookmark.actions';
 import { Outline } from './outline-item/outline.model';
 
 describe('SideBarComponent', () => {
@@ -62,21 +60,6 @@ describe('SideBarComponent', () => {
 
     expect(component.selectedView).toBe('outline');
   });
-
-  it('should dispatch CreateBookmark action',
-    inject([Store], fakeAsync((store) => {
-
-      store.dispatch(new fromDocument.AddPages([{div: {}, scale: 1, rotation: 0, id: '1', viewportScale: 1.333333}]));
-      store.dispatch(new PdfPositionUpdate({ pageNumber: 1, top: 50, left: 30, rotation: 0, scale: 1 }));
-      spyOn(store, 'dispatch');
-
-      component.onAddBookmarkClick();
-      tick();
-
-      expect(store.dispatch).toHaveBeenCalled();
-      expect(component.selectedView).toBe('bookmarks');
-    }))
-  );
 
   it('should dispatch LoadBookmarks action on change',
     inject([Store], (store: Store<{}>) => {

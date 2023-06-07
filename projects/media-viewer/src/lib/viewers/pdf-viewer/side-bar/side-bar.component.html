@@ -1,10 +1,16 @@
 <div id="toolbarSidebar">
+  <div *ngIf="annotationsEnabled && selectedView == 'bookmarks'"
+        class="splitToolbarButton toggled">
+        <button id="sortBookmarkPosition" class="splitToolbarButton left bookmark__sort__position"
+          (click)="bookmarks.sort(bookmarks.positionSort)" title="Order by place in document"></button>
+        <button id="sortBookmarkCustom" class="splitToolbarButton left bookmark__sort__custom"
+          (click)="bookmarks.sort(bookmarks.customSort)" title="Order manually"></button></div>
   <div class="splitToolbarButtonSeparator"></div>
   <div *ngIf="annotationsEnabled && selectedView == 'bookmarks'"
        class="splitToolbarButton right">
     <button id="addBookmark"
             class="toolbarButton addBookmark"
-            (click)="onAddBookmarkClick()"
+            (click)="bookmarks.onAddBookmarkClick()"
             title="Add bookmark" tabindex="3" data-l10n-id="addBookmark">
       <span data-l10n-id="addBookmark_label">Add bookmark</span>
     </button>
