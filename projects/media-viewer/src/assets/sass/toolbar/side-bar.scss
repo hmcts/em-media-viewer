@@ -5,7 +5,7 @@ $--sidebar-width: 20%;
   }
   .icp-mode & {
     top: 91px;
-    height: 100%
+    height: 100%;
   }
   position: absolute;
   top: 43px;
@@ -18,14 +18,14 @@ $--sidebar-width: 20%;
 
   transition-duration: 600ms;
   transition-timing-function: ease;
- 
+  padding-bottom: 3.2rem;
 }
 #sidebarContainer {
   transition-property: left;
   left: -200px;
   left: calc(-1 * var($--sidebar-width));
 }
-html[dir='rtl'] #sidebarContainer {
+html[dir="rtl"] #sidebarContainer {
   transition-property: right;
   right: -200px;
   right: calc(-1 * var($--sidebar-width));
@@ -52,7 +52,7 @@ html[dir='rtl'] #sidebarContainer {
 #outerContainer.sidebarOpen #sidebarContainer {
   left: 0px;
 }
-html[dir='rtl'] #outerContainer.sidebarOpen #sidebarContainer {
+html[dir="rtl"] #outerContainer.sidebarOpen #sidebarContainer {
   right: 0px;
 }
 
@@ -66,11 +66,11 @@ html[dir='rtl'] #outerContainer.sidebarOpen #sidebarContainer {
 }
 #sidebarContent {
   left: 0;
-  box-shadow: inset -1px 0 0 hsla(0,0%,0%,.25);
+  box-shadow: inset -1px 0 0 hsla(0, 0%, 0%, 0.25);
 }
-html[dir='rtl'] #sidebarContent {
+html[dir="rtl"] #sidebarContent {
   right: 0;
-  box-shadow: inset 1px 0 0 hsla(0,0%,0%,.25);
+  box-shadow: inset 1px 0 0 hsla(0, 0%, 0%, 0.25);
 }
 
 #outerContainer.sidebarResizing #viewerContainer {
@@ -83,7 +83,9 @@ html[dir='rtl'] #sidebarContent {
   left: 200px;
   left: var($--sidebar-width);
 }
-html[dir='rtl'] #outerContainer.sidebarOpen #viewerContainer:not(.pdfPresentationMode) {
+html[dir="rtl"]
+  #outerContainer.sidebarOpen
+  #viewerContainer:not(.pdfPresentationMode) {
   transition-property: right;
   right: 200px;
   right: var($--sidebar-width);
@@ -94,19 +96,17 @@ html[dir='rtl'] #outerContainer.sidebarOpen #viewerContainer:not(.pdfPresentatio
   height: 32px;
   background-color: #424242; /* fallback */
   background-image: url(/assets/images/texture.png),
-  linear-gradient(hsla(0,0%,30%,.99), hsla(0,0%,25%,.95));
+    linear-gradient(hsla(0, 0%, 30%, 0.99), hsla(0, 0%, 25%, 0.95));
 }
 #toolbarSidebar {
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25),
-  inset 0 -1px 0 hsla(0,0%,100%,.05),
-  0 1px 0 hsla(0,0%,0%,.15),
-  0 0 1px hsla(0,0%,0%,.1);
+    inset 0 -1px 0 hsla(0, 0%, 100%, 0.05), 0 1px 0 hsla(0, 0%, 0%, 0.15),
+    0 0 1px hsla(0, 0%, 0%, 0.1);
 }
-html[dir='rtl'] #toolbarSidebar {
+html[dir="rtl"] #toolbarSidebar {
   box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.25),
-  inset 0 1px 0 hsla(0,0%,100%,.05),
-  0 1px 0 hsla(0,0%,0%,.15),
-  0 0 1px hsla(0,0%,0%,.1);
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.05), 0 1px 0 hsla(0, 0%, 0%, 0.15),
+    0 0 1px hsla(0, 0%, 0%, 0.1);
 }
 
 #sidebarResizer {
@@ -120,6 +120,6 @@ html[dir='rtl'] #toolbarSidebar {
 #sidebarResizer {
   right: -6px;
 }
-html[dir='rtl'] #sidebarResizer {
+html[dir="rtl"] #sidebarResizer {
   left: -6px;
 }
