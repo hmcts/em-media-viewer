@@ -99,6 +99,12 @@ async function addEmptyBookmarksTest(I, caseId, mediaType) {
   await I.addEmptyBookmarks();
 }
 
+async function sortBookmarksTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.sortBookmarks();
+}
+
 async function multiMediaAudioTest(I, caseId, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.mvAudioScenario();
@@ -282,6 +288,7 @@ module.exports = {
   deleteBookmarkTest,
   updateBookmarkTest,
   addEmptyBookmarksTest,
+  sortBookmarksTest,
   multiMediaAudioTest,
   multiMediaAudioPauseAndRewindTest,
   highlightTextTest,
