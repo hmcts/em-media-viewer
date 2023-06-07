@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Outline } from './outline-item/outline.model';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
@@ -10,6 +10,7 @@ import { v4 as uuid } from 'uuid';
 import { ViewerEventService } from '../../viewer-event.service';
 import { BookmarksState } from '../../../store/reducers/bookmarks.reducer';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { BookmarksComponent } from './bookmarks/bookmarks.component';
 
 @Component({
   selector: 'mv-side-bar',
@@ -24,6 +25,8 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() rotate: number;
   @Input() currentPageNumber: number;
 
+  @ViewChild(BookmarksComponent)
+  bookmarks: BookmarksComponent;
 
   selectedView = 'outline';
   bookmarkNodes$: Observable<BookmarkNode[]>;
@@ -63,16 +66,6 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   toggleSidebarView(sidebarView: string) {
     this.selectedView = sidebarView;
-  }
-
-  onAddBookmarkClick() {
-    this.toggleSidebarView('bookmarks');
-    this.store.pipe(select(bookmarksSelectors.getBookmarkInfo), take(1))
-      .subscribe((bookmarkInfo) => {
-        this.store.dispatch(new CreateBookmark({
-          ...bookmarkInfo, name: '', id: uuid()
-        } as any));
-      });
   }
 
   isViewedItem(current: Outline, next: Outline): boolean {
