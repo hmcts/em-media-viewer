@@ -69,3 +69,5 @@ functional-output/
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+projects/media-viewer/.yarn/*
+projects/media-viewer/.yarn/cache/*

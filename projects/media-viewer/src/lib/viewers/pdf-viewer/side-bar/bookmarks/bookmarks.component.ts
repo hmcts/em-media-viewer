@@ -1,16 +1,18 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { TreeNode } from '@circlon/angular-tree-component';
+import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
 
-import { DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmark.actions';
-import { Bookmark, BookmarkNode } from '../../../../store/models/bookmarks.interface';
+import { CreateBookmark, DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmark.actions';
+import { Bookmark } from '../../../../store/models/bookmarks.interface';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmark.selectors';
 import { AnnotationSetState } from '../../../../store/reducers/annotations.reducer';
 import { DocumentPages } from '../../../../store/reducers/document.reducer';
 import * as fromDocument from '../../../../store/selectors/document.selectors';
 import * as fromBookmarks from '../../../../store/reducers/bookmarks.reducer';
 import { getBookmarkChildren } from '../../../../store/bookmarks-store-utils';
+import { take } from 'rxjs/operators';
+import uuid from 'uuid';
 
 @Component({
   selector: 'mv-bookmarks',
@@ -18,7 +20,7 @@ import { getBookmarkChildren } from '../../../../store/bookmarks-store-utils';
 })
 export class BookmarksComponent implements OnInit, OnDestroy {
 
-  @Input() bookmarkNodes: BookmarkNode[];
+  @Input() bookmarkNodes: Bookmark[];
   @Input() zoom: number;
   @Input() rotate: number;
   @Output() goToDestination = new EventEmitter<any[]>();
@@ -34,9 +36,18 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   $subscription: Subscription;
 
+  @ViewChild(TreeComponent)
+  tree: TreeComponent;
+
+  private sortMode: string;
+
+  private readonly _customSort = 'CUSTOM';
+  private readonly _positionSort = 'POSITION';
+
   constructor(private store: Store<fromBookmarks.BookmarksState | AnnotationSetState>) { }
 
   ngOnInit(): void {
+    this.sortMode = this.customSort;
     this.$subscription = this.store.pipe(select(bookmarksSelectors.getEditableBookmark))
       .subscribe(editableId => this.editableBookmark = editableId);
     this.$subscription.add(this.store.select(fromDocument.getPages)
@@ -49,12 +60,27 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       }));
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.bookmarkNodes && this.sortMode !== this.customSort) {
+      this.sortBookmarks();
+    }
+  }
+
   ngOnDestroy(): void {
     this.$subscription.unsubscribe();
   }
 
   editBookmark(id) {
     this.editableBookmark = id;
+  }
+
+  onAddBookmarkClick() {
+    this.store.pipe(select(bookmarksSelectors.getBookmarkInfo), take(1))
+      .subscribe((bookmarkInfo) => {
+        this.store.dispatch(new CreateBookmark({
+          ...bookmarkInfo, name: '', id: uuid()
+        } as any));
+      });
   }
 
   onBookmarkMove({ node, from, to }: any) {
@@ -76,7 +102,12 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   deleteBookmark(node: TreeNode) {
+    this.customSortBookmarks();
     let next: Bookmark;
+    node = this.tree.treeModel.getNodeById(node.id);
+    if (!node.parent) {
+      node.parent = this.tree.treeModel.virtualRoot;
+    }
     const siblings = node.parent.children;
     if (siblings.length > node.index + 1) {
       next = siblings[node.index + 1].data;
@@ -125,6 +156,56 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       top
     ]);
   }
+
+  get customSort() {
+    return this._customSort;
+  }
+
+  get positionSort() {
+    return this._positionSort;
+  }
+
+  sort(mode: string) {
+    this.sortMode = mode;
+    this.sortBookmarks();
+  }
+
+  private sortBookmarks() {
+    switch (this.sortMode) {
+      case this.customSort: {
+         this.customSortBookmarks();
+         break;
+      }
+      case this.positionSort: {
+        this.positionSortBookmarks();
+         break;
+      }
+      default: {
+         this.customSortBookmarks();
+         break;
+      }
+   }
+  }
+
+  private positionSortBookmarks() {
+    this.bookmarkNodes.sort((a, b) => a.pageNumber === b.pageNumber ? a.yCoordinate - b.yCoordinate : a.pageNumber - b.pageNumber);
+    this.tree.treeModel.update();
+    this.setDragNDrop(false);
+  }
+
+  private customSortBookmarks() {
+    this.bookmarkNodes.sort((a, b) => a.index - b.index);
+    this.tree.treeModel.update();
+    this.setDragNDrop(true);
+  }
+
+  private setDragNDrop(enabled: boolean) {
+    this.options = {
+      allowDrag: enabled,
+      allowDrop: enabled
+    };
+  }
+
 
   private getSibling(node, index) {
     return node.parent.children.length > index ? node.parent.children[index] : undefined;

@@ -1,6 +1,6 @@
 const testConfig = require('./../../config');
 const {createBookmarkTest, deleteBookmarkTest} = require("../helpers/mvCaseHelper");
-const {addEmptyBookmarksTest, updateBookmarkTest} = require("../helpers/mvCaseHelper");
+const {addEmptyBookmarksTest, updateBookmarkTest, sortBookmarksTest} = require("../helpers/mvCaseHelper");
 const {mvData} = require('../pages/common/constants.js');
 
 Feature('Bookmarks Feature');
@@ -25,6 +25,12 @@ Scenario('Delete Bookmark', async ({I}) => {
 
 Scenario('Add an empty bookmark', async ({I}) => {
   await addEmptyBookmarksTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+
+}).tag('@ci')
+  .retry(testConfig.TestRetryScenarios);
+
+Scenario('Sort bookmarks', async ({I}) => {
+  await sortBookmarksTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
 }).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
