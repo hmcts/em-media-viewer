@@ -28,6 +28,8 @@
   "bookMarksButton": "#bookmarkButton",
   "bookmarksToolbarButton": "#mvBookmarksBtn",
   "addBookmarkButton": "#addBookmark",
+  "sortBookmarkPosition": "#sortBookmarkPosition",
+  "sortBookmarkCustom": "#sortBookmarkCustom",
   "bookMarksIndex": "#mvIndexBtn",
   "viewBookmark": "#viewBookmark",
   "highLightPopup": "//*[contains(@class, 'leftButton')]",
