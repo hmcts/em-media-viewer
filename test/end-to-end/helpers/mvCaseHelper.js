@@ -120,6 +120,11 @@ async function highlightTextTest(I, caseId, mediaType) {
   await I.highlightPdfText();
 }
 
+async function addCommentAndRotateTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.addCommentAndRotate();
+}
+
 async function addCommentTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.addComments();
@@ -292,6 +297,7 @@ module.exports = {
   multiMediaAudioTest,
   multiMediaAudioPauseAndRewindTest,
   highlightTextTest,
+  addCommentAndRotateTest,
   addCommentTest,
   deleteCommentTest,
   collateCommentsTest,
