@@ -4,12 +4,19 @@ const {
   commentsSearchTest,
   addMultipleCommentsTest,
   highlightTextTest,
+  addCommentAndRotateTest,
   addCommentTest,
   deleteCommentTest
 } = require("../helpers/mvCaseHelper");
 const {mvData} = require('../pages/common/constants.js');
 
 Feature('Annotations & Comments Feature');
+
+Scenario('Add comment to a rotated pdf document', async ({I}) => {
+  await addCommentAndRotateTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+
+}).tag('@ci')
+  .retry(testConfig.TestRetryScenarios);
 
 Scenario('Ability to highlight and draw box on pdf document', async ({I}) => {
   await highlightTextTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
