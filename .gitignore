@@ -1,8 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist/media-viewer/*
-!/dist/media-viewer/yarn.lock
+/dist
 /tmp
 /out-tsc
 cucumber.json
