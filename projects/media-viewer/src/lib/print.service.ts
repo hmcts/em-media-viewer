@@ -7,7 +7,10 @@ export class PrintService {
 
   printDocumentNatively(url: string): void {
     const printWindow = window.open(url);
-    printWindow.print();
+    printWindow.focus();
+    setTimeout((printWindow) => {
+      printWindow.print();
+    }, 3000, printWindow);
   }
 
   printElementNatively(element: HTMLElement, width: number, height: number): void {
