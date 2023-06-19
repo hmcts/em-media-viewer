@@ -1,4 +1,4 @@
-import { inject, TestBed } from '@angular/core/testing';
+import { fakeAsync, inject, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { PrintService } from './print.service';
 
 describe('PrintService', () => {
@@ -13,26 +13,29 @@ describe('PrintService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should trigger native document print', inject([PrintService], (service: PrintService) => {
-    const windowMock = { print: () => {}} as Window;
+  it('should trigger native document print', fakeAsync(inject([PrintService], (service: PrintService) => {
+    const windowMock = { print: () => { }, focus } as Window;
     const windowSpy = spyOn(window, 'open').and.returnValue(windowMock);
+    const focusSpy = spyOn(windowMock, 'focus');
     const printSpy = spyOn(windowMock, 'print');
     service.printDocumentNatively('url');
+    tick(3000);
 
     expect(windowSpy).toHaveBeenCalledWith('url');
-    expect(printSpy).toHaveBeenCalled();
-  }));
+    expect(focusSpy).toHaveBeenCalled();
+    expect(printSpy).toHaveBeenCalled()
+  })));
 
   it('should print an element in a new window', inject([PrintService], (service: PrintService) => {
     const windowMock = {
-      print: () => {},
-      focus: () => {},
-      close: () => {},
+      print: () => { },
+      focus: () => { },
+      close: () => { },
       document: {
-        close: () => {},
-        write: () => {},
+        close: () => { },
+        write: () => { },
         body: {
-        appendChild: () => {}
+          appendChild: () => { }
         }
       }
     } as unknown as Window;
