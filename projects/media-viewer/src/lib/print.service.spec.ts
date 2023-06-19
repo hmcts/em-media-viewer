@@ -23,7 +23,7 @@ describe('PrintService', () => {
 
     expect(windowSpy).toHaveBeenCalledWith('url');
     expect(focusSpy).toHaveBeenCalled();
-    expect(printSpy).toHaveBeenCalled()
+    expect(printSpy).toHaveBeenCalled();
   })));
 
   it('should print an element in a new window', inject([PrintService], (service: PrintService) => {

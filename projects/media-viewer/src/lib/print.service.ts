@@ -8,8 +8,8 @@ export class PrintService {
   printDocumentNatively(url: string): void {
     const printWindow = window.open(url);
     printWindow.focus();
-    setTimeout((printWindow) => {
-      printWindow.print();
+    setTimeout((printer) => {
+      printer.print();
     }, 3000, printWindow);
   }
 
