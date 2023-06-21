@@ -165,16 +165,16 @@
 }
 
 .mv-toolbar__menu-button--zoom {
-  width: 135px;
+  width: 9rem;
   span:first-of-type {
     margin-left: 8px;
     margin-right: 0px;
   }
   button:first-of-type {
-    margin-left: 10px;
+    margin-left: 6px;
   }
   button:last-of-type {
-    margin-right: 10px;
+    margin-right: 7px;
   }
 }
 
@@ -196,7 +196,7 @@
 
 .mv-toolbar__menu-button--zoom-out {
   &:after {
-    left: 14px;
+    left: 0.5rem;
     right: 105px;
     background-image: url(/assets/images/search-minus.svg);
   }
@@ -204,7 +204,7 @@
 
 .mv-toolbar__menu-button--zoom-in {
   &:after {
-    left: 105px;
+    left: 7.1rem;
     right: 14px;
     background-image: url(/assets/images/search-plus.svg);
   }
@@ -360,7 +360,8 @@
 input:focus,
 textarea:focus,
 select:focus,
-button:focus {
+button:focus,
+button:active {
   outline: 3px solid #ffbf47;
   outline-offset: -2px;
   z-index: 99;
