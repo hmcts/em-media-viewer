@@ -108,6 +108,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @HostListener('document:keydown.control.p', ['$event'])
+  @HostListener('document:keydown.meta.p', ['$event'])
   public onControlPrint(event: KeyboardEvent) {
     event.preventDefault();
     this.printFile();
