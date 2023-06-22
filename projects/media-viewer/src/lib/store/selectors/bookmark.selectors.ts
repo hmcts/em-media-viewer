@@ -39,8 +39,8 @@ export const getBookmarkInfo = createSelector(
     return {
       pageNumber: pdfPosition.pageNumber - 1,
       xCoordinate: pdfPosition.left,
-      yCoordinate: (pages[pdfPosition.pageNumber].styles.height / parseFloat(pages[pdfPosition.pageNumber].scaleRotation.scale))
-        - (pdfPosition.top * (pages[pdfPosition.pageNumber].viewportScale / parseFloat(pages[pdfPosition.pageNumber].scaleRotation.scale))),
+      yCoordinate: ((pages[pdfPosition.pageNumber].styles.height)
+        - (pdfPosition.top * (pages[pdfPosition.pageNumber].viewportScale)) / parseFloat(pages[pdfPosition.pageNumber].scaleRotation.scale)),
       previous: bookmarkNodes.length > 0 ? bookmarkNodes.sort((a, b) => a.index - b.index)[bookmarkNodes.length - 1].id : undefined,
       documentId: docId
     };
