@@ -107,6 +107,13 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cdr.detectChanges();
   }
 
+  @HostListener('document:keydown.control.p', ['$event'])
+  @HostListener('document:keydown.meta.p', ['$event'])
+  public onControlPrint(event: KeyboardEvent) {
+    event.preventDefault();
+    this.printFile();
+  }
+
   public onClickHighlightToggle() {
     this.toolbarEvents.toggleHighlightMode();
   }
