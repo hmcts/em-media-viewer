@@ -307,4 +307,12 @@ describe('MainToolbarComponent', () => {
 
     expect(toggleGrabNDragSpy).toHaveBeenCalled();
   });
+
+  it('should call onControlPrint', () => {
+    const togglePrint = spyOn(toolbarService, 'print');
+    const mockEvent = jasmine.createSpyObj('event', ['preventDefault']);
+    component.onControlPrint(mockEvent);
+
+    expect(togglePrint).toHaveBeenCalled();
+  });
 });
