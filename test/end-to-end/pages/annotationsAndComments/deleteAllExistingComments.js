@@ -17,7 +17,7 @@ module.exports = async function (annotationToDelete) {
 
   while (i < await I.getBookmarksCount(commonConfig.commentsCount)) {
     await I.click(commonConfig.commentsCount);
-    await I.wait(testConfig.BookmarksAndAnnotationsWait);
+    await I.waitForElement(commonConfig.deleteAnnotationBtn, 10);
     await I.click(commonConfig.deleteAnnotationBtn);
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
   }
