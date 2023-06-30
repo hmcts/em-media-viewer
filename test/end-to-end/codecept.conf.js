@@ -18,8 +18,8 @@ exports.config = {
         ignoreHTTPSErrors: true,
         'ignore-certificate-errors': true,
         'defaultViewport': {
-          'width': 1280,
-          'height': 960
+          'width': 1366,
+          'height': 768 
         },
         args: [
           '--headless',
