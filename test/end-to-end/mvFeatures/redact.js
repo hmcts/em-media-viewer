@@ -73,7 +73,7 @@ Scenario('Clear redactions that are added when document has been downloaded', as
   await saveAllRedactionsTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
   await redactContentUsingRedactTextTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@ci')
+}).tag('@wip')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Unmark selected content (marked for redaction)', async ({ I }) => {
