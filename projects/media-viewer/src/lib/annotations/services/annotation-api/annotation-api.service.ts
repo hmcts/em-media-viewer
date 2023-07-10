@@ -1,11 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { catchError, filter, map } from 'rxjs/operators';
 
 import { AnnotationSet } from '../../annotation-set/annotation-set.model';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
 import { Comment } from '../../comment-set/comment/comment.model';
+import * as fromStore from '../../../store/reducers/reducers';
+import * as fromSelectors from '../../../store/selectors/annotation.selectors';
+
+
 
 @Injectable()
 export class AnnotationApiService {
@@ -15,9 +20,23 @@ export class AnnotationApiService {
   private annotationSetBaseUrl = '/annotation-sets';
   private annotationBaseUrl = '/annotations';
 
+  public commentHeader: string;
+  private subscription: Subscription;
+
+
   constructor(
-    private readonly httpClient: HttpClient
-  ) {}
+    private readonly httpClient: HttpClient,
+    private store: Store<fromStore.AnnotationSetState>,
+  ) {
+    this.subscription  = this.store.pipe(select(fromSelectors.getCommentHeader)).subscribe(data => {
+      this.commentHeader = data;
+    });
+    
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   public getAnnotationSet(documentId: string): Observable<any> { // todo add model
     const fixedUrl = `${this.annotationSetsFullUrl}/filter?documentId=${documentId}`;
@@ -62,8 +81,13 @@ export class AnnotationApiService {
   }
 
   public postAnnotation(annotation: Partial<Annotation>): Observable<Annotation> {
+    let annotationToPost = { ...annotation };
+    const caseInfo = JSON.parse(sessionStorage.getItem('caseInfo'));
+    annotationToPost.caseId = caseInfo.cid;
+    annotationToPost.jurisdiction = caseInfo.jurisdiction;
+    annotationToPost.commentHeader = this.commentHeader;
     return this.httpClient
-      .post<Annotation>(this.annotationFullsUrl, annotation, { observe: 'response' , withCredentials: true })
+      .post<Annotation>(this.annotationFullsUrl, annotationToPost, { observe: 'response' , withCredentials: true })
       .pipe(map(response => response.body));
   }
 
