@@ -103,6 +103,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   private $subscriptions: Subscription;
   private prevOffset: number;
+  private commentHeader: string;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -127,6 +128,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       .subscribe(changes => this.onCommentChange(changes));
     this.$subscriptions.add(this.toolbarEvents.getShowCommentSummary()
       .subscribe(changes => this.showCommentSummary = changes));
+    this.$subscriptions.add(this.store.pipe(select(fromAnnoSelectors.getCommentHeader))
+      .subscribe(commentHeader => this.commentHeader = commentHeader));
   }
 
   ngAfterViewChecked(): void {

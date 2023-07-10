@@ -1,5 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, inject, TestBed } from '@angular/core/testing';
+import { Action, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import { AnnotationApiService } from './annotation-api.service';
@@ -11,6 +12,15 @@ import { Comment } from '../../comment-set/comment/comment.model';
 describe('AnnotationApiService', () => {
   let httpMock: HttpTestingController;
   let api: AnnotationApiService;
+  let expectedAction: Action;
+  const mockStore = {
+    select: () => of([{
+      styles: { height: 100, width: 100 },
+      scaleRotation: { scale: 1, rotation: 0 }
+    }]),
+    dispatch: (actualAction) => { expectedAction = actualAction; },
+    pipe: () => of({ annotationSetId: 'annotationSetId', documentId: 'documentId' })
+  } as any;
   const dmDocumentId = 'ad88d12c-8526-49b6-ae5e-3f7ea5d08168';
   const annotationSetId = 'ae2133a4-8dc5-430b-bb20-5290bd801f94';
   const annotationId = 'f6225689-29ab-4e0d-9bea-8519a06d16f9';
@@ -166,7 +176,8 @@ describe('AnnotationApiService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        AnnotationApiService
+        AnnotationApiService,
+        { provide: Store, useValue: mockStore }
       ],
       imports: [
         HttpClientTestingModule
@@ -216,6 +227,13 @@ describe('AnnotationApiService', () => {
   }));
 
   it('save annotation', fakeAsync((done) => {
+    const caseInfo = {
+      cid: 'caseId',
+      caseType: 'caseType',
+      jurisdiction: 'jurisdiction'
+    };
+    sessionStorage.setItem('caseInfo', JSON.stringify(caseInfo));
+
     api.postAnnotation(annotation1).subscribe((response) => {
       expect(response.annotationSetId).toEqual(annotationSet.id);
     }, error => done(error));

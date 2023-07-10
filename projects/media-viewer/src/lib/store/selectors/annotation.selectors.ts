@@ -47,6 +47,11 @@ export const getSelectedAnnotation = createSelector(
   fromAnnotations.getSelectedAnno
 );
 
+export const getCommentHeader = createSelector(
+  getAnnotationsSetState,
+  fromAnnotations.getCommentHeader
+);
+
 export const getCommentEntities = createSelector(
   getAnnotationsSetState,
   fromAnnotations.getCommentEnts

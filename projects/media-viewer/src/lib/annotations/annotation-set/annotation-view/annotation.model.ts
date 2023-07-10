@@ -13,4 +13,8 @@ export interface Annotation extends ApiPersisted {
   type?: string;
   tags: TagsModel[];
   redactionId?: string;
+  caseId?: string;
+  jurisdiction?: string;
+  commentHeader?: string;
+
 }
