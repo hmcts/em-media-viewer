@@ -28,10 +28,9 @@ export class AnnotationApiService {
     private readonly httpClient: HttpClient,
     private store: Store<fromStore.AnnotationSetState>,
   ) {
-    this.subscription  = this.store.pipe(select(fromSelectors.getCommentHeader)).subscribe(data => {
+    this.subscription = this.store.pipe(select(fromSelectors.getCommentHeader)).subscribe(data => {
       this.commentHeader = data;
     });
-    
   }
 
   ngOnDestroy(): void {
@@ -81,7 +80,7 @@ export class AnnotationApiService {
   }
 
   public postAnnotation(annotation: Partial<Annotation>): Observable<Annotation> {
-    let annotationToPost = { ...annotation };
+    const annotationToPost = { ...annotation };
     const caseInfo = JSON.parse(sessionStorage.getItem('caseInfo'));
     annotationToPost.caseId = caseInfo.cid;
     annotationToPost.jurisdiction = caseInfo.jurisdiction;
