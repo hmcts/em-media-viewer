@@ -219,7 +219,7 @@ export function reducer (
 }
 
 export const getAnnoSet = (state: AnnotationSetState) => state.annotationSet;
-export const getCommentHeader = (state: AnnotationSetState) => state.commentHeader;
+export const getAnnoCommentHeader = (state: AnnotationSetState) => state.commentHeader;
 export const getCommentEnts = (state: AnnotationSetState) => state.commentEntities;
 export const getAnnoPageEnt = (state: AnnotationSetState) => state.annotationPageEntities;
 export const getAnnoEnt = (state: AnnotationSetState) => state.annotationEntities;

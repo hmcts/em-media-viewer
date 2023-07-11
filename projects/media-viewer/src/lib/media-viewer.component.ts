@@ -94,6 +94,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   unsupportedContent = false;
 
   documentTitle: string;
+  commentHeader: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
   hasScrollBar: boolean;
@@ -103,7 +104,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   private $subscriptions: Subscription;
   private prevOffset: number;
-  private commentHeader: string;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
