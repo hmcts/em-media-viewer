@@ -7,7 +7,7 @@ module.exports = async function () {
   
   await I.retry(2).click(commonConfig.rotateRightBtn);
 
-  await I.addComments();
+  await I.addComments(commonConfig.firstComment1);
 
   await I.click(commonConfig.mvHighLight);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);

@@ -127,7 +127,7 @@ async function addCommentAndRotateTest(I, caseId, mediaType) {
 
 async function addCommentTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.addComments();
+  await I.addComments(commonConfig.firstComment1);
 }
 
 async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) {
