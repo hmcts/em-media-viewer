@@ -1,7 +1,6 @@
 'use strict'
 const commonConfig = require('../../data/commonConfig.json');
 const testConfig = require("../../../config");
-let commentsList
 
 module.exports = async function () {
   const I = this;

@@ -130,6 +130,12 @@ async function addCommentTest(I, caseId, mediaType) {
   await I.addComments(commonConfig.firstComment1);
 }
 
+async function updateCommentTest(I, caseId, mediaType, comment, updatedComment) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.addComments(comment);
+  await I.updateComment(comment, updatedComment);
+}
+
 async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.deleteComments(comment, updatedComment);
@@ -300,6 +306,7 @@ module.exports = {
   addCommentAndRotateTest,
   addCommentTest,
   deleteCommentTest,
+  updateCommentTest,
   collateCommentsTest,
   commentsSearchTest,
   addMultipleCommentsTest,
