@@ -5,7 +5,7 @@ const testConfig = require("../../../config");
 module.exports = async function (comment, updatedComment) {
   const I = this;
 
-  await I.click(`//p[@class ='commentText' and contains (text(), ${comment})]`);
+  await I.click(`//p[contains(text(), '${comment}')]`);
   await I.wait(testConfig.BookmarksAndAnnotationsWait)
   await I.click(commonConfig.editButton);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
