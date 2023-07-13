@@ -31,7 +31,7 @@ module.exports = () => {
     highlightPdfText: steps.annotationsAndComments.highlightPdfText,
     addCommentAndRotate: steps.annotationsAndComments.addCommentAndRotate,
     addComments: steps.annotationsAndComments.addComments,
-    updateComment: steps.annotationsAndComments.updateComments,
+    updateComment: steps.annotationsAndComments.updateComment,
     deleteComments: steps.annotationsAndComments.deleteComments,
     deleteAllExistingTextHighlights: steps.annotationsAndComments.deleteAllExistingTextHighlights,
     deleteAllExistingComments: steps.annotationsAndComments.deleteAllExistingComments,
