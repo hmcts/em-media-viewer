@@ -11,8 +11,7 @@ module.exports = async function (comment, updatedComment) {
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.clearField(commonConfig.clearFiledXp);
   await I.fillField(commonConfig.clearFiledXp, updatedComment);
-  await I.waitForElement(commonConfig.editButton);
-  await I.click(commonConfig.editButton);
+  await I.click(commonConfig.saveButton);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.refreshPage();
 };
