@@ -6,12 +6,12 @@ module.exports = async function (comment, updatedComment) {
   const I = this;
 
   await I.click(`//p[contains(text(), '${comment}')]`);
-  await I.wait(testConfig.BookmarksAndAnnotationsWait)
+  await I.waitForElement(commonConfig.editButton);
   await I.click(commonConfig.editButton);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.clearField(commonConfig.clearFiledXp);
   await I.fillField(commonConfig.clearFiledXp, updatedComment);
-  await I.wait(testConfig.BookmarksAndAnnotationsWait);
+  await I.waitForElement(commonConfig.editButton);
   await I.click(commonConfig.editButton);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.refreshPage();
