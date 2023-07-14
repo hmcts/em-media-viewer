@@ -19,5 +19,6 @@ module.exports = async function () {
     const pageHandle = document.getElementsByClassName('textLayer')[0].children[3];
     pageHandle.dispatchEvent(mouseUpEvent);
   });
-  await I.wait(testConfig.BookmarksAndAnnotationsWait);
+  await I.waitForElement(commonConfig.highLightPopup, commonConfig.BookmarksAndAnnotationsWait);
+  await I.retry(2).click(commonConfig.highLightPopup);
 }
