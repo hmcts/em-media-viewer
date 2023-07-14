@@ -132,6 +132,7 @@ async function addCommentTest(I, caseId, mediaType) {
 
 async function updateCommentTest(I, caseId, mediaType, comment, updatedComment) {
   await executeTestsOnPreview(I, caseId, mediaType);
+  await I.deleteAllExistingComments();
   await I.addComments(comment);
   await I.updateComment(comment, updatedComment);
 }
