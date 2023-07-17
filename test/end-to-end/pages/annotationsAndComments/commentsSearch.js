@@ -5,7 +5,6 @@ const {mvData} = require("../common/constants");
 
 module.exports = async function () {
   const I = this;
-  await I.deleteAllExistingComments();
   await I.addComments(mvData.UPDATED_COMMENT);
   await I.waitForElement(commonConfig.commentsSearchLink);
   await I.retry(2).click(commonConfig.commentsSearchLink)
