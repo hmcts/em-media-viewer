@@ -6,7 +6,7 @@ module.exports = async function () {
   const I = this;
   let i = 0;
 
-  const visible = await I.grabNumberOfVisibleElements(commonConfig.commentsCount)
+  const visible = await I.grabNumberOfVisibleElements(commonConfig.commentsCount);
   console.log(visible);
   while (i < visible) {
     await I.retry(3).click(commonConfig.commentsCount);
