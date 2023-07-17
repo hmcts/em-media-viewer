@@ -5,7 +5,9 @@ const testConfig = require("../../../config");
 module.exports = async function (comment, updatedComment) {
   const I = this;
 
-  await I.retry(3).click(`//p[contains(text(), '${comment}')]`);
+  const commentElement = `//p[contains(text(), '${comment}')]`;
+  await I.waitForElement(commentElement);
+  await I.click(commentElement);
   await I.waitForElement(commonConfig.editButton);
   await I.click(commonConfig.editButton);
   await I.waitForElement(commonConfig.clearFiledXp);
