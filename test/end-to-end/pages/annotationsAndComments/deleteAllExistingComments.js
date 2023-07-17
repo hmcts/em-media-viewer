@@ -11,7 +11,7 @@ module.exports = async function () {
   while (i < visible) {
     await I.retry(3).click(commonConfig.commentsCount);
     console.log('i', i);
-    await I.waitForElement(commonConfig.deleteAnnotationBtn, 30);
+    await I.waitForElement(commonConfig.deleteAnnotationBtn);
     await I.retry(3).click(commonConfig.deleteAnnotationBtn);
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
     ++i;
