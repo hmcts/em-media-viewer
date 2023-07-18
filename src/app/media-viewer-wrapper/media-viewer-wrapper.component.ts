@@ -10,7 +10,7 @@ import { ToolbarEventService } from '../../../projects/media-viewer/src/lib/tool
 })
 export class MediaViewerWrapperComponent implements AfterContentInit {
 
-  pdfUrl = '7547364e-5e49-452b-82e9-8d4b8a334a53';
+  pdfUrl = '04666097-eb32-4b2b-9bec-8e9ce8057560';
   imageUrl = '69fb7313-5338-42c4-b94d-0ceb3b6ed18b';
   multimediaUrl = 'assets/multimedia/movie.mp4';
   unsupportedUrl = 'assets/unsupported.txt';

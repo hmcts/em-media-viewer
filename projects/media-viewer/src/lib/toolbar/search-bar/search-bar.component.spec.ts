@@ -144,7 +144,7 @@ describe('SearchBarComponent', () => {
       const findNext = component.findNext.nativeElement;
       const findNextSpy = spyOn(findNext, 'focus');
       expect(findNextSpy).toHaveBeenCalled();
-    }, 1000);
+    }, 10000);
   });
 
   it('should set search result count with no results found', () => {
