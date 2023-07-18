@@ -143,7 +143,7 @@ async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) 
   await I.deleteComments(comment, updatedComment);
 }
 
-async function deleteHighlightsTest(I, caseId, mediaType, comment) {
+async function deleteHighlightsTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.highlightPdfText();
   await I.deleteAllExistingTextHighlights();
