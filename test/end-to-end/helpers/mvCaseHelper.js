@@ -122,6 +122,8 @@ async function highlightTextTest(I, caseId, mediaType) {
 
 async function addCommentAndRotateTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
+  await I.wait(10);
+  await I.deleteAllExistingTextHighlights();
   await I.addCommentAndRotate();
 }
 
