@@ -9,11 +9,5 @@ module.exports = async function () {
 
   await I.addComments(commonConfig.firstComment1);
 
-  await I.click(commonConfig.mvHighLight);
-  await I.wait(testConfig.BookmarksAndAnnotationsWait);
-
-  await I.highlightPdfText();
-  await I.wait(testConfig.BookmarksAndAnnotationsWait);
-
   await I.retry(3).click(commonConfig.rotateLeftBtn);
 }
