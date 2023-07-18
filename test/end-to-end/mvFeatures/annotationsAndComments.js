@@ -7,7 +7,8 @@ const {
   addCommentAndRotateTest,
   addCommentTest,
   deleteCommentTest,
-  updateCommentTest
+  updateCommentTest,
+  deleteHighlightsTest
 } = require("../helpers/mvCaseHelper");
 const { mvData } = require('../pages/common/constants.js');
 
@@ -59,4 +60,10 @@ Scenario('Delete a comment', async ({ I }) => {
   await deleteCommentTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT, mvData.DELETE_ANNOTATION, mvData.UPDATED_COMMENT);
 
 }).tag('@wip')
+  .retry(testConfig.TestRetryScenarios);
+
+Scenario('Delete all highlights', async ({ I }) => {
+  await deleteHighlightsTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT, mvData.DELETE_ANNOTATION);
+
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);

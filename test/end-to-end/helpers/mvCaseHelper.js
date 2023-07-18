@@ -122,8 +122,6 @@ async function highlightTextTest(I, caseId, mediaType) {
 
 async function addCommentAndRotateTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.clearAllRedactions();
-  await I.deleteAllExistingTextHighlights();
   await I.addCommentAndRotate();
 }
 
@@ -143,6 +141,12 @@ async function updateCommentTest(I, caseId, mediaType, comment, updatedComment) 
 async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.deleteComments(comment, updatedComment);
+}
+
+async function deleteHighlightsTest(I, caseId, mediaType, comment) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.highlightPdfText();
+  await I.deleteAllExistingTextHighlights();
 }
 
 async function collateCommentsTest(I, caseId, mediaType) {
@@ -311,6 +315,7 @@ module.exports = {
   addCommentAndRotateTest,
   addCommentTest,
   deleteCommentTest,
+  deleteHighlightsTest,
   updateCommentTest,
   collateCommentsTest,
   commentsSearchTest,

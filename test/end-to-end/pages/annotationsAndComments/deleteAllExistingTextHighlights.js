@@ -5,11 +5,18 @@ const testConfig = require("../../../config");
 
 module.exports = async function () {
   const I = this;
+  
+  let i = 0;
 
-
-  while (await I.getBookmarksCount(commonConfig.highLightTextCount) !== 0) {
-    await I.click(commonConfig.highLightTextCount);
-    await I.click(commonConfig.commentPopup.replace('Comment', 'Delete'));
+  const visible = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
+  while (i < visible) {
+    await I.retry(3).click(commonConfig.highLightTextCount);
+    await I.waitForElement(commonConfig.commentPopup.replace('Comment', 'Delete'));
+    await I.retry(3).click(commonConfig.commentPopup.replace('Comment', 'Delete'));
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
+    ++i;
   }
+
+  await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, 0);
+
 }
