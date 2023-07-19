@@ -127,12 +127,26 @@ async function addCommentAndRotateTest(I, caseId, mediaType) {
 
 async function addCommentTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.addComments();
+  await I.addComments(commonConfig.firstComment1);
+}
+
+async function updateCommentTest(I, caseId, mediaType, comment, updatedComment) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clickCommentsPanel();
+  await I.deleteAllExistingComments();
+  await I.addComments(comment);
+  await I.updateComment(comment, updatedComment);
 }
 
 async function deleteCommentTest(I, caseId, mediaType, comment, updatedComment) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.deleteComments(comment, updatedComment);
+}
+
+async function deleteHighlightsTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.highlightPdfText();
+  await I.deleteAllExistingTextHighlights();
 }
 
 async function collateCommentsTest(I, caseId, mediaType) {
@@ -144,6 +158,7 @@ async function collateCommentsTest(I, caseId, mediaType) {
 async function commentsSearchTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.clickCommentsPanel();
+  await I.deleteAllExistingComments();
   await I.commentsSearch();
 }
 
@@ -300,6 +315,8 @@ module.exports = {
   addCommentAndRotateTest,
   addCommentTest,
   deleteCommentTest,
+  deleteHighlightsTest,
+  updateCommentTest,
   collateCommentsTest,
   commentsSearchTest,
   addMultipleCommentsTest,
