@@ -274,6 +274,13 @@ async function uploadDocumentEvent(I, caseId, eventName) {
   await I.chooseNextStep(eventName, 3)
 }
 
+async function hrsUserJourneyTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.hrsSignIn();
+  await I.findCase();
+  await I.shareHRSFile();
+}
+
 module.exports = {
   loginTest,
   submittedState,
@@ -317,5 +324,6 @@ module.exports = {
   nonTextualHighlightUsingDrawBoxTest,
   updateNonTextualCommentTest,
   deleteNonTextualCommentTest,
-  redactSearchAndRedctAllTest
+  redactSearchAndRedctAllTest,
+  hrsUserJourneyTest
 }
