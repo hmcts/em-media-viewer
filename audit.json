@@ -142,6 +142,7 @@
   "10027_Information Disclosure - Suspicious Comments_https://manage-case.aat.platform.hmcts.net/main-es2015.fc6cb517ade70200e689.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_https://manage-case.aat.platform.hmcts.net/main-es5.caab19ba01445ccb76f7.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_https://manage-case.aat.platform.hmcts.net/main-es2015.7e22bc9eed8845403e31.js_GET" : "ignore",
+  "10027_Information Disclosure - Suspicious Comments_https://manage-case.aat.platform.hmcts.net/ruxitagentjs_ICA27NQVfgqrux_10269230615181503.js_GET" : "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/favicon.ico_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/main.4cd1ed7f36ca942d276b.js_GET": "ignore",
