@@ -15,7 +15,7 @@
          [ngClass]="'rot' + rotation"
          (error)="onLoadError(url)"
          (load)="onLoad(img)"/>
-    <mv-redactions *ngIf="(toolbarEvents.redactionMode | async);else annotationTemplate"
+    <mv-redactions *ngIf="(toolbarEvents.redactionMode | async) === true;else annotationTemplate"
                    [zoom]="zoom"
                    [rotate]="rotation"
     ></mv-redactions>
@@ -28,7 +28,7 @@
   </div>
 
     <mv-comment-set [contentScrollTop]="imageContainer.scrollTop"
-                    *ngIf="enableAnnotations && annotationSet && !(toolbarEvents.redactionMode | async)"
+                    *ngIf="enableAnnotations && annotationSet && (toolbarEvents.redactionMode | async) !== true"
                     [annotationSet]="annotationSet"
                     [zoom]="zoom"
                     [rotate]="rotation"

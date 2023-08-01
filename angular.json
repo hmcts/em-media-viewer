@@ -38,6 +38,15 @@
             "tsConfig": "projects/media-viewer/tsconfig.spec.json",
             "karmaConfig": "projects/media-viewer/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/media-viewer/**/*.ts",
+              "projects/media-viewer/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -88,7 +97,9 @@
                 "output": "/"
               }
             ],
-            "styles": ["src/app/app.component.scss"],
+            "styles": [
+              "src/app/app.component.scss"
+            ],
             "scripts": [],
             "aot": false,
             "vendorChunk": true,

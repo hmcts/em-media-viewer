@@ -33,7 +33,7 @@
     [class.annotations]="enableAnnotations"
     [class.show-comments-panel]="
       (showCommentsPanel || showIcpParticipantsList) &&
-      !(toolbarEvents.redactionMode | async)
+      (toolbarEvents.redactionMode | async) !== true
     "
     [class.grabNDrag]="enableGrabNDrag"
   >
@@ -67,7 +67,7 @@
     *ngIf="
       enableAnnotations &&
       annotationSet &&
-      !(toolbarEvents.redactionMode | async)
+      (toolbarEvents.redactionMode | async) !== true
     "
     [annotationSet]="annotationSet"
     [zoom]="zoom"
