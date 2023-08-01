@@ -71,3 +71,7 @@ functional-output/
 .pnp.*
 projects/media-viewer/.yarn/*
 projects/media-viewer/.yarn/cache/*
+
+# karma
+src/coverage/*
+projects/media-viewer/coverage/*

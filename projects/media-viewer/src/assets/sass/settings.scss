@@ -2,15 +2,17 @@
    #GENERAL CONFIGURATIONS
    ========================================================================== */
 
+@use "sass:math";
+
 $aui-page-width: 1220px;
 $aui-gutter: govuk-spacing(6);
-$aui-gutter-half: $govuk-gutter / 2;
+$aui-gutter-half: math.div($govuk-gutter, 2);
 
 // Assets path
 $aui-assets-path : "/public/images/";
 
 @mixin aspect-ratio($ratio-or-width, $height: null) {
-  $padding: if($height, percentage($height/$ratio-or-width), percentage(1/$ratio-or-width));
+  $padding: if($height, percentage(math.div($height, $ratio-or-width)), percentage(1/$ratio-or-width));
   &:before { content:''; float: left; padding-bottom: $padding;  }
   &:after  { content:''; display: table; clear: both;  }
 }
