@@ -100,7 +100,7 @@
                 "output": "/"
               }
             ],
-            "styles": [],
+            "styles": ["src/app/app.component.scss"],
             "scripts": [],
             "aot": false,
             "vendorChunk": true,
