@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { CommentSetComponent } from '../comment-set.component';
+import type { CommentSetComponent } from '../comment-set.component';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
-import { CommentComponent } from './comment.component';
+import type { CommentComponent } from './comment.component';
 
 // TODO: replace by NgRx
 @Injectable()
