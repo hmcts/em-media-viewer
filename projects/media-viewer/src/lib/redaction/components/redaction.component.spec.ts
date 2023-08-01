@@ -124,9 +124,11 @@ describe('RedactionComponent', () => {
     spyOn(document.body, 'appendChild');
     spyOn(document, 'createElement').and.returnValue(anchor);
 
-    component.downloadDocument({ blob: 'blob', filename: 'filename'});
+    const blob: Blob = new Blob();
 
-    expect(URL.createObjectURL).toHaveBeenCalledWith('blob');
+    component.downloadDocument({ blob: blob, filename: 'filename'});
+
+    expect(URL.createObjectURL).toHaveBeenCalledWith(blob);
     expect(URL.revokeObjectURL).toHaveBeenCalled();
     expect(anchor.click).toHaveBeenCalled();
     expect(anchor.remove).toHaveBeenCalled();
