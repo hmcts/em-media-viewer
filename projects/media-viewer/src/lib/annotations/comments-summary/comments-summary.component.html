@@ -61,7 +61,7 @@
               <ngx-datatable-column name="User" [flexGrow]="1" [sortable]="false"></ngx-datatable-column>
               <ngx-datatable-column name="Page" [flexGrow]="1">
                 <ng-template ngx-datatable-cell-template let-value="value">
-                  <a [routerLink]="" class="comment-summary_pages" (click)="navigateToPage(value)">{{value}}</a>
+                  <a [routerLink]="[]" class="comment-summary_pages" (click)="navigateToPage(value)">{{value}}</a>
                 </ng-template>
               </ngx-datatable-column>
               <ngx-datatable-column name="Date" [flexGrow]="1"></ngx-datatable-column>

@@ -41,59 +41,54 @@ import { HighlightCreateDirective } from './annotations/annotation-set/annotatio
 import {MultimediaPlayerComponent} from './viewers/multimedia-player/multimedia-player.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    ToolbarModule,
-    AnnotationsModule,
-    TagInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    StoreModule.forFeature('media-viewer', reducers),
-    EffectsModule.forFeature(effects),
-    TreeModule,
-    MutableDivModule
-  ],
-  declarations: [
-    PdfViewerComponent,
-    SideBarComponent,
-    BookmarksComponent,
-    OutlineItemComponent,
-    ImageViewerComponent,
-    UnsupportedViewerComponent,
-    MultimediaPlayerComponent,
-    MediaViewerComponent,
-    ConvertibleContentViewerComponent,
-    GrabNDragDirective,
-    RotationPersistDirective,
-    HighlightCreateDirective,
-    ConfirmActionDialogComponent,
-    RedactionComponent, // todo made put this into module
-    BookmarkIconsComponent,
-    ParticipantsListComponent
-  ],
-  entryComponents: [
-    PdfViewerComponent,
-    ImageViewerComponent,
-    UnsupportedViewerComponent
-  ],
-  providers: [
-    PdfJsWrapperFactory,
-    CommentService,
-    RedactionApiService,
-    IcpSessionApiService,
-    IcpUpdateService,
-    SocketService,
-    IcpService,
-    IcpPresenterService,
-    IcpFollowerService,
-    RedactionApiService,
-    DocumentConversionApiService,
-    RotationApiService,
-  ],
-  exports: [
-    MediaViewerComponent
-  ]
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        ToolbarModule,
+        AnnotationsModule,
+        TagInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        StoreModule.forFeature('media-viewer', reducers),
+        EffectsModule.forFeature(effects),
+        TreeModule,
+        MutableDivModule
+    ],
+    declarations: [
+        PdfViewerComponent,
+        SideBarComponent,
+        BookmarksComponent,
+        OutlineItemComponent,
+        ImageViewerComponent,
+        UnsupportedViewerComponent,
+        MultimediaPlayerComponent,
+        MediaViewerComponent,
+        ConvertibleContentViewerComponent,
+        GrabNDragDirective,
+        RotationPersistDirective,
+        HighlightCreateDirective,
+        ConfirmActionDialogComponent,
+        RedactionComponent,
+        BookmarkIconsComponent,
+        ParticipantsListComponent
+    ],
+    providers: [
+        PdfJsWrapperFactory,
+        CommentService,
+        RedactionApiService,
+        IcpSessionApiService,
+        IcpUpdateService,
+        SocketService,
+        IcpService,
+        IcpPresenterService,
+        IcpFollowerService,
+        RedactionApiService,
+        DocumentConversionApiService,
+        RotationApiService,
+    ],
+    exports: [
+        MediaViewerComponent
+    ]
 })
 export class MediaViewerModule { }
