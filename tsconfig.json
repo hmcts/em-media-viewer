@@ -31,5 +31,6 @@
       ],
       "core-js/es6/*": ["node_modules/core-js/es"]
     }
-  }
+  },
+  "include": ["src/**/*"]
 }
