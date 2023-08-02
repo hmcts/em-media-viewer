@@ -28,6 +28,7 @@
     "test": "cd projects/media-viewer; ng test",
     "test:coverage": "yarn test",
     "test:a11y": "yarn test",
+    "tests:a11y": "NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_ENV=test LOG_LEVEL=ERROR mocha --exit --reporter mochawesome --require ts-node/register --require tsconfig-paths/register src/test/a11y/a11y.ts --timeout 60000 --reporter-options reportDir=functional-output/accessibility-report,reportFilename=a11y,inlineAssets=true,reportTitle=media-viewer",
     "test:smoke": "NODE_PATH=. node ./node_modules/codeceptjs/bin/codecept.js run -c ./test/end-to-end/codecept.smoke.conf.js --grep @smoke --steps --reporter mocha-multi",
     "test:fullfunctional": "yarn e2e:fullfunctional",
     "test:functional": "yarn e2e:fullfunctional",
