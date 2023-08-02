@@ -37,66 +37,61 @@ import { MetadataLayerComponent } from './annotation-set/metadata-layer/metadata
 import { CommentService } from './comment-set/comment/comment.service';
 
 @NgModule({
-  imports: [
-    A11yModule,
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    MutableDivModule,
-    TagInputModule,
-    RouterModule,
-    ReactiveFormsModule,
-    NgxDatatableModule,
-    SharedModule
-  ],
-  declarations: [
-    MetadataLayerComponent,
-    AnnotationViewComponent,
-    BoxHighlightCreateComponent,
-    AnnotationSetComponent,
-    RectangleComponent,
-    CommentComponent,
-    CommentSetHeaderComponent,
-    CommentSearchComponent,
-    TextHighlightDirective,
-    CtxToolbarComponent,
-    CommentSetComponent,
-    CommentsNavigateComponent,
-    TextareaAutoExpandDirective,
-    CommentsSummaryComponent,
-    TagsComponent,
-    MomentDatePipe,
-    CommentFilterComponent,
-    FilterPipe,
-    UnsnakePipe
-  ],
-  entryComponents: [
-    AnnotationViewComponent,
-    AnnotationSetComponent,
-    CommentSetComponent
-  ],
-  providers: [
-    AnnotationApiService,
-    BookmarksApiService,
-    CommentSetRenderService,
-    HighlightCreateService,
-    CommentService,
-    TagsServices
-  ],
-  exports: [
-    AnnotationViewComponent,
-    BoxHighlightCreateComponent,
-    AnnotationSetComponent,
-    CommentSetComponent,
-    CommentSetHeaderComponent,
-    CommentSearchComponent,
-    CommentsSummaryComponent,
-    TagsComponent,
-    CommentFilterComponent,
-    MomentDatePipe,
-    FilterPipe,
-    UnsnakePipe,
-    MetadataLayerComponent
-  ]
+    imports: [
+        A11yModule,
+        CommonModule,
+        FormsModule,
+        HttpClientModule,
+        MutableDivModule,
+        TagInputModule,
+        RouterModule,
+        ReactiveFormsModule,
+        NgxDatatableModule,
+        SharedModule
+    ],
+    declarations: [
+        MetadataLayerComponent,
+        AnnotationViewComponent,
+        BoxHighlightCreateComponent,
+        AnnotationSetComponent,
+        RectangleComponent,
+        CommentComponent,
+        CommentSetHeaderComponent,
+        CommentSearchComponent,
+        TextHighlightDirective,
+        CtxToolbarComponent,
+        CommentSetComponent,
+        CommentsNavigateComponent,
+        TextareaAutoExpandDirective,
+        CommentsSummaryComponent,
+        TagsComponent,
+        MomentDatePipe,
+        CommentFilterComponent,
+        FilterPipe,
+        UnsnakePipe
+    ],
+    providers: [
+        AnnotationApiService,
+        BookmarksApiService,
+        CommentSetRenderService,
+        HighlightCreateService,
+        CommentService,
+        TagsServices
+    ],
+    exports: [
+        AnnotationViewComponent,
+        BoxHighlightCreateComponent,
+        AnnotationSetComponent,
+        CommentSetComponent,
+        CommentSetHeaderComponent,
+        CommentSearchComponent,
+        CommentsSummaryComponent,
+        TagsComponent,
+        CommentFilterComponent,
+        MomentDatePipe,
+        FilterPipe,
+        UnsnakePipe,
+        MetadataLayerComponent
+    ]
 })
 export class AnnotationsModule { }
