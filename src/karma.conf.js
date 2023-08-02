@@ -5,6 +5,7 @@ const karmaJasmine = require('karma-jasmine');
 const karmaChromeLauncher = require('karma-chrome-launcher');
 const karmaPhantomjsLauncher = require('karma-phantomjs-launcher');
 const karmaJasmineHtmlReporter = require('karma-jasmine-html-reporter');
+const karmaCoverage = require('karma-coverage');
 const karmaCoverageIstanbulReporter = require('karma-coverage-istanbul-reporter');
 const generated = require('@angular-devkit/build-angular/plugins/karma');
 
@@ -17,6 +18,7 @@ module.exports = config => {
             karmaChromeLauncher,
             karmaPhantomjsLauncher,
             karmaJasmineHtmlReporter,
+            karmaCoverage,
             karmaCoverageIstanbulReporter,
             generated
         ],
