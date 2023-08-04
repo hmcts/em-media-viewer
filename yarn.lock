@@ -2506,7 +2506,7 @@ __metadata:
     "@types/jasminewd2": ^2.0.8
     "@types/lodash": 4.14.160
     "@types/mocha": ^8.2.1
-    "@types/node": 12.0.8
+    "@types/node": ^18.17.0
     "@typescript-eslint/eslint-plugin": 5.62.0
     "@typescript-eslint/parser": 5.62.0
     axios: ^1.4.0
@@ -3588,17 +3588,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:12.0.8":
-  version: 12.0.8
-  resolution: "@types/node@npm:12.0.8"
-  checksum: 1eac36c8e4e8f36b0322230dd173cc0fae310de0c10014f3b9b4fc28dda2e599c2db77a641b34c7845fc562b2f3f57231cc39b3d21cdfcb687cb922f7b8c410e
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:^17.0.4":
   version: 17.0.45
   resolution: "@types/node@npm:17.0.45"
   checksum: aa04366b9103b7d6cfd6b2ef64182e0eaa7d4462c3f817618486ea0422984c51fc69fd0d436eae6c9e696ddfdbec9ccaa27a917f7c2e8c75c5d57827fe3d95e8
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.17.0":
+  version: 18.17.2
+  resolution: "@types/node@npm:18.17.2"
+  checksum: 2e08acaeb30e05f96fbf3d974fc2203bf10ed9020cafd511018dbba8023044bb8758f9d5a2a8e68da3bca827ccef7628202de9b7ca3b515374a7b094b128930a
   languageName: node
   linkType: hard
 
