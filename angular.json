@@ -194,7 +194,6 @@
       }
     }
   },
-  "defaultProject": "media-viewer",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"
