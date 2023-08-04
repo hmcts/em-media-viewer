@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "declarationMap": true,
-    "target": "es2017",
+    "target": "es2020",
     "module": "esnext",
     "moduleResolution": "node",
     "declaration": true,
@@ -15,7 +15,7 @@
     "typeRoots": ["../node_modules/@types"],
     "lib": [
       "dom",
-      "es2017"
+      "es2020"
     ]
   },
   "angularCompilerOptions": {

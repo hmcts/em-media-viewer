@@ -31,16 +31,16 @@ __metadata:
     socket.io-client: ^3.1.1
     uuid: ^3.4.0
   peerDependencies:
-    "@angular/animations": ^13.4.0
-    "@angular/common": ^13.4.0
-    "@angular/core": ^13.4.0
-    "@angular/forms": ^13.4.0
-    "@angular/material": ^13.4.0
-    "@angular/platform-browser": ^13.4.0
-    "@ngrx/effects": ^13.0.0
-    "@ngrx/router-store": ^13.0.0
-    "@ngrx/store": ^13.0.0
-    "@ngrx/store-devtools": ^13.0.0
+    "@angular/animations": ^14.3.0
+    "@angular/common": ^14.3.0
+    "@angular/core": ^14.3.0
+    "@angular/forms": ^14.3.0
+    "@angular/material": ^14.3.0
+    "@angular/platform-browser": ^14.3.0
+    "@ngrx/effects": ^14.0.0
+    "@ngrx/router-store": ^14.0.0
+    "@ngrx/store": ^14.0.0
+    "@ngrx/store-devtools": ^14.0.0
   languageName: unknown
   linkType: soft
 
