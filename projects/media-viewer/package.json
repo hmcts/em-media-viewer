@@ -26,16 +26,16 @@
     "uuid": "^3.4.0"
   },
   "peerDependencies": {
-    "@angular/animations": "^14.3.0",
-    "@angular/common": "^14.3.0",
-    "@angular/core": "^14.3.0",
-    "@angular/forms": "^14.3.0",
-    "@angular/material": "^14.3.0",
-    "@angular/platform-browser": "^14.3.0",
-    "@ngrx/effects": "^14.0.0",
-    "@ngrx/router-store": "^14.0.0",
-    "@ngrx/store": "^14.0.0",
-    "@ngrx/store-devtools": "^14.0.0"
+    "@angular/animations": "^15.2.9",
+    "@angular/common": "^15.2.9",
+    "@angular/core": "^15.2.9",
+    "@angular/forms": "^15.2.9",
+    "@angular/material": "^15.2.9",
+    "@angular/platform-browser": "^15.2.9",
+    "@ngrx/effects": "^15.0.0",
+    "@ngrx/router-store": "^15.0.0",
+    "@ngrx/store": "^15.0.0",
+    "@ngrx/store-devtools": "^15.0.0"
   },
   "devDependencies": {
     "@types/uuid": "^3.4.4",
