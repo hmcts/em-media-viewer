@@ -10,7 +10,7 @@
     "module": "es2020",
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "target": "es2020",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -28,7 +28,10 @@
       "core-js/es7/reflect": [
         "node_modules/core-js/proposals/reflect-metadata"
       ],
-      "core-js/es6/*": ["node_modules/core-js/es"]
-    }
+      "core-js/es6/*": [
+        "node_modules/core-js/es"
+      ]
+    },
+    "useDefineForClassFields": false
   }
 }
