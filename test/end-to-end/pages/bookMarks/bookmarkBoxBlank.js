@@ -4,5 +4,8 @@ const testConfig = require("../../../config");
 
 module.exports = async function () {
   const I = this;
-  await I.dontSeeElement(commonConfig.dontSeeBookmark);
+  await I.click(commonConfig.addBookmarkButton);
+  await I.wait(testConfig.BookmarksAndAnnotationsWait);
+
+  await I.seeInField(commonConfig.bookmarkTextField, commonConfig.expectedBookmarkText);
 }
