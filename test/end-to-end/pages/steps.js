@@ -27,6 +27,7 @@ module.exports = () => {
     addNamedBookmark: steps.bookMarks.addNamedBookmark,
     sortBookmarks: steps.bookMarks.sortBookmarks,
     addEmptyBookmarks: steps.bookMarks.addAnEmptyBookMarks,
+    bookmarkBoxBlank: steps.bookMarks.bookmarkBoxBlank,
     mvAudioScenario: steps.multiMedia.multiMediaAudio,
     highlightPdfText: steps.annotationsAndComments.highlightPdfText,
     addCommentAndRotate: steps.annotationsAndComments.addCommentAndRotate,
