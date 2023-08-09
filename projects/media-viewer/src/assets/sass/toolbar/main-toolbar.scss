@@ -41,7 +41,7 @@
       background-image: url(/assets/images/more.svg);
     }
     &:focus {
-      outline: 3px solid #ffbf47;
+      outline: 3px solid #ffdd00;
       outline-offset: -2px;
       z-index: 99;
     }
@@ -78,7 +78,7 @@
 }
 
 .mv-toolbar__menu-button--highlight {
-  width: 120px;
+  width: 7.9rem;
   &:after {
     background-image: url(/assets/images/icon-highlight.svg);
     background-size: 18px 19px;
@@ -111,7 +111,7 @@
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
   font-size: 16px;
-  font-size: 1rem;
+  font-size: 1rem !important;
   line-height: 1;
   background-color: #ffffff;
   color: #0b0c0c;
@@ -150,7 +150,7 @@
 .mv-toolbar__menu-button--zoom-in:focus,
 .mv-toolbar__menu-button--rotate_left:focus,
 .mv-toolbar__menu-button--rotate_right:focus {
-  outline: 3px solid #ffbf47;
+  outline: 3px solid #ffdd00;
   outline-offset: -2px;
   z-index: 1;
 }
@@ -159,6 +159,7 @@
   width: 215px;
   height: 30px;
   padding-top: 10px;
+  font-size: 1rem !important;
   span:first-of-type {
     padding: 0 10px;
   }
@@ -362,7 +363,7 @@ textarea:focus,
 select:focus,
 button:focus,
 button:active {
-  outline: 3px solid #ffbf47;
+  outline: 3px solid #ffdd00;
   outline-offset: -2px;
   z-index: 99;
 }
