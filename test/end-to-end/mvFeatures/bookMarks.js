@@ -38,5 +38,5 @@ Scenario('Sort bookmarks', async ({I}) => {
 Scenario('check if bookmark box is blank', async ({I}) => {
   await bookmarkBoxBlankTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
   
-}).tag('@rr')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
