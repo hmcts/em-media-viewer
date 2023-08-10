@@ -19,6 +19,9 @@ export class AnnotationEffects {
     switchMap((documentId) => {
       return this.annotationApiService.getAnnotationSet(documentId).pipe(
         map(res => {
+          if (res.status === 204) {
+            return new annotationsActions.LoadAnnotationSetFail(res);
+          }
           return new annotationsActions.LoadAnnotationSetSucess(res);
         }),
         catchError(error => {
