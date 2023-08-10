@@ -155,6 +155,15 @@ async function collateCommentsTest(I, caseId, mediaType) {
   await I.collateComments();
 }
 
+async function collateCommentsNotBlankTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clickCommentsPanel();
+  await I.deleteAllExistingComments();
+  await I.addMultipleComments();
+  await I.collateComments();
+  await I.collateCommentsNotBlank();
+}
+
 async function commentsSearchTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.clickCommentsPanel();
@@ -318,6 +327,7 @@ module.exports = {
   deleteHighlightsTest,
   updateCommentTest,
   collateCommentsTest,
+  collateCommentsNotBlankTest,
   commentsSearchTest,
   addMultipleCommentsTest,
   markContentForRedactionUsingDrawBoxTest,

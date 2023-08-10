@@ -37,6 +37,7 @@ module.exports = () => {
     deleteAllExistingComments: steps.annotationsAndComments.deleteAllExistingComments,
     clickCommentsPanel: steps.annotationsAndComments.clickCommentsPanel,
     collateComments: steps.annotationsAndComments.collateComments,
+    collateCommentsNotBlank: steps.annotationsAndComments.collateCommentsNotBlank,
     commentsSearch: steps.annotationsAndComments.commentsSearch,
     addMultipleComments: steps.annotationsAndComments.addMultipleComments,
     clickRedactMenu: steps.redact.clickRedactMenu,
