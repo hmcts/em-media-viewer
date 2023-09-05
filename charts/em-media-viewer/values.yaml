@@ -18,5 +18,5 @@ nodejs:
     ICP_API_URL: "https://em-icp-{{ .Values.global.environment }}.platform.hmcts.net"
     IDAM_URL: "https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net"
     S2S_URL: "http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
-    NPA_URL: "http://em-npa-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    NPA_URL: "https://em-npa-pr-1612.preview.platform.hmcts.net/"
     REDIRECT_URL: "https://em-show-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/oauth2/callback"
