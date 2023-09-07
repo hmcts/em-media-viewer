@@ -74,7 +74,6 @@ withPipeline(type, product, component) {
   disableLegacyDeployment()
 
   afterSuccess('checkout') {
-      sh ("nvm use")
       sh ("rm -rf node_modules")
       sh ("yarn cache clean")
       sh ('npm rebuild node-sass')
