@@ -81,6 +81,7 @@ withPipeline(type, product, component) {
   }
 
   afterSuccess('build') {
+    sh ('node --version')
     sh ('yarn setup')
     yarnBuilder.yarn('build')
   }
