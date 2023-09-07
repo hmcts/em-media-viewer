@@ -85,7 +85,7 @@ describe('OutlineItemComponent', () => {
   });
 
   it('should find the ending page number', () => {
-    component.endPage = Math.random();
+    component.endPage = Math.floor(Math.random() * 1000);
     expect(component.findEndPage(undefined)).toBe(component.endPage);
     const nextOutline = <Outline> {};
     nextOutline.pageNumber = Math.floor(Math.random() * 10000);
