@@ -34,6 +34,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     );
   }
 
+  ngAfterViewInit(): void {
+    this.findInput.nativeElement.focus();
+  }
+
   ngOnDestroy(): void {
     for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
