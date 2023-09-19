@@ -79,7 +79,6 @@ withPipeline(type, product, component) {
       sh ('npm rebuild node-sass')
       sh ('yarn install --check-cache')
       yarnBuilder.yarn('setup')
-
   }
 
   afterSuccess('build') {
