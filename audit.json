@@ -160,6 +160,7 @@
   "10027_Information Disclosure - Suspicious Comments_https://manage-case.aat.platform.hmcts.net/main-es2015.4c5f9649e4112e9cf449.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_https://manage-case.aat.platform.hmcts.net/main-es5.4c5f9649e4112e9cf449.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_https://manage-case.aat.platform.hmcts.net/main-es2015.a72cef17db0525c958d2.js_GET": "ignore",
+  "10027_Information Disclosure - Suspicious Comments_https://manage-case.aat.platform.hmcts.net/main-es5.a72cef17db0525c958d2.js_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/favicon.ico_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/main.4cd1ed7f36ca942d276b.js_GET": "ignore",
@@ -225,6 +226,7 @@
   "10049_Non-Storable Content_https://manage-case.aat.platform.hmcts.net/_GET": "ignore",
   "10049_Non-Storable Content_https://manage-case.aat.platform.hmcts.net/robots.txt_GET": "ignore",
   "10049_Non-Storable Content_https://manage-case.aat.platform.hmcts.net/sitemap.xml_GET": "ignore",
+  "10049_Storable and Cacheable Content_https://manage-case.aat.platform.hmcts.net/favicon.ico_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore",
@@ -256,6 +258,7 @@
   "10055_CSP: style-src unsafe-inline_https://manage-case.aat.platform.hmcts.net/ruxitagentjs_ICA27NQVfgqrux_10273230728040645.js_GET" : "ignore",
   "10063_Permissions Policy Header Not Set_https://manage-case.aat.platform.hmcts.net_GET": "ignore",
   "10063_Permissions Policy Header Not Set_https://manage-case.aat.platform.hmcts.net/_GET": "ignore",
+  "10063_Permissions Policy Header Not Set_https://manage-case.aat.platform.hmcts.net/main-es2015.a72cef17db0525c958d2.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/govuk-apple-touch-icon-152x152.png_GET": "ignore",
@@ -419,10 +422,13 @@
   "10109_Modern Web Application_https://manage-case.aat.platform.hmcts.net/ruxitagentjs_ICA27NQVfgqrux_10273230728040645.js_GET": "ignore",
   "10110_Dangerous JS Functions_https://manage-case.aat.platform.hmcts.net/main-es5.4c5f9649e4112e9cf449.js_GET": "ignore",
   "10110_Dangerous JS Functions_https://manage-case.aat.platform.hmcts.net/main-es2015.a72cef17db0525c958d2.js_GET": "ignore",
+  "10110_Dangerous JS Functions_https://manage-case.aat.platform.hmcts.net/main-es5.a72cef17db0525c958d2.js_GET": "ignore",
   "10112_Session Management Response Identified_https://manage-case.aat.platform.hmcts.net/_GET": "ignore",
   "10112_Session Management Response Identified_https://manage-case.aat.platform.hmcts.net_GET": "ignore",
   "40025_Proxy Disclosure_https://manage-case.aat.platform.hmcts.net/styles.9c4f5237b94adede268c.css_GET": "ignore",
+  "40025_Proxy Disclosure_https://manage-case.aat.platform.hmcts.net_GET": "ignore",
   "90027_Cookie Slack Detector_https://manage-case.aat.platform.hmcts.net/styles.9c4f5237b94adede268c.css_GET": "ignore",
   "90027_Cookie Slack Detector_https://manage-case.aat.platform.hmcts.net/main-es2015.a72cef17db0525c958d2.js_GET": "ignore",
-  "90027_Cookie Slack Detector_https://manage-case.aat.platform.hmcts.net/main-es5.a72cef17db0525c958d2.js_GET": "ignore"
+  "90027_Cookie Slack Detector_https://manage-case.aat.platform.hmcts.net/main-es5.a72cef17db0525c958d2.js_GET": "ignore",
+  "90027_Cookie Slack Detector_https://manage-case.aat.platform.hmcts.net/polyfills-es2015.a66ee62e8d891550158f.js_GET": "ignore"
 }
