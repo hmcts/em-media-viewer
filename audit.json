@@ -454,6 +454,7 @@
   "40025_Proxy Disclosure_https://manage-case.aat.platform.hmcts.net_GET": "ignore",
   "40025_Proxy Disclosure_https://manage-case.aat.platform.hmcts.net/robots.txt_GET": "ignore",
   "40025_Proxy Disclosure_https://manage-case.aat.platform.hmcts.net/sitemap.xml_GET": "ignore",
+  "40025_Proxy Disclosure_https://manage-case.aat.platform.hmcts.net/favicon.ico_GET": "ignore",
   "90027_Cookie Slack Detector_https://manage-case.aat.platform.hmcts.net/styles.9c4f5237b94adede268c.css_GET": "ignore",
   "90027_Cookie Slack Detector_https://manage-case.aat.platform.hmcts.net/main-es2015.a72cef17db0525c958d2.js_GET": "ignore",
   "90027_Cookie Slack Detector_https://manage-case.aat.platform.hmcts.net/main-es5.a72cef17db0525c958d2.js_GET": "ignore",
