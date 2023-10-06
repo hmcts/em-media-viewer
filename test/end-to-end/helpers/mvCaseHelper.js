@@ -295,6 +295,12 @@ async function uploadDocumentEvent(I, caseId, eventName) {
   await I.chooseNextStep(eventName, 3)
 }
 
+async function add30BookmarksTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.add30Bookmarks();
+}
+
 module.exports = {
   loginTest,
   submittedState,
@@ -341,5 +347,6 @@ module.exports = {
   updateNonTextualCommentTest,
   deleteNonTextualCommentTest,
   redactSearchAndRedctAllTest,
-  bookmarkBoxBlankTest
+  bookmarkBoxBlankTest,
+  add30BookmarksTest
 }
