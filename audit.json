@@ -425,6 +425,7 @@
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/runtime-es2015.ee764f6592690b8d9311.js_GET":"ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/robots.txt_GET":"ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/runtime-es2015.b83f4cb00f1ae50716dc.js_GET":"ignore",
+  "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/main-es5.a72cef17db0525c958d2.js_GET": "ignore",
   "10015_Re-examine Cache-control Directives_https://em-media-viewer-staging.service.core-compute-aat.internal/sitemap.xml_GET":"ignore",
   "10020_Missing Anti-clickjacking Header_https://em-media-viewer-staging.service.core-compute-aat.internal/_GET":"ignore",
   "10003_Vulnerable JS Library_https://em-media-viewer-staging.service.core-compute-aat.internal/main.c2ea66bc15f21344e568.js_GET":"ignore",
