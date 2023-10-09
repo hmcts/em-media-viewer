@@ -32,6 +32,8 @@
   "sortBookmarkCustom": "#sortBookmarkCustom",
   "bookMarksIndex": "#mvIndexBtn",
   "viewBookmark": "#viewBookmark",
+  "bookmarkTextField": "input.bookmark__input",
+  "expectedBookmarkText": "",
   "highLightPopup": "//*[contains(@class, 'leftButton')]",
   "commentPopup": "//*[@title='Comment']",
   "firstCommentXp":"//*[@name='content']",
