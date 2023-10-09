@@ -9,4 +9,5 @@ module.exports = async function () {
   await I.fillField(commonConfig.firstCommentXp, commonConfig.firstComment1);
   await I.retry(3).click('//button[@class="govuk-button" and contains(text(), "Save")]');
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
+  await I.nonTextualHighlightAndComment();
 }
