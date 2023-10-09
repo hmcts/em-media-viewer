@@ -105,6 +105,12 @@ async function sortBookmarksTest(I, caseId, mediaType) {
   await I.sortBookmarks();
 }
 
+async function bookmarkBoxBlankTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.bookmarkBoxBlank();
+}
+
 async function multiMediaAudioTest(I, caseId, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.mvAudioScenario();
@@ -298,6 +304,12 @@ async function uploadDocumentEvent(I, caseId, eventName) {
   await I.chooseNextStep(eventName, 3)
 }
 
+async function add30BookmarksTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.add30Bookmarks();
+}
+
 module.exports = {
   loginTest,
   submittedState,
@@ -344,5 +356,7 @@ module.exports = {
   nonTextualHighlightUsingDrawBoxTest,
   updateNonTextualCommentTest,
   deleteNonTextualCommentTest,
-  redactSearchAndRedctAllTest
+  redactSearchAndRedctAllTest,
+  bookmarkBoxBlankTest,
+  add30BookmarksTest
 }
