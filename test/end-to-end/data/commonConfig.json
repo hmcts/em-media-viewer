@@ -94,5 +94,7 @@
   "searchAllBtn": "#mvSearchAllBtn",
   "redactAllBtn": "#mvRedactAllBtn",
   "findRedactResultsCount" : "#findRedactResultsCount",
-  "rectangleClass" : ".rectangle"
+  "rectangleClass" : ".rectangle",
+  "collateCommentsCheck": "ngx-datatable",
+  "closeCommentSummary": "button#modal-close-button"
 }
