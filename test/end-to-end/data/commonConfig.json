@@ -32,6 +32,8 @@
   "sortBookmarkCustom": "#sortBookmarkCustom",
   "bookMarksIndex": "#mvIndexBtn",
   "viewBookmark": "#viewBookmark",
+  "bookmarkTextField": "input.bookmark__input",
+  "expectedBookmarkText": "",
   "highLightPopup": "//*[contains(@class, 'leftButton')]",
   "commentPopup": "//*[@title='Comment']",
   "firstCommentXp":"//*[@name='content']",
@@ -93,7 +95,7 @@
   "redactAllBtn": "#mvRedactAllBtn",
   "findRedactResultsCount" : "#findRedactResultsCount",
   "rectangleClass" : ".rectangle",
-  "hrsCasePage" : "https://manage-case.aat.platform.hmcts.net/cases",
+   "hrsCasePage" : "https://manage-case.aat.platform.hmcts.net/cases",
   "signInTitle" : "Sign in",
   "usernameSelector" : "#username",
   "usernameInput" : "em-test-searcher@test.hmcts.net",
@@ -118,5 +120,7 @@
   "recipientEmailAddress" : "em-test-requestor@test.hmcts.net",
   "submitBtn" : "button.button[type='submit']",
   "fileSharedConfirmationText" : "has been updated with event:",
-  "signOutBtn" : "a.hmcts-header__navigation-link"
+  "signOutBtn" : "a.hmcts-header__navigation-link",
+  "collateCommentsCheck": "ngx-datatable",
+  "closeCommentSummary": "button#modal-close-button"
 }
