@@ -304,6 +304,13 @@ async function uploadDocumentEvent(I, caseId, eventName) {
   await I.chooseNextStep(eventName, 3)
 }
 
+async function hrsUserJourneyTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.hrsSignIn();
+  await I.findCase();
+  await I.shareHRSFile();
+}
+  
 async function add30BookmarksTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.clearBookMarks();
@@ -357,6 +364,7 @@ module.exports = {
   updateNonTextualCommentTest,
   deleteNonTextualCommentTest,
   redactSearchAndRedctAllTest,
+  hrsUserJourneyTest,
   bookmarkBoxBlankTest,
   add30BookmarksTest
 }
