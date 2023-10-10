@@ -105,6 +105,12 @@ async function sortBookmarksTest(I, caseId, mediaType) {
   await I.sortBookmarks();
 }
 
+async function bookmarkBoxBlankTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.bookmarkBoxBlank();
+}
+
 async function multiMediaAudioTest(I, caseId, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.mvAudioScenario();
@@ -153,6 +159,15 @@ async function collateCommentsTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.clickCommentsPanel();
   await I.collateComments();
+}
+
+async function collateCommentsNotBlankTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clickCommentsPanel();
+  await I.deleteAllExistingComments();
+  await I.addMultipleComments();
+  await I.collateComments();
+  await I.collateCommentsNotBlank();
 }
 
 async function commentsSearchTest(I, caseId, mediaType) {
@@ -289,6 +304,19 @@ async function uploadDocumentEvent(I, caseId, eventName) {
   await I.chooseNextStep(eventName, 3)
 }
 
+async function hrsUserJourneyTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.hrsSignIn();
+  await I.findCase();
+  await I.shareHRSFile();
+}
+  
+async function add30BookmarksTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.add30Bookmarks();
+}
+
 module.exports = {
   loginTest,
   submittedState,
@@ -318,6 +346,7 @@ module.exports = {
   deleteHighlightsTest,
   updateCommentTest,
   collateCommentsTest,
+  collateCommentsNotBlankTest,
   commentsSearchTest,
   addMultipleCommentsTest,
   markContentForRedactionUsingDrawBoxTest,
@@ -334,5 +363,8 @@ module.exports = {
   nonTextualHighlightUsingDrawBoxTest,
   updateNonTextualCommentTest,
   deleteNonTextualCommentTest,
-  redactSearchAndRedctAllTest
+  redactSearchAndRedctAllTest,
+  hrsUserJourneyTest,
+  bookmarkBoxBlankTest,
+  add30BookmarksTest
 }
