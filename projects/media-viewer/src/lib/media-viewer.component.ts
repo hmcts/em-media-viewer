@@ -154,6 +154,12 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       this.api.annotationApiUrl = this.annotationApiUrl;
     }
 
+    if (changes.contentType) {
+      this.convertibleContent = this.needsConverting();
+      this.multimediaContent = this.isMultimedia();
+      this.unsupportedContent = !this.isSupported();
+    }
+
     if (changes.url) {
       this.toolbarEvents.reset();
       this.commentService.resetCommentSet();
@@ -168,12 +174,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       if (this.contentType === 'image') {
         this.documentTitle = null;
       }
-    }
-
-    if (changes.contentType) {
-      this.convertibleContent = this.needsConverting();
-      this.multimediaContent = this.isMultimedia();
-      this.unsupportedContent = !this.isSupported();
     }
 
     this.setToolbarButtons();
