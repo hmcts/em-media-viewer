@@ -177,9 +177,9 @@ async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
   await I.redactContentUsingRedactText();
 }
 
-async function redactSearchAndRedctAllTest(I, caseId, mediaType) {
+async function redactSearchAndRedactAllTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.redactSearchAndRedctAll();
+  await I.redactSearchAndRedactAll();
 }
 
 async function createRedactionsUsingDrawBoxAndRedactText(I, caseId, mediaType) {
@@ -289,6 +289,14 @@ async function uploadDocumentEvent(I, caseId, eventName) {
   await I.chooseNextStep(eventName, 3)
 }
 
+async function customAndReorderBookmarksTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.createBookMark();
+  await I.customOrderBookmarks();
+  await I.reorderBookmarks();
+}
+
 module.exports = {
   loginTest,
   submittedState,
@@ -334,5 +342,6 @@ module.exports = {
   nonTextualHighlightUsingDrawBoxTest,
   updateNonTextualCommentTest,
   deleteNonTextualCommentTest,
-  redactSearchAndRedctAllTest
+  redactSearchAndRedactAllTest,
+  customAndReorderBookmarksTest
 }
