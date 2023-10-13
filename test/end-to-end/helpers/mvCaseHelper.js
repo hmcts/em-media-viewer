@@ -47,12 +47,8 @@ async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKey
 }
 
 async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigate) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.pdfViewerPageNavigation(pageNoToNavigate);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.pdfViewerPageNavigation(pageNoToNavigate);
 }
 
 async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
