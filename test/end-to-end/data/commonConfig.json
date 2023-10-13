@@ -122,5 +122,6 @@
   "fileSharedConfirmationText" : "has been updated with event:",
   "signOutBtn" : "a.hmcts-header__navigation-link",
   "collateCommentsCheck": "ngx-datatable",
-  "closeCommentSummary": "button#modal-close-button"
+  "closeCommentSummary": "button#modal-close-button",
+  "imageTabButton": "#image-button"
 }
