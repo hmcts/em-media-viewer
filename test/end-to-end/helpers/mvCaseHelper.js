@@ -47,12 +47,8 @@ async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKey
 }
 
 async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigate) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.pdfViewerPageNavigation(pageNoToNavigate);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.pdfViewerPageNavigation(pageNoToNavigate);
 }
 
 async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
@@ -161,6 +157,15 @@ async function collateCommentsTest(I, caseId, mediaType) {
   await I.collateComments();
 }
 
+async function collateCommentsNotBlankTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clickCommentsPanel();
+  await I.deleteAllExistingComments();
+  await I.addMultipleComments();
+  await I.collateComments();
+  await I.collateCommentsNotBlank();
+}
+
 async function commentsSearchTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.clickCommentsPanel();
@@ -229,40 +234,28 @@ async function navigateNestedDocsUsingIndexTest(I, caseId, mediaType, nestedPage
 }
 
 async function nonTextualHighlightAndAddACommentTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.nonTextualHighlightAndComment();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.openImage();
+  await I.nonTextualHighlightAndComment();
 }
 
 async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.deleteAllExistingNonTextualHighlights();
-    await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.openImage();
+  await I.deleteAllExistingNonTextualHighlights();
+  await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
 }
 
 async function updateNonTextualCommentTest(I, caseId, mediaType, comment, updatedComment) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.updateNonTextualComments();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.openImage();
+  await I.updateNonTextualComments();
 }
 
 async function deleteNonTextualCommentTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.deleteAllExistingNonTextualHighlights();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.openImage();
+  await I.deleteAllExistingNonTextualHighlights();
 }
 
 
@@ -280,13 +273,9 @@ async function previewEnv() {
 }
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
-  if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV) || process.env.TEST_URL.includes(mvData.LOCAL_ENV)) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
-    console.log(await I.grabCurrentUrl());
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  }
+  await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+  console.log(await I.grabCurrentUrl());
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {
@@ -330,6 +319,7 @@ module.exports = {
   deleteHighlightsTest,
   updateCommentTest,
   collateCommentsTest,
+  collateCommentsNotBlankTest,
   commentsSearchTest,
   addMultipleCommentsTest,
   markContentForRedactionUsingDrawBoxTest,

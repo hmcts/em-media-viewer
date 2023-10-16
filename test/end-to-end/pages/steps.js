@@ -39,6 +39,7 @@ module.exports = () => {
     deleteAllExistingComments: steps.annotationsAndComments.deleteAllExistingComments,
     clickCommentsPanel: steps.annotationsAndComments.clickCommentsPanel,
     collateComments: steps.annotationsAndComments.collateComments,
+    collateCommentsNotBlank: steps.annotationsAndComments.collateCommentsNotBlank,
     commentsSearch: steps.annotationsAndComments.commentsSearch,
     addMultipleComments: steps.annotationsAndComments.addMultipleComments,
     clickRedactMenu: steps.redact.clickRedactMenu,
@@ -65,6 +66,7 @@ module.exports = () => {
     clickSearchFrom: steps.redact.clickSearchFrom,
     redactFillSearchInput: steps.redact.redactFillSearchInput,
     clickRedactSearchButton: steps.redact.clickRedactSearchButton,
-    clickRedactAllButton: steps.redact.clickRedactAllButton
+    clickRedactAllButton: steps.redact.clickRedactAllButton,
+    openImage: steps.imageViewer.openImage
   });
 };

@@ -71,3 +71,5 @@ functional-output/
 .pnp.*
 projects/media-viewer/.yarn/*
 projects/media-viewer/.yarn/cache/*
+
+.angular/cache/*
