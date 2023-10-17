@@ -321,6 +321,7 @@
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/scripts.14207270827bb2e6e777.js_GET": "ignore",
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/sitemap.xml_GET": "ignore",
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/main-es2015.da8aa372c57ab134b758.js_GET": "ignore",
+  "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/main-es5.da8aa372c57ab134b758.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/govuk-apple-touch-icon-152x152.png_GET": "ignore",
