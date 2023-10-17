@@ -67,8 +67,6 @@ module.exports = () => {
     redactFillSearchInput: steps.redact.redactFillSearchInput,
     clickRedactSearchButton: steps.redact.clickRedactSearchButton,
     clickRedactAllButton: steps.redact.clickRedactAllButton,
-    hrsSignIn: steps.hrsPlatform.hrsSignIn,
-    findCase: steps.hrsPlatform.findCase,
-    shareHRSFile: steps.hrsPlatform.shareHRSFile
+    openImage: steps.imageViewer.openImage
   });
 };
