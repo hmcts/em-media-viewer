@@ -8,7 +8,8 @@ const {
   addCommentTest,
   deleteCommentTest,
   updateCommentTest,
-  deleteHighlightsTest
+  deleteHighlightsTest,
+  collateCommentsNotBlankTest
 } = require("../helpers/mvCaseHelper");
 const { mvData } = require('../pages/common/constants.js');
 
@@ -41,6 +42,12 @@ Scenario('Update a comment', async ({ I }) => {
 Scenario('Annotations: Collate Comments', async ({ I }) => {
   await collateCommentsTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
+}).tag('@ci')
+  .retry(testConfig.TestRetryScenarios);
+
+Scenario('Collate Comments should not be blank', async ({ I }) => {
+  await collateCommentsNotBlankTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+  
 }).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
