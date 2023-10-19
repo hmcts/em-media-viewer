@@ -2205,7 +2205,7 @@ __metadata:
     "@nguniversal/express-engine": ^11.0.0
     "@reactivex/rxjs": ^6.6.7
     "@swimlane/ngx-datatable": ^19.0.0
-    "@types/chai": 4.2.15
+    "@types/chai": 4.3.9
     "@types/chai-as-promised": ^7.1.3
     "@types/cucumber": ^7.0.0
     "@types/jasmine": ~3.6.0
@@ -3007,10 +3007,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai@npm:4.2.15":
-  version: 4.2.15
-  resolution: "@types/chai@npm:4.2.15"
-  checksum: 8c131d404652e1d5e29eed42b9923da56fc2d358dce929002eb2f2ee64b836632456f9b357a54ba5c5f37b7aafe17d7ab0b9700b2ef95932ddb7160cce120230
+"@types/chai@npm:4.3.9":
+  version: 4.3.9
+  resolution: "@types/chai@npm:4.3.9"
+  checksum: 2300a2c7abd4cb590349927a759b3d0172211a69f363db06e585faf7874a47f125ef3b364cce4f6190e3668147587fc11164c791c9560cf9bce8478fb7019610
   languageName: node
   linkType: hard
 
