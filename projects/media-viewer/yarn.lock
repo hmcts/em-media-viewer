@@ -66,9 +66,9 @@ __metadata:
   linkType: hard
 
 "@types/uuid@npm:^3.4.4":
-  version: 3.4.11
-  resolution: "@types/uuid@npm:3.4.11"
-  checksum: 749280bb6ed8a51f60ae4a4bb1a6cd498c48cd6211bb2f6c04464a8407f6ac510944163f909c6abd2242855e8419b608d0b4f7904cf1b16bf0a60c2099dd6e1d
+  version: 3.4.12
+  resolution: "@types/uuid@npm:3.4.12"
+  checksum: 8f093b7e54d2d6ef3314a341c986983a471adc6fbfe0bbc7dd7283c24ab1e3a0cf2abf99214ac416758d239fb78fedfcc4104783030b9ddd35d77be0524432d9
   languageName: node
   linkType: hard
 
