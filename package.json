@@ -121,7 +121,7 @@
     "@angular-devkit/core": "^11.2.19",
     "@angular/compiler-cli": "^11.2.14",
     "@angular/language-service": "11.2.14",
-    "@cucumber/cucumber": "7.0.0",
+    "@cucumber/cucumber": "7.3.2",
     "@hmcts/eslint-config": "^1.4.0",
     "@ngrx/schematics": "^8.6.0",
     "@types/chai": "4.3.9",
