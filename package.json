@@ -113,7 +113,7 @@
     "trim-newlines": "^4.0.1",
     "ws": "^7.4.6",
     "xmlhttprequest-ssl": "^1.6.2",
-    "@xmldom/xmldom": "^0.7.5",
+    "@xmldom/xmldom": "^0.8.0",
     "yargs-parser": "^20.2.7"
   },
   "devDependencies": {
