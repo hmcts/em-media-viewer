@@ -2139,7 +2139,7 @@ __metadata:
     "@types/chai": 4.3.9
     "@types/chai-as-promised": ^7.1.3
     "@types/cucumber": ^7.0.0
-    "@types/jasmine": ~3.6.0
+    "@types/jasmine": ~3.10.0
     "@types/jasminewd2": ^2.0.8
     "@types/lodash": 4.14.160
     "@types/mocha": ^8.2.1
@@ -2960,10 +2960,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:~3.6.0":
-  version: 3.6.11
-  resolution: "@types/jasmine@npm:3.6.11"
-  checksum: ccb4b749dc43b9ccb4365f36b14bdba8aac5ad7fdd00cc693695064acfbddb6b32fd2d59accd7e70b8f3a1eba69b49e8afa263e96f2b29aed565d0b911efe6c4
+"@types/jasmine@npm:~3.10.0":
+  version: 3.10.15
+  resolution: "@types/jasmine@npm:3.10.15"
+  checksum: 38c573c3cc202886f1bc9d38c88ee9669abb535aa6c5f1987af7271875e4e94f2560393c96299bba730b718c56c372aef0314259b6f3eaa3cb42330901864935
   languageName: node
   linkType: hard
 
