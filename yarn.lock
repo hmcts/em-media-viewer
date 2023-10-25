@@ -2177,7 +2177,7 @@ __metadata:
     ini: 2.0.0
     istanbul-instrumenter-loader: 3.0.1
     jasmine: ^3.6.4
-    jasmine-core: ~3.6.0
+    jasmine-core: ~3.99.0
     jasmine-marbles: ^0.8.1
     jasmine-reporters: ^2.3.2
     jasmine-spec-reporter: ~5.0.0
@@ -11605,13 +11605,6 @@ __metadata:
   version: 2.8.0
   resolution: "jasmine-core@npm:2.8.0"
   checksum: 1a1e73f6cd67ce1b0cb32897a6ead3a4add21233a49844ca7730ede6f518ea4b78be4256cdf4869ecbaf4f5836f80c2a80c96a4aaba2aa4e82f34094348d9447
-  languageName: node
-  linkType: hard
-
-"jasmine-core@npm:~3.6.0":
-  version: 3.6.0
-  resolution: "jasmine-core@npm:3.6.0"
-  checksum: d44e19bad4957f43469fc2e779530f03735ad82623b0d9234cff0b630c25af5d615d068a2eec8c865f8766180c580f75e47d38dd8c72a503de0da1b40c888522
   languageName: node
   linkType: hard
 
