@@ -2139,7 +2139,7 @@ __metadata:
     "@types/chai": 4.3.9
     "@types/chai-as-promised": ^7.1.3
     "@types/cucumber": ^7.0.0
-    "@types/jasmine": ~3.6.0
+    "@types/jasmine": ~3.10.0
     "@types/jasminewd2": ^2.0.8
     "@types/lodash": 4.14.160
     "@types/mocha": ^8.2.1
@@ -2148,7 +2148,7 @@ __metadata:
     body-parser: ^1.19.0
     chai: ^4.3.0
     chai-as-promised: ^7.1.1
-    chai-http: 4.3.0
+    chai-http: 4.4.0
     circular-dependency-plugin: ^5.0.2
     codacy-coverage: ^3.4.0
     codeceptjs: 3.3.0
@@ -2206,7 +2206,7 @@ __metadata:
     pdfjs-dist: 2.5.207
     protractor: ^7.0.0
     protractor-cucumber-framework: ^6.1.1
-    protractor-multiple-cucumber-html-reporter-plugin: 1.8.0
+    protractor-multiple-cucumber-html-reporter-plugin: 1.8.1
     protractor-screenshot-utils: ^1.0.5
     proxyquire: 2.1.3
     puppeteer: 19.9.0
@@ -2960,10 +2960,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:~3.6.0":
-  version: 3.6.11
-  resolution: "@types/jasmine@npm:3.6.11"
-  checksum: ccb4b749dc43b9ccb4365f36b14bdba8aac5ad7fdd00cc693695064acfbddb6b32fd2d59accd7e70b8f3a1eba69b49e8afa263e96f2b29aed565d0b911efe6c4
+"@types/jasmine@npm:~3.10.0":
+  version: 3.10.15
+  resolution: "@types/jasmine@npm:3.10.15"
+  checksum: 38c573c3cc202886f1bc9d38c88ee9669abb535aa6c5f1987af7271875e4e94f2560393c96299bba730b718c56c372aef0314259b6f3eaa3cb42330901864935
   languageName: node
   linkType: hard
 
@@ -3133,13 +3133,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/superagent@npm:^3.8.3":
-  version: 3.8.7
-  resolution: "@types/superagent@npm:3.8.7"
+"@types/superagent@npm:4.1.13":
+  version: 4.1.13
+  resolution: "@types/superagent@npm:4.1.13"
   dependencies:
     "@types/cookiejar": "*"
     "@types/node": "*"
-  checksum: 87ca335703f203c5f558977f4a7cd29fef792698007952631575518085f1604791b7a85ceb4f03b395a20ce82f4e8c87d78b1a142b3721f5043195329a4bfc00
+  checksum: dffbfd1d3e5b9ed3f44d00e388ce9617407f5a3333241ffcfcf9056b446643794e62a09b817df83611e2f6e8a5bf6a50ba6cfe5abb1afb0f2c4771cdf5b68136
   languageName: node
   linkType: hard
 
@@ -3442,10 +3442,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xmldom/xmldom@npm:^0.7.5":
-  version: 0.7.13
-  resolution: "@xmldom/xmldom@npm:0.7.13"
-  checksum: b4054078530e5fa8ede9677425deff0fce6d965f4c477ca73f8490d8a089e60b8498a15560425a1335f5ff99ecb851ed2c734b0a9a879299a5694302f212f37a
+"@xmldom/xmldom@npm:^0.8.0":
+  version: 0.8.10
+  resolution: "@xmldom/xmldom@npm:0.8.10"
+  checksum: 4c136aec31fb3b49aaa53b6fcbfe524d02a1dc0d8e17ee35bd3bf35e9ce1344560481cd1efd086ad1a4821541482528672306d5e37cdbd187f33d7fadd3e2cf0
   languageName: node
   linkType: hard
 
@@ -5215,18 +5215,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai-http@npm:4.3.0":
-  version: 4.3.0
-  resolution: "chai-http@npm:4.3.0"
+"chai-http@npm:4.4.0":
+  version: 4.4.0
+  resolution: "chai-http@npm:4.4.0"
   dependencies:
     "@types/chai": 4
-    "@types/superagent": ^3.8.3
-    cookiejar: ^2.1.1
+    "@types/superagent": 4.1.13
+    charset: ^1.0.1
+    cookiejar: ^2.1.4
     is-ip: ^2.0.0
     methods: ^1.1.2
-    qs: ^6.5.1
-    superagent: ^3.7.0
-  checksum: 273275ca08518145898e1c10adc1a2c8bbf79bd03415c4213a88a67e2c90fac3d611a25812bcffb59fce80399a914dd01a2014515daa5bec84cbb75a23c837a5
+    qs: ^6.11.2
+    superagent: ^8.0.9
+  checksum: beaf2418eb00c27d6a2a315340f770e5a53aaf589dec57e70b878f2dd809caae4cee7b5531165a4e40a451d472e98e429d8d8beac9cae01568f28b6145182f8a
   languageName: node
   linkType: hard
 
@@ -5307,6 +5308,13 @@ __metadata:
   version: 0.0.2
   resolution: "charenc@npm:0.0.2"
   checksum: 81dcadbe57e861d527faf6dd3855dc857395a1c4d6781f4847288ab23cffb7b3ee80d57c15bba7252ffe3e5e8019db767757ee7975663ad2ca0939bb8fcaf2e5
+  languageName: node
+  linkType: hard
+
+"charset@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "charset@npm:1.0.1"
+  checksum: adf747e7bc76c0e47dbfbb555ef376f5adb2e67cad35718f19a2d02e27589345ccaf3c6170c185d2cc82298241f8478cdcdcab8be8ec429bf56807885f3c5300
   languageName: node
   linkType: hard
 
@@ -6011,7 +6019,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"component-emitter@npm:^1.2.0, component-emitter@npm:^1.2.1, component-emitter@npm:^1.3.0, component-emitter@npm:~1.3.0":
+"component-emitter@npm:^1.2.1, component-emitter@npm:^1.3.0, component-emitter@npm:~1.3.0":
   version: 1.3.0
   resolution: "component-emitter@npm:1.3.0"
   checksum: b3c46de38ffd35c57d1c02488355be9f218e582aec72d72d1b8bbec95a3ac1b38c96cd6e03ff015577e68f550fbb361a3bfdbd9bb248be9390b7b3745691be6b
@@ -6190,7 +6198,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookiejar@npm:^2.1.0, cookiejar@npm:^2.1.1, cookiejar@npm:^2.1.3":
+"cookiejar@npm:^2.1.3, cookiejar@npm:^2.1.4":
   version: 2.1.4
   resolution: "cookiejar@npm:2.1.4"
   checksum: c4442111963077dc0e5672359956d6556a195d31cbb35b528356ce5f184922b99ac48245ac05ed86cf993f7df157c56da10ab3efdadfed79778a0d9b1b092d5b
@@ -9137,17 +9145,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^2.3.1":
-  version: 2.5.1
-  resolution: "form-data@npm:2.5.1"
-  dependencies:
-    asynckit: ^0.4.0
-    combined-stream: ^1.0.6
-    mime-types: ^2.1.12
-  checksum: 5134ada56cc246b293a1ac7678dba6830000603a3979cf83ff7b2f21f2e3725202237cfb89e32bcb38a1d35727efbd3c3a22e65b42321e8ade8eec01ce755d08
-  languageName: node
-  linkType: hard
-
 "form-data@npm:^4.0.0":
   version: 4.0.0
   resolution: "form-data@npm:4.0.0"
@@ -9170,7 +9167,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:^1.2.0, formidable@npm:^1.2.1":
+"formidable@npm:^1.2.1":
   version: 1.2.6
   resolution: "formidable@npm:1.2.6"
   checksum: 2b68ed07ba88302b9c63f8eda94f19a460cef6017bfda48348f09f41d2a36660c9353137991618e0e4c3db115b41e4b8f6fa63bc973b7a7c91dec66acdd02a56
@@ -9186,6 +9183,18 @@ __metadata:
     once: ^1.4.0
     qs: ^6.11.0
   checksum: b407bf89abf0dc40e00efe20edd80aa60ff7e7f4928b3a7048b630d3bb61012f316b69cd3350ccc9aab2d4c682516fea917bc31aef3479d4a652ed97cf8ba9aa
+  languageName: node
+  linkType: hard
+
+"formidable@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "formidable@npm:2.1.2"
+  dependencies:
+    dezalgo: ^1.0.4
+    hexoid: ^1.0.0
+    once: ^1.4.0
+    qs: ^6.11.0
+  checksum: 81c8e5d89f5eb873e992893468f0de22c01678ca3d315db62be0560f9de1c77d4faefc9b1f4575098eb2263b3c81ba1024833a9fc3206297ddbac88a4f69b7a8
   languageName: node
   linkType: hard
 
@@ -13050,7 +13059,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"methods@npm:^1.1.1, methods@npm:^1.1.2, methods@npm:~1.1.2":
+"methods@npm:^1.1.2, methods@npm:~1.1.2":
   version: 1.1.2
   resolution: "methods@npm:1.1.2"
   checksum: 0917ff4041fa8e2f2fda5425a955fe16ca411591fbd123c0d722fcf02b73971ed6f764d85f0a6f547ce49ee0221ce2c19a5fa692157931cecb422984f1dcd13a
@@ -13713,7 +13722,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"multiple-cucumber-html-reporter@npm:^1.11.0":
+"multiple-cucumber-html-reporter@npm:^1.11.7":
   version: 1.21.6
   resolution: "multiple-cucumber-html-reporter@npm:1.21.6"
   dependencies:
@@ -16380,17 +16389,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protractor-multiple-cucumber-html-reporter-plugin@npm:1.8.0":
-  version: 1.8.0
-  resolution: "protractor-multiple-cucumber-html-reporter-plugin@npm:1.8.0"
+"protractor-multiple-cucumber-html-reporter-plugin@npm:1.8.1":
+  version: 1.8.1
+  resolution: "protractor-multiple-cucumber-html-reporter-plugin@npm:1.8.1"
   dependencies:
     fs-extra: ^3.0.1
-    multiple-cucumber-html-reporter: ^1.11.0
+    multiple-cucumber-html-reporter: ^1.11.7
   peerDependencies:
     cucumber: ">= 1.3.0 || >= 2.0.0 || >= 3.0.0"
     protractor: ">= 4.0.0"
     protractor-cucumber-framework: ">= 3.1.2"
-  checksum: c33c7c2c663159c207f08c47de9dd67dbc1addd80dd23145151b226cc68ad60f5b4b53c2af9e72a70d02b4dc589665c81bf3127a1e4416210f8642f287d5882d
+  checksum: 133aa991362981baf7875b00db57082ba025826d9e684604c4fea3a0cb0b9be19b51cc110d3572c7d5800e8c00fcc6a9d43ab47a8a4d78cc2ca7fff7bc4fa0a8
   languageName: node
   linkType: hard
 
@@ -16648,12 +16657,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.11.0, qs@npm:^6.10.3, qs@npm:^6.11.0, qs@npm:^6.5.1":
+"qs@npm:6.11.0, qs@npm:^6.10.3, qs@npm:^6.11.0":
   version: 6.11.0
   resolution: "qs@npm:6.11.0"
   dependencies:
     side-channel: ^1.0.4
   checksum: 6e1f29dd5385f7488ec74ac7b6c92f4d09a90408882d0c208414a34dd33badc1a621019d4c799a3df15ab9b1d0292f97c1dd71dc7c045e69f81a8064e5af7297
+  languageName: node
+  linkType: hard
+
+"qs@npm:^6.11.2":
+  version: 6.11.2
+  resolution: "qs@npm:6.11.2"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: e812f3c590b2262548647d62f1637b6989cc56656dc960b893fe2098d96e1bd633f36576f4cd7564dfbff9db42e17775884db96d846bebe4f37420d073ecdc0b
   languageName: node
   linkType: hard
 
@@ -16855,7 +16873,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:1 || 2, readable-stream@npm:^2.0.0, readable-stream@npm:^2.0.1, readable-stream@npm:^2.0.2, readable-stream@npm:^2.0.5, readable-stream@npm:^2.0.6, readable-stream@npm:^2.1.5, readable-stream@npm:^2.2.2, readable-stream@npm:^2.3.3, readable-stream@npm:^2.3.5, readable-stream@npm:^2.3.6, readable-stream@npm:~2.3.6":
+"readable-stream@npm:1 || 2, readable-stream@npm:^2.0.0, readable-stream@npm:^2.0.1, readable-stream@npm:^2.0.2, readable-stream@npm:^2.0.5, readable-stream@npm:^2.0.6, readable-stream@npm:^2.1.5, readable-stream@npm:^2.2.2, readable-stream@npm:^2.3.3, readable-stream@npm:^2.3.6, readable-stream@npm:~2.3.6":
   version: 2.3.7
   resolution: "readable-stream@npm:2.3.7"
   dependencies:
@@ -17921,6 +17939,17 @@ __metadata:
   bin:
     semver: ./bin/semver.js
   checksum: 1b26ecf6db9e8292dd90df4e781d91875c0dcc1b1909e70f5d12959a23c7eebb8f01ea581c00783bbee72ceeaad9505797c381756326073850dc36ed284b21b9
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.3.8":
+  version: 7.5.4
+  resolution: "semver@npm:7.5.4"
+  dependencies:
+    lru-cache: ^6.0.0
+  bin:
+    semver: bin/semver.js
+  checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
   languageName: node
   linkType: hard
 
@@ -19004,21 +19033,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"superagent@npm:^3.7.0":
-  version: 3.8.3
-  resolution: "superagent@npm:3.8.3"
+"superagent@npm:^8.0.9":
+  version: 8.1.2
+  resolution: "superagent@npm:8.1.2"
   dependencies:
-    component-emitter: ^1.2.0
-    cookiejar: ^2.1.0
-    debug: ^3.1.0
-    extend: ^3.0.0
-    form-data: ^2.3.1
-    formidable: ^1.2.0
-    methods: ^1.1.1
-    mime: ^1.4.1
-    qs: ^6.5.1
-    readable-stream: ^2.3.5
-  checksum: b13d0303259d76c9180bd40d97d9f0713760f5ced1aef089bdb2fcdf69cfaef89004cd6e986416d59bd9a2f0f9933d72521b5171fa26f89b781a2c3460c516fe
+    component-emitter: ^1.3.0
+    cookiejar: ^2.1.4
+    debug: ^4.3.4
+    fast-safe-stringify: ^2.1.1
+    form-data: ^4.0.0
+    formidable: ^2.1.2
+    methods: ^1.1.2
+    mime: 2.6.0
+    qs: ^6.11.0
+    semver: ^7.3.8
+  checksum: f3601c5ccae34d5ba684a03703394b5d25931f4ae2e1e31a1de809f88a9400e997ece037f9accf148a21c408f950dc829db1e4e23576a7f9fe0efa79fd5c9d2f
   languageName: node
   linkType: hard
 
