@@ -412,6 +412,7 @@
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/main-es2015.4c5f9649e4112e9cf449.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/runtime-es5.91c29905879814b9c254.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_https://manage-case.aat.platform.hmcts.net/main-es2015.a72cef17db0525c958d2.js_GET": "ignore",
+  "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/runtime-es2015.15e45cb14f65541a41d5.js_GET": "ignore",
   "10104_User Agent Fuzzer_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore",
   "10104_User Agent Fuzzer_https://em-media-viewer-staging.service.core-compute-aat.internal/_GET": "ignore",
   "10104_User Agent Fuzzer_https://em-media-viewer-staging.service.core-compute-aat.internal/robots.txt_GET": "ignore",
