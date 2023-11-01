@@ -11,7 +11,7 @@ import * as fromStore from '../../../../store/reducers/reducers';
 import * as fromSelectors from '../../../../store/selectors/annotation.selectors';
 import * as fromActions from '../../../../store/actions/annotation.actions';
 import { Annotation } from '../../annotation-view/annotation.model';
-import { RedactRectangle } from '@hmcts/media-viewer/lib/toolbar/redaction-search-bar/redaction-search.model';
+import { RedactRectangle } from '../../../../toolbar/redaction-search-bar/redaction-search.model';
 import { AnnotationSet } from '../../annotation-set.model';
 
 @Injectable()
@@ -62,7 +62,7 @@ export class HighlightCreateService {
           tags: [],
         } as Annotation
       });
-      this.store.dispatch(new fromActions.SaveAnnotationSet({ id: uuid(), annotations: annoSet, documentId: anoSetDocId.documentId } as AnnotationSet));
+      this.store.dispatch(new fromActions.SaveAnnotationSet({ id:anoSetDocId.annotationSetId, annotations: annoSet, documentId: anoSetDocId.documentId } as AnnotationSet));
     });
   }
 
