@@ -3,9 +3,8 @@
     >Highlight options</label
   >
 
-    <button
+  <button
     *ngIf="toolbarButtons.showDrawButton"
-    [disabled]="icpEnabled || redactionEnabled"
     id="mvDrawBtn"
     #mvDrawBtn
     class="mv-button mv-toolbar__menu-button--draw"
@@ -13,7 +12,8 @@
     [class.toggled]="toolbarEventService.drawModeSubject | async"
     aria-pressed="false"
     data-l10n-id="toggleDrawButton"
-    (click)="onClickDrawToggle(); isDropdownMenuOpen = false"
+    (click)="onClickDrawToggle()"
+    [disabled]="redactionAllInProgress"
   >
     <span data-l10n-id="draw_label">Draw a box</span>
   </button>
