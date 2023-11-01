@@ -37,7 +37,11 @@ export class HighlightToolbarComponent implements OnInit {
   }
 
   onHighlight() {
-    this.toolbarEventService.highlightModeSubject.next(true);
+    this.toolbarEventService.toggleHighlightMode();
+  }
+
+  onClickDrawToggle() {
+    this.toolbarEventService.toggleDrawMode();
   }
 
   onClose() {

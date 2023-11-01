@@ -82,27 +82,6 @@
           </button>
 
           <button
-            *ngIf="toolbarButtons.showDrawButton"
-            [disabled]="icpEnabled || redactionEnabled"
-            id="mvDrawBtn"
-            #mvDrawBtn
-            class="mv-button mv-toolbar__menu-button--draw"
-            title="Draw a box"
-            [class.button-hidden-on-toolbar]="
-              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']
-            "
-            [class.button-hidden-on-dropdown]="
-              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDrawBtn']
-            "
-            [class.toggled]="toolbarEvents.drawModeSubject | async"
-            aria-pressed="false"
-            data-l10n-id="toggleDrawButton"
-            (click)="onClickDrawToggle(); isDropdownMenuOpen = false"
-          >
-            <span data-l10n-id="draw_label">Draw a box</span>
-          </button>
-
-          <button
             *ngIf="toolbarButtons.showHighlightButton"
             [disabled]="icpEnabled || redactionEnabled"
             id="mvHighlightBtn"
@@ -116,7 +95,7 @@
             [class.button-hidden-on-dropdown]="
               mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvHighlightBtn']
             "
-            [class.toggled]="toolbarEvents.highlightModeSubject | async"
+            [class.toggled]="toolbarEvents.highlightToolbarSubject | async"
             aria-pressed="false"
             (click)="onClickHighlightToggle(); isDropdownMenuOpen = false"
             data-l10n-id="toggleHighlightButton"

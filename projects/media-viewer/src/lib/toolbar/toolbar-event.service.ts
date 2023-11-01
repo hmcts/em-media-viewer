@@ -87,12 +87,12 @@ export class ToolbarEventService {
   // Function to inform Observers that highlightMode has been enabled
   public toggleHighlightMode(): void {
     // Highlight and Draw states are mutually exclusive
-    if (this.highlightToolbarSubject.getValue() === false) {
+    if (this.highlightModeSubject.getValue() === false) {
       this.drawModeSubject.next(false);
       this.grabNDrag.next(false);
-      this.highlightToolbarSubject.next(true);
+      this.highlightModeSubject.next(true);
     } else {
-      this.highlightToolbarSubject.next(false);
+      this.highlightModeSubject.next(false);
     }
   }
 
@@ -100,12 +100,15 @@ export class ToolbarEventService {
   public toggleDrawMode(): void {
     if (this.drawModeSubject.getValue() === false) {
       this.highlightModeSubject.next(false);
-      this.highlightToolbarSubject.next(false);
       this.grabNDrag.next(false);
       this.drawModeSubject.next(true);
     } else {
       this.drawModeSubject.next(false);
     }
+  }
+
+  public toggleHighlightToolbar(): void {
+    this.highlightToolbarSubject.next(!this.highlightToolbarSubject.getValue());
   }
 
   public rotate(angle: number): void {

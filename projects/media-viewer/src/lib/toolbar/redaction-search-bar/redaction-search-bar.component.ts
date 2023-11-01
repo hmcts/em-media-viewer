@@ -121,7 +121,7 @@ export class RedactionSearchBarComponent implements OnInit {
     }
   }
 
-  private saveRedaction(redactRectangle: RedactRectangle[]) {
+  public saveRedaction(redactRectangle: RedactRectangle[]) {
     const redaction = redactRectangle.map(ele => {
       return { page: ele.page, rectangles: ele.rectangles, redactionId: uuid(), documentId: this.documentId } as Redaction;
     });

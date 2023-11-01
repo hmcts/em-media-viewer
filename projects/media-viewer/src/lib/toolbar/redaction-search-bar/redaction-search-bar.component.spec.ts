@@ -2,7 +2,7 @@
 import { async, ComponentFixture, TestBed, waitForAsync, fakeAsync, tick, flush, inject } from '@angular/core/testing';
 import { RedactionSearchBarComponent } from './redaction-search-bar.component';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
-import { SearchResultsCount, ToolbarEventService } from '../toolbar-event.service';
+import { SearchResultsCount, SearchType, ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { Subject, of } from 'rxjs';
 import { RedactionSearch } from './redaction-search.model';
@@ -61,6 +61,7 @@ describe('RedactionSearchBarComponent', () => {
     fixture = TestBed.createComponent(RedactionSearchBarComponent);
     component = fixture.componentInstance;
     component.openSearchModal = true;
+    component.searchType = SearchType.Redact;
     fixture.detectChanges();
     component.allPages = {
       2: {
