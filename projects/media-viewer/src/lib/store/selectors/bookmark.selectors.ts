@@ -1,4 +1,4 @@
-import {createSelector} from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 
 import * as fromFeature from '../reducers/reducers';
 import * as fromBookmarks from '../reducers/bookmarks.reducer';
@@ -7,7 +7,7 @@ import * as fromDocument from './document.selectors';
 
 export const getBookmarkState = createSelector(
   fromFeature.getMVState,
-  (state: fromFeature.State) =>  state.bookmarks
+  (state: fromFeature.State) => state.bookmarks
 );
 
 export const getBookmarkPages = createSelector(
@@ -39,7 +39,9 @@ export const getBookmarkInfo = createSelector(
     return {
       pageNumber: pdfPosition.pageNumber - 1,
       xCoordinate: pdfPosition.left,
-      yCoordinate: pages[pdfPosition.pageNumber].styles.height - (pdfPosition.top * pages[pdfPosition.pageNumber].viewportScale),
+      yCoordinate: ((pages[pdfPosition.pageNumber].styles.height)
+        - (pdfPosition.top * (pages[pdfPosition.pageNumber].viewportScale)))
+        / parseFloat(pages[pdfPosition.pageNumber].scaleRotation.scale),
       previous: bookmarkNodes.length > 0 ? bookmarkNodes.sort((a, b) => a.index - b.index)[bookmarkNodes.length - 1].id : undefined,
       documentId: docId
     };

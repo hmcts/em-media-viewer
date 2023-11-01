@@ -9,7 +9,7 @@ module.exports = async function (annotationToDelete, updatedComment) {
 
   if (annotationToDelete === mvData.DELETE_ANNOTATION) {
     if (await I.getBookmarksCount(commonConfig.commentsCount) !== 0) {
-      await I.deleteAllExistingComments(annotationToDelete);
+      await I.deleteAllExistingComments();
     }
   } else {
     await I.click(commonConfig.commentsCount);

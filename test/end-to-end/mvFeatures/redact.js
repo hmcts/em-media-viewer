@@ -68,6 +68,14 @@ Scenario('Redact multiple pages', async ({ I }) => {
 }).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
+Scenario('Clear redactions that are added when document has been downloaded', async ({ I }) => {
+  await markContentForRedactionUsingDrawBoxTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+  await saveAllRedactionsTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+  await redactContentUsingRedactTextTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+
+}).tag('@wip')
+  .retry(testConfig.TestRetryScenarios);
+
 Scenario('Unmark selected content (marked for redaction)', async ({ I }) => {
   await redactContentUsingRedactTextTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 

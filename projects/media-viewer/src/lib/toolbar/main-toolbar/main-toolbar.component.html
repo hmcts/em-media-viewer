@@ -58,17 +58,21 @@
           >
             <span>Index</span>
           </button>
-          
-          <button 
-            *ngIf="toolbarButtons.showSidebar" 
-            id="mvBookmarksBtn" 
-            title="Bookmarks" 
+
+          <button
+            *ngIf="toolbarButtons.showSidebar"
+            id="mvBookmarksBtn"
+            title="Bookmarks"
             data-l10n-id="bookmarks"
-            #mvBookmarksBtn 
-            [ngClass]="{ 
-              'mv-button mv-toolbar__menu-button--bookmarks' : true,
-              'button-hidden-on-toolbar': mvToolbarMain.offsetWidth < widthRequiredForBtn['mvBookmarksBtn'],
-              'button-hidden-on-dropdown': mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvBookmarksBtn']
+            #mvBookmarksBtn
+            [ngClass]="{
+              'mv-button mv-toolbar__menu-button--bookmarks': true,
+              'button-hidden-on-toolbar':
+                mvToolbarMain.offsetWidth <
+                widthRequiredForBtn['mvBookmarksBtn'],
+              'button-hidden-on-dropdown':
+                mvToolbarMain.offsetWidth >=
+                widthRequiredForBtn['mvBookmarksBtn']
             }"
             aria-pressed="false"
             [disabled]="redactAllInProgress"
@@ -84,7 +88,6 @@
             #mvDrawBtn
             class="mv-button mv-toolbar__menu-button--draw"
             title="Draw a box"
-            tabindex="-1"
             [class.button-hidden-on-toolbar]="
               mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']
             "
@@ -92,7 +95,6 @@
               mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDrawBtn']
             "
             [class.toggled]="toolbarEvents.drawModeSubject | async"
-            aria-hidden="true"
             aria-pressed="false"
             data-l10n-id="toggleDrawButton"
             (click)="onClickDrawToggle(); isDropdownMenuOpen = false"
@@ -107,7 +109,7 @@
             #mvHighlightBtn
             class="mv-button mv-toolbar__menu-button--highlight"
             title="Highlight"
-            tabindex="-1"
+            aria-label="Highlight"
             [class.button-hidden-on-toolbar]="
               mvToolbarMain.offsetWidth < widthRequiredForBtn['mvHighlightBtn']
             "
@@ -115,7 +117,6 @@
               mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvHighlightBtn']
             "
             [class.toggled]="toolbarEvents.highlightModeSubject | async"
-            aria-hidden="true"
             aria-pressed="false"
             (click)="onClickHighlightToggle(); isDropdownMenuOpen = false"
             data-l10n-id="toggleHighlightButton"
@@ -204,7 +205,9 @@
                 data-l10n-id="zoom_out"
                 (click)="stepZoom(-0.1)"
               >
-                <span></span>
+                <span class="mv-toolbar__menu-button--zoom-out-text"
+                  >Zoom Out</span
+                >
               </button>
               <select
                 id="scaleSelect"
@@ -248,7 +251,9 @@
                 title="Zoom In"
                 data-l10n-id="zoom_in"
               >
-                <span></span>
+                <span class="mv-toolbar__menu-button--zoom-out-text"
+                  >Zoom In</span
+                >
               </button>
             </div>
           </ng-container>
@@ -305,7 +310,12 @@
             "
             aria-pressed="false"
             (click)="toggleSearchBar(); isDropdownMenuOpen = false"
-          ></button>
+          >
+            <span>Search</span>
+          </button>
+          <mv-search-bar
+            *ngIf="!toolbarEvents.searchBarHidden.getValue()"
+          ></mv-search-bar>
 
           <button
             *ngIf="enableICP && toolbarButtons.showPresentationMode && isPdf()"
@@ -382,7 +392,9 @@
             "
             aria-pressed="false"
             (click)="downloadFile(); isDropdownMenuOpen = false"
-          ></button>
+          >
+            <span>Download</span>
+          </button>
 
           <button
             *ngIf="toolbarButtons.showPrint"
@@ -400,7 +412,9 @@
             "
             aria-pressed="false"
             (click)="printFile(); isDropdownMenuOpen = false"
-          ></button>
+          >
+            <span>Print</span>
+          </button>
 
           <button
             *ngIf="enableAnnotations && toolbarButtons.showCommentSummary"
@@ -423,7 +437,6 @@
           </button>
         </ng-template>
       </div>
-      <mv-search-bar></mv-search-bar>
     </div>
 
     <div id="loadingBar">

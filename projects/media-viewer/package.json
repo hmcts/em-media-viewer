@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "2.9.3",
+  "version": "2.9.5",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
@@ -41,5 +41,5 @@
     "@types/uuid": "^3.4.4",
     "pdfjs-dist": "2.5.207"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.6.4"
 }

@@ -41,7 +41,7 @@
       background-image: url(/assets/images/more.svg);
     }
     &:focus {
-      outline: 3px solid #ffbf47;
+      outline: 3px solid #ffdd00;
       outline-offset: -2px;
       z-index: 99;
     }
@@ -78,7 +78,7 @@
 }
 
 .mv-toolbar__menu-button--highlight {
-  width: 120px;
+  width: 7.9rem;
   &:after {
     background-image: url(/assets/images/icon-highlight.svg);
     background-size: 18px 19px;
@@ -86,10 +86,8 @@
 }
 
 .mv-toolbar__menu-button--up,
-.mv-toolbar__menu-button--down,
-.mv-toolbar__menu-button--zoom-in,
-.mv-toolbar__menu-button--zoom-out {
-  width: 26px;
+.mv-toolbar__menu-button--down {
+  width: 1.625rem;
   left: 40px;
   font-weight: 400;
   &:after {
@@ -103,6 +101,26 @@
   }
 }
 
+.mv-toolbar__menu-button--zoom-in,
+.mv-toolbar__menu-button--zoom-out {
+  white-space: nowrap;
+  font-weight: 400;
+  &:after {
+    position: absolute;
+    content: "";
+    top: 8px;
+    bottom: 8px;
+    background-size: 16px 19px;
+    background-position: 0px 50%;
+    background-repeat: no-repeat;
+  }
+}
+
+.mv-toolbar__menu-button--zoom-in-text,
+.mv-toolbar__menu-button--zoom-out-text {
+  margin-left: 1.5rem;
+}
+
 .mv-toolbar__menu-button--page,
 .mv-toolbar__menu-button--zoom,
 .mv-toolbar__menu-button--rotate {
@@ -111,7 +129,7 @@
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
   font-size: 16px;
-  font-size: 1rem;
+  font-size: 1rem !important;
   line-height: 1;
   background-color: #ffffff;
   color: #0b0c0c;
@@ -150,7 +168,7 @@
 .mv-toolbar__menu-button--zoom-in:focus,
 .mv-toolbar__menu-button--rotate_left:focus,
 .mv-toolbar__menu-button--rotate_right:focus {
-  outline: 3px solid #ffbf47;
+  outline: 3px solid #ffdd00;
   outline-offset: -2px;
   z-index: 1;
 }
@@ -159,23 +177,17 @@
   width: 215px;
   height: 30px;
   padding-top: 10px;
+  font-size: 1rem !important;
   span:first-of-type {
     padding: 0 10px;
   }
 }
 
 .mv-toolbar__menu-button--zoom {
-  width: 135px;
-  span:first-of-type {
-    margin-left: 8px;
-    margin-right: 0px;
-  }
-  button:first-of-type {
-    margin-left: 10px;
-  }
-  button:last-of-type {
-    margin-right: 10px;
-  }
+  width: 17rem;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
 }
 
 .mv-toolbar__menu-button--up {
@@ -196,7 +208,7 @@
 
 .mv-toolbar__menu-button--zoom-out {
   &:after {
-    left: 14px;
+    left: 0.5rem;
     right: 105px;
     background-image: url(/assets/images/search-minus.svg);
   }
@@ -204,8 +216,9 @@
 
 .mv-toolbar__menu-button--zoom-in {
   &:after {
-    left: 105px;
+    left: 7.1rem;
     right: 14px;
+    margin-left: 4.1rem;
     background-image: url(/assets/images/search-plus.svg);
   }
 }
@@ -256,7 +269,7 @@
 }
 
 .mv-toolbar__menu-button--search {
-  width: 25px;
+  width: 7.5rem;
   &:after {
     background-image: url(/assets/images/search.svg);
   }
@@ -293,14 +306,14 @@
 }
 
 .mv-toolbar__menu-button--download {
-  width: 25px;
+  width: 8rem;
   &:after {
     background-image: url(/assets/images/download-button.svg);
   }
 }
 
 .mv-toolbar__menu-button--print {
-  width: 25px;
+  width: 6rem;
   &:after {
     background-image: url(/assets/images/printer.svg);
   }
@@ -360,8 +373,9 @@
 input:focus,
 textarea:focus,
 select:focus,
-button:focus {
-  outline: 3px solid #ffbf47;
+button:focus,
+button:active {
+  outline: 3px solid #ffdd00;
   outline-offset: -2px;
   z-index: 99;
 }

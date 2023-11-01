@@ -40,8 +40,8 @@ describe('BookmarksComponent', () => {
   ] as any;
 
   const treeModelMock = jasmine.createSpyObj('TreeModel', {
-    'update' : null,
-    'getNodeById' : bookmarkNode
+    'update': null,
+    'getNodeById': bookmarkNode
   },
     {
       nodes: bookmarks
@@ -60,6 +60,9 @@ describe('BookmarksComponent', () => {
             viewportScale: 1,
             styles: {
               height: 300
+            },
+            scaleRotation: {
+              scale: 1
             }
           }
         },
@@ -100,7 +103,7 @@ describe('BookmarksComponent', () => {
 
     expect(store.dispatch).toHaveBeenCalled();
   })
-);
+  );
 
   it('should delete bookmark', () => {
     spyOn(store, 'dispatch');
