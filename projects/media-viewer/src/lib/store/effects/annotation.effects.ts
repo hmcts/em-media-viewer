@@ -4,7 +4,6 @@ import { catchError, concatMap, exhaustMap, map, switchMap, withLatestFrom } fro
 import { of } from 'rxjs';
 import { AnnotationApiService } from '../../annotations/services/annotation-api/annotation-api.service';
 import * as annotationsActions from '../actions/annotation.actions';
-import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AnnotationEffects {

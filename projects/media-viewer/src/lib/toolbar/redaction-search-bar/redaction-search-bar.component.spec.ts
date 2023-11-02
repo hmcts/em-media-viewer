@@ -2,9 +2,9 @@
 import { async, ComponentFixture, TestBed, waitForAsync, fakeAsync, tick, flush, inject } from '@angular/core/testing';
 import { RedactionSearchBarComponent } from './redaction-search-bar.component';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
-import { SearchResultsCount, SearchType, ToolbarEventService } from '../toolbar-event.service';
+import { SearchMode, SearchResultsCount, SearchType, ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
-import { Subject, of } from 'rxjs';
+import { Subject, of, BehaviorSubject } from 'rxjs';
 import { RedactionSearch } from './redaction-search.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
@@ -17,7 +17,7 @@ describe('RedactionSearchBarComponent', () => {
   let fixture: ComponentFixture<RedactionSearchBarComponent>;
   const redactionSerachSubject: Subject<RedactionSearch> = new Subject<RedactionSearch>();
   const searchResultsCountSubject: Subject<SearchResultsCount> = new Subject<SearchResultsCount>();
-  const openRedactionSearch: Subject<boolean> = new Subject<boolean>();
+  const openRedactionSearch: BehaviorSubject<SearchMode | null> = new BehaviorSubject<SearchMode | null>(null);
   const mockHighlightService = { saveAnnotationSet: () => { }, applyRotation: () => { } };
   const mockStore = {
     select: () => of([{
@@ -134,7 +134,7 @@ describe('RedactionSearchBarComponent', () => {
 
 
   it('should highlight all search text', inject([Store], fakeAsync((store) => {
-    component.searchType = SearchType.Highlight;
+    openRedactionSearch.next({ modeType: SearchType.Highlight, isOpen: true } as SearchMode)
     const redactionSearch: RedactionSearch = {
       matchedIndex: 1,
       matchesCount: 1,
