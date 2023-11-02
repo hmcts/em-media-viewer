@@ -134,7 +134,7 @@ describe('RedactionSearchBarComponent', () => {
 
 
   it('should highlight all search text', inject([Store], fakeAsync((store) => {
-    openRedactionSearch.next({ modeType: SearchType.Highlight, isOpen: true } as SearchMode)
+    openRedactionSearch.next({ modeType: SearchType.Highlight, isOpen: true } as SearchMode);
     const redactionSearch: RedactionSearch = {
       matchedIndex: 1,
       matchesCount: 1,
