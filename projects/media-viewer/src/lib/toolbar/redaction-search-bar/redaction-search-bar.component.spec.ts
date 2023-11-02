@@ -60,8 +60,7 @@ describe('RedactionSearchBarComponent', () => {
       .compileComponents();
     fixture = TestBed.createComponent(RedactionSearchBarComponent);
     component = fixture.componentInstance;
-    component.openSearchModal = true;
-    component.searchType = SearchType.Redact;
+    openRedactionSearch.next({ modeType: SearchType.Redact, isOpen: true } as SearchMode);
     fixture.detectChanges();
     component.allPages = {
       2: {
