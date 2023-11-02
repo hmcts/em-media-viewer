@@ -30,9 +30,7 @@ export class AnnotationApiService {
       .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response', withCredentials: true })
       .pipe(
         map(response => response.body),
-        catchError(error => {
-          return [];
-        })
+        catchError(() => [])
       );
   }
 

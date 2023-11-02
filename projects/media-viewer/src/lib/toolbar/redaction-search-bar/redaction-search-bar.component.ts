@@ -1,7 +1,7 @@
 import { BulkRedaction, Redaction } from './../../redaction/services/redaction.model';
 import { SearchMode, SearchResultsCount, SearchType } from './../toolbar-event.service';
 import { RedactionSearch, RedactRectangle } from './redaction-search.model';
-import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
@@ -12,8 +12,6 @@ import * as fromDocument from '../../store/selectors/document.selectors';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import uuid from 'uuid';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
-import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.model';
-import { Annotation } from '../../annotations/annotation-set/annotation-view/annotation.model';
 
 @Component({
   selector: 'mv-redaction-search-bar',
@@ -120,7 +118,7 @@ export class RedactionSearchBarComponent implements OnInit {
     }
   }
 
-  public saveRedaction(redactRectangle: RedactRectangle[]) {
+  private saveRedaction(redactRectangle: RedactRectangle[]) {
     const redaction = redactRectangle.map(ele => {
       return { page: ele.page, rectangles: ele.rectangles, redactionId: uuid(), documentId: this.documentId } as Redaction;
     });

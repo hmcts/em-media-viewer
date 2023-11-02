@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { take, map } from 'rxjs/operators';
+import { take} from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment-timezone';
