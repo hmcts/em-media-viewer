@@ -2022,6 +2022,7 @@ __metadata:
     "@types/cucumber": ^7.0.0
     "@types/jasmine": ~3.10.0
     "@types/jasminewd2": ^2.0.8
+    "@types/lodash": 4.14.160
     "@types/mocha": ^8.2.1
     "@types/node": 12.0.8
     axios: ^0.21.1
@@ -2874,6 +2875,13 @@ __metadata:
   version: 4.14.200
   resolution: "@types/lodash@npm:4.14.200"
   checksum: 6471f8bb5da692a6ecf03a8da4935bfbc341e67ee9bcb4f5730bfacff0c367232548f0a01e8ac5ea18c6fe78fb085d502494e33ccb47a7ee87cbdee03b47d00d
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:4.14.160":
+  version: 4.14.160
+  resolution: "@types/lodash@npm:4.14.160"
+  checksum: af129ded217ae41de1a7a278d9fc15a762099afbfa5d38cff967f53347c451c53870ee193c322395f6e1f30c80b17df5e6395b3a10e3cca71675ea31406ec5bb
   languageName: node
   linkType: hard
 
