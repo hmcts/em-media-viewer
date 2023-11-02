@@ -40,7 +40,7 @@ export class RedactionSearchBarComponent implements OnInit {
   openSearchModal: boolean;
   redactAllInProgress: boolean;
   redactAllText?: string;
-  searchType: SearchType
+  searchType: SearchType;
   inProgessText: string;
   titleText: string;
 
@@ -114,8 +114,7 @@ export class RedactionSearchBarComponent implements OnInit {
     if (this.searchType === SearchType.Highlight) {
       this.inProgessText = 'Highlighting';
       this.titleText = 'Highlight';
-    }
-    else if (this.searchType === SearchType.Redact) {
+    } else if (this.searchType === SearchType.Redact) {
       this.inProgessText = 'Redacting';
       this.titleText = 'Redact';
     }
@@ -194,8 +193,7 @@ export class RedactionSearchBarComponent implements OnInit {
         this.redactAllText = null;
         if (this.searchType === SearchType.Redact) {
           this.saveRedaction(this.redactElements);
-        }
-        else if (this.searchType === SearchType.Highlight) {
+        } else if (this.searchType === SearchType.Highlight) {
           // this.redactElements.forEach(ele => {
           //   this.highlightService.saveAnnotation(ele.rectangles, ele.page);
           // });

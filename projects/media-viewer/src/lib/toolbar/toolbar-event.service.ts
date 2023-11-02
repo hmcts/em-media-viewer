@@ -21,8 +21,8 @@ export interface SearchResultsCount {
 }
 
 export enum SearchType {
-  Redact = "Redact",
-  Highlight = "Highlight",
+  Redact = 'Redact',
+  Highlight = 'Highlight',
 }
 
 export interface SearchMode {

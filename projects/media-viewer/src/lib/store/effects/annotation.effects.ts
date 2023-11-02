@@ -44,7 +44,7 @@ export class AnnotationEffects {
     }));
 
 
-  //map((action: annotationsActions.SaveAnnotation) => action.payload),
+  // map((action: annotationsActions.SaveAnnotation) => action.payload),
   // switchMap((annotation) => {
   //   return this.annotationApiService.postAnnotation(annotation).pipe(
   //     map(annotations => {
@@ -53,7 +53,7 @@ export class AnnotationEffects {
   //     catchError(error => {
   //       return of(new annotationsActions.LoadAnnotationSetFail(error));
   //     }));
-  //}));
+  // }));
 
   @Effect()
   deleteAnnotation$ = this.actions$.pipe(

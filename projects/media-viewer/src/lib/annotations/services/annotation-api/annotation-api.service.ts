@@ -31,7 +31,7 @@ export class AnnotationApiService {
       .pipe(
         map(response => response.body),
         catchError(error => {
-          return []
+          return [];
         })
       );
   }

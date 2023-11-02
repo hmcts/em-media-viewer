@@ -60,9 +60,10 @@ export class HighlightCreateService {
           lastModifiedByDetails: undefined,
           lastModifiedDate: '',
           tags: [],
-        } as Annotation
+        } as Annotation;
       });
-      this.store.dispatch(new fromActions.SaveAnnotationSet({ id:anoSetDocId.annotationSetId, annotations: annoSet, documentId: anoSetDocId.documentId } as AnnotationSet));
+      this.store.dispatch(new fromActions.SaveAnnotationSet({
+        id: anoSetDocId.annotationSetId, annotations: annoSet, documentId: anoSetDocId.documentId } as AnnotationSet));
     });
   }
 
