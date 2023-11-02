@@ -76,7 +76,7 @@ export class AnnotationEffects {
     switchMap((annotationSet) => {
       return this.annotationApiService.postAnnotationSet(annotationSet).pipe(
         map(res => {
-          return new annotationsActions.SaveAnnotationSetSucess(res);
+          return new annotationsActions.SaveAnnotationSetSuccess(res);
         }),
         catchError(error => {
           return of(new annotationsActions.SaveAnnotationSetFail(error));

@@ -42,7 +42,7 @@ export class LoadAnnotationSetSucess implements Action {
   constructor(public payload: { status: number, body: AnnotationSet }) { }
 }
 
-export class SaveAnnotationSetSucess implements Action {
+export class SaveAnnotationSetSuccess implements Action {
   readonly type = SAVE_ANNOTATION_SET_SUCCESS;
   constructor(public payload: AnnotationSet) { }
 }
