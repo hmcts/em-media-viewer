@@ -13,20 +13,13 @@ import * as fromRedactSelectors from '../../store/selectors/redaction.selectors'
 })
 export class HighlightToolbarComponent implements OnInit {
 
-  preview = false;
-  hasRedactions = false;
-
   private subscriptions: Subscription[] = [];
   redactionAllInProgress: boolean;
 
   constructor(public readonly toolbarEventService: ToolbarEventService,
-    public readonly toolbarButtons: ToolbarButtonVisibilityService,
-    private store: Store<fromStore.AnnotationSetState>) { }
+    public readonly toolbarButtons: ToolbarButtonVisibilityService) { }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.store.pipe(select(fromRedactSelectors.getRedactionArray)).subscribe(redactions => {
-      this.hasRedactions = !!redactions.redactions.length;
-    }));
     this.subscriptions.push(this.toolbarEventService.redactAllInProgressSubject.subscribe(inprogress => {
       this.redactionAllInProgress = inprogress;
     }));
