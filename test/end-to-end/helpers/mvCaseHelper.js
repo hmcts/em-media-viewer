@@ -243,6 +243,7 @@ async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.openImage();
   await I.deleteAllExistingNonTextualHighlights();
+  await I.openImage();
   await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
 }
 
