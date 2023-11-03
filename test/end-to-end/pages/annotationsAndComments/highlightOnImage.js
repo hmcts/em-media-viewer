@@ -4,6 +4,7 @@ const testConfig = require("../../../config");
 
 module.exports = async function (xAxis, yAxis, screenX, screenY, eventList, elementSelector, elementIndex) {
   const I = this;
+  await I.openHighlightToolbar();
   await I.click(commonConfig.drawBox)
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 

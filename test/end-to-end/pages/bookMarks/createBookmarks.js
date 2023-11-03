@@ -4,7 +4,8 @@ const testConfig = require("../../../config");
 
 module.exports = async function () {
   const I = this;
-  await I.click(commonConfig.mvHighLight);
+  await I.openHighlightToolbar();
+  await I.click(commonConfig.mvHighLightText);
 
   await I.executeScript(async () => {
     const range = document.createRange();

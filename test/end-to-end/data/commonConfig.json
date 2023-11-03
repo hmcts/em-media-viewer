@@ -25,6 +25,7 @@
   "multimediaAudioBtn": "#mv-multimedia-player",
   "searchKeyword": "SSCS",
   "mvHighLight": "#mvHighlightBtn",
+  "mvHighLightText": "#highlightTextBtn",
   "bookMarksButton": "#bookmarkButton",
   "bookmarksToolbarButton": "#mvBookmarksBtn",
   "addBookmarkButton": "#addBookmark",
