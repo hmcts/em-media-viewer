@@ -13,6 +13,8 @@
   "moveUp": "#mvUpBtn",
   "pageNumber": "//*[@id='pageNumber']",
   "moreOptionsButton": "#mvMoreOptionsBtn",
+  "mvDownloadButton": "#mvDownloadBtn",
+  "mvPrintButton": "#mvPrintBtn",
   "rotateRightBtn": "#mvRotateRightBtn",
   "rotateLeftBtn": "#mvRotateLeftBtn",
   "addNewButton": "Add new",
