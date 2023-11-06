@@ -4,8 +4,12 @@ const testConfig = require("../../../config");
 
 module.exports = async function () {
   const I = this;
-  await I.openHighlightToolbar();
-  await I.click(commonConfig.mvHighLightText);
+
+  await I.click(commonConfig.mvHighLight);
+  const toolbar = await I.grabNumberOfVisibleElements(commonConfig.mvHighLightText);
+  if (toolbar) {
+    await I.click(commonConfig.mvHighLightText);
+  }
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 
   await I.executeScript(async () => {
