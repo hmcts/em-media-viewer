@@ -4,6 +4,7 @@ const {
   commentsSearchTest,
   addMultipleCommentsTest,
   highlightTextTest,
+  annotateFromSearchTest,
   addCommentAndRotateTest,
   addCommentTest,
   deleteCommentTest,
