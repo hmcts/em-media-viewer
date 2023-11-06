@@ -11,8 +11,7 @@ module.exports = async function () {
   }
   const highlights = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
   await I.openHighlightToolbar();
-  await I.click(commonConfig.highlightSearchButton)
-  await I.click(commonConfig.clearAllRedaction);;
+  await I.click(commonConfig.highlightSearchButton);
   await I.clickSearchFrom();
   await I.redactFillSearchInput();
   await I.clickRedactSearchButton();
