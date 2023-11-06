@@ -58,7 +58,7 @@ Scenario('Annotations: Search Comment Text', async ({ I }) => {
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Annotations: Annotate from search', async ({ I }) => {
-  await commentsSearchTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+  await annotateFromSearchTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
   
 }).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
