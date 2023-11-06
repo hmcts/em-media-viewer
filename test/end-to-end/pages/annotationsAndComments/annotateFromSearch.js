@@ -9,6 +9,7 @@ module.exports = async function () {
     console.log('Draw box is visible, skipping test');
     return;
   }
+  const highlights = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
   await I.openHighlightToolbar();
   await I.click(commonConfig.highlightSearchButton)
   await I.click(commonConfig.clearAllRedaction);;
@@ -16,4 +17,5 @@ module.exports = async function () {
   await I.redactFillSearchInput();
   await I.clickRedactSearchButton();
   await I.clickRedactAllButton();
+  await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, highlights + 8);
 }
