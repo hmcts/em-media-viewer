@@ -57,6 +57,12 @@ Scenario('Annotations: Search Comment Text', async ({ I }) => {
 }).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
+Scenario('Annotations: Annotate from search', async ({ I }) => {
+  await commentsSearchTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+  
+}).tag('@ci')
+  .retry(testConfig.TestRetryScenarios);
+
 Scenario('Add multiple comments on multiples pages', async ({ I }) => {
   await addMultipleCommentsTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
