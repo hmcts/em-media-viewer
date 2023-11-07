@@ -201,7 +201,7 @@ export class RedactionSearchBarComponent implements OnInit {
 
   private cleanUpPostSave() {
     this.toolbarEvents.redactAllInProgressSubject.next(false);
-    this.searchText = "";
+    this.searchText = '';
     this.search();
   }
 
