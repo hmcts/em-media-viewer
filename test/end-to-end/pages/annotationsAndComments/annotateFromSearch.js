@@ -10,10 +10,12 @@ module.exports = async function () {
     return;
   }
   const highlights = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
+  console.log(highlights);
   await I.openHighlightToolbar();
   await I.click(commonConfig.highlightSearchButton);
   await I.redactFillSearchInput();
   await I.clickRedactSearchButton();
   await I.clickRedactAllButton();
+  console.log(highlights);
   await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, highlights + 8);
 }
