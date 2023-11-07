@@ -10,12 +10,13 @@ module.exports = async function () {
     return;
   }
   const highlights = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
-  console.log(highlights);
   await I.openHighlightToolbar();
   await I.click(commonConfig.highlightSearchButton);
   await I.redactFillSearchInput();
   await I.clickRedactSearchButton();
+  const countText = await I.grabTextFrom(commonConfig.findRedactResultsCount);
+  const countValueString = countText.replace('results founds', '')
+  const countValue = Number(countValueString.trim());
   await I.clickRedactAllButton();
-  console.log(highlights);
-  await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, highlights + 8);
+  await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, highlights + countValue);
 }
