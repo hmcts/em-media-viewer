@@ -193,10 +193,16 @@ export class RedactionSearchBarComponent implements OnInit {
           this.saveRedaction(this.redactElements);
         } else if (this.searchType === SearchType.Highlight) {
           this.highlightService.saveAnnotationSet(this.redactElements);
-          this.toolbarEvents.redactAllInProgressSubject.next(false);
+          this.cleanUpPostSave();
         }
       }
     }
+  }
+
+  private cleanUpPostSave() {
+    this.toolbarEvents.redactAllInProgressSubject.next(false);
+    this.searchText = "";
+    this.search();
   }
 
   private CreateRedactAllText() {
