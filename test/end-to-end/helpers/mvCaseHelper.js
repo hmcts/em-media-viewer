@@ -153,6 +153,7 @@ async function deleteHighlightsTest(I, caseId, mediaType) {
 
 async function annotateFromSearchTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
+  await I.deleteAllExistingTextHighlights();
   await I.annotateFromSearch();
 }
 
