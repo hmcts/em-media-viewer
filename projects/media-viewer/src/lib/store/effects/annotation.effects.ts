@@ -42,18 +42,6 @@ export class AnnotationEffects {
         }));
     }));
 
-
-  // map((action: annotationsActions.SaveAnnotation) => action.payload),
-  // switchMap((annotation) => {
-  //   return this.annotationApiService.postAnnotation(annotation).pipe(
-  //     map(annotations => {
-  //       return new annotationsActions.SaveAnnotationSuccess(annotations);
-  //     }),
-  //     catchError(error => {
-  //       return of(new annotationsActions.LoadAnnotationSetFail(error));
-  //     }));
-  // }));
-
   @Effect()
   deleteAnnotation$ = this.actions$.pipe(
     ofType(annotationsActions.DELETE_ANNOTATION),
