@@ -1,6 +1,6 @@
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, SimpleChanges } from '@angular/core';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Convert } from '../../store/actions/document.actions';
 import { GrabNDragDirective } from '../grab-n-drag.directive';
@@ -59,9 +59,10 @@ describe('ConvertibleContentViewerComponent', () => {
     inject([Store], (store: Store<{}>) => {
       spyOn(store, 'dispatch');
       component.ngOnInit();
+      component.ngOnChanges({ originalUrl: { currentValue: DOCUMENT_URL, previousValue: null, firstChange: true } } as unknown as SimpleChanges);
 
       expect(store.dispatch).toHaveBeenCalledWith(new Convert('111'));
-  }));
+    }));
 
   it('should emit viewerException', fakeAsync(() => {
     spyOn(component.viewerException, 'emit');
