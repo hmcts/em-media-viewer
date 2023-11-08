@@ -59,7 +59,14 @@ describe('ConvertibleContentViewerComponent', () => {
     inject([Store], (store: Store<{}>) => {
       spyOn(store, 'dispatch');
       component.ngOnInit();
-      component.ngOnChanges({ originalUrl: { currentValue: DOCUMENT_URL, previousValue: null, firstChange: true } } as unknown as SimpleChanges);
+      component.ngOnChanges(
+        {
+          originalUrl: {
+            currentValue: DOCUMENT_URL,
+            previousValue: null,
+            firstChange: true
+          }
+        } as unknown as SimpleChanges);
 
       expect(store.dispatch).toHaveBeenCalledWith(new Convert('111'));
     }));
