@@ -32,6 +32,8 @@
   "sortBookmarkCustom": "#sortBookmarkCustom",
   "bookMarksIndex": "#mvIndexBtn",
   "viewBookmark": "#viewBookmark",
+  "bookmarkTextField": "input.bookmark__input",
+  "expectedBookmarkText": "",
   "highLightPopup": "//*[contains(@class, 'leftButton')]",
   "commentPopup": "//*[@title='Comment']",
   "firstCommentXp":"//*[@name='content']",
@@ -100,5 +102,8 @@
   "bookmark1Position" : "div >tree-node:nth-child(1) > div.tree-node-level-1 > tree-node-drop-slot > div.node-drop-slot",
   "bookmark1Card": "div.node-content-wrapper",
   "bookmark2Position" : "tree-node:nth-child(2) > div.tree-node-level-1 > tree-node-wrapper > div.node-wrapper > div.node-content-wrapper > tree-node-content > div.outlineItem', 'div >tree-node:nth-child(1) > div.tree-node-level-1 > tree-node-drop-slot > div.node-drop-slot",
-  "sortBookmarksBtn" : "button#sortBookmarkPosition"
+  "sortBookmarksBtn" : "button#sortBookmarkPosition",
+  "collateCommentsCheck": "ngx-datatable",
+  "closeCommentSummary": "button#modal-close-button",
+  "imageTabButton": "#image-button"
 }
