@@ -38,5 +38,5 @@ Scenario('Sort bookmarks', async ({I}) => {
 Scenario('custom order and reorder bookmarks', async ({I}) => {
   await customAndReorderBookmarksTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
   
-}).tag('@rr')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
