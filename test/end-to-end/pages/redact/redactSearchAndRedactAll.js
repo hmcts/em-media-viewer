@@ -6,6 +6,7 @@ let i = 0;
 module.exports = async function () {
 
   const I = this;
+  await I.click(commonConfig.redactSearchFunctionSwitch);
   await I.clickRedactMenu();
   await I.click(commonConfig.clearAllRedaction);;
   await I.clickSearchFrom();
