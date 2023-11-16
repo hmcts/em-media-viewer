@@ -274,6 +274,7 @@
   "10049_Storable but Non-Cacheable Content_http://em-showcase-aat.service.core-compute-aat.internal/runtime-es5.15e45cb14f65541a41d5.js_GET": "ignore",
   "10049_Storable but Non-Cacheable Content_http://em-showcase-aat.service.core-compute-aat.internal/runtime-es2015.15e45cb14f65541a41d5.js_GET": "ignore",
   "10049_Storable and Cacheable Content_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10277231024135831.js_GET": "ignore",
+  "10049_Storable but Non-Cacheable Content_http://em-showcase-aat.service.core-compute-aat.internal/styles.190adccb59e536cdd47d.css_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore",
