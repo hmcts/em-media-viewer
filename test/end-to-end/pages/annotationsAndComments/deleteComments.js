@@ -5,7 +5,7 @@ const { mvData } = require("../common/constants");
 
 module.exports = async function (annotationToDelete, updatedComment) {
   const I = this;
-  await I.retry(3).click(commonConfig.commentsBtnId);;
+  await I.clickCommentsPanel();;
 
   if (annotationToDelete === mvData.DELETE_ANNOTATION) {
     if (await I.getBookmarksCount(commonConfig.commentsCount) !== 0) {

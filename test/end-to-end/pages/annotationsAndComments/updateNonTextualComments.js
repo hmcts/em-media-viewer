@@ -5,7 +5,7 @@ const testConfig = require("../../../config");
 module.exports = async function (annotationToDelete, updatedComment) {
   const I = this;
   await I.refreshPage();
-  await I.retry(3).click(commonConfig.commentsBtnId);;
+  await I.clickCommentsPanel();;
 
   if (await I.getBookmarksCount(commonConfig.commentsCount) !== 0) {
     let commentsList = await I.grabTextFromAll(commonConfig.commentsCount);
