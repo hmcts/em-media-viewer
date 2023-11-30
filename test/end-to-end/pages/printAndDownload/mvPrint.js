@@ -7,11 +7,11 @@ module.exports = async function () {
   if (!visible) {
     await I.click(commonConfig.moreOptionsButton)
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
-    await I.click(commonConfig.mvPrint);
+    await I.click(`.dropdown-menu ${commonConfig.mvPrint}`);
   }
   else {
     await I.click(commonConfig.mvPrint);
   }
   const screenshotName = Date.now() + 'print' + '.png';
   await I.saveScreenshot(screenshotName, true);
-};
+}

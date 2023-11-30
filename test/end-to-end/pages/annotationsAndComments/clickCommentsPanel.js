@@ -8,7 +8,7 @@ module.exports = async function () {
   if (!visible) {
     await I.click(commonConfig.moreOptionsButton)
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
-    await I.click(commonConfig.commentsBtnId);
+    await I.click(commonConfig.commentsBtn);
   }
   else {
     await I.click(commonConfig.commentsBtnId);

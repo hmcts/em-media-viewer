@@ -7,7 +7,7 @@ module.exports = async function () {
   if (!visible) {
     await I.click(commonConfig.moreOptionsButton)
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
-    await I.click(commonConfig.mvDownload);
+    await I.click(`.dropdown-menu ${commonConfig.mvDownload}`);
   }
   else {
     await I.click(commonConfig.mvDownload);
