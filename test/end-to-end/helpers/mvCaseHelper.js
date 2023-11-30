@@ -153,13 +153,13 @@ async function deleteHighlightsTest(I, caseId, mediaType) {
 
 async function collateCommentsTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.click(commonConfig.commentsBtnId);
+  await I.clickCommentsPanel();
   await I.collateComments();
 }
 
 async function collateCommentsNotBlankTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.click(commonConfig.commentsBtnId);
+  await I.clickCommentsPanel();
   await I.deleteAllExistingComments();
   await I.addMultipleComments();
   await I.collateComments();
@@ -168,7 +168,7 @@ async function collateCommentsNotBlankTest(I, caseId, mediaType) {
 
 async function commentsSearchTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.click(commonConfig.commentsBtnId);
+  await I.clickCommentsPanel();
   await I.deleteAllExistingComments();
   await I.commentsSearch();
 }
