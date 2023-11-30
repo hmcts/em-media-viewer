@@ -11,6 +11,8 @@
   "zoomIn": "#mvMinusBtn",
   "moveDown": "#mvDownBtn",
   "moveUp": "#mvUpBtn",
+  "mvPrint": "#mvPrintBtn",
+  "mvDownload": "#mvDownloadBtn",
   "pageNumber": "//*[@id='pageNumber']",
   "moreOptionsButton": "#mvMoreOptionsBtn",
   "rotateRightBtn": "#mvRotateRightBtn",
