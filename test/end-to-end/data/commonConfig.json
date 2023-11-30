@@ -41,6 +41,7 @@
   "selectTextToHighlight":"//span[text()='Apelydd']",
   "commentsCount": "p.commentText",
   "commentsBtn": ".dropdown-menu #mvCommentsBtn",
+  "commentsBtnId": "#mvCommentsBtn",
   "bookmarksCount": ".outlineWithDeepNesting .bookmarks-tree .outlineItem",
   "highLightTextCount": "mv-annotation-set .rectangle",
   "bookMarksCss": ".outlineItem",

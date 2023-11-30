@@ -1,11 +1,11 @@
 'use strict'
 const commonConfig = require('../../data/commonConfig.json');
 const testConfig = require("../../../config");
-const {mvData} = require("../common/constants");
+const { mvData } = require("../common/constants");
 
 module.exports = async function (annotationToDelete, updatedComment) {
   const I = this;
-  await I.clickCommentsPanel();
+  await I.retry(3).click(commonConfig.commentsBtnId);;
 
   if (annotationToDelete === mvData.DELETE_ANNOTATION) {
     if (await I.getBookmarksCount(commonConfig.commentsCount) !== 0) {
