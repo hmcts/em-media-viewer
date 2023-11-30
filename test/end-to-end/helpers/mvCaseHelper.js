@@ -134,7 +134,7 @@ async function addCommentTest(I, caseId, mediaType) {
 
 async function updateCommentTest(I, caseId, mediaType, comment, updatedComment) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.retry(3).click(commonConfig.commentsBtnId);
+  await I.clickCommentsPanel();;
   await I.deleteAllExistingComments();
   await I.addComments(comment);
   await I.updateComment(comment, updatedComment);
