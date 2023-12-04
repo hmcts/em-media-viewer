@@ -8,9 +8,9 @@ import { Outline } from './outline.model';
 export class OutlineItemComponent implements OnInit {
 
   @Input() outline: Outline;
-  @Input() currentPageNumber: Number;
+  @Input() currentPageNumber: number;
   @Input() isCurrentSection: boolean;
-  @Input() endPage: Number;
+  @Input() endPage: number;
   @Output() navigationEvent = new EventEmitter();
 
   showOutlineItems: boolean;
@@ -38,7 +38,7 @@ export class OutlineItemComponent implements OnInit {
   }
 
   findEndPage(next: Outline): number {
-    return next === undefined ? Number.MAX_SAFE_INTEGER : next.pageNumber;
+    return next === undefined ? this.endPage : next.pageNumber;
   }
 
   showHighlightOutlineCss() {

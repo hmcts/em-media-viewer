@@ -1,58 +1,136 @@
-<div class="searchbar govuk-!-padding-3" [hidden]="toolbarEvents.searchBarHidden | async">
+<div
+  class="searchbar govuk-!-padding-3"
+  [hidden]="toolbarEvents.searchBarHidden | async"
+>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <input class="govuk-input govuk-!-display-inline-block govuk-!-width-three-quarters govuk-!-margin-bottom-5 govuk-!-margin-top-5"
-        type="text" aria-label="Find in document" #findInput [(ngModel)]="searchText" (keydown.escape)="onEscapeKeyPress($event)" (keydown.enter)="onEnterKeyPress($event)" title="Find in document"
-        placeholder="Find in document…" tabindex="0" data-l10n-id="find_input" />
-      <button class="govuk-button govuk-!-display-inline-block govuk-!-margin-bottom-4" data-module="govuk-button"
-        (click)="search()" style=" position: absolute; top: 40px; right: 10px; ">
+      <input
+        class="govuk-input govuk-!-display-inline-block govuk-!-width-three-quarters govuk-!-margin-bottom-5 govuk-!-margin-top-5"
+        type="text"
+        aria-label="Find in document"
+        #findInput
+        [(ngModel)]="searchText"
+        (keydown.escape)="onEscapeKeyPress($event)"
+        (keydown.enter)="onEnterKeyPress($event)"
+        title="Find in document"
+        placeholder="Find in document…"
+        tabindex="0"
+        data-l10n-id="find_input"
+      />
+      <button
+        class="govuk-button govuk-!-display-inline-block govuk-!-margin-bottom-4"
+        data-module="govuk-button"
+        (click)="search()"
+        style="position: absolute; top: 40px; right: 10px"
+      >
         Search
-      </button>
-      <button id="mvCloseBtn" #mvCloseBtn class="mv-button searchbar-button--close" title="Close Search" data-l10n-id="mvRedactBtn"
-        (click)="toggleSearchBar()">
       </button>
     </div>
   </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-      <span id="findResultsCount" class="govuk-!-display-inline-block govuk-!-margin-right-4">{{resultsText}}</span>
-      <a *ngIf="resultCount > 0" [routerLink]="[]" class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2"
-        (click)="searchPrev()" title="Find the previous occurrence of the phrase" data-l10n-id="find_previous">Prev</a>
-      <a *ngIf="resultCount > 0" [routerLink]="[]" #findNext class="govuk-link govuk-link--no-visited-state" (click)="searchNext()"
-        title="Find the next occurrence of the phrase" data-l10n-id="find_next">Next</a>
+      <span
+        id="findResultsCount"
+        class="govuk-!-display-inline-block govuk-!-margin-right-4"
+        role="status"
+        >{{ resultsText }}</span
+      >
+      <a
+        *ngIf="resultCount > 0"
+        [routerLink]=""
+        class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2"
+        (click)="searchPrev()"
+        title="Find the previous occurrence of the phrase"
+        data-l10n-id="find_previous"
+        >Prev</a
+      >
+      <a
+        *ngIf="resultCount > 0"
+        [routerLink]=""
+        #findNext
+        class="govuk-link govuk-link--no-visited-state"
+        (click)="searchNext()"
+        title="Find the next occurrence of the phrase"
+        data-l10n-id="find_next"
+        >Next</a
+      >
     </div>
     <div class="govuk-grid-column-one-quarter">
-      <a [routerLink]="[]" class="govuk-link govuk-link--no-visited-state" (click)="toggleAdvancedSearch()" title="Advanced"
-        data-l10n-id="find_advanced" style=" position: absolute; top: 95px; right: 15px; ">Advanced</a>
+      <a
+        [routerLink]=""
+        class="govuk-link govuk-link--no-visited-state"
+        (click)="toggleAdvancedSearch()"
+        title="Advanced"
+        role="button"
+        [attr.aria-expanded]="advancedSearchVisible"
+        aria-controls="advancedSearchVisible"
+        data-l10n-id="find_advanced"
+        style="position: absolute; top: 95px; right: 15px"
+        >Advanced</a
+      >
     </div>
   </div>
 
-  <div class="govuk-grid-row" *ngIf="advancedSearchVisible">
+  <div
+    id="advancedSearchVisible"
+    class="govuk-grid-row"
+    *ngIf="advancedSearchVisible"
+  >
     <div class="govuk-grid-column-full">
-      <div class="govuk-form-group govuk-!-margin-top-3 govuk-!-margin-bottom-1">
+      <div
+        class="govuk-form-group govuk-!-margin-top-3 govuk-!-margin-bottom-1"
+      >
         <fieldset class="govuk-fieldset" aria-describedby="advanced">
           <div class="govuk-checkboxes">
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="findHighlightAll" name="findHighlightAll" type="checkbox"
-                (change)="highlightAll = !highlightAll; search()" [checked]="highlightAll">
-              <label class="govuk-label govuk-checkboxes__label" for="findHighlightAll" data-l10n-id="find_highlight">
+              <input
+                class="govuk-checkboxes__input"
+                id="findHighlightAll"
+                name="findHighlightAll"
+                type="checkbox"
+                (change)="highlightAll = !highlightAll; search()"
+                [checked]="highlightAll"
+              />
+              <label
+                class="govuk-label govuk-checkboxes__label"
+                for="findHighlightAll"
+                data-l10n-id="find_highlight"
+              >
                 Highlight all
               </label>
             </div>
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="findMatchCase" name="findMatchCase" type="checkbox"
-                (change)="matchCase = !matchCase; search()" [checked]="matchCase">
-              <label class="govuk-label govuk-checkboxes__label" for="findMatchCase"
-                data-l10n-id="find_match_case_label">
+              <input
+                class="govuk-checkboxes__input"
+                id="findMatchCase"
+                name="findMatchCase"
+                type="checkbox"
+                (change)="matchCase = !matchCase; search()"
+                [checked]="matchCase"
+              />
+              <label
+                class="govuk-label govuk-checkboxes__label"
+                for="findMatchCase"
+                data-l10n-id="find_match_case_label"
+              >
                 Match text (exact case)
               </label>
             </div>
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="findEntireWord" name="findMatchCase" type="checkbox"
-                (change)="wholeWord = !wholeWord; search()" [checked]="wholeWord">
-              <label class="govuk-label govuk-checkboxes__label" for="findEntireWord"
-                data-l10n-id="find_entire_word_label">
+              <input
+                class="govuk-checkboxes__input"
+                id="findEntireWord"
+                name="findMatchCase"
+                type="checkbox"
+                (change)="wholeWord = !wholeWord; search()"
+                [checked]="wholeWord"
+              />
+              <label
+                class="govuk-label govuk-checkboxes__label"
+                for="findEntireWord"
+                data-l10n-id="find_entire_word_label"
+              >
                 Match whole words or sentences
               </label>
             </div>
@@ -60,5 +138,15 @@
         </fieldset>
       </div>
     </div>
+  </div>
+  <div>
+    <button
+      id="mvCloseBtn"
+      #mvCloseBtn
+      class="mv-button searchbar-button--close"
+      title="Close Search"
+      data-l10n-id="mvRedactBtn"
+      (click)="toggleSearchBar()"
+    ></button>
   </div>
 </div>

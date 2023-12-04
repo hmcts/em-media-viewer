@@ -1,37 +1,62 @@
-<mv-comment-set-header [ngClass]="{'show-comments-panel': showCommentsPanel}"
-                       [showCommentSummary]="toolbarButtons.showCommentSummary"
-                       (showCommentSummaryDialog)="toggleCommentsSummary()">
+<mv-comment-set-header
+  [ngClass]="{ 'show-comments-panel': showCommentsPanel }"
+  [showCommentSummary]="toolbarButtons.showCommentSummary"
+  (showCommentSummaryDialog)="toggleCommentsSummary()"
+>
 </mv-comment-set-header>
-<div id="viewer-wrapper"
-     [ngStyle]="{ height: height }"
-     [ngClass]="{ 'grabNDrag': enableGrabNDrag }"
-     *ngIf="url && !errorMessage">
-  <div #imageContainer id="image-container"
-       mvGrabNDrag [dragX]="imageContainer" [dragEnabled]="enableGrabNDrag"
-       (scroll)="$event"
-       [ngClass]="{ 'image-container': true, 'annotations': enableAnnotations, 'show-comments-panel': showCommentsPanel }">
-    <img #img
-         [src]="url"
-         [ngClass]="'rot' + rotation"
-         (error)="onLoadError(url)"
-         (load)="onLoad(img)"/>
-    <mv-redactions *ngIf="(toolbarEvents.redactionMode | async) === true;else annotationTemplate"
-                   [zoom]="zoom"
-                   [rotate]="rotation"
+<div
+  id="viewer-wrapper"
+  [ngStyle]="{ height: height }"
+  [ngClass]="{ grabNDrag: enableGrabNDrag }"
+  *ngIf="url && !errorMessage"
+>
+  <div
+    #imageContainer
+    id="image-container"
+    mvGrabNDrag
+    [dragX]="imageContainer"
+    [dragEnabled]="enableGrabNDrag"
+    (scroll)="($event)"
+    [ngClass]="{
+      'image-container': true,
+      annotations: enableAnnotations,
+      'show-comments-panel': showCommentsPanel
+    }"
+  >
+    <img
+      #img
+      alt=""
+      [src]="url"
+      [ngClass]="'rot' + rotation"
+      (error)="onLoadError(url)"
+      (load)="onLoad(img)"
+    />
+    <mv-redactions
+      *ngIf="toolbarEvents.redactionMode | async; else annotationTemplate"
+      [zoom]="zoom"
+      [rotate]="rotation"
     ></mv-redactions>
     <ng-template #annotationTemplate>
-      <mv-metadata-layer *ngIf="enableAnnotations && annotationSet"
-                         [zoom]="zoom"
-                         [rotate]="rotation">
+      <mv-metadata-layer
+        *ngIf="enableAnnotations && annotationSet"
+        [zoom]="zoom"
+        [rotate]="rotation"
+      >
       </mv-metadata-layer>
     </ng-template>
   </div>
 
-    <mv-comment-set [contentScrollTop]="imageContainer.scrollTop"
-                    *ngIf="enableAnnotations && annotationSet && (toolbarEvents.redactionMode | async) !== true"
-                    [annotationSet]="annotationSet"
-                    [zoom]="zoom"
-                    [rotate]="rotation"
-                    [height]="imageHeight">
-    </mv-comment-set>
+  <mv-comment-set
+    [contentScrollTop]="imageContainer.scrollTop"
+    *ngIf="
+      enableAnnotations &&
+      annotationSet &&
+      !(toolbarEvents.redactionMode | async)
+    "
+    [annotationSet]="annotationSet"
+    [zoom]="zoom"
+    [rotate]="rotation"
+    [height]="imageHeight"
+  >
+  </mv-comment-set>
 </div>
