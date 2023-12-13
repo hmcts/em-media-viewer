@@ -91,6 +91,7 @@
     "protractor-screenshot-utils": "^1.0.5",
     "request-promise-native": "1.0.9",
     "require-directory": "2.1.1",
+    "rpx-xui-translation": "^1.0.2",
     "rxjs": "^6.5.3",
     "sass": "^1.64.1",
     "scss-bundle": "~3.1.2",

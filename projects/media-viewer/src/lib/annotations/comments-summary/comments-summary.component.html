@@ -1,42 +1,78 @@
 <div id="modal-background" class="modal" (click)="onClose()">
-  <div #outerContainer id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()" cdkTrapFocus tabindex="0">
+  <div
+    #outerContainer
+    id="modal"
+    class="modal-content govuk-width-container clearfix"
+    (click)="$event.stopPropagation()"
+    cdkTrapFocus
+    tabindex="0"
+  >
     <div id="comment-container" class="comment-container" #commentContainer>
       <h2 class="govuk-heading-m">{{ title }}</h2>
-      <ng-container *ngIf="(comments$ | async) as comments">
+      <ng-container *ngIf="comments$ | async as comments">
         <ng-container *ngIf="comments.length">
-          <button type="submit" class="govuk-button govuk-!-margin-right-1" (click)="onFiltersToggle()">
-            {{ !showFilters ? 'Show Filters' : 'Hide Filters'}}
+          <button
+            type="submit"
+            class="govuk-button govuk-!-margin-right-1"
+            (click)="onFiltersToggle()"
+          >
+            {{
+              !showFilters
+                ? ("Show Filters" | rpxTranslate)
+                : ("Hide Filters" | rpxTranslate)
+            }}
           </button>
-          <button type="submit" class="govuk-button govuk-button--secondary" (click)="onClearFilters()" *ngIf="hasFilter">
-            Clear Filters
+          <button
+            type="submit"
+            class="govuk-button govuk-button--secondary"
+            (click)="onClearFilters()"
+            *ngIf="hasFilter"
+          >
+            {{ "Clear Filters" | rpxTranslate }}
           </button>
           <ng-container *ngIf="showFilters">
-            <form [formGroup]="filtersFg" (ngSubmit)="onFilter()" >
+            <form [formGroup]="filtersFg" (ngSubmit)="onFilter()">
               <div class="dates">
                 <div class="dates__from">
                   <mv-gov-uk-date
-                    [config]="{id: 'dateRangeFrom', legend: 'From'}"
+                    [config]="{ id: 'dateRangeFrom', legend: 'From' }"
                     [formGroup]="filtersFg.controls['dateRangeFrom']"
                     [errorMessage]="'test'"
                   ></mv-gov-uk-date>
                 </div>
                 <div class="dates__to">
                   <mv-gov-uk-date
-                    [config]="{id: 'dateRangeTo', legend: 'To'}"
+                    [config]="{ id: 'dateRangeTo', legend: 'To' }"
                     [formGroup]="filtersFg.controls['dateRangeTo']"
                     [errorMessage]="'test'"
                   ></mv-gov-uk-date>
                 </div>
                 <div class="dates__tags">
                   <mv-gov-uk-fieldset
-                    [config]="{legend: 'Tags', classes: 'govuk-label--m', id: 'filters'}"
-                    [isHeading]="false">
-                    <div class="govuk-checkboxes--scroll" [formGroup]="filtersFg.controls['tagFilters']">
+                    [config]="{
+                      legend: 'Tags',
+                      classes: 'govuk-label--m',
+                      id: 'filters'
+                    }"
+                    [isHeading]="false"
+                  >
+                    <div
+                      class="govuk-checkboxes--scroll"
+                      [formGroup]="filtersFg.controls['tagFilters']"
+                    >
                       <div class="govuk-checkboxes govuk-checkboxes--small">
-                        <div class="govuk-checkboxes__item" *ngFor="let item of (allTags$ | async)">
-                          <input [formControlName]="item.key" class="govuk-checkboxes__input" [value]="false"  type="checkbox">
+                        <div
+                          class="govuk-checkboxes__item"
+                          *ngFor="let item of allTags$ | async"
+                        >
+                          <input
+                            [formControlName]="item.key"
+                            class="govuk-checkboxes__input"
+                            [value]="false"
+                            type="checkbox"
+                          />
                           <label class="govuk-label govuk-checkboxes__label">
-                            {{ item.key | unsnake}} ({{item.length}})
+                            {{ item.key | unsnake }} ({{ item.length }})
                           </label>
                         </div>
                       </div>
@@ -45,7 +81,7 @@
                 </div>
                 <div class="dates__cta">
                   <button type="submit" class="govuk-button">
-                    Filter comments
+                    {{ "Filter comments" | rpxTranslate }}
                   </button>
                 </div>
               </div>
@@ -57,32 +93,67 @@
               rowHeight="auto"
               headerHeight="auto"
               [columnMode]="'flex'"
-              [sorts]="[{ prop: 'date', dir: 'desc' }]">
-              <ngx-datatable-column name="User" [flexGrow]="1" [sortable]="false"></ngx-datatable-column>
-              <ngx-datatable-column name="Page" [flexGrow]="1">
+              [sorts]="[{ prop: 'date', dir: 'desc' }]"
+            >
+              <ngx-datatable-column
+                name="{{ 'User' | rpxTranslate }}"
+                [flexGrow]="1"
+                [sortable]="false"
+              ></ngx-datatable-column>
+              <ngx-datatable-column
+                name="{{ 'Page' | rpxTranslate }}"
+                [flexGrow]="1"
+              >
                 <ng-template ngx-datatable-cell-template let-value="value">
-                  <a [routerLink]="[]" class="comment-summary_pages" (click)="navigateToPage(value)">{{value}}</a>
+                  <a
+                    [routerLink]="[]"
+                    class="comment-summary_pages"
+                    (click)="navigateToPage(value)"
+                    >{{ value }}</a
+                  >
                 </ng-template>
               </ngx-datatable-column>
-              <ngx-datatable-column name="Date" [flexGrow]="1"></ngx-datatable-column>
-              <ngx-datatable-column name="Comment" [flexGrow]="3" [sortable]="false"></ngx-datatable-column>
-              <ngx-datatable-column name="Tags" [flexGrow]="1" [sortable]="false">
+              <ngx-datatable-column
+                name="{{ 'Date' | rpxTranslate }}"
+                [flexGrow]="1"
+              ></ngx-datatable-column>
+              <ngx-datatable-column
+                name="{{ 'Comment' | rpxTranslate }}"
+                [flexGrow]="3"
+                [sortable]="false"
+              ></ngx-datatable-column>
+              <ngx-datatable-column
+                name="{{ 'Tags' | rpxTranslate }}"
+                [flexGrow]="1"
+                [sortable]="false"
+              >
                 <ng-template ngx-datatable-cell-template let-value="value">
-                  <span class="hmcts-badge" *ngFor="let tag of value">{{tag.label}}</span>
+                  <span class="hmcts-badge" *ngFor="let tag of value">{{
+                    tag.label
+                  }}</span>
                 </ng-template>
               </ngx-datatable-column>
             </ngx-datatable>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="!comments[0]">
-          <h3 class="govuk-heading-s" >No comments available. Select text to add a highlight or comment.</h3>
+          <h3 class="govuk-heading-s">
+            {{
+              "No comments available. Select text to add a highlight or comment."
+                | rpxTranslate
+            }}
+          </h3>
         </ng-container>
       </ng-container>
     </div>
 
     <div class="button-container">
-      <button (click)="onPrint()" class="govuk-button govuk-button--secondary">Print</button>
-      <button id="modal-close-button" (click)="onClose()" class="govuk-button">Close</button>
+      <button (click)="onPrint()" class="govuk-button govuk-button--secondary">
+        {{ "Print" | rpxTranslate }}
+      </button>
+      <button id="modal-close-button" (click)="onClose()" class="govuk-button">
+        {{ "Close" | rpxTranslate }}
+      </button>
     </div>
   </div>
 </div>

@@ -2597,6 +2597,7 @@ __metadata:
     puppeteer: 19.9.0
     request-promise-native: 1.0.9
     require-directory: 2.1.1
+    rpx-xui-translation: ^1.0.2
     rxjs: ^6.5.3
     sass: ^1.64.1
     scss-bundle: ~3.1.2
@@ -7488,6 +7489,13 @@ __metadata:
     ua-parser-js: ^1.0.1
     uuid: ^8.0.0
   checksum: d62f1ae213bb08bda3b7347a1cebf998d43f39d7f446667642f8c06d47928eaf6de07e359d02bb3f8c27975f4ea389a991e7e54dba14b39b913d04050ba260d2
+  languageName: node
+  linkType: hard
+
+"dexie@npm:^3.2.2":
+  version: 3.2.4
+  resolution: "dexie@npm:3.2.4"
+  checksum: 4e5294a954118b6862c864b8c3970904a1733daebcd919488624520696411e2e81ed1bceeac3634c5c15a21e37ce4b8502ed41c4edfbc5ba3f5925c34d56497b
   languageName: node
   linkType: hard
 
@@ -12596,6 +12604,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"luxon@npm:^2.4.0":
+  version: 2.5.2
+  resolution: "luxon@npm:2.5.2"
+  checksum: d8b671ffd2ff0b438af862ac11082a81b3aedd9f8b6a4ca636f944224f8dd381125cd4d274ca0a8aedcaf2cfca0fc2ca96fe4cc1b16a28b7af701afb95c0bff8
+  languageName: node
+  linkType: hard
+
 "luxon@npm:^3.1.1":
   version: 3.2.1
   resolution: "luxon@npm:3.2.1"
@@ -16358,6 +16373,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 524477e73885bafd2df395c12db330f3893e1f8eca67e811fb1423a4f6318451987e978607c75f8115bd9ce7fa834460969b0c39b797d45da87fa42fef9bafa8
+  languageName: node
+  linkType: hard
+
+"rpx-xui-translation@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "rpx-xui-translation@npm:1.0.2"
+  dependencies:
+    dexie: ^3.2.2
+    luxon: ^2.4.0
+    tslib: ^2.0.0
+  peerDependencies:
+    "@angular/common": ^15.2.9
+    "@angular/core": ^15.2.9
+  checksum: 305f4ae1d935de2f4d0874637a61863c1b5478872d335653f6986776fc274de9ebfe3728c04c8a386ff8b4d36fa1de8e444d000ad42f2a914bab3fb5989f28bc
   languageName: node
   linkType: hard
 
