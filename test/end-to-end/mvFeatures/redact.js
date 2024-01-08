@@ -8,7 +8,7 @@ const {
   createRedactionsUsingDrawBoxAndRedactText,
   previewAllRedactionsTest,
   saveAllRedactionsTest,
-  redactSearchAndRedctAllTest
+  redactSearchAndRedactAllTest
 } = require("../helpers/mvCaseHelper");
 const { mvData } = require('../pages/common/constants.js');
 
