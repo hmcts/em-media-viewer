@@ -66,7 +66,7 @@ module.exports = () => {
     nonTextualHighlightAndComment: steps.annotationsAndComments.nonTextualHighlightAndComment,
     updateNonTextualComments: steps.annotationsAndComments.updateNonTextualComments,
     deleteAllExistingNonTextualHighlights: steps.annotationsAndComments.deleteAllExistingNonTextualHighlights,
-    redactSearchAndRedctAll: steps.redact.redactSearchAndRedctAll,
+    redactSearchAndRedactAll: steps.redact.redactSearchAndRedactAll,
     clickSearchFrom: steps.redact.clickSearchFrom,
     redactFillSearchInput: steps.redact.redactFillSearchInput,
     clickRedactSearchButton: steps.redact.clickRedactSearchButton,
