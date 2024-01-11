@@ -1,0 +1,12 @@
+{
+  "defaults": {
+    "timeout": 4000
+  },
+  "urls": [
+    {
+      "url": "http://localhost:3000",
+      "screenCapture": "pa11y/pa11y-screenshots/home.png",
+      "rootElement": "mv-media-viewer"
+    }
+  ]
+}
