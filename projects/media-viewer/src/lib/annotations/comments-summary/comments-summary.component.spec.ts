@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -17,7 +18,8 @@ describe('CommentsSummaryComponent', () => {
   let component: CommentsSummaryComponent;
   let fixture: ComponentFixture<CommentsSummaryComponent>;
   let printService: PrintService;
-  const initialState = { 'media-viewer': {
+  const initialState = {
+    'media-viewer': {
       tags: {
         tagNameEnt: {
           tag1: ['a'],
@@ -26,7 +28,7 @@ describe('CommentsSummaryComponent', () => {
         }
       },
       annotations: {
-        commentSummaryFilters: {hasFilter: false, filters: {} }
+        commentSummaryFilters: { hasFilter: false, filters: {} }
       },
       document: {
         pages: {}
@@ -40,12 +42,20 @@ describe('CommentsSummaryComponent', () => {
         NgxDatatableModule,
         ReactiveFormsModule,
         RouterModule,
-        SharedModule
+        SharedModule,
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
-      declarations: [ CommentsSummaryComponent, MomentDatePipe, UnsnakePipe ],
-      providers: [ PrintService, provideMockStore({ initialState }), ]
+      declarations: [CommentsSummaryComponent, MomentDatePipe, UnsnakePipe],
+      providers: [PrintService, provideMockStore({ initialState }),]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -104,17 +114,17 @@ describe('CommentsSummaryComponent', () => {
   it('should toggle the display comment summary state',
     inject([ToolbarEventService],
       (toolbarEvents: ToolbarEventService) => {
-      spyOn(toolbarEvents, 'setPage');
-      spyOn(toolbarEvents, 'toggleCommentsSummary');
-      spyOn(toolbarEvents, 'toggleCommentsPanel');
-      component.contentType = 'pdf';
+        spyOn(toolbarEvents, 'setPage');
+        spyOn(toolbarEvents, 'toggleCommentsSummary');
+        spyOn(toolbarEvents, 'toggleCommentsPanel');
+        component.contentType = 'pdf';
 
-      component.navigateToPage(4);
+        component.navigateToPage(4);
 
-      expect(toolbarEvents.setPage).toHaveBeenCalled();
-      expect(toolbarEvents.toggleCommentsSummary).toHaveBeenCalledWith(false);
-      expect(toolbarEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
-    })
+        expect(toolbarEvents.setPage).toHaveBeenCalled();
+        expect(toolbarEvents.toggleCommentsSummary).toHaveBeenCalledWith(false);
+        expect(toolbarEvents.toggleCommentsPanel).toHaveBeenCalledWith(true);
+      })
   );
 
   it('should dispatch ClearCommentSummaryFilters action and call buildCheckBoxForm when onClearFilters called',
@@ -143,7 +153,7 @@ describe('CommentsSummaryComponent', () => {
           dateRangeTo: null,
           dateRangeFrom: null,
           tagFilters: { ...mockTags }
-          });
+        });
         component.onFilter();
 
         expect(store.dispatch).toHaveBeenCalledWith(action);

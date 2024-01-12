@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,13 +17,13 @@ import { OutlineItemComponent } from './viewers/pdf-viewer/side-bar/outline-item
 import { TagInputModule } from 'ngx-chips';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule} from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { RedactionComponent } from './redaction/components/redaction.component';
 import { IcpSessionApiService } from './icp/icp-session-api.service';
 import { IcpUpdateService } from './icp/icp-update.service';
 import { IcpService } from './icp/icp.service';
 import { SocketService } from './icp/socket.service';
-import { reducers} from './store/reducers/reducers';
+import { reducers } from './store/reducers/reducers';
 import { effects } from './store/effects/index';
 import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
 import { RedactionApiService } from './redaction/services/redaction-api.service';
@@ -38,57 +39,58 @@ import { RotationApiService } from './viewers/rotation-persist/rotation-api.serv
 import { RotationPersistDirective } from './viewers/rotation-persist/rotation-persist.directive';
 import { ParticipantsListComponent } from './icp/participants-list/participants-list.component';
 import { HighlightCreateDirective } from './annotations/annotation-set/annotation-create/highlight-create/highlight-create.directive';
-import {MultimediaPlayerComponent} from './viewers/multimedia-player/multimedia-player.component';
+import { MultimediaPlayerComponent } from './viewers/multimedia-player/multimedia-player.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        HttpClientModule,
-        ToolbarModule,
-        AnnotationsModule,
-        TagInputModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule,
-        StoreModule.forFeature('media-viewer', reducers),
-        EffectsModule.forFeature(effects),
-        TreeModule,
-        MutableDivModule
-    ],
-    declarations: [
-        PdfViewerComponent,
-        SideBarComponent,
-        BookmarksComponent,
-        OutlineItemComponent,
-        ImageViewerComponent,
-        UnsupportedViewerComponent,
-        MultimediaPlayerComponent,
-        MediaViewerComponent,
-        ConvertibleContentViewerComponent,
-        GrabNDragDirective,
-        RotationPersistDirective,
-        HighlightCreateDirective,
-        ConfirmActionDialogComponent,
-        RedactionComponent,
-        BookmarkIconsComponent,
-        ParticipantsListComponent
-    ],
-    providers: [
-        PdfJsWrapperFactory,
-        CommentService,
-        RedactionApiService,
-        IcpSessionApiService,
-        IcpUpdateService,
-        SocketService,
-        IcpService,
-        IcpPresenterService,
-        IcpFollowerService,
-        RedactionApiService,
-        DocumentConversionApiService,
-        RotationApiService,
-    ],
-    exports: [
-        MediaViewerComponent
-    ]
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    ToolbarModule,
+    AnnotationsModule,
+    TagInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    StoreModule.forFeature('media-viewer', reducers),
+    EffectsModule.forFeature(effects),
+    TreeModule,
+    MutableDivModule,
+    RpxTranslationModule.forChild()
+  ],
+  declarations: [
+    PdfViewerComponent,
+    SideBarComponent,
+    BookmarksComponent,
+    OutlineItemComponent,
+    ImageViewerComponent,
+    UnsupportedViewerComponent,
+    MultimediaPlayerComponent,
+    MediaViewerComponent,
+    ConvertibleContentViewerComponent,
+    GrabNDragDirective,
+    RotationPersistDirective,
+    HighlightCreateDirective,
+    ConfirmActionDialogComponent,
+    RedactionComponent,
+    BookmarkIconsComponent,
+    ParticipantsListComponent
+  ],
+  providers: [
+    PdfJsWrapperFactory,
+    CommentService,
+    RedactionApiService,
+    IcpSessionApiService,
+    IcpUpdateService,
+    SocketService,
+    IcpService,
+    IcpPresenterService,
+    IcpFollowerService,
+    RedactionApiService,
+    DocumentConversionApiService,
+    RotationApiService,
+  ],
+  exports: [
+    MediaViewerComponent
+  ]
 })
 export class MediaViewerModule { }

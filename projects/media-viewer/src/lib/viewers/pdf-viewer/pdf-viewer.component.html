@@ -78,7 +78,7 @@
   </mv-comment-set>
   <div class="loadingMessage" *ngIf="loadingDocument">
     <h3 class="govuk-heading-m">
-      Loading...{{
+      {{ "Loading..." | rpxTranslate}}{{
         loadingDocumentProgress ? loadingDocumentProgress + "%" : ""
       }}
     </h3>

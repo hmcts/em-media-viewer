@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -44,7 +45,15 @@ describe('PdfViewerComponent', () => {
       ],
       imports: [
         StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({})
+        StoreModule.forRoot({}),
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       providers: [
         CommentService,
@@ -70,26 +79,26 @@ describe('PdfViewerComponent', () => {
 
   beforeEach(() => {
     mockWrapper = {
-      loadDocument: () => {},
-      search: () => {},
-      clearSearch: () => {},
-      rotate: () => {},
-      setZoom: () => {},
-      stepZoom: () => {},
-      downloadFile: () => {},
-      setPageNumber: () => {},
-      changePageNumber: () => {},
-      getPageNumber: () => {},
-      getCurrentPDFTitle: () => {},
+      loadDocument: () => { },
+      search: () => { },
+      clearSearch: () => { },
+      rotate: () => { },
+      setZoom: () => { },
+      stepZoom: () => { },
+      downloadFile: () => { },
+      setPageNumber: () => { },
+      changePageNumber: () => { },
+      getPageNumber: () => { },
+      getCurrentPDFTitle: () => { },
       documentLoadInit: new Subject<any>(),
       documentLoadProgress: new Subject<DocumentLoadProgress>(),
       documentLoaded: new Subject<any>(),
       outlineLoaded: new Subject<Outline>(),
       documentLoadFailed: new Subject(),
-      pageRendered: new Subject<{pageNumber: number, source: { rotation: number, scale: number, div: Element} }>(),
+      pageRendered: new Subject<{ pageNumber: number, source: { rotation: number, scale: number, div: Element } }>(),
       positionUpdated: new Subject<{ location: PdfPosition }>()
     };
-    component.annotationSet = JSON.parse(JSON.stringify(annotationSet)) ;
+    component.annotationSet = JSON.parse(JSON.stringify(annotationSet));
     component.url = 'url';
     toolbarEvents = fixture.debugElement.injector.get(ToolbarEventService);
     printService = fixture.debugElement.injector.get(PrintService);
@@ -124,7 +133,7 @@ describe('PdfViewerComponent', () => {
     toolbarEvents.searchSubject.next();
     toolbarEvents.setCurrentPageSubject.next();
     toolbarEvents.changePageByDeltaSubject.next();
-    mockWrapper.positionUpdated.next({ location: { pageNumber: 1, top: 10, left: 10, rotation: 0, scale: 1 }});
+    mockWrapper.positionUpdated.next({ location: { pageNumber: 1, top: 10, left: 10, rotation: 0, scale: 1 } });
 
     expect(printService.printDocumentNatively).toHaveBeenCalledWith(component.url);
     expect(mockWrapper.downloadFile).toHaveBeenCalled();
@@ -181,7 +190,7 @@ describe('PdfViewerComponent', () => {
   it('should set document loading status to false after document load failed', () => {
     component.loadingDocument = true;
 
-    mockWrapper.documentLoadFailed.next({ name: 'error', message: 'Could not load the document'});
+    mockWrapper.documentLoadFailed.next({ name: 'error', message: 'Could not load the document' });
 
     expect(component.loadingDocument).toBe(false);
   });

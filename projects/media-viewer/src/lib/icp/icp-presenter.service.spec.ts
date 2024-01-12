@@ -14,9 +14,9 @@ describe('Icp Presenter Service', () => {
   let updateService: IcpUpdateService;
   const mockUpdateService = {
     newParticipantJoined: () => of('client'),
-    updateScreen: () => {},
-    updatePresenter: () => {},
-    screenUpdated: () => {}
+    updateScreen: () => { },
+    updatePresenter: () => { },
+    screenUpdated: () => { }
   } as any;
 
   const session: IcpSession = {
@@ -44,7 +44,7 @@ describe('Icp Presenter Service', () => {
         StoreModule.forRoot({})
       ],
       providers: [IcpPresenterService,
-        {provide: IcpUpdateService, useValue: mockUpdateService}]
+        { provide: IcpUpdateService, useValue: mockUpdateService }]
     });
 
     presenterService = TestBed.inject(IcpPresenterService);
@@ -78,9 +78,9 @@ describe('Icp Presenter Service', () => {
 
       presenterService.subscribe();
 
-      const joinedPayload = {session: session, participantInfo: {client: participant, presenter: participant}};
-      store.dispatch( new IcpSocketSessionJoined(joinedPayload));
-      store.dispatch( new PdfPositionUpdate(pdfPosition));
+      const joinedPayload = { session: session, participantInfo: { client: participant, presenter: participant } };
+      store.dispatch(new IcpSocketSessionJoined(joinedPayload));
+      store.dispatch(new PdfPositionUpdate(pdfPosition));
       mockUpdateService.newParticipantJoined();
 
       expect(presenterService.presenter).toEqual(participant);
@@ -103,15 +103,6 @@ describe('Icp Presenter Service', () => {
 
     expect(updateService.updateScreen).toHaveBeenCalledWith({ pdfPosition, document: undefined });
   });
-
-  it('should call service to update screen position', () => {
-    spyOn(updateService, 'updateScreen');
-
-    presenterService.onPositionUpdate(pdfPosition);
-
-    expect(updateService.updateScreen).toHaveBeenCalledWith({ pdfPosition, document: undefined });
-  });
-
 
   it('should call service to update presenter', () => {
     spyOn(presenterService, 'onPositionUpdate');
