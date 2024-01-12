@@ -105,12 +105,7 @@
                 [flexGrow]="1"
               >
                 <ng-template ngx-datatable-cell-template let-value="value">
-                  <a
-                    [routerLink]="[]"
-                    class="comment-summary_pages"
-                    (click)="navigateToPage(value)"
-                    >{{ value }}</a
-                  >
+                  <a [routerLink]="[]" class="comment-summary_pages" (click)="navigateToPage(value)">{{value}}</a>
                 </ng-template>
               </ngx-datatable-column>
               <ngx-datatable-column
