@@ -131,10 +131,10 @@ describe('RectangleComponent', () => {
   });
 
   it('should emit a click', () => {
-    spyOn(component.select, 'emit');
+    spyOn(component.selectEvent, 'emit');
     component.onClick();
 
-    expect(component.select.emit).toHaveBeenCalledTimes(1);
+    expect(component.selectEvent.emit).toHaveBeenCalledTimes(1);
   });
 
   it('should update the rectangle if moved', () => {
@@ -175,7 +175,7 @@ describe('RectangleComponent', () => {
   });
 
   it('should not update the rectangle if the rectangle did not change', () => {
-    spyOn(component.update, 'emit');
+    spyOn(component.updateEvent, 'emit');
     component.left = rectangleEl.nativeElement.offsetLeft;
     component.top = rectangleEl.nativeElement.offsetTop;
     component.width = rectangleEl.nativeElement.offsetWidth;
@@ -194,7 +194,7 @@ describe('RectangleComponent', () => {
     expect(rectangleEl.nativeElement.offsetTop).toEqual(component.top);
     expect(rectangleEl.nativeElement.offsetWidth).toEqual(component.width);
     expect(rectangleEl.nativeElement.offsetHeight).toEqual(component.height);
-    expect(component.update.emit).not.toHaveBeenCalled();
+    expect(component.updateEvent.emit).not.toHaveBeenCalled();
   });
 
   it('should compare 2 rectangles values and see if its the same', () => {

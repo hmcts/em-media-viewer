@@ -51,7 +51,7 @@
     *ngIf="
       enableAnnotations &&
       annotationSet &&
-      !(toolbarEvents.redactionMode | async)
+      (toolbarEvents.redactionMode | async) !== true
     "
     [annotationSet]="annotationSet"
     [zoom]="zoom"

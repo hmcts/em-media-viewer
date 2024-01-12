@@ -11,7 +11,7 @@
       <div class="hmcts-filter__heading-action">
         <p><a (click)="onClearFilters()"
               class="govuk-link govuk-link--no-visited-state"
-              [routerLink]="">Clear filters</a></p>
+              [routerLink]="[]">Clear filters</a></p>
       </div>
     </div>
 
@@ -19,7 +19,7 @@
 
     <ul class="hmcts-filter-tags" *ngIf="filters.length">
       <li *ngFor="let tagName of filters">
-        <a class="hmcts-filter__tag" [routerLink]="" (click)="onRemoveFilter(tagName)">
+        <a class="hmcts-filter__tag" [routerLink]="[]" (click)="onRemoveFilter(tagName)">
           <span class="govuk-visually-hidden">Remove this filter</span>{{tagName | unsnake}}</a>
       </li>
     </ul>
