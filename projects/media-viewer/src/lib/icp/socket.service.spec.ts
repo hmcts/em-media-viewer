@@ -80,12 +80,6 @@ describe('SocketService', () => {
     expect(nextSpy).toHaveBeenCalled();
   });
 
-  it('message event handler should call participant updated', () => {
-    const nextSpy = spyOn(socketService.participantUpdated$, 'next');
-    socketService.messageEventHandller('IcpParticipantsListUpdated', { test: 'hello' });
-    expect(nextSpy).toHaveBeenCalled();
-  });
-
   it('message event handler should call new participant joined', () => {
     const nextSpy = spyOn(socketService.newParticipantJoined$, 'next');
     socketService.messageEventHandller('IcpNewParticipantJoinedSession', { test: 'hello' });

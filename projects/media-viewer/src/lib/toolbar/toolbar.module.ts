@@ -12,6 +12,7 @@ export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.serv
 export { ToolbarEventService } from './toolbar-event.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { RouterModule } from '@angular/router';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     FormsModule,
     OverlayModule,
-    RouterModule
+    RouterModule,
+    RpxTranslationModule.forChild(),
   ]
 })
 export class ToolbarModule { }

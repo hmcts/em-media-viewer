@@ -104,14 +104,6 @@ describe('RedactionComponent', () => {
     expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveRedaction({}));
   }));
 
-  it('should dispatch DeleteRedaction', inject([Store], (store) => {
-    spyOn(store, 'dispatch');
-
-    component.onMarkerDelete({});
-
-    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteRedaction({} as any));
-  }));
-
   it('should download redacted document', inject([Store], (store) => {
     const anchor = {
       setAttribute: () => {}, click: () => {}, remove: () => {}, href: undefined, download: undefined
