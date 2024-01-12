@@ -196,7 +196,7 @@
             >
               <button
                 [disabled]="
-                  toolbarEvents.zoomValueSubject.value == 0.1 ||
+                  toolbarEvents.zoomValueSubject.value === 0.1 ||
                   redactAllInProgress
                 "
                 id="mvMinusBtn"
@@ -242,7 +242,7 @@
 
               <button
                 [disabled]="
-                  toolbarEvents.zoomValueSubject.value == 5 ||
+                  toolbarEvents.zoomValueSubject.value === 5 ||
                   redactAllInProgress
                 "
                 id="mvPlusBtn"

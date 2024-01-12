@@ -1,8 +1,8 @@
-FROM hmctspublic.azurecr.io/base/node:14-alpine as base
+FROM hmctspublic.azurecr.io/base/node:18-alpine as base
 
 # Update & Install theses apps.
 USER root
-RUN apk update && apk upgrade && apk add --no-cache rsync && apk add python2 make g++
+RUN apk update && apk upgrade && apk add --no-cache rsync && apk add python3 make g++
 
 USER hmcts
 
@@ -11,8 +11,7 @@ WORKDIR ${WORKDIR}
 
 COPY --chown=hmcts:hmcts ./ /opt/app/
 
-RUN yarn rebuild-node-sass \
-  && yarn \
+RUN yarn \
   && yarn setup \
   && yarn cache clean
 
