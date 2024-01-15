@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MultimediaPlayerComponent } from './multimedia-player.component';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
@@ -13,9 +14,16 @@ describe('MultimediaPlayerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [MultimediaPlayerComponent],
       providers: [ToolbarEventService, ViewerUtilService],
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule, RpxTranslationModule.forRoot({
+        baseUrl: '',
+        debounceTimeMs: 300,
+        validity: {
+          days: 1
+        },
+        testMode: true
+      })]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

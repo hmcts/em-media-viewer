@@ -27,6 +27,8 @@ module.exports = () => {
     addNamedBookmark: steps.bookMarks.addNamedBookmark,
     sortBookmarks: steps.bookMarks.sortBookmarks,
     addEmptyBookmarks: steps.bookMarks.addAnEmptyBookMarks,
+    customOrderBookmarks: steps.bookMarks.customOrderBookmarks,
+    reorderBookmarks: steps.bookMarks.reorderBookmarks,
     bookmarkBoxBlank: steps.bookMarks.bookmarkBoxBlank,
     add30Bookmarks: steps.bookMarks.add30Bookmarks,
     mvAudioScenario: steps.multiMedia.multiMediaAudio,
@@ -67,8 +69,6 @@ module.exports = () => {
     redactFillSearchInput: steps.redact.redactFillSearchInput,
     clickRedactSearchButton: steps.redact.clickRedactSearchButton,
     clickRedactAllButton: steps.redact.clickRedactAllButton,
-    hrsSignIn: steps.hrsPlatform.hrsSignIn,
-    findCase: steps.hrsPlatform.findCase,
-    shareHRSFile: steps.hrsPlatform.shareHRSFile
+    openImage: steps.imageViewer.openImage
   });
 };

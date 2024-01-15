@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild, ElementRef, OnInit, OnDestroy} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import {select, Store} from '@ngrx/store';
 
@@ -21,7 +21,7 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
   @ViewChild('outerContainer', {static: true}) container: ElementRef;
   @ViewChild('commentContainer', {static: false}) commentsTable: ElementRef;
   public comments$: Observable<any>;
-  public filtersFg: FormGroup;
+  public filtersFg: UntypedFormGroup;
   private $subscriptions: Subscription;
   allTags$: Observable<{key: string; length: number}[]>;
   showFilters = false;
@@ -31,20 +31,20 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
     private store: Store<fromStore.AnnotationSetState>,
     private readonly printService: PrintService,
     private readonly toolbarEvents: ToolbarEventService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {
     this.filtersFg = this.fb.group({
-      dateRangeFrom: new FormGroup({
-        day: new FormControl(''),
-        month: new FormControl(''),
-        year: new FormControl('')
+      dateRangeFrom: new UntypedFormGroup({
+        day: new UntypedFormControl(''),
+        month: new UntypedFormControl(''),
+        year: new UntypedFormControl('')
       }),
-      dateRangeTo: new FormGroup({
-        day: new FormControl(''),
-        month: new FormControl(''),
-        year: new FormControl('')
+      dateRangeTo: new UntypedFormGroup({
+        day: new UntypedFormControl(''),
+        month: new UntypedFormControl(''),
+        year: new UntypedFormControl('')
       }),
       tagFilters: this.fb.group({}),
     });
@@ -55,7 +55,7 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
 
   buildCheckBoxForm() {
     this.filtersFg.reset();
-    const checkboxes = <FormGroup>this.filtersFg.get('tagFilters');
+    const checkboxes = <UntypedFormGroup>this.filtersFg.get('tagFilters');
     const filters$ = this.store.pipe(select(fromSelectors.getCommentSummaryFilters));
     this.allTags$ = this.store.pipe(select(fromTagSelectors.getAllTagsArr));
     this.$subscriptions = combineLatest([this.allTags$, filters$]).subscribe(([tags, filters]) => {
@@ -64,7 +64,7 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
         const checkBoxValue = (filters.filters.tagFilters &&
           filters.filters.tagFilters.hasOwnProperty(val.key)) ?
           filters.filters.tagFilters[val.key] : false;
-        checkboxes.addControl(val.key, new FormControl(checkBoxValue));
+        checkboxes.addControl(val.key, new UntypedFormControl(checkBoxValue));
       });
       this.filtersFg.updateValueAndValidity();
     });

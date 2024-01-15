@@ -1,7 +1,8 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import {Store, StoreModule} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import { MediaViewerComponent } from './media-viewer.component';
@@ -17,7 +18,7 @@ import {
 } from './toolbar/toolbar-button-visibility.service';
 import { AnnotationApiService } from './annotations/services/annotation-api/annotation-api.service';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
-import {reducers} from './store/reducers/reducers';
+import { reducers } from './store/reducers/reducers';
 import * as fromRedactActions from './store/actions/redaction.actions';
 import * as fromAnnoActions from './store/actions/annotation.actions';
 
@@ -26,7 +27,7 @@ describe('MediaViewerComponent', () => {
   let fixture: ComponentFixture<MediaViewerComponent>;
   const commentService = {
     getUnsavedChanges: () => new Subject(),
-    resetCommentSet: () => {}
+    resetCommentSet: () => { }
   };
 
   beforeEach(() => {
@@ -48,7 +49,15 @@ describe('MediaViewerComponent', () => {
         AnnotationsModule,
         StoreModule.forRoot({}),
         StoreModule.forFeature('media-viewer', reducers),
-        RouterTestingModule
+        RouterTestingModule,
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
@@ -235,17 +244,17 @@ describe('MediaViewerComponent', () => {
   });
 
   it('should set annotationApiUrl', () => {
-     const api = TestBed.inject(AnnotationApiService);
-     component.contentType = 'pdf';
-     const ANNOTATION_API_URL = 'annotation-api-url';
-     component.annotationApiUrl = ANNOTATION_API_URL;
+    const api = TestBed.inject(AnnotationApiService);
+    component.contentType = 'pdf';
+    const ANNOTATION_API_URL = 'annotation-api-url';
+    component.annotationApiUrl = ANNOTATION_API_URL;
 
-     component.ngOnChanges({
-       annotationApiUrl: new SimpleChange(true, false, false)
-     });
+    component.ngOnChanges({
+      annotationApiUrl: new SimpleChange(true, false, false)
+    });
 
-     expect(api.annotationApiUrl).toBe(ANNOTATION_API_URL);
-   });
+    expect(api.annotationApiUrl).toBe(ANNOTATION_API_URL);
+  });
 
   it('onMediaLoad should emit a ResponseType', () => {
     spyOn(component.mediaLoadStatus, 'emit');

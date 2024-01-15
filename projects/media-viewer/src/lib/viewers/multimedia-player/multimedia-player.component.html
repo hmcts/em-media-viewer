@@ -1,21 +1,53 @@
 <div class="govuk-width-container">
   <div class="govuk-notification-banner__content">
     <p>
-      <span *ngIf="multimediaOn && playbackMsg === 'loading'">Loading multimedia content ... </span>
-      <span *ngIf="!multimediaOn">Multimedia playback is not enabled, </span>
-      <span *ngIf="multimediaOn && playbackMsg === 'success'">Use the player to play to the file or </span>
-      <span *ngIf="multimediaOn && playbackMsg === 'error'">Mime type not supported. </span>
-      <a *ngIf="!multimediaOn || playbackMsg !== 'loading'" #downloadLink
-         [href]="url" [download]="downloadFileName">Click here to download</a>
+      <span *ngIf="multimediaOn && playbackMsg === 'loading'">{{
+        "Loading multimedia content ..." | rpxTranslate
+      }}</span>
+      <span *ngIf="!multimediaOn"
+        >{{ "Multimedia playback is not enabled, " | rpxTranslate }}
+      </span>
+      <span *ngIf="multimediaOn && playbackMsg === 'success'"
+        >{{ "Use the player to play to the file or" | rpxTranslate }}
+      </span>
+      <span *ngIf="multimediaOn && playbackMsg === 'error'"
+        >{{ "Mime type not supported." | rpxTranslate }}
+      </span>
+      <a
+        *ngIf="!multimediaOn || playbackMsg !== 'loading'"
+        #downloadLink
+        [href]="url"
+        [download]="downloadFileName"
+        >{{ "Click here to download" | rpxTranslate }}</a
+      >
     </p>
-    <video #videoPlayer *ngIf="multimediaOn"
-           width="100%" height="100%" preload="auto" (canplay)="onSuccess()" controls>
-      <source (error)="onError()" [src]="url" type="video/mp4">
-      <source (error)="onError()" [src]="url" type="video/mp4; codecs='avc1, av01, hvc1, hev1, mp4v, mp4a.40.2, opus'">
-      <source (error)="onError()" [src]="url" type="video/ogg">
-      <source (error)="onError()" [src]="url" type="video/ogg; codecs='theora, vp8, vp9, flac, opus, vorbis'">
-      <source (error)="onError()" [src]="url" type="video/webm">
-      <source (error)="onError()" [src]="url" type="video/webm; codecs='vp8, vp9, vorbis, opus'">
+    <video
+      #videoPlayer
+      *ngIf="multimediaOn"
+      width="100%"
+      height="100%"
+      preload="auto"
+      (canplay)="onSuccess()"
+      controls
+    >
+      <source (error)="onError()" [src]="url" type="video/mp4" />
+      <source
+        (error)="onError()"
+        [src]="url"
+        type="video/mp4; codecs='avc1, av01, hvc1, hev1, mp4v, mp4a.40.2, opus'"
+      />
+      <source (error)="onError()" [src]="url" type="video/ogg" />
+      <source
+        (error)="onError()"
+        [src]="url"
+        type="video/ogg; codecs='theora, vp8, vp9, flac, opus, vorbis'"
+      />
+      <source (error)="onError()" [src]="url" type="video/webm" />
+      <source
+        (error)="onError()"
+        [src]="url"
+        type="video/webm; codecs='vp8, vp9, vorbis, opus'"
+      />
     </video>
   </div>
 </div>
