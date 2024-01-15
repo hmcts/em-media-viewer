@@ -459,10 +459,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/language-service@npm:15.2.9":
-  version: 15.2.9
-  resolution: "@angular/language-service@npm:15.2.9"
-  checksum: 718572b0dfed2185b0db1d74608a9c697d4b38bf70d6ec40779b76c23c79b5637fcfa70ea5edc7ec8f102caaeebb43c86b551beed0d55fc12695142e227a2d83
+"@angular/language-service@npm:15.2.10":
+  version: 15.2.10
+  resolution: "@angular/language-service@npm:15.2.10"
+  checksum: b374182f24a1ecf650b0fc81c8e2546c01dd8485b5fa449160fe132d9cf025216913152839dc5c7c3f83c38e49adc0df08a546d0e51fd1d1710e5624c932c6c2
   languageName: node
   linkType: hard
 
@@ -2517,7 +2517,7 @@ __metadata:
     "@angular/compiler-cli": ^15.2.9
     "@angular/core": ^15.2.9
     "@angular/forms": ^15.2.9
-    "@angular/language-service": 15.2.9
+    "@angular/language-service": 15.2.10
     "@angular/platform-browser": ^15.2.9
     "@angular/platform-browser-dynamic": ^15.2.9
     "@angular/platform-server": ^15.2.9
@@ -2633,7 +2633,7 @@ __metadata:
     when: 3.7.8
     ws: ^7.4.6
     xmlhttprequest-ssl: ^1.6.2
-    zone.js: ~0.11.4
+    zone.js: ~0.14.0
   languageName: unknown
   linkType: soft
 
@@ -20242,11 +20242,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zone.js@npm:~0.11.4":
-  version: 0.11.8
-  resolution: "zone.js@npm:0.11.8"
+"zone.js@npm:~0.14.0":
+  version: 0.14.3
+  resolution: "zone.js@npm:0.14.3"
   dependencies:
     tslib: ^2.3.0
-  checksum: ad4a2f4aafce10f5bc3f60213384bb6ee4727de09d87fb77cb8089eecdb44dd5838fd9fa43ac4c351afec142b0e5477a22093928260a486804f70b8cace6c7d3
+  checksum: 6150e7f3472f0c0063b776172b09c0eed18b1842528a45a83bc773d96b795e928f0b1ebced02b2af57ff892b73990c1a80c3c05b4f5adc6c3754c3e9a50b6dcb
   languageName: node
   linkType: hard
