@@ -12,6 +12,7 @@ export * from './lib/store/selectors/annotation.selectors';
 export * from './lib/store/actions/annotation.actions';
 export * from './lib/store/effects/annotation.effects';
 export * from './lib/media-viewer.component';
+export * from './lib/toolbar/highlight-toolbar/highlight-toolbar.component';
 export * from './lib/toolbar/main-toolbar/main-toolbar.component';
 export * from './lib/toolbar/search-bar/search-bar.component';
 export * from './lib/toolbar/redaction-toolbar/redaction-toolbar.component';

@@ -59,7 +59,6 @@ export class AnnotationEffects {
     }))
   );
 
-  @Effect()
   saveAnnotationSet$ = createEffect(() =>
     this.actions$.pipe(
     ofType(annotationsActions.SAVE_ANNOTATION_SET),

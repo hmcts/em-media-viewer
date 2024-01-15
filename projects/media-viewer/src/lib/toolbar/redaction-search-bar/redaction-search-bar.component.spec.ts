@@ -272,20 +272,20 @@ describe('RedactionSearchBarComponent', () => {
   }));
 
   it('should set highlight text', fakeAsync(() => {
-    component.inProgessText = '';
+    component.inProgressText = '';
     component.titleText = '';
     component.searchType = SearchType.Highlight;
     component.modeText();
-    expect(component.inProgessText).toEqual('Highlighting');
+    expect(component.inProgressText).toEqual('Highlighting');
     expect(component.titleText).toEqual('Highlight');
   }));
 
   it('should set redact text', fakeAsync(() => {
-    component.inProgessText = '';
+    component.inProgressText = '';
     component.titleText = '';
     component.searchType = SearchType.Redact;
     component.modeText();
-    expect(component.inProgessText).toEqual('Redacting');
+    expect(component.inProgressText).toEqual('Redacting');
     expect(component.titleText).toEqual('Redact');
   }));
 });

@@ -39,7 +39,7 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
   redactAllInProgress: boolean;
   redactAllText?: string;
   searchType: SearchType;
-  inProgessText: string;
+  inProgressText: string;
   titleText: string;
 
 
@@ -110,10 +110,10 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
 
   modeText(): void {
     if (this.searchType === SearchType.Highlight) {
-      this.inProgessText = 'Highlighting';
+      this.inProgressText = 'Highlighting';
       this.titleText = 'Highlight';
     } else if (this.searchType === SearchType.Redact) {
-      this.inProgessText = 'Redacting';
+      this.inProgressText = 'Redacting';
       this.titleText = 'Redact';
     }
   }
