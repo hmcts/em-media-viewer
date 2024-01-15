@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +33,15 @@ describe('RedactionToolbarComponent', () => {
       imports: [
         FormsModule,
         StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({})
+        StoreModule.forRoot({}),
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }]
     })

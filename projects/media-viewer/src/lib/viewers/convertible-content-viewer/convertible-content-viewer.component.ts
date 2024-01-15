@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from '../../store/reducers/document.reducer';
@@ -13,7 +13,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './convertible-content-viewer.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class ConvertibleContentViewerComponent implements OnInit, OnDestroy {
+export class ConvertibleContentViewerComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() originalUrl;
   @Input() downloadFileName: string;
@@ -36,9 +36,8 @@ export class ConvertibleContentViewerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new fromDocumentActions.Convert(this.extractDMStoreDocId(this.originalUrl)));
     this.$subscription = this.store.pipe(select(fromSelectors.getConvertedDocument), filter(value => !!value))
-      .subscribe((docInfo)  => {
+      .subscribe((docInfo) => {
         if (docInfo.url) {
           this.convertedUrl = docInfo.url;
           this.store.dispatch(new fromDocumentActions.ClearConvertDocUrl());
@@ -46,6 +45,12 @@ export class ConvertibleContentViewerComponent implements OnInit, OnDestroy {
           this.onLoadException(new ViewerException(docInfo.error));
         }
       });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.originalUrl?.currentValue && changes.originalUrl.currentValue !== changes.originalUrl.previousValue) {
+      this.store.dispatch(new fromDocumentActions.Convert(this.extractDMStoreDocId(this.originalUrl)));
+    }
   }
 
   ngOnDestroy(): void {

@@ -18,10 +18,10 @@
         id="search_input"
         class="govuk-input govuk-!-width-three-quarters govuk-!-display-inline-block govuk-!-margin-top-5"
         type="text"
-        aria-label="Find in document"
+        aria-label="Redact from search"
         #findInput
-        title="Find in document"
-        placeholder="{{ titleText }} from search..."
+        title="Redact from search"
+        placeholder="{{ titleText ' from search...' | rpxTranslate }}"
         data-l10n-id="search_input"
         [(ngModel)]="searchText"
         (keydown.escape)="onEscapeKeyPress($event)"
@@ -35,7 +35,7 @@
           (click)="search()"
           [disabled]="redactAllInProgress"
         >
-          Search
+          {{ "Search" | rpxTranslate }}
         </button>
         <button
           id="mvRedactAllBtn"
@@ -44,7 +44,7 @@
           (click)="search(false)"
           [disabled]="redactAllInProgress"
         >
-          {{ titleText }} all
+          {{ titleText " all" | rpxTranslate }}
         </button>
       </div>
       <div
@@ -57,7 +57,7 @@
             class="govuk-!-display-inline-block govuk-!-margin-top-0 govuk-!-margin-bottom-1"
             *ngIf="redactAllInProgress"
           >
-            {{ inProgessText }} in progress
+            {{ inProgessText " in progress" | rpxTranslate }}
           </h4>
           {{ redactAllInProgress ? "" : resultsText }}</span
         >

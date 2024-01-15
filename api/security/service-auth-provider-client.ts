@@ -38,7 +38,7 @@ export class ServiceAuthProviderClient {
             const response = await this.http.post("/lease", body);
             return `Bearer ${response.data}`;
         }
-        catch (err) {
+        catch (err: any) {
             logger.error("Error getting s2s token", err.message);
             throw err;
         }

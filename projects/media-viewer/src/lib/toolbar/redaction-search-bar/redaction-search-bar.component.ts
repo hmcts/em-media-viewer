@@ -1,7 +1,7 @@
 import { BulkRedaction, Redaction } from './../../redaction/services/redaction.model';
 import { SearchMode, SearchResultsCount, SearchType } from './../toolbar-event.service';
 import { RedactionSearch, RedactRectangle } from './redaction-search.model';
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
@@ -18,7 +18,7 @@ import { HighlightCreateService } from '../../annotations/annotation-set/annotat
   templateUrl: './redaction-search-bar.component.html',
   styleUrls: ['./redaction-search-bar.component.scss']
 })
-export class RedactionSearchBarComponent implements OnInit {
+export class RedactionSearchBarComponent implements OnInit, OnDestroy {
 
   @ViewChild('findInput', { static: true }) findInput: ElementRef<HTMLInputElement>;
 

@@ -13,6 +13,7 @@ export { ToolbarEventService } from './toolbar-event.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { RouterModule } from '@angular/router';
 import { HighlightToolbarComponent } from './highlight-toolbar/highlight-toolbar.component';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { HighlightToolbarComponent } from './highlight-toolbar/highlight-toolbar
     CommonModule,
     FormsModule,
     OverlayModule,
-    RouterModule
+    RouterModule,
+    RpxTranslationModule.forChild(),
   ]
 })
 export class ToolbarModule { }

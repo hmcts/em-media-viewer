@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 import { async, ComponentFixture, TestBed, waitForAsync, fakeAsync, tick, flush, inject } from '@angular/core/testing';
 import { RedactionSearchBarComponent } from './redaction-search-bar.component';
@@ -36,7 +37,15 @@ describe('RedactionSearchBarComponent', () => {
       imports: [
         StoreModule.forRoot({}),
         StoreModule.forFeature('media-viewer', reducers),
-        FormsModule
+        FormsModule,
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       providers: [
         {

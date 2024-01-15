@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommentComponent } from './comment.component';
@@ -20,24 +21,24 @@ describe('CommentComponent', () => {
     createdDate: '2018-05-28T08:48:33.206Z',
     createdBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
     createdByDetails: {
-        'forename': 'Linus',
-        'surname': 'Norton',
-        'email': 'linus.norton@hmcts.net'
-      },
+      'forename': 'Linus',
+      'surname': 'Norton',
+      'email': 'linus.norton@hmcts.net'
+    },
     lastModifiedDate: '2019-05-28T08:48:33.206Z',
     lastModifiedBy: 'ea6d959c-b6c9-48af-89c2-6f7bd796524d',
     lastModifiedByDetails: {
-        'forename': 'Jeroen',
-        'surname': 'Rijks',
-        'email': 'jeroen.rijks@hmcts.net'
-      },
+      'forename': 'Jeroen',
+      'surname': 'Rijks',
+      'email': 'jeroen.rijks@hmcts.net'
+    },
     content: 'This is a comment.',
     tags: [],
     selected: true,
     editable: true,
     page: 1,
     pageHeight: 1122,
-    pages: { 1: { styles: { height: 200 }}}
+    pages: { 1: { styles: { height: 200 } } }
   };
 
   const mockRectangle = {
@@ -85,7 +86,15 @@ describe('CommentComponent', () => {
         FormsModule,
         HttpClientTestingModule,
         StoreModule.forRoot({}),
-        StoreModule.forFeature('media-viewer', reducers)
+        StoreModule.forFeature('media-viewer', reducers),
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       providers: [
         CommentService,
@@ -96,13 +105,13 @@ describe('CommentComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA
       ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.componentInstance;
-    component.comment = {...mockComment};
+    component.comment = { ...mockComment };
     component.annotation = { ...mockAnnotation } as any;
     nativeElement = fixture.debugElement.nativeElement;
     nativeElement.style.position = 'absolute';
@@ -117,7 +126,7 @@ describe('CommentComponent', () => {
 
 
   it('should set comment if date modified exists', () => {
-    component.comment = {...mockComment};
+    component.comment = { ...mockComment };
 
     expect(component.lastUpdate).toEqual(mockComment.lastModifiedDate);
     expect(component.author).toEqual(mockComment.createdByDetails);
@@ -126,8 +135,8 @@ describe('CommentComponent', () => {
   });
 
   it('should get comment', () => {
-    component.comment = {...mockComment};
-    expect(component.comment).toEqual({...mockComment});
+    component.comment = { ...mockComment };
+    expect(component.comment).toEqual({ ...mockComment });
   });
 
   it('should set the unsavedChanges value',
@@ -153,7 +162,7 @@ describe('CommentComponent', () => {
   });
 
   it('should set comment with lastUpdate set to createdDate if there has been no update', () => {
-    const modifiedMockComment = {...mockComment};
+    const modifiedMockComment = { ...mockComment };
     modifiedMockComment.lastModifiedDate = null;
     modifiedMockComment.lastModifiedBy = null;
     modifiedMockComment.lastModifiedByDetails = null;
@@ -169,7 +178,7 @@ describe('CommentComponent', () => {
 
   it('should emit changes event when comment editing cancelled', fakeAsync(() => {
     const commentChangesEmitEventSpy = spyOn(component.changes, 'emit');
-    component.editableComment = { nativeElement: ({ focus: () => ({})}) } as any;
+    component.editableComment = { nativeElement: ({ focus: () => ({}) }) } as any;
     component._editable = true;
     waitForChanges();
 
@@ -199,7 +208,7 @@ describe('CommentComponent', () => {
     component.author = 'Test user' as any;
     component.fullComment = 'Test';
     component._editable = false;
-   component.deleteOrCancel();
+    component.deleteOrCancel();
     expect(deleteEmitEventSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -210,7 +219,7 @@ describe('CommentComponent', () => {
   });
 
   it('should set comments to non-editable', fakeAsync(() => {
-    component.editableComment = { nativeElement: ({ focus: () => ({})}) } as any;
+    component.editableComment = { nativeElement: ({ focus: () => ({}) }) } as any;
     component._editable = true;
     component.selected = true;
     waitForChanges();
@@ -221,7 +230,7 @@ describe('CommentComponent', () => {
   }));
 
   it('should set hasUnsavedChanges to false when changes cancelled', fakeAsync(() => {
-    component.editableComment = { nativeElement: ({ focus: () => ({})}) } as any;
+    component.editableComment = { nativeElement: ({ focus: () => ({}) }) } as any;
     component.hasUnsavedChanges = true;
     component._editable = true;
 
@@ -232,7 +241,7 @@ describe('CommentComponent', () => {
   }));
 
   it('should not set focus on textArea when comment made non-editable', fakeAsync(() => {
-    component.editableComment = { nativeElement: ({ focus: () => ({})}) } as any;
+    component.editableComment = { nativeElement: ({ focus: () => ({}) }) } as any;
     component._editable = true;
     component.selected = true;
     component.fullComment = 'test comment';

@@ -1,7 +1,7 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {TagsModel} from '../models/tags.model';
 import {TagsServices} from '../services/tags/tags.services';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -31,7 +31,7 @@ export class TagsComponent {
     return this.tagsServices.getAllTags(this.userId);
   }
 
-  private minLength(control: FormControl) {
+  private minLength(control: UntypedFormControl) {
     if (control.value.length < 2) {
       return {
         'minLength': true
@@ -40,7 +40,7 @@ export class TagsComponent {
     return null;
   }
 
-  private maxLength20(control: FormControl) {
+  private maxLength20(control: UntypedFormControl) {
     if (control.value.length >= 20) {
       return {
         'maxLength20': true
