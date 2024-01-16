@@ -15,6 +15,7 @@ export * from './lib/media-viewer.component';
 export * from './lib/toolbar/main-toolbar/main-toolbar.component';
 export * from './lib/toolbar/search-bar/search-bar.component';
 export * from './lib/toolbar/redaction-toolbar/redaction-toolbar.component';
+export * from './lib/toolbar/redaction-search-bar/redaction-search-bar.component';
 export * from './lib/toolbar/icp-toolbar/icp-toolbar.component';
 export * from './lib/annotations/annotation-set/annotation-view/annotation-view.component';
 export * from './lib/annotations/annotation-set/annotation-create/box-highlight-create/box-highlight-create.component';

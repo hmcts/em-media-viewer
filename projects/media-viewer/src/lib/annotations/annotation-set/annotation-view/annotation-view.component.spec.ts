@@ -44,8 +44,8 @@ class MockRectangleComponent {
   @Input() annoRect: Rectangle;
   @Input() selected: boolean;
 
-  @Output() select = new EventEmitter<Rectangle>();
-  @Output() update = new EventEmitter<Rectangle>();
+  @Output() selectEvent = new EventEmitter<Rectangle>();
+  @Output() updateEvent = new EventEmitter<Rectangle>();
 }
 
 describe('AnnotationViewComponent', () => {

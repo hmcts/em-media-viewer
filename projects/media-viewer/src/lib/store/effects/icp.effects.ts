@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { IcpSessionApiService } from '../../icp/icp-session-api.service';
@@ -14,8 +14,8 @@ export class IcpEffects {
               private icpApiService: IcpSessionApiService,
               private icpUpdateService: IcpUpdateService) {}
 
-  @Effect()
-  loadIcpSession$ = this.actions$.pipe(
+  loadIcpSession$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(icpActions.LOAD_ICP_SESSION),
     map((action: icpActions.LoadIcpSession) => action.payload),
     exhaustMap((caseId: string) =>
@@ -24,15 +24,17 @@ export class IcpEffects {
           map(res => new icpActions.JoinIcpSocketSession(res)),
           catchError(error => of(new icpActions.LoadIcpSessionFailure(error)))
         )
-    ));
+    ))
+  );
 
 
-  @Effect()
-  joinIcpSocketSession$ = this.actions$.pipe(
+  joinIcpSocketSession$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(icpActions.JOIN_ICP_SOCKET_SESSION),
     map((action: icpActions.JoinIcpSocketSession) => action.payload),
     switchMap((res: {username: string, session: IcpSession}) =>
       this.icpUpdateService.joinSession(res.username, res.session)
         .pipe(map(participants => new icpActions.IcpSocketSessionJoined({session: res.session, participantInfo: participants})))
-    ));
+    ))
+  );
 }

@@ -30,6 +30,7 @@ reports/
 !.vscode/extensions.json
 
 # misc
+/.angular/cache
 /.sass-cache
 /connect.lock
 /coverage
@@ -71,7 +72,13 @@ functional-output/
 .pnp.*
 projects/media-viewer/.yarn/*
 projects/media-viewer/.yarn/cache/*
+
+# karma
+src/coverage/*
+projects/media-viewer/coverage/*
 !projects/media-viewer/.yarn/releases
 
+
+.angular/cache/*
 
 .angular/cache/*

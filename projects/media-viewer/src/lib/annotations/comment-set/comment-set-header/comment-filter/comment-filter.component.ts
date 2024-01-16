@@ -5,7 +5,7 @@ import * as fromStore from '../../../../store/reducers/reducers';
 import * as fromSelectors from '../../../../store/selectors/tag.selectors';
 import * as fromActions from '../../../../store/actions/tag.actions';
 import {Observable, Subscription} from 'rxjs';
-import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
+import {UntypedFormGroup, UntypedFormBuilder, UntypedFormControl} from '@angular/forms';
 import {auditTime, tap} from 'rxjs/operators';
 
 
@@ -15,7 +15,7 @@ import {auditTime, tap} from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class CommentFilterComponent implements OnInit, OnDestroy {
-  tagGroup: FormGroup;
+  tagGroup: UntypedFormGroup;
   $subscriptions: Subscription;
   filter$: Observable<string[]>;
   allTags$: Observable<any>;
@@ -23,7 +23,7 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   isPreview = false;
   constructor(
     private store: Store<fromStore.State>,
-    private fb: FormBuilder) {}
+    private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.tagGroup = this.fb.group({
@@ -39,11 +39,11 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   }
 
   buildFrom() {
-    const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
+    const checkboxes = <UntypedFormGroup>this.tagGroup.get('tagFilters');
     this.allTags$ = this.store.pipe(select(fromSelectors.getAllTagsArr)).pipe(tap(tags => {
       this.tagGroup.reset();
       tags.forEach((value) => {
-        checkboxes.addControl(value.key, new FormControl(false));
+        checkboxes.addControl(value.key, new UntypedFormControl(false));
       });
     }));
   }
@@ -58,7 +58,7 @@ export class CommentFilterComponent implements OnInit, OnDestroy {
   }
 
   onRemoveFilter(tagName) {
-    const checkboxes = <FormGroup>this.tagGroup.get('tagFilters');
+    const checkboxes = <UntypedFormGroup>this.tagGroup.get('tagFilters');
     checkboxes.controls[tagName].setValue(false);
   }
 

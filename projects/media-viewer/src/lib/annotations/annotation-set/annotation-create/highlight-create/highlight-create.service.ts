@@ -1,3 +1,4 @@
+import { ToolbarEventService } from './../../../../toolbar/toolbar-event.service';
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
@@ -6,7 +7,6 @@ import moment from 'moment-timezone';
 
 
 import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
-import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
 import * as fromStore from '../../../../store/reducers/reducers';
 import * as fromSelectors from '../../../../store/selectors/annotation.selectors';
 import * as fromActions from '../../../../store/actions/annotation.actions';
