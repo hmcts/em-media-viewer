@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { SearchResultsCount, ToolbarEventService } from '../toolbar-event.service';
 import { Subscription } from 'rxjs';
