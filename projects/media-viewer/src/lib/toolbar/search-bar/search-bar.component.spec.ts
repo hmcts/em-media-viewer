@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -13,7 +14,18 @@ describe('SearchBarComponent', () => {
   beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [SearchBarComponent],
-      imports: [FormsModule, RouterTestingModule],
+      imports: [
+        FormsModule,
+        RouterTestingModule,
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
+      ],
       providers: [ToolbarButtonVisibilityService, ToolbarEventService]
     })
       .compileComponents();
