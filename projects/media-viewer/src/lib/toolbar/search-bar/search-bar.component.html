@@ -39,7 +39,7 @@
       <a
         *ngIf="resultCount > 0"
         id="findPrevious"
-        routerLink=""
+        [routerLink]="[]"
         role="button"
         class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2"
         (click)="searchPrev()"
@@ -51,7 +51,7 @@
         *ngIf="resultCount > 0"
         id="findNext"
         #findNext
-        routerLink=""
+        [routerLink]="[]"
         role="button"
         class="govuk-link govuk-link--no-visited-state"
         (click)="searchNext()"
@@ -62,7 +62,7 @@
     </div>
     <div class="govuk-grid-column-one-quarter">
       <a
-        routerLink=""
+        [routerLink]="[]"
         class="govuk-link govuk-link--no-visited-state"
         role="button"
         (click)="toggleAdvancedSearch()"
