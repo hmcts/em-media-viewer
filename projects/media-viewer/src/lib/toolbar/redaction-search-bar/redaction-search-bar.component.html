@@ -42,7 +42,7 @@
           class="govuk-button govuk-!-margin-left-2 govuk-!-margin-bottom-0"
           data-module="govuk-button"
           (click)="search(false)"
-          [disabled]="redactAllInProgress"
+          [disabled]="redactAllInProgress || resultCount <= 0"
         >
           {{ titleText + " all" | rpxTranslate }}
         </button>
