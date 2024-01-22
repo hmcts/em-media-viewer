@@ -12,6 +12,7 @@ import * as fromDocument from '../../store/selectors/document.selectors';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import uuid from 'uuid';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
+import { some } from 'lodash';
 
 @Component({
   selector: 'mv-redaction-search-bar',
@@ -229,7 +230,14 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
     const selectedHighLightedElements = document.getElementsByClassName('highlight selected');
     if (selectedHighLightedElements && selectedHighLightedElements.length > 0) {
       const docRange = document.createRange();
-      docRange.selectNodeContents(selectedHighLightedElements[0] as HTMLElement);
+      if (some(selectedHighLightedElements, element => element.className === 'highlight begin selected' || element.className === 'highlight end selected')) {
+        docRange.setStart(selectedHighLightedElements[0], 0);
+        const endNode = selectedHighLightedElements[selectedHighLightedElements.length - 1];
+        docRange.setEnd(endNode, endNode.childNodes.length);
+      }
+      else {
+        docRange.selectNodeContents(selectedHighLightedElements[0] as HTMLElement);
+      }
       const selection = window.getSelection();
       selection?.removeAllRanges();
       selection?.addRange(docRange);
