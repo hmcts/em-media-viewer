@@ -1,4 +1,4 @@
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
@@ -15,8 +15,8 @@ export class DocumentEffects {
     private rotationApiService: RotationApiService,
   ) { }
 
-  @Effect()
-  convert$ = this.actions$.pipe(
+  convert$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(documentActions.CONVERT),
     map((action: documentActions.Convert) => action.payload),
     exhaustMap((documentId) => {
@@ -28,10 +28,11 @@ export class DocumentEffects {
         catchError(error => {
           return of(new documentActions.ConvertFailure(error));
         }));
-    }));
+    }))
+  );
 
-  @Effect()
-  loadRotation$ = this.actions$.pipe(
+  loadRotation$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(documentActions.LOAD_ROTATION),
     map((action: documentActions.LoadRotation) => action.payload),
     switchMap((documentId) => {
@@ -42,10 +43,11 @@ export class DocumentEffects {
         catchError(error => {
           return of(new documentActions.LoadRotationFailure(error));
         }));
-    }));
+    }))
+  );
 
-  @Effect()
-  saveRotation$ = this.actions$.pipe(
+  saveRotation$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(documentActions.SAVE_ROTATION),
     map((action: documentActions.SaveRotation) => action.payload),
     switchMap((payload) => {
@@ -56,5 +58,6 @@ export class DocumentEffects {
         catchError(error => {
           return of(new documentActions.SaveRotationFailure(error));
         }));
-    }));
+    }))
+  );
 }
