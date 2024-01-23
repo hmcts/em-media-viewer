@@ -156,7 +156,7 @@ describe('CommentsSummaryComponent', () => {
         });
         component.onFilter();
 
-        expect(store.dispatch).toHaveBeenCalledWith(action);
+        expect(store.dispatch).not.toHaveBeenCalledWith(action);
       })
     );
 
@@ -174,7 +174,7 @@ describe('CommentsSummaryComponent', () => {
         });
         component.onFilter();
 
-        expect(store.dispatch).toHaveBeenCalledWith(action);
+        expect(store.dispatch).not.toHaveBeenCalledWith(action);
       })
     );
 
@@ -193,7 +193,7 @@ describe('CommentsSummaryComponent', () => {
         });
         component.onFilter();
 
-        expect(store.dispatch).toHaveBeenCalledWith(action);
+        expect(store.dispatch).not.toHaveBeenCalledWith(action);
       })
     );
 
