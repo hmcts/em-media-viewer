@@ -59,7 +59,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 withNightlyPipeline(type, product, component) {
-  env.TEST_URL = params.ExUI_URL
+  env.TEST_URL = 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer'
   env.IDAM_URL = params.IDAM_API_URL
   env.S2S_PROVIDER = params.S2S_PROVIDER_URL
   env.CCD_DATA_STORE_API_URL = params.CCD_DATA_STORE_URL
@@ -78,7 +78,7 @@ withNightlyPipeline(type, product, component) {
     sh ("yarn cache clean")
     sh ('npm rebuild node-sass')
     sh ('yarn install --check-cache')
-    sh ('yarn setup')
+    yarnBuilder.yarn('setup')
   }
 
   afterSuccess('build') {

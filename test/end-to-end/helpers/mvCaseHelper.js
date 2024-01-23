@@ -47,12 +47,8 @@ async function enterShouldJumpViewerToNextSearchResultsTest(I, caseId, searchKey
 }
 
 async function pdfViewerPageNavigationTest(I, caseId, mediaType, pageNoToNavigate) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.pdfViewerPageNavigation(pageNoToNavigate);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.pdfViewerPageNavigation(pageNoToNavigate);
 }
 
 async function pdfViewerZoomInOutTest(I, caseId, mediaType) {
@@ -105,6 +101,12 @@ async function sortBookmarksTest(I, caseId, mediaType) {
   await I.sortBookmarks();
 }
 
+async function bookmarkBoxBlankTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.bookmarkBoxBlank();
+}
+
 async function multiMediaAudioTest(I, caseId, mediaType) {
   await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
   await I.mvAudioScenario();
@@ -155,6 +157,15 @@ async function collateCommentsTest(I, caseId, mediaType) {
   await I.collateComments();
 }
 
+async function collateCommentsNotBlankTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clickCommentsPanel();
+  await I.deleteAllExistingComments();
+  await I.addMultipleComments();
+  await I.collateComments();
+  await I.collateCommentsNotBlank();
+}
+
 async function commentsSearchTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.clickCommentsPanel();
@@ -177,9 +188,9 @@ async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
   await I.redactContentUsingRedactText();
 }
 
-async function redactSearchAndRedctAllTest(I, caseId, mediaType) {
+async function redactSearchAndRedactAllTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.redactSearchAndRedctAll();
+  await I.redactSearchAndRedactAll();
 }
 
 async function createRedactionsUsingDrawBoxAndRedactText(I, caseId, mediaType) {
@@ -223,40 +234,28 @@ async function navigateNestedDocsUsingIndexTest(I, caseId, mediaType, nestedPage
 }
 
 async function nonTextualHighlightAndAddACommentTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.nonTextualHighlightAndComment();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.openImage();
+  await I.nonTextualHighlightAndComment();
 }
 
 async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.deleteAllExistingNonTextualHighlights();
-    await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.openImage();
+  await I.deleteAllExistingNonTextualHighlights();
+  await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
 }
 
 async function updateNonTextualCommentTest(I, caseId, mediaType, comment, updatedComment) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.updateNonTextualComments();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.openImage();
+  await I.updateNonTextualComments();
 }
 
 async function deleteNonTextualCommentTest(I, caseId, mediaType) {
-  if (await previewEnv()) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-    await I.deleteAllExistingNonTextualHighlights();
-  }
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.openImage();
+  await I.deleteAllExistingNonTextualHighlights();
 }
 
 
@@ -274,19 +273,29 @@ async function previewEnv() {
 }
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
-  if (process.env.TEST_URL.includes(mvData.PREVIEW_ENV) || process.env.TEST_URL.includes(mvData.LOCAL_ENV)) {
-    await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-    await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
-    console.log(await I.grabCurrentUrl());
-  } else {
-    await openCaseDocumentsInMediaViewer(I, caseId, mediaType);
-  }
+  await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
+  await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+  console.log(await I.grabCurrentUrl());
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
   await I.chooseNextStep(eventName, 3)
+}
+
+async function customAndReorderBookmarksTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.createBookMark();
+  await I.customOrderBookmarks();
+  await I.reorderBookmarks();
+}
+
+async function add30BookmarksTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.add30Bookmarks();
 }
 
 module.exports = {
@@ -318,6 +327,7 @@ module.exports = {
   deleteHighlightsTest,
   updateCommentTest,
   collateCommentsTest,
+  collateCommentsNotBlankTest,
   commentsSearchTest,
   addMultipleCommentsTest,
   markContentForRedactionUsingDrawBoxTest,
@@ -334,5 +344,8 @@ module.exports = {
   nonTextualHighlightUsingDrawBoxTest,
   updateNonTextualCommentTest,
   deleteNonTextualCommentTest,
-  redactSearchAndRedctAllTest
+  redactSearchAndRedactAllTest,
+  customAndReorderBookmarksTest,
+  bookmarkBoxBlankTest,
+  add30BookmarksTest
 }

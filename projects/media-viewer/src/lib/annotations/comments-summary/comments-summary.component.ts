@@ -1,7 +1,7 @@
-import {Component, Input, ViewChild, ElementRef, OnInit, OnDestroy} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
-import {select, Store} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
 import { PrintService } from '../../print.service';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
@@ -18,33 +18,35 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
 
   @Input() title: string;
   @Input() contentType: string;
-  @ViewChild('outerContainer', {static: true}) container: ElementRef;
-  @ViewChild('commentContainer', {static: false}) commentsTable: ElementRef;
+  @ViewChild('outerContainer', { static: true }) container: ElementRef;
+  @ViewChild('commentContainer', { static: false }) commentsTable: ElementRef;
   public comments$: Observable<any>;
   public filtersFg: FormGroup;
   private $subscriptions: Subscription;
-  allTags$: Observable<{key: string; length: number}[]>;
+  allTags$: Observable<{ key: string; length: number }[]>;
   showFilters = false;
   hasFilter = false;
+  fromFilterValid: boolean = true;
+  toFilterValid: boolean = true;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
     private readonly printService: PrintService,
     private readonly toolbarEvents: ToolbarEventService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.filtersFg = this.fb.group({
       dateRangeFrom: new FormGroup({
-        day: new FormControl(''),
-        month: new FormControl(''),
-        year: new FormControl('')
+        day: new FormControl('', [Validators.required]),
+        month: new FormControl('', [Validators.required]),
+        year: new FormControl('', [Validators.required])
       }),
       dateRangeTo: new FormGroup({
-        day: new FormControl(''),
-        month: new FormControl(''),
-        year: new FormControl('')
+        day: new FormControl('', [Validators.required]),
+        month: new FormControl('', [Validators.required]),
+        year: new FormControl('', [Validators.required])
       }),
       tagFilters: this.fb.group({}),
     });
@@ -77,13 +79,21 @@ export class CommentsSummaryComponent implements OnInit, OnDestroy {
 
   onFilter() {
     const { value } = this.filtersFg;
-    const hasDateFrom =  (value.dateRangeFrom.year && value.dateRangeFrom.month && value.dateRangeFrom.day);
+
+
+    const hasDateFrom = (value.dateRangeFrom.year && value.dateRangeFrom.month && value.dateRangeFrom.day);
     const hasDateTo = (value.dateRangeTo.year && value.dateRangeTo.month && value.dateRangeTo.day);
     const dateRangeFrom = hasDateFrom ?
       new Date(value.dateRangeFrom.year, value.dateRangeFrom.month - 1, value.dateRangeFrom.day).getTime() : null;
     const dateRangeTo = hasDateTo ?
       new Date(value.dateRangeTo.year, value.dateRangeTo.month - 1, value.dateRangeTo.day).getTime() : null;
-    this.store.dispatch(new fromAnnoActions.ApplyCommentSymmaryFilter({...value, dateRangeFrom, dateRangeTo}));
+
+    this.fromFilterValid = hasDateFrom ? true : false;
+    this.toFilterValid = hasDateTo ? true : false;
+
+    if (this.filtersFg.valid) {
+      this.store.dispatch(new fromAnnoActions.ApplyCommentSymmaryFilter({ ...value, dateRangeFrom, dateRangeTo }));
+    }
   }
 
   onFiltersToggle() {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
@@ -18,7 +18,7 @@ import uuid from 'uuid';
   selector: 'mv-bookmarks',
   templateUrl: './bookmarks.component.html'
 })
-export class BookmarksComponent implements OnInit, OnDestroy {
+export class BookmarksComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() bookmarkNodes: Bookmark[];
   @Input() zoom: number;

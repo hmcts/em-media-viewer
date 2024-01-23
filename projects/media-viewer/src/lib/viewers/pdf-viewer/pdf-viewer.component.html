@@ -33,7 +33,7 @@
     [class.annotations]="enableAnnotations"
     [class.show-comments-panel]="
       (showCommentsPanel || showIcpParticipantsList) &&
-      !(toolbarEvents.redactionMode | async)
+      (toolbarEvents.redactionMode | async) !== true
     "
     [class.grabNDrag]="enableGrabNDrag"
   >
@@ -67,7 +67,7 @@
     *ngIf="
       enableAnnotations &&
       annotationSet &&
-      !(toolbarEvents.redactionMode | async)
+      (toolbarEvents.redactionMode | async) !== true
     "
     [annotationSet]="annotationSet"
     [zoom]="zoom"
@@ -78,7 +78,7 @@
   </mv-comment-set>
   <div class="loadingMessage" *ngIf="loadingDocument">
     <h3 class="govuk-heading-m">
-      Loading...{{
+      {{ "Loading..." | rpxTranslate}}{{
         loadingDocumentProgress ? loadingDocumentProgress + "%" : ""
       }}
     </h3>

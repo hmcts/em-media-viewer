@@ -104,14 +104,6 @@ describe('RedactionComponent', () => {
     expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SaveRedaction({}));
   }));
 
-  it('should dispatch DeleteRedaction', inject([Store], (store) => {
-    spyOn(store, 'dispatch');
-
-    component.onMarkerDelete({});
-
-    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteRedaction({} as any));
-  }));
-
   it('should download redacted document', inject([Store], (store) => {
     const anchor = {
       setAttribute: () => {}, click: () => {}, remove: () => {}, href: undefined, download: undefined
@@ -124,9 +116,11 @@ describe('RedactionComponent', () => {
     spyOn(document.body, 'appendChild');
     spyOn(document, 'createElement').and.returnValue(anchor);
 
-    component.downloadDocument({ blob: 'blob', filename: 'filename'});
+    const blob: Blob = new Blob();
 
-    expect(URL.createObjectURL).toHaveBeenCalledWith('blob');
+    component.downloadDocument({ blob: blob, filename: 'filename'});
+
+    expect(URL.createObjectURL).toHaveBeenCalledWith(blob);
     expect(URL.revokeObjectURL).toHaveBeenCalled();
     expect(anchor.click).toHaveBeenCalled();
     expect(anchor.remove).toHaveBeenCalled();

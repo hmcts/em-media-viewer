@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,13 +17,13 @@ import { OutlineItemComponent } from './viewers/pdf-viewer/side-bar/outline-item
 import { TagInputModule } from 'ngx-chips';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule} from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { RedactionComponent } from './redaction/components/redaction.component';
 import { IcpSessionApiService } from './icp/icp-session-api.service';
 import { IcpUpdateService } from './icp/icp-update.service';
 import { IcpService } from './icp/icp.service';
 import { SocketService } from './icp/socket.service';
-import { reducers} from './store/reducers/reducers';
+import { reducers } from './store/reducers/reducers';
 import { effects } from './store/effects/index';
 import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
 import { RedactionApiService } from './redaction/services/redaction-api.service';
@@ -38,7 +39,7 @@ import { RotationApiService } from './viewers/rotation-persist/rotation-api.serv
 import { RotationPersistDirective } from './viewers/rotation-persist/rotation-persist.directive';
 import { ParticipantsListComponent } from './icp/participants-list/participants-list.component';
 import { HighlightCreateDirective } from './annotations/annotation-set/annotation-create/highlight-create/highlight-create.directive';
-import {MultimediaPlayerComponent} from './viewers/multimedia-player/multimedia-player.component';
+import { MultimediaPlayerComponent } from './viewers/multimedia-player/multimedia-player.component';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import {MultimediaPlayerComponent} from './viewers/multimedia-player/multimedia-
     StoreModule.forFeature('media-viewer', reducers),
     EffectsModule.forFeature(effects),
     TreeModule,
-    MutableDivModule
+    MutableDivModule,
+    RpxTranslationModule.forChild()
   ],
   declarations: [
     PdfViewerComponent,
@@ -69,14 +71,9 @@ import {MultimediaPlayerComponent} from './viewers/multimedia-player/multimedia-
     RotationPersistDirective,
     HighlightCreateDirective,
     ConfirmActionDialogComponent,
-    RedactionComponent, // todo made put this into module
+    RedactionComponent,
     BookmarkIconsComponent,
     ParticipantsListComponent
-  ],
-  entryComponents: [
-    PdfViewerComponent,
-    ImageViewerComponent,
-    UnsupportedViewerComponent
   ],
   providers: [
     PdfJsWrapperFactory,
