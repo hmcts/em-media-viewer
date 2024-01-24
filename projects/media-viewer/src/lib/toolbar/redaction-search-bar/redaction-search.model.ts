@@ -4,6 +4,7 @@ export interface RedactionSearch {
   page?: number;
   matchedIndex?: number;
   matchesCount?: number;
+  isPrevious: boolean;
 }
 
 export interface RedactRectangle {
