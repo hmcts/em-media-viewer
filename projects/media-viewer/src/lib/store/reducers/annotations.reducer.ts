@@ -20,7 +20,7 @@ export interface AnnotationSetState {
 }
 
 export const initialState: AnnotationSetState = {
-  commentHeader: 'dummy comment header',
+  commentHeader: null,
   annotationSet: {},
   annotationEntities: {},
   commentEntities: {},
