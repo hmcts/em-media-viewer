@@ -43,8 +43,8 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
       .subscribe(pages => this.pages = Object.values(pages));
     this.annoPages$ = this.store.pipe(select(fromSelectors.getPageEntities));
 
-    this.$subscriptions.add(this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode))
-    this.$subscriptions.add(this.viewerEvents.textHighlight.subscribe(highlight => this.showContextToolbar(highlight)))
+    this.$subscriptions.add(this.toolbarEvents.drawModeSubject.subscribe(drawMode => this.drawMode = drawMode));
+    this.$subscriptions.add(this.viewerEvents.textHighlight.subscribe(highlight => this.showContextToolbar(highlight)));
     this.$subscriptions.add(this.viewerEvents.ctxToolbarCleared.subscribe(() => this.clearContextToolbar()));
   }
 
