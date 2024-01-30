@@ -37,14 +37,20 @@
                   <mv-gov-uk-date
                     [config]="{ id: 'dateRangeFrom', legend: 'From' }"
                     [formGroup]="filtersFg.controls['dateRangeFrom']"
-                    [errorMessage]="'test'"
+                    [errorMessage]="{
+                      isInvalid: !fromFilterValid,
+                      messages: ['From date is required']
+                    }"
                   ></mv-gov-uk-date>
                 </div>
                 <div class="dates__to">
                   <mv-gov-uk-date
                     [config]="{ id: 'dateRangeTo', legend: 'To' }"
                     [formGroup]="filtersFg.controls['dateRangeTo']"
-                    [errorMessage]="'test'"
+                    [errorMessage]="{
+                      isInvalid: !toFilterValid,
+                      messages: ['To date is required']
+                    }"
                   ></mv-gov-uk-date>
                 </div>
                 <div class="dates__tags">
@@ -105,7 +111,12 @@
                 [flexGrow]="1"
               >
                 <ng-template ngx-datatable-cell-template let-value="value">
-                  <a [routerLink]="[]" class="comment-summary_pages" (click)="navigateToPage(value)">{{value}}</a>
+                  <a
+                    [routerLink]="[]"
+                    class="comment-summary_pages"
+                    (click)="navigateToPage(value)"
+                    >{{ value }}</a
+                  >
                 </ng-template>
               </ngx-datatable-column>
               <ngx-datatable-column
