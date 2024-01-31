@@ -189,6 +189,7 @@
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/main.34f4f9f011d8cd6f.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/polyfills.5cbca92e80d6416a.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/scripts.8482d8f861a8c7f6.js_GET": "ignore",
+  "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/main.73e07b65400bc216.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/main.0c84526d0e382c47.js_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/favicon.ico_GET": "ignore",
@@ -356,6 +357,7 @@
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/polyfills.5cbca92e80d6416a.js_GET": "ignore",
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/runtime.226bfa0a0298738f.js_GET": "ignore",
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/scripts.8482d8f861a8c7f6.js_GET": "ignore",
+  "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/main.73e07b65400bc216.js_GET": "ignore",
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/main.0c84526d0e382c47.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
@@ -486,6 +488,7 @@
   "10109_Modern Web Application_http://em-showcase-aat.service.core-compute-aat.internal/robots.txt_GET": "ignore",
   "10109_Modern Web Application_http://em-showcase-aat.service.core-compute-aat.internal/sitemap.xml_GET": "ignore",
   "10109_Modern Web Application_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10281231207105659.js_GET": "ignore",
+  "10110_Dangerous JS Functions_http://em-showcase-aat.service.core-compute-aat.internal/main.73e07b65400bc216.js_GET": "ignore",
   "40025_Proxy Disclosure_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10281231207105659.js_GET": "ignore",
   "40035_Hidden File Found_http://em-showcase-aat.service.core-compute-aat.internal/.svn/entries_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore",
@@ -619,5 +622,7 @@
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/runtime.226bfa0a0298738f.js_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/scripts.8482d8f861a8c7f6.js_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/styles.5c464f93959616e0.css_GET": "ignore",
+  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/main.73e07b65400bc216.js_GET": "ignore",
+  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/styles.29af957b697d9e3f.css_GET": "ignore"
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/main.0c84526d0e382c47.js_GET": "ignore"
 }
