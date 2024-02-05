@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { BookmarksApiService } from '../../annotations/services/bookmarks-api/bookmarks-api.service';
@@ -16,8 +16,8 @@ export class BookmarksEffects {
               private store: Store<fromStore.AnnotationSetState|fromBookmarks.BookmarksState>,
               private bookmarksApiService: BookmarksApiService) {}
 
-  @Effect()
-  loadBookmarks$ = this.actions$.pipe(
+  loadBookmarks$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(bookmarksActions.LOAD_BOOKMARKS),
     withLatestFrom(this.store.pipe(select(fromDocument.getDocumentId))),
     map(([, documentId]) => documentId),
@@ -27,10 +27,11 @@ export class BookmarksEffects {
           map(res => new bookmarksActions.LoadBookmarksSuccess(res)),
           catchError(err => of(new bookmarksActions.LoadBookmarksFailure(err)))
         )
-    ));
+    ))
+  );
 
-  @Effect()
-  createBookmark$ = this.actions$.pipe(
+  createBookmark$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(bookmarksActions.CREATE_BOOKMARK),
     map((action: bookmarksActions.CreateBookmark) => action.payload),
     exhaustMap((bookmark) =>
@@ -39,10 +40,11 @@ export class BookmarksEffects {
           map(bmrk => new bookmarksActions.CreateBookmarkSuccess(bmrk)),
           catchError(error => of(new bookmarksActions.CreateBookmarkFailure(error)))
         )
-    ));
+    ))
+  );
 
-  @Effect()
-  moveBookmark$ = this.actions$.pipe(
+  moveBookmark$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(bookmarksActions.MOVE_BOOKMARK),
     map((action: bookmarksActions.MoveBookmark) => action.payload),
     exhaustMap((bookmarks) =>
@@ -51,10 +53,11 @@ export class BookmarksEffects {
           map(bmrks => new bookmarksActions.MoveBookmarkSuccess(bmrks)),
           catchError(error => of(new bookmarksActions.MoveBookmarkFailure(error)))
         )
-    ));
+    ))
+  );
 
-  @Effect()
-  deleteBookmark$ = this.actions$.pipe(
+  deleteBookmark$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(bookmarksActions.DELETE_BOOKMARK),
     map((action: bookmarksActions.DeleteBookmark) => action.payload),
     exhaustMap(({ deleted, updated }) =>
@@ -72,10 +75,11 @@ export class BookmarksEffects {
           }),
           catchError(error => of(new bookmarksActions.DeleteBookmarkFailure(error)))
         )
-    ));
+    ))
+  );
 
-  @Effect()
-  updateBookmark$ = this.actions$.pipe(
+  updateBookmark$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(bookmarksActions.UPDATE_BOOKMARK),
     map((action: bookmarksActions.UpdateBookmark) => action.payload),
     switchMap((bookmark) =>
@@ -84,5 +88,6 @@ export class BookmarksEffects {
           map(bmrk => new bookmarksActions.UpdateBookmarkSuccess(bmrk)),
           catchError(error => of(new bookmarksActions.UpdateBookmarkFailure(error)))
         )
-    ));
+    ))
+  );
 }

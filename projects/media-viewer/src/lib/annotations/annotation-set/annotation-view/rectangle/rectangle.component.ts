@@ -28,8 +28,8 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() pageHeight: number;
   @Input() pageWidth: number;
 
-  @Output() select = new EventEmitter<Rectangle>();
-  @Output() update = new EventEmitter<Rectangle>();
+  @Output() selectEvent = new EventEmitter<Rectangle>();
+  @Output() updateEvent = new EventEmitter<Rectangle>();
 
   @ViewChild('rectElement', {static: false}) viewRect: ElementRef;
 
@@ -90,7 +90,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   onClick() {
-    this.select.emit(this.annoRect);
+    this.selectEvent.emit(this.annoRect);
   }
 
   onUpdate(viewRect: any) {
@@ -99,7 +99,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
       let rectangle = this.highlightService
         .applyRotation(this.pageHeight, this.pageWidth, offsetHeight, offsetWidth, offsetTop, offsetLeft, this.rotate, this.zoom);
       rectangle = { ...this.annoRect, ...rectangle };
-      this.update.emit({ ...rectangle });
+      this.updateEvent.emit({ ...rectangle });
     }
   }
 
