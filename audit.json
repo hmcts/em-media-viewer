@@ -107,6 +107,7 @@
   "10021_X-Content-Type-Options Header Missing_http://em-showcase-aat.service.core-compute-aat.internal/styles.190adccb59e536cdd47d.css_GET": "ignore",
   "10021_X-Content-Type-Options Header Missing_http://em-showcase-aat.service.core-compute-aat.internal/runtime.226bfa0a0298738f.js_GET": "ignore",
   "10021_X-Content-Type-Options Header Missing_http://em-showcase-aat.service.core-compute-aat.internal/styles.5c464f93959616e0.css_GET": "ignore",
+  "10021_X-Content-Type-Options Header Missing_http://em-showcase-aat.service.core-compute-aat.internal/runtime.cec83f2c9a2d2d87.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/html5-shiv/html5shiv.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_https://manage-case.aat.platform.hmcts.net/main-es5.be2961dcc5e297c465a9.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/main.2d204dfc031368665a48.js_GET": "ignore",
@@ -242,6 +243,7 @@
   "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-showcase-aat.service.core-compute-aat.internal/styles.190adccb59e536cdd47d.css_GET": "ignore",
   "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-showcase-aat.service.core-compute-aat.internal/runtime.226bfa0a0298738f.js_GET": "ignore",
   "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-showcase-aat.service.core-compute-aat.internal/styles.5c464f93959616e0.css_GET": "ignore",
+  "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-showcase-aat.service.core-compute-aat.internal/runtime.cec83f2c9a2d2d87.js_GET": "ignore",
   "10038_Content Security Policy (CSP) Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10038_Content Security Policy (CSP) Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/govuk-frontend/all-ie8.css_GET": "ignore",
   "10038_Content Security Policy (CSP) Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/html5-shiv/html5shiv.js_GET": "ignore",
@@ -294,6 +296,7 @@
   "10049_Storable but Non-Cacheable Content_http://em-showcase-aat.service.core-compute-aat.internal/styles.190adccb59e536cdd47d.css_GET": "ignore",
   "10049_Storable but Non-Cacheable Content_http://em-showcase-aat.service.core-compute-aat.internal/runtime.226bfa0a0298738f.js_GET": "ignore",
   "10049_Storable but Non-Cacheable Content_http://em-showcase-aat.service.core-compute-aat.internal/styles.5c464f93959616e0.css_GET": "ignore",
+  "10049_Storable but Non-Cacheable Content_http://em-showcase-aat.service.core-compute-aat.internal/runtime.cec83f2c9a2d2d87.js_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
   "10054_Cookie without SameSite Attribute_http://em-showcase-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore",
@@ -360,6 +363,7 @@
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/main.73e07b65400bc216.js_GET": "ignore",
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/main.0c84526d0e382c47.js_GET": "ignore",
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/polyfills.ac913584ee1b04d2.js_GET": "ignore",
+  "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/runtime.cec83f2c9a2d2d87.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/govuk-apple-touch-icon-152x152.png_GET": "ignore",
@@ -625,5 +629,7 @@
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/styles.5c464f93959616e0.css_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/main.73e07b65400bc216.js_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/styles.29af957b697d9e3f.css_GET": "ignore",
-  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/main.0c84526d0e382c47.js_GET": "ignore"
+  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/main.0c84526d0e382c47.js_GET": "ignore",
+  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/polyfills.ac913584ee1b04d2.js_GET": "ignore",
+  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/runtime.cec83f2c9a2d2d87.js_GET": "ignore"
 }
