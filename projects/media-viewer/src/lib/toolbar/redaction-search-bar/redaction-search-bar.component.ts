@@ -1,7 +1,7 @@
 import { BulkRedaction, Redaction } from './../../redaction/services/redaction.model';
-import { SearchResultsCount } from './../toolbar-event.service';
+import { SearchMode, SearchResultsCount, SearchType } from './../toolbar-event.service';
 import { RedactionSearch, RedactRectangle } from './redaction-search.model';
-import { Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
@@ -12,6 +12,7 @@ import * as fromDocument from '../../store/selectors/document.selectors';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import uuid from 'uuid';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
+import { some } from 'lodash';
 
 @Component({
   selector: 'mv-redaction-search-bar',
@@ -38,11 +39,15 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
   openSearchModal: boolean;
   redactAllInProgress: boolean;
   redactAllText?: string;
+  searchType: SearchType;
+  inProgressText: string;
+  titleText: string;
 
 
   private subscription: Subscription;
   private documentId: string;
   public advancedSearchVisible = false;
+
 
   constructor(
     private store: Store<fromStore.State>,
@@ -62,7 +67,13 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.toolbarEvents.searchResultsCountSubject.subscribe(results => this.setSearchResultsCount(results))
     );
-    this.subscription.add(this.toolbarEvents.openRedactionSearch.subscribe(isOpen => this.openSearchModal = isOpen));
+    this.subscription.add(this.toolbarEvents.openRedactionSearch.subscribe((searchMode: SearchMode) => {
+      if (searchMode) {
+        this.openSearchModal = searchMode.isOpen;
+        this.searchType = searchMode.modeType;
+        this.modeText();
+      }
+    }));
     this.subscription.add(this.toolbarEvents.redactAllInProgressSubject
       .subscribe(inProgress => this.redactAllInProgress = inProgress));
   }
@@ -98,6 +109,16 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
     });
   }
 
+  modeText(): void {
+    if (this.searchType === SearchType.Highlight) {
+      this.inProgressText = 'Highlighting';
+      this.titleText = 'Highlight';
+    } else if (this.searchType === SearchType.Redact) {
+      this.inProgressText = 'Redacting';
+      this.titleText = 'Redact';
+    }
+  }
+
   private saveRedaction(redactRectangle: RedactRectangle[]) {
     const redaction = redactRectangle.map(ele => {
       return { page: ele.page, rectangles: ele.rectangles, redactionId: uuid(), documentId: this.documentId } as Redaction;
@@ -127,7 +148,7 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
   }
 
   onCloseSearchModal() {
-    this.toolbarEvents.openRedactionSearch.next(false);
+    this.toolbarEvents.openRedactionSearch.next({ isOpen: false, modeType: this.searchType });
   }
 
 
@@ -169,9 +190,20 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
       if (this.redactAll && this.resultCount && this.redactElements.length === this.resultCount) {
         this.redactAll = false;
         this.redactAllText = null;
-        this.saveRedaction(this.redactElements);
+        if (this.searchType === SearchType.Redact) {
+          this.saveRedaction(this.redactElements);
+        } else if (this.searchType === SearchType.Highlight) {
+          this.highlightService.saveAnnotationSet(this.redactElements);
+          this.cleanUpPostSave();
+        }
       }
     }
+  }
+
+  private cleanUpPostSave() {
+    this.toolbarEvents.redactAllInProgressSubject.next(false);
+    this.searchText = '';
+    this.search();
   }
 
   private CreateRedactAllText() {
@@ -198,7 +230,14 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
     const selectedHighLightedElements = document.getElementsByClassName('highlight selected');
     if (selectedHighLightedElements && selectedHighLightedElements.length > 0) {
       const docRange = document.createRange();
-      docRange.selectNodeContents(selectedHighLightedElements[0] as HTMLElement);
+      if (some(selectedHighLightedElements, element => element.className === 'highlight begin selected' || element.className === 'highlight end selected')) {
+        docRange.setStart(selectedHighLightedElements[0], 0);
+        const endNode = selectedHighLightedElements[selectedHighLightedElements.length - 1];
+        docRange.setEnd(endNode, endNode.childNodes.length);
+      }
+      else {
+        docRange.selectNodeContents(selectedHighLightedElements[0] as HTMLElement);
+      }
       const selection = window.getSelection();
       selection?.removeAllRanges();
       selection?.addRange(docRange);

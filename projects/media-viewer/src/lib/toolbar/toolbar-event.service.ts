@@ -21,10 +21,21 @@ export interface SearchResultsCount {
   isPrevious: boolean;
 }
 
+export enum SearchType {
+  Redact = 'Redact',
+  Highlight = 'Highlight',
+}
+
+export interface SearchMode {
+  modeType: SearchType;
+  isOpen: boolean;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ToolbarEventService {
 
   public readonly highlightModeSubject = new BehaviorSubject<HighlightMode>(false);
+  public readonly highlightToolbarSubject = new BehaviorSubject<HighlightMode>(false);
   public readonly drawModeSubject = new BehaviorSubject<DrawMode>(false);
   public readonly rotateSubject = new Subject<number>();
   public readonly searchSubject = new Subject<SearchOperation>();
@@ -45,11 +56,12 @@ export class ToolbarEventService {
   public readonly redactionMode = new BehaviorSubject(false);
   public readonly redactionPreview = new Subject<boolean>();
   public readonly applyRedactToDocument = new Subject();
+
   public readonly clearAllRedactMarkers = new Subject();
   public readonly redactWholePage = new Subject();
   public readonly redactionSerachSubject = new Subject<RedactionSearch>();
   public readonly redactAllInProgressSubject = new BehaviorSubject(false);
-  public readonly openRedactionSearch = new Subject<boolean>();
+  public readonly openRedactionSearch = new BehaviorSubject<SearchMode | null>(null);
 
   public readonly sidebarOpen = new BehaviorSubject(false);
   public readonly sidebarOutlineView = new BehaviorSubject(true);
@@ -67,6 +79,7 @@ export class ToolbarEventService {
     this.setCurrentPageSubject.next(1);
     this.zoomValueSubject.next(1);
     this.highlightModeSubject.next(false);
+    this.highlightToolbarSubject.next(false);
     this.drawModeSubject.next(false);
     this.showCommentSummary.next(false);
     this.grabNDrag.next(false);
@@ -93,6 +106,10 @@ export class ToolbarEventService {
     } else {
       this.drawModeSubject.next(false);
     }
+  }
+
+  public toggleHighlightToolbar(): void {
+    this.highlightToolbarSubject.next(!this.highlightToolbarSubject.getValue());
   }
 
   public rotate(angle: number): void {
@@ -175,7 +192,7 @@ export class ToolbarEventService {
     } else {
       this.redactionMode.next(false);
     }
-    this.openRedactionSearch.next(false);
+    this.openRedactionSearch.next({ modeType: SearchType.Redact, isOpen: false });
   }
 
   public toggleRedactionPreview(viewMode: boolean): void {

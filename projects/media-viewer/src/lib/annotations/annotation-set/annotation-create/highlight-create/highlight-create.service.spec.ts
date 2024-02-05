@@ -35,6 +35,18 @@ describe('HighlightCreateService', () => {
     expect(saveAnnoAction.payload.annotationSetId).toBe('annotationSetId');
   });
 
+  it('should save annotation set', () => {
+    const mockAnnotations = [{rectangles: ['rectangles'] }] as any;
+    spyOn(mockStore, 'dispatch').and.callThrough();
+
+    service.saveAnnotationSet(mockAnnotations);
+
+    expect(mockStore.dispatch).toHaveBeenCalled();
+    expect(saveAnnoAction.payload.annotations[0].rectangles).toBe(mockAnnotations[0].rectangles);
+    expect(saveAnnoAction.payload.documentId).toBe('documentId');
+    expect(saveAnnoAction.payload.id).toBe('annotationSetId');
+  });
+
   it('should apply no rotation', () => {
     const rectangle = service
       .applyRotation(500, 400, 200, 150, 75, 80, 0, 1);
