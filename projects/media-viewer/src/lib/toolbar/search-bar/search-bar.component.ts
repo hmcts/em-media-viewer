@@ -92,7 +92,7 @@ export class SearchBarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resultsText = this.resultCount > 0
       ? `Found ${results.current} of ${results.total}`
       : 'No results found';
-    if (this.resultCount && this.resultCount > 0) {
+    if (this.resultCount && this.resultCount > 0 && !results.isPrevious) {
       setTimeout(() => {
         this.findNext.nativeElement.focus();
       }, 1000);
