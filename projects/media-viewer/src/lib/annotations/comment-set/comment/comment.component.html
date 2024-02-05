@@ -1,8 +1,12 @@
-<div #form (click)="onCommentClick()" class="aui-comment"
-      [ngClass]="{'stylestoggle' : (marginToComment$ | async ) }"
-      [style.top.px]="commentTop"
-      [style.zIndex]="selected ? 100 : 0">
-  <div id="detailsWrapper {{index}}" class="aui-comment__header">
+<div
+  #form
+  (click)="onCommentClick()"
+  class="aui-comment"
+  [ngClass]="{ stylestoggle: (marginToComment$ | async) }"
+  [style.top.px]="commentTop"
+  [style.zIndex]="selected ? 100 : 0"
+>
+  <div id="detailsWrapper {{ index }}" class="aui-comment__header">
     <span *ngIf="author && !editor" class="aui-comment__author">
       {{ author.forename }} {{ author.surname }}
     </span>
@@ -10,43 +14,62 @@
       {{ editor.forename }} {{ editor.surname }}
     </span>
     <time [hidden]="!selected && !this.editable" class="aui-comment__meta">
-      {{ lastUpdate | momentDate: 'd MMMM y h:mm a' }}
+      {{ lastUpdate | momentDate : "d MMMM y h:mm a" }}
     </time>
   </div>
   <mv-tags
     [tagItems]="tagItems"
     [userId]="createdBy"
     [editable]="editable"
-    [annoId]="_comment.annotationId">
+    [annoId]="_comment.annotationId"
+  >
   </mv-tags>
-  <textarea *ngIf="selected && editable"
-            #editableComment
-            mvTextAreaAutoExpand
-            type="text"
-            required
-            name="content"
-            [maxlength]="CHAR_LIMIT"
-            class="aui-comment__content form-control mimic-focus edit-mode expanded"
-            [(ngModel)]="fullComment"
-            (ngModelChange)="reRenderComments(); onCommentChange($event);"
-            aria-label="comment">
+  <textarea
+    *ngIf="selected && editable"
+    #editableComment
+    mvTextAreaAutoExpand
+    type="text"
+    required
+    name="content"
+    [maxlength]="CHAR_LIMIT"
+    class="aui-comment__content form-control mimic-focus edit-mode expanded"
+    [(ngModel)]="fullComment"
+    (ngModelChange)="reRenderComments(); onCommentChange($event)"
+    aria-label="comment"
+  >
   </textarea>
-  <p *ngIf="!editable"
-     mvTextHighlight class="commentText" [textToHighlight]="searchString">
-      {{ fullComment }}
+  <p
+    *ngIf="!editable"
+    mvTextHighlight
+    class="commentText"
+    [textToHighlight]="searchString"
+  >
+    {{ fullComment }}
   </p>
-  <div *ngIf="selected || this.editable || (!fullComment.length && (tagItems && !tagItems.length))"
-       class="aui-comment__footer commentBtns">
-    <button class="govuk-button"
-            type="button" role="button"
-            (click)="editOrSave()">
-      {{ !editable ? 'Edit' : 'Save' }}
+  <div
+    *ngIf="
+      selected ||
+      this.editable ||
+      (!fullComment.length && tagItems && !tagItems.length)
+    "
+    class="aui-comment__footer commentBtns"
+  >
+    <button
+      class="govuk-button"
+      type="button"
+      role="button"
+      (click)="editOrSave()"
+    >
+      {{ !editable ? ("Edit" | rpxTranslate) : ("Save" | rpxTranslate) }}
     </button>
-    <button type="button" role="button"
-            class="govuk-button govuk-button--secondary"
-            (click)="deleteOrCancel()">
-      {{ !editable ? 'Delete' : 'Cancel' }}
+    <button
+      type="button"
+      role="button"
+      class="govuk-button govuk-button--secondary"
+      (click)="deleteOrCancel()"
+    >
+      {{ !editable ? ("Delete" | rpxTranslate) : ("Cancel" | rpxTranslate) }}
     </button>
   </div>
-  <span class="aui-comment__private">private</span>
+  <span class="aui-comment__private">{{ "private" | rpxTranslate }}</span>
 </div>

@@ -205,7 +205,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   setToolbarButtons() {
     if (this.contentType === CoreContentTypes.PDF || this.needsConverting()) {
       this.toolbarButtons.setup({
-        ...defaultPdfOptions, showHighlightButton: this.enableAnnotations, showDrawButton: this.enableAnnotations,
+        ...defaultPdfOptions, showHighlightButton: this.enableAnnotations, showDrawButton: false,
         ...this.toolbarButtonOverrides
       });
     } else if (this.contentType === CoreContentTypes.IMAGE) {
