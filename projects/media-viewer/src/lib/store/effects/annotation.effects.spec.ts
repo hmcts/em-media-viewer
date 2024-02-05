@@ -8,6 +8,7 @@ import { mockAnnotations } from 'test/mocks/data/mock-annotations';
 import * as annotationActions from '../actions/annotation.actions';
 import { AnnotationApiService } from '../../annotations/services/annotation-api/annotation-api.service';
 import { AnnotationEffects } from './annotation.effects';
+import { mockAnnotationSet } from 'test/mocks/data/mock-annotation-set';
 
 
 describe('Annotations Effects', () => {
@@ -16,6 +17,7 @@ describe('Annotations Effects', () => {
   const UserServiceMock = jasmine.createSpyObj('AnnotationApiService', [
     'getAnnotationSet',
     'postAnnotation',
+    'postAnnotationSet',
     'deleteAnnotation'
   ]);
 
@@ -62,6 +64,17 @@ describe('Annotations Effects', () => {
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
       expect(effects.postAnnotation$).toBeObservable(expected);
+    });
+  });
+
+  describe('postAnnotationSet', () => {
+    it('should return a SaveAnnotationSetSuccess', () => {
+      const action = new annotationActions.SaveAnnotationSet(mockAnnotationSet);
+      UserServiceMock.postAnnotationSet.and.returnValue(of(returnValue));
+      const completion = new annotationActions.SaveAnnotationSetSuccess(returnValue);
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+      expect(effects.saveAnnotationSet$).toBeObservable(expected);
     });
   });
 

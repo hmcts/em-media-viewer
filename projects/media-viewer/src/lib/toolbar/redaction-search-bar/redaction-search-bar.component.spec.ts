@@ -3,9 +3,9 @@ import { RpxTranslationModule } from 'rpx-xui-translation';
 import { async, ComponentFixture, TestBed, waitForAsync, fakeAsync, tick, flush, inject } from '@angular/core/testing';
 import { RedactionSearchBarComponent } from './redaction-search-bar.component';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
-import { SearchResultsCount, ToolbarEventService } from '../toolbar-event.service';
+import { SearchMode, SearchResultsCount, SearchType, ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
-import { Subject, of } from 'rxjs';
+import { Subject, of, BehaviorSubject } from 'rxjs';
 import { RedactionSearch } from './redaction-search.model';
 import { Store, StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
@@ -18,8 +18,8 @@ describe('RedactionSearchBarComponent', () => {
   let fixture: ComponentFixture<RedactionSearchBarComponent>;
   const redactionSerachSubject: Subject<RedactionSearch> = new Subject<RedactionSearch>();
   const searchResultsCountSubject: Subject<SearchResultsCount> = new Subject<SearchResultsCount>();
-  const openRedactionSearch: Subject<boolean> = new Subject<boolean>();
-  const mockHighlightService = { saveAnnotation: () => { }, applyRotation: () => { } };
+  const openRedactionSearch: BehaviorSubject<SearchMode | null> = new BehaviorSubject<SearchMode | null>(null);
+  const mockHighlightService = { saveAnnotationSet: () => { }, applyRotation: () => { } };
   const mockStore = {
     select: () => of([{
       styles: { height: 100, width: 100 },
@@ -69,7 +69,7 @@ describe('RedactionSearchBarComponent', () => {
       .compileComponents();
     fixture = TestBed.createComponent(RedactionSearchBarComponent);
     component = fixture.componentInstance;
-    component.openSearchModal = true;
+    openRedactionSearch.next({ modeType: SearchType.Redact, isOpen: true } as SearchMode);
     fixture.detectChanges();
     component.allPages = {
       2: {
@@ -138,6 +138,45 @@ describe('RedactionSearchBarComponent', () => {
     expect(component.redactAllText).toBeNull();
     expect(component.redactAll).toBeFalse();
     expect(store.dispatch).toHaveBeenCalledTimes(1);
+  })));
+
+
+  it('should highlight all search text', inject([Store], fakeAsync((store) => {
+    openRedactionSearch.next({ modeType: SearchType.Highlight, isOpen: true } as SearchMode);
+    const redactionSearch: RedactionSearch = {
+      matchedIndex: 1,
+      matchesCount: 1,
+      page: 1
+    };
+    component.redactAll = true;
+    const htmlElement = jasmine.createSpyObj<HTMLElement>('HTMLElement', ['getBoundingClientRect'], { parentElement: null });
+    const htmlElement2 = jasmine.createSpyObj<HTMLElement>('HTMLElement', ['getBoundingClientRect'], { parentElement: htmlElement });
+    const element = jasmine.createSpyObj<Element>('Element', ['getBoundingClientRect'], { parentElement: htmlElement2 });
+    spyOn(document, 'getElementsByClassName').withArgs('highlight selected').and.returnValue([element] as any);
+    const range = jasmine.createSpyObj<Range>('Range', ['setStart', 'setEnd', 'getBoundingClientRect', 'cloneRange', 'selectNodeContents']);
+    spyOn(document, 'createRange').and.returnValue(range);
+    const selection = jasmine.createSpyObj<Selection>('Selection', ['addRange', 'getRangeAt', 'removeAllRanges'],
+      { rangeCount: 1, isCollapsed: false });
+
+    const range2 = jasmine.createSpyObj<Range>('Range', ['setStart', 'setEnd', 'getBoundingClientRect', 'cloneRange', 'selectNodeContents', 'getClientRects']);
+    selection.getRangeAt.and.returnValue(range2);
+    range2.cloneRange.and.returnValue(range2);
+    const domRect = jasmine.createSpyObj<DOMRect>('DOMRect', [], { x: 100, y: 100, height: 100, width: 100 });
+    range2.getClientRects.and.returnValue([domRect] as any);
+    htmlElement.getBoundingClientRect.and.returnValue(domRect);
+    spyOn(window, 'getSelection').and.returnValue(selection);
+
+    spyOn(mockHighlightService, 'applyRotation').and.returnValue({ x: 100, y: 100, height: 100, width: 100 } as any);
+    spyOn(mockHighlightService, 'saveAnnotationSet').and.callThrough();
+
+
+    redactionSerachSubject.next(redactionSearch);
+    tick(100);
+
+
+    expect(component.redactAllText).toBeNull();
+    expect(component.redactAll).toBeFalse();
+    expect(mockHighlightService.saveAnnotationSet).toHaveBeenCalledTimes(1);
   })));
 
   it('should redact search text if does not already exists', inject([Store], fakeAsync((store) => {
@@ -230,5 +269,23 @@ describe('RedactionSearchBarComponent', () => {
 
     expect(component.resultCount).toEqual(searchResultsCount.total);
     expect(component.resultsText).toEqual(`${searchResultsCount.total} results founds`);
+  }));
+
+  it('should set highlight text', fakeAsync(() => {
+    component.inProgressText = '';
+    component.titleText = '';
+    component.searchType = SearchType.Highlight;
+    component.modeText();
+    expect(component.inProgressText).toEqual('Highlighting');
+    expect(component.titleText).toEqual('Highlight');
+  }));
+
+  it('should set redact text', fakeAsync(() => {
+    component.inProgressText = '';
+    component.titleText = '';
+    component.searchType = SearchType.Redact;
+    component.modeText();
+    expect(component.inProgressText).toEqual('Redacting');
+    expect(component.titleText).toEqual('Redact');
   }));
 });
