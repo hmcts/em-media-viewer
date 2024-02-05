@@ -18,6 +18,7 @@ export interface SearchOperation {
 export interface SearchResultsCount {
   current: number;
   total: number;
+  isPrevious: boolean;
 }
 
 @Injectable({ providedIn: 'root' })

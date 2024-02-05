@@ -224,7 +224,7 @@ describe('RedactionSearchBarComponent', () => {
 
   it('should show search results count', fakeAsync(() => {
 
-    const searchResultsCount = { current: 1, total: 1 };
+    const searchResultsCount = { current: 1, total: 1, isPrevious: false };
     searchResultsCountSubject.next(searchResultsCount);
     fixture.detectChanges();
 
