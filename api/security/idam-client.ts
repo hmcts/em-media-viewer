@@ -46,7 +46,7 @@ export class IdamClient {
   private async createUser() {
     try {
       await this.http.post('/testing-support/accounts', { email, password, forename, surname, roles: [{ code: 'caseworker-hrs' }] });
-    } catch (err) {
+    } catch (err: any) {
       logger.warn('could not create the user, possibly because the user already exists ', err.message);
       logger.debug('\n', err.stack);
     }
@@ -69,7 +69,7 @@ export class IdamClient {
     try {
       const response = await this.http.post('/o/token', params, { headers });
       return response.data['access_token'];
-    } catch (err) {
+    } catch (err: any) {
       logger.error('Error getting idam token', err.message);
       throw err;
     }
@@ -91,7 +91,7 @@ export class IdamClient {
     try {
       const response = await this.http.post('/o/token', params, { headers });
       return response.data['access_token'];
-    } catch (err) {
+    } catch (err: any) {
       logger.warn('Error getting ITHC idam token', err.message);
       return undefined;
     }

@@ -23,19 +23,17 @@ export class RotationPersistDirective implements OnInit, OnDestroy {
   $subscriptions: Subscription;
 
   constructor(private el: ElementRef,
-              private store: Store<fromStore.DocumentState>,
-              public readonly toolbarButtons: ToolbarButtonVisibilityService,
-              private toolbarEvents: ToolbarEventService) {
+    private store: Store<fromStore.DocumentState>,
+    public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    private toolbarEvents: ToolbarEventService) {
   }
 
   ngOnInit() {
     this.$subscriptions = this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation));
-    this.$subscriptions
-      .add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()))
-      .add(this.store.pipe(select(fromDocuments.getRotation))
-        .subscribe(rotation => this.savedRotation = rotation))
-      .add(this.store.pipe(select(fromDocuments.getDocumentId))
-        .subscribe(documentId => this.documentId = documentId));
+
+    this.$subscriptions.add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
+    this.$subscriptions.add(this.store.pipe(select(fromDocuments.getRotation)).subscribe(rotation => this.savedRotation = rotation));
+    this.$subscriptions.add(this.store.pipe(select(fromDocuments.getDocumentId)).subscribe(documentId => this.documentId = documentId));
   }
 
   ngOnDestroy() {

@@ -3,7 +3,7 @@ import * as pdfjsLib from 'pdfjs-dist';
 import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
 import { Subject } from 'rxjs';
-import { SearchOperation, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
+import { SearchOperation, SearchResultsCount, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
 import { PdfPosition } from '../../../store/reducers/document.reducer';
 
@@ -50,14 +50,16 @@ export class PdfJsWrapper {
       this.sendSearchDetails(event);
     });
     this.pdfViewer.eventBus.on('updatefindmatchescount', event => {
-      this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
+      const result = { ...event.matchesCount, isPrevious: event?.source?.state?.findPrevious } as SearchResultsCount
+      this.toolbarEvents.searchResultsCountSubject.next(result);
     });
     this.zoomValue = 1;
   }
 
   sendSearchDetails(event: any) {
     if (event.state !== FindState.PENDING) {
-      this.toolbarEvents.searchResultsCountSubject.next(event.matchesCount);
+      const result = { ...event.matchesCount, isPrevious: event?.source?.state?.findPrevious } as SearchResultsCount
+      this.toolbarEvents.searchResultsCountSubject.next(result);
       if (event?.source?.selected?.pageIdx !== -1 && event.matchesCount.total > 0) {
         this.toolbarEvents.redactionSerachSubject.next({
           page: event?.source?.selected?.pageIdx,

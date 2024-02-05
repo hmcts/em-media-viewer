@@ -1,10 +1,11 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
 import { CommentSearchComponent } from './comment-search.component';
 import { FormsModule } from '@angular/forms';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
-import {reducers} from '../../../../store/reducers/reducers';
+import { reducers } from '../../../../store/reducers/reducers';
 import * as fromActions from '../../../../store/actions/annotation.actions';
 
 describe('CommentSearch', () => {
@@ -15,9 +16,9 @@ describe('CommentSearch', () => {
     <mv-comment-search [annotations]="annotations"></mv-comment-search>`
   })
   class TestHostComponent {
-    annotations = [] ;
+    annotations = [];
 
-    @ViewChild(CommentSearchComponent, {static: false}) commentSearchComponent: CommentSearchComponent;
+    @ViewChild(CommentSearchComponent, { static: false }) commentSearchComponent: CommentSearchComponent;
   }
 
   let hostComponent: TestHostComponent;
@@ -29,7 +30,15 @@ describe('CommentSearch', () => {
       imports: [
         FormsModule,
         StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({})
+        StoreModule.forRoot({}),
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       declarations: [CommentSearchComponent, TestHostComponent],
       providers: [ToolbarEventService],
@@ -59,25 +68,25 @@ describe('CommentSearch', () => {
 
   it('should dispatch search action when search matches',
     inject([Store], (store) => {
-      hostComponent.annotations =  [{ comments: [{ content: 'searchText' }] }];
+      hostComponent.annotations = [{ comments: [{ content: 'searchText' }] }];
       fixture.detectChanges();
       spyOn(store, 'dispatch');
 
       component.searchComments('searchText');
 
       expect(store.dispatch).toHaveBeenCalledWith(new fromActions.SearchComment('searchText'));
-  }));
+    }));
 
   it('should not dispatch search action when no results found',
     inject([Store], (store) => {
-      hostComponent.annotations = [] ;
+      hostComponent.annotations = [];
       fixture.detectChanges();
       spyOn(store, 'dispatch');
 
       component.searchComments('searchText');
 
       expect(store.dispatch).not.toHaveBeenCalledWith(new fromActions.SearchComment('searchText'));
-  }));
+    }));
 
   it('should clear search',
     inject([Store], (store) => {
@@ -88,5 +97,5 @@ describe('CommentSearch', () => {
       expect(component.searchString).toBeUndefined();
       expect(component.searchResults).toEqual([]);
       expect(component.searchIndex).toBe(0);
-  }));
+    }));
 });
