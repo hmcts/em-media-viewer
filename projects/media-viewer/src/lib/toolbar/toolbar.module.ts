@@ -12,6 +12,7 @@ export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.serv
 export { ToolbarEventService } from './toolbar-event.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { RouterModule } from '@angular/router';
+import { HighlightToolbarComponent } from './highlight-toolbar/highlight-toolbar.component';
 import { RpxTranslationModule } from 'rpx-xui-translation';
 
 
@@ -21,7 +22,8 @@ import { RpxTranslationModule } from 'rpx-xui-translation';
     MainToolbarComponent,
     RedactionToolbarComponent,
     IcpToolbarComponent,
-    RedactionSearchBarComponent
+    RedactionSearchBarComponent,
+    HighlightToolbarComponent
   ],
   providers: [
     ToolbarButtonVisibilityService,
@@ -32,7 +34,8 @@ import { RpxTranslationModule } from 'rpx-xui-translation';
     SearchBarComponent,
     RedactionToolbarComponent,
     IcpToolbarComponent,
-    RedactionSearchBarComponent
+    RedactionSearchBarComponent,
+    HighlightToolbarComponent
   ],
   imports: [
     CommonModule,

@@ -26,10 +26,10 @@ Scenario('Redact Content Using Redact Text Function', async ({ I }) => {
 }).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
-Scenario('Redact Content Using Search And Redact All Funcation', async ({ I }) => {
-  await redactSearchAndRedctAllTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+Scenario('Redact Content Using Search And Redact All Function', async ({ I }) => {
+  await redactSearchAndRedactAllTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@mks')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('Create Redactions Using Draw Box and Redact Text Functions', async ({ I }) => {

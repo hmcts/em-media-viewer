@@ -34,6 +34,9 @@
       [showRedactSearch]="enableRedactSearch"
       *ngIf="toolbarEvents.redactionMode | async"
     ></mv-redaction-toolbar>
+    <mv-highlight-toolbar
+      *ngIf="toolbarEvents.highlightToolbarSubject | async"
+    ></mv-highlight-toolbar>
     <mv-icp-toolbar *ngIf="toolbarEvents.icp.enabled | async"></mv-icp-toolbar>
 
     <div #viewerRef>
