@@ -76,6 +76,33 @@ export function reducer (
       };
     }
 
+    case fromAnnotations.SAVE_ANNOTATION_SET_SUCCESS: {
+      const anno = action.payload.annotations;
+      const annEntities = {
+        ...state.annotationEntities,
+        ...anno
+      };
+      const annotArray = Object.keys(annEntities).map(key => annEntities[key]);
+      const annotationEntities = StoreUtils.generateAnnotationEntities(annotArray);
+      const annotationPageEntities = StoreUtils.groupByKeyEntities(annotArray, 'page');
+      const commentEntities = StoreUtils.generateCommentsEntities(annotArray);
+      const selectedAnnotation = {
+        ...state.selectedAnnotation,
+        ...anno,
+        editable: false
+      };
+      return {
+        ...state,
+        annotationEntities,
+        annotationPageEntities,
+        commentEntities,
+        selectedAnnotation,
+        loading: false,
+        loaded: true
+      };
+
+    }
+
     case fromAnnotations.SAVE_ANNOTATION_SUCCESS: {
       const anno = action.payload;
       const annEntities = {

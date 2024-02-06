@@ -40,12 +40,12 @@ export class AnnotationApiService {
   public getAnnotationSet(documentId: string): Observable<any> { // todo add model
     const fixedUrl = `${this.annotationSetsFullUrl}/filter?documentId=${documentId}`;
     return this.httpClient
-      .get<AnnotationSet>(fixedUrl, { observe: 'response' , withCredentials: true });
+      .get<AnnotationSet>(fixedUrl, { observe: 'response', withCredentials: true });
   }
 
   public postAnnotationSet(body: Partial<AnnotationSet>): Observable<AnnotationSet> {
     return this.httpClient
-      .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response' , withCredentials: true })
+      .post<AnnotationSet>(this.annotationSetsFullUrl, body, { observe: 'response', withCredentials: true })
       .pipe(
         map(response => response.body),
         catchError(() => [])
@@ -75,7 +75,7 @@ export class AnnotationApiService {
     const url = `${this.annotationFullsUrl}/${annotationId}`;
 
     return this.httpClient
-      .delete<null>(url, { observe: 'response' , withCredentials: true })
+      .delete<null>(url, { observe: 'response', withCredentials: true })
       .pipe(map(response => response.body));
   }
 
