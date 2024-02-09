@@ -149,7 +149,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should set search result count with results found', () => {
-    component.toolbarEvents.searchResultsCountSubject.next({ current: 1, total: 4 });
+    component.toolbarEvents.searchResultsCountSubject.next({ current: 1, total: 4, isPrevious: false });
     expect(component.resultCount).toBeTruthy();
     expect(component.resultsText).toEqual('Found 1 of 4');
     setTimeout(() => {
@@ -160,7 +160,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should set search result count with no results found', () => {
-    component.toolbarEvents.searchResultsCountSubject.next({ current: null, total: null });
+    component.toolbarEvents.searchResultsCountSubject.next({ current: null, total: null, isPrevious: false });
     expect(component.resultCount).toBeFalsy();
     expect(component.resultsText).toEqual('No results found');
   });
