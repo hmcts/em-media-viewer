@@ -115,7 +115,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onClickHighlightToggle() {
-    this.toolbarEvents.toggleHighlightMode();
+    this.toolbarEvents.toggleHighlightToolbar();
   }
   public onClickDrawToggle() {
     this.toolbarEvents.toggleDrawMode();

@@ -1,6 +1,8 @@
 'use strict';
 
 const requireDirectory = require('require-directory');
+const annotateFromSearch = require('./annotationsAndComments/annotateFromSearch');
+const openHighlightToolbar = require('./annotationsAndComments/openHighlightToolbar');
 const steps = requireDirectory(module);
 
 module.exports = () => {
@@ -64,11 +66,13 @@ module.exports = () => {
     nonTextualHighlightAndComment: steps.annotationsAndComments.nonTextualHighlightAndComment,
     updateNonTextualComments: steps.annotationsAndComments.updateNonTextualComments,
     deleteAllExistingNonTextualHighlights: steps.annotationsAndComments.deleteAllExistingNonTextualHighlights,
-    redactSearchAndRedctAll: steps.redact.redactSearchAndRedctAll,
+    redactSearchAndRedactAll: steps.redact.redactSearchAndRedactAll,
     clickSearchFrom: steps.redact.clickSearchFrom,
     redactFillSearchInput: steps.redact.redactFillSearchInput,
     clickRedactSearchButton: steps.redact.clickRedactSearchButton,
     clickRedactAllButton: steps.redact.clickRedactAllButton,
-    openImage: steps.imageViewer.openImage
+    openImage: steps.imageViewer.openImage,
+    openHighlightToolbar: steps.annotationsAndComments.openHighlightToolbar,
+    annotateFromSearch: steps.annotationsAndComments.annotateFromSearch
   });
 };

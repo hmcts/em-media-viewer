@@ -4,6 +4,7 @@ const {
   commentsSearchTest,
   addMultipleCommentsTest,
   highlightTextTest,
+  annotateFromSearchTest,
   addCommentAndRotateTest,
   addCommentTest,
   deleteCommentTest,
@@ -54,6 +55,12 @@ Scenario('Collate Comments should not be blank', async ({ I }) => {
 Scenario('Annotations: Search Comment Text', async ({ I }) => {
   await commentsSearchTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
+}).tag('@ci')
+  .retry(testConfig.TestRetryScenarios);
+
+Scenario('Annotations: Annotate from search', async ({ I }) => {
+  await annotateFromSearchTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
+  
 }).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 

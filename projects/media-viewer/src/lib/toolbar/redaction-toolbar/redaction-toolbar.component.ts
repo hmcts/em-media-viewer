@@ -1,11 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ToolbarEventService } from '../toolbar-event.service';
+import { SearchType, ToolbarEventService } from '../toolbar-event.service';
 import { select, Store } from '@ngrx/store';
 import * as fromRedactSelectors from '../../store/selectors/redaction.selectors';
 import * as fromStore from '../../store/reducers/reducers';
 import { Subscription } from 'rxjs';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
-import { ThisReceiver } from '@angular/compiler';
+
 
 @Component({
   selector: 'mv-redaction-toolbar',
@@ -35,7 +35,7 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
   }
 
   onRedactAllSearch() {
-    this.toolbarEventService.openRedactionSearch.next(true);
+    this.toolbarEventService.openRedactionSearch.next({ modeType: SearchType.Redact, isOpen: true });
   }
 
   toggleTextRedactionMode() {

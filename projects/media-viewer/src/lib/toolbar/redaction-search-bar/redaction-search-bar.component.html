@@ -21,7 +21,7 @@
         aria-label="Redact from search"
         #findInput
         title="Redact from search"
-        placeholder="{{ 'Redact from search...' | rpxTranslate }}"
+        placeholder="{{ titleText + ' from search...' | rpxTranslate }}"
         data-l10n-id="search_input"
         [(ngModel)]="searchText"
         (keydown.escape)="onEscapeKeyPress($event)"
@@ -42,9 +42,9 @@
           class="govuk-button govuk-!-margin-left-2 govuk-!-margin-bottom-0"
           data-module="govuk-button"
           (click)="search(false)"
-          [disabled]="redactAllInProgress"
+          [disabled]="redactAllInProgress || resultCount <= 0"
         >
-          {{ "Redact all" | rpxTranslate }}
+          {{ titleText + " all" | rpxTranslate }}
         </button>
       </div>
       <div
@@ -57,7 +57,7 @@
             class="govuk-!-display-inline-block govuk-!-margin-top-0 govuk-!-margin-bottom-1"
             *ngIf="redactAllInProgress"
           >
-            {{ "Redacting in progress" | rpxTranslate }}
+            {{ inProgressText + " in progress" | rpxTranslate }}
           </h4>
           {{ redactAllInProgress ? "" : resultsText }}</span
         >
