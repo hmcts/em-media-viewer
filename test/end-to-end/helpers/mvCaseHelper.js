@@ -151,6 +151,12 @@ async function deleteHighlightsTest(I, caseId, mediaType) {
   await I.deleteAllExistingTextHighlights();
 }
 
+async function annotateFromSearchTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.deleteAllExistingTextHighlights();
+  await I.annotateFromSearch();
+}
+
 async function collateCommentsTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.clickCommentsPanel();
@@ -243,6 +249,7 @@ async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.openImage();
   await I.deleteAllExistingNonTextualHighlights();
+  await I.openImage();
   await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
 }
 
@@ -347,5 +354,6 @@ module.exports = {
   redactSearchAndRedactAllTest,
   customAndReorderBookmarksTest,
   bookmarkBoxBlankTest,
-  add30BookmarksTest
+  add30BookmarksTest, 
+  annotateFromSearchTest
 }
