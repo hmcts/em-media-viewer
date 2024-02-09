@@ -94,6 +94,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   unsupportedContent = false;
 
   documentTitle: string;
+  commentHeader: string;
   showCommentSummary: boolean;
   annotationSet$: Observable<AnnotationSet | {}>;
   hasScrollBar: boolean;
@@ -127,6 +128,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       .subscribe(changes => this.onCommentChange(changes));
     this.$subscriptions.add(this.toolbarEvents.getShowCommentSummary()
       .subscribe(changes => this.showCommentSummary = changes));
+    this.$subscriptions.add(this.store.pipe(select(fromAnnoSelectors.getCommentHeader))
+      .subscribe(commentHeader => this.commentHeader = commentHeader));
   }
 
   ngAfterViewChecked(): void {

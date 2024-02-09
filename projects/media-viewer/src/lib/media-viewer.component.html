@@ -12,7 +12,7 @@
 >
   <mv-comments-summary
     *ngIf="showCommentSummary"
-    [title]="documentTitle || 'Comment Summary'"
+    [title]="commentHeader || documentTitle || 'Comment Summary'"
     [contentType]="contentType"
   >
   </mv-comments-summary>

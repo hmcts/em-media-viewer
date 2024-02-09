@@ -15,7 +15,10 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   multimediaUrl = 'assets/multimedia/movie.mp4';
   unsupportedUrl = 'assets/unsupported.txt';
   filename = 'filename';
+  caseInfo;
   caseId = 'dummyCaseId';
+  caseType = 'dummyCaseType';
+  jurisdiction = 'dummyJurisdiction';
 
   documentType = 'pdf';
   url;
@@ -37,6 +40,12 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     this.setDocumentType(this.documentType);
+    this.caseInfo = {
+      cid: this.caseId,
+      caseType: this.caseType,
+      jurisdiction: this.jurisdiction
+    };
+    sessionStorage.setItem('caseInfo', JSON.stringify(this.caseInfo));
   }
 
   setDocumentType(newTab: string) {
