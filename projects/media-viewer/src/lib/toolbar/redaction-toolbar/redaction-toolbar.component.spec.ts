@@ -1,10 +1,11 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { RedactionToolbarComponent } from './redaction-toolbar.component';
-import { ToolbarEventService } from '../toolbar-event.service';
+import { SearchType, ToolbarEventService } from '../toolbar-event.service';
 import { RedactionSearch } from '../redaction-search-bar/redaction-search.model';
 import { Subject } from 'rxjs';
 
@@ -15,6 +16,7 @@ describe('RedactionToolbarComponent', () => {
   const redactAllInProgressSubject: Subject<RedactionSearch> = new Subject<RedactionSearch>();
 
   const toolbarEventsMock = {
+    openRedactionSearch: { next: () => { } },
     highlightModeSubject: { next: () => { } },
     drawModeSubject: { next: () => { } },
     toggleRedactionPreview: () => { },
@@ -31,7 +33,15 @@ describe('RedactionToolbarComponent', () => {
       imports: [
         FormsModule,
         StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({})
+        StoreModule.forRoot({}),
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }]
     })
@@ -47,6 +57,14 @@ describe('RedactionToolbarComponent', () => {
 
   it('should be created', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should enableSearchRedactionMode', () => {
+    spyOn(toolbarEvents.openRedactionSearch, 'next');
+
+    component.onRedactAllSearch();
+
+    expect(toolbarEvents.openRedactionSearch.next).toHaveBeenCalledOnceWith({ modeType: SearchType.Redact, isOpen: true});
   });
 
   it('should toggleTextRedactionMode', () => {

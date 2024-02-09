@@ -21,7 +21,7 @@
             #trigger="cdkOverlayOrigin"
             [disabled]="redactAllInProgress"
           >
-            <span>More options</span>
+            <span>{{ "More options" | rpxTranslate }}</span>
           </button>
           <!-- This template displays the overlay content for the dropdown menu and is connected to the "More options" button -->
           <ng-template
@@ -56,7 +56,7 @@
             [disabled]="redactAllInProgress"
             (click)="toggleIndexSideBar(); isDropdownMenuOpen = false"
           >
-            <span>Index</span>
+            <span>{{ "Index" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -78,30 +78,30 @@
             [disabled]="redactAllInProgress"
             (click)="toggleBookmarksSideBar(); isDropdownMenuOpen = false"
           >
-            <span>Bookmarks</span>
+            <span>{{ "Bookmarks" | rpxTranslate }}</span>
           </button>
 
           <button
-            *ngIf="toolbarButtons.showDrawButton"
-            [disabled]="icpEnabled || redactionEnabled"
-            id="mvDrawBtn"
-            #mvDrawBtn
-            class="mv-button mv-toolbar__menu-button--draw"
-            title="Draw a box"
-            tabindex="-1"
-            [class.button-hidden-on-toolbar]="
-              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']
-            "
-            [class.button-hidden-on-dropdown]="
-              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDrawBtn']
-            "
-            [class.toggled]="toolbarEvents.drawModeSubject | async"
-            aria-hidden="true"
-            aria-pressed="false"
-            data-l10n-id="toggleDrawButton"
-            (click)="onClickDrawToggle(); isDropdownMenuOpen = false"
+          *ngIf="toolbarButtons.showDrawButton"
+          [disabled]="icpEnabled || redactionEnabled"
+          id="mvDrawBtn"
+          #mvDrawBtn
+          class="mv-button mv-toolbar__menu-button--draw"
+          title="Draw a box"
+          [class.button-hidden-on-toolbar]="
+            mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']
+          "
+          [class.button-hidden-on-dropdown]="
+            mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDrawBtn']
+          "
+          [class.toggled]="toolbarEvents.drawModeSubject | async"
+          aria-pressed="false"
+          data-l10n-id="toggleDrawButton"
+          (click)="onClickDrawToggle(); isDropdownMenuOpen = false"
           >
-            <span data-l10n-id="draw_label">Draw a box</span>
+            <span data-l10n-id="draw_label">{{
+              "Draw a box" | rpxTranslate
+            }}</span>
           </button>
 
           <button
@@ -111,20 +111,21 @@
             #mvHighlightBtn
             class="mv-button mv-toolbar__menu-button--highlight"
             title="Highlight"
-            tabindex="0"
+            aria-label="Highlight"
             [class.button-hidden-on-toolbar]="
               mvToolbarMain.offsetWidth < widthRequiredForBtn['mvHighlightBtn']
             "
             [class.button-hidden-on-dropdown]="
               mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvHighlightBtn']
             "
-            [class.toggled]="toolbarEvents.highlightModeSubject | async"
-            aria-hidden="true"
+            [class.toggled]="toolbarEvents.highlightToolbarSubject | async"
             aria-pressed="false"
             (click)="onClickHighlightToggle(); isDropdownMenuOpen = false"
             data-l10n-id="toggleHighlightButton"
           >
-            <span data-l10n-id="highlight_label">Highlight</span>
+            <span data-l10n-id="highlight_label">{{
+              "Highlight" | rpxTranslate
+            }}</span>
           </button>
 
           <ng-container *ngIf="toolbarButtons.showNavigation">
@@ -140,7 +141,7 @@
                 mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvPageBtn']
               "
             >
-              <span>Page</span>
+              <span>{{ "Page" | rpxTranslate }}</span>
 
               <button
                 id="mvUpBtn"
@@ -199,7 +200,7 @@
             >
               <button
                 [disabled]="
-                  toolbarEvents.zoomValueSubject.value == 0.1 ||
+                  toolbarEvents.zoomValueSubject.value === 0.1 ||
                   redactAllInProgress
                 "
                 id="mvMinusBtn"
@@ -208,7 +209,9 @@
                 data-l10n-id="zoom_out"
                 (click)="stepZoom(-0.1)"
               >
-                <span></span>
+                <span class="mv-toolbar__menu-button--zoom-out-text">{{
+                  "Zoom Out" | rpxTranslate
+                }}</span>
               </button>
               <select
                 id="scaleSelect"
@@ -243,7 +246,7 @@
 
               <button
                 [disabled]="
-                  toolbarEvents.zoomValueSubject.value == 5 ||
+                  toolbarEvents.zoomValueSubject.value === 5 ||
                   redactAllInProgress
                 "
                 id="mvPlusBtn"
@@ -252,7 +255,9 @@
                 title="Zoom In"
                 data-l10n-id="zoom_in"
               >
-                <span></span>
+                <span class="mv-toolbar__menu-button--zoom-out-text">{{
+                  "Zoom In" | rpxTranslate
+                }}</span>
               </button>
             </div>
           </ng-container>
@@ -290,7 +295,7 @@
             >
               <span></span>
             </button>
-            <span>Rotate</span>
+            <span>{{ "Rotate" | rpxTranslate }}</span>
           </div>
 
           <button
@@ -309,7 +314,12 @@
             "
             aria-pressed="false"
             (click)="toggleSearchBar(); isDropdownMenuOpen = false"
-          ></button>
+          >
+            <span>{{ "Search" | rpxTranslate }}</span>
+          </button>
+          <mv-search-bar
+            *ngIf="!toolbarEvents.searchBarHidden.getValue()"
+          ></mv-search-bar>
 
           <button
             *ngIf="enableICP && toolbarButtons.showPresentationMode && isPdf()"
@@ -328,7 +338,9 @@
             aria-pressed="false"
             (click)="togglePresentBar(); isDropdownMenuOpen = false"
           >
-            <span data-l10n-id="icpMode_label">Present</span>
+            <span data-l10n-id="icpMode_label">{{
+              "Present" | rpxTranslate
+            }}</span>
           </button>
 
           <button
@@ -348,7 +360,7 @@
             aria-pressed="false"
             (click)="toggleRedactBar(); isDropdownMenuOpen = false"
           >
-            <span>Redact</span>
+            <span>{{ "Redact" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -367,7 +379,7 @@
             aria-pressed="false"
             (click)="toggleGrabNDrag(); isDropdownMenuOpen = false"
           >
-            <span>Grab and drag</span>
+            <span>{{ "Grab and drag" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -386,7 +398,9 @@
             "
             aria-pressed="false"
             (click)="downloadFile(); isDropdownMenuOpen = false"
-          ></button>
+          >
+            <span>{{ "Download" | rpxTranslate }}</span>
+          </button>
 
           <button
             *ngIf="toolbarButtons.showPrint"
@@ -404,7 +418,9 @@
             "
             aria-pressed="false"
             (click)="printFile(); isDropdownMenuOpen = false"
-          ></button>
+          >
+            <span>{{ "Print" | rpxTranslate }}</span>
+          </button>
 
           <button
             *ngIf="enableAnnotations && toolbarButtons.showCommentSummary"
@@ -423,11 +439,10 @@
             aria-pressed="false"
             (click)="toggleCommentsPanel(); isDropdownMenuOpen = false"
           >
-            <span>Comments</span>
+            <span>{{ "Comments" | rpxTranslate }}</span>
           </button>
         </ng-template>
       </div>
-      <mv-search-bar></mv-search-bar>
     </div>
 
     <div id="loadingBar">

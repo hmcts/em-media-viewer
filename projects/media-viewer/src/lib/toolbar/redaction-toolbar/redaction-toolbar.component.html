@@ -1,40 +1,44 @@
 <div class="redaction">
-  <label class="govuk-label redaction-title" data-l10n-id="redaction_options"
-    >Redaction options</label
-  >
+  <label class="govuk-label redaction-title" data-l10n-id="redaction_options">{{
+    "Redaction options" | rpxTranslate
+  }}</label>
   <button
     id="toggleDrawButton"
     class="mv-button redaction-button--draw"
-    title="Draw a box"
+    title="{{ 'Draw a box' | rpxTranslate }}}"
     data-l10n-id="toggleDrawButton"
     (click)="toggleDrawMode()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="toggleDrawButton_label">Draw a box</span>
+    <span data-l10n-id="toggleDrawButton_label">{{
+      "Draw a box" | rpxTranslate
+    }}</span>
   </button>
 
   <button
     id="redactPageButton"
     class="mv-button redaction-button--redact-page"
-    title="Redact Page"
+    title="{{ 'Redact page' | rpxTranslate }}"
     data-l10n-id="redactPageButton"
     (click)="redactPage()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="redactPageButton_label">Redact page</span>
+    <span data-l10n-id="redactPageButton_label">{{
+      "Redact page" | rpxTranslate
+    }}</span>
   </button>
   <button
     *ngIf="showRedactSearch"
     id="mvRedactFromSearchBtn"
-    title="From search"
+    title="{{ 'From search' | rpxTranslate }}"
     data-l10n-id="fromSearchButton"
     class="mv-button redaction-button--search"
     (click)="onRedactAllSearch()"
     [disabled]="redactionAllInProgress"
   >
-    <span style="width: 5rem" data-l10n-id="fromSearchButton_label"
-      >From search</span
-    >
+    <span style="width: 5rem" data-l10n-id="fromSearchButton_label">{{
+      "From search" | rpxTranslate
+    }}</span>
   </button>
 
   <button
@@ -42,12 +46,14 @@
     id="toggleHighlightButton"
     class="mv-button redaction-button--redact"
     aria-pressed="false"
-    title="Redact text"
+    title="{{ 'Redact text' | rpxTranslate }}"
     data-l10n-id="toggleTextRedactionButton"
     (click)="toggleTextRedactionMode()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="toggleTextRedactionButton_label">Redact text</span>
+    <span data-l10n-id="toggleTextRedactionButton_label">{{
+      "Redact text" | rpxTranslate
+    }}</span>
   </button>
 
   <button
@@ -56,11 +62,11 @@
     #mvClearBtn
     class="mv-button redaction-button--clear"
     aria-pressed="false"
-    title="Clear all"
+    title="{{ 'Clear all' | rpxTranslate }}"
     data-l10n-id="toggleClearAllButton"
     (click)="unmarkAll()"
   >
-    <span data-l10n-id="Clear all">Clear all</span>
+    <span data-l10n-id="Clear all">{{ "Clear all" | rpxTranslate }}</span>
   </button>
 
   <button
@@ -71,14 +77,16 @@
     [class.redaction-button--hide-preview]="preview"
     redaction-button--preview
     aria-pressed="false"
-    title="Preview"
+    title="{{ 'Preview' | rpxTranslate }}"
     data-l10n-id="togglePreviewButton"
     (click)="togglePreview()"
   >
-    <span *ngIf="!preview" data-l10n-id="redaction-preview_label">Preview</span>
-    <span *ngIf="preview" data-l10n-id="redaction-hide-preview_label"
-      >Hide preview</span
-    >
+    <span *ngIf="!preview" data-l10n-id="redaction-preview_label">{{
+      "Preview" | rpxTranslate
+    }}</span>
+    <span *ngIf="preview" data-l10n-id="redaction-hide-preview_label">{{
+      "Hide preview" | rpxTranslate
+    }}</span>
   </button>
 
   <button
@@ -86,22 +94,26 @@
     id="mvRedactBtn"
     class="mv-button redaction-button--download"
     aria-pressed="false"
-    title="Redact"
+    title="{{ 'Save document' | rpxTranslate }}"
     data-l10n-id="mvRedactBtn"
     (click)="redact()"
   >
-    <span data-l10n-id="Save Document">Save document</span>
+    <span data-l10n-id="Save Document">{{
+      "Save document" | rpxTranslate
+    }}</span>
   </button>
 
   <button
     id="mvCloseBtn"
     #mvCloseBtn
     class="mv-button redaction-button--close"
-    title="Close Redaction"
+    title="{{ 'Close Redaction' | rpxTranslate }}"
     data-l10n-id="mvRedactBtn"
     (click)="toggleRedactBar()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="Close Redaction">Close Redaction</span>
+    <span data-l10n-id="Close Redaction">{{
+      "Close Redaction" | rpxTranslate
+    }}</span>
   </button>
 </div>

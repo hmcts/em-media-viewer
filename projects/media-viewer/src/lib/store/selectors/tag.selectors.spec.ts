@@ -4,7 +4,7 @@ import { select, Store, StoreModule } from '@ngrx/store';
 import * as fromSelectors from './tag.selectors';
 import * as fromActions from '../actions/annotation.actions';
 import * as fromTags from '../actions/tag.actions';
-import {initialTagState, reducers, State} from '../reducers/reducers';
+import { initialTagState, reducers, State } from '../reducers/reducers';
 
 const comment = {
   createdBy: 'b3afcb72-5e30-49cd-b833-88ab7aab619b',
@@ -133,7 +133,7 @@ describe('Tags selectors', () => {
       });
 
       store.dispatch(new fromActions.SaveAnnotationSuccess(anno));
-      store.dispatch(new fromTags.AddFilterTags({important: true}));
+      store.dispatch(new fromTags.AddFilterTags({ important: true }));
       expect(result).toEqual(['important']);
     });
   });
@@ -146,7 +146,7 @@ describe('Tags selectors', () => {
       });
 
       store.dispatch(new fromActions.SaveAnnotationSuccess(anno));
-      store.dispatch(new fromTags.AddFilterTags({important: true}));
+      store.dispatch(new fromTags.AddFilterTags({ important: true }));
       const expected = {
         'c3adf070-353b-45d2-9a84-c912851cf34d': 'c3adf070-353b-45d2-9a84-c912851cf34d'
       };
@@ -162,7 +162,7 @@ describe('Tags selectors', () => {
       });
 
       store.dispatch(new fromActions.SaveAnnotationSuccess(anno));
-      store.dispatch(new fromTags.AddFilterTags({important: true}));
+      store.dispatch(new fromTags.AddFilterTags({ important: true }));
       const expected = {
         '1': [anno]
       };
@@ -182,7 +182,4 @@ describe('Tags selectors', () => {
       expect(result).toEqual([{ key: 'important', length: 1 }]);
     });
   });
-
-
-
 });

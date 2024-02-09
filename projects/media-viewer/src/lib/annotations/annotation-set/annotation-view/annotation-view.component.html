@@ -11,8 +11,8 @@
   </mv-ctx-toolbar>
   <ng-container *ngFor="let rectangle of anno.rectangles">
     <mv-anno-rectangle
-      (select)="onSelect()"
-      (update)="onRectangleUpdate($event)"
+      (selectEvent)="onSelect()"
+      (updateEvent)="onRectangleUpdate($event)"
       [selected]="selected"
       [zoom]="zoom"
       [rotate]="rotate"
