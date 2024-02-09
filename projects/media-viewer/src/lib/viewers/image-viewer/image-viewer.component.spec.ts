@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
 import { PrintService } from '../../print.service';
@@ -30,7 +31,15 @@ describe('ImageViewerComponent', () => {
         AnnotationsModule,
         StoreModule.forRoot({}),
         StoreModule.forFeature('media-viewer', reducers),
-        RouterTestingModule
+        RouterTestingModule,
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, concatMap, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import {AnnotationApiService} from '../../annotations/services/annotation-api/annotation-api.service';
+import { AnnotationApiService } from '../../annotations/services/annotation-api/annotation-api.service';
 import * as annotationsActions from '../actions/annotation.actions';
 
 @Injectable()
@@ -12,8 +12,8 @@ export class AnnotationEffects {
     private annotationApiService: AnnotationApiService,
   ) { }
 
-  @Effect()
-  loadAnnotation$ = this.actions$.pipe(
+  loadAnnotation$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(annotationsActions.LOAD_ANNOTATION_SET),
     map((action: annotationsActions.LoadAnnotationSet) => action.payload),
     switchMap((documentId) => {
@@ -27,24 +27,25 @@ export class AnnotationEffects {
         catchError(error => {
           return of(new annotationsActions.LoadAnnotationSetFail(error));
         }));
-    }));
+    }))
+  );
 
-  @Effect()
-  postAnnotation$ = this.actions$.pipe(
+  postAnnotation$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(annotationsActions.SAVE_ANNOTATION),
-    map((action: annotationsActions.SaveAnnotation) => action.payload),
-    exhaustMap((annotation) => {
-      return this.annotationApiService.postAnnotation(annotation).pipe(
+    concatMap((action: annotationsActions.SaveAnnotation) => {
+      return this.annotationApiService.postAnnotation(action.payload).pipe(
         map(annotations => {
           return new annotationsActions.SaveAnnotationSuccess(annotations);
         }),
         catchError(error => {
           return of(new annotationsActions.LoadAnnotationSetFail(error));
         }));
-    }));
+    }))
+  );
 
-  @Effect()
-  deleteAnnotation$ = this.actions$.pipe(
+  deleteAnnotation$ = createEffect(() =>
+    this.actions$.pipe(
     ofType(annotationsActions.DELETE_ANNOTATION),
     map((action: annotationsActions.DeleteAnnotation) => action.payload),
     exhaustMap((annotation) => {
@@ -55,5 +56,21 @@ export class AnnotationEffects {
         catchError(error => {
           return of(new annotationsActions.DeleteAnnotationFail(error));
         }));
-    }));
+    }))
+  );
+
+  saveAnnotationSet$ = createEffect(() =>
+    this.actions$.pipe(
+    ofType(annotationsActions.SAVE_ANNOTATION_SET),
+    map((action: annotationsActions.SaveAnnotationSet) => action.payload),
+    switchMap((annotationSet) => {
+      return this.annotationApiService.postAnnotationSet(annotationSet).pipe(
+        map(res => {
+          return new annotationsActions.SaveAnnotationSetSuccess(res);
+        }),
+        catchError(error => {
+          return of(new annotationsActions.SaveAnnotationSetFail(error));
+        }));
+    }))
+  );
 }

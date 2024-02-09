@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { A11yModule } from '@angular/cdk/a11y';
 import { RouterModule } from '@angular/router';
 
 import { MutableDivModule } from 'mutable-div';
 import { TagInputModule } from 'ngx-chips';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { AnnotationApiService } from './services/annotation-api/annotation-api.service';
 import { AnnotationViewComponent } from './annotation-set/annotation-view/annotation-view.component';
@@ -27,14 +27,15 @@ import { TextHighlightDirective } from './comment-set/comment/text-highlight/tex
 import { TagsComponent } from './tags/tags.component';
 import { TagsServices } from './services/tags/tags.services';
 import { CommentsNavigateComponent } from './comment-set/comment-navigate/comments-navigate.component';
-import {CommentFilterComponent} from './comment-set/comment-set-header/comment-filter/comment-filter.component';
-import {MomentDatePipe} from './pipes/date/date.pipe';
+import { CommentFilterComponent } from './comment-set/comment-set-header/comment-filter/comment-filter.component';
+import { MomentDatePipe } from './pipes/date/date.pipe';
 import { BookmarksApiService } from './services/bookmarks-api/bookmarks-api.service';
-import {FilterPipe} from './pipes/filter/filter.pipe';
-import {UnsnakePipe} from './pipes/unsnake/unsnake.pipe';
-import {SharedModule} from '../shared/shared.module';
+import { FilterPipe } from './pipes/filter/filter.pipe';
+import { UnsnakePipe } from './pipes/unsnake/unsnake.pipe';
+import { SharedModule } from '../shared/shared.module';
 import { MetadataLayerComponent } from './annotation-set/metadata-layer/metadata-layer.component';
 import { CommentService } from './comment-set/comment/comment.service';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { CommentService } from './comment-set/comment/comment.service';
     RouterModule,
     ReactiveFormsModule,
     NgxDatatableModule,
-    SharedModule
+    SharedModule,
+    RpxTranslationModule.forChild()
   ],
   declarations: [
     MetadataLayerComponent,
@@ -69,11 +71,6 @@ import { CommentService } from './comment-set/comment/comment.service';
     CommentFilterComponent,
     FilterPipe,
     UnsnakePipe
-  ],
-  entryComponents: [
-    AnnotationViewComponent,
-    AnnotationSetComponent,
-    CommentSetComponent
   ],
   providers: [
     AnnotationApiService,

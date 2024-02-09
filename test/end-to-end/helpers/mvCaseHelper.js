@@ -151,6 +151,12 @@ async function deleteHighlightsTest(I, caseId, mediaType) {
   await I.deleteAllExistingTextHighlights();
 }
 
+async function annotateFromSearchTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.deleteAllExistingTextHighlights();
+  await I.annotateFromSearch();
+}
+
 async function collateCommentsTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.clickCommentsPanel();
@@ -188,9 +194,9 @@ async function redactContentUsingRedactTextTest(I, caseId, mediaType) {
   await I.redactContentUsingRedactText();
 }
 
-async function redactSearchAndRedctAllTest(I, caseId, mediaType) {
+async function redactSearchAndRedactAllTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
-  await I.redactSearchAndRedctAll();
+  await I.redactSearchAndRedactAll();
 }
 
 async function createRedactionsUsingDrawBoxAndRedactText(I, caseId, mediaType) {
@@ -243,6 +249,7 @@ async function nonTextualHighlightUsingDrawBoxTest(I, caseId, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.openImage();
   await I.deleteAllExistingNonTextualHighlights();
+  await I.openImage();
   await I.highlightOnImage(900, 900, 900, 900, ['mousedown', 'mousemove', 'mouseup'], 'box-highlight', 0);
 }
 
@@ -282,6 +289,14 @@ async function uploadDocumentEvent(I, caseId, eventName) {
   await I.authenticateWithIdam();
   await I.amOnPage('/case-details/' + caseId);
   await I.chooseNextStep(eventName, 3)
+}
+
+async function customAndReorderBookmarksTest(I, caseId, mediaType) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.clearBookMarks();
+  await I.createBookMark();
+  await I.customOrderBookmarks();
+  await I.reorderBookmarks();
 }
 
 async function add30BookmarksTest(I, caseId, mediaType) {
@@ -336,7 +351,9 @@ module.exports = {
   nonTextualHighlightUsingDrawBoxTest,
   updateNonTextualCommentTest,
   deleteNonTextualCommentTest,
-  redactSearchAndRedctAllTest,
+  redactSearchAndRedactAllTest,
+  customAndReorderBookmarksTest,
   bookmarkBoxBlankTest,
-  add30BookmarksTest
+  add30BookmarksTest, 
+  annotateFromSearchTest
 }
