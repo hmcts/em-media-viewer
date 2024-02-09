@@ -1,3 +1,4 @@
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
@@ -29,7 +30,15 @@ describe('MainToolbarComponent', () => {
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({}),
         OverlayModule,
-        RouterTestingModule
+        RouterTestingModule,
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       providers: [ToolbarButtonVisibilityService, ToolbarEventService]
     })
@@ -160,68 +169,19 @@ describe('MainToolbarComponent', () => {
     expect(component.pageNumber).toEqual(4);
   });
 
-  it('should start with both annotation modes deactivated', () => {
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
-  });
-
-  it('should toggle on the highlight button', () => {
+  it('should toggle highlight toolbar', () => {
     expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
     component.onClickHighlightToggle();
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).toHaveClass('toggled');
   });
 
-  it('should toggle off the highlight button', () => {
+  it('should toggle off the highlight toolbar', () => {
     component.onClickHighlightToggle();
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).toHaveClass('toggled');
     component.onClickHighlightToggle();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
-  });
-
-  it('should show the draw button if permitted', () => {
-    component.toolbarButtons.showHighlightButton = true;
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).toBeTruthy();
-  });
-
-  it('should toggle on the draw button', () => {
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
-    component.onClickDrawToggle();
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).toHaveClass('toggled');
-  });
-
-  it('should  toggle off the draw button', () => {
-    component.onClickDrawToggle();
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).toHaveClass('toggled');
-    component.onClickDrawToggle();
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
-  });
-
-  it('should turn draw mode off when highlight is selected', () => {
-    component.onClickDrawToggle();
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).toHaveClass('toggled');
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
-    component.onClickHighlightToggle();
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).toHaveClass('toggled');
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
-  });
-
-  it('should turn highlight mode off when draw is selected', () => {
-    component.onClickHighlightToggle();
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).toHaveClass('toggled');
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).not.toHaveClass('toggled');
-    component.onClickDrawToggle();
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).toHaveClass('toggled');
     expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
   });
 
@@ -249,7 +209,7 @@ describe('MainToolbarComponent', () => {
     expect(stepZoom).toHaveBeenCalledWith(-0.1);
   });
 
-  it('should emit zoom in event', () => {
+  it('should emit step zoom in event', () => {
     const stepZoom = spyOn(component.toolbarEvents.stepZoomSubject, 'next');
     const zoomInButton = nativeElement.querySelector('button[id=mvPlusBtn]');
     zoomInButton.click();

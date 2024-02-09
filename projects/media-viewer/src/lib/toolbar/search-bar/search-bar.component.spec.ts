@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -13,7 +14,18 @@ describe('SearchBarComponent', () => {
   beforeEach(() => {
     return TestBed.configureTestingModule({
       declarations: [SearchBarComponent],
-      imports: [FormsModule, RouterTestingModule],
+      imports: [
+        FormsModule,
+        RouterTestingModule,
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
+      ],
       providers: [ToolbarButtonVisibilityService, ToolbarEventService]
     })
       .compileComponents();
@@ -137,7 +149,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should set search result count with results found', () => {
-    component.toolbarEvents.searchResultsCountSubject.next({ current: 1, total: 4 });
+    component.toolbarEvents.searchResultsCountSubject.next({ current: 1, total: 4, isPrevious: false });
     expect(component.resultCount).toBeTruthy();
     expect(component.resultsText).toEqual('Found 1 of 4');
     setTimeout(() => {
@@ -148,7 +160,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should set search result count with no results found', () => {
-    component.toolbarEvents.searchResultsCountSubject.next({ current: null, total: null });
+    component.toolbarEvents.searchResultsCountSubject.next({ current: null, total: null, isPrevious: false });
     expect(component.resultCount).toBeFalsy();
     expect(component.resultsText).toEqual('No results found');
   });

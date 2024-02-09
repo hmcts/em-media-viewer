@@ -15,7 +15,7 @@
   >
     <mv-gov-uk-error-message
       [config]="{ id: 'passport' }"
-      *ngIf="errorMessage"
+      *ngIf="errorMessage.isInvalid"
       [errorMessage]="errorMessage"
     >
     </mv-gov-uk-error-message>
