@@ -86,6 +86,17 @@ describe('AnnotationReducer', () => {
     });
   });
 
+  describe('SAVE_ANNOTATION_SET_SUCCESS action', () => {
+    it('should set annotation entities page entities and comment entities', () => {
+      const { initialState } = fromAnnotations;
+      const payload: any = annotationSet;
+      const action = new fromActions.SaveAnnotationSetSuccess(payload);
+      const state = fromAnnotations.reducer(initialState, action);
+      expect(state.loading).toEqual(false);
+      expect(state.loaded).toEqual(true);
+    });
+  });
+
   describe('DELETE_ANNOTATION_SUCCESS action', () => {
     it('should delete annotations', () => {
       const { initialState } = fromAnnotations;

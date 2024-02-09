@@ -1,0 +1,56 @@
+<div class="redaction">
+  <label class="govuk-label redaction-title" data-l10n-id="redaction_options"
+    >Highlight options</label
+  >
+
+  <button
+    id="mvDrawBtn"
+    #mvDrawBtn
+    class="mv-button mv-toolbar__menu-button--draw"
+    title="Draw a box"
+    [class.toggled]="toolbarEventService.drawModeSubject | async"
+    aria-pressed="false"
+    data-l10n-id="mvDrawBtn"
+    (click)="onClickDrawToggle()"
+    [disabled]="redactionAllInProgress"
+  >
+    <span data-l10n-id="draw_label">Draw a box</span>
+  </button>
+
+  <button
+    id="highlightTextBtn"
+    class="mv-button mv-toolbar__menu-button--highlight"
+    title="Highlight text"
+    data-l10n-id="highlightTextBtn"
+    (click)="onHighlight()"
+    [class.toggled]="toolbarEventService.highlightModeSubject | async"
+    [disabled]="redactionAllInProgress"
+  >
+    <span data-l10n-id="highlightTextBtn_label">Highlight text</span>
+  </button>
+
+  <button
+    id="mvHighlightFromSearchBtn"
+    title="From search"
+    data-l10n-id="fromSearchButton"
+    class="mv-button redaction-button--search"
+    (click)="onAllSearch()"
+    [disabled]="redactionAllInProgress"
+  >
+    <span style="width: 5rem" data-l10n-id="fromSearchButton_label"
+      >From search</span
+    >
+  </button>
+
+  <button
+    id="mvCloseBtn"
+    #mvCloseBtn
+    class="mv-button redaction-button--close"
+    title="Close Redaction"
+    data-l10n-id="mvRedactBtn"
+    (click)="onClose()"
+    [disabled]="redactionAllInProgress"
+  >
+    <span data-l10n-id="Close Redaction">Close Highlight</span>
+  </button>
+</div>

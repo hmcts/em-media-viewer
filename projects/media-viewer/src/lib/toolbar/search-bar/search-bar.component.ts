@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { SearchResultsCount, ToolbarEventService } from '../toolbar-event.service';
 import { Subscription } from 'rxjs';
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   selector: 'mv-search-bar',
   templateUrl: './search-bar.component.html'
 })
-export class SearchBarComponent implements OnInit, OnDestroy {
+export class SearchBarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('findInput', { static: true }) findInput: ElementRef<HTMLInputElement>;
   @ViewChild('findNext', { static: false }) findNext: ElementRef<HTMLAnchorElement>;
@@ -92,7 +92,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.resultsText = this.resultCount > 0
       ? `Found ${results.current} of ${results.total}`
       : 'No results found';
-    if (this.resultCount && this.resultCount > 0) {
+    if (this.resultCount && this.resultCount > 0 && !results.isPrevious) {
       setTimeout(() => {
         this.findNext.nativeElement.focus();
       }, 1000);
