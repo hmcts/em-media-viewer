@@ -65,14 +65,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   highlightMode: Observable<boolean>;
   drawMode: BehaviorSubject<boolean>;
 
-  documentOutline: Outline;
+  documentOutline: Outline[];
   loadingDocument = false;
   loadingDocumentProgress: number;
   errorMessage: string;
   hasDifferentPageSize = false;
 
-  @ViewChild('viewerContainer', {static: true}) viewerContainer: ElementRef<HTMLDivElement>;
-  @ViewChild('pdfViewer', {static: false}) pdfViewer: ElementRef<HTMLDivElement>;
+  @ViewChild('viewerContainer', { static: true }) viewerContainer: ElementRef<HTMLDivElement>;
+  @ViewChild('pdfViewer', { static: false }) pdfViewer: ElementRef<HTMLDivElement>;
 
   private pdfWrapper: PdfJsWrapper;
   private $subscription: Subscription;
@@ -120,8 +120,8 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     );
     this.$subscription.add(this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag));
     this.$subscription.add(this.toolbarEvents.commentsPanelVisible.subscribe(toggle => {
-        this.showCommentsPanel = toggle;
-      })
+      this.showCommentsPanel = toggle;
+    })
     );
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
     this.$subscription.add(
