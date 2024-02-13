@@ -6,6 +6,7 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { Outline } from '../side-bar/outline-item/outline.model';
 import { PdfPosition } from '../../../store/reducers/document.reducer';
+import { RefProxy } from 'pdfjs-dist/types/src/display/api';
 
 
 describe('PdfJsWrapper', () => {
@@ -52,7 +53,7 @@ describe('PdfJsWrapper', () => {
       new Subject<string>(),
       new Subject<DocumentLoadProgress>(),
       new Subject<any>(),
-      new Subject<Outline>(),
+      new Subject<Outline[]>(),
       new Subject(),
       new Subject<PageEvent[]>(),
       new Subject<{ location: PdfPosition }>()
@@ -92,13 +93,26 @@ describe('PdfJsWrapper', () => {
     const outlineItem: Outline = <Outline>{};
     outlineItem.dest = [{ num: 254, gen: 0, }, { name: 'Fit', }];
     outlineItem.items = [];
-    const outline: Outline = <Outline>{};
+    const outline: Outline = {
+      bold: true,
+      color: new Uint8ClampedArray(2),
+      count: 1,
+      dest: [],
+      italic: true,
+      items: [],
+      newWindow: false,
+      pageNumber: 1,
+      title: 'Outline',
+      unsafeUrl: '',
+      url: ''
+    };
     outline.dest = [{ num: 254, gen: 0, }, { name: 'Fit', }];
     outline.items = [];
     outline.items.push(outlineItem);
     outlineArray.push(outline);
+    const ref: RefProxy = { num: 254, gen: 0, }
 
-    const mockDocument = { numPages: 10, getOutline: () => (outlineArray), getPageIndex: ({ }) => (0), getMetadata: () => ({ info: { Title: 'Title' } }) };
+    const mockDocument = { numPages: 10, getOutline: () => (outlineArray), getPageIndex: (ref) => (0), getMetadata: () => ({ info: { Title: 'Title' } }) };
 
     spyOn(wrapper, 'createLoadingTask')
       .and.returnValue({ promise: Promise.resolve(mockDocument) });

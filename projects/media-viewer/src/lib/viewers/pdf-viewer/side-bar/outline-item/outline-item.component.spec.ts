@@ -8,12 +8,12 @@ describe('OutlineItemComponent', () => {
 
   const outline: Outline = {
     bold: true,
-    color: [],
+    color: new Uint8ClampedArray(2),
     count: 1,
     dest: [],
     italic: true,
     items: [],
-    newWindow: '',
+    newWindow: false,
     pageNumber: 0,
     title: 'Outline',
     unsafeUrl: '',
@@ -22,9 +22,9 @@ describe('OutlineItemComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ OutlineItemComponent ]
+      declarations: [OutlineItemComponent]
     })
-    .compileComponents();
+      .compileComponents();
     fixture = TestBed.createComponent(OutlineItemComponent);
     component = fixture.componentInstance;
     component.outline = outline;
@@ -76,7 +76,7 @@ describe('OutlineItemComponent', () => {
     component.currentPageNumber = 3;
     expect(component.isViewedItem(outline, undefined)).toBe(false);
 
-    const nextOutline = <Outline> {};
+    const nextOutline = <Outline>{};
     nextOutline.pageNumber = 2;
     component.currentPageNumber = 1;
     expect(component.isViewedItem(outline, nextOutline)).toBe(true);
@@ -87,7 +87,7 @@ describe('OutlineItemComponent', () => {
   it('should find the ending page number', () => {
     component.endPage = Math.floor(Math.random() * 1000);
     expect(component.findEndPage(undefined)).toBe(component.endPage);
-    const nextOutline = <Outline> {};
+    const nextOutline = <Outline>{};
     nextOutline.pageNumber = Math.floor(Math.random() * 10000);
     expect(component.findEndPage(nextOutline)).toBe(nextOutline.pageNumber);
   });
