@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SearchMode, SearchType, ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import * as fromStore from '../../store/reducers/reducers';
@@ -11,7 +11,7 @@ import * as fromRedactSelectors from '../../store/selectors/redaction.selectors'
   templateUrl: './highlight-toolbar.component.html',
   styleUrls: ['./highlight-toolbar.component.scss']
 })
-export class HighlightToolbarComponent implements OnInit {
+export class HighlightToolbarComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   redactionAllInProgress: boolean;

@@ -1,12 +1,12 @@
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
 import { ElementRef, Injectable } from '@angular/core';
-import {DocumentLoadProgress, PageEvent, PdfJsWrapper} from './pdf-js-wrapper';
+import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Outline } from '../side-bar/outline-item/outline.model';
 import { PdfPosition } from '../../../store/reducers/document.reducer';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class PdfJsWrapperFactory {
 
   private linkService: pdfjsViewer.PDFLinkService;
@@ -42,7 +42,7 @@ export class PdfJsWrapperFactory {
       new Subject<string>(),
       new Subject<DocumentLoadProgress>(),
       new Subject<any>(),
-      new Subject<Outline>(),
+      new Subject<Outline[]>(),
       new Subject(),
       new Subject<PageEvent[]>(),
       new Subject<{ location: PdfPosition }>()

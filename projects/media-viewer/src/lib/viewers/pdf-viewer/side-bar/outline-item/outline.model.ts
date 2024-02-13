@@ -1,13 +1,13 @@
 export interface Outline {
   bold: boolean;
-  color: string[];
-  count: number;
-  dest: {}[];
+  color: Uint8ClampedArray;
+  count: number | undefined;
+  dest: string | Array<any> | null;
   italic: boolean;
   items: Outline[];
-  newWindow: any;
-  pageNumber: number;
+  newWindow: boolean | undefined;
+  pageNumber?: number;
   title: string;
-  unsafeUrl: any;
-  url: any;
+  unsafeUrl: string | undefined;
+  url: string | null;
 }
