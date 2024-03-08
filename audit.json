@@ -196,6 +196,7 @@
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/main.0c84526d0e382c47.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10283240117152214.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10285240126040824.js_GET": "ignore",
+  "10027_Information Disclosure - Suspicious Comments_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10285240307101407.js_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/favicon.ico_GET": "ignore",
   "10035_Strict-Transport-Security Header Not Set_https://em-media-viewer-staging.service.core-compute-aat.internal/main.4cd1ed7f36ca942d276b.js_GET": "ignore",
@@ -373,6 +374,7 @@
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/runtime.cec83f2c9a2d2d87.js_GET": "ignore",
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10283240117152214.js_GET": "ignore",
   "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10285240126040824.js_GET": "ignore",
+  "10063_Permissions Policy Header Not Set_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10285240307101407.js_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-showcase-aat.service.core-compute-aat.internal/assets/images/govuk-apple-touch-icon-152x152.png_GET": "ignore",
@@ -645,5 +647,6 @@
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/main.0c84526d0e382c47.js_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/polyfills.ac913584ee1b04d2.js_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/runtime.cec83f2c9a2d2d87.js_GET": "ignore",
-  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10283240117152214.js_GET": "ignore"
+  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10283240117152214.js_GET": "ignore",
+  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA27NVfgjqrux_10285240307101407.js_GET": "ignore"
 }
