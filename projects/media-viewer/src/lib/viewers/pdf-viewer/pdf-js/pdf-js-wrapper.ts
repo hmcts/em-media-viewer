@@ -102,7 +102,7 @@ export class PdfJsWrapper {
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
 
       const outlineNode = await pdfDocument.getOutline();
-      const outline = outlineNode.map(x => {
+      const outline = outlineNode ? outlineNode.map(x => {
         return {
           bold: x.bold,
           color: x.color,
@@ -115,7 +115,7 @@ export class PdfJsWrapper {
           unsafeUrl: x.unsafeUrl,
           url: x.url
         } as Outline
-      });
+      }) : null;
 
 
 
