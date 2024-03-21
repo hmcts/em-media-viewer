@@ -115,5 +115,5 @@
   "changeDocumentDetails": "//span[text()='Change document details']",
   "uploadDocumentUrl": "#documentUrl",
   "loadDocument": "//button[@class=\"govuk-button\" and contains(text(), \"Load document\")]",
-  "mvpdfviewer": "//mv-pdf-viewer[contains(@ng-reflect-url, '/documents/fbec2f90')]"
+  "mvpdfviewer": "//mv-pdf-viewer"
 }
