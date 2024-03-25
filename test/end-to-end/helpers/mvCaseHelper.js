@@ -26,6 +26,11 @@ async function uploadWorDoc(I, caseId, eventName) {
   await I.uploadWordDoc();
 }
 
+async function loadNewDocument(I, caseId, mediaType, newCaseId) {
+  await executeTestsOnPreview(I, caseId, mediaType);
+  await I.loadDocumentAndCheckSuccessLoad(newCaseId)
+}
+
 async function contentSearchTest(I, caseId, searchKeyword, noOfFindings, mediaType) {
   await executeTestsOnPreview(I, caseId, mediaType);
   await I.executeContentSearch(searchKeyword, noOfFindings);
@@ -354,6 +359,7 @@ module.exports = {
   redactSearchAndRedactAllTest,
   customAndReorderBookmarksTest,
   bookmarkBoxBlankTest,
-  add30BookmarksTest, 
-  annotateFromSearchTest
+  add30BookmarksTest,
+  annotateFromSearchTest,
+  loadNewDocument
 }

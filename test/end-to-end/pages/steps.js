@@ -73,6 +73,7 @@ module.exports = () => {
     clickRedactAllButton: steps.redact.clickRedactAllButton,
     openImage: steps.imageViewer.openImage,
     openHighlightToolbar: steps.annotationsAndComments.openHighlightToolbar,
-    annotateFromSearch: steps.annotationsAndComments.annotateFromSearch
+    annotateFromSearch: steps.annotationsAndComments.annotateFromSearch,
+    loadDocumentAndCheckSuccessLoad: steps.indexAndOutline.loadDocumentAndCheckSuccessLoad,
   });
 };
