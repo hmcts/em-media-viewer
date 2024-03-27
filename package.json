@@ -100,7 +100,7 @@
     "uuid": "^3.4.0",
     "ws": "^7.4.6",
     "xmlhttprequest-ssl": "^1.6.2",
-    "zone.js": "~0.14.0"
+    "zone.js": "0.14.3"
   },
   "resolutions": {
     "glob-parent": "^5.1.2",
@@ -114,7 +114,9 @@
     "ws": "^7.4.6",
     "xmlhttprequest-ssl": "^1.6.2",
     "@xmldom/xmldom": "^0.8.0",
-    "yargs-parser": "^20.2.7"
+    "yargs-parser": "^20.2.7",
+    "zone.js": "0.14.3",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "15.2.10",
@@ -196,7 +198,8 @@
     "watch": "1.0.2",
     "webdriver-manager": "^12.1.7",
     "webdriverio": "7.19.4",
-    "when": "3.7.8"
+    "when": "3.7.8",
+    "yarn-audit-fix": "^10.0.7"
   },
   "packageManager": "yarn@3.6.4"
 }
