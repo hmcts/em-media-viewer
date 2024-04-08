@@ -6,6 +6,6 @@ home: https://github.com/hmcts/media-viewer
 version: 0.0.15
 dependencies:
   - name: nodejs
-    version: 3.0.3
+    version: 3.1.0
     repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
 
