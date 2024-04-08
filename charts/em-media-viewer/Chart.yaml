@@ -3,9 +3,9 @@ appVersion: "1.0"
 description: A Helm chart for EM Media Viewer Demo Application
 name: em-media-viewer
 home: https://github.com/hmcts/media-viewer
-version: 0.0.15
+version: 0.0.16
 dependencies:
   - name: nodejs
-    version: 3.0.3
+    version: 3.1.0
     repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
 
