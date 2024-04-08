@@ -72,7 +72,7 @@
     "@nguniversal/express-engine": "^15.0.0",
     "@reactivex/rxjs": "^6.6.7",
     "@swimlane/ngx-datatable": "^20.0.0",
-    "axios": "^1.6.0",
+    "axios": "^1.6.3",
     "body-parser": "^1.19.0",
     "config": "^3.3.9",
     "core-js": "^2.6.5",
@@ -118,9 +118,9 @@
     "yargs-parser": "^20.2.7",
     "zone.js": "0.14.3",
     "lodash": "^4.17.21",
-    "xml2j":"^0.5.0",
-    "axios":"^0.28.0",
-    "got":"^11.8.5"
+    "xml2j": "^0.5.0",
+    "axios": "^1.6.3",
+    "got": "^11.8.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "15.2.10",
