@@ -101,7 +101,7 @@
     "uuid": "^3.4.0",
     "ws": "^7.4.6",
     "xmlhttprequest-ssl": "^1.6.2",
-    "zone.js": "0.14.3"
+    "zone.js": "0.14.4"
   },
   "resolutions": {
     "glob-parent": "^5.1.2",
@@ -116,7 +116,7 @@
     "xmlhttprequest-ssl": "^1.6.2",
     "@xmldom/xmldom": "^0.8.0",
     "yargs-parser": "^20.2.7",
-    "zone.js": "0.14.3",
+    "zone.js": "0.14.4",
     "lodash": "^4.17.21",
     "xml2j": "^0.5.0",
     "axios": "^1.6.3",
