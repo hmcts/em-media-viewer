@@ -1982,8 +1982,8 @@ __metadata:
   linkType: hard
 
 "@cucumber/cucumber@npm:*":
-  version: 10.3.1
-  resolution: "@cucumber/cucumber@npm:10.3.1"
+  version: 10.3.2
+  resolution: "@cucumber/cucumber@npm:10.3.2"
   dependencies:
     "@cucumber/ci-environment": 10.0.0
     "@cucumber/cucumber-expressions": 17.0.1
@@ -2020,7 +2020,7 @@ __metadata:
     string-argv: 0.3.1
     strip-ansi: 6.0.1
     supports-color: ^8.1.1
-    tmp: ^0.2.1
+    tmp: 0.2.3
     type-fest: ^4.8.3
     util-arity: ^1.1.0
     xmlbuilder: ^15.1.1
@@ -2028,7 +2028,7 @@ __metadata:
     yup: 1.2.0
   bin:
     cucumber-js: bin/cucumber.js
-  checksum: 72223468c8ea18dd74b180fceb656b782f09fbb1034c2c8fe6d102b4952b157f0ad556aa2fdc323b858861b92d6a9f45e2e175245ee88f7de961db1288feba36
+  checksum: 3c16bfc9450c894b3fee203aedfedc375b739faebe4aef179d389796b4ff6293545033013e702ac918e9a2cec20cec1490e90046b347517c17c823d544189ea4
   languageName: node
   linkType: hard
 
@@ -2530,6 +2530,7 @@ __metadata:
     "@angular-eslint/eslint-plugin-template": 15.2.1
     "@angular-eslint/schematics": 15.2.1
     "@angular-eslint/template-parser": 13.5.0
+    "@angular-eslint/utils": 15.2.1
     "@angular/animations": ^15.2.9
     "@angular/cdk": ^15.2.9
     "@angular/cli": ^15.2.9
@@ -2584,7 +2585,7 @@ __metadata:
     cucumber-html-reporter: ^4.0.5
     cucumber-pretty: 1.5.2
     cucumberjs-allure-reporter: 1.0.3
-    eslint: ^8.17.0
+    eslint: ^8.57.0
     eslint-config-standard: ^14.1.0
     eslint-plugin-import: ^2.19.1
     eslint-plugin-node: ^10.0.0
@@ -9430,7 +9431,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.17.0":
+"eslint@npm:^8.57.0":
   version: 8.57.0
   resolution: "eslint@npm:8.57.0"
   dependencies:
@@ -13357,13 +13358,13 @@ __metadata:
   linkType: hard
 
 "locate-app@npm:^2.1.0":
-  version: 2.2.25
-  resolution: "locate-app@npm:2.2.25"
+  version: 2.2.26
+  resolution: "locate-app@npm:2.2.26"
   dependencies:
-    n12: 1.8.28
+    n12: 1.8.29
     type-fest: 2.13.0
     userhome: 1.0.0
-  checksum: ab141fae81405dbde4205f38ec678dc7cfd9c1d4fb2af356dbfa9934f21e11acafba62ad04fa2d6ddbbeb1c16ddf109141d2134c7fa2facf71df1cc0298dd546
+  checksum: e6abbfd6fdf724dc73c5719f0fcf8e85ba46647408e6d0ce7d518c30d1e7d8c4b794d77b74954d92c99800b5ea5a1d73d4d2b6b9696e8c944ff99f988aaad357
   languageName: node
   linkType: hard
 
@@ -14723,10 +14724,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"n12@npm:1.8.28":
-  version: 1.8.28
-  resolution: "n12@npm:1.8.28"
-  checksum: af35e72f10f9f22a3705d78eba93ac4b9e918f8b1de4827cb83d30a197ae1a286d28f719aeb46a5dceabe014d9c4f391e85691b31aa450d2a873dadffb2e5ae0
+"n12@npm:1.8.29":
+  version: 1.8.29
+  resolution: "n12@npm:1.8.29"
+  checksum: 29cb408444e43f501306a93f2170e5f6675e61c88043a2a930ec69d0dafb5748bde4cd7fef4a8ce28fd7118049ae16ad53a1a28bec9bc18b54da152b02be2385
   languageName: node
   linkType: hard
 
@@ -19462,8 +19463,8 @@ __metadata:
   linkType: hard
 
 "terser@npm:^5.15.1, terser@npm:^5.26.0":
-  version: 5.29.2
-  resolution: "terser@npm:5.29.2"
+  version: 5.30.0
+  resolution: "terser@npm:5.30.0"
   dependencies:
     "@jridgewell/source-map": ^0.3.3
     acorn: ^8.8.2
@@ -19471,7 +19472,7 @@ __metadata:
     source-map-support: ~0.5.20
   bin:
     terser: bin/terser
-  checksum: 2310d04e530903ed4da6168c4c90ab65965c5f1f8919733772119ff560e9e9be2def070c9659f7d96f2e28489c4378241c4cef1917f05b9524587436fdd5a802
+  checksum: a5c3b35675ddc96f355e7d27c012c7408f5cb89c6cb47079817414e765ef594900439169f92641500b8f0b7abbbc61bc52c394e1a53dfea87b5ea01ff56eeadd
   languageName: node
   linkType: hard
 
@@ -19573,19 +19574,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tmp@npm:0.2.3, tmp@npm:^0.2.1":
+  version: 0.2.3
+  resolution: "tmp@npm:0.2.3"
+  checksum: 73b5c96b6e52da7e104d9d44afb5d106bb1e16d9fa7d00dbeb9e6522e61b571fbdb165c756c62164be9a3bbe192b9b268c236d370a2a0955c7689cd2ae377b95
+  languageName: node
+  linkType: hard
+
 "tmp@npm:^0.0.33":
   version: 0.0.33
   resolution: "tmp@npm:0.0.33"
   dependencies:
     os-tmpdir: ~1.0.2
   checksum: 902d7aceb74453ea02abbf58c203f4a8fc1cead89b60b31e354f74ed5b3fb09ea817f94fb310f884a5d16987dd9fa5a735412a7c2dd088dd3d415aa819ae3a28
-  languageName: node
-  linkType: hard
-
-"tmp@npm:^0.2.1":
-  version: 0.2.3
-  resolution: "tmp@npm:0.2.3"
-  checksum: 73b5c96b6e52da7e104d9d44afb5d106bb1e16d9fa7d00dbeb9e6522e61b571fbdb165c756c62164be9a3bbe192b9b268c236d370a2a0955c7689cd2ae377b95
   languageName: node
   linkType: hard
 

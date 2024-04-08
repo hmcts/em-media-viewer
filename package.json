@@ -49,6 +49,7 @@
     "test:crossbrowser": "NODE_PATH=. codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} -c test/end-to-end/saucelabs.conf.js --plugins retryFailedStep --steps --grep '@xb' --reporter mocha-multi"
   },
   "dependencies": {
+    "@angular-eslint/utils": "15.2.1",
     "@angular/animations": "^15.2.9",
     "@angular/cdk": "^15.2.9",
     "@angular/cli": "^15.2.9",
@@ -154,7 +155,7 @@
     "cucumber-html-reporter": "^4.0.5",
     "cucumber-pretty": "1.5.2",
     "cucumberjs-allure-reporter": "1.0.3",
-    "eslint": "^8.17.0",
+    "eslint": "^8.57.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-node": "^10.0.0",
