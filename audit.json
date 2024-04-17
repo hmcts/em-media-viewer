@@ -678,5 +678,9 @@
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/ruxitagentjs_ICA7NVfgqrux_10287240325103108.js_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/styles.b7c1ddb0e581bf7f.css_GET": "ignore",
   "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/main.9b3628077f478265.js_GET": "ignore",
-  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/main.74569d3cb1463b67.js_GET": "ignore"
+  "90027_Cookie Slack Detector_http://em-showcase-aat.service.core-compute-aat.internal/main.74569d3cb1463b67.js_GET": "ignore",
+  "40035_Hidden File Found_http://em-showcase-aat.service.core-compute-aat.internal/._darcs_GET": "ignore",
+  "40035_Hidden File Found_http://em-showcase-aat.service.core-compute-aat.internal/.bzr_GET": "ignore",
+  "40035_Hidden File Found_http://em-showcase-aat.service.core-compute-aat.internal/.hg_GET": "ignore",
+  "40035_Hidden File Found_http://em-showcase-aat.service.core-compute-aat.internal/BitKeeper_GET": "ignore"
 }
