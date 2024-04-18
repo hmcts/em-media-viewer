@@ -1,0 +1,77 @@
+.resize-handlers {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 2px solid #424242;
+  box-sizing: border-box;
+}
+
+.handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: white;
+  opacity: 50%;
+}
+
+.TOP-LEFT {
+  left: -7px;
+  top: -7px;
+  border-top: 3px solid #424242;
+  border-left: 3px solid #424242;
+}
+
+.TOP-LEFT:hover,
+.TOP-LEFT:active {
+  border-radius: unset;
+  background: transparent;
+  border-bottom: black;
+  border-right: black;
+}
+
+.TOP-RIGHT {
+  right: -7px;
+  top: -7px;
+  border-top: 3px solid #424242;
+  border-right: 3px solid #424242;
+}
+
+.TOP-RIGHT:hover,
+.TOP-RIGHT:active {
+  border-radius: unset;
+  background: transparent;
+  border-bottom: black;
+  border-left: black;
+}
+
+.BOTTOM-LEFT {
+  left: -7px;
+  bottom: -7px;
+  border-bottom: 3px solid #424242;
+  border-left: 3px solid #424242;
+}
+
+.BOTTOM-LEFT:hover,
+.BOTTOM-LEFT:active {
+  border-radius: unset;
+  background: transparent;
+  border-top: black;
+  border-right: black;
+}
+
+.BOTTOM-RIGHT {
+  right: -7px;
+  bottom: -7px;
+  border-bottom: 3px solid #424242;
+  border-right: 3px solid #424242;
+}
+
+.BOTTOM-RIGHT:hover,
+.BOTTOM-RIGHT:active {
+  border-radius: unset;
+  background: transparent;
+  border-top: black;
+  border-left: black;
+}

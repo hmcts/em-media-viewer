@@ -2867,7 +2867,6 @@ __metadata:
     mocha-multi: 1.1.7
     mochawesome: 7.1.3
     moment-timezone: ^0.5.28
-    mutable-div: ^1.0.0
     ng-packagr: ^16.2.3
     ngrx-store-freeze: ^0.2.4
     ngx-chips: 3.0.0
@@ -15194,19 +15193,6 @@ __metadata:
   bin:
     mustache: ./bin/mustache
   checksum: e3073355fe8efc4c36eb18af9985812aa7ab216d2b07246b407320b0f93acebeae14719ade700e817393c27e2168a4a1092d6c2f65efb3e26f0be84747a81e78
-  languageName: node
-  linkType: hard
-
-"mutable-div@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "mutable-div@npm:1.0.0"
-  dependencies:
-    tslib: ^1.9.0
-  peerDependencies:
-    "@angular/common": ^8.2.13
-    "@angular/core": ^8.2.13
-    hammerjs: ^2.0.8
-  checksum: 162d3c33dd18abb22b6554fbb272f95cacc9fdb939e030436e9d7a13a87addacd93bcdb80646586e4ff19d94119b7d3205ab782e3243e0cad17b437b153cd17e
   languageName: node
   linkType: hard
 

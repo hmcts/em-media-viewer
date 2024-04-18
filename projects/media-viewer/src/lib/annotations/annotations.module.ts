@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { A11yModule } from '@angular/cdk/a11y';
 import { RouterModule } from '@angular/router';
 
-import { MutableDivModule } from 'mutable-div';
+import { MutableDivModule } from './annotation-set/annotation-view/rectangle/mutable-div.module';
 import { TagInputModule } from 'ngx-chips';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
