@@ -14,7 +14,7 @@ import {
 import { ResizeHandlersComponent } from './resize-handlers/resize-handlers.component';
 
 @Directive({
-  selector: '[resizable]'
+  selector: '[mv-resizable]'
 })
 export class ResizableElementDirective implements OnInit, OnChanges {
 
