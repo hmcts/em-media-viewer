@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 @Component({
   template: `
-    <div class="rectangle" style="left: 0; top: 0; width: 100px; height: 100px;" mv-draggable [rotate]="rotate">
+    <div class="rectangle" style="left: 0; top: 0; width: 100px; height: 100px;" mvDraggable [rotate]="rotate">
       Test Block
     </div>`
 })

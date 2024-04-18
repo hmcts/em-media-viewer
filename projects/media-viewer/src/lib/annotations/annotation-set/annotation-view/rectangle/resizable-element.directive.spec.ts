@@ -8,7 +8,7 @@ import { DraggableElementDirective } from './draggable-element.directive';
 
 @Component({
   template: `
-    <div class="rectangle" style="left: 0; top: 0; width: 100px; height: 100px;" mv-resizable [rotate]="rotate" [selected]="selected">
+    <div class="rectangle" style="left: 0; top: 0; width: 100px; height: 100px;" mvResizable [rotate]="rotate" [selected]="selected">
       Test Block
     </div>`
 })
