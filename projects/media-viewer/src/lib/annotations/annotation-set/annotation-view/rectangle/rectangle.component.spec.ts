@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed} from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RectangleComponent } from './rectangle.component';
 import { FormsModule } from '@angular/forms';
-import { MutableDivModule } from 'mutable-div';
+import { MutableDivModule } from './mutable-div.module';
 import { By } from '@angular/platform-browser';
 import { HighlightCreateService } from '../../annotation-create/highlight-create/highlight-create.service';
 import { StoreModule } from '@ngrx/store';
