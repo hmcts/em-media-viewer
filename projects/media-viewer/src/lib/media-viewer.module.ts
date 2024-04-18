@@ -33,7 +33,7 @@ import { DocumentConversionApiService } from './viewers/convertible-content-view
 import { IcpPresenterService } from './icp/icp-presenter.service';
 import { IcpFollowerService } from './icp/icp-follower.service';
 import { ConfirmActionDialogComponent } from './icp/confirm-exit/confirm-action-dialog.component';
-import { TreeModule } from '@circlon/angular-tree-component';
+import { TreeModule } from '@ali-hm/angular-tree-component';
 import { BookmarkIconsComponent } from './bookmark/components/bookmark-icons.component';
 import { RotationApiService } from './viewers/rotation-persist/rotation-api.service';
 import { RotationPersistDirective } from './viewers/rotation-persist/rotation-persist.directive';

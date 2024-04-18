@@ -12,6 +12,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ali-hm/angular-tree-component@npm:12.0.5":
+  version: 12.0.5
+  resolution: "@ali-hm/angular-tree-component@npm:12.0.5"
+  dependencies:
+    mobx: ~4.14.1
+    tslib: ^2.0.0
+  peerDependencies:
+    "@angular/common": ">=14.0.0"
+    "@angular/core": ">=14.0.0"
+    mobx: ^6.10.2
+  checksum: 4efbfae87a9027596e7554b00a5d520efe7628a8f382d23a582624b1dadb59ebd87626bd6d15292acaaba89a73c921bc0c288c20c003cbb7bf970c646ab932d5
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:2.2.1":
   version: 2.2.1
   resolution: "@ampproject/remapping@npm:2.2.1"
@@ -1996,19 +2010,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@circlon/angular-tree-component@npm:^11.0.4":
-  version: 11.0.4
-  resolution: "@circlon/angular-tree-component@npm:11.0.4"
-  dependencies:
-    mobx: ~4.14.1
-    tslib: ^2.0.0
-  peerDependencies:
-    "@angular/common": ">=11.0.0"
-    "@angular/core": ">=11.0.0"
-  checksum: bbadb1231b7422fa829da9afb10f0fa31a770c4c860e9aafec697260e47705d5b6c0e46dee3913fe0d1a8308ac0f19c4c0aaa9c27a956ecf1e37bee62723d2aa
-  languageName: node
-  linkType: hard
-
 "@codeceptjs/configure@npm:0.10.0":
   version: 0.10.0
   resolution: "@codeceptjs/configure@npm:0.10.0"
@@ -2775,6 +2776,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hmcts/media-viewer@workspace:."
   dependencies:
+    "@ali-hm/angular-tree-component": 12.0.5
     "@angular-devkit/build-angular": 16.2.14
     "@angular-devkit/core": ^16.2.14
     "@angular-eslint/builder": 16.3.1
@@ -2796,7 +2798,6 @@ __metadata:
     "@angular/platform-browser-dynamic": ^16.2.12
     "@angular/platform-server": ^16.2.12
     "@angular/router": ^16.2.12
-    "@circlon/angular-tree-component": ^11.0.4
     "@hmcts/eslint-config": ^1.4.0
     "@hmcts/nodejs-healthcheck": ^1.7.0
     "@hmcts/nodejs-logging": 3.0.4

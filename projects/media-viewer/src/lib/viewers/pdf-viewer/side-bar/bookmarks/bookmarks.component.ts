@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
+import { TreeComponent, TreeNode } from '@ali-hm/angular-tree-component';
 
 import { CreateBookmark, DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmark.actions';
 import { Bookmark } from '../../../../store/models/bookmarks.interface';
