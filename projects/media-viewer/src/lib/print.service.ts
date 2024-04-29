@@ -12,11 +12,6 @@ export class PrintService {
 
     setTimeout((printer) => {
       printer.print();
-      printer.onafterprint = () => {
-        printer.close();
-        window.close();
-      };
-
     }, 3000, printWindow);
   }
 

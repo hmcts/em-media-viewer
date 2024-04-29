@@ -1,3 +1,5 @@
+import { getPages } from './../../store/selectors/document.selectors';
+import { Rotation } from './../rotation-persist/rotation.model';
 import { RpxTranslationModule } from 'rpx-xui-translation';
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
@@ -90,6 +92,7 @@ describe('PdfViewerComponent', () => {
       changePageNumber: () => { },
       getPageNumber: () => { },
       getCurrentPDFTitle: () => { },
+      navigateTo: () => { },
       documentLoadInit: new Subject<any>(),
       documentLoadProgress: new Subject<DocumentLoadProgress>(),
       documentLoaded: new Subject<any>(),
@@ -283,4 +286,29 @@ describe('PdfViewerComponent', () => {
       expect(store.dispatch).toHaveBeenCalledWith(new SetCaseId(caseId));
     }))
   );
+
+  it('calls goToDestination', inject([Store], fakeAsync((store) => {
+    spyOn(mockWrapper, 'navigateTo');
+    spyOn(mockWrapper, 'getPageNumber');
+    spyOn(mockWrapper, 'setPageNumber');
+    component.rotation = 270;
+
+    viewerEvents.navigationEvent.next([{ pageNumber: 1, top: 10, left: 10, rotation: 270, scale: 1 }]);
+    tick(10);
+    expect(mockWrapper.navigateTo).toHaveBeenCalled();
+    expect(component.rotation).toEqual(270);
+    expect(mockWrapper.getPageNumber).toHaveBeenCalledTimes(2);
+    expect(mockWrapper.setPageNumber).toHaveBeenCalledTimes(2);
+  })));
+
+  it('call calculateZoomValue where the new zoom will be 5', inject([Store], (store) => {
+    var result = component.calculateZoomValue(2, 4);
+    expect(result).toEqual(5);
+  }));
+
+  it('call calculateZoomValue where the new zoom will be 0.5', inject([Store], (store) => {
+    var result = component.calculateZoomValue(0.01, 0.05);
+    expect(result).toEqual(0.1);
+  }));
+
 });
