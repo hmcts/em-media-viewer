@@ -257,7 +257,12 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   private goToDestination(destination: any[]) {
+    const currentRotation = this.rotation;
+    this.rotateDocument(360 - this.rotation);
     this.pdfWrapper.navigateTo(destination);
+    setTimeout(() => {
+      this.rotateDocument(currentRotation);
+    }, 10);
   }
 
   getCurrentPageNumber(): number {
