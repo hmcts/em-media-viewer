@@ -2618,7 +2618,7 @@ __metadata:
     sonar-scanner: ^3.1.0
     totp-generator: ^0.0.14
     ts-node: ^8.1.0
-    tsickle: ^0.40.0
+    tsickle: ^0.46.0
     tslib: ^2.0.0
     tslint: ^6.1.3
     typescript: 4.9.5
@@ -19855,14 +19855,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsickle@npm:^0.40.0":
-  version: 0.40.0
-  resolution: "tsickle@npm:0.40.0"
+"tsickle@npm:^0.46.0":
+  version: 0.46.3
+  resolution: "tsickle@npm:0.46.3"
   dependencies:
     "@types/minimist": ^1.2.1
   peerDependencies:
-    typescript: ~4.2
-  checksum: a111fb0701b8118c6158b36b1a63e83e0347714dcd27cfcb8c34b4cc519f4f597b25981a1db0f0ad1722748a09267ee40b0abec501326734d5d6a58a6160b64f
+    typescript: ~4.7.2
+  checksum: dce86d5f50291ba0dfbd64a0811eb9303739488b347d04e05e56852dc2d77bd55dae311032b4b4b968e4a4562ef46bc7d5eb023611098767b2956d4a354add46
   languageName: node
   linkType: hard
 
