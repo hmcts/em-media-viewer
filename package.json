@@ -52,7 +52,7 @@
     "@angular-eslint/utils": "15.2.1",
     "@angular/animations": "^15.2.9",
     "@angular/cdk": "^15.2.9",
-    "@angular/cli": "^15.2.9",
+    "@angular/cli": "^17.0.0",
     "@angular/common": "^15.2.9",
     "@angular/compiler": "^15.2.9",
     "@angular/core": "^15.2.9",
@@ -123,8 +123,8 @@
     "got": "^11.8.5"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "15.2.11",
-    "@angular-devkit/core": "^15.2.9",
+    "@angular-devkit/build-angular": "17.3.6",
+    "@angular-devkit/core": "^17.0.0",
     "@angular-eslint/builder": "15.2.1",
     "@angular-eslint/eslint-plugin": "15.2.1",
     "@angular-eslint/eslint-plugin-template": "15.2.1",
