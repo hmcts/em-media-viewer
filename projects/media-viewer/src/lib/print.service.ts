@@ -6,8 +6,10 @@ import { Injectable } from '@angular/core';
 export class PrintService {
 
   printDocumentNatively(url: string): void {
+
     const printWindow = window.open(url);
     printWindow.focus();
+
     setTimeout((printer) => {
       printer.print();
     }, 3000, printWindow);

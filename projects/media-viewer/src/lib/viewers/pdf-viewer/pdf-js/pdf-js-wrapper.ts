@@ -1,10 +1,10 @@
+import { Outline } from './../side-bar/outline-item/outline.model';
 import { RedactionSearch } from './../../../toolbar/redaction-search-bar/redaction-search.model';
 import * as pdfjsLib from 'pdfjs-dist';
 import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
 import 'pdfjs-dist/build/pdf.worker';
 import { Subject } from 'rxjs';
 import { SearchOperation, SearchResultsCount, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
-import { Outline } from '../side-bar/outline-item/outline.model';
 import { PdfPosition } from '../../../store/reducers/document.reducer';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/assets/build/pdf.worker.min.js';
@@ -23,7 +23,7 @@ export class PdfJsWrapper {
 
   private zoomValue: number;
   private documentTitle: string;
-  private documentOutline: Outline;
+  private documentOutline: Outline[];
 
   constructor(
     private readonly pdfViewer: PDFViewer,
@@ -32,7 +32,7 @@ export class PdfJsWrapper {
     public readonly documentLoadInit: Subject<string>,
     public readonly documentLoadProgress: Subject<DocumentLoadProgress>,
     public readonly documentLoaded: Subject<any>,
-    public readonly outlineLoaded: Subject<Outline>,
+    public readonly outlineLoaded: Subject<Outline[]>,
     public readonly documentLoadFailed: Subject<Error>,
     public readonly pageRendered: Subject<PageEvent[]>,
     public readonly positionUpdated: Subject<{ location: PdfPosition }>
@@ -101,7 +101,23 @@ export class PdfJsWrapper {
       this.pdfViewer.setDocument(pdfDocument);
       this.pdfViewer.linkService.setDocument(pdfDocument, null);
 
-      const outline = await pdfDocument.getOutline();
+      const outlineNode = await pdfDocument.getOutline();
+      const outline = outlineNode ? outlineNode.map(x => {
+        return {
+          bold: x.bold,
+          color: x.color,
+          count: x.count,
+          dest: x.dest,
+          italic: x.italic,
+          items: x.items,
+          newWindow: x.newWindow,
+          title: x.title,
+          unsafeUrl: x.unsafeUrl,
+          url: x.url
+        } as Outline
+      }) : null;
+
+
 
       if (outline) {
         await this.setOutlinePageNumbers(pdfDocument, outline);
@@ -110,7 +126,7 @@ export class PdfJsWrapper {
       this.documentOutline = outline;
       this.outlineLoaded.next(this.documentOutline);
       const pdfMetaData = await pdfDocument.getMetadata();
-      this.setCurrentPDFTitle(pdfMetaData.info.Title);
+      this.setCurrentPDFTitle((pdfMetaData.info as any)?.Title);
     } catch (e) {
       this.documentLoadFailed.next(e);
     }

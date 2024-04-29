@@ -111,5 +111,9 @@
   "sortBookmarksBtn" : "button#sortBookmarkPosition",
   "collateCommentsCheck": "ngx-datatable",
   "closeCommentSummary": "button#modal-close-button",
-  "imageTabButton": "#image-button"
+  "imageTabButton": "#image-button",
+  "changeDocumentDetails": "//span[text()='Change document details']",
+  "uploadDocumentUrl": "#documentUrl",
+  "loadDocument": "//button[@class=\"govuk-button\" and contains(text(), \"Load document\")]",
+  "mvpdfviewer": "//mv-pdf-viewer"
 }

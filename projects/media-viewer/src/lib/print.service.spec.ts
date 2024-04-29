@@ -14,10 +14,12 @@ describe('PrintService', () => {
   }));
 
   it('should trigger native document print', fakeAsync(inject([PrintService], (service: PrintService) => {
-    const windowMock = { print: () => { }, focus } as Window;
+    const windowMock = { print: () => { }, focus, close, onafterprint } as Window;
     const windowSpy = spyOn(window, 'open').and.returnValue(windowMock);
     const focusSpy = spyOn(windowMock, 'focus');
     const printSpy = spyOn(windowMock, 'print');
+    const closeSpy = spyOn(windowMock, 'close');
+    const onafterprintSpy = spyOn(windowMock, 'onafterprint');
     service.printDocumentNatively('url');
     tick(3000);
 
