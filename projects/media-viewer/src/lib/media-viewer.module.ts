@@ -40,6 +40,8 @@ import { RotationPersistDirective } from './viewers/rotation-persist/rotation-pe
 import { ParticipantsListComponent } from './icp/participants-list/participants-list.component';
 import { HighlightCreateDirective } from './annotations/annotation-set/annotation-create/highlight-create/highlight-create.directive';
 import { MultimediaPlayerComponent } from './viewers/multimedia-player/multimedia-player.component';
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -55,6 +57,8 @@ import { MultimediaPlayerComponent } from './viewers/multimedia-player/multimedi
     EffectsModule.forFeature(effects),
     TreeModule,
     MutableDivModule,
+    CdkTreeModule,
+    DragDropModule,
     RpxTranslationModule.forChild()
   ],
   declarations: [

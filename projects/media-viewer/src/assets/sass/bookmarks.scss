@@ -1,9 +1,11 @@
 mv-bookmarks {
   .bookmark__delete {
-    background: url(/assets/images/icon-tag-remove-cross.svg) center center  no-repeat;
-    filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg) brightness(107%) contrast(101%);
+    background: url(/assets/images/icon-tag-remove-cross.svg) center center
+      no-repeat;
+    filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg)
+      brightness(107%) contrast(101%);
     border-radius: 2px;
-    border: 1px ridge #D3D3D3;
+    border: 1px ridge #d3d3d3;
     width: 16px;
     height: 16px;
     background-size: 12px 12px;
@@ -13,9 +15,10 @@ mv-bookmarks {
 
   .bookmark__rename {
     background: url(/assets/images/bookmark-rename.svg) center center no-repeat;
-    filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg) brightness(107%) contrast(101%);
+    filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg)
+      brightness(107%) contrast(101%);
     border-radius: 2px;
-    border: 1px ridge #D3D3D3;
+    border: 1px ridge #d3d3d3;
     width: 16px;
     height: 16px;
     background-size: 12px 12px;
@@ -24,10 +27,11 @@ mv-bookmarks {
   }
 
   .bookmark__save {
-    background: url(/assets/images/bookmark-save.svg) center center  no-repeat;
-    filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg) brightness(107%) contrast(101%);
+    background: url(/assets/images/bookmark-save.svg) center center no-repeat;
+    filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(349deg)
+      brightness(107%) contrast(101%);
     border-radius: 2px;
-    border: 1px ridge #D3D3D3;
+    border: 1px ridge #d3d3d3;
     width: 17px;
     height: 17px;
     background-size: 15px 15px;
@@ -38,13 +42,13 @@ mv-bookmarks {
   .bookmark__delete:hover,
   .bookmark__rename:hover,
   .bookmark__save:hover {
-    border: 1px groove #D3D3D3;
+    border: 1px groove #d3d3d3;
   }
 
   .bookmark__input {
     width: calc(100% - 50px);
     background-color: #474747;
-    color: hsla(0,0%,100%,.8);
+    color: hsla(0, 0%, 100%, 0.8);
     font-size: 13px;
     border-width: 1px;
     border-style: solid;
@@ -54,10 +58,16 @@ mv-bookmarks {
   .bookmarks-tree {
     .node-content-wrapper {
       width: 100%;
-      &:hover { background: rgba(153, 153, 102, 0.2) }
+      &:hover {
+        background: rgba(153, 153, 102, 0.2);
+      }
     }
-    .node-content-wrapper-focused { background: rgba(255, 0, 0, 0.2) }
-    .tree-children { padding-left: 10px }
+    .node-content-wrapper-focused {
+      background: rgba(255, 0, 0, 0.2);
+    }
+    .tree-children {
+      padding-left: 10px;
+    }
   }
 }
 
@@ -66,4 +76,3 @@ mv-bookmarks {
   left: 16px;
   position: absolute;
 }
-
