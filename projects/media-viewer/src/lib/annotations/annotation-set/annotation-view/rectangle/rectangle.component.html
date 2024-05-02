@@ -1,8 +1,8 @@
 <div *ngIf="editable; else nonEditable">
   <div #rectElement
        class="rectangle"
-       mvDraggable
-       mvResizable
+       mv-draggable
+       mv-resizable
        [tabindex]="annoRect.id"
        [ngClass]="{ 'selected': selected, 'grabNDrag': enableGrabNDrag }"
        [style.backgroundColor]="'#' + color"
