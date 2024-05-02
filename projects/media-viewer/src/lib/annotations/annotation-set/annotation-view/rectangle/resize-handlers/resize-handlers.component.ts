@@ -103,6 +103,7 @@ export class ResizeHandlersComponent implements AfterViewInit, OnChanges {
             y: parentElement.offsetTop - coordinates.x
           }
         };
+        break;
       case 180:
         return {
           width: className.includes('LEFT') ? parentElement.offsetWidth + coordinates.x : parentElement.offsetWidth - coordinates.x,
@@ -112,6 +113,7 @@ export class ResizeHandlersComponent implements AfterViewInit, OnChanges {
             y: parentElement.offsetTop - coordinates.y
           }
         };
+        break;
       case 270:
         return {
           width: className.includes('LEFT') ? parentElement.offsetWidth + coordinates.y : parentElement.offsetWidth - coordinates.y,
@@ -121,6 +123,7 @@ export class ResizeHandlersComponent implements AfterViewInit, OnChanges {
             y: parentElement.offsetTop + coordinates.x
           }
         };
+        break;
       default:
         return {
           width: className.includes('LEFT') ? parentElement.offsetWidth - coordinates.x : parentElement.offsetWidth + coordinates.x,
