@@ -12,7 +12,7 @@ __metadata:
     "@swimlane/ngx-datatable": ^20.0.0
     "@types/uuid": ^3.4.4
     hammerjs: ^2.0.8
-    mutable-div: ^1.0.0
+    mutable-div: ^2.0.0
     pdfjs-dist: 2.5.207
     socket.io-client: ^3.1.1
     uuid: ^3.4.0
@@ -140,16 +140,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mutable-div@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "mutable-div@npm:1.0.0"
+"mutable-div@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "mutable-div@npm:2.0.0"
   dependencies:
-    tslib: ^1.9.0
+    tslib: ^2.0.0
   peerDependencies:
-    "@angular/common": ^8.2.13
-    "@angular/core": ^8.2.13
+    "@angular/common": ^16.2.12
+    "@angular/core": ^16.2.12
     hammerjs: ^2.0.8
-  checksum: 162d3c33dd18abb22b6554fbb272f95cacc9fdb939e030436e9d7a13a87addacd93bcdb80646586e4ff19d94119b7d3205ab782e3243e0cad17b437b153cd17e
+  checksum: a7b447f27eaf895bbb5b1eeaecdebe2acc2ee13c0ce2af3948cbd80e608f095f1f753716fac92b602133546f5ff4dc46889079c814bcabf9a0625fa44766cd0b
   languageName: node
   linkType: hard
 
@@ -197,13 +197,6 @@ __metadata:
     component-emitter: ~1.3.0
     debug: ~4.3.1
   checksum: 8b60cf3abb9c3571f90cf894d40f41459ab007e6cee7ca8ee28ab107d76ded4a72ca5c4e5dcb82d996d4f78b3689dd3eb36ba0b39a66e25e2e9a9afa276c81c5
-  languageName: node
-  linkType: hard
-
-"tslib@npm:^1.9.0":
-  version: 1.14.1
-  resolution: "tslib@npm:1.14.1"
-  checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
   languageName: node
   linkType: hard
 
