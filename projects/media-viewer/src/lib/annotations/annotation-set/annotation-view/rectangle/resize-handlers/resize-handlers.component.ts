@@ -12,7 +12,7 @@ import { Size } from '../model/size.model';
 import { HandleBar } from '../model/handle-bar.model';
 
 @Component({
-  selector: 'mv-lib-resize-handlers',
+  selector: 'lib-resize-handlers',
   templateUrl: './resize-handlers.component.html',
   styleUrls: ['./resize-handlers.component.css']
 })
