@@ -27,7 +27,7 @@ import { reducers } from './store/reducers/reducers';
 import { effects } from './store/effects/index';
 import { BookmarksComponent } from './viewers/pdf-viewer/side-bar/bookmarks/bookmarks.component';
 import { RedactionApiService } from './redaction/services/redaction-api.service';
-import { MutableDivModule } from './annotations/annotation-set/annotation-view/rectangle/mutable-div.module';
+import { MutableDivModule } from 'mutable-div';
 import { ConvertibleContentViewerComponent } from './viewers/convertible-content-viewer/convertible-content-viewer.component';
 import { DocumentConversionApiService } from './viewers/convertible-content-viewer/document-conversion-api.service';
 import { IcpPresenterService } from './icp/icp-presenter.service';
