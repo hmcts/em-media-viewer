@@ -2,7 +2,7 @@ import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from
 import { Position } from './model/position.model';
 
 @Directive({
-  selector: '[mvDraggable]'
+  selector: '[mv-draggable]'
 })
 export class DraggableElementDirective {
 
