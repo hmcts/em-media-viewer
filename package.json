@@ -83,6 +83,7 @@
     "hammerjs": "^2.0.8",
     "ini": "4.0.0",
     "moment-timezone": "^0.5.28",
+    "mutable-div": "^1.0.0",
     "ngx-chips": "3.0.0",
     "nodemon": "^1.19.0",
     "nunjucks": "^3.2.4",
