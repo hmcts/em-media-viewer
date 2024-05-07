@@ -308,7 +308,6 @@ describe('BookmarksComponent', () => {
 
       const movedBookmarks = [nodeMoved2, nodeMoved1];
 
-      debugger;
       expect(store.dispatch).toHaveBeenCalledWith(new fromActions.MoveBookmark(movedBookmarks));
 
     });
