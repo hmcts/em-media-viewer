@@ -1,3 +1,4 @@
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -71,6 +72,7 @@ describe('BookmarksComponent', () => {
     }
   };
 
+  const dropEventMock = jasmine.createSpyObj('CdkDragDrop', ['previousContainer', 'container'], { item: { data: {} }, isPointerOverContainer: true, previousIndex: 0, currentIndex: 1 });
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [BookmarksComponent],
@@ -182,6 +184,7 @@ describe('BookmarksComponent', () => {
       yCoordinate: 100
     };
 
+
     it('should emit goToDestination event no rotation', () => {
       component.zoom = 1;
       fixture.detectChanges();
@@ -259,5 +262,31 @@ describe('BookmarksComponent', () => {
         0
       ]);
     });
+
+    it('should drop when bookmark is moved to a new location', () => {
+      spyOn(store, 'dispatch');
+      dropEventMock.isPointerOverContainer = true;
+      const bookmarks = JSON.parse(`[{"id":"8816fd4b-bed5-46df-9315-a8f40080c720","name":"2","previous": null ,"index":0},
+      {"id":"a1374cbc-1e28-4f49-91e5-7793e0a183a3","name":"6","parent":null,"previous":"8816fd4b-bed5-46df-9315-a8f40080c720","index":1},
+      {"id":"a21309f9-0e65-46f1-9a58-40605d1fa851","name":"5","parent":null,"previous":"a1374cbc-1e28-4f49-91e5-7793e0a183a3","index":2,
+      "children":[{"id":"69a98ad2-9418-4eec-bf2a-7981e3fec1db","name":"4","parent":"a21309f9-0e65-46f1-9a58-40605d1fa851","previous":null,"index":0}]}]`) as Bookmark[];
+      dropEventMock.item.data = bookmarks[0];
+      dropEventMock.isPointerOverContainer = true;
+
+      component.bookmarkNodes = bookmarks;
+      component.dragNodeInsertToParent = false
+      component.drop(dropEventMock)
+
+      const nodeMoved1 = { ...bookmarks[1], previous: null };
+      const nodeMoved2 = { ...bookmarks[0], previous: bookmarks[1].id, parent: undefined };
+      const nodeMoved3 = { ...bookmarks[2], previous: bookmarks[0].id };
+
+
+      const movedBookmarks = [nodeMoved2, nodeMoved1, nodeMoved3];
+      debugger;
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.MoveBookmark(movedBookmarks));
+
+    });
+
   });
 });

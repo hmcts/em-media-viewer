@@ -124,3 +124,23 @@ tree-root .angular-tree-component-rtl .tree-children {
 tree-node-checkbox {
   padding: 1px;
 }
+
+.nested-tree-node {
+  flex-direction: row;
+  display: flex;
+  margin-bottom: 0.7rem !important;
+  width: 90% !important;
+  cursor: pointer;
+}
+
+.nested-tree-node-children {
+  padding-left: 1.5rem;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

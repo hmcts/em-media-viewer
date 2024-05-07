@@ -26,8 +26,14 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 export class BookmarksComponent implements OnInit, OnDestroy {
 
   @Input()
-  set bookmarkNodes(value: Bookmark[]) {
+  // set bookmarkNodes(value: Bookmark[]) {
+  //   this.rebuildTreeForData(value);
+  //   if (this._bookmarkNodes && this.sortMode !== this.customSort) {
+  //     this.sortBookmarks();
+  //   }
+  // };
 
+  set bookmarkNodes(value: Bookmark[]) {
     this.rebuildTreeForData(value);
     if (this._bookmarkNodes && this.sortMode !== this.customSort) {
       this.sortBookmarks();
@@ -42,6 +48,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Output() goToDestination = new EventEmitter<any[]>();
 
+  // private _bookmarkNodes: Bookmark[] = [];
   private _bookmarkNodes: Bookmark[] = [];
   datasource: ArrayDataSource<Bookmark>;
   treeControl: FlatTreeControl<Bookmark>;
@@ -50,7 +57,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   dragging = false;
   expandTimeout: any;
   expandDelay = 1000;
-  currentHoverNode: Bookmark;
+  dragNodeInsertToParent: boolean;
 
   pageLookup: { [pageId: number]: DocumentPages } = {};
   editableBookmark: string;
@@ -125,6 +132,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     if (toNext) {
       movedBookmarks = [...movedBookmarks, { ...toNext, previous: node.id }];
     }
+    console.log(JSON.stringify(movedBookmarks));
     this.store.dispatch(new MoveBookmark(movedBookmarks));
   }
 
@@ -232,13 +240,11 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   private positionSortBookmarks() {
     this.bookmarkNodes.sort((a, b) => a.pageNumber === b.pageNumber ? a.yCoordinate - b.yCoordinate : a.pageNumber - b.pageNumber);
-    this.tree.treeModel.update();
     this.setDragNDrop(false);
   }
 
   private customSortBookmarks() {
     this.bookmarkNodes.sort((a, b) => a.index - b.index);
-    // this.tree.treeModel.update();
     this.setDragNDrop(true);
   }
 
@@ -279,58 +285,93 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<Bookmark>) {
+
     if (!event.isPointerOverContainer) return;
 
-    if (this.currentHoverNode && !this.currentHoverNode.children) {
-      const node = event.item.data;
+    const hasMovedUp = event.previousIndex > event.currentIndex;
+    const changedData = JSON.parse(JSON.stringify(this.bookmarkNodes));
+    const visibleNodes = this.visibleNodes(this._bookmarkNodes);
+    const toNode = visibleNodes[event.currentIndex];
+    const toNodeSiblings = this.findNodeSiblings(changedData, toNode.id);
 
+    const toNodeParent = toNodeSiblings[0].parent;
+    const toIndex = toNodeSiblings.findIndex(s => s.id === toNode.id);
+
+    const fromNode = event.item.data;
+    const fromNodeSiblings = this.findNodeSiblings(changedData, fromNode.id);
+    const fromIndex = fromNodeSiblings.findIndex(n => n.id === fromNode.id);
+
+    if (this.dragNodeInsertToParent) {
+      const indexOfParent = toNodeSiblings.findIndex(element => element.id === toNode.id);
+      const parentId = toNodeSiblings[indexOfParent].id
+      const childMovedBookmarks = [{ ...fromNode, parent: parentId, previous: null }];
+      this.store.dispatch(new MoveBookmark(childMovedBookmarks));
+      return;
     }
 
-    const visibleNodes = this.visibleNodes();
-    const changedData = JSON.parse(JSON.stringify(this._bookmarkNodes));
+    if (!toNodeSiblings) return;
 
-    const nodeAtDest = visibleNodes[event.currentIndex];
-    const newSiblings = this.findNodeSiblings(changedData, nodeAtDest.id);
-    if (!newSiblings) return;
-    const insertIndex = newSiblings.findIndex(s => s.id === nodeAtDest.id);
+    let movedBookmarks = [{
+      ...fromNode,
+      previous: toNode.index > 0 ? toNodeSiblings[toNode.index].id : undefined,
+      parent: toNodeParent
+    }];
 
-    const node = event.item.data;
-    const siblings = this.findNodeSiblings(changedData, node.id);
-    const siblingIndex = siblings.findIndex(n => n.id === node.id);
-    const nodeToInsert = siblings.splice(siblingIndex, 1)[0];
+    let fromNodeSibling = this.getSiblingFromAllSibliings(fromNodeSiblings, fromIndex + 1);
+    fromNodeSibling = fromNodeSibling && fromNodeSibling.id === fromNode.previous ? this.getSiblingFromAllSibliings(fromNodeSiblings, fromIndex + 1) : fromNodeSibling;
 
-    if (nodeAtDest.id === nodeToInsert.id) return;
+    if (fromNodeSibling) {
+      movedBookmarks = [...movedBookmarks, { ...fromNodeSibling, previous: fromNode.previous }];
+    }
 
-    newSiblings.splice(insertIndex, 0, nodeToInsert);
 
-    this.rebuildTreeForData(changedData);
+    const toNodeSiblingIndex = hasMovedUp ? toIndex : toIndex + 1;
+    const toNodeSibling = this.getSiblingFromAllSibliings(toNodeSiblings, toNodeSiblingIndex);
+    if (toNodeSibling) {
+      movedBookmarks = [...movedBookmarks, { ...toNodeSibling, previous: fromNode.id }];
+    }
+
+    const hasDups = (movedBookmarks as Bookmark[]).map(x => x.id).some(function (value, index, array) {                            // .some will break as soon as duplicate found (no need to itterate over all array)
+      return array.indexOf(value) !== array.lastIndexOf(value);   // comparing first and last indexes of the same value
+    })
+    if (hasDups || movedBookmarks && movedBookmarks.length <= 1) return;
+
+    debugger;
+    this.store.dispatch(new MoveBookmark(movedBookmarks));
+  }
+
+  private getSiblingFromAllSibliings(sibling: Bookmark[], index) {
+    return sibling.length > index ? sibling[index] : undefined;
   }
 
   dragStart() {
+    this.dragNodeInsertToParent = false;
     this.dragging = true;
   }
+
   dragEnd() {
     this.dragging = false;
   }
 
   dragHover(event: any, node: Bookmark) {
     if (this.dragging) {
+      const newEvent: any = event;
+      const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
+      if (percentageX > .25) {
+        this.dragNodeInsertToParent = true;
+      } else {
+        this.dragNodeInsertToParent = false;
+      }
+
       clearTimeout(this.expandTimeout);
       this.expandTimeout = setTimeout(() => {
-        if (node) {
-          this.currentHoverNode = node;
-        }
         this.treeControl.expand(node);
       }, this.expandDelay);
     }
   }
   dragHoverEnd(event: any, node: Bookmark) {
     if (this.dragging) {
-      if (node && this.currentHoverNode && node.id === this.currentHoverNode.id) {
-        this.currentHoverNode = null;
-      }
-
       clearTimeout(this.expandTimeout);
     }
   }
@@ -340,7 +381,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     return isExpanded ? "toggle-children-wrapper-expanded" : "toggle-children-wrapper-collapsed";
   }
 
-  visibleNodes(): Bookmark[] {
+  visibleNodes(bookmarks: Bookmark[]): Bookmark[] {
     const result = [];
 
     function addExpandedChildren(node: Bookmark, expanded: Bookmark[]) {
@@ -349,7 +390,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         node.children.map((child) => addExpandedChildren(child, expanded));
       }
     }
-    this.treeControl.dataNodes.forEach((node) => {
+    bookmarks.forEach((node) => {
       addExpandedChildren(node, this.treeControl.expansionModel.selected);
     });
     return result;
