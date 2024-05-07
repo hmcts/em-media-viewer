@@ -351,20 +351,26 @@ describe('BookmarksComponent', () => {
       expect(window.clearTimeout).toHaveBeenCalled();
     }));
 
-    it('should call on node expand when expanded', fakeAsync(() => {
+    it('should call on node expand when expanded', () => {
       const node = bookmarks[0];
       spyOn(component.treeControl, 'isExpanded').and.returnValue(true);
 
       const result = component.onNodeExpand(node);
       expect(result).toEqual("toggle-children-wrapper-expanded");
-    }));
+    });
 
-    it('should call on node expand when collapsed', fakeAsync(() => {
+    it('should call on node expand when collapsed', () => {
       const node = bookmarks[0];
       spyOn(component.treeControl, 'isExpanded').and.returnValue(false);
-
       const result = component.onNodeExpand(node);
       expect(result).toEqual("toggle-children-wrapper-collapsed");
-    }));
+    });
+
+    it('should find node when getNode is called on bookmark with child', () => {
+
+      const result = component.getNode(bookmarks, '69a98ad2-9418-4eec-bf2a-7981e3fec1db');
+      debugger;
+      expect(result).toEqual([bookmarks[2].children[0]]);
+    });
   });
 });

@@ -149,7 +149,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   deleteBookmark2(node: Bookmark) {
     this.customSortBookmarks();
     let next: Bookmark;
-    const parent = this.getParent(this._bookmarkNodes, node.parent);
+    const parent = this.getNode(this._bookmarkNodes, node.parent);
 
     const siblings = parent && parent.length > 0 ? parent[0].children : null;
     debugger;
@@ -239,8 +239,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   }
 
   private customSortBookmarks() {
-    debugger;
-
     if (this.bookmarkNodes.length > 1) {
       this.bookmarkNodes.sort((a, b) => a.index - b.index);
     }
@@ -260,15 +258,14 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     return node.children && node.children.length > 0;
   }
 
-  getParent(bookmarks, parentId) {
+  getNode(bookmarks, parentId) {
     if (typeof bookmarks !== 'undefined') {
       for (let i = 0; i < bookmarks.length; i++) {
         if (bookmarks[i].id === parentId) {
           return [bookmarks[i]];
         }
-        const a = this.getParent(bookmarks[i].children, parentId);
+        const a = this.getNode(bookmarks[i].children, parentId);
         if (a !== null) {
-          a.unshift(bookmarks[i]);
           return a;
         }
       }
