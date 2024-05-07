@@ -110,24 +110,24 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       });
   }
 
-  onBookmarkMove({ node, from, to }: any) {
-    let movedBookmarks = [{
-      ...node,
-      previous: to.index > 0 ? to.parent.children[to.index - 1].id : undefined,
-      parent: to.parent.documentId ? to.parent.id : undefined
-    }];
-    let fromNext = this.getSibling(from, from.index);
-    fromNext = fromNext && fromNext.id === node.previous ? this.getSibling(from, from.index + 1) : fromNext;
-    if (fromNext) {
-      movedBookmarks = [...movedBookmarks, { ...fromNext, previous: node.previous }];
-    }
-    const toNext = this.getSibling(to, to.index + 1);
-    if (toNext) {
-      movedBookmarks = [...movedBookmarks, { ...toNext, previous: node.id }];
-    }
-    console.log(JSON.stringify(movedBookmarks));
-    this.store.dispatch(new MoveBookmark(movedBookmarks));
-  }
+  // onBookmarkMove({ node, from, to }: any) {
+  //   let movedBookmarks = [{
+  //     ...node,
+  //     previous: to.index > 0 ? to.parent.children[to.index - 1].id : undefined,
+  //     parent: to.parent.documentId ? to.parent.id : undefined
+  //   }];
+  //   let fromNext = this.getSibling(from, from.index);
+  //   fromNext = fromNext && fromNext.id === node.previous ? this.getSibling(from, from.index + 1) : fromNext;
+  //   if (fromNext) {
+  //     movedBookmarks = [...movedBookmarks, { ...fromNext, previous: node.previous }];
+  //   }
+  //   const toNext = this.getSibling(to, to.index + 1);
+  //   if (toNext) {
+  //     movedBookmarks = [...movedBookmarks, { ...toNext, previous: node.id }];
+  //   }
+  //   console.log(JSON.stringify(movedBookmarks));
+  //   this.store.dispatch(new MoveBookmark(movedBookmarks));
+  // }
 
   // deleteBookmark(node: TreeNode) {
   //   this.customSortBookmarks();
@@ -153,6 +153,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
     const siblings = parent && parent.length > 0 ? parent[0].children : null;
     if (siblings && siblings.length > node.index + 1) {
+      debugger;
       next = siblings[node.index + 1];
       next.previous = node.previous;
     }
