@@ -296,5 +296,16 @@ describe('BookmarksComponent', () => {
 
     });
 
+    it('should start drag', () => {
+      component.dragStart();
+      expect(component.dragNodeInsertToParent).toEqual(false);
+      expect(component.dragging).toEqual(true);
+    });
+
+    it('should end drag', () => {
+      component.dragEnd();
+      expect(component.dragging).toEqual(false);
+    });
+
   });
 });
