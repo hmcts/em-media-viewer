@@ -8,6 +8,7 @@ import { BookmarksComponent } from './bookmarks.component';
 import { Bookmark } from '../../../../store/models/bookmarks.interface';
 import * as fromActions from '../../../../store/actions/bookmark.actions';
 import { State } from 'projects/media-viewer/src/lib/store/reducers/reducers';
+import { off } from 'process';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
@@ -192,6 +193,10 @@ describe('BookmarksComponent', () => {
       yCoordinate: 100
     };
 
+    const bookmarks = JSON.parse(`[{"id":"8816fd4b-bed5-46df-9315-a8f40080c720","name":"2","previous": null ,"index":0},
+    {"id":"a1374cbc-1e28-4f49-91e5-7793e0a183a3","name":"6","parent":null,"previous":"8816fd4b-bed5-46df-9315-a8f40080c720","index":1},
+    {"id":"a21309f9-0e65-46f1-9a58-40605d1fa851","name":"5","parent":null,"previous":"a1374cbc-1e28-4f49-91e5-7793e0a183a3","index":2,
+    "children":[{"id":"69a98ad2-9418-4eec-bf2a-7981e3fec1db","name":"4","parent":"a21309f9-0e65-46f1-9a58-40605d1fa851","previous":null,"index":0}]}]`) as Bookmark[];
 
     it('should emit goToDestination event no rotation', () => {
       component.zoom = 1;
@@ -274,10 +279,6 @@ describe('BookmarksComponent', () => {
     it('should drop when bookmark is moved to a new location', () => {
       spyOn(store, 'dispatch');
       dropEventMock.isPointerOverContainer = true;
-      const bookmarks = JSON.parse(`[{"id":"8816fd4b-bed5-46df-9315-a8f40080c720","name":"2","previous": null ,"index":0},
-      {"id":"a1374cbc-1e28-4f49-91e5-7793e0a183a3","name":"6","parent":null,"previous":"8816fd4b-bed5-46df-9315-a8f40080c720","index":1},
-      {"id":"a21309f9-0e65-46f1-9a58-40605d1fa851","name":"5","parent":null,"previous":"a1374cbc-1e28-4f49-91e5-7793e0a183a3","index":2,
-      "children":[{"id":"69a98ad2-9418-4eec-bf2a-7981e3fec1db","name":"4","parent":"a21309f9-0e65-46f1-9a58-40605d1fa851","previous":null,"index":0}]}]`) as Bookmark[];
       dropEventMock.item.data = bookmarks[0];
       dropEventMock.isPointerOverContainer = true;
 
@@ -306,6 +307,34 @@ describe('BookmarksComponent', () => {
       component.dragEnd();
       expect(component.dragging).toEqual(false);
     });
+
+    it('should drag hover start on mouse enter', fakeAsync(() => {
+      const nodeWithDragHover = bookmarks[0];
+      spyOn(component.treeControl, "expand");
+      spyOn(window, 'clearTimeout');
+      component.dragging = true;
+
+      const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 1, offsetY: 0, target: { clientWidth: 3 } });
+      component.dragHover(dragEvent, nodeWithDragHover);
+      tick(1000);
+
+      expect(component.treeControl.expand).toHaveBeenCalled();
+      expect(window.clearTimeout).toHaveBeenCalled();
+      expect(component.dragNodeInsertToParent).toEqual(true);
+    }));
+
+    it('should drag hover end on mouse leave', fakeAsync(() => {
+      const nodeWithDragHover = bookmarks[0];
+      spyOn(window, 'clearTimeout');
+      component.dragging = true;
+
+      const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 1, offsetY: 0, target: { clientWidth: 3 } });
+      component.dragHoverEnd(dragEvent, nodeWithDragHover);
+      tick(1000);
+
+      expect(window.clearTimeout).toHaveBeenCalled();
+    }));
+
 
   });
 });

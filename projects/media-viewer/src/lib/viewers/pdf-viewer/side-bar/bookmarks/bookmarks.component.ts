@@ -359,6 +359,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     if (this.dragging) {
       const newEvent: any = event;
       const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
+      debugger;
       if (percentageX > .25) {
         this.dragNodeInsertToParent = true;
       } else {
@@ -371,6 +372,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       }, this.expandDelay);
     }
   }
+
   dragHoverEnd(event: any, node: Bookmark) {
     if (this.dragging) {
       clearTimeout(this.expandTimeout);
