@@ -21,6 +21,10 @@ describe('BookmarksComponent', () => {
     data: { id: 'bookmarkId', children: [] }
   } as any;
 
+  const bookmarkNodeWithChildren = {
+    data: { id: 'bookmarkId', children: [{ id: 'bookmarkId2', children: [] }] }
+  } as any;
+
   const bookmarks = [
     { id: 1, name: 'root1', next: 4, index: 0, pageNumber: 1, yCoordinate: 70 },
     { id: 2, name: 'child1', parent: 1, next: 3, index: 1, pageNumber: 1, yCoordinate: 50 },
@@ -108,19 +112,11 @@ describe('BookmarksComponent', () => {
   })
   );
 
-  it('should delete bookmark', () => {
-    spyOn(store, 'dispatch');
-    component.deleteBookmark(bookmarkNode);
-    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
-      deleted: ['bookmarkId'], updated: undefined
-    }));
-  });
-
   it('should new delete bookmark', () => {
     spyOn(store, 'dispatch');
-    component.deleteBookmark2(bookmarkNode.data);
+    component.deleteBookmark2(bookmarkNodeWithChildren.data);
     expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
-      deleted: ['bookmarkId'], updated: undefined
+      deleted: ['bookmarkId', 'bookmarkId2'], updated: undefined
     }));
   });
 
@@ -355,6 +351,20 @@ describe('BookmarksComponent', () => {
       expect(window.clearTimeout).toHaveBeenCalled();
     }));
 
+    it('should call on node expand when expanded', fakeAsync(() => {
+      const node = bookmarks[0];
+      spyOn(component.treeControl, 'isExpanded').and.returnValue(true);
 
+      const result = component.onNodeExpand(node);
+      expect(result).toEqual("toggle-children-wrapper-expanded");
+    }));
+
+    it('should call on node expand when collapsed', fakeAsync(() => {
+      const node = bookmarks[0];
+      spyOn(component.treeControl, 'isExpanded').and.returnValue(false);
+
+      const result = component.onNodeExpand(node);
+      expect(result).toEqual("toggle-children-wrapper-collapsed");
+    }));
   });
 });

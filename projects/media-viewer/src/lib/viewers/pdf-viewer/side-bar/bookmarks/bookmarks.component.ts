@@ -129,22 +129,22 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     this.store.dispatch(new MoveBookmark(movedBookmarks));
   }
 
-  deleteBookmark(node: TreeNode) {
-    this.customSortBookmarks();
-    let next: Bookmark;
-    node = this.tree.treeModel.getNodeById(node.id);
-    if (!node.parent) {
-      node.parent = this.tree.treeModel.virtualRoot;
-    }
-    const siblings = node.parent.children;
-    if (siblings.length > node.index + 1) {
-      next = siblings[node.index + 1].data;
-      next.previous = node.data.previous;
-    }
-    this.store.dispatch(new DeleteBookmark({
-      deleted: [node.data.id, ...getBookmarkChildren(node.data.children)], updated: next
-    }));
-  }
+  // deleteBookmark(node: TreeNode) {
+  //   this.customSortBookmarks();
+  //   let next: Bookmark;
+  //   node = this.tree.treeModel.getNodeById(node.id);
+  //   if (!node.parent) {
+  //     node.parent = this.tree.treeModel.virtualRoot;
+  //   }
+  //   const siblings = node.parent.children;
+  //   if (siblings.length > node.index + 1) {
+  //     next = siblings[node.index + 1].data;
+  //     next.previous = node.data.previous;
+  //   }
+  //   this.store.dispatch(new DeleteBookmark({
+  //     deleted: [node.data.id, ...getBookmarkChildren(node.data.children)], updated: next
+  //   }));
+  // }
 
   deleteBookmark2(node: Bookmark) {
     this.customSortBookmarks();
@@ -157,8 +157,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       next.previous = node.previous;
     }
 
+    const toDelete = [node.id, ...getBookmarkChildren(node.children)];
     this.store.dispatch(new DeleteBookmark({
-      deleted: [node.id, ...getBookmarkChildren(node.children)], updated: next
+      deleted: toDelete, updated: next
     }));
   }
 
