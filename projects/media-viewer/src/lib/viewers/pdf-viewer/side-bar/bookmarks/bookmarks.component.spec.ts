@@ -22,7 +22,7 @@ describe('BookmarksComponent', () => {
   } as any;
 
   const bookmarkNodeWithChildren = {
-    data: { id: 'bookmarkId', children: [{ id: 'bookmarkId2', children: [], index: 1 }] }
+    data: { id: 'bookmarkId', children: [{ id: 'bookmarkId2', children: [], index: 1 }], index: 0 }
   } as any;
 
   const bookmarks = [
@@ -114,6 +114,7 @@ describe('BookmarksComponent', () => {
 
   it('should new delete bookmark', () => {
     spyOn(store, 'dispatch');
+    component.bookmarkNodes = bookmarkNodeWithChildren.data;
     component.deleteBookmark2(bookmarkNodeWithChildren.data);
     expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
       deleted: ['bookmarkId', 'bookmarkId2'], updated: undefined

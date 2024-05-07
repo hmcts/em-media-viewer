@@ -152,6 +152,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     const parent = this.getParent(this._bookmarkNodes, node.parent);
 
     const siblings = parent && parent.length > 0 ? parent[0].children : null;
+    debugger;
     if (siblings && siblings.length > node.index + 1) {
       debugger;
       next = siblings[node.index + 1];
@@ -235,25 +236,20 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   private positionSortBookmarks() {
     this.bookmarkNodes.sort((a, b) => a.pageNumber === b.pageNumber ? a.yCoordinate - b.yCoordinate : a.pageNumber - b.pageNumber);
-    this.setDragNDrop(false);
   }
 
   private customSortBookmarks() {
-    this.bookmarkNodes.sort((a, b) => a.index - b.index);
-    this.setDragNDrop(true);
-  }
+    debugger;
 
-  private setDragNDrop(enabled: boolean) {
-    this.options = {
-      allowDrag: enabled,
-      allowDrop: enabled
-    };
+    if (this.bookmarkNodes.length > 1) {
+      this.bookmarkNodes.sort((a, b) => a.index - b.index);
+    }
   }
 
 
-  private getSibling(node, index) {
-    return node.parent.children.length > index ? node.parent.children[index] : undefined;
-  }
+  // private getSibling(node, index) {
+  //   return node.parent.children.length > index ? node.parent.children[index] : undefined;
+  // }
 
   private scaledY(yCoordinate: number, height: number, page: DocumentPages): number {
     const viewportScale = page.viewportScale / this.zoom;
