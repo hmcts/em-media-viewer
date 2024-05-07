@@ -296,7 +296,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     const fromIndex = fromNodeSiblings.findIndex(n => n.id === fromNode.id);
 
     if (this.dragNodeInsertToParent) {
-      
+
       const indexOfParent = toNodeSiblings.findIndex(element => element.id === toNode.id);
       const parentNode = toNodeSiblings[indexOfParent]
       let movedBookmarksWithParent = [{ ...fromNode, parent: parentNode.id, previous: null }];
@@ -419,10 +419,4 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       this.treeControl.expand(node);
     });
   }
-
-  removeNode(arr: Array<Bookmark>, node: Bookmark) {
-
-    arr.filter((item) => item.id !== node.id);
-  }
-
 }
