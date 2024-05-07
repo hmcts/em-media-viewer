@@ -164,7 +164,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       next.previous = node.previous;
     }
 
-    debugger;
     this.store.dispatch(new DeleteBookmark({
       deleted: [node.id, ...getBookmarkChildren(node.children)], updated: next
     }));
@@ -338,7 +337,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     })
     if (hasDups || movedBookmarks && movedBookmarks.length <= 1) return;
 
-    debugger;
     this.store.dispatch(new MoveBookmark(movedBookmarks));
   }
 
@@ -359,7 +357,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     if (this.dragging) {
       const newEvent: any = event;
       const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
-      debugger;
+
       if (percentageX > .25) {
         this.dragNodeInsertToParent = true;
       } else {
