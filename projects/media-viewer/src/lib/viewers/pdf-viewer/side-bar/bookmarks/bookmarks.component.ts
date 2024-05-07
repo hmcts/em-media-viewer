@@ -1,5 +1,5 @@
 import { Bookmark } from './../../../../store/models/bookmarks.interface';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
@@ -15,7 +15,7 @@ import { take } from 'rxjs/operators';
 import uuid from 'uuid';
 import { ArrayDataSource, SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'mv-bookmarks',
@@ -26,13 +26,6 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 export class BookmarksComponent implements OnInit, OnDestroy {
 
   @Input()
-  // set bookmarkNodes(value: Bookmark[]) {
-  //   this.rebuildTreeForData(value);
-  //   if (this._bookmarkNodes && this.sortMode !== this.customSort) {
-  //     this.sortBookmarks();
-  //   }
-  // };
-
   set bookmarkNodes(value: Bookmark[]) {
     this.rebuildTreeForData(value);
     if (this._bookmarkNodes && this.sortMode !== this.customSort) {
@@ -303,10 +296,16 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     const fromIndex = fromNodeSiblings.findIndex(n => n.id === fromNode.id);
 
     if (this.dragNodeInsertToParent) {
+      
       const indexOfParent = toNodeSiblings.findIndex(element => element.id === toNode.id);
-      const parentId = toNodeSiblings[indexOfParent].id
-      const childMovedBookmarks = [{ ...fromNode, parent: parentId, previous: null }];
-      this.store.dispatch(new MoveBookmark(childMovedBookmarks));
+      const parentNode = toNodeSiblings[indexOfParent]
+      let movedBookmarksWithParent = [{ ...fromNode, parent: parentNode.id, previous: null }];
+
+      const parentMovedBookmarks = parentNode.previous === fromNode.id ? this.getSiblingFromAllSibliings(fromNodeSiblings, fromIndex - 1) : parentNode;
+
+      movedBookmarksWithParent = [...movedBookmarksWithParent, { ...parentNode, previous: parentMovedBookmarks?.id }];
+
+      this.store.dispatch(new MoveBookmark(movedBookmarksWithParent));
       return;
     }
 

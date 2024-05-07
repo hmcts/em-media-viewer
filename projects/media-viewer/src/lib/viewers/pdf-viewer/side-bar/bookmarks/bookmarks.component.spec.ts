@@ -297,6 +297,26 @@ describe('BookmarksComponent', () => {
 
     });
 
+    it('should drop when bookmark is moved into parent node', () => {
+      spyOn(store, 'dispatch');
+      dropEventMock.isPointerOverContainer = true;
+      dropEventMock.item.data = bookmarks[0];
+      dropEventMock.isPointerOverContainer = true;
+
+      component.bookmarkNodes = bookmarks;
+      component.dragNodeInsertToParent = true
+      component.drop(dropEventMock)
+
+      const nodeMoved1 = { ...bookmarks[1], previous: undefined, parent: null };
+      const nodeMoved2 = { ...bookmarks[0], previous: null, parent: bookmarks[1].id };
+
+      const movedBookmarks = [nodeMoved2, nodeMoved1];
+
+      debugger;
+      expect(store.dispatch).toHaveBeenCalledWith(new fromActions.MoveBookmark(movedBookmarks));
+
+    });
+
     it('should start drag', () => {
       component.dragStart();
       expect(component.dragNodeInsertToParent).toEqual(false);
