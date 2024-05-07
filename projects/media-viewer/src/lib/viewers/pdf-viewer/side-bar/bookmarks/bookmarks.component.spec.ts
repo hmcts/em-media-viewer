@@ -115,6 +115,14 @@ describe('BookmarksComponent', () => {
     }));
   });
 
+  it('should new delete bookmark', () => {
+    spyOn(store, 'dispatch');
+    component.deleteBookmark2(bookmarkNode.data);
+    expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
+      deleted: ['bookmarkId'], updated: undefined
+    }));
+  });
+
   it('should update bookmark', () => {
     spyOn(store, 'dispatch');
     const mockBookmark = { name: 'Bookmark name', id: 'id' } as any;

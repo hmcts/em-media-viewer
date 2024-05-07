@@ -164,6 +164,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       next.previous = node.previous;
     }
 
+    debugger;
     this.store.dispatch(new DeleteBookmark({
       deleted: [node.id, ...getBookmarkChildren(node.children)], updated: next
     }));
