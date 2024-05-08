@@ -45,6 +45,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   private _bookmarkNodes: Bookmark[] = [];
   datasource: ArrayDataSource<Bookmark>;
   treeControl: FlatTreeControl<Bookmark>;
+  hoveredNode: Bookmark;
   // expansion model tracks expansion state
   expansionModel = new SelectionModel<Bookmark>(true);
   dragging = false;
@@ -236,12 +237,14 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   private positionSortBookmarks() {
     this.bookmarkNodes.sort((a, b) => a.pageNumber === b.pageNumber ? a.yCoordinate - b.yCoordinate : a.pageNumber - b.pageNumber);
+    this.rebuildTreeForData(this.bookmarkNodes);
   }
 
   private customSortBookmarks() {
     if (this.bookmarkNodes.length > 1) {
       this.bookmarkNodes.sort((a, b) => a.index - b.index);
     }
+    this.rebuildTreeForData(this.bookmarkNodes);
   }
 
 
@@ -353,8 +356,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
 
       if (percentageX > .25) {
+        this.hoveredNode = node;
         this.dragNodeInsertToParent = true;
       } else {
+        this.hoveredNode = null;
         this.dragNodeInsertToParent = false;
       }
 
@@ -367,6 +372,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   dragHoverEnd(event: any, node: Bookmark) {
     if (this.dragging) {
+      if (!node || this.hoveredNode?.id !== node.id) {
+        this.dragNodeInsertToParent = false;
+        this.hoveredNode = null;
+      }
       clearTimeout(this.expandTimeout);
     }
   }

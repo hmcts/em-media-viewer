@@ -11,10 +11,10 @@
   (cdkDropListDropped)="drop($event)"
 >
   <!-- This is the tree node template for leaf nodes -->
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node">
+  <cdk-nested-tree-node class="node-wrapper" *cdkTreeNodeDef="let node">
     <div *ngIf="node.id !== editableBookmark; else inputBookmark">
       <div
-        class="node-wrapper node-content-wrapper nested-tree-node"
+        class="node-content-wrapper nested-tree-node"
         cdkDrag
         [cdkDragData]="node"
         (mouseenter)="dragHover($event, node)"
@@ -50,10 +50,12 @@
         (click)="updateBookmark(node, bookmarkName.value)"
       ></button>
     </ng-template>
-    <div class="drop-slot"></div>
   </cdk-nested-tree-node>
   <!-- This is the tree node template for expandable nodes -->
-  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild">
+  <cdk-nested-tree-node
+    class="node-wrapper"
+    *cdkTreeNodeDef="let node; when: hasChild"
+  >
     <div *ngIf="node.id !== editableBookmark; else inputBookmark2">
       <div
         class="node-wrapper node-content-wrapper nested-tree-node"
@@ -86,7 +88,6 @@
       </div>
       <div class="node-drop-slot"></div>
     </div>
-    <!-- <pre>{{ node | json }}</pre> -->
     <ng-template #inputBookmark2>
       <input
         #bookmarkName
@@ -103,5 +104,4 @@
       <ng-container cdkTreeNodeOutlet></ng-container>
     </div>
   </cdk-nested-tree-node>
-  <div class="drop-slot"></div>
 </cdk-tree>
