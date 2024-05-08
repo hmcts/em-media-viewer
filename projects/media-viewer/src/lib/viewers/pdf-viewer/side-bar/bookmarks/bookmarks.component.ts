@@ -153,9 +153,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     const parent = this.getNode(this._bookmarkNodes, node.parent);
 
     const siblings = parent && parent.length > 0 ? parent[0].children : null;
-    debugger;
     if (siblings && siblings.length > node.index + 1) {
-      debugger;
       next = siblings[node.index + 1];
       next.previous = node.previous;
     }

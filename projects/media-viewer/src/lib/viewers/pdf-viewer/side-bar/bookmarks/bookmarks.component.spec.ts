@@ -367,9 +367,7 @@ describe('BookmarksComponent', () => {
     });
 
     it('should find node when getNode is called on bookmark with child', () => {
-
       const result = component.getNode(bookmarks, '69a98ad2-9418-4eec-bf2a-7981e3fec1db');
-      debugger;
       expect(result).toEqual([bookmarks[2].children[0]]);
     });
   });
