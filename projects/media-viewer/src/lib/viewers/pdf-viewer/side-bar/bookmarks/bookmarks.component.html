@@ -1,7 +1,6 @@
 <a *ngIf="bookmarkNodes?.length === 0" class="highlightedOutlineItem"
   >No bookmarks created yet</a
 >
-
 <cdk-tree
   cdkDropList
   class="bookmarks-tree"
@@ -58,7 +57,7 @@
   >
     <div *ngIf="node.id !== editableBookmark; else inputBookmark2">
       <div
-        class="node-wrapper node-content-wrapper nested-tree-node"
+        class="node-content-wrapper nested-tree-node"
         cdkDrag
         [cdkDragData]="node"
         (mouseenter)="dragHover($event, node)"

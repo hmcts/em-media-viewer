@@ -114,7 +114,7 @@ describe('BookmarksComponent', () => {
 
   it('should new delete bookmark', () => {
     spyOn(store, 'dispatch');
-    component.bookmarkNodes = bookmarkNodeWithChildren.data;
+    component.bookmarkNodes = [bookmarkNodeWithChildren.data as unknown as Bookmark];
     component.deleteBookmark2(bookmarkNodeWithChildren.data);
     expect(store.dispatch).toHaveBeenCalledWith(new fromActions.DeleteBookmark({
       deleted: ['bookmarkId', 'bookmarkId2'], updated: undefined
@@ -330,7 +330,7 @@ describe('BookmarksComponent', () => {
       spyOn(window, 'clearTimeout');
       component.dragging = true;
 
-      const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 1, offsetY: 0, target: { clientWidth: 3 } });
+      const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 2, offsetY: 0, target: { clientWidth: 3 } });
       component.dragHover(dragEvent, nodeWithDragHover);
       tick(1000);
 

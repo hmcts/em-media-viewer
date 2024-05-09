@@ -56,6 +56,10 @@ mv-bookmarks {
   }
 
   .bookmarks-tree {
+    display: flex;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    flex-direction: column;
     .node-content-wrapper {
       width: 100%;
       &:hover {
@@ -75,4 +79,9 @@ mv-bookmarks {
   background: url(/assets/images/bookmark-here.svg) center center no-repeat;
   left: 16px;
   position: absolute;
+}
+
+.node-drop-slot:hover {
+  background: rgba(46, 90, 193, 0.372);
+  height: 2rem;
 }

@@ -51,6 +51,7 @@
 }
 .node-wrapper {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
 }
 .node-content-wrapper-active,
@@ -134,6 +135,8 @@ tree-node-checkbox {
 }
 
 .nested-tree-node-children {
+  display: flex;
+  flex-direction: column;
   padding-left: 1.5rem;
 }
 

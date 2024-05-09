@@ -1,7 +1,8 @@
+import { provideMockActions } from '@ngrx/effects/testing';
 import { Bookmark } from './../../../../store/models/bookmarks.interface';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
 
 import { CreateBookmark, DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmark.actions';
@@ -130,34 +131,21 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   //   this.store.dispatch(new MoveBookmark(movedBookmarks));
   // }
 
-  // deleteBookmark(node: TreeNode) {
-  //   this.customSortBookmarks();
-  //   let next: Bookmark;
-  //   node = this.tree.treeModel.getNodeById(node.id);
-  //   if (!node.parent) {
-  //     node.parent = this.tree.treeModel.virtualRoot;
-  //   }
-  //   const siblings = node.parent.children;
-  //   if (siblings.length > node.index + 1) {
-  //     next = siblings[node.index + 1].data;
-  //     next.previous = node.data.previous;
-  //   }
-  //   this.store.dispatch(new DeleteBookmark({
-  //     deleted: [node.data.id, ...getBookmarkChildren(node.data.children)], updated: next
-  //   }));
+  // private getSibling(node, index) {
+  //   return node.parent.children.length > index ? node.parent.children[index] : undefined;
   // }
 
   deleteBookmark2(node: Bookmark) {
     this.customSortBookmarks();
     let next: Bookmark;
-    const parent = this.getNode(this._bookmarkNodes, node.parent);
 
-    const siblings = parent && parent.length > 0 ? parent[0].children : null;
+    const changedData = JSON.parse(JSON.stringify(this.bookmarkNodes));
+    const siblings = this.findNodeSiblings(changedData, node.id);
     if (siblings && siblings.length > node.index + 1) {
       next = siblings[node.index + 1];
       next.previous = node.previous;
     }
-
+    debugger;
     const toDelete = [node.id, ...getBookmarkChildren(node.children)];
     this.store.dispatch(new DeleteBookmark({
       deleted: toDelete, updated: next
@@ -245,11 +233,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     this.rebuildTreeForData(this.bookmarkNodes);
   }
 
-
-  // private getSibling(node, index) {
-  //   return node.parent.children.length > index ? node.parent.children[index] : undefined;
-  // }
-
   private scaledY(yCoordinate: number, height: number, page: DocumentPages): number {
     const viewportScale = page.viewportScale / this.zoom;
     return ((height / this.zoom) - yCoordinate) / viewportScale;
@@ -276,9 +259,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   drop(event: CdkDragDrop<Bookmark>) {
 
-    if (!event.isPointerOverContainer) return;
+    if (!event.isPointerOverContainer || (event.previousIndex === event.currentIndex)) return;
 
-    const hasMovedUp = event.previousIndex > event.currentIndex;
+    const hasMovedUpTheTree = event.previousIndex > event.currentIndex;
     const changedData = JSON.parse(JSON.stringify(this.bookmarkNodes));
     const visibleNodes = this.visibleNodes(this._bookmarkNodes);
     const toNode = visibleNodes[event.currentIndex];
@@ -295,11 +278,27 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
       const indexOfParent = toNodeSiblings.findIndex(element => element.id === toNode.id);
       const parentNode = toNodeSiblings[indexOfParent]
+      const firstChild = parentNode?.children && parentNode?.children.length > 0 ? parentNode.children[0] : null;
       let movedBookmarksWithParent = [{ ...fromNode, parent: parentNode.id, previous: null }];
 
-      const parentMovedBookmarks = parentNode.previous === fromNode.id ? this.getSiblingFromAllSibliings(fromNodeSiblings, fromIndex - 1) : parentNode;
+      if (firstChild) {
+        movedBookmarksWithParent = [...movedBookmarksWithParent, { ...firstChild, previous: fromNode.id }];
+      }
 
-      movedBookmarksWithParent = [...movedBookmarksWithParent, { ...parentNode, previous: parentMovedBookmarks?.id }];
+      let previousSiblingForParentIndex = toIndex - 1;
+      let parentNodeSibling = this.getSiblingFromAllSibliings(fromNodeSiblings, previousSiblingForParentIndex);
+
+      if (parentNodeSibling.id == fromNode.id) {
+        previousSiblingForParentIndex = previousSiblingForParentIndex - 1;
+        if (previousSiblingForParentIndex > 0) {
+          parentNodeSibling = this.getSiblingFromAllSibliings(fromNodeSiblings, previousSiblingForParentIndex);
+        }
+        else {
+          parentNodeSibling = null;
+        }
+      }
+
+      movedBookmarksWithParent = [...movedBookmarksWithParent, { ...parentNode, previous: parentNodeSibling?.id }];
 
       this.store.dispatch(new MoveBookmark(movedBookmarksWithParent));
       return;
@@ -307,9 +306,10 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
     if (!toNodeSiblings) return;
 
+    const fromNodePrevious = hasMovedUpTheTree ? toNode.previous : toNode.id;
     let movedBookmarks = [{
       ...fromNode,
-      previous: toNode.index > 0 ? toNodeSiblings[toNode.index].id : undefined,
+      previous: toNode.index > 0 ? fromNodePrevious : undefined,
       parent: toNodeParent
     }];
 
@@ -321,8 +321,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     }
 
 
-    const toNodeSiblingIndex = hasMovedUp ? toIndex : toIndex + 1;
-    const toNodeSibling = this.getSiblingFromAllSibliings(toNodeSiblings, toNodeSiblingIndex);
+    let toNodeSiblingIndex = hasMovedUpTheTree ? toIndex : toIndex + 1;
+    let toNodeSibling = this.getSiblingFromAllSibliings(toNodeSiblings, toNodeSiblingIndex);
+
     if (toNodeSibling) {
       movedBookmarks = [...movedBookmarks, { ...toNodeSibling, previous: fromNode.id }];
     }
@@ -341,6 +342,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   dragStart() {
     this.dragNodeInsertToParent = false;
+    this.hoveredNode = null;
     this.dragging = true;
   }
 
@@ -352,15 +354,13 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     if (this.dragging) {
       const newEvent: any = event;
       const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
-
-      if (percentageX > .25) {
+      if (percentageX > .55) {
         this.hoveredNode = node;
         this.dragNodeInsertToParent = true;
       } else {
         this.hoveredNode = null;
         this.dragNodeInsertToParent = false;
       }
-
       clearTimeout(this.expandTimeout);
       this.expandTimeout = setTimeout(() => {
         this.treeControl.expand(node);
