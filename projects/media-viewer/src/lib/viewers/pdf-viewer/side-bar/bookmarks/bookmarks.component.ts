@@ -3,7 +3,6 @@ import { Bookmark } from './../../../../store/models/bookmarks.interface';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subscription, from } from 'rxjs';
-import { TreeComponent, TreeNode } from '@circlon/angular-tree-component';
 
 import { CreateBookmark, DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmark.actions';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmark.selectors';
@@ -23,7 +22,6 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
   templateUrl: './bookmarks.component.html'
 })
 
-//, OnChanges
 export class BookmarksComponent implements OnInit, OnDestroy {
 
   @Input()
@@ -42,7 +40,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   @Input() rotate: number;
   @Output() goToDestination = new EventEmitter<any[]>();
 
-  // private _bookmarkNodes: Bookmark[] = [];
   private _bookmarkNodes: Bookmark[] = [];
   datasource: ArrayDataSource<Bookmark>;
   treeControl: FlatTreeControl<Bookmark>;
@@ -70,9 +67,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   };
 
   $subscription: Subscription;
-
-  @ViewChild(TreeComponent)
-  tree: TreeComponent;
 
   private sortMode: string;
 
@@ -112,29 +106,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       });
   }
 
-  // onBookmarkMove({ node, from, to }: any) {
-  //   let movedBookmarks = [{
-  //     ...node,
-  //     previous: to.index > 0 ? to.parent.children[to.index - 1].id : undefined,
-  //     parent: to.parent.documentId ? to.parent.id : undefined
-  //   }];
-  //   let fromNext = this.getSibling(from, from.index);
-  //   fromNext = fromNext && fromNext.id === node.previous ? this.getSibling(from, from.index + 1) : fromNext;
-  //   if (fromNext) {
-  //     movedBookmarks = [...movedBookmarks, { ...fromNext, previous: node.previous }];
-  //   }
-  //   const toNext = this.getSibling(to, to.index + 1);
-  //   if (toNext) {
-  //     movedBookmarks = [...movedBookmarks, { ...toNext, previous: node.id }];
-  //   }
-  //   console.log(JSON.stringify(movedBookmarks));
-  //   this.store.dispatch(new MoveBookmark(movedBookmarks));
-  // }
-
-  // private getSibling(node, index) {
-  //   return node.parent.children.length > index ? node.parent.children[index] : undefined;
-  // }
-
   deleteBookmark2(node: Bookmark) {
     this.customSortBookmarks();
     let next: Bookmark;
@@ -145,7 +116,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       next = siblings[node.index + 1];
       next.previous = node.previous;
     }
-    debugger;
     const toDelete = [node.id, ...getBookmarkChildren(node.children)];
     this.store.dispatch(new DeleteBookmark({
       deleted: toDelete, updated: next

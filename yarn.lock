@@ -1944,19 +1944,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@circlon/angular-tree-component@npm:^11.0.4":
-  version: 11.0.4
-  resolution: "@circlon/angular-tree-component@npm:11.0.4"
-  dependencies:
-    mobx: ~4.14.1
-    tslib: ^2.0.0
-  peerDependencies:
-    "@angular/common": ">=11.0.0"
-    "@angular/core": ">=11.0.0"
-  checksum: bbadb1231b7422fa829da9afb10f0fa31a770c4c860e9aafec697260e47705d5b6c0e46dee3913fe0d1a8308ac0f19c4c0aaa9c27a956ecf1e37bee62723d2aa
-  languageName: node
-  linkType: hard
-
 "@codeceptjs/configure@npm:0.10.0":
   version: 0.10.0
   resolution: "@codeceptjs/configure@npm:0.10.0"
@@ -2584,7 +2571,6 @@ __metadata:
     "@angular/platform-browser-dynamic": ^15.2.9
     "@angular/platform-server": ^15.2.9
     "@angular/router": ^15.2.9
-    "@circlon/angular-tree-component": ^11.0.4
     "@hmcts/eslint-config": ^1.4.0
     "@hmcts/nodejs-healthcheck": ^1.7.0
     "@hmcts/nodejs-logging": 3.0.4
@@ -15296,13 +15282,6 @@ __metadata:
   bin:
     mkdirp: dist/cjs/src/bin.js
   checksum: 972deb188e8fb55547f1e58d66bd6b4a3623bf0c7137802582602d73e6480c1c2268dcbafbfb1be466e00cc7e56ac514d7fd9334b7cf33e3e2ab547c16f83a8d
-  languageName: node
-  linkType: hard
-
-"mobx@npm:~4.14.1":
-  version: 4.14.1
-  resolution: "mobx@npm:4.14.1"
-  checksum: 0acf79c55fc77310e52b67a8ac9c8a00276c616cff0919bcc7ce7c9494ce97e2bbbc20abd5f75944f2a66a398e1e96b46d06b195f712069eb15305298c1717c1
   languageName: node
   linkType: hard
 
