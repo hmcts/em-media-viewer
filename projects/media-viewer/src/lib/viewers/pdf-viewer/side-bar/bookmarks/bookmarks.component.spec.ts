@@ -139,26 +139,6 @@ describe('BookmarksComponent', () => {
     expect(store.dispatch).not.toHaveBeenCalled();
   });
 
-  // it('should move bookmarks', () => {
-  //   spyOn(store, 'dispatch');
-  //   const node = {
-  //     documentId: '7547364e-5e49-452b-82e9-8d4b8a334a53',
-  //     id: 'id1',
-  //     index: 0,
-  //     name: 'new bookmark',
-  //     parent: undefined,
-  //     previous: undefined
-  //   };
-
-  //   const from = { index: 0, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
-  //   const to = { index: 1, parent: { children: [{ id: 'id2', index: 1 }, { id: 'id1', index: 0 }] } };
-  //   const movedBookmarks = [{ ...node, previous: 'id2' }, { id: 'id2', index: 1, previous: undefined } as any];
-
-  //   component.onBookmarkMove({ node, to, from });
-
-  //   expect(store.dispatch).toHaveBeenCalledWith(new fromActions.MoveBookmark(movedBookmarks));
-  // });
-
   it('should set editableBookmark', () => {
     const mockId = '123';
     component.editBookmark(mockId);
