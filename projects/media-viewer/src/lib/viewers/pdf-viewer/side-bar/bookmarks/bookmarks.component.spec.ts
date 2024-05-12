@@ -94,8 +94,6 @@ describe('BookmarksComponent', () => {
     store = TestBed.inject(Store);
     fixture.detectChanges();
     component.bookmarkNodes = bookmarks;
-    component.tree = jasmine.createSpyObj('TreeComponent', ['treeModel']);
-    component.tree.treeModel = treeModelMock;
   });
 
   it('should create', () => {
