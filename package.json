@@ -49,7 +49,6 @@
     "test:crossbrowser": "NODE_PATH=. codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} -c test/end-to-end/saucelabs.conf.js --plugins retryFailedStep --steps --grep '@xb' --reporter mocha-multi"
   },
   "dependencies": {
-    "@ali-hm/angular-tree-component": "12.0.5",
     "@angular-eslint/utils": "15.2.1",
     "@angular/animations": "^16.2.12",
     "@angular/cdk": "^16.2.9",
