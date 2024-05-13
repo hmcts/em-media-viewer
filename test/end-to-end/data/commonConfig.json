@@ -50,7 +50,7 @@
   "highLightTextCount": "mv-annotation-set .rectangle",
   "bookMarksCss": ".outlineItem",
   "deleteBookmarkCss": ".outlineWithDeepNesting .bookmarks-tree .bookmark__delete",
-  "bookMarkRename": ".outlineWithDeepNesting .bookmarks-tree .outlineItem .bookmark__rename",
+  "bookMarkRename": ".outlineWithDeepNesting .bookmarks-tree .nested-tree-node .bookmark__rename",
   "bookMarkSave": ".outlineWithDeepNesting .bookmarks-tree .bookmark__save",
   "bookMarkInput": ".outlineWithDeepNesting .bookmarks-tree .node-wrapper .bookmark__input",
   "deleteAnnotationBtn_original": "//*[contains(@class, 'govuk-button--secondary')]",
