@@ -33,13 +33,12 @@ module.exports = async function () {
   bookmarkNames = await collectBookmarkNames();
   assert.deepEqual(bookmarkNames, ['page2', 'page3', 'page1']);
 
-    async function collectBookmarkNames() {
-        let names = [];
-        for (let i = 1; i < 4; i++) {
-            let bookmarkName = await I.grabTextFrom(`(//tree-node)[${i}]`);
-            names.push(bookmarkName);
-        }
-        return names;
+  async function collectBookmarkNames() {
+    let names = [];
+    for (let i = 1; i < 4; i++) {
+      let bookmarkName = await I.grabTextFrom(`(//cdk-nested-tree-node)[${i}]`);
+      names.push(bookmarkName);
     }
-
+    return names;
+  }
 }

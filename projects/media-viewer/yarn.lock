@@ -5,24 +5,10 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@circlon/angular-tree-component@npm:^11.0.4":
-  version: 11.0.4
-  resolution: "@circlon/angular-tree-component@npm:11.0.4"
-  dependencies:
-    mobx: ~4.14.1
-    tslib: ^2.0.0
-  peerDependencies:
-    "@angular/common": ">=11.0.0"
-    "@angular/core": ">=11.0.0"
-  checksum: bbadb1231b7422fa829da9afb10f0fa31a770c4c860e9aafec697260e47705d5b6c0e46dee3913fe0d1a8308ac0f19c4c0aaa9c27a956ecf1e37bee62723d2aa
-  languageName: node
-  linkType: hard
-
 "@hmcts/media-viewer@workspace:.":
   version: 0.0.0-use.local
   resolution: "@hmcts/media-viewer@workspace:."
   dependencies:
-    "@circlon/angular-tree-component": ^11.0.4
     "@swimlane/ngx-datatable": ^20.0.0
     "@types/uuid": ^3.4.4
     hammerjs: ^2.0.8
@@ -143,13 +129,6 @@ __metadata:
   version: 1.1.0
   resolution: "has-cors@npm:1.1.0"
   checksum: 549ce94113fd23895b22d71ade9809918577b8558cd4d701fe79045d8b1d58d87eba870260b28f6a3229be933a691c55653afd496d0fc52e98fd2ff577f01197
-  languageName: node
-  linkType: hard
-
-"mobx@npm:~4.14.1":
-  version: 4.14.1
-  resolution: "mobx@npm:4.14.1"
-  checksum: 0acf79c55fc77310e52b67a8ac9c8a00276c616cff0919bcc7ce7c9494ce97e2bbbc20abd5f75944f2a66a398e1e96b46d06b195f712069eb15305298c1717c1
   languageName: node
   linkType: hard
 
