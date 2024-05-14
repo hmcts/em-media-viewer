@@ -38,7 +38,7 @@ Scenario('Sort bookmarks', async ({ I }) => {
 Scenario('custom order and reorder bookmarks', async ({ I }) => {
   await customAndReorderBookmarksTest(I, mvData.CASE_ID, mvData.PDF_DOCUMENT);
 
-}).tag('@mks')
+}).tag('@ci')
   .retry(testConfig.TestRetryScenarios);
 
 Scenario('check if bookmark box is blank', async ({ I }) => {
