@@ -1,5 +1,4 @@
 const {Logger} = require('@hmcts/nodejs-logging');
-const requestModule = require('request-promise-native');
 const testConfig = require('../../config.js');
 const totp = require("totp-generator")
 const logger = Logger.getLogger('helpers/s2sHelper.js');
