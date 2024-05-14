@@ -11,7 +11,6 @@ __metadata:
   dependencies:
     "@swimlane/ngx-datatable": ^20.0.0
     "@types/uuid": ^3.4.4
-    hammerjs: ^2.0.8
     mutable-div: ^2.0.0
     pdfjs-dist: 2.5.207
     socket.io-client: ^3.1.1
@@ -115,13 +114,6 @@ __metadata:
   dependencies:
     base64-arraybuffer: 0.1.4
   checksum: 9e2db35acb6f2e8269a7c5cd8ca40d1cd7277e5c6472e7341d0f85a8d09a6788427c1f55cc5a8fa4a44213d89d2bd2494f230d0624605d88f7aae32651a3c44b
-  languageName: node
-  linkType: hard
-
-"hammerjs@npm:^2.0.8":
-  version: 2.0.8
-  resolution: "hammerjs@npm:2.0.8"
-  checksum: b092da7d1565a165d7edb53ef0ce212837a8b11f897aa3cf81a7818b66686b0ab3f4747fbce8fc8a41d1376594639ce3a054b0fd4889ca8b5b136a29ca500e27
   languageName: node
   linkType: hard
 
