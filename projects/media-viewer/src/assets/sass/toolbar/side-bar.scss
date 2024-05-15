@@ -80,16 +80,15 @@ html[dir="rtl"] #sidebarContent {
 
 #outerContainer.sidebarOpen #viewerContainer:not(.pdfPresentationMode) {
   transition-property: left;
-  left: 200px;
-
+  left: 12rem;
+  width: 87.5%;
   left: var($--sidebar-width);
 }
 html[dir="rtl"]
   #outerContainer.sidebarOpen
   #viewerContainer:not(.pdfPresentationMode) {
   transition-property: right;
-  right: 12rem;
-  width: 87.5%;
+  right: -200px;
   right: var($--sidebar-width);
 }
 
