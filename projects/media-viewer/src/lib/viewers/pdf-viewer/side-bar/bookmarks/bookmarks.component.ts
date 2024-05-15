@@ -256,7 +256,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       }
 
       let previousSiblingForParentIndex = toIndex - 1;
-      let parentNodeSibling = this.getSiblingFromAllSibliings(fromNodeSiblings, previousSiblingForParentIndex);
+      let parentNodeSibling = this.getSiblingFromAllSibliings(toNodeSiblings, previousSiblingForParentIndex);
 
       if (parentNodeSibling.id == fromNode.id) {
         previousSiblingForParentIndex = previousSiblingForParentIndex - 1;
