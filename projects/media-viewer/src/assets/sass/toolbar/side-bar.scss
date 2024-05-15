@@ -88,7 +88,7 @@ html[dir="rtl"]
   #outerContainer.sidebarOpen
   #viewerContainer:not(.pdfPresentationMode) {
   transition-property: right;
-  right: -200px;
+  right: 200px;
   right: var($--sidebar-width);
 }
 
