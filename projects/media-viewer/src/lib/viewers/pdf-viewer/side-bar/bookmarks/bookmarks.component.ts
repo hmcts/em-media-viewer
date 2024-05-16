@@ -416,6 +416,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     }
 
     const result = this.getNode(fromNodeChildren, toNode.id);
-    return result !== null || result !== undefined ? true : false;
+    return result ? true : false;
   }
 }
