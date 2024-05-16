@@ -235,20 +235,22 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     const bookmarkNodesString = JSON.stringify(this._bookmarkNodes);
     const changedData = JSON.parse(bookmarkNodesString);
     const visibleNodes = this.visibleNodes(this._bookmarkNodes);
-    const toNode = visibleNodes[event.currentIndex];
+    const toNode = visibleNodes[event.currentIndex] as Bookmark;
     const toNodeSiblings = this.findNodeSiblings(changedData, toNode.id);
 
     const toNodeParent = toNodeSiblings[0].parent;
     const toIndex = toNodeSiblings.findIndex(s => s.id === toNode.id);
 
-    const fromNode = event.item.data;
+    const fromNode = event.item.data as Bookmark;
     const fromNodeSiblings = this.findNodeSiblings(changedData, fromNode.id);
     const fromIndex = fromNodeSiblings.findIndex(n => n.id === fromNode.id);
+
+    if (this.isToNodeChildOfFromNode(fromNode?.children, toNode)) return;
 
     if (this.dragNodeInsertToParent) {
 
       const indexOfParent = toNodeSiblings.findIndex(element => element.id === toNode.id);
-      const parentNode = toNodeSiblings[indexOfParent]
+      const parentNode = toNodeSiblings[indexOfParent];
       const firstChild = parentNode?.children && parentNode?.children.length > 0 ? parentNode.children[0] : null;
       let movedBookmarksWithParent = [{ ...fromNode, parent: parentNode.id, previous: null }];
 
@@ -405,5 +407,15 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       const node = this.treeControl.dataNodes.find((n) => n.id === bookmark.id);
       this.treeControl.expand(node);
     });
+  }
+
+  isToNodeChildOfFromNode(fromNodeChildren: Bookmark[], toNode: Bookmark) {
+
+    if (!fromNodeChildren) {
+      return false;
+    }
+
+    const result = this.getNode(fromNodeChildren, toNode.id);
+    return result !== null || result !== undefined ? true : false;
   }
 }
