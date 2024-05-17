@@ -348,5 +348,15 @@ describe('BookmarksComponent', () => {
       const result = component.getNode(bookmarks, '69a98ad2-9418-4eec-bf2a-7981e3fec1db');
       expect(result).toEqual([bookmarks[2].children[0]]);
     });
+
+    it('should tell if from node is parent of to node', () => {
+      const result = component.isToNodeChildOfFromNode(bookmarks[2].children, bookmarks[2].children[0]);
+      expect(result).toEqual(true);
+    });
+
+    it('should tell if from node is not parent of to node', () => {
+      const result = component.isToNodeChildOfFromNode(bookmarks[2].children, bookmarks[1]);
+      expect(result).toEqual(false);
+    });
   });
 });
