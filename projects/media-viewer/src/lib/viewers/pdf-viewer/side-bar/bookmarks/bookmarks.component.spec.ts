@@ -294,39 +294,34 @@ describe('BookmarksComponent', () => {
     it('should start drag', () => {
       component.dragStart();
       expect(component.dragNodeInsertToParent).toEqual(false);
-      expect(component.dragging).toEqual(true);
+      expect(component.isUserdragging).toEqual(true);
     });
 
     it('should end drag', () => {
       component.dragEnd();
-      expect(component.dragging).toEqual(false);
+      expect(component.isUserdragging).toEqual(false);
     });
 
     it('should drag hover start on mouse enter', fakeAsync(() => {
       const nodeWithDragHover = bookmarks[0];
-      spyOn(component.treeControl, "expand");
-      spyOn(window, 'clearTimeout');
-      component.dragging = true;
+      component.isUserdragging = true;
 
       const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 2, offsetY: 0, target: { clientWidth: 3 } });
       component.dragHover(dragEvent, nodeWithDragHover);
-      tick(1000);
 
-      expect(component.treeControl.expand).toHaveBeenCalled();
-      expect(window.clearTimeout).toHaveBeenCalled();
       expect(component.dragNodeInsertToParent).toEqual(true);
     }));
 
     it('should drag hover end on mouse leave', fakeAsync(() => {
       const nodeWithDragHover = bookmarks[0];
-      spyOn(window, 'clearTimeout');
-      component.dragging = true;
+      component.hoveredNode = bookmarks[1];
+      component.isUserdragging = true;
 
       const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 1, offsetY: 0, target: { clientWidth: 3 } });
       component.dragHoverEnd(dragEvent, nodeWithDragHover);
-      tick(1000);
 
-      expect(window.clearTimeout).toHaveBeenCalled();
+      expect(component.dragNodeInsertToParent).toEqual(false);
+      expect(component.hoveredNode).toEqual(null);
     }));
 
     it('should call on node expand when expanded', () => {
