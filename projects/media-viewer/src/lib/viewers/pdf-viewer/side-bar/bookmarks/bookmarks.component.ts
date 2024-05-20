@@ -111,7 +111,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     let next: Bookmark;
 
     const changedData = JSON.parse(JSON.stringify(this.bookmarkNodes));
-    console.log('changedData', changedData);
     const siblings = this.findNodeSiblings(changedData, node.id);
     if (siblings && siblings.length > node.index + 1) {
       next = siblings[node.index + 1];
@@ -236,7 +235,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
     const hasMovedUpTheTree = event.previousIndex > event.currentIndex;
     const bookmarkNodesString = JSON.stringify(this._bookmarkNodes);
-    console.log('bookmarkNodesString', bookmarkNodesString);
     const changedData = JSON.parse(bookmarkNodesString);
     const visibleNodes = this.visibleNodes(this._bookmarkNodes);
     const toNode = visibleNodes[event.currentIndex] as Bookmark;
@@ -290,7 +288,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       })
       if (hasParentDups || movedBookmarksWithParent && movedBookmarksWithParent.length <= 1) return;
 
-      console.log('movedBookmarks parent:', movedBookmarksWithParent);
       this.store.dispatch(new MoveBookmark(movedBookmarksWithParent));
       return;
     }
@@ -325,7 +322,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     })
     if (hasDups || movedBookmarks && movedBookmarks.length <= 1) return;
 
-    console.log('movedBookmarks not parent:', movedBookmarks);
     this.store.dispatch(new MoveBookmark(movedBookmarks));
   }
 
