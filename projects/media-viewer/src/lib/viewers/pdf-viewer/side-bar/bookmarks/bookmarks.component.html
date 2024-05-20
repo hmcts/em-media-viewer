@@ -3,6 +3,7 @@
 >
 <cdk-tree
   cdkDropList
+  [cdkDropListDisabled]="!isDraggingOn"
   class="bookmarks-tree"
   *ngIf="datasource"
   [dataSource]="datasource"
