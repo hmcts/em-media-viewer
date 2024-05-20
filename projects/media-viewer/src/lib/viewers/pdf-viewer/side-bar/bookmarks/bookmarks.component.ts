@@ -1,4 +1,3 @@
-import { provideMockActions } from '@ngrx/effects/testing';
 import { Bookmark } from './../../../../store/models/bookmarks.interface';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { select, Store } from '@ngrx/store';
@@ -46,7 +45,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   hoveredNode: Bookmark;
   // expansion model tracks expansion state
   expansionModel = new SelectionModel<Bookmark>(true);
-  dragging = false;
+  isDraggingOn = false;
+  isUserdragging = false;
   expandTimeout: any;
   expandDelay = 1000;
   dragNodeInsertToParent: boolean;
@@ -193,6 +193,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   private positionSortBookmarks() {
     this.bookmarkNodes.sort((a, b) => a.pageNumber === b.pageNumber ? a.yCoordinate - b.yCoordinate : a.pageNumber - b.pageNumber);
+    this.isDraggingOn = false;
     this.rebuildTreeForData(this.bookmarkNodes);
   }
 
@@ -200,6 +201,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     if (this.bookmarkNodes.length > 1) {
       this.bookmarkNodes.sort((a, b) => a.index - b.index);
     }
+    this.isDraggingOn = true;
     this.rebuildTreeForData(this.bookmarkNodes);
   }
 
@@ -315,7 +317,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       movedBookmarks = [...movedBookmarks, { ...toNodeSibling, previous: fromNode.id }];
     }
 
-    const hasDups = (movedBookmarks as Bookmark[]).map(x => x.id).some(function (value, index, array) {                            // .some will break as soon as duplicate found (no need to itterate over all array)
+    const hasDups = (movedBookmarks as Bookmark[]).map(x => x.id).some(function (value, index, array) {
       return array.indexOf(value) !== array.lastIndexOf(value);   // comparing first and last indexes of the same value
     })
     if (hasDups || movedBookmarks && movedBookmarks.length <= 1) return;
@@ -330,15 +332,15 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   dragStart() {
     this.dragNodeInsertToParent = false;
     this.hoveredNode = null;
-    this.dragging = true;
+    this.isUserdragging = true;
   }
 
   dragEnd() {
-    this.dragging = false;
+    this.isUserdragging = false;
   }
 
   dragHover(event: any, node: Bookmark) {
-    if (this.dragging) {
+    if (this.isUserdragging) {
       const newEvent: any = event;
       const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
       if (percentageX > .55) {
@@ -348,20 +350,15 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         this.hoveredNode = null;
         this.dragNodeInsertToParent = false;
       }
-      clearTimeout(this.expandTimeout);
-      this.expandTimeout = setTimeout(() => {
-        this.treeControl.expand(node);
-      }, this.expandDelay);
     }
   }
 
   dragHoverEnd(event: any, node: Bookmark) {
-    if (this.dragging) {
+    if (this.isUserdragging) {
       if (!node || this.hoveredNode?.id !== node.id) {
         this.dragNodeInsertToParent = false;
         this.hoveredNode = null;
       }
-      clearTimeout(this.expandTimeout);
     }
   }
 
