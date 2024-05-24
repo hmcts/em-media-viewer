@@ -62,6 +62,15 @@ mv-pdf-viewer {
     z-index: 1;
   }
 
+  .textLayer .markedContent > span {
+    position: absolute;
+  }
+
+
+  .textLayer .markedContent > br {
+    position: absolute;
+  }
+
   .annotationLayer * {
     z-index: 2;
   }

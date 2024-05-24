@@ -1,4 +1,5 @@
-import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
+import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer'
+import * as _pdfjsLib from 'pdfjs-dist'
 import { ElementRef, Injectable } from '@angular/core';
 import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
@@ -24,6 +25,8 @@ export class PdfJsWrapperFactory {
       eventBus: this.eventBus
     });
 
+    console.log("hello world")
+
     const pdfViewer = new pdfjsViewer.PDFViewer({
       container: container.nativeElement,
       linkService: this.linkService,
@@ -37,7 +40,7 @@ export class PdfJsWrapperFactory {
 
     this.pdfJsWrapper = new PdfJsWrapper(
       pdfViewer,
-      new pdfjsViewer.DownloadManager({}),
+      new pdfjsViewer.DownloadManager(),
       this.toolbarEvents,
       new Subject<string>(),
       new Subject<DocumentLoadProgress>(),

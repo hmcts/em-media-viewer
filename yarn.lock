@@ -3140,7 +3140,7 @@ __metadata:
     nunjucks: ^3.2.4
     otp: ^0.1.3
     pa11y-ci: ^2.4.0
-    pdfjs-dist: 4.0.379
+    pdfjs-dist: 3.8.162
     protractor: ^7.0.0
     protractor-cucumber-framework: ^6.1.1
     protractor-multiple-cucumber-html-reporter-plugin: 1.8.1
@@ -17154,9 +17154,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pdfjs-dist@npm:4.0.379":
-  version: 4.0.379
-  resolution: "pdfjs-dist@npm:4.0.379"
+"pdfjs-dist@npm:3.8.162":
+  version: 3.8.162
+  resolution: "pdfjs-dist@npm:3.8.162"
   dependencies:
     canvas: ^2.11.2
     path2d-polyfill: ^2.0.1
@@ -17165,7 +17165,7 @@ __metadata:
       optional: true
     path2d-polyfill:
       optional: true
-  checksum: dc40e9251c4fa178bb54e655ecf370393c913cc276b1444f7314bb856004727c9bde69b7de4bccb4884da3ed0ea2613029d130bcc4c7e4ddc1c842187927734c
+  checksum: 2d6449c45e5b5be37b11ac2cac393b465255437237c7d6f2e3482b6806a43acb33cd48864e13f2fed357df7cbc40b110ca427153e5192515bfac22d8a7839df0
   languageName: node
   linkType: hard
 
