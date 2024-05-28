@@ -51,10 +51,11 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     let currentElement = mouseEvent.target as HTMLElement;
     while (currentElement.offsetParent) {
       currentElement = currentElement.offsetParent as HTMLElement;
-      let number = parseInt(currentElement.getAttribute('data-page-number'), 10);
-      if (number) {
-        page = number;
-        break;
+      if (currentElement.getAttribute) {
+        page = parseInt(currentElement.getAttribute('data-page-number'), 10);
+        if (page) {
+          break;
+        }
       }
     }
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
