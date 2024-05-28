@@ -25,8 +25,6 @@ export class PdfJsWrapperFactory {
       eventBus: this.eventBus
     });
 
-    console.log("hello world")
-
     const pdfViewer = new pdfjsViewer.PDFViewer({
       container: container.nativeElement,
       linkService: this.linkService,
