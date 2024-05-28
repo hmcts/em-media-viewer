@@ -19,7 +19,7 @@
   "dependencies": {
     "@swimlane/ngx-datatable": "^20.0.0",
     "mutable-div": "^2.0.0",
-    "pdfjs-dist": "4.0.379",
+    "pdfjs-dist": "3.8.162",
     "socket.io-client": "^3.1.1",
     "uuid": "^3.4.0"
   },
