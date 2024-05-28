@@ -47,10 +47,16 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
 
   @HostListener('mouseup', ['$event'])
   onMouseUp(mouseEvent: MouseEvent) {
-    const markedContent = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent);
-    const textLayer = markedContent.offsetParent as HTMLElement;
-    const pageElement = textLayer.offsetParent;
-    const page = parseInt(pageElement.getAttribute('data-page-number'), 10);
+    let page: number;
+    let currentElement = mouseEvent.target as HTMLElement;
+    while (currentElement.offsetParent) {
+      currentElement = currentElement.offsetParent as HTMLElement;
+      let number = parseInt(currentElement.getAttribute('data-page-number'), 10);
+      if (number) {
+        page = number;
+        break;
+      }
+    }
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
       const rectangles = this.getRectangles(mouseEvent, page);
       this.viewerEvents.textSelected({ page, rectangles });
