@@ -35,7 +35,9 @@ export class IcpUpdateService {
 
   removeParticipant(participantId) {
     this.socket.emit(IcpEvents.REMOVE_PARTICIPANT, {
-      participantId: participantId, caseId: this.session.caseId
+      participantId: participantId,
+      caseId: this.session.caseId,
+      documentId: this.session.documentId
     });
   }
 
@@ -45,7 +47,9 @@ export class IcpUpdateService {
 
   updatePresenter(presenter: IcpParticipant) {
     this.socket.emit(IcpEvents.UPDATE_PRESENTER, {
-      ...this.session, presenterId: presenter.id, presenterName: presenter.username
+      ...this.session,
+      presenterId: presenter.id,
+      presenterName: presenter.username
     });
   }
 
@@ -54,7 +58,11 @@ export class IcpUpdateService {
   }
 
   updateScreen(screen: IcpScreenUpdate) {
-    const update = { body: screen, caseId: this.session.caseId };
+    const update = {
+      body: screen,
+      caseId: this.session.caseId,
+      documentId: this.session.documentId
+    };
     this.socket.emit(IcpEvents.UPDATE_SCREEN, update);
   }
 
