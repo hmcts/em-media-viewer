@@ -9,8 +9,10 @@ describe('IcpSessionApiService', () => {
   let api: IcpSessionApiService;
 
   const caseId = 'caseId';
+  const documentId = 'documentId';
   const session: IcpSession = {
     caseId: 'caseId',
+    documentId: documentId,
     sessionId: 'sessionId',
     dateOfHearing: new Date(),
     connectionUrl: ''
@@ -37,14 +39,14 @@ describe('IcpSessionApiService', () => {
   }));
 
   it('load icp session', fakeAsync((done) => {
-    api.loadSession(caseId)
+    api.loadSession({ caseId: 'caseId', documentId: 'documentId' })
       .subscribe(response => {
         expect(response.username).toBe(username);
         expect(response.session).toBe(session);
       }, error => done(error));
 
-    const req = httpMock.expectOne(`/my-context-path/${caseId}`);
+    const req = httpMock.expectOne(`/my-context-path/${caseId}/${documentId}`);
     expect(req.request.method).toBe('GET');
-    req.flush({session, username});
+    req.flush({ session, username });
   }));
 });
