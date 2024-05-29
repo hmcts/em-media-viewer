@@ -1,6 +1,6 @@
 import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
-import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
+import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer.mjs';
 import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { fakeAsync, tick } from '@angular/core/testing';
