@@ -9,5 +9,5 @@ module.exports = async function () {
   await I.click(commonConfig.clearAllRedaction);
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
   await I.refreshPage();
-  await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+  await I.waitForElement(commonConfig.redactTextCss);
 }
