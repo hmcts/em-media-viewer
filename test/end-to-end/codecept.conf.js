@@ -22,12 +22,12 @@ exports.config = {
           'height': 1080
         },
         args: [
-           '--headless',
+          '--headless',
           '--disable-gpu',
           '--no-sandbox',
           '--allow-running-insecure-content',
           '--ignore-certificate-errors',
-          '--window-size=1440,1400'
+          '--window-size=1920,1080'
         ]
       },
     },
