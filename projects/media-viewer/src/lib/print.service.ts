@@ -25,6 +25,6 @@ export class PrintService {
     printWindow.print();
     setTimeout((printer) => {
       printer.close();
-    }, 10, printWindow);
+    }, 1000, printWindow);
   }
 }
