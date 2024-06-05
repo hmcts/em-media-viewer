@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "3.0.4",
+  "version": "4.0.2",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
@@ -17,7 +17,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@circlon/angular-tree-component": "^11.0.4",
     "@swimlane/ngx-datatable": "^20.0.0",
     "hammerjs": "^2.0.8",
     "mutable-div": "^1.0.0",

@@ -1,16 +1,107 @@
-<a *ngIf="bookmarkNodes?.length === 0" class="highlightedOutlineItem">No bookmarks created yet</a>
-<tree-root [nodes]="bookmarkNodes" class="bookmarks-tree" [options]="options" (moveNode)="onBookmarkMove($event)">
-  <ng-template #treeNodeTemplate let-node let-index="index">
-    <div class="outlineItem" *ngIf="node.data.id !== editableBookmark; else inputBookmark">
-      <a (click)="goToBookmark(node.data)">
-        {{ node.data.name }}
-      </a>
-      <button class="bookmark__rename" (click)="editBookmark(node.data.id)"></button>
-      <button class="bookmark__delete" (click)="deleteBookmark(node)"></button>
+<a *ngIf="bookmarkNodes?.length === 0" class="highlightedOutlineItem"
+  >No bookmarks created yet</a
+>
+<cdk-tree
+  cdkDropList
+  [cdkDropListDisabled]="!isDraggingOn"
+  class="bookmarks-tree"
+  *ngIf="datasource"
+  [dataSource]="datasource"
+  [treeControl]="treeControl"
+  (cdkDropListDropped)="drop($event)"
+>
+  <!-- This is the tree node template for leaf nodes -->
+  <cdk-nested-tree-node class="node-wrapper" *cdkTreeNodeDef="let node">
+    <div *ngIf="node.id !== editableBookmark; else inputBookmark">
+      <div
+        class="node-content-wrapper nested-tree-node"
+        cdkDrag
+        [cdkDragData]="node"
+        (mouseenter)="dragHover($event, node)"
+        (mouseleave)="dragHoverEnd($event, node)"
+        (cdkDragStarted)="dragStart()"
+        (cdkDragReleased)="dragEnd()"
+      >
+        <div class="outlineItem">
+          <a (click)="goToBookmark(node)">
+            {{ node.name }}
+          </a>
+        </div>
+        <button
+          class="bookmark__rename"
+          (click)="editBookmark(node.id)"
+        ></button>
+        <button
+          class="bookmark__delete"
+          (click)="deleteBookmark2(node)"
+        ></button>
+      </div>
+      <div class="node-drop-slot"></div>
     </div>
     <ng-template #inputBookmark>
-      <input #bookmarkName class="bookmark__input" [value]="node.data.name" [maxLength]="BOOKMARK_CHAR_LIMIT">
-      <button class="bookmark__save" (click)="updateBookmark(node.data, bookmarkName.value)"></button>
+      <input
+        #bookmarkName
+        class="bookmark__input"
+        [value]="node.name"
+        [maxLength]="BOOKMARK_CHAR_LIMIT"
+      />
+      <button
+        class="bookmark__save"
+        (click)="updateBookmark(node, bookmarkName.value)"
+      ></button>
     </ng-template>
-  </ng-template>
-</tree-root>
+  </cdk-nested-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <cdk-nested-tree-node
+    class="node-wrapper"
+    *cdkTreeNodeDef="let node; when: hasChild"
+  >
+    <div *ngIf="node.id !== editableBookmark; else inputBookmark2">
+      <div
+        class="node-content-wrapper nested-tree-node"
+        cdkDrag
+        [cdkDragData]="node"
+        (mouseenter)="dragHover($event, node)"
+        (mouseleave)="dragHoverEnd($event, node)"
+        (cdkDragStarted)="dragStart()"
+        (cdkDragReleased)="dragEnd()"
+      >
+        <div class="outlineItem">
+          <span
+            cdkTreeNodeToggle
+            class="toggle-children-wrapper"
+            [ngClass]="onNodeExpand(node)"
+            ><span class="toggle-children"></span
+          ></span>
+          <a (click)="goToBookmark(node)">
+            {{ node.name }}
+          </a>
+        </div>
+        <button
+          class="bookmark__rename"
+          (click)="editBookmark(node.id)"
+        ></button>
+        <button
+          class="bookmark__delete"
+          (click)="deleteBookmark2(node)"
+        ></button>
+      </div>
+      <div class="node-drop-slot"></div>
+    </div>
+    <ng-template #inputBookmark2>
+      <input
+        #bookmarkName
+        class="bookmark__input"
+        [value]="node.name"
+        [maxLength]="BOOKMARK_CHAR_LIMIT"
+      />
+      <button
+        class="bookmark__save"
+        (click)="updateBookmark(node, bookmarkName.value)"
+      ></button>
+    </ng-template>
+    <div class="nested-tree-node-children" *ngIf="treeControl.isExpanded(node)">
+      <ng-container cdkTreeNodeOutlet></ng-container>
+    </div>
+  </cdk-nested-tree-node>
+</cdk-tree>
