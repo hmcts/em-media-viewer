@@ -126,16 +126,16 @@ export function docReducer (state = initialDocumentState,
       let hasDifferentPageSize = state.hasDifferentPageSize;
       payload.forEach(page => {
         if (!hasDifferentPageSize && pageHeight && pageWidth &&
-          (pageHeight !== page.div['scrollHeight'] || pageWidth !== page.div['scrollWidth'])) {
+          (pageHeight !== page.div['offsetHeight'] || pageWidth !== page.div['offsetWidth'])) {
             hasDifferentPageSize = true;
         } else {
-          pageHeight = page.div['scrollHeight'];
-          pageWidth = page.div['scrollWidth'];
+          pageHeight = page.div['offsetHeight'];
+          pageWidth = page.div['offsetWidth'];
         }
         const styles = {
           left: page.div['offsetLeft'],
-          height: page.div['scrollHeight'],
-          width: page.div['scrollWidth']
+          height: page.div['offsetHeight'],
+          width: page.div['offsetWidth']
         };
 
         const scaleRotation = {

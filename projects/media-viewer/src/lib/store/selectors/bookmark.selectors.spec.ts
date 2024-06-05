@@ -14,7 +14,7 @@ describe('Bookmarks selectors', () => {
   } as any;
   const page = {
     div: {
-      scrollHeight: 466.666
+      offsetHeight: 466.666
     },
     scale: 1,
     rotation: 0,
