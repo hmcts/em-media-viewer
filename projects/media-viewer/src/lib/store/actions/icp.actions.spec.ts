@@ -16,10 +16,10 @@ describe('Icp actions', () => {
   describe('Load Session', () => {
     describe('Load Session', () => {
       it('should create an action', () => {
-        const action = new fromIcp.LoadIcpSession('caseId');
+        const action = new fromIcp.LoadIcpSession({ caseId: 'caseId', documentId: 'documentId' });
         expect({ ...action }).toEqual({
           type: fromIcp.LOAD_ICP_SESSION,
-          payload: 'caseId'
+          payload: { caseId: 'caseId', documentId: 'documentId' }
         });
       });
     });
@@ -43,6 +43,7 @@ describe('Icp actions', () => {
           username: 'name',
           session: {
             sessionId: 'sessionId',
+            documentId: 'documentId',
             caseId: 'caseId',
             dateOfHearing: new Date(),
             connectionUrl: 'url-connectionstring'
@@ -70,6 +71,7 @@ describe('Icp actions', () => {
             },
             session: {
               sessionId: 'sessionId',
+              documentId: 'documentId',
               caseId: 'caseId',
               dateOfHearing: new Date(),
               connectionUrl: 'url-connectionstring'
