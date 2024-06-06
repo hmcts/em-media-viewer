@@ -3452,7 +3452,7 @@ __metadata:
     ws: ^7.4.6
     xmlhttprequest-ssl: ^1.6.2
     yarn-audit-fix: ^10.0.7
-    zone.js: 0.14.5
+    zone.js: 0.14.7
   languageName: unknown
   linkType: soft
 
@@ -25324,11 +25324,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zone.js@npm:0.14.5":
-  version: 0.14.5
-  resolution: "zone.js@npm:0.14.5"
-  dependencies:
-    tslib: ^2.3.0
-  checksum: a9424fa22679c8aa96f67dea3de52aa1d4ea2d0d2ebd13bf3fe9a5bcc1edae797ecf761aaec5dcf17cc287251df4d6edcf7c418d34897b77f303f20c94c1babc
+"zone.js@npm:0.14.7":
+  version: 0.14.7
+  resolution: "zone.js@npm:0.14.7"
+  checksum: 8b5cd4fd615c367d81c06840fcdde690f3c82e3e1f8ff799c045daac34cbedf9b4b3b53140404db61baf484af5c0fc049cb60cf195580aaf69ba522879e1acd9
   languageName: node
   linkType: hard
