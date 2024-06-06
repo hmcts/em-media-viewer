@@ -3358,7 +3358,7 @@ __metadata:
     "@types/cucumber": ^7.0.0
     "@types/jasmine": ~3.10.0
     "@types/jasminewd2": ^2.0.8
-    "@types/lodash": 4.14.202
+    "@types/lodash": 4.17.4
     "@types/mocha": ^8.2.1
     "@types/node": ^18.17.0
     "@typescript-eslint/eslint-plugin": 5.62.0
@@ -3452,7 +3452,7 @@ __metadata:
     ws: ^7.4.6
     xmlhttprequest-ssl: ^1.6.2
     yarn-audit-fix: ^10.0.7
-    zone.js: 0.14.4
+    zone.js: 0.14.5
   languageName: unknown
   linkType: soft
 
@@ -5798,10 +5798,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:4.14.202":
-  version: 4.14.202
-  resolution: "@types/lodash@npm:4.14.202"
-  checksum: a91acf3564a568c6f199912f3eb2c76c99c5a0d7e219394294213b3f2d54f672619f0fde4da22b29dc5d4c31457cd799acc2e5cb6bd90f9af04a1578483b6ff7
+"@types/lodash@npm:4.17.4":
+  version: 4.17.4
+  resolution: "@types/lodash@npm:4.17.4"
+  checksum: 268e652fd52d49189f155bc89b49bd4535aa44f0b6b0ed9ce7e50318307bda58147c49539d2047f39ca37cf5b5ea38dfb801d0dbcdbc8b019c95c1afc346b05a
   languageName: node
   linkType: hard
 
@@ -25324,11 +25324,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zone.js@npm:0.14.4":
-  version: 0.14.4
-  resolution: "zone.js@npm:0.14.4"
+"zone.js@npm:0.14.5":
+  version: 0.14.5
+  resolution: "zone.js@npm:0.14.5"
   dependencies:
     tslib: ^2.3.0
-  checksum: 6168114b44f3f984c9aa72b1d0a05706b7b3010a38bcb49ef89f338c217279db77be26d1fd79d3eeb59b63b223472b104851be81898094f5eefc550bd69ae68f
+  checksum: a9424fa22679c8aa96f67dea3de52aa1d4ea2d0d2ebd13bf3fe9a5bcc1edae797ecf761aaec5dcf17cc287251df4d6edcf7c418d34897b77f303f20c94c1babc
   languageName: node
   linkType: hard
