@@ -21387,8 +21387,8 @@ __metadata:
   linkType: hard
 
 "rpx-xui-translation@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "rpx-xui-translation@npm:1.0.2"
+  version: 1.0.4
+  resolution: "rpx-xui-translation@npm:1.0.4"
   dependencies:
     dexie: ^3.2.2
     luxon: ^2.4.0
@@ -21396,7 +21396,7 @@ __metadata:
   peerDependencies:
     "@angular/common": ^15.2.9
     "@angular/core": ^15.2.9
-  checksum: 305f4ae1d935de2f4d0874637a61863c1b5478872d335653f6986776fc274de9ebfe3728c04c8a386ff8b4d36fa1de8e444d000ad42f2a914bab3fb5989f28bc
+  checksum: bfa7008625ad4d7a4769b7b15d1878992625331a9740e14a398a5c8ad26731255ccfec12f3930c6a7c98c68e0fb9e426cab5a7f5abff218fb12a0c754e28242d
   languageName: node
   linkType: hard
 
