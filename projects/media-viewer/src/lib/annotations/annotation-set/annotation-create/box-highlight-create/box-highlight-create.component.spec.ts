@@ -13,7 +13,7 @@ describe('BoxHighlightCreateComponent', () => {
   let nativeElement: HTMLElement;
   const mockHighlightService = { saveAnnotation: () => {}, applyRotation: () => {} };
   const drawModeSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  const redactWholePageSubject$ = new Subject();
+  const redactWholePageSubject$ = new Subject<void>();
 
 
   beforeEach(() => {

@@ -9,7 +9,6 @@
     "pdfjs-dist",
     "uuid",
     "mutable-div",
-    "hammerjs",
     "socket.io-client"
   ]
 }

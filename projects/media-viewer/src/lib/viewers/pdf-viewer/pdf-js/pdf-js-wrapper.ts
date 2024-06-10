@@ -137,7 +137,8 @@ export class PdfJsWrapper {
       url: documentUrl,
       cMapUrl: 'assets/minified/cmaps',
       cMapPacked: true,
-      withCredentials: true
+      withCredentials: true,
+      isEvalSupported: false
     });
   }
 
