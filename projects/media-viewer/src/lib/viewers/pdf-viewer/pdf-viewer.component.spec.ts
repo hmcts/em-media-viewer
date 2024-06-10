@@ -69,11 +69,6 @@ describe('PdfViewerComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA,
       ]
     })
-      .overrideModule(BrowserDynamicTestingModule, {
-        set: {
-          entryComponents: [AnnotationSetComponent]
-        }
-      })
       .compileComponents();
     fixture = TestBed.createComponent(PdfViewerComponent);
     component = fixture.componentInstance;
@@ -129,13 +124,22 @@ describe('PdfViewerComponent', () => {
     spyOnAllFunctions(mockWrapper);
     spyOn(store, 'dispatch');
 
+    const mockSearchOperation = {
+      searchTerm: 'searchTerm',
+      highlightAll: false,
+      matchCase: false,
+      wholeWord: false,
+      previous: false,
+      reset: true
+    };
+
     toolbarEvents.printSubject.next();
     toolbarEvents.downloadSubject.next();
     toolbarEvents.zoomSubject.next(0.2);
     toolbarEvents.stepZoomSubject.next(0.2);
-    toolbarEvents.searchSubject.next();
-    toolbarEvents.setCurrentPageSubject.next();
-    toolbarEvents.changePageByDeltaSubject.next();
+    toolbarEvents.searchSubject.next(mockSearchOperation);
+    toolbarEvents.setCurrentPageSubject.next(0);
+    toolbarEvents.changePageByDeltaSubject.next(0);
     mockWrapper.positionUpdated.next({ location: { pageNumber: 1, top: 10, left: 10, rotation: 0, scale: 1 } });
 
     expect(printService.printDocumentNatively).toHaveBeenCalledWith(component.url);

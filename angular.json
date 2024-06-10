@@ -132,20 +132,20 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "media-viewer-demo-app:build",
             "port": 3000,
-            "proxyConfig": "proxy.config.js"
+            "proxyConfig": "proxy.config.js",
+            "buildTarget": "media-viewer-demo-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "media-viewer-demo-app:build:production"
+              "buildTarget": "media-viewer-demo-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "media-viewer-demo-app:build"
+            "buildTarget": "media-viewer-demo-app:build"
           }
         },
         "test": {
