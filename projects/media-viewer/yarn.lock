@@ -16,12 +16,12 @@ __metadata:
     socket.io-client: ^3.1.1
     uuid: ^3.4.0
   peerDependencies:
-    "@angular/animations": ^17.3.8
-    "@angular/common": ^17.3.8
-    "@angular/core": ^17.3.8
-    "@angular/forms": ^17.3.8
+    "@angular/animations": ^17.3.8 || ^18.0.0
+    "@angular/common": ^17.3.8 || ^18.0.0
+    "@angular/core": ^17.3.8 || ^18.0.0
+    "@angular/forms": ^17.3.8 || ^18.0.0
     "@angular/material": ^17.3.8
-    "@angular/platform-browser": ^17.3.8
+    "@angular/platform-browser": ^17.3.8 || ^18.0.0
     "@ngrx/effects": ^17.0.0
     "@ngrx/router-store": ^17.0.0
     "@ngrx/store": ^17.0.0
