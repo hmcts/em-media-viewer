@@ -10,7 +10,7 @@ __metadata:
   resolution: "@hmcts/media-viewer@workspace:."
   dependencies:
     "@swimlane/ngx-datatable": ^20.0.0
-    "@types/uuid": ^3.4.4
+    "@types/uuid": ^9.0.0
     mutable-div: ^2.0.0
     pdfjs-dist: 2.5.207
     socket.io-client: ^3.1.1
@@ -50,10 +50,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:^3.4.4":
-  version: 3.4.13
-  resolution: "@types/uuid@npm:3.4.13"
-  checksum: 906c4bc29711b0fcdca4303a66a58c611a195b782b33e194ab80b4453a0aee26416bb04596a6e34a97dafa28e25fac9d5be5fcc0b5eae422e850200981d78f18
+"@types/uuid@npm:^9.0.0":
+  version: 9.0.8
+  resolution: "@types/uuid@npm:9.0.8"
+  checksum: b8c60b7ba8250356b5088302583d1704a4e1a13558d143c549c408bf8920535602ffc12394ede77f8a8083511b023704bc66d1345792714002bfa261b17c5275
   languageName: node
   linkType: hard
 

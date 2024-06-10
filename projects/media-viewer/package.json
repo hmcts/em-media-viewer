@@ -36,7 +36,7 @@
     "@ngrx/store-devtools": "^17.0.0"
   },
   "devDependencies": {
-    "@types/uuid": "^3.4.4",
+    "@types/uuid": "^9.0.0",
     "pdfjs-dist": "2.5.207"
   },
   "packageManager": "yarn@3.8.1"
