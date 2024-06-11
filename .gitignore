@@ -78,7 +78,5 @@ src/coverage/*
 projects/media-viewer/coverage/*
 !projects/media-viewer/.yarn/releases
 
-
 .angular/cache/*
-
-.angular/cache/*
+.nx/cache/*

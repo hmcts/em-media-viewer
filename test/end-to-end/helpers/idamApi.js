@@ -1,6 +1,4 @@
 const {Logger} = require('@hmcts/nodejs-logging');
-const requestModule = require('request-promise-native');
-const request = requestModule.defaults();
 const testConfig = require('../../config.js');
 const querystring = require("querystring");
 const logger = Logger.getLogger('helpers/idamApi.js');
