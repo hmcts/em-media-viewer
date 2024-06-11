@@ -10,7 +10,6 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "types": [ "node"],
     "typeRoots": ["../node_modules/@types"],
     "lib": [
       "dom",

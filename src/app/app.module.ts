@@ -1,5 +1,5 @@
 import { RpxTranslationModule, RpxTranslationService, RpxTranslationConfig } from 'rpx-xui-translation';
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -24,7 +24,6 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     HttpClientModule,
     RouterModule,
     RoutingModule,
-    BrowserTransferStateModule,
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
     !environment.production ?

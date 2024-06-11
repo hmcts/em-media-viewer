@@ -24,7 +24,6 @@ import { ToolbarEventService } from './toolbar/toolbar-event.service';
 import { AnnotationApiService } from './annotations/services/annotation-api/annotation-api.service';
 import { ResponseType, ViewerException } from './viewers/viewer-exception.model';
 import { CommentService } from './annotations/comment-set/comment/comment.service';
-import 'hammerjs';
 import { select, Store } from '@ngrx/store';
 import * as fromStore from './store/reducers/reducers';
 import * as fromAnnoSelectors from './store/selectors/annotation.selectors';
