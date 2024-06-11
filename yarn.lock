@@ -767,8 +767,8 @@ __metadata:
   linkType: hard
 
 "@azure/identity@npm:^4.0.0-beta.1":
-  version: 4.2.0
-  resolution: "@azure/identity@npm:4.2.0"
+  version: 4.2.1
+  resolution: "@azure/identity@npm:4.2.1"
   dependencies:
     "@azure/abort-controller": ^1.0.0
     "@azure/core-auth": ^1.5.0
@@ -778,13 +778,13 @@ __metadata:
     "@azure/core-util": ^1.3.0
     "@azure/logger": ^1.0.0
     "@azure/msal-browser": ^3.11.1
-    "@azure/msal-node": ^2.6.6
+    "@azure/msal-node": ^2.9.2
     events: ^3.0.0
     jws: ^4.0.0
     open: ^8.0.0
     stoppable: ^1.1.0
     tslib: ^2.2.0
-  checksum: b1b336113c944abf89376f366bf8e82958617465c91e561e922c165a10aaa1789e83a78b7baa070671247d0f97c63b4cc89cf6cabc72258f3d9cbe12fe799e2a
+  checksum: 2dbd7b0fa6b92904b7b8f828374d7316384cc4e00c71cdac3a2f2544b9e02c7287fe7ad58149bb8794c57913d77a927f5a7b5d1367e05abe82b0f2e1b162415c
   languageName: node
   linkType: hard
 
@@ -817,29 +817,29 @@ __metadata:
   linkType: hard
 
 "@azure/msal-browser@npm:^3.11.1":
-  version: 3.16.0
-  resolution: "@azure/msal-browser@npm:3.16.0"
+  version: 3.17.0
+  resolution: "@azure/msal-browser@npm:3.17.0"
   dependencies:
-    "@azure/msal-common": 14.11.0
-  checksum: 8bba704b6d1e2862405697672547fa266037ae01570368631c7b698ac2837900fecaaa6622e3d4a3469fcfd4b3e20f07d4296f271556cbd097d601f85aaf1528
+    "@azure/msal-common": 14.12.0
+  checksum: 4b01ee3500e5bb1c8a71e92b81f61174d23109eb60101c17bf95ede248eeefd2ca5d68228d7d1cf147eeeade5bbe994a09f8ada96e14f3352da7822899c0c441
   languageName: node
   linkType: hard
 
-"@azure/msal-common@npm:14.11.0":
-  version: 14.11.0
-  resolution: "@azure/msal-common@npm:14.11.0"
-  checksum: 54d2d118aa937829bf76a8ca8f0a8bd5115abcd6b52419e78a8dbdf7732b1781d6cc09873dcc7210319529f9a0e99b3acc33738fbc656713c983b25eb5a3aee2
+"@azure/msal-common@npm:14.12.0":
+  version: 14.12.0
+  resolution: "@azure/msal-common@npm:14.12.0"
+  checksum: 9a987b7b9b6453500481ec48224b4d9f728c62ac584f9a35ef519eff46016fc63c1a7dc159f725a5ec3748bf1ade352654fd7a7170ba42bc27ca263a01cf59db
   languageName: node
   linkType: hard
 
-"@azure/msal-node@npm:^2.6.6":
-  version: 2.9.1
-  resolution: "@azure/msal-node@npm:2.9.1"
+"@azure/msal-node@npm:^2.9.2":
+  version: 2.9.2
+  resolution: "@azure/msal-node@npm:2.9.2"
   dependencies:
-    "@azure/msal-common": 14.11.0
+    "@azure/msal-common": 14.12.0
     jsonwebtoken: ^9.0.0
     uuid: ^8.3.0
-  checksum: aaa350346d24637a507db707193c1002c2710824373f81284582acb5a2dd53c53031c7f28f2f42966ead22b373677145de683164128882019c44ef0b87a18e89
+  checksum: a2b51d4085d20cbac84752b9e68a5a22c7c9dbfdbc25a1713ee5e6918a504928f82e66c9317fc78db4f12053e7debd477b984cab578e0bea269aacc0862e7219
   languageName: node
   linkType: hard
 
@@ -2588,13 +2588,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codeceptjs/detox-helper@npm:1.0.5":
-  version: 1.0.5
-  resolution: "@codeceptjs/detox-helper@npm:1.0.5"
+"@codeceptjs/detox-helper@npm:1.0.7":
+  version: 1.0.7
+  resolution: "@codeceptjs/detox-helper@npm:1.0.7"
   dependencies:
     detox: 20.18.1
     react-native: ^0.73.4
-  checksum: 86672bca57c20d7cbd2948f7ce66bed5dee96d380bd492570d5c85459a5af3e1755e693435d5d55043540da161df23d85ace8f06a6e7bf832965e8f59fb6bb10
+  checksum: df5a7cc9c39adb002a8458ef4e638366deb27c717ec5ce8cd9f3b0a23d5f45d5fa25727bbd33a0becdb1168792ce8147a2cced453a3e0ea73c9ebd2a11ffecba
   languageName: node
   linkType: hard
 
@@ -3389,7 +3389,7 @@ __metadata:
     "@types/cucumber": ^7.0.0
     "@types/jasmine": ~3.10.0
     "@types/jasminewd2": ^2.0.8
-    "@types/lodash": 4.17.4
+    "@types/lodash": 4.17.5
     "@types/mocha": ^8.2.1
     "@types/node": ^18.19.33
     "@typescript-eslint/eslint-plugin": 5.62.0
@@ -3401,7 +3401,7 @@ __metadata:
     chai-http: 4.4.0
     circular-dependency-plugin: ^5.0.2
     codacy-coverage: ^3.4.0
-    codeceptjs: 3.6.2
+    codeceptjs: 3.6.3
     codecov: ^3.7.1
     codelyzer: ^6.0.0
     config: ^3.3.9
@@ -6162,17 +6162,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:*":
+"@types/lodash@npm:*, @types/lodash@npm:4.17.5":
   version: 4.17.5
   resolution: "@types/lodash@npm:4.17.5"
   checksum: 3c9bb15772509f0ecb40428531863dbc3f064f2bf34bbccc2ce2b2923c69fb0868aec7e357b1d97fd0d7f7e435a014ea5c1adef8a64715529887179c97a5a823
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:4.17.4":
-  version: 4.17.4
-  resolution: "@types/lodash@npm:4.17.4"
-  checksum: 268e652fd52d49189f155bc89b49bd4535aa44f0b6b0ed9ce7e50318307bda58147c49539d2047f39ca37cf5b5ea38dfb801d0dbcdbc8b019c95c1afc346b05a
   languageName: node
   linkType: hard
 
@@ -6764,18 +6757,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/config@npm:8.33.1":
-  version: 8.33.1
-  resolution: "@wdio/config@npm:8.33.1"
+"@wdio/config@npm:8.38.2":
+  version: 8.38.2
+  resolution: "@wdio/config@npm:8.38.2"
   dependencies:
-    "@wdio/logger": 8.28.0
-    "@wdio/types": 8.32.4
-    "@wdio/utils": 8.33.1
+    "@wdio/logger": 8.38.0
+    "@wdio/types": 8.38.2
+    "@wdio/utils": 8.38.2
     decamelize: ^6.0.0
     deepmerge-ts: ^5.0.0
     glob: ^10.2.2
     import-meta-resolve: ^4.0.0
-  checksum: 0f8f3485c72c9ee0dcfb1f05d0c12058b3229dc7413b4c2181ec62080e82b8403fcc6482e475f9334decb73d01f2d9c50cf53127b02cde07c58cf4925d419ac2
+  checksum: b76f8f86c45ea2ba7de8c130eb7af5dc7c474d6e4bfa31d90125cd280b01940239d2211921661e99e123319ddc978c9ef7bddba6fd51ee196e47afb7d2879732
   languageName: node
   linkType: hard
 
@@ -6791,19 +6784,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/logger@npm:8.28.0":
-  version: 8.28.0
-  resolution: "@wdio/logger@npm:8.28.0"
-  dependencies:
-    chalk: ^5.1.2
-    loglevel: ^1.6.0
-    loglevel-plugin-prefix: ^0.8.4
-    strip-ansi: ^7.1.0
-  checksum: d7fe9d1d0b58fa73f1d34b2d1ab54993cfc535564a108e6488df30882bdf9c03602cf3010f2790c162352cea0771c1b44051d01d468dc1cd5c3e6b77afa4e76f
-  languageName: node
-  linkType: hard
-
-"@wdio/logger@npm:^8.28.0":
+"@wdio/logger@npm:8.38.0, @wdio/logger@npm:^8.28.0":
   version: 8.38.0
   resolution: "@wdio/logger@npm:8.38.0"
   dependencies:
@@ -6822,10 +6803,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/protocols@npm:8.32.0":
-  version: 8.32.0
-  resolution: "@wdio/protocols@npm:8.32.0"
-  checksum: 19481090b7de1428f0c1c048ee72ad6136cf136ee7ecbe1bebdedd4362998e184f1dcb26d5dd51880ffbe1f216c5d57a2d5338f81b343c1cd9a1bb15ce48f2da
+"@wdio/protocols@npm:8.38.0":
+  version: 8.38.0
+  resolution: "@wdio/protocols@npm:8.38.0"
+  checksum: 990e41ec4173914da98575aa59ea15a101f3897155d45a74dc4e25caafdac58f3525867a2549d0ced5b2ed70354bca59a024007453e67134dcc1ca899f38e453
   languageName: node
   linkType: hard
 
@@ -6853,12 +6834,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/types@npm:8.32.4":
-  version: 8.32.4
-  resolution: "@wdio/types@npm:8.32.4"
+"@wdio/types@npm:8.38.2":
+  version: 8.38.2
+  resolution: "@wdio/types@npm:8.38.2"
   dependencies:
     "@types/node": ^20.1.0
-  checksum: c7f051f3e48dffb3f3963d71dcf16fa600b53333cf5ef66a501211e6f747389a6763b311dba6f81d60e8819498604dd4fbc341f5745e9a5a20e727ec746bb8d9
+  checksum: 935cd0e4a3246549336ed8af8ddba25d8b463d1f96e2634da966886a491299bce6b9cc4c66f6d3944e803bbd33722a786063c7fe37cb23682d5d0ac94edd4a1d
   languageName: node
   linkType: hard
 
@@ -6873,16 +6854,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/utils@npm:8.33.1":
-  version: 8.33.1
-  resolution: "@wdio/utils@npm:8.33.1"
+"@wdio/utils@npm:8.38.2":
+  version: 8.38.2
+  resolution: "@wdio/utils@npm:8.38.2"
   dependencies:
     "@puppeteer/browsers": ^1.6.0
-    "@wdio/logger": 8.28.0
-    "@wdio/types": 8.32.4
+    "@wdio/logger": 8.38.0
+    "@wdio/types": 8.38.2
     decamelize: ^6.0.0
     deepmerge-ts: ^5.1.0
-    edgedriver: ^5.3.5
+    edgedriver: ^5.5.0
     geckodriver: ^4.3.1
     get-port: ^7.0.0
     import-meta-resolve: ^4.0.0
@@ -6890,7 +6871,7 @@ __metadata:
     safaridriver: ^0.1.0
     split2: ^4.2.0
     wait-port: ^1.0.4
-  checksum: 81c2582ee7ea8e57752329554144ab79c9342daea102468f5cfa0f21dd0ef6b1e2693e6415036268b068f2af4caf0b385fd72e1b135ab31eeda0ae2ed31ac727
+  checksum: a1b6d0e625769183dd9f6ddeaecad626fd7cddc504948b18ea42fb1384662b09cf22c1e7d0e8f700620dcd8d6b9a230d071a92ac5aedc7291300efa2a3e1f4d6
   languageName: node
   linkType: hard
 
@@ -8837,16 +8818,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:5.1.0":
-  version: 5.1.0
-  resolution: "chai@npm:5.1.0"
+"chai@npm:5.1.1":
+  version: 5.1.1
+  resolution: "chai@npm:5.1.1"
   dependencies:
     assertion-error: ^2.0.1
-    check-error: ^2.0.0
+    check-error: ^2.1.1
     deep-eql: ^5.0.1
     loupe: ^3.1.0
     pathval: ^2.0.0
-  checksum: f45c8c6ca8b35933efa533eba26a3ecf78378c86acf1d5d0ca82ae0be94a8d25f574f098e3f7e0294a3774e43931eb2e299c991516f22ac24c9042dce8a23ce0
+  checksum: 1e0a5e1b5febdfa8ceb97b9aff608286861ecb86533863119b2f39f07c08fb59f3c1791ab554947f009b9d71d509b9e4e734fb12133cb81f231c2c2ee7c1e738
   languageName: node
   linkType: hard
 
@@ -8953,7 +8934,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"check-error@npm:^2.0.0":
+"check-error@npm:^2.1.1":
   version: 2.1.1
   resolution: "check-error@npm:2.1.1"
   checksum: d785ed17b1d4a4796b6e75c765a9a290098cf52ff9728ce0756e8ffd4293d2e419dd30c67200aee34202463b474306913f2fcfaf1890641026d9fc6966fea27a
@@ -9370,12 +9351,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"codeceptjs@npm:3.6.2":
-  version: 3.6.2
-  resolution: "codeceptjs@npm:3.6.2"
+"codeceptjs@npm:3.6.3":
+  version: 3.6.3
+  resolution: "codeceptjs@npm:3.6.3"
   dependencies:
     "@codeceptjs/configure": 1.0.1
-    "@codeceptjs/detox-helper": 1.0.5
+    "@codeceptjs/detox-helper": 1.0.7
     "@codeceptjs/helper": 2.0.4
     "@cucumber/cucumber-expressions": 17
     "@cucumber/gherkin": 26
@@ -9383,8 +9364,8 @@ __metadata:
     "@xmldom/xmldom": 0.8.10
     acorn: 8.11.3
     arrify: 2.0.1
-    axios: 1.6.7
-    chai: 5.1.0
+    axios: 1.7.2
+    chai: 5.1.1
     chai-deep-match: 1.2.1
     chai-exclude: 2.1.0
     chai-json-schema: 1.5.1
@@ -9396,7 +9377,7 @@ __metadata:
     cross-spawn: 7.0.3
     css-to-xpath: 0.1.0
     csstoxpath: 1.6.0
-    devtools: 8.33.1
+    devtools: 8.38.2
     envinfo: 7.11.1
     escape-string-regexp: 4.0.0
     figures: 3.2.0
@@ -9411,10 +9392,10 @@ __metadata:
     lodash.merge: 4.6.2
     mkdirp: 1.0.4
     mocha: 10.4.0
-    monocart-coverage-reports: 2.7.4
+    monocart-coverage-reports: 2.8.3
     ms: 2.1.3
     ora-classic: 5.4.2
-    pactum: 3.6.7
+    pactum: 3.6.9
     parse-function: 5.6.10
     parse5: 7.1.2
     promise-retry: 1.1.1
@@ -9426,7 +9407,7 @@ __metadata:
       optional: true
   bin:
     codeceptjs: bin/codecept.js
-  checksum: bd7fcbd7de73612d2de6439f86869a3fb1ae462f080bfd9f54230a9c9f6edc9a4778304edad3a027671948b4de637a942c950c8406b3f0f85fc1498839a0ab59
+  checksum: 77d2463930e9f068aed6ea89aebc317ca286a44355506cf5835e90b323430e53e08a3380cdd90d882e687ce96ccfb72ad7ab118237075b601a0ae7fec14add78
   languageName: node
   linkType: hard
 
@@ -10775,16 +10756,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devtools@npm:8.33.1":
-  version: 8.33.1
-  resolution: "devtools@npm:8.33.1"
+"devtools@npm:8.38.2":
+  version: 8.38.2
+  resolution: "devtools@npm:8.38.2"
   dependencies:
     "@types/node": ^20.1.0
-    "@wdio/config": 8.33.1
-    "@wdio/logger": 8.28.0
-    "@wdio/protocols": 8.32.0
-    "@wdio/types": 8.32.4
-    "@wdio/utils": 8.33.1
+    "@wdio/config": 8.38.2
+    "@wdio/logger": 8.38.0
+    "@wdio/protocols": 8.38.0
+    "@wdio/types": 8.38.2
+    "@wdio/utils": 8.38.2
     chrome-launcher: ^1.0.0
     edge-paths: ^3.0.5
     import-meta-resolve: ^4.0.0
@@ -10793,7 +10774,7 @@ __metadata:
     ua-parser-js: ^1.0.37
     uuid: ^9.0.0
     which: ^4.0.0
-  checksum: e7305f8062a3e77128f636c64e5b732672f7e32b5567e838acc9965161c37e675e220103b404b0443c0f1b93d3bbbea777d4304a7e2cbef0e046f39276a0fc7e
+  checksum: 3cdd6f1f99f7ef1739f019bf5db12fe6ae3e01133eaef52716f5db05abbeab60639d7798c5aabf8ddd9a3e8cda46887e912172b50f7a05227a12201778f8ad1a
   languageName: node
   linkType: hard
 
@@ -11066,7 +11047,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"edgedriver@npm:^5.3.5":
+"edgedriver@npm:^5.5.0":
   version: 5.6.0
   resolution: "edgedriver@npm:5.6.0"
   dependencies:
@@ -11122,9 +11103,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.796":
-  version: 1.4.796
-  resolution: "electron-to-chromium@npm:1.4.796"
-  checksum: 29829ba285b2bb765e3abb82023b006f1d214333d045ab434b2c6be964c5ce0a761e992bd9eab09f51ac2b31712a5b003ed34cf891a627bf80f37e79ccddd6ac
+  version: 1.4.798
+  resolution: "electron-to-chromium@npm:1.4.798"
+  checksum: 4ba9ef4bbe2c665a0e90a9944176aabc504fd14f3ebd70b96c5d7440d514010d2857875222801b1df19e5a44b9659774feb1d6d3bbf3b6c95a95b64afa5059f9
   languageName: node
   linkType: hard
 
@@ -17326,16 +17307,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"monocart-code-viewer@npm:^1.1.2":
+"monocart-code-viewer@npm:^1.1.3":
   version: 1.1.3
   resolution: "monocart-code-viewer@npm:1.1.3"
   checksum: 4527f99ea1ad746e457f8d29fafec031663adfbce5d0effdde9c59cb2f78366de0e7f3534356955be9b5855b99462799d96c358c3c2fc4e242ee2677f44a89ef
   languageName: node
   linkType: hard
 
-"monocart-coverage-reports@npm:2.7.4":
-  version: 2.7.4
-  resolution: "monocart-coverage-reports@npm:2.7.4"
+"monocart-coverage-reports@npm:2.8.3":
+  version: 2.8.3
+  resolution: "monocart-coverage-reports@npm:2.8.3"
   dependencies:
     console-grid: ^2.2.2
     eight-colors: ^1.3.0
@@ -17343,19 +17324,27 @@ __metadata:
     istanbul-lib-report: ^3.0.1
     istanbul-reports: ^3.1.7
     lz-utils: ^2.0.2
-    monocart-code-viewer: ^1.1.2
-    monocart-formatter: ^2.3.2
+    monocart-code-viewer: ^1.1.3
+    monocart-formatter: ^3.0.0
+    monocart-locator: ^1.0.0
     turbogrid: ^3.0.13
   bin:
     mcr: lib/cli.js
-  checksum: f4f8027b478b986f69f20f5c4522fdbb68f591dfd1bf70cc621c848f36320051b7db5958ffc50f4481d63dbe9d2bab8e54532357a6122bd4436337e4bb0b57f5
+  checksum: c907e3405736721fa6b4dae6f77c4afdcc9567628aae2f0d4d1e971093d0df79ad2df14f44382bb4f891ab8298a8f8d50612ce0cf0d612a3d3a2ffdaa7b89577
   languageName: node
   linkType: hard
 
-"monocart-formatter@npm:^2.3.2":
-  version: 2.3.3
-  resolution: "monocart-formatter@npm:2.3.3"
-  checksum: 6c1c632a653de65692c528c18fafdd66467cd12a67ca399f273f977c218dea7f426052af1d90a15a1b6cd86e3ff5891b4b35c9a00a338639992a8a0de1825d70
+"monocart-formatter@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "monocart-formatter@npm:3.0.0"
+  checksum: e5c82cfac39fc5150f059b67c999f96bda5d26ff7de35476f88e5ea83a60875f542fdbe00fd0c9816b2e1cbe6ec0edf0328979329111a85325cbd4afd1c51802
+  languageName: node
+  linkType: hard
+
+"monocart-locator@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "monocart-locator@npm:1.0.0"
+  checksum: 0be044ba8a72bf8ad4e184984677263df020502956f2394d1a620b67e89c3ce8469bf55c6005ad330b722be71a2e0b809d83ba34e1fba49d63e8a1cd7bd91748
   languageName: node
   linkType: hard
 
@@ -18930,9 +18919,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pactum@npm:3.6.7":
-  version: 3.6.7
-  resolution: "pactum@npm:3.6.7"
+"pactum@npm:3.6.9":
+  version: 3.6.9
+  resolution: "pactum@npm:3.6.9"
   dependencies:
     "@exodus/schemasafe": ^1.3.0
     deep-override: ^1.0.2
@@ -18945,7 +18934,7 @@ __metadata:
     parse-graphql: ^1.0.0
     phin: ^3.7.0
     polka: ^0.5.2
-  checksum: 89d2f3d744c36aef91cc0a7c64a0a00bfd4be8702954b37407da97989e885792f2220d59ff433ec2e255d24fe1efd3f736b10f7540ef9b49240097cd651d3ca6
+  checksum: 6eb57a96276b933fba1a750696ad2c66ae1aa5afd320fbc2f0e13b33db8746264ab8ecdd57bcdadb3a2c4a68a2a8b379730a1f3ef4f5017aa64ac6168426dd71
   languageName: node
   linkType: hard
 
