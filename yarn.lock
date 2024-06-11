@@ -3426,7 +3426,7 @@ __metadata:
     axios: ^1.6.3
     body-parser: ^1.20.0
     chai: ^4.3.0
-    chai-as-promised: ^7.1.1
+    chai-as-promised: ^8.0.0
     chai-http: 4.4.0
     circular-dependency-plugin: ^5.0.2
     codacy-coverage: ^3.4.0
@@ -8771,14 +8771,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai-as-promised@npm:^7.1.1":
-  version: 7.1.2
-  resolution: "chai-as-promised@npm:7.1.2"
+"chai-as-promised@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "chai-as-promised@npm:8.0.0"
   dependencies:
-    check-error: ^1.0.2
+    check-error: ^2.0.0
   peerDependencies:
     chai: ">= 2.1.2 < 6"
-  checksum: 671ee980054eb23a523875c1d22929a2ac05d89b5428e1fd12800f54fc69baf41014667b87e2368e2355ee2a3140d3e3d7d5a1f8638b07cfefd7fe38a149e3f6
+  checksum: 89a1b9702171e006ba9551909c67f0780b768185651f3bd831d74a0951b9405b5761fe2c80c46096c46829ffe62803e68c33bc782279edf386d4be08fe6c3b67
   languageName: node
   linkType: hard
 
@@ -8966,7 +8966,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"check-error@npm:^1.0.2, check-error@npm:^1.0.3":
+"check-error@npm:^1.0.3":
   version: 1.0.3
   resolution: "check-error@npm:1.0.3"
   dependencies:
