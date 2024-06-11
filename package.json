@@ -148,7 +148,7 @@
     "cross-env": "^7.0.3",
     "cucumber-html-report": "0.6.5",
     "cucumber-html-reporter": "^4.0.5",
-    "cucumber-pretty": "1.5.2",
+    "cucumber-pretty": "6.0.1",
     "cucumberjs-allure-reporter": "1.0.3",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^14.1.0",
