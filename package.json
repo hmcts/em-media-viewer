@@ -138,7 +138,7 @@
     "@typescript-eslint/parser": "5.62.0",
     "chai": "^4.3.0",
     "chai-as-promised": "^7.1.1",
-    "chai-http": "4.4.0",
+    "chai-http": "5.0.0",
     "circular-dependency-plugin": "^5.0.2",
     "codacy-coverage": "^3.4.0",
     "codeceptjs": "3.6.2",
