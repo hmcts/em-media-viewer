@@ -124,7 +124,7 @@
     "@angular-eslint/schematics": "17.4.0",
     "@angular-eslint/template-parser": "13.5.0",
     "@angular/compiler-cli": "^17.3.8",
-    "@angular/language-service": "17.3.8",
+    "@angular/language-service": "17.3.11",
     "@ngrx/schematics": "^17.2.0",
     "@types/chai": "4.3.14",
     "@types/chai-as-promised": "^7.1.3",
