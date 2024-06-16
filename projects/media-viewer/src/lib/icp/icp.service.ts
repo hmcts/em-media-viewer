@@ -9,34 +9,30 @@ import { IcpFollowerService } from './icp-follower.service';
 import { select, Store } from '@ngrx/store';
 import * as fromIcpActions from '../store/actions/icp.actions';
 import * as fromIcpSelectors from '../store/selectors/icp.selectors';
-import * as fromDocument from '../store/selectors/document.selectors';
 import { filter, take } from 'rxjs/operators';
 
 @Injectable()
-export class IcpService implements OnDestroy {
+export class IcpService implements OnDestroy  {
 
   caseId: string;
   client: IcpParticipant;
   presenter: IcpParticipant;
   isPresenter: boolean;
-  documentId: string;
 
   subscription: Subscription;
   sessionSubscription: Subscription;
 
   constructor(private readonly toolbarEvents: ToolbarEventService,
-    private readonly viewerEvents: ViewerEventService,
-    private readonly socketService: IcpUpdateService,
-    private readonly presenterSubscriptions: IcpPresenterService,
-    private readonly followerSubscriptions: IcpFollowerService,
-    private store: Store<IcpState>) {
+              private readonly viewerEvents: ViewerEventService,
+              private readonly socketService: IcpUpdateService,
+              private readonly presenterSubscriptions: IcpPresenterService,
+              private readonly followerSubscriptions: IcpFollowerService,
+              private store: Store<IcpState>) {
     this.subscription = this.store.pipe(select(fromIcpSelectors.getCaseId), filter(value => !!value)).subscribe(caseId => {
       this.caseId = caseId;
     });
-    this.subscription.add(this.store.pipe(select(fromDocument.getDocumentId)).subscribe(docId => this.documentId = docId));
     this.subscription.add(this.toolbarEvents.icp.sessionLaunch.subscribe(() => {
-
-      if (this.caseId && this.documentId) { this.launchSession(); }
+      if (this.caseId) { this.launchSession(); }
     }));
   }
 
@@ -46,9 +42,9 @@ export class IcpService implements OnDestroy {
   }
 
   launchSession() {
-    this.store.dispatch(new fromIcpActions.LoadIcpSession({ caseId: this.caseId, documentId: this.documentId }));
+    this.store.dispatch(new fromIcpActions.LoadIcpSession(this.caseId));
     this.subscription.add(this.store.pipe(select(fromIcpSelectors.getIcpSession),
-      filter(value => !!value && Object.keys(value).length > 1),
+      filter(value => !!value && Object.keys(value).length > 1 ),
       take(1)).subscribe(() => { this.setUpSessionSubscriptions(); }));
   }
 
@@ -57,20 +53,20 @@ export class IcpService implements OnDestroy {
     this.sessionSubscription.add(this.toolbarEvents.icp.stoppingPresenting.subscribe(() => this.stopPresenting()));
     this.sessionSubscription.add(this.toolbarEvents.icp.sessionExitConfirmed.subscribe(() => this.leavePresentation()));
     this.sessionSubscription.add(
-      this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => this.presenter = presenter)
+      this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => this.presenter = presenter )
     );
     this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.getClient)).subscribe(client => this.client = client));
     this.sessionSubscription.add(this.store.pipe(select(fromIcpSelectors.isPresenter)).subscribe(isPresenter => {
-      this.isPresenter = isPresenter;
-      this.presenterSubscriptions.update(isPresenter);
-      this.followerSubscriptions.update(!isPresenter);
+        this.isPresenter = isPresenter;
+        this.presenterSubscriptions.update(isPresenter);
+        this.followerSubscriptions.update(!isPresenter);
     }));
     this.sessionSubscription.add(this.socketService.clientDisconnected().subscribe(cli => this.clientDisconnected(cli)));
     this.sessionSubscription.add(this.socketService.presenterUpdated().subscribe(pres => {
-      this.store.dispatch(new fromIcpActions.IcpPresenterUpdated(pres));
+        this.store.dispatch(new fromIcpActions.IcpPresenterUpdated(pres));
     }));
     this.sessionSubscription.add(this.socketService.participantListUpdated().subscribe(participants => {
-      this.store.dispatch(new fromIcpActions.IcpParticipantListUpdated(participants));
+        this.store.dispatch(new fromIcpActions.IcpParticipantListUpdated(participants));
     }));
   }
 
@@ -91,7 +87,7 @@ export class IcpService implements OnDestroy {
   }
 
   stopPresenting() {
-    const presenter: IcpParticipant = { username: '', id: '' };
+    const presenter: IcpParticipant = {username: '', id: ''};
     this.socketService.updatePresenter(presenter);
   }
 

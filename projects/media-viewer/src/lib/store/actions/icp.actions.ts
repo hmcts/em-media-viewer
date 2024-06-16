@@ -12,42 +12,42 @@ export const ICP_PARTICIPANT_LIST_UPDATED = '[Icp] Participant List Updated';
 
 export class SetCaseId implements Action {
   readonly type = SET_CASE_ID;
-  constructor(public payload: string) { }
+  constructor(public payload: string) {}
 }
 
 export class LoadIcpSession implements Action {
   readonly type = LOAD_ICP_SESSION;
-  constructor(public payload: { caseId: string, documentId: string }) { }
+  constructor(public payload: string) {}
 }
 
 export class LoadIcpSessionFailure implements Action {
   readonly type = LOAD_ICP_SESSION_FAIL;
-  constructor(public payload: Error) { }
+  constructor(public payload: Error) {}
 }
 
 export class JoinIcpSocketSession implements Action {
   readonly type = JOIN_ICP_SOCKET_SESSION;
-  constructor(public payload: { username: string, session: IcpSession }) { }
+  constructor(public payload: { username: string, session: IcpSession }) {}
 }
 
 export class IcpSocketSessionJoined implements Action {
   readonly type = ICP_SOCKET_SESSION_JOINED;
-  constructor(public payload: { session: IcpSession, participantInfo: { client: IcpParticipant, presenter: IcpParticipant } }) { }
+  constructor(public payload: { session: IcpSession, participantInfo: { client: IcpParticipant, presenter: IcpParticipant } }) {}
 }
 
 export class LeaveIcpSocketSession implements Action {
   readonly type = LEAVE_ICP_SOCKET_SESSION;
-  constructor() { }
+  constructor() {}
 }
 
 export class IcpPresenterUpdated implements Action {
   readonly type = ICP_PRESENTER_UPDATED;
-  constructor(public payload: IcpParticipant) { }
+  constructor(public payload: IcpParticipant) {}
 }
 
 export class IcpParticipantListUpdated implements Action {
   readonly type = ICP_PARTICIPANT_LIST_UPDATED;
-  constructor(public payload: any) { }
+  constructor(public payload: any) {}
 }
 
 export type IcpActions =
