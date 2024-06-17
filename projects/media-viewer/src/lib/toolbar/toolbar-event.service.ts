@@ -44,21 +44,21 @@ export class ToolbarEventService {
   public readonly stepZoomSubject = new Subject<number>();
   public readonly zoomValueSubject = new BehaviorSubject<number>(1);
   public readonly pageCountSubject = new Subject<number>();
-  public readonly printSubject = new Subject();
-  public readonly downloadSubject = new Subject();
+  public readonly printSubject = new Subject<void>();
+  public readonly downloadSubject = new Subject<void>();
   public readonly setCurrentPageSubject = new Subject<number>();
   public readonly setCurrentPageInputValueSubject = new Subject<number>();
   public readonly changePageByDeltaSubject = new Subject<number>();
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
-  public readonly saveRotationSubject = new Subject();
+  public readonly saveRotationSubject = new Subject<void>();
 
   public readonly redactionMode = new BehaviorSubject(false);
   public readonly redactionPreview = new Subject<boolean>();
-  public readonly applyRedactToDocument = new Subject();
+  public readonly applyRedactToDocument = new Subject<void>();
 
-  public readonly clearAllRedactMarkers = new Subject();
-  public readonly redactWholePage = new Subject();
+  public readonly clearAllRedactMarkers = new Subject<void>();
+  public readonly redactWholePage = new Subject<void>();
   public readonly redactionSerachSubject = new Subject<RedactionSearch>();
   public readonly redactAllInProgressSubject = new BehaviorSubject(false);
   public readonly openRedactionSearch = new BehaviorSubject<SearchMode | null>(null);

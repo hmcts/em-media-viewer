@@ -12,7 +12,7 @@ export class ViewerEventService {
 
   public readonly textHighlight = new Subject<Highlight>();
   public readonly boxHighlight = new Subject<Highlight>();
-  public readonly ctxToolbarCleared = new Subject();
+  public readonly ctxToolbarCleared = new Subject<void>();
   public readonly navigationEvent = new Subject<any[]>();
 
   constructor() {}

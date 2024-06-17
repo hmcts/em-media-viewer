@@ -1,11 +1,11 @@
 import { BehaviorSubject, Subject } from 'rxjs';
 
   export const enabled = new BehaviorSubject(false);
-  export const sessionLaunch = new Subject();
-  export const becomingPresenter = new Subject();
-  export const stoppingPresenting = new Subject();
+  export const sessionLaunch = new Subject<void>();
+  export const becomingPresenter = new Subject<void>();
+  export const stoppingPresenting = new Subject<void>();
   export const leavingSession = new BehaviorSubject(false);
-  export const sessionExitConfirmed = new Subject();
+  export const sessionExitConfirmed = new Subject<void>();
   export const participantsListVisible = new BehaviorSubject(false);
 
 export const launchSession = () => {
