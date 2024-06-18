@@ -193,7 +193,7 @@ export class PdfJsWrapper {
     this.pdfViewer.eventBus.dispatch('findbarclose');
   }
 
-  public navigateTo(destination: object | number) {
+  public navigateTo(destination: object) {
     if (destination instanceof Object) {
       if (!destination[1].name.includes('XYZ')) {
         destination[1] = { name: 'XYZ' };
@@ -202,6 +202,10 @@ export class PdfJsWrapper {
       }
       destination[4] = this.zoomValue;
     }
+    this.nativeNavigate(destination);
+  }
+
+  public nativeNavigate(destination: object) {
     this.pdfViewer.linkService.navigateTo(destination);
   }
 

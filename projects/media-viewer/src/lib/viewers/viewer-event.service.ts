@@ -14,8 +14,9 @@ export class ViewerEventService {
   public readonly boxHighlight = new Subject<Highlight>();
   public readonly ctxToolbarCleared = new Subject<void>();
   public readonly navigationEvent = new Subject<any[]>();
+  public readonly navigationEventICP = new Subject<any[]>();
 
-  constructor() {}
+  constructor() { }
 
   public textSelected(selectionData: Highlight): void {
     this.textHighlight.next(selectionData);
@@ -32,5 +33,9 @@ export class ViewerEventService {
 
   public goToDestination(destination: any[]) {
     this.navigationEvent.next(destination);
+  }
+
+  public goToDestinationICP(destination: any[]) {
+    this.navigationEventICP.next(destination);
   }
 }
