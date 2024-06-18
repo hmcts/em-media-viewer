@@ -3455,7 +3455,7 @@ __metadata:
     webdriver-manager: ^12.1.7
     webdriverio: 7.36.0
     when: 3.7.8
-    ws: ^7.4.6
+    ws: ^7.5.10
     xmlhttprequest-ssl: ^1.6.2
     yarn-audit-fix: ^10.0.7
     zone.js: 0.14.7
