@@ -124,6 +124,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     })
     );
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
+    this.$subscription.add(this.viewerEvents.navigationEventICP.subscribe(destination => this.goToDestinationICP(destination)));
     this.$subscription.add(
       this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle)
     );
@@ -263,6 +264,10 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     setTimeout(() => {
       this.rotateDocument(currentRotation);
     }, 10);
+  }
+
+  private goToDestinationICP(destination: any[]) {
+    this.pdfWrapper.nativeNavigate(destination);
   }
 
   getCurrentPageNumber(): number {
