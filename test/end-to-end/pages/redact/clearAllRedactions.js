@@ -7,7 +7,6 @@ module.exports = async function () {
 
   await I.clickRedactMenu();
   await I.click(commonConfig.clearAllRedaction);
-  await I.wait(testConfig.BookmarksAndAnnotationsWait);
-  await I.refreshPage();
-  await I.wait(testConfig.BookmarksAndAnnotationsWait);
+  await I.dontSeeElement(commonConfig.rectangleClass);
+  await I.clickRedactMenu();
 }

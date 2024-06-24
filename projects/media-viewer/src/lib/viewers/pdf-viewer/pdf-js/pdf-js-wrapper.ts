@@ -1,13 +1,14 @@
 import { Outline } from './../side-bar/outline-item/outline.model';
 import { RedactionSearch } from './../../../toolbar/redaction-search-bar/redaction-search.model';
-import * as pdfjsLib from 'pdfjs-dist';
-import { DownloadManager, PDFViewer } from 'pdfjs-dist/web/pdf_viewer';
+import * as pdfjs from 'pdfjs-dist';
+import { DownloadManager, PDFLinkService, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import 'pdfjs-dist/build/pdf.worker';
+import 'pdfjs-dist/build/pdf.mjs';
 import { Subject } from 'rxjs';
 import { SearchOperation, SearchResultsCount, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { PdfPosition } from '../../../store/reducers/document.reducer';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/assets/build/pdf.worker.min.js';
+pdfjs.GlobalWorkerOptions.workerSrc = '/assets/build/pdf.worker.min.js';
 
 /**
  * Values of the state field returned by the find events
@@ -99,7 +100,10 @@ export class PdfJsWrapper {
       this.toolbarEvents.pageCountSubject.next(pdfDocument.numPages);
 
       this.pdfViewer.setDocument(pdfDocument);
-      this.pdfViewer.linkService.setDocument(pdfDocument, null);
+      if (this.pdfViewer.linkService instanceof PDFLinkService) {
+        const linkservice : PDFLinkService = this.pdfViewer.linkService;
+        linkservice.setDocument(pdfDocument, null);
+      }
 
       const outlineNode = await pdfDocument.getOutline();
       const outline = outlineNode ? outlineNode.map(x => {
@@ -133,7 +137,7 @@ export class PdfJsWrapper {
   }
 
   private createLoadingTask(documentUrl: string) {
-    return pdfjsLib.getDocument({
+    return pdfjs.getDocument({
       url: documentUrl,
       cMapUrl: 'assets/minified/cmaps',
       cMapPacked: true,
@@ -163,7 +167,7 @@ export class PdfJsWrapper {
   }
 
   public downloadFile(url: string, filename: string): void {
-    this.downloadManager.downloadUrl(url, filename);
+    this.downloadManager.downloadUrl(url, filename, {});
   }
 
   public setPageNumber(pageNumber: number): void {
@@ -177,23 +181,26 @@ export class PdfJsWrapper {
   }
 
   public search(operation: SearchOperation): void {
-    const command = operation.reset ? 'find' : 'findagain';
-
-    this.pdfViewer.findController.executeCommand(command, {
+    const command = operation.reset ? '' : 'again';
+    const data = {
+      source: this.pdfViewer,
+      type: command,
       query: operation.searchTerm,
       phraseSearch: true,
       caseSensitive: operation.matchCase,
       entireWord: operation.wholeWord,
       highlightAll: operation.highlightAll,
       findPrevious: operation.previous,
-    });
+    };
+    
+    this.pdfViewer.eventBus.dispatch('find', data);
   }
 
   public clearSearch(): void {
-    this.pdfViewer.eventBus.dispatch('findbarclose');
+    this.pdfViewer.eventBus.dispatch('findbarclose', {});
   }
 
-  public navigateTo(destination: object | number) {
+  public navigateTo(destination: string | any[]) {
     if (destination instanceof Object) {
       if (!destination[1].name.includes('XYZ')) {
         destination[1] = { name: 'XYZ' };
@@ -202,19 +209,19 @@ export class PdfJsWrapper {
       }
       destination[4] = this.zoomValue;
     }
-    this.pdfViewer.linkService.navigateTo(destination);
+    this.pdfViewer.linkService.goToDestination(destination);
   }
 
   public setZoom(zoomValue: number): void {
-    this.pdfViewer.currentScaleValue = this.getZoomValue(zoomValue);
-    this.zoomValue = this.pdfViewer.currentScaleValue;
-    this.toolbarEvents.zoomValueSubject.next(this.pdfViewer.currentScaleValue);
+    this.pdfViewer.currentScaleValue = this.getZoomValue(zoomValue).toString();
+    this.zoomValue = +this.pdfViewer.currentScaleValue;
+    this.toolbarEvents.zoomValueSubject.next(this.zoomValue);
   }
 
   public stepZoom(zoomValue: number): void {
-    this.pdfViewer.currentScaleValue = +this.getZoomValue((+this.pdfViewer.currentScaleValue) + zoomValue);
-    this.zoomValue = this.pdfViewer.currentScaleValue;
-    this.toolbarEvents.zoomValueSubject.next(this.pdfViewer.currentScaleValue);
+    this.pdfViewer.currentScaleValue = this.getZoomValue((+this.pdfViewer.currentScaleValue) + zoomValue).toString();
+    this.zoomValue = +this.pdfViewer.currentScaleValue;
+    this.toolbarEvents.zoomValueSubject.next(this.zoomValue);
   }
 
   private getZoomValue(zoomValue: number): number {
@@ -238,7 +245,7 @@ export class PdfJsWrapper {
   }
 
   public getCurrentPDFZoomValue(): number {
-    return this.pdfViewer.currentScaleValue;
+    return +this.pdfViewer.currentScaleValue;
   }
 
   public setCurrentPDFTitle(title: string) {
