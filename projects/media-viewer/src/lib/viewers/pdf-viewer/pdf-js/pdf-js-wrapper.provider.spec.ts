@@ -6,11 +6,9 @@ describe('PdfJsWrapperFactory', () => {
 
   it('creates a wrapper', () => {
     const elementRef = {
-      nativeElement: {
-        firstElementChild: document.createElement('div'),
-        addEventListener: () => {}
-      }
-    } as any;
+      nativeElement: document.createElement('div')
+    }
+    elementRef.nativeElement.appendChild(document.createElement('div'));
     const factory = new PdfJsWrapperFactory(new ToolbarEventService());
     const wrapper = factory.create(elementRef);
 

@@ -14,7 +14,7 @@ module.exports = async function () {
 
   await I.executeScript(async () => {
     const range = document.createRange();
-    const matchingElement = document.getElementsByClassName('textLayer')[0].children[3];
+    const matchingElement = document.getElementsByClassName('textLayer')[0].children[6].children[1];
     range.selectNodeContents(matchingElement);
     const sel = window.getSelection();
     sel.removeAllRanges();

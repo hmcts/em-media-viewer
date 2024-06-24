@@ -4,37 +4,37 @@ import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { IcpSessionApiService } from '../../icp/icp-session-api.service';
 import { IcpUpdateService } from '../../icp/icp-update.service';
-import * as icpActions from '../actions/icp.actions';
+import * as icpActions from '../actions/icp.actions' ;
 import { IcpSession } from '../../icp/icp.interfaces';
 
 @Injectable()
 export class IcpEffects {
 
   constructor(private actions$: Actions,
-    private icpApiService: IcpSessionApiService,
-    private icpUpdateService: IcpUpdateService) { }
+              private icpApiService: IcpSessionApiService,
+              private icpUpdateService: IcpUpdateService) {}
 
   loadIcpSession$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(icpActions.LOAD_ICP_SESSION),
-      map((action: icpActions.LoadIcpSession) => action.payload),
-      exhaustMap((payload: { caseId: string, documentId: string }) =>
-        this.icpApiService.loadSession(payload)
-          .pipe(
-            map(res => new icpActions.JoinIcpSocketSession(res)),
-            catchError(error => of(new icpActions.LoadIcpSessionFailure(error)))
-          )
-      ))
+    ofType(icpActions.LOAD_ICP_SESSION),
+    map((action: icpActions.LoadIcpSession) => action.payload),
+    exhaustMap((caseId: string) =>
+      this.icpApiService.loadSession(caseId)
+        .pipe(
+          map(res => new icpActions.JoinIcpSocketSession(res)),
+          catchError(error => of(new icpActions.LoadIcpSessionFailure(error)))
+        )
+    ))
   );
 
 
   joinIcpSocketSession$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(icpActions.JOIN_ICP_SOCKET_SESSION),
-      map((action: icpActions.JoinIcpSocketSession) => action.payload),
-      switchMap((res: { username: string, session: IcpSession }) =>
-        this.icpUpdateService.joinSession(res.username, res.session)
-          .pipe(map(participants => new icpActions.IcpSocketSessionJoined({ session: res.session, participantInfo: participants })))
-      ))
+    ofType(icpActions.JOIN_ICP_SOCKET_SESSION),
+    map((action: icpActions.JoinIcpSocketSession) => action.payload),
+    switchMap((res: {username: string, session: IcpSession}) =>
+      this.icpUpdateService.joinSession(res.username, res.session)
+        .pipe(map(participants => new icpActions.IcpSocketSessionJoined({session: res.session, participantInfo: participants})))
+    ))
   );
 }

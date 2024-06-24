@@ -21,7 +21,7 @@ describe('HighlightCreateDirective', () => {
   hostElement.scrollLeft = 20;
   hostElement.scrollTop = 30;
   const event = { clientX: 50, clientY: 40, preventDefault: () => { } };
-  const mouseEvent = { target: { offsetParent: { offsetParent: { getAttribute: () => 1 } } } } as any;
+  const mouseEvent = { target: { offsetParent: { offsetParent: { offsetParent: { getAttribute: () => 1 } } } } } as any;
   const page = {
     scaleRotation: { rotation: 0, scale: 1 },
     styles: { height: 1122, left: 341, width: 793 }
