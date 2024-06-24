@@ -11,7 +11,6 @@ describe('UpdateService', () => {
   const username = 'name';
   const session: IcpSession = {
     caseId: 'caseId',
-    documentId: 'documentId',
     sessionId: 'sessionId',
     dateOfHearing: new Date(),
     connectionUrl: ''

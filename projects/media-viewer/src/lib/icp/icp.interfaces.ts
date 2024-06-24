@@ -9,7 +9,6 @@ export interface IcpState {
 
 export interface IcpSession {
   sessionId: string;
-  documentId: string;
   caseId: string;
   dateOfHearing: Date;
   connectionUrl: string;
