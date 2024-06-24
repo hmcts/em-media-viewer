@@ -23,6 +23,8 @@ export class PrintService {
     printWindow.document.close();
     printWindow.focus();
     printWindow.print();
-    printWindow.close();
+    setTimeout((printer) => {
+      printer.close();
+    }, 1000, printWindow);
   }
 }
