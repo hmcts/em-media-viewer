@@ -3395,7 +3395,7 @@ __metadata:
     eslint-config-standard: ^17.0.0
     eslint-plugin-import: ^2.19.1
     eslint-plugin-node: ^10.0.0
-    eslint-plugin-promise: ^4.2.1
+    eslint-plugin-promise: ^6.0.0
     eslint-plugin-standard: ^4.0.1
     glob: ^10.3.3
     govuk-frontend: ^4.2.0
@@ -11742,10 +11742,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-promise@npm:^4.2.1":
-  version: 4.3.1
-  resolution: "eslint-plugin-promise@npm:4.3.1"
-  checksum: 3a6f4180008bb3b7106371ed49060c9bca06ba5cffa82fb249f83d2c4fcf94bbefd468a837bff1164dd52066fe1be7ff2d126b212aaa8fe13e681916e78b1618
+"eslint-plugin-promise@npm:^6.0.0":
+  version: 6.2.0
+  resolution: "eslint-plugin-promise@npm:6.2.0"
+  peerDependencies:
+    eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
+  checksum: 4ce2ee365044aaeac7feb7c4b62f7d432594960bf96be703f871fa5fdd61f358d6620222e7c907f7ee43ff54b0b2ff392c1f70680bce335f6396c8c7af79c141
   languageName: node
   linkType: hard
 
