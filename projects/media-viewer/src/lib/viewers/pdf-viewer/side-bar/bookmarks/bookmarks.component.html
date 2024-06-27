@@ -14,7 +14,7 @@
   <cdk-nested-tree-node class="node-wrapper" *cdkTreeNodeDef="let node">
     <div *ngIf="node.id !== editableBookmark; else inputBookmark">
       <div
-        class="node-content-wrapper nested-tree-node"
+        class="node-content-wrapper nested-tree-node nest-tree-node-padding"
         cdkDrag
         [cdkDragData]="node"
         (mouseenter)="dragHover($event, node)"
@@ -36,7 +36,7 @@
           (click)="deleteBookmark2(node)"
         ></button>
       </div>
-      <div class="node-drop-slot"></div>
+      <!-- <div class="node-drop-slot"></div> -->
     </div>
     <ng-template #inputBookmark>
       <input
@@ -86,7 +86,7 @@
           (click)="deleteBookmark2(node)"
         ></button>
       </div>
-      <div class="node-drop-slot"></div>
+      <!-- <div class="node-drop-slot"></div> -->
     </div>
     <ng-template #inputBookmark2>
       <input

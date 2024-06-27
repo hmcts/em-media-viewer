@@ -134,6 +134,11 @@ tree-node-checkbox {
   cursor: pointer;
 }
 
+.nest-tree-node-padding {
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+
 .nested-tree-node-children {
   display: flex;
   flex-direction: column;
