@@ -25,7 +25,8 @@ module.exports = async function () {
     pageHandle.dispatchEvent(mouseUpEvent);
   });
   await I.waitForElement(commonConfig.highLightPopup, commonConfig.BookmarksAndAnnotationsWait);
-  await I.retry(2).click(commonConfig.highLightPopup);
+  await I.click(commonConfig.highLightPopup);
   await I.waitForElement(commonConfig.highLightTextCount);
   await I.click(commonConfig.highLightTextCount);
+
 }
