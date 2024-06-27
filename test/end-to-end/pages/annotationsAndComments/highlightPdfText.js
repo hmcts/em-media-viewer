@@ -27,6 +27,5 @@ module.exports = async function () {
   await I.waitForElement(commonConfig.highLightPopup, commonConfig.BookmarksAndAnnotationsWait);
   await I.click(commonConfig.highLightPopup);
   await I.waitForElement(commonConfig.highLightTextCount);
-  await I.click(commonConfig.highLightTextCount);
 
 }
