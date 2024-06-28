@@ -13,8 +13,8 @@ module.exports = async function () {
     await I.retry(3).click(commonConfig.highLightTextCount);
     await I.waitForElement(commonConfig.commentPopup.replace('Comment', 'Delete'));
     await I.retry(3).click(commonConfig.commentPopup.replace('Comment', 'Delete'));
-    await I.wait(testConfig.BookmarksAndAnnotationsWait);
     ++i;
+    await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, visible - i);
   }
 
   await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, 0);
