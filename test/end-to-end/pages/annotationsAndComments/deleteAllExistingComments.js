@@ -16,5 +16,5 @@ module.exports = async function () {
     ++i;
   }
   await I.refreshPage();
-  await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+  await I.waitForText(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
 };
