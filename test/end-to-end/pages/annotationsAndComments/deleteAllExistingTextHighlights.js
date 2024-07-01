@@ -10,9 +10,9 @@ module.exports = async function () {
 
   const visible = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
   while (i < visible) {
-    await I.retry(3).click(commonConfig.highLightTextCount);
+    await I.click(commonConfig.highLightTextCount);
     await I.waitForElement(commonConfig.commentPopup.replace('Comment', 'Delete'));
-    await I.retry(3).click(commonConfig.commentPopup.replace('Comment', 'Delete'));
+    await I.click(commonConfig.commentPopup.replace('Comment', 'Delete'));
     ++i;
     await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, visible - i);
   }
