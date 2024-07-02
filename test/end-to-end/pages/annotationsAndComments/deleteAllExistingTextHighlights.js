@@ -13,9 +13,11 @@ module.exports = async function () {
   while (i < initial) {
     await I.click(commonConfig.highLightTextCount);
     await I.waitForElement(commonConfig.commentPopup.replace('Comment', 'Delete'));
-    await I.click(commonConfig.commentPopup.replace('Comment', 'Delete'));
+    await I.retry(2).click(commonConfig.commentPopup.replace('Comment', 'Delete'));
+    await I.wait(2);
     ++i;
-    const remaining = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
-    assert.equal(remaining, initial - i);
   }
+
+  const remaining = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
+  assert.equal(remaining, 0);
 }
