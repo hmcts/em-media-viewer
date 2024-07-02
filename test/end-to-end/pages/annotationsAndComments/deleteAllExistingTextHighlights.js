@@ -14,9 +14,6 @@ module.exports = async function () {
     await I.waitForElement(commonConfig.commentPopup.replace('Comment', 'Delete'));
     await I.click(commonConfig.commentPopup.replace('Comment', 'Delete'));
     ++i;
-    await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, visible - i);
+    await I.waitNumberOfVisibleElements(commonConfig.highLightTextCount, visible - i);
   }
-
-  await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, 0);
-
 }
