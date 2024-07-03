@@ -72,6 +72,19 @@ mv-pdf-viewer {
     z-index: 1;
   }
 
+
+  [data-main-rotation='90'] {
+    transform: rotate(90deg) translate(-21%, -14.5%);
+  }
+  [data-main-rotation='180'] {
+    transform: rotate(180deg);
+  }
+  [data-main-rotation='270'] {
+    transform: rotate(270deg) translate(21%, 14.5%);
+  }
+
+
+
   .textLayer .markedContent > span {
     position: absolute;
     transform-origin: left

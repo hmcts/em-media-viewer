@@ -126,9 +126,9 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   hasRectangleChanged(viewRect): boolean {
-    return this.left !== viewRect.offsetLeft ||
-      this.top !== viewRect.offsetTop ||
-      this.width !== viewRect.offsetWidth ||
-      this.height !== viewRect.offsetHeight;
+    return Math.round(this.left) !== viewRect.offsetLeft ||
+      Math.round(this.top) !== viewRect.offsetTop ||
+      Math.round(this.width) !== viewRect.offsetWidth ||
+      Math.round(this.height) !== viewRect.offsetHeight;
   }
 }
