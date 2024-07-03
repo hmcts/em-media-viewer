@@ -5,11 +5,10 @@ const testConfig = require("../../../config");
 module.exports = async function () {
   const I = this;
   let i = 0;
-
   const visible = await I.grabNumberOfVisibleElements(commonConfig.commentsCount);
   console.log(visible);
   while (i < visible) {
-    await I.retry(3).click(commonConfig.commentsCount);
+    await I.click(commonConfig.commentsCount);
     console.log('i', i);
     await I.waitForElement(commonConfig.deleteAnnotationBtn);
     await I.retry(3).click(commonConfig.deleteAnnotationBtn);
@@ -17,5 +16,5 @@ module.exports = async function () {
     ++i;
   }
   await I.refreshPage();
-  await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+  await I.waitForText(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
 };
