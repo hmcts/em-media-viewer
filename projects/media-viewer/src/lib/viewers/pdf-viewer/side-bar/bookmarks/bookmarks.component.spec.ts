@@ -307,7 +307,7 @@ describe('BookmarksComponent', () => {
       const nodeWithDragHover = bookmarks[0];
       component.isUserdragging = true;
 
-      const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 2, offsetY: 0, target: { clientWidth: 3, style: { borderRight: '' } } });
+      const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 2, offsetY: 0, target: { clientWidth: 3, style: { borderRight: '' } }, currentTarget: { clientWidth: 3, style: { borderRight: '' } } });
       component.dragHover(dragEvent, nodeWithDragHover);
 
       expect(component.dragNodeInsertToParent).toEqual(true);

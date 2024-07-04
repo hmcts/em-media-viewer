@@ -354,6 +354,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
           this.hoverHtmlElement.style.borderRight = '';
         }
         this.hoverHtmlElement = event.currentTarget;
+        debugger;
         this.hoverHtmlElement.style.borderRight = '5px solid #007bff';
         this.dragNodeInsertToParent = true;
       } else {
