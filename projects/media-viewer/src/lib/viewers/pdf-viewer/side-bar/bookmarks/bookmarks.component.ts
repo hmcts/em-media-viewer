@@ -339,7 +339,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   dragEnd() {
     this.isUserdragging = false;
-    this.hoverHtmlElement.style.borderRight = '';
+    if (this.hoverHtmlElement?.style) {
+      this.hoverHtmlElement.style.borderRight = '';
+    }
   }
 
   dragHover(event: any, node: Bookmark) {
@@ -348,7 +350,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
       if (percentageX > .55) {
         this.hoveredNode = node;
-        if (this.hoverHtmlElement) {
+        if (this.hoverHtmlElement?.style) {
           this.hoverHtmlElement.style.borderRight = '';
         }
         this.hoverHtmlElement = event.currentTarget;
@@ -356,7 +358,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         this.dragNodeInsertToParent = true;
       } else {
         this.hoveredNode = null;
-        if (this.hoverHtmlElement) {
+        if (this.hoverHtmlElement?.style) {
           this.hoverHtmlElement.style.borderRight = '';
         }
         this.dragNodeInsertToParent = false;
@@ -368,7 +370,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     if (this.isUserdragging) {
       if (!node || this.hoveredNode?.id !== node.id) {
         this.dragNodeInsertToParent = false;
-        if (this.hoverHtmlElement) {
+        if (this.hoverHtmlElement?.style) {
           this.hoverHtmlElement.style.borderRight = '';
         }
         this.hoveredNode = null;

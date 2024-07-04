@@ -9,6 +9,7 @@ import { Bookmark } from '../../../../store/models/bookmarks.interface';
 import * as fromActions from '../../../../store/actions/bookmark.actions';
 import { State } from 'projects/media-viewer/src/lib/store/reducers/reducers';
 import { off } from 'process';
+import { style } from '@angular/animations';
 
 describe('BookmarksComponent', () => {
   let component: BookmarksComponent;
@@ -306,7 +307,7 @@ describe('BookmarksComponent', () => {
       const nodeWithDragHover = bookmarks[0];
       component.isUserdragging = true;
 
-      const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 2, offsetY: 0, target: { clientWidth: 3 } });
+      const dragEvent = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 2, offsetY: 0, target: { clientWidth: 3, style: { borderRight: '' } } });
       component.dragHover(dragEvent, nodeWithDragHover);
 
       expect(component.dragNodeInsertToParent).toEqual(true);
