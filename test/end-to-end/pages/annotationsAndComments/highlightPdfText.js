@@ -21,7 +21,7 @@ module.exports = async function () {
     sel.addRange(range);
     const mouseUpEvent = document.createEvent('MouseEvents');
     mouseUpEvent.initEvent('mouseup', true, true)
-    const pageHandle = document.getElementsByClassName('textLayer')[0].children[3];
+    const pageHandle = document.getElementsByClassName('textLayer')[0].children[6].children[1];
     pageHandle.dispatchEvent(mouseUpEvent);
   });
   await I.waitForElement(commonConfig.highLightPopup, commonConfig.BookmarksAndAnnotationsWait);
