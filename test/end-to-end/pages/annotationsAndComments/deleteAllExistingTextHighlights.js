@@ -2,21 +2,22 @@
 
 const commonConfig = require('../../data/commonConfig.json');
 const testConfig = require("../../../config");
+const {assert} = require('chai')
 
 module.exports = async function () {
   const I = this;
   
   let i = 0;
 
-  const visible = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
-  while (i < visible) {
-    await I.retry(3).click(commonConfig.highLightTextCount);
+  const initial = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
+  while (i < initial) {
+    await I.click(commonConfig.highLightTextCount);
     await I.waitForElement(commonConfig.commentPopup.replace('Comment', 'Delete'));
-    await I.retry(3).click(commonConfig.commentPopup.replace('Comment', 'Delete'));
-    await I.wait(testConfig.BookmarksAndAnnotationsWait);
+    await I.click(commonConfig.commentPopup.replace('Comment', 'Delete'));
+    await I.waitForInvisible(commonConfig.commentPopup);
     ++i;
   }
 
-  await I.seeNumberOfVisibleElements(commonConfig.highLightTextCount, 0);
-
+  const remaining = await I.grabNumberOfVisibleElements(commonConfig.highLightTextCount);
+  assert.equal(remaining, 0);
 }
