@@ -333,6 +333,18 @@ describe('BookmarksComponent', () => {
       expect(component.hoverHtmlElement.style.borderRight).toEqual('5px solid #007bff');
     }));
 
+    it('should drag hover start on mouse enter with hoverHtmlElement having style and percentageX less .55', fakeAsync(() => {
+      const nodeWithDragHover = bookmarks[0];
+      component.isUserdragging = true;
+      const dragEvent1 = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 1, offsetY: 0, target: { clientWidth: 3, style: { borderRight: '' } }, currentTarget: { clientWidth: 3, style: { borderRight: '' } } });
+      component.hoverHtmlElement = dragEvent1.currentTarget
+      const dragEvent2 = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 1, offsetY: 0, target: { clientWidth: 3, style: { borderRight: '' } }, currentTarget: { clientWidth: 3, style: { borderRight: '' } } });
+      component.dragHover(dragEvent2, nodeWithDragHover);
+
+      expect(component.dragNodeInsertToParent).toEqual(false);
+      expect(component.hoverHtmlElement.style.borderRight).toEqual('');
+    }));
+
     it('should drag hover end on mouse leave', fakeAsync(() => {
       const nodeWithDragHover = bookmarks[0];
       component.hoveredNode = bookmarks[1];
@@ -342,6 +354,21 @@ describe('BookmarksComponent', () => {
       component.dragHoverEnd(dragEvent, nodeWithDragHover);
 
       expect(component.dragNodeInsertToParent).toEqual(false);
+      expect(component.hoveredNode).toEqual(null);
+    }));
+
+    it('should drag hover end on mouse leave with hoverHtmlElement having style', fakeAsync(() => {
+      const nodeWithDragHover = bookmarks[0];
+      component.hoveredNode = bookmarks[1];
+      component.isUserdragging = true;
+
+      const dragEvent1 = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 1, offsetY: 0, target: { clientWidth: 3, style: { borderRight: '' } }, currentTarget: { clientWidth: 3, style: { borderRight: '' } } });
+      component.hoverHtmlElement = dragEvent1.currentTarget
+      const dragEvent2 = jasmine.createSpyObj('MouseEnter', ['preventDefault'], { offsetX: 1, offsetY: 0, target: { clientWidth: 3, style: { borderRight: '' } }, currentTarget: { clientWidth: 3, style: { borderRight: '' } } });
+      component.dragHoverEnd(dragEvent2, nodeWithDragHover);
+
+      expect(component.dragNodeInsertToParent).toEqual(false);
+      expect(component.hoverHtmlElement.style.borderRight).toEqual('');
       expect(component.hoveredNode).toEqual(null);
     }));
 
