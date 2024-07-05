@@ -348,6 +348,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     if (this.isUserdragging) {
       const newEvent: any = event;
       const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
+      debugger;
       if (percentageX > .55) {
         this.hoveredNode = node;
         if (this.hoverHtmlElement?.style) {
