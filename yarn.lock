@@ -3394,7 +3394,7 @@ __metadata:
     eslint: ^8.57.0
     eslint-config-standard: ^17.0.0
     eslint-plugin-import: ^2.19.1
-    eslint-plugin-node: ^10.0.0
+    eslint-plugin-node: ^11.0.0
     eslint-plugin-promise: ^4.2.1
     eslint-plugin-standard: ^4.0.1
     glob: ^10.3.3
@@ -11680,15 +11680,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-es@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "eslint-plugin-es@npm:2.0.0"
+"eslint-plugin-es@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "eslint-plugin-es@npm:3.0.1"
   dependencies:
-    eslint-utils: ^1.4.2
+    eslint-utils: ^2.0.0
     regexpp: ^3.0.0
   peerDependencies:
     eslint: ">=4.19.1"
-  checksum: 2fd35a5266f9cf66a69ed84d89554a0f59362b6afc655cb6b59d1ba7958972999f43fffc4108b5ea4edc0aa3ae92f204c6ab39e78321dda9023c83752e438c37
+  checksum: e57592c52301ee8ddc296ae44216df007f3a870bcb3be8d1fbdb909a1d3a3efe3fa3785de02066f9eba1d6466b722d3eb3cc3f8b75b3cf6a1cbded31ac6298e4
   languageName: node
   linkType: hard
 
@@ -11719,19 +11719,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-node@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "eslint-plugin-node@npm:10.0.0"
+"eslint-plugin-node@npm:^11.0.0":
+  version: 11.1.0
+  resolution: "eslint-plugin-node@npm:11.1.0"
   dependencies:
-    eslint-plugin-es: ^2.0.0
-    eslint-utils: ^1.4.2
+    eslint-plugin-es: ^3.0.0
+    eslint-utils: ^2.0.0
     ignore: ^5.1.1
     minimatch: ^3.0.4
     resolve: ^1.10.1
     semver: ^6.1.0
   peerDependencies:
     eslint: ">=5.16.0"
-  checksum: a4c279cad9cf44ef970403a81d8e0f405240cdf392a1a9be8b92592ea28faf80cc57e5d2731b2b37a072a21dee0b85335b8bbf273b14767418e566654be9e15d
+  checksum: 5804c4f8a6e721f183ef31d46fbe3b4e1265832f352810060e0502aeac7de034df83352fc88643b19641bb2163f2587f1bd4119aff0fd21e8d98c57c450e013b
   languageName: node
   linkType: hard
 
@@ -11771,12 +11771,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-utils@npm:^1.4.2":
-  version: 1.4.3
-  resolution: "eslint-utils@npm:1.4.3"
+"eslint-utils@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "eslint-utils@npm:2.1.0"
   dependencies:
     eslint-visitor-keys: ^1.1.0
-  checksum: a20630e686034107138272f245c460f6d77705d1f4bb0628c1a1faf59fc800f441188916b3ec3b957394dc405aa200a3017dfa2b0fff0976e307a4e645a18d1e
+  checksum: 27500938f348da42100d9e6ad03ae29b3de19ba757ae1a7f4a087bdcf83ac60949bbb54286492ca61fac1f5f3ac8692dd21537ce6214240bf95ad0122f24d71d
   languageName: node
   linkType: hard
 
