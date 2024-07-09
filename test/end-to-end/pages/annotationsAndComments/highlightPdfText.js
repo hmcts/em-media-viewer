@@ -14,18 +14,19 @@ module.exports = async function () {
 
   await I.executeScript(async () => {
     const range = document.createRange();
-    const matchingElement = document.getElementsByClassName('textLayer')[0].children[3];
+    const matchingElement = document.getElementsByClassName('textLayer')[0].children[6].children[1];
     range.selectNodeContents(matchingElement);
     const sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
     const mouseUpEvent = document.createEvent('MouseEvents');
     mouseUpEvent.initEvent('mouseup', true, true)
-    const pageHandle = document.getElementsByClassName('textLayer')[0].children[3];
+    const pageHandle = document.getElementsByClassName('textLayer')[0].children[6].children[1];
     pageHandle.dispatchEvent(mouseUpEvent);
   });
   await I.waitForElement(commonConfig.highLightPopup, commonConfig.BookmarksAndAnnotationsWait);
-  await I.retry(2).click(commonConfig.highLightPopup);
+  await I.click(commonConfig.highLightPopup);
   await I.waitForElement(commonConfig.highLightTextCount);
-  await I.click(commonConfig.highLightTextCount);
+  await I.click(commonConfig.redactTextCss);
+
 }

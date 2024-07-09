@@ -13,7 +13,7 @@ module.exports = async function () {
 
   await I.executeScript(async () => {
     const range = document.createRange();
-    const matchingElement = document.getElementsByClassName('textLayer')[0].children[3];
+    const matchingElement = document.getElementsByClassName('textLayer')[0].children[6].children[1];
     range.selectNodeContents(matchingElement);
     const sel = window.getSelection();
     sel.removeAllRanges();
@@ -21,7 +21,7 @@ module.exports = async function () {
 
     const mouseUpEvent = document.createEvent('MouseEvents');
     mouseUpEvent.initMouseEvent('mouseup', true, true, window, 1, 844, 497, 937, 403, false, false, false, false, 0, null);
-    const pageHandle = document.getElementsByClassName('textLayer')[0].children[3];
+    const pageHandle = document.getElementsByClassName('textLayer')[0].children[6].children[1];
     pageHandle.dispatchEvent(mouseUpEvent);
   });
 

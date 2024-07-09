@@ -286,7 +286,7 @@ async function previewEnv() {
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
   await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  await I.waitForEnabled(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
+  await I.waitForText(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
   console.log(await I.grabCurrentUrl());
 }
 

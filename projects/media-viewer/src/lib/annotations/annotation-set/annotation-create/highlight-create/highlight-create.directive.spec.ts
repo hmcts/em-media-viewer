@@ -21,7 +21,7 @@ describe('HighlightCreateDirective', () => {
   hostElement.scrollLeft = 20;
   hostElement.scrollTop = 30;
   const event = { clientX: 50, clientY: 40, preventDefault: () => { } };
-  const mouseEvent = { target: { offsetParent: { offsetParent: { getAttribute: () => 1 } } } } as any;
+  const mouseEvent = { target: { offsetParent: { offsetParent: { offsetParent: { getAttribute: () => 1 } } } } } as any;
   const page = {
     scaleRotation: { rotation: 0, scale: 1 },
     styles: { height: 1122, left: 341, width: 793 }
@@ -90,7 +90,7 @@ describe('HighlightCreateDirective', () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
 
     const mockElement = getMockElement('');
-    const mockEvent = { target: { ...mouseEvent.target, parentElement: mockElement } } as any;
+    const mockEvent = { target: { ...mouseEvent.target, parentElement: mockElement, closest : () => mockElement } } as any;
     directive.zoom = 1;
     directive.allPages = { '1': { ...page } };
     spyOn(viewerEvents, 'textSelected');
@@ -148,7 +148,7 @@ describe('HighlightCreateDirective', () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
 
     const mockElement = getMockElement('');
-    const mockEvent = { target: { ...mouseEvent.target, parentElement: mockElement } } as any;
+    const mockEvent = { target: { ...mouseEvent.target, parentElement: mockElement, closest : () => mockElement } } as any;
     directive.zoom = 1;
     directive.allPages = { '1': { ...page } };
     spyOn(viewerEvents, 'textSelected');
@@ -178,7 +178,7 @@ describe('HighlightCreateDirective', () => {
     spyOn(window, 'getSelection').and.returnValue(mockSelection);
 
     const mockElement = getMockElement('');
-    const mockEvent = { target: { ...mouseEvent.target, parentElement: mockElement } } as any;
+    const mockEvent = { target: { ...mouseEvent.target, parentElement: mockElement, closest : () => mockElement } } as any;
     directive.zoom = 1;
     directive.allPages = { '1': { ...page } };
     spyOn(viewerEvents, 'textSelected');

@@ -58,8 +58,41 @@ mv-pdf-viewer {
     opacity: 0.0 !important;
   }
 
+  .canvasWrapper {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .canvasWrapper > canvas{
+    max-width: 100%;
+    max-height: 100%;
+  }
+
   .textLayer {
     z-index: 1;
+  }
+
+
+  [data-main-rotation='90'] {
+    transform: rotate(90deg) translate(-21%, -14.5%);
+  }
+  [data-main-rotation='180'] {
+    transform: rotate(180deg);
+  }
+  [data-main-rotation='270'] {
+    transform: rotate(270deg) translate(21%, 14.5%);
+  }
+
+
+
+  .textLayer .markedContent > span {
+    position: absolute;
+    transform-origin: left
+  }
+
+
+  .textLayer .markedContent > br {
+    position: absolute;
   }
 
   .annotationLayer * {

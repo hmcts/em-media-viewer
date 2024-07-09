@@ -1,6 +1,6 @@
 import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js-wrapper';
 import { Subject } from 'rxjs';
-import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer';
+import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer.mjs';
 import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { fakeAsync, tick } from '@angular/core/testing';
@@ -18,7 +18,7 @@ describe('PdfJsWrapper', () => {
   let toolbarEventService;
 
   beforeEach(() => {
-    downloadManager = new pdfjsViewer.DownloadManager({});
+    downloadManager = new pdfjsViewer.DownloadManager();
 
     mockViewer = {
       pagesRotation: 0,
@@ -33,7 +33,7 @@ describe('PdfJsWrapper', () => {
       setDocument: () => { },
       linkService: {
         setDocument: () => { },
-        navigateTo: () => { }
+        goToDestination: () => { }
       },
       findController: {
         executeCommand: () => { }
@@ -64,7 +64,7 @@ describe('PdfJsWrapper', () => {
     const downloadSpy = spyOn(downloadManager, 'downloadUrl');
 
     wrapper.downloadFile('http://derp.com/derp.jpg', 'derp.jpg');
-    expect(downloadSpy).toHaveBeenCalledWith('http://derp.com/derp.jpg', 'derp.jpg');
+    expect(downloadSpy).toHaveBeenCalledWith('http://derp.com/derp.jpg', 'derp.jpg', {});
   });
 
   it('loads a document', fakeAsync(() => {
@@ -150,7 +150,7 @@ describe('PdfJsWrapper', () => {
   });
 
   it('should set the zoomValue only if the zoom name includes XYZ', () => {
-    const navigateSpy = spyOn(mockViewer.linkService, 'navigateTo');
+    const navigateSpy = spyOn(mockViewer.linkService, 'goToDestination');
     const destination = [];
     destination[1] = { name: 'XYZ' };
     wrapper.navigateTo(destination);
@@ -160,7 +160,7 @@ describe('PdfJsWrapper', () => {
   });
 
   it('should populate the destination object if the zoom name does not include XYZ', () => {
-    const navigateSpy = spyOn(mockViewer.linkService, 'navigateTo');
+    const navigateSpy = spyOn(mockViewer.linkService, 'goToDestination');
     const destination = [];
     destination[1] = { name: 'FitH' };
     wrapper.navigateTo(destination);
@@ -172,7 +172,7 @@ describe('PdfJsWrapper', () => {
   });
 
   it('should not alter the destination if it is not of type object', () => {
-    const navigateSpy = spyOn(mockViewer.linkService, 'navigateTo');
+    const navigateSpy = spyOn(mockViewer.linkService, 'goToDestination');
     const destination = 1234;
     wrapper.navigateTo(destination);
 
@@ -184,39 +184,39 @@ describe('PdfJsWrapper', () => {
     mockViewer.currentScaleValue = 1;
     wrapper.setZoom(2);
 
-    expect(mockViewer.currentScaleValue).toEqual(2);
+    expect(mockViewer.currentScaleValue).toEqual('2');
   });
 
   it('should set scale value to max value', () => {
     mockViewer.currentScaleValue = 1;
     wrapper.setZoom(6);
 
-    expect(mockViewer.currentScaleValue).toEqual(5);
+    expect(mockViewer.currentScaleValue).toEqual('5');
   });
 
   it('should set scale value to min value', () => {
     mockViewer.currentScaleValue = 1;
     wrapper.setZoom(0.001);
 
-    expect(mockViewer.currentScaleValue).toEqual(0.1);
+    expect(mockViewer.currentScaleValue).toEqual('0.1');
   });
 
   it('should set scale value to this.zoomValue', () => {
     mockViewer.currentScaleValue = 1;
     wrapper.setZoom(NaN);
 
-    expect(mockViewer.currentScaleValue).toEqual(1);
+    expect(mockViewer.currentScaleValue).toEqual('1');
   });
 
   it('should step the zoom', () => {
     mockViewer.currentScaleValue = 1;
     wrapper.stepZoom(0.5);
 
-    expect(mockViewer.currentScaleValue).toEqual(1.5);
+    expect(mockViewer.currentScaleValue).toEqual('1.5');
   });
 
   it('should call the search operation', () => {
-    spyOn(mockViewer.findController, 'executeCommand');
+    spyOn(mockViewer.eventBus, 'dispatch');
 
     const searchOperation = {
       searchTerm: 'searchTerm',
@@ -228,7 +228,9 @@ describe('PdfJsWrapper', () => {
     };
     wrapper.search(searchOperation);
 
-    expect(mockViewer.findController.executeCommand).toHaveBeenCalledWith('findagain', {
+    expect(mockViewer.eventBus.dispatch).toHaveBeenCalledWith('find', {
+      source: mockViewer,
+      type: 'again',
       query: 'searchTerm',
       phraseSearch: true,
       caseSensitive: false,

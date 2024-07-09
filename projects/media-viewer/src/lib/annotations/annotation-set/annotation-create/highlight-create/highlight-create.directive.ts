@@ -47,8 +47,17 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
 
   @HostListener('mouseup', ['$event'])
   onMouseUp(mouseEvent: MouseEvent) {
-    const pageElement = (<HTMLElement>(mouseEvent.target as HTMLElement).offsetParent).offsetParent;
-    const page = parseInt(pageElement.getAttribute('data-page-number'), 10);
+    let page: number;
+    let currentElement = mouseEvent.target as HTMLElement;
+    while (currentElement.offsetParent) {
+      currentElement = currentElement.offsetParent as HTMLElement;
+      if (currentElement.getAttribute) {
+        page = parseInt(currentElement.getAttribute('data-page-number'), 10);
+        if (page) {
+          break;
+        }
+      }
+    }
     if (this.toolbarEvents.highlightModeSubject.getValue()) {
       const rectangles = this.getRectangles(mouseEvent, page);
       this.viewerEvents.textSelected({ page, rectangles });
@@ -84,7 +93,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
 
         if (clientRects) {
 
-          const parentRect = localElement.parentElement.getBoundingClientRect();
+          const parentRect = localElement.closest(".textLayer").getBoundingClientRect();
           const selectionRectangles: Rectangle[] = [];
           for (let i = 0; i < clientRects.length; i++) {
             const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
