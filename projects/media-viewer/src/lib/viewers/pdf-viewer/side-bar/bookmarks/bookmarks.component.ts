@@ -43,6 +43,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   datasource: ArrayDataSource<Bookmark>;
   treeControl: FlatTreeControl<Bookmark>;
   hoveredNode: Bookmark;
+  hoverHtmlElement: HTMLElement;
   // expansion model tracks expansion state
   expansionModel = new SelectionModel<Bookmark>(true);
   isDraggingOn = false;
@@ -60,6 +61,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
   dragNodeExpandOverNode: any;
   dragNodeExpandOverTime: number;
   dragNodeExpandOverArea: number;
+
 
   options = {
     allowDrag: true,
@@ -337,17 +339,29 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   dragEnd() {
     this.isUserdragging = false;
+    if (this.hoverHtmlElement?.style) {
+      this.hoverHtmlElement.style.borderRight = '';
+    }
   }
 
   dragHover(event: any, node: Bookmark) {
     if (this.isUserdragging) {
       const newEvent: any = event;
       const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
+      debugger;
       if (percentageX > .55) {
         this.hoveredNode = node;
+        if (this.hoverHtmlElement?.style) {
+          this.hoverHtmlElement.style.borderRight = '';
+        }
+        this.hoverHtmlElement = event.currentTarget;
+        this.hoverHtmlElement.style.borderRight = '5px solid #007bff';
         this.dragNodeInsertToParent = true;
       } else {
         this.hoveredNode = null;
+        if (this.hoverHtmlElement?.style) {
+          this.hoverHtmlElement.style.borderRight = '';
+        }
         this.dragNodeInsertToParent = false;
       }
     }
@@ -357,6 +371,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     if (this.isUserdragging) {
       if (!node || this.hoveredNode?.id !== node.id) {
         this.dragNodeInsertToParent = false;
+        if (this.hoverHtmlElement?.style) {
+          this.hoverHtmlElement.style.borderRight = '';
+        }
         this.hoveredNode = null;
       }
     }
