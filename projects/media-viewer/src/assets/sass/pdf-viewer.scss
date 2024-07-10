@@ -96,7 +96,7 @@ mv-pdf-viewer {
   }
 
   .annotationLayer * {
-    z-index: 2;
+    z-index: 2 !important;
   }
 
   .commentSummaryHeader {
