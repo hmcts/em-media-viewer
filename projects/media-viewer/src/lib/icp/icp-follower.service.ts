@@ -16,9 +16,9 @@ export class IcpFollowerService {
   $subscription: Subscription;
 
   constructor(private readonly toolbarEvents: ToolbarEventService,
-              private readonly viewerEvents: ViewerEventService,
-              private readonly socketService: IcpUpdateService,
-              private store: Store<IcpState>) {}
+    private readonly viewerEvents: ViewerEventService,
+    private readonly socketService: IcpUpdateService,
+    private store: Store<IcpState>) { }
 
 
   update(isFollower: boolean) {
@@ -45,7 +45,7 @@ export class IcpFollowerService {
 
   followScreenUpdate({ pdfPosition }) {
     if (pdfPosition) {
-      this.viewerEvents.goToDestination([
+      this.viewerEvents.goToDestinationICP([
         pdfPosition.pageNumber - 1,
         { 'name': 'XYZ' },
         pdfPosition.left,
@@ -54,7 +54,7 @@ export class IcpFollowerService {
     }
     this.store.pipe(select(fromDocSelectors.getPdfPosition), take(1))
       .subscribe(position => {
-        const rotationDelta =  (pdfPosition.rotation - position.rotation) % 360;
+        const rotationDelta = (pdfPosition.rotation - position.rotation) % 360;
         if (rotationDelta !== 0) {
           this.toolbarEvents.rotate(rotationDelta);
         }

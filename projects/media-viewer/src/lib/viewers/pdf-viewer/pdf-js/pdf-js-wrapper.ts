@@ -101,7 +101,7 @@ export class PdfJsWrapper {
 
       this.pdfViewer.setDocument(pdfDocument);
       if (this.pdfViewer.linkService instanceof PDFLinkService) {
-        const linkservice : PDFLinkService = this.pdfViewer.linkService;
+        const linkservice: PDFLinkService = this.pdfViewer.linkService;
         linkservice.setDocument(pdfDocument, null);
       }
 
@@ -192,7 +192,7 @@ export class PdfJsWrapper {
       highlightAll: operation.highlightAll,
       findPrevious: operation.previous,
     };
-    
+
     this.pdfViewer.eventBus.dispatch('find', data);
   }
 
@@ -209,6 +209,10 @@ export class PdfJsWrapper {
       }
       destination[4] = this.zoomValue;
     }
+    this.nativeNavigate(destination);
+  }
+
+  public nativeNavigate(destination: string | any[]) {
     this.pdfViewer.linkService.goToDestination(destination);
   }
 

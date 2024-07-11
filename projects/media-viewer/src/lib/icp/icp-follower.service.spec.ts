@@ -11,10 +11,10 @@ describe('Icp Follower Service', () => {
 
   let followerService: IcpFollowerService;
   const mockUpdateService = {
-    newParticipantJoined: () => {},
-    updateScreen: () => {},
-    updatePresenter: () => {},
-    screenUpdated: () => {}
+    newParticipantJoined: () => { },
+    updateScreen: () => { },
+    updatePresenter: () => { },
+    screenUpdated: () => { }
   } as any;
 
   const pdfPosition: PdfPosition = {
@@ -32,7 +32,7 @@ describe('Icp Follower Service', () => {
         StoreModule.forRoot({})
       ],
       providers: [IcpFollowerService,
-        {provide: IcpUpdateService, useValue: mockUpdateService}]
+        { provide: IcpUpdateService, useValue: mockUpdateService }]
     });
 
     followerService = TestBed.inject(IcpFollowerService);
@@ -66,14 +66,14 @@ describe('Icp Follower Service', () => {
 
   it('should follow screen updates',
     inject([Store, ViewerEventService, ToolbarEventService], fakeAsync((store, viewerEvents, toolbarEvents) => {
-      spyOn(viewerEvents, 'goToDestination');
+      spyOn(viewerEvents, 'goToDestinationICP');
       spyOn(toolbarEvents, 'rotate');
 
-      store.dispatch(new PdfPositionUpdate({...pdfPosition, rotation: 0}));
+      store.dispatch(new PdfPositionUpdate({ ...pdfPosition, rotation: 0 }));
 
-      followerService.followScreenUpdate({pdfPosition});
+      followerService.followScreenUpdate({ pdfPosition });
 
-      expect(viewerEvents.goToDestination).toHaveBeenCalled();
+      expect(viewerEvents.goToDestinationICP).toHaveBeenCalled();
       expect(toolbarEvents.rotate).toHaveBeenCalled();
     }))
   );
