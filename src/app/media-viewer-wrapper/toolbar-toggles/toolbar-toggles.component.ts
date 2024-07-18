@@ -16,7 +16,7 @@ export class ToolbarTogglesComponent {
   @Output() toggleCustomToolbar = new BehaviorSubject(false);
   @Output() toggleAnnotations = new BehaviorSubject(true);
   @Output() toggleRedaction = new BehaviorSubject(true);
-  @Output() toggleICP = new BehaviorSubject(true);
+  @Output() toggleICP = new BehaviorSubject(false);
   @Output() toggleMultimediaPlayer = new BehaviorSubject(true);
   @Output() showCommentSummary = new BehaviorSubject(false);
   @Output() toggleSearchRedact = new BehaviorSubject(true);

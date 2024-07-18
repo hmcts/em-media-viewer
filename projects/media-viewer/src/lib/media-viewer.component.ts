@@ -82,6 +82,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() enableRedactions = false;
   @Input() enableICP = false;
+  @Input() allowedRolesICP: String[] = [];
   @Input() multimediaPlayerEnabled = false;
   @Input() enableRedactSearch = false;
 
@@ -175,6 +176,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       }
     }
 
+    this.enableICP = this.checkICPRoles();
+
     this.setToolbarButtons();
     this.detectOs();
     this.typeException = false;
@@ -253,5 +256,23 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   detectOs() {
     this.hasScrollBar = window.navigator.userAgent.indexOf('Win') !== -1;
+  }
+
+  private checkICPRoles() : boolean {
+    if (!this.enableICP) {
+      return false;
+    }
+    const userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
+    if (!userDetails) {
+      return false;
+    }
+    const userRoles = userDetails.roles;
+    if (!userRoles) {
+      return false
+    }
+    if (!userRoles.some((role: String) => this.allowedRolesICP.includes(role))) {
+      return false;
+    }
+    return true;
   }
 }

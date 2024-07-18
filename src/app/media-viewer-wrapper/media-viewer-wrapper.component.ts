@@ -34,9 +34,14 @@ export class MediaViewerWrapperComponent implements AfterContentInit {
   toolbarButtonOverrides: {};
   showHeader = true;
   enableRedactSearch = false;
+  allowedRolesICP = ["ICP role 1", "ICP role 2"];
 
   ngAfterContentInit() {
     this.setDocumentType(this.documentType);
+    const userDetails = {
+      roles: ["ICP role 2", "other role"]
+    };
+    sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
   }
 
   setDocumentType(newTab: string) {
