@@ -111,6 +111,17 @@ describe('BookmarksComponent', () => {
   })
   );
 
+  it('should dispatch UpdateBookmarkScrollTop action', fakeAsync(() => {
+
+    const simplyChangesMock = jasmine.createSpyObj('SimpleChanges', [], { "bookmarkNodes": {} })
+    spyOn(store, 'dispatch');
+    component.ngOnChanges(simplyChangesMock);
+    tick(200);
+    expect(store.dispatch).toHaveBeenCalled();
+  })
+  );
+
+
   it('should new delete bookmark', () => {
     spyOn(store, 'dispatch');
     component.bookmarkNodes = [bookmarkNodeWithChildren.data as unknown as Bookmark];

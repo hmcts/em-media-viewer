@@ -16,15 +16,16 @@ export const MOVE_BOOKMARK_FAIL = '[Bookmarks] Move Bookmark Failure';
 export const UPDATE_BOOKMARK = '[Bookmarks] Update Bookmark';
 export const UPDATE_BOOKMARK_SUCCESS = '[Bookmarks] Update Bookmark Success';
 export const UPDATE_BOOKMARK_FAIL = '[Bookmarks] Update Bookmark Failure';
+export const UPDATE_BOOKMARK_SCROLL_TOP = '[Bookmarks] Update Bookmark Scroll Top'
 
 export class LoadBookmarks implements Action {
   readonly type = LOAD_BOOKMARKS;
-  constructor() {}
+  constructor() { }
 }
 
 export class LoadBookmarksSuccess implements Action {
   readonly type = LOAD_BOOKMARKS_SUCCESS;
-  constructor(public payload: { body: Bookmark[], status: number}) { }
+  constructor(public payload: { body: Bookmark[], status: number }) { }
 }
 
 export class LoadBookmarksFailure implements Action {
@@ -39,32 +40,32 @@ export class CreateBookmark implements Action {
 
 export class CreateBookmarkSuccess implements Action {
   readonly type = CREATE_BOOKMARK_SUCCESS;
-  constructor(public payload: Bookmark) {}
+  constructor(public payload: Bookmark) { }
 }
 
 export class CreateBookmarkFailure implements Action {
   readonly type = CREATE_BOOKMARK_FAIL;
-  constructor(public payload: Bookmark) {}
+  constructor(public payload: Bookmark) { }
 }
 
 export class DeleteBookmark implements Action {
   readonly type = DELETE_BOOKMARK;
-  constructor(public payload: { deleted: string[], updated: Bookmark }) {}
+  constructor(public payload: { deleted: string[], updated: Bookmark }) { }
 }
 
 export class DeleteBookmarkSuccess implements Action {
   readonly type = DELETE_BOOKMARK_SUCCESS;
-  constructor(public payload: string[]) {}
+  constructor(public payload: string[]) { }
 }
 
 export class DeleteBookmarkFailure implements Action {
   readonly type = DELETE_BOOKMARK_FAIL;
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class MoveBookmark implements Action {
   readonly type = MOVE_BOOKMARK;
-  constructor(public payload: Bookmark[]) {}
+  constructor(public payload: Bookmark[]) { }
 }
 
 export class MoveBookmarkSuccess implements Action {
@@ -74,22 +75,27 @@ export class MoveBookmarkSuccess implements Action {
 
 export class MoveBookmarkFailure implements Action {
   readonly type = MOVE_BOOKMARK_FAIL;
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class UpdateBookmark implements Action {
   readonly type = UPDATE_BOOKMARK;
-  constructor(public payload: Bookmark) {}
+  constructor(public payload: Bookmark) { }
 }
 
 export class UpdateBookmarkSuccess implements Action {
   readonly type = UPDATE_BOOKMARK_SUCCESS;
-  constructor(public payload: Bookmark) {}
+  constructor(public payload: Bookmark) { }
 }
 
 export class UpdateBookmarkFailure implements Action {
   readonly type = UPDATE_BOOKMARK_FAIL;
-  constructor(public payload: Bookmark) {}
+  constructor(public payload: Bookmark) { }
+}
+
+export class UpdateBookmarkScrollTop implements Action {
+  readonly type = UPDATE_BOOKMARK_SCROLL_TOP;
+  constructor(public payload: number) { }
 }
 
 
@@ -98,4 +104,4 @@ export type BookmarksActions =
   | CreateBookmark | CreateBookmarkSuccess | CreateBookmarkFailure
   | DeleteBookmark | DeleteBookmarkSuccess | DeleteBookmarkFailure
   | UpdateBookmark | UpdateBookmarkSuccess | UpdateBookmarkFailure
-  | MoveBookmark | MoveBookmarkSuccess | MoveBookmarkFailure;
+  | MoveBookmark | MoveBookmarkSuccess | MoveBookmarkFailure | UpdateBookmarkScrollTop;

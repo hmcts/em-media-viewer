@@ -30,6 +30,11 @@ export const getEditableBookmark = createSelector(
   fromBookmarks.getEditBookmark
 );
 
+export const getScrollTop = createSelector(
+  getBookmarkState,
+  fromBookmarks.getScrollTop
+);
+
 export const getBookmarkInfo = createSelector(
   getBookmarkNodes,
   fromDocument.getDocumentId,
