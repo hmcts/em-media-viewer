@@ -18,6 +18,7 @@ describe('Icp Effects', () => {
   const icpSocket = jasmine.createSpyObj('IcpUpdateService', ['joinSession']);
   const session: IcpSession = {
     caseId: 'caseId',
+    documentId: 'documentId',
     sessionId: 'sessionId',
     dateOfHearing: new Date(),
     connectionUrl: 'url-connectionstring'
@@ -44,7 +45,7 @@ describe('Icp Effects', () => {
   describe('loadIcpSession$', () => {
     it('should return a JoinSocketSession', () => {
       const payload = { session: session, username: 'name' };
-      const action = new icpActions.LoadIcpSession(session.caseId);
+      const action = new icpActions.LoadIcpSession({ caseId: session.caseId, documentId: session.documentId });
       icpApi.loadSession.and.returnValue(of(payload));
       const completion = new icpActions.JoinIcpSocketSession({ session: session, username: 'name' });
       actions$ = hot('-a', { a: action });
@@ -53,7 +54,7 @@ describe('Icp Effects', () => {
     });
 
     it('should return a LoadSessionFailure', () => {
-      const action = new icpActions.LoadIcpSession(session.caseId);
+      const action = new icpActions.LoadIcpSession({ caseId: session.caseId, documentId: session.documentId });
       icpApi.loadSession.and.returnValue(throwError(new Error()));
       const completion = new icpActions.LoadIcpSessionFailure(new Error());
       actions$ = hot('-a', { a: action });
