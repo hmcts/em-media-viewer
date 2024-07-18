@@ -82,7 +82,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   @Input() enableRedactions = false;
   @Input() enableICP = false;
-  @Input() allowedRolesICP: String[] = [];
+  @Input() allowedRolesICP: string[] = [];
   @Input() multimediaPlayerEnabled = false;
   @Input() enableRedactSearch = false;
 
@@ -270,7 +270,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     if (!userRoles) {
       return false
     }
-    if (!userRoles.some((role: String) => this.allowedRolesICP.includes(role))) {
+    if (!userRoles.some((role: string) => this.allowedRolesICP.includes(role))) {
       return false;
     }
     return true;

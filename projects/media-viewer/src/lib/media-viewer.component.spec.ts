@@ -381,4 +381,48 @@ describe('MediaViewerComponent', () => {
       expect(component.viewerHeight).not.toEqual(viewerHeight);
     });
   });
+
+  it('should not enable icp', () => {
+    component.enableICP = false;
+    fixture.detectChanges();
+    expect(component.enableICP).toBeFalsy();
+  });
+
+  it('should disable icp when missing details', () => {
+    component.enableICP = true;
+    component.ngOnChanges({});
+    fixture.detectChanges();
+    expect(component.enableICP).toBeFalsy();
+  });
+
+  it('should disable icp when missing roles', () => {
+    component.enableICP = true;
+    const userDetails = {};
+    sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
+    component.ngOnChanges({});
+    fixture.detectChanges();
+    expect(component.enableICP).toBeFalsy();
+  });
+
+
+  it('should disable icp when missing correct roles', () => {
+    component.enableICP = true;
+    const userDetails = {roles: ["test role 1", "test role 2"]};
+    sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
+    component.ngOnChanges({});
+    fixture.detectChanges();
+    expect(component.enableICP).toBeFalsy();
+  });
+
+  it('should enable icp', () => {
+    component.enableICP = true;
+    component.allowedRolesICP.push("test role 2");
+    const userDetails = {roles: ["test role 1", "test role 2"]};
+    sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
+    component.ngOnChanges({});
+    fixture.detectChanges();
+    expect(component.enableICP).toBeTruthy();
+  });
+
+
 });
