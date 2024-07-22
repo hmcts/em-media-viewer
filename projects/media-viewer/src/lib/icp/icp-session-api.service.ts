@@ -9,12 +9,12 @@ export class IcpSessionApiService {
 
   public ICP_SESSION_API = '/icp/sessions';
 
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) { }
 
-  public loadSession(caseId: string): Observable<any> {
+  public loadSession(payload: { caseId: string, documentId: string }): Observable<any> {
     return this.httpClient
-      .get<{username: string, session: IcpSession}>(`${this.ICP_SESSION_API}/${caseId}`,
-        { observe: 'response' , withCredentials: true })
+      .get<{ username: string, session: IcpSession }>(`${this.ICP_SESSION_API}/${payload.caseId}/${payload.documentId}`,
+        { observe: 'response', withCredentials: true })
       .pipe(map(response => response.body));
   }
 }
