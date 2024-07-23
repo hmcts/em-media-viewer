@@ -25,14 +25,15 @@ describe('Icp Service', () => {
     clientDisconnected: () => of('client'),
     presenterUpdated: () => of(),
     participantListUpdated: () => of(),
-    leaveSession: () => {},
-    updatePresenter: () => {},
-    screenUpdated: () => {},
-    removeParticipant: () => {},
+    leaveSession: () => { },
+    updatePresenter: () => { },
+    screenUpdated: () => { },
+    removeParticipant: () => { },
   } as any;
 
   const session: IcpSession = {
     caseId: 'caseId',
+    documentId: 'documentId',
     sessionId: 'sessionId',
     dateOfHearing: new Date(),
     connectionUrl: ''
@@ -50,9 +51,9 @@ describe('Icp Service', () => {
       ],
       providers: [IcpService,
         SocketService,
-        {provide: IcpUpdateService, useValue: mockUpdateService},
-        {provide: IcpPresenterService, useValue: mockParticipantService},
-        {provide: IcpFollowerService, useValue: mockParticipantService},
+        { provide: IcpUpdateService, useValue: mockUpdateService },
+        { provide: IcpPresenterService, useValue: mockParticipantService },
+        { provide: IcpFollowerService, useValue: mockParticipantService },
       ]
     });
     service = TestBed.inject(IcpService);
@@ -78,7 +79,7 @@ describe('Icp Service', () => {
     inject([Store, ToolbarEventService], fakeAsync((store, toolbarEvents) => {
       spyOn(service, 'launchSession');
       service.caseId = 'caseId';
-
+      service.documentId = 'documentId';
       toolbarEvents.icp.sessionLaunch.next();
 
       expect(service.launchSession).toHaveBeenCalled();
@@ -90,9 +91,10 @@ describe('Icp Service', () => {
       spyOn(store, 'dispatch');
 
       service.caseId = 'caseId';
+      service.documentId = 'documentId';
       service.launchSession();
 
-      expect(store.dispatch).toHaveBeenCalledWith(new fromIcpActions.LoadIcpSession('caseId'));
+      expect(store.dispatch).toHaveBeenCalledWith(new fromIcpActions.LoadIcpSession({ caseId: 'caseId', documentId: 'documentId' }));
     }))
   );
 
@@ -103,7 +105,7 @@ describe('Icp Service', () => {
       service.caseId = 'caseId';
       service.launchSession();
 
-      const payload = {session: session, participantInfo: {client: participant, presenter: participant}};
+      const payload = { session: session, participantInfo: { client: participant, presenter: participant } };
       const action = new fromIcpActions.IcpSocketSessionJoined(payload);
       store.dispatch(action);
 
@@ -123,7 +125,7 @@ describe('Icp Service', () => {
       toolbarEvents.icp.becomingPresenter.next();
       toolbarEvents.icp.stoppingPresenting.next();
       toolbarEvents.icp.sessionExitConfirmed.next();
-      const payload = {session: session, participantInfo: {client: participant, presenter: participant}};
+      const payload = { session: session, participantInfo: { client: participant, presenter: participant } };
       const action = new fromIcpActions.IcpSocketSessionJoined(payload);
       store.dispatch(action);
       mockUpdateService.clientDisconnected();
