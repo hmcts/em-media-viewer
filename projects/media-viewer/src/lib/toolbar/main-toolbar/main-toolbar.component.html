@@ -82,22 +82,22 @@
           </button>
 
           <button
-          *ngIf="toolbarButtons.showDrawButton"
-          [disabled]="icpEnabled || redactionEnabled"
-          id="mvDrawBtn"
-          #mvDrawBtn
-          class="mv-button mv-toolbar__menu-button--draw"
-          title="Draw a box"
-          [class.button-hidden-on-toolbar]="
-            mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']
-          "
-          [class.button-hidden-on-dropdown]="
-            mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDrawBtn']
-          "
-          [class.toggled]="toolbarEvents.drawModeSubject | async"
-          aria-pressed="false"
-          data-l10n-id="toggleDrawButton"
-          (click)="onClickDrawToggle(); isDropdownMenuOpen = false"
+            *ngIf="toolbarButtons.showDrawButton"
+            [disabled]="icpEnabled || redactionEnabled"
+            id="mvDrawBtn"
+            #mvDrawBtn
+            class="mv-button mv-toolbar__menu-button--draw"
+            title="Draw a box"
+            [class.button-hidden-on-toolbar]="
+              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']
+            "
+            [class.button-hidden-on-dropdown]="
+              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDrawBtn']
+            "
+            [class.toggled]="toolbarEvents.drawModeSubject | async"
+            aria-pressed="false"
+            data-l10n-id="toggleDrawButton"
+            (click)="onClickDrawToggle(); isDropdownMenuOpen = false"
           >
             <span data-l10n-id="draw_label">{{
               "Draw a box" | rpxTranslate
@@ -329,12 +329,7 @@
             class="mv-button mv-toolbar__menu-button--present"
             title="In-Court Presentation Mode"
             data-l10n-id="icpMode_label"
-            [class.button-hidden-on-toolbar]="
-              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvPresentBtn']
-            "
-            [class.button-hidden-on-dropdown]="
-              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvPresentBtn']
-            "
+            [ngClass]="onToolBarOffSetChange('mvPresentBtn')"
             aria-pressed="false"
             (click)="togglePresentBar(); isDropdownMenuOpen = false"
           >
@@ -351,12 +346,7 @@
             title="Redact"
             data-l10n-id="redact"
             class="mv-button mv-toolbar__menu-button--redact"
-            [class.button-hidden-on-toolbar]="
-              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvRedactBtn']
-            "
-            [class.button-hidden-on-dropdown]="
-              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvRedactBtn']
-            "
+            [ngClass]="onToolBarOffSetChange('mvRedactBtn')"
             aria-pressed="false"
             (click)="toggleRedactBar(); isDropdownMenuOpen = false"
           >
@@ -370,12 +360,7 @@
             #mvGrabBtn
             class="mv-button mv-toolbar__menu-button--grab"
             title="Grab and drag"
-            [class.button-hidden-on-toolbar]="
-              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvGrabBtn']
-            "
-            [class.button-hidden-on-dropdown]="
-              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvGrabBtn']
-            "
+            [ngClass]="onToolBarOffSetChange('mvGrabBtn')"
             aria-pressed="false"
             (click)="toggleGrabNDrag(); isDropdownMenuOpen = false"
           >
@@ -390,12 +375,7 @@
             class="mv-button mv-toolbar__menu-button--download"
             title="Download"
             data-l10n-id="download"
-            [class.button-hidden-on-toolbar]="
-              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDownloadBtn']
-            "
-            [class.button-hidden-on-dropdown]="
-              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvDownloadBtn']
-            "
+            [ngClass]="onToolBarOffSetChange('mvDownloadBtn')"
             aria-pressed="false"
             (click)="downloadFile(); isDropdownMenuOpen = false"
           >
@@ -410,12 +390,7 @@
             title="Print"
             data-l10n-id="print"
             class="mv-button mv-toolbar__menu-button--print"
-            [class.button-hidden-on-toolbar]="
-              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvPrintBtn']
-            "
-            [class.button-hidden-on-dropdown]="
-              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvPrintBtn']
-            "
+            [ngClass]="onToolBarOffSetChange('mvPrintBtn')"
             aria-pressed="false"
             (click)="printFile(); isDropdownMenuOpen = false"
           >
@@ -430,12 +405,7 @@
             class="mv-button mv-toolbar__menu-button--comments"
             title="Comments"
             data-l10n-id="comments"
-            [class.button-hidden-on-toolbar]="
-              mvToolbarMain.offsetWidth < widthRequiredForBtn['mvCommentsBtn']
-            "
-            [class.button-hidden-on-dropdown]="
-              mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvCommentsBtn']
-            "
+            [ngClass]="onToolBarOffSetChange('mvCommentsBtn')"
             aria-pressed="false"
             (click)="toggleCommentsPanel(); isDropdownMenuOpen = false"
           >
