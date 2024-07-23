@@ -130,6 +130,15 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.toolbarEvents.toggleSideBarView(true);
   }
 
+  public onToolBarOffSetChange(buttonId: string) {
+    debugger
+    if (this.mvToolbarMain && this.mvToolbarMain.nativeElement.offsetWidth < this.widthRequiredForBtn[buttonId]) {
+      return "button-hidden-on-toolbar";
+
+    }
+    return "button-hidden-on-dropdown";
+  }
+
   public toggleBookmarksSideBar() {
     const sidebarOpen = this.toolbarEvents.sidebarOpen.getValue();
     const sidebarView = this.toolbarEvents.sidebarOutlineView.getValue();
