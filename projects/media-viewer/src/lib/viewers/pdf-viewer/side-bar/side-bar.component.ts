@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Outline } from './outline-item/outline.model';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
@@ -27,15 +27,18 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
   @ViewChild(BookmarksComponent)
   bookmarks: BookmarksComponent;
+  treeChanged: boolean = false;
 
   selectedView = 'outline';
   bookmarkNodes$: Observable<BookmarkNode[]>;
+  scrollTop: any;
 
   private subscriptions: Subscription[] = [];
+  @ViewChild('sidebar') sidebarDiv;
 
   constructor(private viewerEvents: ViewerEventService,
     private store: Store<BookmarksState>,
-    private readonly toolbarEvents: ToolbarEventService
+    private readonly toolbarEvents: ToolbarEventService,
   ) { }
 
   ngOnInit(): void {
@@ -46,7 +49,11 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       this.toolbarEvents.sidebarOutlineView.subscribe(toggle => {
         this.selectedView = toggle ? 'outline' : 'bookmarks';
       })
-    );  }
+    );
+    this.subscriptions.push(this.store.pipe(select(bookmarksSelectors.getScrollTop)).subscribe(scrollTopValue => {
+      this.sidebarDiv.nativeElement.scrollTop = scrollTopValue;
+    }));
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.url && this.url) {
@@ -60,8 +67,19 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  public onScroll(event: any): void {
+    if (!this.treeChanged) {
+      this.scrollTop = event.srcElement.scrollTop;
+    }
+    this.treeChanged = false;
+  }
+
   goToDestination(destination: any[]) {
     this.viewerEvents.goToDestination(destination);
+  }
+
+  hasTreeChanged(value: boolean) {
+    this.treeChanged = value;
   }
 
   toggleSidebarView(sidebarView: string) {

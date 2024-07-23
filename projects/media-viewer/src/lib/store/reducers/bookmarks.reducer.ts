@@ -6,10 +6,11 @@ import { generateBookmarkEntities } from '../bookmarks-store-utils';
 export interface BookmarksState {
   bookmarks: Bookmark[];
   bookmarkEntities: { [id: string]: Bookmark };
-  bookmarkPageEntities: {[id: string]: any};
+  bookmarkPageEntities: { [id: string]: any };
   editableBookmark: string;
   loaded: boolean;
   loading: boolean;
+  scrollTop?: number;
 }
 
 export const initialBookmarksState: BookmarksState = {
@@ -18,11 +19,12 @@ export const initialBookmarksState: BookmarksState = {
   bookmarkPageEntities: {},
   editableBookmark: undefined,
   loaded: false,
-  loading: false
+  loading: false,
+  scrollTop: null,
 };
 
-export function bookmarksReducer (state = initialBookmarksState,
-                                  action: fromBookmarks.BookmarksActions): BookmarksState {
+export function bookmarksReducer(state = initialBookmarksState,
+  action: fromBookmarks.BookmarksActions): BookmarksState {
 
   switch (action.type) {
 
@@ -85,7 +87,7 @@ export function bookmarksReducer (state = initialBookmarksState,
       const bookmarkIds: string[] = action.payload;
       const bookmarkEntities = { ...state.bookmarkEntities };
       const bookmarkPageEntities = { ...state.bookmarkPageEntities };
-      const removeBookmarksByPage: {[pageNumber: number]: string[]} = {};
+      const removeBookmarksByPage: { [pageNumber: number]: string[] } = {};
       bookmarkIds.forEach(bookmarkId => {
         if (removeBookmarksByPage[bookmarkEntities[bookmarkId].pageNumber] !== undefined &&
           removeBookmarksByPage[bookmarkEntities[bookmarkId].pageNumber].length > 0) {
@@ -99,7 +101,7 @@ export function bookmarksReducer (state = initialBookmarksState,
       Object.entries(removeBookmarksByPage).forEach(
         ([pageNumber, bmrkIds]) => {
           bookmarkPageEntities[pageNumber]
-          = bookmarkPageEntities[pageNumber].filter(bookmark => !bmrkIds.includes(bookmark.id));
+            = bookmarkPageEntities[pageNumber].filter(bookmark => !bmrkIds.includes(bookmark.id));
         }
       );
 
@@ -130,6 +132,13 @@ export function bookmarksReducer (state = initialBookmarksState,
         loaded: true
       };
     }
+    case fromBookmarks.UPDATE_BOOKMARK_SCROLL_TOP: {
+      const scrollTop: number = action.payload;
+      return {
+        ...state,
+        scrollTop: scrollTop
+      }
+    }
   }
   return state;
 }
@@ -138,3 +147,4 @@ export const getBookmarks = (state: BookmarksState) => state.bookmarks;
 export const getBookmarkEnts = (state: BookmarksState) => state.bookmarkEntities;
 export const getBookmarkPageEnt = (state: BookmarksState) => state.bookmarkPageEntities;
 export const getEditBookmark = (state: BookmarksState) => state.editableBookmark;
+export const getScrollTop = (state: BookmarksState) => state.scrollTop;
