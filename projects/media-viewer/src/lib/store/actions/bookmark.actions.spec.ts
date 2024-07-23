@@ -34,7 +34,7 @@ describe('Bookmark actions', () => {
   describe('Update Bookmark', () => {
     describe('Update Bookmark', () => {
       it('should create an action', () => {
-        const payload: any = {name: 'bookmark name', id: 'id'};
+        const payload: any = { name: 'bookmark name', id: 'id' };
         const action = new fromBookmarks.UpdateBookmark(payload);
         expect({ ...action }).toEqual({
           type: fromBookmarks.UPDATE_BOOKMARK,
@@ -44,7 +44,7 @@ describe('Bookmark actions', () => {
     });
     describe('UpdateBookmarkSuccess', () => {
       it('should create an action', () => {
-        const payload: any = {name: 'bookmark name', id: 'id'};
+        const payload: any = { name: 'bookmark name', id: 'id' };
         const action = new fromBookmarks.UpdateBookmarkSuccess(payload);
         expect({ ...action }).toEqual({
           type: fromBookmarks.UPDATE_BOOKMARK_SUCCESS,
@@ -81,6 +81,16 @@ describe('Bookmark actions', () => {
         const action = new fromBookmarks.MoveBookmarkSuccess(payload);
         expect({ ...action }).toEqual({
           type: fromBookmarks.MOVE_BOOKMARK_SUCCESS,
+          payload: payload
+        });
+      });
+    });
+    describe('UpdateBookmarkScrollTop', () => {
+      it('should create an action', () => {
+        const payload: number = 190;
+        const action = new fromBookmarks.UpdateBookmarkScrollTop(payload);
+        expect({ ...action }).toEqual({
+          type: fromBookmarks.UPDATE_BOOKMARK_SCROLL_TOP,
           payload: payload
         });
       });
