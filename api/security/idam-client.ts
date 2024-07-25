@@ -4,7 +4,6 @@ import { logger } from '../logger';
 import { config } from '../config';
 
 const email = 'abb@b.com';
-const password = '***REMOVED***';
 const forename = 'EM';
 const surname = 'showcase';
 
@@ -17,6 +16,7 @@ export class IdamClient {
   private readonly client: string;
   private readonly secret: string;
   private readonly redirect: string;
+  private readonly password: string;
 
   constructor() {
     console.log('this is the idam key', config.idam.secret);
@@ -27,6 +27,7 @@ export class IdamClient {
     this.client = config.idam.client;
     this.secret = config.idam.secret;
     this.redirect = config.idam.redirect;
+    this.password = config.idam.password;
   }
 
   /**
@@ -45,7 +46,7 @@ export class IdamClient {
 
   private async createUser() {
     try {
-      await this.http.post('/testing-support/accounts', { email, password, forename, surname, roles: [{ code: 'caseworker-hrs' }] });
+      await this.http.post('/testing-support/accounts', { email, password: this.password, forename, surname, roles: [{ code: 'caseworker-hrs' }] });
     } catch (err: any) {
       logger.warn('could not create the user, possibly because the user already exists ', err.message);
       logger.debug('\n', err.stack);
@@ -64,7 +65,7 @@ export class IdamClient {
     params.append('client_id', this.client);
     params.append('client_secret', this.secret);
     params.append('username', email);
-    params.append('password', password);
+    params.append('password', this.password);
     console.log('these are the params', params);
     try {
       const response = await this.http.post('/o/token', params, { headers });
