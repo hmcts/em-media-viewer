@@ -12,7 +12,7 @@ __metadata:
     "@swimlane/ngx-datatable": ^20.0.0
     "@types/uuid": ^3.4.4
     mutable-div: ^2.0.0
-    pdfjs-dist: 4.3.136
+    pdfjs-dist: 4.5.136
     socket.io-client: ^3.1.1
     uuid: ^3.4.0
   peerDependencies:
@@ -1034,25 +1034,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path2d@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "path2d@npm:0.2.0"
-  checksum: caa6cf19437748e26a801bfcaa9ddd43a33c04695906806cb33d42bdd36cb8210a7241f081d3b6da16da9bd708896b2d419a31b32f4a46df754313bdfc25d869
+"path2d@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "path2d@npm:0.2.1"
+  checksum: d9e8feca8b67de5ae87d784c06841d1c65e6b244ee04fec94cd01749fa1607df2e00e7ae99e543a5d2db07840d47d98fc85a5f2456797cf1407e1a4b9490d141
   languageName: node
   linkType: hard
 
-"pdfjs-dist@npm:4.3.136":
-  version: 4.3.136
-  resolution: "pdfjs-dist@npm:4.3.136"
+"pdfjs-dist@npm:4.5.136":
+  version: 4.5.136
+  resolution: "pdfjs-dist@npm:4.5.136"
   dependencies:
     canvas: ^2.11.2
-    path2d: ^0.2.0
+    path2d: ^0.2.1
   dependenciesMeta:
     canvas:
       optional: true
     path2d:
       optional: true
-  checksum: 3f2a528cc004ae207cfe021edd132de88fc4bcb0ed2d94e88a2df4db30f903364e5beddfabfa308d1100d338378bd6b10d2580d239aadeed6653d94ccfe59772
+  checksum: 328ca69be90d8ab0f319ff52310be07e6cd70489befb2524cba1cbee8cd2ddfa8c310fb896a1bc0de31ee36ce18cb54e25f7916e7b7ded812a32cd13bf1d9662
   languageName: node
   linkType: hard
 
