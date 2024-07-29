@@ -162,6 +162,26 @@ describe('MainToolbarComponent', () => {
 
       expect(setPageSpy).toHaveBeenCalledWith(4);
     });
+
+    it('should mvPresentBtn width is greater than mvToolbarMain width then "button-hidden-on-toolbar" should be return', () => {
+
+      const mockMvToolbarMain = jasmine.createSpyObj("ElementRef", [], { 'nativeElement': { 'offsetWidth': 10 } })
+      component.mvToolbarMain = mockMvToolbarMain;
+      component.widthRequiredForBtn['mvPresentBtn'] = 11;
+      const result = component.onToolBarOffSetChange('mvPresentBtn');
+
+      expect(result).toEqual("button-hidden-on-toolbar");
+    });
+
+    it('should mvPresentBtn width is less than mvToolbarMain width then "button-hidden-on-dropdown" should be return', () => {
+
+      const mockMvToolbarMain = jasmine.createSpyObj("ElementRef", [], { 'nativeElement': { 'offsetWidth': 12 } })
+      component.mvToolbarMain = mockMvToolbarMain;
+      component.widthRequiredForBtn['mvPresentBtn'] = 11;
+      const result = component.onToolBarOffSetChange('mvPresentBtn');
+
+      expect(result).toEqual("button-hidden-on-dropdown");
+    });
   });
 
   it('should update page number', () => {
