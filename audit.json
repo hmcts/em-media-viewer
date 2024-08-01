@@ -1,9 +1,4 @@
 {
-  "10003_Vulnerable JS Library_http://em-media-viewer-aat.service.core-compute-aat.internal/main-es2015.da8aa372c57ab134b758.js_GET": "ignore",
-  "10003_Vulnerable JS Library_http://em-media-viewer-aat.service.core-compute-aat.internal/main-es5.da8aa372c57ab134b758.js_GET": "ignore",
-  "10003_Vulnerable JS Library_http://em-media-viewer-aat.service.core-compute-aat.internal/main.0c84526d0e382c47.js_GET": "ignore",
-  "10003_Vulnerable JS Library_http://em-media-viewer-aat.service.core-compute-aat.internal/main.34f4f9f011d8cd6f.js_GET": "ignore",
-  "10003_Vulnerable JS Library_http://em-media-viewer-aat.service.core-compute-aat.internal/main.c2ea66bc15f21344e568.js_GET":"ignore",
   "10010_Cookie No HttpOnly Flag_http://em-media-viewer-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10010_Cookie No HttpOnly Flag_http://em-media-viewer-aat.service.core-compute-aat.internal/assets/images/favicon.ico_GET": "ignore",
   "10010_Cookie No HttpOnly Flag_http://em-media-viewer-aat.service.core-compute-aat.internal/media-viewer_GET": "ignore",
