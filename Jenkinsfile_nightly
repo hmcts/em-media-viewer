@@ -59,7 +59,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 withNightlyPipeline(type, product, component) {
-  env.TEST_URL = 'http://em-showcase-aat.service.core-compute-aat.internal/media-viewer'
+  env.TEST_URL = 'http://em-media-viewer-aat.service.core-compute-aat.internal'
   env.IDAM_URL = params.IDAM_API_URL
   env.S2S_PROVIDER = params.S2S_PROVIDER_URL
   env.CCD_DATA_STORE_API_URL = params.CCD_DATA_STORE_URL
