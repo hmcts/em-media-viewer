@@ -11,7 +11,6 @@ properties([
   ]),
   parameters([
     string(name: 'ENVIRONMENT', defaultValue: 'aat', description: 'Environment to test'),
-    string(name: 'ExUI_URL', defaultValue: 'https://manage-case.aat.platform.hmcts.net', description: 'The ExUI Url you want to run Media Viewer end to end tests'),
     string(name: 'IDAM_API_URL', defaultValue: 'https://idam-api.aat.platform.hmcts.net', description: 'The Url of IDAM'),
     string(name: 'S2S_PROVIDER_URL', defaultValue: 'http://rpe-service-auth-provider-aat.service.core-compute-aat.internal', description: 'The Url of S2S provider'),
     string(name: 'CCD_DATA_STORE_URL', defaultValue: 'http://ccd-data-store-api-aat.service.core-compute-aat.internal', description: 'The Url of ccd data store'),
