@@ -4,13 +4,14 @@ import {
   LoadBookmarksFailure,
   LoadBookmarksSuccess,
   DeleteBookmarkSuccess,
-  UpdateBookmarkSuccess, MoveBookmarkSuccess
+  UpdateBookmarkSuccess, MoveBookmarkSuccess,
+  UpdateBookmarkScrollTop
 } from '../actions/bookmark.actions';
 import * as fromBookmarks from './bookmarks.reducer';
 import * as fromDocActions from '../actions/document.actions';
-import {TestBed} from '@angular/core/testing';
-import {Store, StoreModule} from '@ngrx/store';
-import {reducers, State} from './reducers';
+import { TestBed } from '@angular/core/testing';
+import { Store, StoreModule } from '@ngrx/store';
+import { reducers, State } from './reducers';
 
 describe('BookmarksReducer', () => {
 
@@ -65,6 +66,13 @@ describe('BookmarksReducer', () => {
     expect(state.bookmarkEntities).toEqual({ [bookmark.id]: bookmark });
     expect(state.loaded).toBeTrue();
     expect(state.loading).toBeFalse();
+  });
+
+  it('should load update bookmark scroll top', () => {
+    const scrollTop = 195;
+    const state = fromBookmarks.bookmarksReducer(fromBookmarks.initialBookmarksState, new UpdateBookmarkScrollTop(scrollTop));
+
+    expect(state.scrollTop).toEqual(scrollTop);
   });
 
   it('should delete bookmark', () => {
