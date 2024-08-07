@@ -1,9 +1,9 @@
 import { Bookmark } from './../../../../store/models/bookmarks.interface';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subscription, from } from 'rxjs';
 
-import { CreateBookmark, DeleteBookmark, MoveBookmark, UpdateBookmark } from '../../../../store/actions/bookmark.actions';
+import { CreateBookmark, DeleteBookmark, MoveBookmark, UpdateBookmark, UpdateBookmarkScrollTop } from '../../../../store/actions/bookmark.actions';
 import * as bookmarksSelectors from '../../../../store/selectors/bookmark.selectors';
 import { AnnotationSetState } from '../../../../store/reducers/annotations.reducer';
 import { DocumentPages } from '../../../../store/reducers/document.reducer';
@@ -21,7 +21,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
   templateUrl: './bookmarks.component.html'
 })
 
-export class BookmarksComponent implements OnInit, OnDestroy {
+export class BookmarksComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input()
   set bookmarkNodes(value: Bookmark[]) {
@@ -37,7 +37,9 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   @Input() zoom: number;
   @Input() rotate: number;
+  @Input() parentScrollTop: number;
   @Output() goToDestination = new EventEmitter<any[]>();
+  @Output() treeHasChanged = new EventEmitter<boolean>()
 
   private _bookmarkNodes: Bookmark[] = [];
   datasource: ArrayDataSource<Bookmark>;
@@ -89,6 +91,14 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         });
 
       }));
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes?.bookmarkNodes) {
+      setTimeout(() => {
+        this.store.dispatch(new UpdateBookmarkScrollTop(this.parentScrollTop));
+      }, 200);
+    }
   }
 
   ngOnDestroy(): void {
@@ -348,7 +358,6 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     if (this.isUserdragging) {
       const newEvent: any = event;
       const percentageX = newEvent.offsetX / newEvent.target.clientWidth;
-      debugger;
       if (percentageX > .55) {
         this.hoveredNode = node;
         if (this.hoverHtmlElement?.style) {
@@ -421,6 +430,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       const node = this.treeControl.dataNodes.find((n) => n.id === bookmark.id);
       this.treeControl.expand(node);
     });
+    this.treeHasChanged.emit(true);
   }
 
   isToNodeChildOfFromNode(fromNodeChildren: Bookmark[], toNode: Bookmark) {
