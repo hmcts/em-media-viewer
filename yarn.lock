@@ -3416,7 +3416,7 @@ __metadata:
     jasmine-core: ~5.2.0
     jasmine-marbles: ^0.9.1
     jasmine-reporters: ^2.3.2
-    jasmine-spec-reporter: ~5.0.0
+    jasmine-spec-reporter: ~7.0.0
     karma: ^6.4.2
     karma-chrome-launcher: 3.2.0
     karma-coverage: ^2.2.1
@@ -14753,12 +14753,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-spec-reporter@npm:~5.0.0":
-  version: 5.0.2
-  resolution: "jasmine-spec-reporter@npm:5.0.2"
+"jasmine-spec-reporter@npm:~7.0.0":
+  version: 7.0.0
+  resolution: "jasmine-spec-reporter@npm:7.0.0"
   dependencies:
     colors: 1.4.0
-  checksum: 3b64fbdd7cab002e1573451a89e3159b0922a365476d988dec90077bc5ee1252b94f6da8bb21e9d4f56cb1d0415a9802c3c96d1106dbdb509d2bb4adf5f8b805
+  checksum: d5dd5ee26aad98158653776111231889b21b6cffa136d712a814058ad099301045fa2b95f887fcdeaa20e2a82c3896ffd43b47e25190ddfc921782b09088224e
   languageName: node
   linkType: hard
 
