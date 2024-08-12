@@ -131,7 +131,6 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onToolBarOffSetChange(buttonId: string) {
-    debugger
     if (this.mvToolbarMain && this.mvToolbarMain.nativeElement.offsetWidth < this.widthRequiredForBtn[buttonId]) {
       return "button-hidden-on-toolbar";
 
