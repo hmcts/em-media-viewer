@@ -35,7 +35,7 @@
     </button>
   </div>
 </div>
-<div id="sidebarContent">
+<div #sidebar id="sidebarContent" (scroll)="onScroll($event)">
   <div id="outlineView" class="outlineWithDeepNesting">
     <div class="outlineItem" *ngIf="selectedView === 'outline'">
       <mv-outline-item
@@ -55,7 +55,9 @@
         [bookmarkNodes]="bookmarkNodes$ | async"
         [zoom]="zoom"
         [rotate]="rotate"
+        [parentScrollTop]="scrollTop"
         (goToDestination)="goToDestination($event)"
+        (treeHasChanged)="hasTreeChanged($event)"
       ></mv-bookmarks>
     </div>
   </div>
