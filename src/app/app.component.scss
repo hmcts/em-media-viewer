@@ -26,6 +26,9 @@ body {
   max-width: 833px;
 }
 
+.media-viewer-wrapper-container {
+  max-height: 100vh;
+}
 
 .aui-case-action-alert {
   background-color: govuk-colour("blue");
@@ -44,14 +47,12 @@ body {
   p:last-child {
     margin-bottom: 0;
   }
-
 }
 
 .aui-case-action-alert__link:link,
 .aui-case-action-alert__link:visited {
   color: govuk-colour("white");
 }
-
 
 // Case action alert
 
@@ -62,17 +63,12 @@ body {
   padding: govuk-spacing(4);
 }
 
-
 .aui-case-action-alert__heading {
-  @include govuk-font(
-    $size: 24,
-    $weight: bold
-  );
+  @include govuk-font($size: 24, $weight: bold);
   color: inherit;
   margin-bottom: govuk-spacing(2);
   margin-top: 0;
 }
-
 
 .aui-case-action-alert__content {
   color: inherit;
@@ -80,14 +76,11 @@ body {
   p:last-child {
     margin-bottom: 0;
   }
-
 }
-
 
 .aui-case-action-alert__link:link {
   color: govuk-colour("white");
 }
-
 
 .aui-case-action-alert__link:focus {
   color: govuk-colour("black");
