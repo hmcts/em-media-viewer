@@ -51,6 +51,7 @@
   "10096_Timestamp Disclosure - Unix_http://em-media-viewer-aat.service.core-compute-aat.internal/robots.txt_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-media-viewer-aat.service.core-compute-aat.internal/sitemap.xml_GET": "ignore",
   "10096_Timestamp Disclosure - Unix_http://em-media-viewer-aat.service.core-compute-aat.internal/styles.e35dd9b56a21e867.css_GET": "ignore",
+  "10096_Timestamp Disclosure - Unix_http://em-media-viewer-aat.service.core-compute-aat.internal/runtime.a401c5fc4b6193d2.js_GET": "ignore",
   "10104_User Agent Fuzzer_http://em-media-viewer-aat.service.core-compute-aat.internal/main.96acd4d01af80abd.js_GET": "ignore",
   "10109_Modern Web Application_http://em-media-viewer-aat.service.core-compute-aat.internal/_GET": "ignore",
   "10109_Modern Web Application_http://em-media-viewer-aat.service.core-compute-aat.internal_GET": "ignore",
