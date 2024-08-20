@@ -3428,7 +3428,7 @@ __metadata:
     karma-chrome-launcher: 3.2.0
     karma-coverage: ^2.2.1
     karma-jasmine: ~4.0.0
-    karma-jasmine-html-reporter: ^1.5.0
+    karma-jasmine-html-reporter: ^2.0.0
     karma-phantomjs-launcher: ^1.0.4
     mocha: 9.2.2
     mocha-jenkins-reporter: 0.4.8
@@ -15460,14 +15460,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma-jasmine-html-reporter@npm:^1.5.0":
-  version: 1.7.0
-  resolution: "karma-jasmine-html-reporter@npm:1.7.0"
+"karma-jasmine-html-reporter@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "karma-jasmine-html-reporter@npm:2.1.0"
   peerDependencies:
-    jasmine-core: ">=3.8"
-    karma: ">=0.9"
-    karma-jasmine: ">=1.1"
-  checksum: 926c25858ea45115496524749881837de0091e3f8119e0f81a18c377e69fb82f832836b94e08d2a24fbc49aa21b491ae0bb861f07404f144c92bc84f409ef202
+    jasmine-core: ^4.0.0 || ^5.0.0
+    karma: ^6.0.0
+    karma-jasmine: ^5.0.0
+  checksum: 1c3906c8ed4299342702ad6d5a8c735b5adfb1ed5c955bb381a39b9679da8705b21347f712da0eb5e8e2b0d4690927ae67b6a3c23d901e9a7d09f9f05aeb7e98
   languageName: node
   linkType: hard
 
