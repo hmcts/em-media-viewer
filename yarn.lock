@@ -5706,10 +5706,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sindresorhus/is@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "@sindresorhus/is@npm:6.3.1"
-  checksum: 7337738cd7002cebf0ee8569f88f9f23e818eafac74d0894511b2b0e8865c661552ab354f203f5f589172ada1f9c9dbe2e4747d710237ef7c483c403024052ee
+"@sindresorhus/is@npm:^7.0.0":
+  version: 7.0.1
+  resolution: "@sindresorhus/is@npm:7.0.1"
+  checksum: 490b66ead3b368ab3a216c97fc339b17daed0a5f097a595eba39101a9bd76b6da59bacc0799a5e972b7d3b7aca871e61297eaede5d6fd00dc691ce85126a8f43
   languageName: node
   linkType: hard
 
@@ -13050,13 +13050,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-stream@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "get-stream@npm:8.0.1"
-  checksum: 01e3d3cf29e1393f05f44d2f00445c5f9ec3d1c49e8179b31795484b9c117f4c695e5e07b88b50785d5c8248a788c85d9913a79266fc77e3ef11f78f10f1b974
-  languageName: node
-  linkType: hard
-
 "get-stream@npm:^9.0.1":
   version: 9.0.1
   resolution: "get-stream@npm:9.0.1"
@@ -13336,22 +13329,21 @@ __metadata:
   linkType: hard
 
 "got@npm:^14.0.0":
-  version: 14.4.1
-  resolution: "got@npm:14.4.1"
+  version: 14.4.2
+  resolution: "got@npm:14.4.2"
   dependencies:
-    "@sindresorhus/is": ^6.3.1
+    "@sindresorhus/is": ^7.0.0
     "@szmarczak/http-timer": ^5.0.1
     cacheable-lookup: ^7.0.0
     cacheable-request: ^12.0.1
     decompress-response: ^6.0.0
     form-data-encoder: ^4.0.2
-    get-stream: ^8.0.1
     http2-wrapper: ^2.2.1
     lowercase-keys: ^3.0.0
     p-cancelable: ^4.0.1
     responselike: ^3.0.0
     type-fest: ^4.19.0
-  checksum: 686e9f141b23f740f0ee3c414af930f8b524bafabd5ff15e35046851101506f7cd74e7f1996cd17b9e2e046e9f7b3df2beb2c10c31f941fc1a59e7b146ad6719
+  checksum: b0c189f161f8e8d3b27e73f7f2a7f061e819eaa7d413a0a146b5238aa830d8d087cdca5bf766dcb104d0c34de3eb9fdbcbefea827540baeea946201da3807780
   languageName: node
   linkType: hard
 
