@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -140,7 +140,7 @@
     "chai-as-promised": "^7.1.1",
     "chai-http": "4.4.0",
     "circular-dependency-plugin": "^5.0.2",
-    "codeceptjs": "3.6.4",
+    "codeceptjs": "3.6.7",
     "codecov": "^3.7.1",
     "codelyzer": "^6.0.0",
     "coveralls": "^3.0.3",
@@ -164,7 +164,7 @@
     "karma-chrome-launcher": "3.2.0",
     "karma-coverage": "^2.2.1",
     "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "^1.5.0",
+    "karma-jasmine-html-reporter": "^2.0.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "mocha": "9.2.2",
     "mocha-jenkins-reporter": "0.4.8",
