@@ -48,7 +48,7 @@
     "test:crossbrowser": "NODE_PATH=. codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} -c test/end-to-end/saucelabs.conf.js --plugins retryFailedStep --steps --grep '@xb' --reporter mocha-multi"
   },
   "dependencies": {
-    "@angular-eslint/utils": "17.5.2",
+    "@angular-eslint/utils": "17.5.3",
     "@angular/animations": "^17.3.8",
     "@angular/cdk": "^17.3.8",
     "@angular/cli": "^17.3.7",
@@ -71,7 +71,7 @@
     "@ngrx/store-devtools": "^17.0.0",
     "@swimlane/ngx-datatable": "^20.0.0",
     "axios": "^1.6.3",
-    "body-parser": "^1.20.0",
+    "body-parser": "^1.20.3",
     "config": "^3.3.9",
     "core-js": "^2.6.5",
     "glob": "^10.3.3",
@@ -116,17 +116,17 @@
     "got": "^14.0.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "17.3.8",
+    "@angular-devkit/build-angular": "17.3.10",
     "@angular-devkit/core": "^17.3.7",
     "@angular-eslint/builder": "16.3.1",
     "@angular-eslint/eslint-plugin": "16.3.1",
     "@angular-eslint/eslint-plugin-template": "16.3.1",
-    "@angular-eslint/schematics": "17.5.2",
+    "@angular-eslint/schematics": "17.5.3",
     "@angular-eslint/template-parser": "13.5.0",
     "@angular/compiler-cli": "^17.3.8",
     "@angular/language-service": "17.3.11",
     "@ngrx/schematics": "^17.2.0",
-    "@types/chai": "4.3.17",
+    "@types/chai": "4.3.20",
     "@types/chai-as-promised": "^7.1.3",
     "@types/cucumber": "^7.0.0",
     "@types/jasmine": "~5.1.0",
