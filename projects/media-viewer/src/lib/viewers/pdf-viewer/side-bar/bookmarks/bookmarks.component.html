@@ -16,6 +16,7 @@
       <div
         class="node-content-wrapper nested-tree-node nest-tree-node-padding"
         cdkDrag
+        cdkDragBoundary=".bookmarks-tree"
         [cdkDragData]="node"
         (mouseenter)="dragHover($event, node)"
         (mouseleave)="dragHoverEnd($event, node)"

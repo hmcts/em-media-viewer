@@ -3445,7 +3445,7 @@ __metadata:
     ng-packagr: ^18.0.0
     ngrx-store-freeze: ^0.2.4
     ngx-chips: 3.0.0
-    nock: 13.5.4
+    nock: 13.5.5
     nodemon: ^3.1.0
     nsp: 3.2.1
     nunjucks: ^3.2.4
@@ -5841,7 +5841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/fs-extra@npm:^11.0.1":
+"@types/fs-extra@npm:^11.0.4":
   version: 11.0.4
   resolution: "@types/fs-extra@npm:11.0.4"
   dependencies:
@@ -5967,7 +5967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash-es@npm:^4.17.8":
+"@types/lodash-es@npm:^4.17.12":
   version: 4.17.12
   resolution: "@types/lodash-es@npm:4.17.12"
   dependencies:
@@ -6138,7 +6138,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/semver@npm:^7.3.12, @types/semver@npm:^7.5.0":
+"@types/semver@npm:^7.3.12, @types/semver@npm:^7.5.8":
   version: 7.5.8
   resolution: "@types/semver@npm:7.5.8"
   checksum: ea6f5276f5b84c55921785a3a27a3cd37afee0111dfe2bcb3e03c31819c197c782598f17f0b150a69d453c9584cd14c4c4d7b9a55d2c5e6cacd4d66fdb3b3663
@@ -6270,7 +6270,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yarnpkg__lockfile@npm:^1.1.6":
+"@types/yarnpkg__lockfile@npm:^1.1.9":
   version: 1.1.9
   resolution: "@types/yarnpkg__lockfile@npm:1.1.9"
   checksum: 8cad287732567efeab3da420115e4250d1b80ee6a6c1afa04db0bb18aa2bd71167f72b1ba9d782b7cbcdb1abaa02710a0dd48f0129eefdf939b58b08a61c7219
@@ -9400,7 +9400,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:11.1.0, commander@npm:^11.0.0":
+"commander@npm:11.1.0":
   version: 11.1.0
   resolution: "commander@npm:11.1.0"
   checksum: fd1a8557c6b5b622c89ecdfde703242ab7db3b628ea5d1755784c79b8e7cb0d74d65b4a262289b533359cd58e1bfc0bf50245dfbcd2954682a6f367c828b79ef
@@ -12116,7 +12116,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:3.3.2, fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1":
+"fast-glob@npm:3.3.2, fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -17398,14 +17398,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nock@npm:13.5.4":
-  version: 13.5.4
-  resolution: "nock@npm:13.5.4"
+"nock@npm:13.5.5":
+  version: 13.5.5
+  resolution: "nock@npm:13.5.5"
   dependencies:
     debug: ^4.1.0
     json-stringify-safe: ^5.0.1
     propagate: ^2.0.0
-  checksum: d31f924e34c87ae985edfb7b5a56e8a4dcfc3a072334ceb6d686326581f93090b3e23492663a64ce61b8df4f365b113231d926bc300bcfe9e5eb309c3e4b8628
+  checksum: 91947b683992096a694140714323f11493b8ad9961c172e3e574c4801131fea259755e95c48e7e01527c14209967c20f151ff03b6bf6700471f0f76fa4071d32
   languageName: node
   linkType: hard
 
@@ -21933,7 +21933,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synp@npm:^1.9.10":
+"synp@npm:^1.9.13":
   version: 1.9.13
   resolution: "synp@npm:1.9.13"
   dependencies:
@@ -23961,25 +23961,25 @@ __metadata:
   linkType: hard
 
 "yarn-audit-fix@npm:^10.0.7":
-  version: 10.0.7
-  resolution: "yarn-audit-fix@npm:10.0.7"
+  version: 10.0.9
+  resolution: "yarn-audit-fix@npm:10.0.9"
   dependencies:
-    "@types/fs-extra": ^11.0.1
-    "@types/lodash-es": ^4.17.8
-    "@types/semver": ^7.5.0
-    "@types/yarnpkg__lockfile": ^1.1.6
+    "@types/fs-extra": ^11.0.4
+    "@types/lodash-es": ^4.17.12
+    "@types/semver": ^7.5.8
+    "@types/yarnpkg__lockfile": ^1.1.9
     "@yarnpkg/lockfile": ^1.1.0
     chalk: ^5.3.0
-    commander: ^11.0.0
-    fast-glob: ^3.3.1
-    fs-extra: ^11.1.1
+    commander: ^12.0.0
+    fast-glob: ^3.3.2
+    fs-extra: ^11.2.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
-    semver: ^7.5.4
-    synp: ^1.9.10
+    semver: ^7.6.3
+    synp: ^1.9.13
   bin:
     yarn-audit-fix: target/esm/cli.mjs
-  checksum: 4733241868a75b5eeb965e3f6b10c4b98489d831713aada568369822f1266348f07bf58a9419fcbaad067c7559e58e3c7d83861fbb8edcb26c34a38e03ee61f2
+  checksum: 2d35a33142269953f737b41382e2df4deb6a85b3215c020ae5f7f5c48000a894803b9e85b26cc9eb6846b22722ac7a133b93dcc8ac6cb784d21615a0171fe3eb
   languageName: node
   linkType: hard
 
