@@ -39,5 +39,5 @@
     "@types/uuid": "^3.4.4",
     "pdfjs-dist": "4.3.136"
   },
-  "packageManager": "yarn@3.8.3"
+  "packageManager": "yarn@3.8.5"
 }
