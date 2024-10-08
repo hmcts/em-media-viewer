@@ -17298,8 +17298,8 @@ __metadata:
   linkType: hard
 
 "ng-packagr@npm:^18.0.0":
-  version: 18.1.0
-  resolution: "ng-packagr@npm:18.1.0"
+  version: 18.2.1
+  resolution: "ng-packagr@npm:18.2.1"
   dependencies:
     "@rollup/plugin-json": ^6.1.0
     "@rollup/plugin-node-resolve": ^15.2.3
@@ -17337,7 +17337,7 @@ __metadata:
       optional: true
   bin:
     ng-packagr: cli/main.js
-  checksum: ef5dd103056c402c2db018e8d458e70c680ad7a1ce8a83b81767549f5c99742d5bc61206fbf099a448741363c0283e7e25109d248b4daf0fc6e1ad4b61487210
+  checksum: ebe07a1e0e9415f8dc140e7c1a58c7d371e101e4ac516a962bb1d3a2e7d8493cd47e58d74b4ed07f947769a074e44b7e1c3a16b6e90ca4273e9af505f337f4ce
   languageName: node
   linkType: hard
 
