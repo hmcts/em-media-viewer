@@ -11688,8 +11688,8 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-n@npm:^17.0.0":
-  version: 17.10.3
-  resolution: "eslint-plugin-n@npm:17.10.3"
+  version: 17.11.1
+  resolution: "eslint-plugin-n@npm:17.11.1"
   dependencies:
     "@eslint-community/eslint-utils": ^4.4.0
     enhanced-resolve: ^5.17.0
@@ -11701,7 +11701,7 @@ __metadata:
     semver: ^7.5.3
   peerDependencies:
     eslint: ">=8.23.0"
-  checksum: bf81911c588773b4f77d1acf3c5b2514818423d14f11320078f1c4362c78400dfc6fdfa8fc0523a24f1d04b93849656033383dc666f2c8ef3e1c5ec9bcd4e926
+  checksum: 22041b4cef2f76ab4723407cbddb6ca3d39b67ca24936268bb2661871b0011ef2d55856b189147855ab89a90357d0765ffc9559c42019a7f24a705682bb5d7d2
   languageName: node
   linkType: hard
 
