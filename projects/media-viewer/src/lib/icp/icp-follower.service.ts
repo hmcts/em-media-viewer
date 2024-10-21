@@ -8,7 +8,7 @@ import { take } from 'rxjs/operators';
 import { IcpState, IcpSession } from './icp.interfaces';
 import * as fromDocSelectors from '../store/selectors/document.selectors';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IcpFollowerService {
 
   session: IcpSession;

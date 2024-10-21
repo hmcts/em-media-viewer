@@ -8,7 +8,7 @@ import { IcpState, IcpScreenUpdate, IcpSession, IcpParticipant } from './icp.int
 import * as fromIcpSelectors from '../store/selectors/icp.selectors';
 import { PdfPosition } from '../store/reducers/document.reducer';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IcpPresenterService {
 
   session: IcpSession;
