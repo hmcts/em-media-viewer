@@ -12,7 +12,7 @@ import * as fromIcpSelectors from '../store/selectors/icp.selectors';
 import * as fromDocument from '../store/selectors/document.selectors';
 import { filter, take } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IcpService implements OnDestroy {
 
   caseId: string;
