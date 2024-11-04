@@ -5601,7 +5601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sindresorhus/is@npm:^7.0.0":
+"@sindresorhus/is@npm:^7.0.1":
   version: 7.0.1
   resolution: "@sindresorhus/is@npm:7.0.1"
   checksum: 490b66ead3b368ab3a216c97fc339b17daed0a5f097a595eba39101a9bd76b6da59bacc0799a5e972b7d3b7aca871e61297eaede5d6fd00dc691ce85126a8f43
@@ -13200,10 +13200,10 @@ __metadata:
   linkType: hard
 
 "got@npm:^14.0.0":
-  version: 14.4.2
-  resolution: "got@npm:14.4.2"
+  version: 14.4.4
+  resolution: "got@npm:14.4.4"
   dependencies:
-    "@sindresorhus/is": ^7.0.0
+    "@sindresorhus/is": ^7.0.1
     "@szmarczak/http-timer": ^5.0.1
     cacheable-lookup: ^7.0.0
     cacheable-request: ^12.0.1
@@ -13213,8 +13213,8 @@ __metadata:
     lowercase-keys: ^3.0.0
     p-cancelable: ^4.0.1
     responselike: ^3.0.0
-    type-fest: ^4.19.0
-  checksum: b0c189f161f8e8d3b27e73f7f2a7f061e819eaa7d413a0a146b5238aa830d8d087cdca5bf766dcb104d0c34de3eb9fdbcbefea827540baeea946201da3807780
+    type-fest: ^4.26.1
+  checksum: a21ccaaec0f8becb63b67ed333622a43836dcd4e166dface47826bc82abdfbfdfdc1a598aee115483cd5d95c7a5dd4a1646ea0c8a78c570664c1794b04749be0
   languageName: node
   linkType: hard
 
@@ -22675,7 +22675,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^4.19.0, type-fest@npm:^4.8.3":
+"type-fest@npm:^4.26.1":
+  version: 4.26.1
+  resolution: "type-fest@npm:4.26.1"
+  checksum: 7188db3bca82afa62c69a8043fb7c5eb74e63c45e7e28efb986da1629d844286f7181bc5a8185f38989fffff0d6c96be66fd13529b01932d1b6ebe725181d31a
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.8.3":
   version: 4.21.0
   resolution: "type-fest@npm:4.21.0"
   checksum: 32d3536acac388cc32a3c0e31966d36e44124ffd6cb7d6f6c846602ffdeda68b723f5fdcd13d136f9d855b166e5c1d529bcdfac9d5d0ed4e96cff4867710adae
