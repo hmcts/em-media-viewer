@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.0.8-exui-2537-rc1",
+  "version": "4.0.8-exui-2537-rc2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -83,7 +83,7 @@
     "nodemon": "^3.1.0",
     "nunjucks": "^3.2.4",
     "otp": "^0.1.3",
-    "pdfjs-dist": "^4.3.136",
+    "pdfjs-dist": "^4.8.69",
     "require-directory": "2.1.1",
     "rpx-xui-translation": "^1.0.4",
     "rxjs": "^7.4.0",
