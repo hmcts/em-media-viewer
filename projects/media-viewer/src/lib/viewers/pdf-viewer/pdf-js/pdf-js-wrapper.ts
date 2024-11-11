@@ -167,7 +167,7 @@ export class PdfJsWrapper {
   }
 
   public downloadFile(url: string, filename: string): void {
-    this.downloadManager.download(url, filename, {});
+    this.downloadManager.downloadUrl(url, filename, {});
   }
 
   public setPageNumber(pageNumber: number): void {
