@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.0.8-exui-2537-rc2",
+  "version": "4.0.8-exui-2537-rc3",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
@@ -20,8 +20,8 @@
     "@swimlane/ngx-datatable": "^20.0.0",
     "mutable-div": "^2.0.0",
     "pdfjs-dist": "^4.8.69",
-    "socket.io-client": "^3.1.1",
-    "uuid": "^3.4.0"
+    "socket.io-client": "^4.8.0",
+    "uuid": "^11.0.3"
   },
   "peerDependencies": {
     "@angular/animations": "^17.3.8",
@@ -36,7 +36,7 @@
     "@ngrx/store-devtools": "^17.0.0"
   },
   "devDependencies": {
-    "@types/uuid": "^3.4.4",
+    "@types/uuid": "^10.0.0",
     "pdfjs-dist": "^4.8.69"
   },
   "packageManager": "yarn@3.8.5"
