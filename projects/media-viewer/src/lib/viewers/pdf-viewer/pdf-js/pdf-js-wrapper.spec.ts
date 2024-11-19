@@ -64,7 +64,7 @@ describe('PdfJsWrapper', () => {
     const downloadSpy = spyOn(downloadManager, 'download');
 
     wrapper.downloadFile('http://derp.com/derp.jpg', 'derp.jpg');
-    expect(downloadSpy).toHaveBeenCalledWith('http://derp.com/derp.jpg', 'derp.jpg', {});
+    expect(downloadSpy).toHaveBeenCalledWith(null, 'http://derp.com/derp.jpg', 'derp.jpg');
   });
 
   it('loads a document', fakeAsync(() => {
