@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import * as fromAnnotations from '../actions/annotation.actions';
 import { Annotation } from '../../annotations/annotation-set/annotation-view/annotation.model';
 import { Comment } from '../../annotations/comment-set/comment/comment.model';
@@ -8,12 +8,12 @@ import { Filters } from '../models/filters.interface';
 
 export interface AnnotationSetState {
   annotationSet: any;
-  annotationEntities: {[id: string]: any};
-  annotationPageEntities: {[id: string]: Annotation[]};
-  commentEntities: {[id: string]: Comment};
+  annotationEntities: { [id: string]: any };
+  annotationPageEntities: { [id: string]: Annotation[] };
+  commentEntities: { [id: string]: Comment };
   selectedAnnotation: SelectionAnnotation;
   commentSearchQueries: { commentSearch: string };
-  commentSummaryFilters: {hasFilter: boolean; filters: Filters};
+  commentSummaryFilters: { hasFilter: boolean; filters: Filters };
   loaded: boolean;
   loading: boolean;
 }
@@ -24,13 +24,13 @@ export const initialState: AnnotationSetState = {
   commentEntities: {},
   annotationPageEntities: {},
   selectedAnnotation: null,
-  commentSearchQueries: {commentSearch: ''},
-  commentSummaryFilters: {hasFilter: false, filters: {}},
+  commentSearchQueries: { commentSearch: '' },
+  commentSummaryFilters: { hasFilter: false, filters: {} },
   loading: false,
   loaded: false,
 };
 
-export function reducer (
+export function reducer(
   state = initialState,
   action: fromAnnotations.AnnotationsActions
 ): AnnotationSetState {
@@ -108,7 +108,7 @@ export function reducer (
       const commentEntities = StoreUtils.generateCommentsEntities(annotArray);
       const selectedAnnotation = {
         ...state.selectedAnnotation,
-        annotationId : anno.id,
+        annotationId: anno.id,
         editable: false
       };
       return {
@@ -172,12 +172,12 @@ export function reducer (
         selected: payload.selected
       };
 
-      const resetCommentEntSelect = StoreUtils.resetCommentEntSelect({...state.commentEntities});
+      const resetCommentEntSelect = StoreUtils.resetCommentEntSelect({ ...state.commentEntities });
 
       const commentEntities = payload.annotationId && state.commentEntities[payload.annotationId] ? {
         ...resetCommentEntSelect,
-      [payload.annotationId]: commentEntity
-      } : {...resetCommentEntSelect};
+        [payload.annotationId]: commentEntity
+      } : { ...resetCommentEntSelect };
 
       return {
         ...state,
@@ -192,7 +192,7 @@ export function reducer (
         commentSearch: action.payload
       };
 
-      const commentEntities = StoreUtils.resetCommentEntSelect({...state.commentEntities});
+      const commentEntities = StoreUtils.resetCommentEntSelect({ ...state.commentEntities });
       return {
         ...state,
         commentEntities,
@@ -228,7 +228,7 @@ export function reducer (
 
       return {
         ...state,
-        commentSummaryFilters : {...initialState.commentSummaryFilters}
+        commentSummaryFilters: { ...initialState.commentSummaryFilters }
       };
     }
   }

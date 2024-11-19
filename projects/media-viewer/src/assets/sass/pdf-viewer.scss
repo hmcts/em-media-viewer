@@ -34,7 +34,7 @@ mv-pdf-viewer {
   }
 
   .hidden {
-    display:none!important;
+    display: none !important;
   }
 
   .loadingMessage {
@@ -55,44 +55,11 @@ mv-pdf-viewer {
   }
 
   .linkAnnotation > a:hover {
-    opacity: 0.0 !important;
-  }
-
-  .canvasWrapper {
-    max-width: 100%;
-    max-height: 100%;
-  }
-
-  .canvasWrapper > canvas{
-    max-width: 100%;
-    max-height: 100%;
+    opacity: 0 !important;
   }
 
   .textLayer {
     z-index: 1;
-  }
-
-
-  [data-main-rotation='90'] {
-    transform: rotate(90deg) translate(-21%, -14.5%);
-  }
-  [data-main-rotation='180'] {
-    transform: rotate(180deg);
-  }
-  [data-main-rotation='270'] {
-    transform: rotate(270deg) translate(21%, 14.5%);
-  }
-
-
-
-  .textLayer .markedContent > span {
-    position: absolute;
-    transform-origin: left
-  }
-
-
-  .textLayer .markedContent > br {
-    position: absolute;
   }
 
   .annotationLayer * {
@@ -103,7 +70,7 @@ mv-pdf-viewer {
     .has-redact-bar & {
       display: none;
     }
-    top: 28px
+    top: 28px;
   }
 
   .icp-mode {
@@ -117,7 +84,8 @@ mv-pdf-viewer {
   }
 
   .show-comments-panel {
-    .pdfViewer, .pageContainer {
+    .pdfViewer,
+    .pageContainer {
       .has-redact-bar & {
         width: 100%;
       }
@@ -140,5 +108,4 @@ mv-pdf-viewer {
   .splitToolbarButton.left {
     float: left;
   }
-
 }

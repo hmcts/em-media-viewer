@@ -10,7 +10,7 @@ import * as fromStore from '../../store/reducers/reducers';
 import { Rectangle } from '../../annotations/annotation-set/annotation-view/rectangle/rectangle.model';
 import * as fromDocument from '../../store/selectors/document.selectors';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
 import { some } from 'lodash';
 
