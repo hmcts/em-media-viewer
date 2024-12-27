@@ -3,7 +3,7 @@ import { SocketService } from './socket.service';
 import { IcpParticipant, IcpScreenUpdate, IcpSession } from './icp.interfaces';
 import { IcpEvents } from './icp.events';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IcpUpdateService {
 
   session: IcpSession;
