@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.0.8-exui-2388-rc1",
+  "version": "4.0.9-exui-2388-rc1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -83,15 +83,15 @@
     "nodemon": "^3.1.0",
     "nunjucks": "^3.2.4",
     "otp": "^0.1.3",
-    "pdfjs-dist": "4.3.136",
+    "pdfjs-dist": "^4.8.69",
     "require-directory": "2.1.1",
     "rpx-xui-translation": "^1.0.4",
     "rxjs": "^7.4.0",
     "sass": "^1.64.1",
     "scss-bundle": "~3.1.2",
     "session-file-store": "^1.2.0",
-    "socket.io-client": "^3.1.1",
-    "uuid": "^3.4.0",
+    "socket.io-client": "^4.8.0",
+    "uuid": "^11.0.3",
     "ws": "^7.5.10",
     "xmlhttprequest-ssl": "^1.6.2",
     "zone.js": "0.15.0"
@@ -113,7 +113,9 @@
     "lodash": "^4.17.21",
     "xml2j": "^0.5.0",
     "axios": "^1.6.3",
-    "got": "^14.0.0"
+    "got": "^14.0.0",
+    "body-parser": "^1.20.3",
+    "cross-spawn": "^7.0.6"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "17.3.10",

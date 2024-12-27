@@ -11,7 +11,7 @@ import * as fromDocument from '../../../../store/selectors/document.selectors';
 import * as fromBookmarks from '../../../../store/reducers/bookmarks.reducer';
 import { getBookmarkChildren } from '../../../../store/bookmarks-store-utils';
 import { take } from 'rxjs/operators';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { ArrayDataSource, SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
