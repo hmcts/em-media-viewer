@@ -9,8 +9,8 @@ metadata:
   tags:
     - nodejs
   links:
-    - url: https://hmcts-reform.slack.com/app_redirect?channel=em-dev-chat
-      title: "#em-dev-chat on Slack"
+    - url: https://hmcts-reform.slack.com/app_redirect?channel=xui-pipeline
+      title: "#xui-pipeline on Slack"
       icon: chat
 spec:
   type: service

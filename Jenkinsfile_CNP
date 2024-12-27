@@ -17,7 +17,7 @@ properties([
 def type = "nodejs"
 def product = "em"
 def component = "media-viewer"
-def channel   = '#em-dev-chat'
+def channel   = '#xui-pipeline'
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
