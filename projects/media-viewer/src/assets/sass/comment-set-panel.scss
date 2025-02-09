@@ -24,3 +24,15 @@
   top: 90px;
   height: 100%
 }
+
+@media (max-width: 1200px) {
+  .comments-panel {
+    margin-top: 2.6rem;
+  }
+}
+
+@media (max-width: 1040px) {
+  .comments-panel {
+    margin-top: 5rem;
+  }
+}
