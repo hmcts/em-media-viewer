@@ -3,13 +3,13 @@
     <li *ngFor="let tab of tabs; let i = index" class="govuk-tabs__list-item govuk-tabs__list-item"
         [ngClass]="{'govuk-tabs__list-item--selected': tabSelected === tab.label}">
       <a id="commentSubPane{{ i }}" (click)="selectTab(tab.label)" [routerLink]="[]" [ngClass]="{'govuk-tabs__list-item--filtered': tab.isFiltered}"
-         class="govuk-tabs__tab">
+         class="govuk-tabs__tab" [hidden]="isHidden">
         {{ tab.label | titlecase }}
       </a>
     </li>
     <li>
       <button id="mvCloseBtn" #mvCloseBtn class="mv-button commentSummaryHeader-button--close"
-        title="Close Comments" (click)="toggleCommentsPanel()">
+        title="Close Comments" (click)="toggleCommentsPanel()" [hidden]="isHidden">
       </button>
     </li>
   </ul>
