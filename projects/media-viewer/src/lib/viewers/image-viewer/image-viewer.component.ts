@@ -64,7 +64,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
     private readonly viewerUtilService: ViewerUtilService,
     public readonly toolbarEvents: ToolbarEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
-    private viewerEvents: ViewerEventService,
+    private viewerEvents: ViewerEventService
   ) { }
 
   ngOnInit(): void {

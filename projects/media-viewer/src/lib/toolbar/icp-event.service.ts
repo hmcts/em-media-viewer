@@ -1,36 +1,45 @@
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 
-  export const enabled = new BehaviorSubject(false);
-  export const sessionLaunch = new Subject<void>();
-  export const becomingPresenter = new Subject<void>();
-  export const stoppingPresenting = new Subject<void>();
-  export const leavingSession = new BehaviorSubject(false);
-  export const sessionExitConfirmed = new Subject<void>();
-  export const participantsListVisible = new BehaviorSubject(false);
+@Injectable({
+  providedIn: 'root'
+})
+export class IcpEventService {
 
-export const launchSession = () => {
-  sessionLaunch.next();
-};
+  enabled = new BehaviorSubject(false);
+  sessionLaunch = new Subject<void>();
+  becomingPresenter = new Subject<void>();
+  stoppingPresenting = new Subject<void>();
+  leavingSession = new BehaviorSubject(false);
+  sessionExitConfirmed = new Subject<void>();
+  participantsListVisible = new BehaviorSubject(false);
 
-export const enable = () => {
-  enabled.next(true);
-  launchSession();
-};
+  constructor() { }
 
-export const becomePresenter = () => {
-  becomingPresenter.next();
-};
+  launchSession = () => {
+    this.sessionLaunch.next();
+  };
 
-export const stopPresenting = () => {
-  stoppingPresenting.next();
-};
+  enable = () => {
+    this.enabled.next(true);
+    this.launchSession();
+  };
 
-export const leaveSession = () => {
-  leavingSession.next(true);
-};
+  becomePresenter = () => {
+    this.becomingPresenter.next();
+  };
 
-export const confirmExit = () => {
-  sessionExitConfirmed.next();
-  participantsListVisible.next(false);
-  enabled.next(false);
-};
+  stopPresenting = () => {
+    this.stoppingPresenting.next();
+  };
+
+  leaveSession = () => {
+    this.leavingSession.next(true);
+  };
+
+  confirmExit = () => {
+    this.sessionExitConfirmed.next();
+    this.participantsListVisible.next(false);
+    this.enabled.next(false);
+  };
+}

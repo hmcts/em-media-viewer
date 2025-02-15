@@ -4,19 +4,21 @@ import { reducers } from '../../store/reducers/reducers';
 import { IcpToolbarComponent } from './icp-toolbar.component';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { BehaviorSubject } from 'rxjs';
+import { IcpEventService } from '../icp-event.service';
 
 describe('IcpToolbarComponent', () => {
   let component: IcpToolbarComponent;
   let fixture: ComponentFixture<IcpToolbarComponent>;
   let toolbarEvents: ToolbarEventService;
+  let icpEventService: IcpEventService
   const toolbarEventsMock = {
-    icp: {
-      becomePresenter: () => {},
-      stopPresenting: () => {},
-      leaveSession: () => {},
-      participantsListVisible: new BehaviorSubject(false)
-    },
     toggleParticipantsList: () => {}
+  };
+  const icpEventServiceMock = {
+    becomePresenter: jasmine.createSpy('becomePresenter'),
+    stopPresenting: jasmine.createSpy('stopPresenting'),
+    leaveSession: jasmine.createSpy('leaveSession'),
+    participantsListVisible: new BehaviorSubject<boolean>(false),
   };
 
   beforeEach(() => {
@@ -26,7 +28,7 @@ describe('IcpToolbarComponent', () => {
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({})
       ],
-      providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }]
+      providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }, { provide: IcpEventService, useValue: icpEventServiceMock }]
     })
     .compileComponents();
   });
@@ -35,6 +37,7 @@ describe('IcpToolbarComponent', () => {
     fixture = TestBed.createComponent(IcpToolbarComponent);
     component = fixture.componentInstance;
     toolbarEvents = TestBed.inject(ToolbarEventService);
+    icpEventService = TestBed.inject(IcpEventService);
     fixture.detectChanges();
   });
 
@@ -43,27 +46,18 @@ describe('IcpToolbarComponent', () => {
   });
 
   it('should present', () => {
-    spyOn(toolbarEvents.icp, 'becomePresenter');
-
     component.present();
-
-    expect(toolbarEvents.icp.becomePresenter).toHaveBeenCalled();
+    expect(icpEventService.becomePresenter).toHaveBeenCalled();
   });
 
   it('should stopPresenting', () => {
-    spyOn(toolbarEvents.icp, 'stopPresenting');
-
     component.stopPresenting();
-
-    expect(toolbarEvents.icp.stopPresenting).toHaveBeenCalled();
+    expect(icpEventService.stopPresenting).toHaveBeenCalled();
   });
 
   it('should leaveSession', () => {
-    spyOn(toolbarEvents.icp, 'leaveSession');
-
     component.leaveIcpSession();
-
-    expect(toolbarEvents.icp.leaveSession).toHaveBeenCalled();
+    expect(icpEventService.leaveSession).toHaveBeenCalled();
   });
 
   it('should show participants', () => {

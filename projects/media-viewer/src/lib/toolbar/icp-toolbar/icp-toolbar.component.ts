@@ -4,6 +4,7 @@ import { select, Store } from '@ngrx/store';
 import * as fromIcpSelectors from '../../store/selectors/icp.selectors';
 import { Subscription } from 'rxjs';
 import { IcpState } from '../../icp/icp.interfaces';
+import { IcpEventService } from '../icp-event.service';
 
 @Component({
   selector: 'mv-icp-toolbar',
@@ -17,7 +18,8 @@ export class IcpToolbarComponent implements OnInit, OnDestroy {
   private $subscription: Subscription;
 
   constructor(public readonly toolbarEventService: ToolbarEventService,
-              private store: Store<IcpState>) {}
+              private store: Store<IcpState>, 
+              public readonly icpEventService:IcpEventService) {}
 
   ngOnInit() {
     this.$subscription = this.store.pipe(select(fromIcpSelectors.isPresenter))
@@ -31,18 +33,18 @@ export class IcpToolbarComponent implements OnInit, OnDestroy {
   }
 
   present() {
-    this.toolbarEventService.icp.becomePresenter();
+    this.icpEventService.becomePresenter();
   }
 
   stopPresenting() {
-    this.toolbarEventService.icp.stopPresenting();
+    this.icpEventService.stopPresenting();
   }
 
   leaveIcpSession() {
-    this.toolbarEventService.icp.leaveSession();
+    this.icpEventService.leaveSession();
   }
 
   showParticipantsList() {
-    this.toolbarEventService.toggleParticipantsList(!this.toolbarEventService.icp.participantsListVisible.getValue());
+    this.toolbarEventService.toggleParticipantsList(!this.icpEventService.participantsListVisible.getValue());
   }
 }

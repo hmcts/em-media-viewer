@@ -40,7 +40,7 @@
     <button class="govuk-button govuk-button--secondary" id="icp-participants-list" tabindex="0"
       title="Participants list" (click)="showParticipantsList()">
       <span
-        data-l10n-id="icp-stop-presenting_label">{{(toolbarEventService.icp.participantsListVisible | async) ? 'Hide': 'Show'}}
+        data-l10n-id="icp-stop-presenting_label">{{(icpEventService.participantsListVisible | async) ? 'Hide': 'Show'}}
         participants</span>
     </button>
   </div>
