@@ -5,7 +5,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../../store/reducers/reducers';
 import {RouterTestingModule} from '@angular/router/testing';
-import { ToolbarEventService } from '../../../toolbar/toolbar.module';
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 describe('CommentsNavigateComponent', () => {
 

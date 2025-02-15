@@ -14,7 +14,7 @@ import { Annotation } from '../../annotation-view/annotation.model';
 import { RedactRectangle } from '../../../../toolbar/redaction-search-bar/redaction-search.model';
 import { AnnotationSet } from '../../annotation-set.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class HighlightCreateService {
 
   constructor(private toolBarEvents: ToolbarEventService,

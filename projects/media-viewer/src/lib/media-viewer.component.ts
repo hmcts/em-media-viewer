@@ -31,6 +31,7 @@ import * as fromDocumentsSelector from './store/selectors/document.selectors';
 import * as fromAnnoActions from './store/actions/annotation.actions';
 import * as fromRedactActions from './store/actions/redaction.actions';
 import * as fromDocumentActions from './store/actions/document.actions';
+import { IcpEventService } from './toolbar/icp-event.service';
 
 enum CoreContentTypes {
   PDF = 'pdf',
@@ -110,7 +111,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     private readonly api: AnnotationApiService,
     private readonly commentService: CommentService,
     private elRef: ElementRef,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public icpEventService: IcpEventService
   ) {
     if (this.annotationApiUrl) {
       api.annotationApiUrl = this.annotationApiUrl;

@@ -4,12 +4,12 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
-import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
 import * as fromStore from '../../../../store/reducers/reducers';
 import * as fromDocument from '../../../../store/selectors/document.selectors';
 import { ViewerEventService } from '../../../../viewers/viewer-event.service';
 import * as fromAnnotationActions from '../../../../store/actions/annotation.actions';
 import { HighlightCreateService } from './highlight-create.service';
+import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 
 @Directive({
   selector: '[mvCreateTextHighlight]'
