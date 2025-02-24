@@ -22,6 +22,7 @@ import { PdfPosition, reducers } from '../../store/reducers/reducers';
 import { PdfPositionUpdate } from '../../store/actions/document.actions';
 import { IcpService } from '../../icp/icp.service';
 import { SetCaseId } from '../../store/actions/icp.actions';
+import { IcpEventService } from '../../toolbar/icp-event.service';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -61,6 +62,7 @@ describe('PdfViewerComponent', () => {
         CommentService,
         ToolbarEventService,
         ViewerEventService,
+        IcpEventService,
         PrintService,
         PdfJsWrapperFactory,
         { provide: IcpService, useValue: mockIcpService },
@@ -253,7 +255,7 @@ describe('PdfViewerComponent', () => {
     component.showIcpParticipantsList = false;
     component.showCommentsPanel = false;
 
-    toolbarEvents.icp.participantsListVisible.next(true);
+    toolbarEvents.toggleParticipantsList(true);
     fixture.detectChanges();
 
     expect(component.showIcpParticipantsList).toBeTruthy();
@@ -264,7 +266,7 @@ describe('PdfViewerComponent', () => {
     component.showIcpParticipantsList = true;
     component.showCommentsPanel = false;
 
-    toolbarEvents.icp.participantsListVisible.next(false);
+    toolbarEvents.toggleParticipantsList(false);
     fixture.detectChanges();
 
     expect(component.showIcpParticipantsList).toBeFalsy();

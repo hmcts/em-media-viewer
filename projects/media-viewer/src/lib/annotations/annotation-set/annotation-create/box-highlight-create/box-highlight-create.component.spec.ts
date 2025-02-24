@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Subscription, BehaviorSubject, Subject } from 'rxjs';
 
-import { ToolbarEventService } from '../../../../toolbar/toolbar.module';
+import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 import { HighlightCreateService } from '../highlight-create/highlight-create.service';
 import { BoxHighlightCreateComponent } from './box-highlight-create.component';
 

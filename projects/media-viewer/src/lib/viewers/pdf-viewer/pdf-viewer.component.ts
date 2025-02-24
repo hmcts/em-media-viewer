@@ -12,7 +12,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { asyncScheduler, BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { filter, tap, throttleTime } from 'rxjs/operators';
+import { debounceTime, filter, tap, throttleTime } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 
 import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js/pdf-js-wrapper';
@@ -33,6 +33,7 @@ import * as fromDocumentsSelector from '../../store/selectors/document.selectors
 import { IcpState } from '../../icp/icp.interfaces';
 import { ViewerEventService } from '../viewer-event.service';
 import { IcpService } from '../../icp/icp.service';
+import { IcpEventService } from '../../toolbar/icp-event.service';
 
 @Component({
   selector: 'mv-pdf-viewer',
@@ -90,6 +91,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     private readonly viewerEvents: ViewerEventService,
     private icpService: IcpService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    private readonly icpEventService: IcpEventService
   ) {
     this.highlightMode = toolbarEvents.highlightModeSubject.pipe(tap(() => {
       this.store.dispatch(new fromTagActions.ClearFilterTags());
@@ -126,7 +128,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.$subscription.add(this.viewerEvents.navigationEvent.subscribe(dest => this.goToDestination(dest)));
     this.$subscription.add(this.viewerEvents.navigationEventICP.subscribe(destination => this.goToDestinationICP(destination)));
     this.$subscription.add(
-      this.toolbarEvents.icp.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle)
+      this.icpEventService.participantsListVisible.subscribe(toggle => this.showIcpParticipantsList = toggle)
     );
     this.$subscription.add(this.pdfWrapper.positionUpdated.asObservable()
       .pipe(throttleTime(500, asyncScheduler, { leading: true, trailing: true }))
@@ -212,7 +214,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     this.pdfWrapper.rotate(rotation);
     this.pdfWrapper.setPageNumber(pageNumber);
     this.rotation = (this.rotation + rotation) % 360;
-
     this.setPageHeights();
   }
 

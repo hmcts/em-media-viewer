@@ -7,6 +7,7 @@ import * as fromAnnoSelector from '../../../store/selectors/annotation.selectors
 import { combineLatest, Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { CommentService } from '../comment/comment.service';
+import { IcpEventService } from '../../../toolbar/icp-event.service';
 
 @Component({
   selector: 'mv-comment-set-header',
@@ -27,7 +28,8 @@ export class CommentSetHeaderComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromStore.State>,
               private commentService: CommentService,
-              public toolbarEvents: ToolbarEventService) {}
+              public toolbarEvents: ToolbarEventService,
+              public readonly icpEventService: IcpEventService) {}
 
   ngOnInit(): void {
     const tagFilter$ = this.store.pipe(select(fromTagSelectors.getTagFilters));

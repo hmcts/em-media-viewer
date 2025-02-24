@@ -2,7 +2,7 @@ import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular
 import * as fromDocumentActions from '../../store/actions/document.actions';
 import { select, Store } from '@ngrx/store';
 import * as fromDocuments from '../../store/selectors/document.selectors';
-import { filter, take } from 'rxjs/operators';
+import { distinctUntilChanged, filter, take } from 'rxjs/operators';
 import { Rotation } from './rotation.model';
 import { ResponseType } from '../viewer-exception.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
@@ -29,7 +29,7 @@ export class RotationPersistDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.$subscriptions = this.toolbarEvents.rotateSubject.subscribe(rotation => this.onRotate(rotation));
+    this.$subscriptions = this.toolbarEvents.rotateSubject.pipe(distinctUntilChanged()).subscribe(rotation => this.onRotate(rotation));
 
     this.$subscriptions.add(this.toolbarEvents.saveRotationSubject.subscribe(() => this.saveRotation()));
     this.$subscriptions.add(this.store.pipe(select(fromDocuments.getRotation)).subscribe(rotation => this.savedRotation = rotation));

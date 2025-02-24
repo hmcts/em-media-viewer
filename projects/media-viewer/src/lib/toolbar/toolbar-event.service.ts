@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import * as icpEvents from './icp-event.service';
-import { participantsListVisible } from './icp-event.service';
+// import * as icpEvents from './icp-event.service';
+// import { participantsListVisible } from './icp-event.service';
 import { RedactionSearch } from './redaction-search-bar/redaction-search.model';
+import { IcpEventService } from './icp-event.service';
 
 // Toolbar Custom-Event Types
 export type HighlightMode = boolean;
@@ -33,6 +34,8 @@ export interface SearchMode {
 
 @Injectable({ providedIn: 'root' })
 export class ToolbarEventService {
+
+  constructor(private icpEventService: IcpEventService) {}
 
   public readonly highlightModeSubject = new BehaviorSubject<HighlightMode>(false);
   public readonly highlightToolbarSubject = new BehaviorSubject<HighlightMode>(false);
@@ -68,9 +71,6 @@ export class ToolbarEventService {
 
   public readonly searchBarHidden = new BehaviorSubject(true);
   public readonly commentsPanelVisible = new BehaviorSubject(false);
-
-  public readonly icp = icpEvents;
-
 
   /**
    * Reset the stateful behaviour subjects
@@ -222,6 +222,6 @@ export class ToolbarEventService {
     if (isVisible) {
       this.toggleCommentsPanel(!isVisible);
     }
-    this.icp.participantsListVisible.next(isVisible);
+    this.icpEventService.participantsListVisible.next(isVisible);
   }
 }

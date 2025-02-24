@@ -44,7 +44,9 @@ describe('PdfJsWrapper', () => {
       dispatch: () => { }
     };
 
-    toolbarEventService = new ToolbarEventService();
+    const icpEventService = jasmine.createSpyObj('IcpEventService', ['confirmExit', 'leavingSession']);
+
+    toolbarEventService = new ToolbarEventService(icpEventService);
 
     wrapper = new PdfJsWrapper(
       mockViewer,

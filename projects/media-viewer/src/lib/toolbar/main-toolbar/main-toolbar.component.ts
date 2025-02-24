@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { NumberHelperService } from '../../../lib/shared/util/services/number.helper.service';
+import { IcpEventService } from '../icp-event.service';
 
 @Component({
   selector: 'mv-main-toolbar',
@@ -63,7 +64,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     public readonly toolbarEvents: ToolbarEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     private readonly cdr: ChangeDetectorRef,
-    private readonly numberHelper: NumberHelperService
+    private readonly numberHelper: NumberHelperService,
+    private readonly icpEventService: IcpEventService
   ) {
   }
 
@@ -72,7 +74,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       this.toolbarEvents.setCurrentPageSubject.subscribe(pageNumber => this.setCurrentPage(pageNumber)),
       this.toolbarEvents.setCurrentPageInputValueSubject.subscribe(pageNumber => this.pageNumber = pageNumber),
       this.toolbarEvents.getPageCount().subscribe(count => this.pageCount = count),
-      this.toolbarEvents.icp.enabled.subscribe(enabled => {
+      this.icpEventService.enabled.subscribe(enabled => {
         this.icpEnabled = enabled;
         if (this.icpEnabled) {
           this.toolbarEvents.toggleCommentsPanel(!enabled);
@@ -149,7 +151,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public togglePresentBar() {
     this.toolbarEvents.searchBarHidden.next(true);
-    this.toolbarEvents.icp.enable();
+    this.icpEventService.enable();
   }
 
   public increasePageNumber() {
