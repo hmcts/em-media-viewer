@@ -10,6 +10,7 @@ import { ToolbarEventService } from '../toolbar/toolbar-event.service';
 import { IcpParticipant, IcpSession } from './icp.interfaces';
 import * as fromIcpActions from '../store/actions/icp.actions';
 import { of, Subscription } from 'rxjs';
+import { IcpEventService } from '../toolbar/icp-event.service';
 
 describe('Icp Service', () => {
 
@@ -76,11 +77,11 @@ describe('Icp Service', () => {
   );
 
   it('should subscribe to the sessionLaunch event',
-    inject([Store, ToolbarEventService], fakeAsync((store, toolbarEvents) => {
+    inject([Store, IcpEventService], fakeAsync((store, icpEventService) => {
       spyOn(service, 'launchSession');
       service.caseId = 'caseId';
       service.documentId = 'documentId';
-      toolbarEvents.icp.sessionLaunch.next();
+      icpEventService.sessionLaunch.next();
 
       expect(service.launchSession).toHaveBeenCalled();
     }))
@@ -114,7 +115,7 @@ describe('Icp Service', () => {
   );
 
   it('should set up session subscriptions when session launched',
-    inject([ToolbarEventService, Store], fakeAsync((toolbarEvents, store) => {
+    inject([IcpEventService, Store], fakeAsync((icpEventService, store) => {
       spyOn(service, 'becomePresenter');
       spyOn(service, 'stopPresenting');
       spyOn(service, 'leavePresentation');
@@ -122,9 +123,9 @@ describe('Icp Service', () => {
       spyOn(service, 'clientDisconnected');
 
       service.setUpSessionSubscriptions();
-      toolbarEvents.icp.becomingPresenter.next();
-      toolbarEvents.icp.stoppingPresenting.next();
-      toolbarEvents.icp.sessionExitConfirmed.next();
+      icpEventService.becomingPresenter.next();
+      icpEventService.stoppingPresenting.next();
+      icpEventService.sessionExitConfirmed.next();
       const payload = { session: session, participantInfo: { client: participant, presenter: participant } };
       const action = new fromIcpActions.IcpSocketSessionJoined(payload);
       store.dispatch(action);

@@ -13,9 +13,9 @@ import * as fromActions from '../../store/actions/redaction.actions';
 import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import * as fromRedaActions from '../../store/actions/redaction.actions';
 import { SelectionAnnotation } from '../../annotations/models/event-select.model';
-import { ToolbarEventService } from '../../toolbar/toolbar.module';
 import { ViewerEventService } from '../../viewers/viewer-event.service';
 import { Redaction } from '../services/redaction.model';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 @Component({
   selector: 'mv-redactions',

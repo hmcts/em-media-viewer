@@ -11,8 +11,9 @@ import * as fromIcpActions from '../store/actions/icp.actions';
 import * as fromIcpSelectors from '../store/selectors/icp.selectors';
 import * as fromDocument from '../store/selectors/document.selectors';
 import { filter, take } from 'rxjs/operators';
+import { IcpEventService } from '../toolbar/icp-event.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IcpService implements OnDestroy {
 
   caseId: string;
@@ -29,12 +30,13 @@ export class IcpService implements OnDestroy {
     private readonly socketService: IcpUpdateService,
     private readonly presenterSubscriptions: IcpPresenterService,
     private readonly followerSubscriptions: IcpFollowerService,
-    private store: Store<IcpState>) {
+    private store: Store<IcpState>,
+    private readonly icpEventService: IcpEventService) {
     this.subscription = this.store.pipe(select(fromIcpSelectors.getCaseId), filter(value => !!value)).subscribe(caseId => {
       this.caseId = caseId;
     });
     this.subscription.add(this.store.pipe(select(fromDocument.getDocumentId)).subscribe(docId => this.documentId = docId));
-    this.subscription.add(this.toolbarEvents.icp.sessionLaunch.subscribe(() => {
+    this.subscription.add(this.icpEventService.sessionLaunch.subscribe(() => {
 
       if (this.caseId && this.documentId) { this.launchSession(); }
     }));
@@ -53,9 +55,9 @@ export class IcpService implements OnDestroy {
   }
 
   setUpSessionSubscriptions() {
-    this.sessionSubscription = this.toolbarEvents.icp.becomingPresenter.subscribe(() => this.becomePresenter());
-    this.sessionSubscription.add(this.toolbarEvents.icp.stoppingPresenting.subscribe(() => this.stopPresenting()));
-    this.sessionSubscription.add(this.toolbarEvents.icp.sessionExitConfirmed.subscribe(() => this.leavePresentation()));
+    this.sessionSubscription = this.icpEventService.becomingPresenter.subscribe(() => this.becomePresenter());
+    this.sessionSubscription.add(this.icpEventService.stoppingPresenting.subscribe(() => this.stopPresenting()));
+    this.sessionSubscription.add(this.icpEventService.sessionExitConfirmed.subscribe(() => this.leavePresentation()));
     this.sessionSubscription.add(
       this.store.pipe(select(fromIcpSelectors.getPresenter)).subscribe(presenter => this.presenter = presenter)
     );
