@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ToolbarEventService } from '../../toolbar/toolbar.module';
+import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { IcpEventService } from '../../toolbar/icp-event.service';
 
 @Component({
   selector: 'mv-confirm-action',
@@ -7,14 +8,14 @@ import { ToolbarEventService } from '../../toolbar/toolbar.module';
 })
 export class ConfirmActionDialogComponent {
 
-  constructor(private toolbarEvents: ToolbarEventService) {}
+  constructor(private icpEventService: IcpEventService) {}
 
   onCancel() {
-    this.toolbarEvents.icp.leavingSession.next(false);
+    this.icpEventService.leavingSession.next(false);
   }
 
   onConfirm() {
-    this.toolbarEvents.icp.confirmExit();
-    this.toolbarEvents.icp.leavingSession.next(false);
+    this.icpEventService.confirmExit();
+    this.icpEventService.leavingSession.next(false);
   }
 }

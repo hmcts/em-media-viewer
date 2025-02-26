@@ -2,7 +2,7 @@
   id="outerContainer"
   [ngClass]="{
     'has-redact-bar': toolbarEvents.redactionMode | async,
-    'icp-mode': toolbarEvents.icp.enabled | async,
+    'icp-mode': icpEventService.enabled | async,
     'is-redaction-preview': toolbarEvents.redactionPreview | async,
     sidebarOpen: toolbarEvents.sidebarOpen | async,
     'has-scroll-bar': hasScrollBar,
@@ -18,7 +18,7 @@
   </mv-comments-summary>
 
   <mv-confirm-action
-    *ngIf="toolbarEvents.icp.leavingSession | async"
+    *ngIf="icpEventService.leavingSession | async"
   ></mv-confirm-action>
 
   <div id="mainContainer">
@@ -37,7 +37,7 @@
     <mv-highlight-toolbar
       *ngIf="toolbarEvents.highlightToolbarSubject | async"
     ></mv-highlight-toolbar>
-    <mv-icp-toolbar *ngIf="toolbarEvents.icp.enabled | async"></mv-icp-toolbar>
+    <mv-icp-toolbar *ngIf="icpEventService.enabled | async"></mv-icp-toolbar>
 
     <div #viewerRef>
       <mv-conversion-viewer
