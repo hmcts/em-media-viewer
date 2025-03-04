@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { IcpSession } from './icp.interfaces';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IcpSessionApiService {
 
   public ICP_SESSION_API = '/icp/sessions';

@@ -3,7 +3,7 @@ import { BehaviorSubject, from, Observable, of, Subject, Subscription } from 'rx
 import { IcpEvents } from './icp.events';
 import { IcpParticipant } from './icp.interfaces';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SocketService implements OnDestroy {
 
   private socket: WebSocket;

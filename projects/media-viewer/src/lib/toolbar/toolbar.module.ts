@@ -5,11 +5,9 @@ import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
-import { ToolbarEventService } from './toolbar-event.service';
 import { RedactionToolbarComponent } from './redaction-toolbar/redaction-toolbar.component';
 import { IcpToolbarComponent } from './icp-toolbar/icp-toolbar.component';
 export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
-export { ToolbarEventService } from './toolbar-event.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { RouterModule } from '@angular/router';
 import { HighlightToolbarComponent } from './highlight-toolbar/highlight-toolbar.component';
@@ -26,8 +24,7 @@ import { RpxTranslationModule } from 'rpx-xui-translation';
     HighlightToolbarComponent
   ],
   providers: [
-    ToolbarButtonVisibilityService,
-    ToolbarEventService
+    ToolbarButtonVisibilityService
   ],
   exports: [
     MainToolbarComponent,
