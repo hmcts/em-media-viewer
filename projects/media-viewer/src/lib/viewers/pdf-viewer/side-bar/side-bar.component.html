@@ -1,4 +1,4 @@
-<div id="toolbarSidebar">
+<div id="toolbarSidebar" [hidden]="!sidebarOpen">
   <div
     *ngIf="annotationsEnabled && selectedView === 'bookmarks'"
     class="splitToolbarButton toggled"
