@@ -50,7 +50,7 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
         this.selectedView = toggle ? 'outline' : 'bookmarks';
       })
     );
-    this.sidebarOpen = this.toolbarEvents.sidebarOpen;
+    this.sidebarOpen = this.toolbarEvents.sidebarOpen.closed;
     this.subscriptions.push(this.store.pipe(select(bookmarksSelectors.getScrollTop)).subscribe(scrollTopValue => {
       this.sidebarDiv.nativeElement.scrollTop = scrollTopValue;
     }));
