@@ -1,5 +1,6 @@
 <mv-comment-set-header
   [ngClass]="{ 'show-comments-panel': showCommentsPanel }"
+  [isHidden]="!showCommentsPanel"
   [showCommentSummary]="toolbarButtons.showCommentSummary"
   (showCommentSummaryDialog)="toggleCommentsSummary()"
 >
