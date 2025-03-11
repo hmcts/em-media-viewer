@@ -17,6 +17,7 @@ import { IcpEventService } from '../../../toolbar/icp-event.service';
 export class CommentSetHeaderComponent implements OnInit, OnDestroy {
 
   @Input() public showCommentSummary: boolean;
+  @Input() public isHidden: boolean;
   @Output() public readonly showCommentSummaryDialog = new EventEmitter();
 
   marginToComment: boolean;
