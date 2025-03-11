@@ -37,7 +37,7 @@
     </button>
   </div>
 </div>
-<div #sidebar id="sidebarContent" cdkScrollable (scroll)="onScroll($event)">
+<div #sidebar id="sidebarContent" cdkScrollable (scroll)="onScroll($event)" [hidden]="!sidebarOpen">
   <div id="outlineView" class="outlineWithDeepNesting">
     <div class="outlineItem" *ngIf="selectedView === 'outline'">
       <mv-outline-item

@@ -58,8 +58,28 @@ mv-pdf-viewer {
     opacity: 0 !important;
   }
 
+  .canvasWrapper {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .canvasWrapper > canvas{
+    max-width: 100%;
+    max-height: 100%;
+  }
+
   .textLayer {
     z-index: 1;
+  }
+
+  .textLayer .markedContent > span {
+    position: absolute;
+    transform-origin: left
+  }
+
+
+  .textLayer .markedContent > br {
+    position: absolute;
   }
 
   .annotationLayer * {
