@@ -28,10 +28,10 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild(BookmarksComponent)
   bookmarks: BookmarksComponent;
   treeChanged: boolean = false;
-
   selectedView = 'outline';
   bookmarkNodes$: Observable<BookmarkNode[]>;
   scrollTop: any;
+  sidebarOpen: any;
 
   private subscriptions: Subscription[] = [];
   @ViewChild('sidebar') sidebarDiv;
@@ -48,6 +48,9 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
     this.subscriptions.push(
       this.toolbarEvents.sidebarOutlineView.subscribe(toggle => {
         this.selectedView = toggle ? 'outline' : 'bookmarks';
+      }),
+      this.toolbarEvents.sidebarOpen.subscribe(toggle => {
+        this.sidebarOpen = toggle;
       })
     );
     this.subscriptions.push(this.store.pipe(select(bookmarksSelectors.getScrollTop)).subscribe(scrollTopValue => {
