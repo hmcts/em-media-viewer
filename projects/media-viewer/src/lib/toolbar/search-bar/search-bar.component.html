@@ -7,13 +7,13 @@
       <input
         class="govuk-input govuk-!-display-inline-block govuk-!-width-three-quarters govuk-!-margin-bottom-5 govuk-!-margin-top-5"
         type="text"
-        aria-label="Find in document"
+        aria-label="Search document"
         #findInput
         [(ngModel)]="searchText"
         (keydown.escape)="onEscapeKeyPress($event)"
         (keydown.enter)="onEnterKeyPress($event)"
-        title="Find in document"
-        placeholder="Find in document…"
+        title="Search document"
+        placeholder="Search document for…"
         tabindex="0"
         data-l10n-id="find_input"
       />
