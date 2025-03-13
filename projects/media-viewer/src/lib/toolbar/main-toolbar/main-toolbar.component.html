@@ -15,7 +15,7 @@
             [class.mv-toolbar__menu-button--more-options__hidden]="
               mvToolbar.offsetWidth >= allButtonsWidth
             "
-            aria-pressed="false"
+            aria-expanded="isDropdownMenuOpen"
             (click)="toggleMoreOptions()"
             cdkOverlayOrigin
             #trigger="cdkOverlayOrigin"
@@ -52,7 +52,7 @@
             [class.button-hidden-on-dropdown]="
               mvToolbarMain.offsetWidth >= widthRequiredForBtn['mvIndexBtn']
             "
-            aria-pressed="false"
+            aria-expanded="isDropdownMenuOpen"
             [disabled]="redactAllInProgress"
             (click)="toggleIndexSideBar(); isDropdownMenuOpen = false"
           >
@@ -74,7 +74,7 @@
                 mvToolbarMain.offsetWidth >=
                 widthRequiredForBtn['mvBookmarksBtn']
             }"
-            aria-pressed="false"
+            aria-expanded="isDropdownMenuOpen"
             [disabled]="redactAllInProgress"
             (click)="toggleBookmarksSideBar(); isDropdownMenuOpen = false"
           >
@@ -345,7 +345,7 @@
             data-l10n-id="redact"
             class="mv-button mv-toolbar__menu-button--redact"
             [ngClass]="onToolBarOffSetChange('mvRedactBtn')"
-            aria-pressed="false"
+            aria-expanded="isDropdownMenuOpen"
             (click)="toggleRedactBar(); isDropdownMenuOpen = false"
           >
             <span>{{ "Redact" | rpxTranslate }}</span>
@@ -404,7 +404,7 @@
             title="Comments"
             data-l10n-id="comments"
             [ngClass]="onToolBarOffSetChange('mvCommentsBtn')"
-            aria-pressed="false"
+            aria-expanded="isDropdownMenuOpen"
             (click)="toggleCommentsPanel(); isDropdownMenuOpen = false"
           >
             <span>{{ "Comments" | rpxTranslate }}</span>
