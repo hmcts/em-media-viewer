@@ -8,12 +8,14 @@
       class="splitToolbarButton left bookmark__sort__position"
       (click)="bookmarks.sort(bookmarks.positionSort)"
       title="Order by place in document"
+      aria-pressed="true"
     ></button>
     <button
       id="sortBookmarkCustom"
       class="splitToolbarButton left bookmark__sort__custom"
       (click)="bookmarks.sort(bookmarks.customSort)"
       title="Order manually"
+      aria-pressed="true"
     ></button>
   </div>
   <div class="splitToolbarButtonSeparator"></div>
@@ -35,7 +37,7 @@
     </button>
   </div>
 </div>
-<div #sidebar id="sidebarContent" cdkScrollable (scroll)="onScroll($event)">
+<div #sidebar id="sidebarContent" cdkScrollable (scroll)="onScroll($event)" [hidden]="!sidebarOpen">
   <div id="outlineView" class="outlineWithDeepNesting">
     <div class="outlineItem" *ngIf="selectedView === 'outline'">
       <mv-outline-item
