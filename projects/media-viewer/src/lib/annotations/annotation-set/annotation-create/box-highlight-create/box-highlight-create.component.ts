@@ -69,6 +69,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     offsetX = event.clientX - rect.left,
     offsetY = event.clientY - rect.top;
     console.log("updateHighlight rect:", rect);
+    console.log("updateHighlight clientX:", event.clientX);
+    console.log("updateHighlight clientY:", event.clientY);
     console.log("updateHighlight offsetX:", offsetX);
     console.log("updateHighlight offsetY:", offsetY);
 
@@ -103,6 +105,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
       offsetX = event.clientX - rect.left,
       offsetY = event.clientY - rect.top;
     console.log("updateHighlight rect:", rect);
+    console.log("updateHighlight clientX:", event.clientX);
+    console.log("updateHighlight clientY:", event.clientY);
     console.log("updateHighlight offsetX:", offsetX);
     console.log("updateHighlight offsetY:", offsetY);
     if (this.drawStartX > 0 && this.drawStartY > 0) {
