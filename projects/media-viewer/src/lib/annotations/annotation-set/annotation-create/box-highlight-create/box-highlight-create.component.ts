@@ -59,11 +59,19 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  initHighlight({ offsetX, offsetY }) {
+  initHighlight(event: MouseEvent) {
     if (this.wholePage) {
       this.highlightPage();
       return;
     }
+
+    const rect = (event.target as HTMLElement).getBoundingClientRect(),
+    offsetX = event.clientX - rect.left,
+    offsetY = event.clientY - rect.top;
+    console.log("updateHighlight rect:", rect);
+    console.log("updateHighlight offsetX:", offsetX);
+    console.log("updateHighlight offsetY:", offsetY);
+
     this.position = 'absolute';
     this.backgroundColor = 'yellow';
     this.drawStartX = offsetX;
@@ -121,6 +129,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.display = 'none';
     this.width = 0;
     this.height = 0;
+    this.backgroundColor = 'none';
+    this.position = 'initial';
     this.wholePage = false;
   }
 
