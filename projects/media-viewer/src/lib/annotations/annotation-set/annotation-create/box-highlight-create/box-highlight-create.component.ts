@@ -68,11 +68,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     const rect = (event.target as HTMLElement).getBoundingClientRect(),
     offsetX = event.clientX - rect.left,
     offsetY = event.clientY - rect.top;
-    console.log("updateHighlight rect:", rect);
-    console.log("updateHighlight clientX:", event.clientX);
-    console.log("updateHighlight clientY:", event.clientY);
-    console.log("updateHighlight offsetX:", offsetX);
-    console.log("updateHighlight offsetY:", offsetY);
+    console.log(`initHighlight: rect=${JSON.stringify(rect)}, clientX=${event.clientX}, clientY=${event.clientY}, offsetX=${offsetX}, offsetY=${offsetY}`);
 
     this.position = 'absolute';
     this.backgroundColor = 'yellow';
@@ -82,7 +78,6 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.display = 'block';
     this.height = 50;
     this.width = 50;
-
     this.top = this.drawStartY;
     this.left = this.drawStartX;
 
@@ -104,11 +99,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     const rect = (event.target as HTMLElement).getBoundingClientRect(),
       offsetX = event.clientX - rect.left,
       offsetY = event.clientY - rect.top;
-    console.log("updateHighlight rect:", rect);
-    console.log("updateHighlight clientX:", event.clientX);
-    console.log("updateHighlight clientY:", event.clientY);
-    console.log("updateHighlight offsetX:", offsetX);
-    console.log("updateHighlight offsetY:", offsetY);
+      console.log(`updateHighlight: rect=${JSON.stringify(rect)}, clientX=${event.clientX}, clientY=${event.clientY}, offsetX=${offsetX}, offsetY=${offsetY}`);
     if (this.drawStartX > 0 && this.drawStartY > 0) {
       this.height = Math.abs(offsetY - this.drawStartY);
       this.width = Math.abs(offsetX - this.drawStartX);

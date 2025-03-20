@@ -124,7 +124,7 @@ describe('BoxHighlightCreateComponent', () => {
 
     it('should initialise the box highlight creator with ratation on 90deg', () => {
       const mockTarget = document.createElement('div');
-      const event = { clientX: 150, clientY: 100, target: mockTarget } as unknown as MouseEvent;
+      const event = { clientX: 100, clientY: 200, target: mockTarget } as unknown as MouseEvent;
       spyOn(mockTarget, 'getBoundingClientRect').and.returnValue({
         top: 0,
         left: 0,
@@ -143,8 +143,8 @@ describe('BoxHighlightCreateComponent', () => {
 
       expect(component.height).toBe(50);
       expect(component.width).toBe(50);
-      expect(component.top).toBe(50);
-      expect(component.left).toBe(150);
+      expect(component.top).toBe(150);
+      expect(component.left).toBe(100);
     });
 
     it('should initialise the box highlight creator with ratation on 180deg', () => {
@@ -187,7 +187,7 @@ describe('BoxHighlightCreateComponent', () => {
         y: 0,
         toJSON: () => {}
       });
-      
+
       component.rotate = 270;
       fixture.detectChanges();
 
