@@ -41,6 +41,10 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public pageNumber = 1;
   public pageCount = 0;
   public isDropdownMenuOpen = false;
+  public isBookmarksOpen = false;
+  public isIndexOpen = false;
+  public isRedactOpen = false;
+  public isCommentsOpen = false;
   public dropdownMenuPositions = [
     new ConnectionPositionPair(
       {
@@ -130,6 +134,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       this.toolbarEvents.toggleSideBar(!sidebarOpen);
     }
     this.toolbarEvents.toggleSideBarView(true);
+    this.isIndexOpen = !this.isIndexOpen;
   }
 
   public onToolBarOffSetChange(buttonId: string) {
@@ -147,6 +152,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       this.toolbarEvents.toggleSideBar(!sidebarOpen);
     }
     this.toolbarEvents.toggleSideBarView(false);
+    this.isBookmarksOpen = !this.isBookmarksOpen;
   }
 
   public togglePresentBar() {
@@ -200,10 +206,12 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public toggleCommentsPanel() {
     this.toolbarEvents.toggleCommentsPanel(!this.toolbarEvents.commentsPanelVisible.getValue());
+    this.isCommentsOpen = !this.isCommentsOpen;
   }
 
   public toggleRedactBar() {
     this.toolbarEvents.toggleRedactionMode();
+    this.isRedactOpen = !this.isRedactOpen;
   }
 
   public toggleGrabNDrag() {
