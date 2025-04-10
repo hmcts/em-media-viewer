@@ -36,7 +36,8 @@ const mvData = {
   "PREVIEW_ENV": 'em-media-viewer-pr',
   "LOCAL_ENV": 'local',
   "STAGING_ENV": 'em-media-viewer-staging',
-  "NO_OUTLINE_CASE_ID": 'fbec2f90-6748-4274-bf4e-8b2b0e0b3153',
+  // Note: If someone removed document (with documentID below) then that will fail 'Load new document with no outlines' test
+  "NO_OUTLINE_CASE_ID": '291b1dd0-1627-43d8-beb0-a9cb171dc0b6',
 };
 
 module.exports = {

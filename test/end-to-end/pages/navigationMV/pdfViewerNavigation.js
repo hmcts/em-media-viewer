@@ -12,9 +12,11 @@ module.exports = async function (pageToNavigate) {
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
       // await I.seeInField(commonConfig.pageNumber, mvData.PAGE_NAVIGATION_NUMBER);
   } else {
+    await I.wait(3);
     await I.clearField(commonConfig.pageNumber);
     await I.fillField(commonConfig.pageNumber, pageToNavigate);
-    await I.click('#viewerContainer')
+    await I.pressKey('Enter');
+    await I.click('#viewerContainer');
     await I.wait(testConfig.BookmarksAndAnnotationsWait);
     await I.seeInField(commonConfig.pageNumber, pageToNavigate);
   }
