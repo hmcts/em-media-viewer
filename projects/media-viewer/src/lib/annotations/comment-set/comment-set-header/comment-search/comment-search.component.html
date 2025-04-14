@@ -6,6 +6,7 @@
   name="searchString"
   aria-label="search comments input"
   [ngModel]="searchString"
+  (ngModelChange)="searchString = $event"
 />
 <button
   type="button"
