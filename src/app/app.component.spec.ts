@@ -1,8 +1,7 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { RouterTestingModule } from '@angular/router/testing';
-
 import { TransferState } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
 

@@ -9,7 +9,8 @@
         type="text"
         aria-label="Search document"
         #findInput
-        [(ngModel)]="searchText"
+        [ngModel]="searchText"
+        (ngModelChange)="searchText = $event"
         (keydown.escape)="onEscapeKeyPress($event)"
         (keydown.enter)="onEnterKeyPress($event)"
         title="Search document"
