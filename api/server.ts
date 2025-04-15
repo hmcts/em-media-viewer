@@ -4,11 +4,15 @@ import * as nunjucks from 'nunjucks';
 import * as express from 'express';
 import { ClientRequest } from 'http';
 import { config } from './config';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import { TokenRepository } from './security/token-repository';
 import { ServiceAuthProviderClient } from './security/service-auth-provider-client';
 import { IdamClient } from './security/idam-client';
 import { healthcheckRoutes } from './health';
+
+interface EnhancedProxyOptions extends Options {
+    context?: string | string[];
+}
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -42,21 +46,24 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
         };
 
         const assemblyProxy = config.proxies.assembly;
-        app.use(createProxyMiddleware(assemblyProxy.endpoints, {
+        app.use(createProxyMiddleware({
+            context: assemblyProxy.endpoints,
             target: assemblyProxy.target,
             pathRewrite: assemblyProxy.pathRewrite,
             ...proxyOptions
-        }));
+        } as EnhancedProxyOptions));
 
         const annotationProxy = config.proxies.annotation;
-        app.use(createProxyMiddleware(annotationProxy.endpoints, {
+        app.use(createProxyMiddleware({
+            context: annotationProxy.endpoints,
             target: annotationProxy.target,
             pathRewrite: annotationProxy.pathRewrite,
             ...proxyOptions
-        }));
+        } as EnhancedProxyOptions));
 
         const dmStoreProxy = config.proxies.dmStore;
-        app.use(createProxyMiddleware(dmStoreProxy.endpoints, {
+        app.use(createProxyMiddleware({
+            context: dmStoreProxy.endpoints,
             target: dmStoreProxy.target,
             onProxyReq: (req: ClientRequest) => {
                 req.setHeader('user-roles', 'caseworker');
@@ -64,21 +71,26 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
             },
             secure: false,
             changeOrigin: true
-        }));
+        } as EnhancedProxyOptions));
 
         const npaProxy = config.proxies.npa;
-        app.use(createProxyMiddleware(npaProxy.endpoints, { target: npaProxy.target, ...proxyOptions }));
+        app.use(createProxyMiddleware({
+            context: npaProxy.endpoints, target: npaProxy.target, ...proxyOptions
+        } as EnhancedProxyOptions));
 
         const icpProxy = config.proxies.icp;
-        app.use(createProxyMiddleware(icpProxy.endpoints, {
+        app.use(createProxyMiddleware({
+            context: icpProxy.endpoints,
             target: icpProxy.target,
             ...proxyOptions,
             ws: true,
             headers: { 'Authorization': idamRepository.getToken() }
-        }));
+        } as EnhancedProxyOptions));
 
         const hrsProxy = config.proxies.hrsApi;
-        app.use(createProxyMiddleware(hrsProxy.endpoints, { target: hrsProxy.target, ...proxyOptions }));
+        app.use(createProxyMiddleware({
+            context: hrsProxy.endpoints, target: hrsProxy.target, ...proxyOptions
+        } as EnhancedProxyOptions));
 
         app.use('/', healthcheckRoutes);
         app.use('/dm-store', (req, res) => res.render('index.html'));
