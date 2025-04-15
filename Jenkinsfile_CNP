@@ -2,15 +2,23 @@
 
 properties([
   [
-    $class       : 'GithubProjectProperty',
-    displayName  : 'MediaViewer',
-    projectUrlStr: 'https://github.com/hmcts/em-media-viewer/'
+  $class       : 'GithubProjectProperty',
+  displayName  : 'MediaViewer',
+  projectUrlStr: 'https://github.com/hmcts/em-media-viewer/'
   ],
   pipelineTriggers([
-    [$class: 'GitHubPushTrigger']
+    cron('H 05 * * *')
+  ]),
+  parameters([
+    string(name: 'ENVIRONMENT', defaultValue: 'aat', description: 'Environment to test'),
+    string(name: 'IDAM_API_URL', defaultValue: 'https://idam-api.aat.platform.hmcts.net', description: 'The Url of IDAM'),
+    string(name: 'S2S_PROVIDER_URL', defaultValue: 'http://rpe-service-auth-provider-aat.service.core-compute-aat.internal', description: 'The Url of S2S provider'),
+    string(name: 'CCD_DATA_STORE_URL', defaultValue: 'http://ccd-data-store-api-aat.service.core-compute-aat.internal', description: 'The Url of ccd data store'),
+    string(name: 'SecurityRules',
+      defaultValue: 'https://raw.githubusercontent.com/hmcts/security-test-rules/master/conf/security-rules.conf',
+      description: 'The URL you want to run these tests against'),
   ])
 ])
-
 
 @Library("Infrastructure")
 
@@ -21,111 +29,91 @@ def channel   = '#xui-pipeline'
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
-env.DOCASSEMBLY_URL = "http://dg-docassembly-aat.service.core-compute-aat.internal"
-env.DM_STORE_APP_URL = "http://dm-store-aat.service.core-compute-aat.internal"
-env.HRS_API_URL = "http://em-hrs-api-aat.service.core-compute-aat.internal"
-env.ANNOTATION_API_URL = "http://em-anno-aat.service.core-compute-aat.internal"
-env.ICP_API_URL = "https://em-icp.aat.platform.hmcts.net"
-env.NPA_URL = "http://em-npa-aat.service.core-compute-aat.internal"
-env.IDAM_URL = "http://idam-api.aat.platform.hmcts.net"
-env.S2S_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
-env.REDIRECT_URL = "https://em-show-aat.service.core-compute-aat.internal/oauth2/callback"
-env.NODE_ENV="TEST"
-
 def vaultOverrides = [
-        'preview' : 'aat',
+  'aat' : params.ENVIRONMENT,
 ]
 
 def secrets = [
-        's2s-${env}': [
-                secret('microservicekey-em-gw', 'S2S_KEY')
-        ],
-        'rpa-${env}': [
-                secret('show-oauth2-token', 'IDAM_SECRET')
-        ],
-        'em-showcase-${env}': [
-          secret('ccd-user-email', 'CCD_CASEWORKER_E2E_EMAIL'),
-          secret('ccd-user-password', 'CCD_CASEWORKER_E2E_PASSWORD'),
-          secret('microservicekey-ccd-gw', 'MICROSERVICE_CCD_GW'),
-          secret('idam-client-secret', 'IDAM_CLIENT_SECRET')
-        ]
+  "s2s-${params.ENVIRONMENT}": [
+    secret('microservicekey-em-gw', 'S2S_KEY')
+  ],
+  "rpa-${params.ENVIRONMENT}": [
+    secret('show-oauth2-token', 'IDAM_SECRET')
+  ],
+  "em-showcase-${params.ENVIRONMENT}": [
+    secret('ccd-user-email', 'CCD_CASEWORKER_E2E_EMAIL'),
+    secret('ccd-user-password', 'CCD_CASEWORKER_E2E_PASSWORD'),
+    secret('microservicekey-ccd-gw', 'MICROSERVICE_CCD_GW'),
+    secret('idam-client-secret', 'IDAM_CLIENT_SECRET')
+  ]
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
-    [ $class: 'AzureKeyVaultSecret',
-      secretType: 'Secret',
-      name: secretName,
-      version: '',
-      envVariable: envVar
-    ]
+  [ $class: 'AzureKeyVaultSecret',
+    secretType: 'Secret',
+    name: secretName,
+    version: '',
+    envVariable: envVar
+  ]
 }
 
-withPipeline(type, product, component) {
-  enableSlackNotifications(channel)
+withNightlyPipeline(type, product, component) {
+  env.TEST_URL = 'http://em-media-viewer-aat.service.core-compute-aat.internal'
+  env.IDAM_URL = params.IDAM_API_URL
+  env.S2S_PROVIDER = params.S2S_PROVIDER_URL
+  env.CCD_DATA_STORE_API_URL = params.CCD_DATA_STORE_URL
+  env.RUNNING_ENV = params.ENVIRONMENT
   overrideVaultEnvironments(vaultOverrides)
   loadVaultSecrets(secrets)
-  enableSecurityScan()
-  env.EXECUTE_E2E=false
-  env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
-  onPR{
-  env.EXECUTE_E2E=true
-  }
-  enableAksStagingDeployment()
+
   disableLegacyDeployment()
+  enableSecurityScan()
+  enableSlackNotifications(channel)
+  enableFullFunctionalTest(60)
+  enableCrossBrowserTest()
 
   afterSuccess('checkout') {
-      sh ("rm -rf node_modules")
-      sh ("yarn cache clean")
-      sh ('npm rebuild node-sass')
-      sh ('yarn install --check-cache')
-      yarnBuilder.yarn('setup')
+    sh ("rm -rf node_modules")
+    sh ("yarn cache clean")
+    sh ('npm rebuild node-sass')
+    sh ('yarn install --check-cache')
+    yarnBuilder.yarn('setup')
   }
 
   afterSuccess('build') {
     yarnBuilder.yarn('build')
   }
 
-  afterAlways('smoketest:preview') {
+  afterAlways('functionalTest') {
     publishHTML([
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
       keepAll              : true,
-      reportDir            : "functional-output/",
-      reportFiles          : 'mv-e2e-result.html',
-      reportName           : 'PREVIEW Smoke Test'
+      reportDir            : "functional-output/reports/html",
+      reportFiles          : 'index.html',
+      reportName           : 'Functional Tests'
     ])
   }
 
-  afterAlways('functionalTest:preview') {
-      publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : "functional-output/reports/html",
-              reportFiles          : 'index.html',
-              reportName           : 'PREVIEW Functional Test'
-      ])
-  }
-
-  afterAlways('smoketest:aat') {
+  afterAlways('crossBrowserTest') {
     publishHTML([
       allowMissing         : true,
       alwaysLinkToLastBuild: true,
       keepAll              : true,
-      reportDir            : "functional-output/",
-      reportFiles          : 'mv-e2e-result.html',
-      reportName           : 'AAT Smoke Test'
+      reportDir            : "reports/tests/crossbrowser/",
+      reportFiles          : 'index.html',
+      reportName           : 'Cross Browser Tests'
     ])
   }
 
-  afterAlways('functionalTest:aat') {
-      publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : "functional-output/reports/html",
-              reportFiles          : 'index.html',
-              reportName           : 'AAT Functional Test'
-      ])
+  afterAlways('securityScan') {
+    publishHTML([
+      allowMissing         : true,
+      alwaysLinkToLastBuild: true,
+      keepAll              : true,
+      reportDir            : "reports/tests/",
+      reportFiles          : 'activescan.html',
+      reportName           : 'ZAP Security Scan Report'
+    ])
   }
 }
