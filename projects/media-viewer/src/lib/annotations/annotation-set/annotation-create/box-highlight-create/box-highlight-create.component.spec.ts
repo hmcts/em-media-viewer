@@ -97,7 +97,20 @@ describe('BoxHighlightCreateComponent', () => {
 
   describe('initHighlight', () => {
     it('should initialise the box highlight creator without ratation', () => {
-      const event = { offsetX: 100, offsetY: 200 } as MouseEvent;
+      const mockTarget = document.createElement('div');
+      spyOn(mockTarget, 'getBoundingClientRect').and.returnValue({
+        top: 0,
+        left: 0,
+        right: 100,
+        bottom: 100,
+        width: 100,
+        height: 100,
+        x: 100,
+        y: 100,
+
+        toJSON: () => {}
+      });
+      const event = { clientX: 100, clientY: 200, target: mockTarget } as unknown as MouseEvent;
 
       component.initHighlight(event);
 
@@ -110,7 +123,19 @@ describe('BoxHighlightCreateComponent', () => {
     });
 
     it('should initialise the box highlight creator with ratation on 90deg', () => {
-      const event = { offsetX: 100, offsetY: 200 } as MouseEvent;
+      const mockTarget = document.createElement('div');
+      const event = { clientX: 100, clientY: 200, target: mockTarget } as unknown as MouseEvent;
+      spyOn(mockTarget, 'getBoundingClientRect').and.returnValue({
+        top: 0,
+        left: 0,
+        right: 100,
+        bottom: 100,
+        width: 100,
+        height: 100,
+        x: 0,
+        y: 0,
+        toJSON: () => {}
+      });
       component.rotate = 90;
       fixture.detectChanges();
 
@@ -123,7 +148,19 @@ describe('BoxHighlightCreateComponent', () => {
     });
 
     it('should initialise the box highlight creator with ratation on 180deg', () => {
-      const event = { offsetX: 100, offsetY: 200 } as MouseEvent;
+      const mockTarget = document.createElement('div');
+      const event = { clientX: 100, clientY: 200, target: mockTarget } as unknown as MouseEvent;
+      spyOn(mockTarget, 'getBoundingClientRect').and.returnValue({
+        top: 0,
+        left: 0,
+        right: 100,
+        bottom: 100,
+        width: 100,
+        height: 100,
+        x: 0,
+        y: 0,
+        toJSON: () => {}
+      });
       component.rotate = 180;
       fixture.detectChanges();
 
@@ -136,7 +173,21 @@ describe('BoxHighlightCreateComponent', () => {
     });
 
     it('should initialise the box highlight creator with ratation on 270deg', () => {
-      const event = { offsetX: 100, offsetY: 200 } as MouseEvent;
+
+      const mockTarget = document.createElement('div');
+      const event = { clientX: 100, clientY: 200, target: mockTarget } as unknown as MouseEvent;
+      spyOn(mockTarget, 'getBoundingClientRect').and.returnValue({
+        top: 0,
+        left: 0,
+        right: 100,
+        bottom: 100,
+        width: 100,
+        height: 100,
+        x: 0,
+        y: 0,
+        toJSON: () => {}
+      });
+
       component.rotate = 270;
       fixture.detectChanges();
 
@@ -278,13 +329,27 @@ describe('BoxHighlightCreateComponent', () => {
 
     it('should create whole page highlight',
     inject([HighlightCreateService], (highlightService: HighlightCreateService) => {
+      const mockTarget = document.createElement('div');
+
+      const event = { offsetX: 200, offsetY: 300, target: mockTarget } as unknown as MouseEvent;
+      spyOn(mockTarget, 'getBoundingClientRect').and.returnValue({
+        top: 0,
+        left: 0,
+        right: 100,
+        bottom: 100,
+        width: 100,
+        height: 100,
+        x: 0,
+        y: 0,
+        toJSON: () => {}
+      });
       component.wholePage = true;
       fixture.detectChanges();
 
         spyOn(component.saveSelection, 'emit');
         spyOn(highlightService, 'applyRotation');
 
-        component.initHighlight({offsetX: 30, offsetY: 30});
+        component.initHighlight(event);
 
         expect(highlightService.applyRotation).toHaveBeenCalledWith(400, 200, 400, 200, 0, 0, 0, 1);
 

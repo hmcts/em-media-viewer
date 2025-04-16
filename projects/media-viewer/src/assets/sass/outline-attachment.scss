@@ -49,6 +49,10 @@ html[dir="rtl"] .outlineItem > .outlineItems {
   white-space: normal;
 }
 
+.outlineItem > a:focus{
+  color: rgba(0, 0, 0, 0.8);
+}
+
 .highlightedOutlineItem {
   background-color: white;
   color: rgba(0, 0, 0, 0.8);
