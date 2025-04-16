@@ -10,10 +10,6 @@ import { ServiceAuthProviderClient } from './security/service-auth-provider-clie
 import { IdamClient } from './security/idam-client';
 import { healthcheckRoutes } from './health';
 
-interface EnhancedProxyOptions extends Options {
-    context?: string | string[];
-}
-
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const frontendRoot = path.join(__dirname, '..', 'demo-app');
@@ -46,24 +42,21 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
         };
 
         const assemblyProxy = config.proxies.assembly;
-        app.use(createProxyMiddleware({
-            context: assemblyProxy.endpoints,
+        app.use(createProxyMiddleware(assemblyProxy.endpoints, {
             target: assemblyProxy.target,
             pathRewrite: assemblyProxy.pathRewrite,
             ...proxyOptions
-        } as EnhancedProxyOptions));
+        }));
 
         const annotationProxy = config.proxies.annotation;
-        app.use(createProxyMiddleware({
-            context: annotationProxy.endpoints,
+        app.use(createProxyMiddleware(annotationProxy.endpoints, {
             target: annotationProxy.target,
             pathRewrite: annotationProxy.pathRewrite,
             ...proxyOptions
-        } as EnhancedProxyOptions));
+        }));
 
         const dmStoreProxy = config.proxies.dmStore;
-        app.use(createProxyMiddleware({
-            context: dmStoreProxy.endpoints,
+        app.use(createProxyMiddleware(dmStoreProxy.endpoints, {
             target: dmStoreProxy.target,
             onProxyReq: (req: ClientRequest) => {
                 req.setHeader('user-roles', 'caseworker');
@@ -71,26 +64,25 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
             },
             secure: false,
             changeOrigin: true
-        } as EnhancedProxyOptions));
+        }));
 
         const npaProxy = config.proxies.npa;
-        app.use(createProxyMiddleware({
-            context: npaProxy.endpoints, target: npaProxy.target, ...proxyOptions
-        } as EnhancedProxyOptions));
+        app.use(createProxyMiddleware(npaProxy.endpoints, {
+            target: npaProxy.target, ...proxyOptions
+        }));
 
         const icpProxy = config.proxies.icp;
-        app.use(createProxyMiddleware({
-            context: icpProxy.endpoints,
+        app.use(createProxyMiddleware(icpProxy.endpoints, {
             target: icpProxy.target,
             ...proxyOptions,
             ws: true,
             headers: { 'Authorization': idamRepository.getToken() }
-        } as EnhancedProxyOptions));
+        }));
 
         const hrsProxy = config.proxies.hrsApi;
-        app.use(createProxyMiddleware({
-            context: hrsProxy.endpoints, target: hrsProxy.target, ...proxyOptions
-        } as EnhancedProxyOptions));
+        app.use(createProxyMiddleware(hrsProxy.endpoints, {
+            target: hrsProxy.target, ...proxyOptions
+        }));
 
         app.use('/', healthcheckRoutes);
         app.use('/dm-store', (req, res) => res.render('index.html'));
