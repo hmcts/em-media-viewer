@@ -16,7 +16,7 @@ export const config = {
       ],
       target: process.env['REFORM_ENVIRONMENT'] ? process.env['DOCASSEMBLY_URL'] : 'http://localhost:4631',
       pathRewrite: {
-        '^/doc-assembly': '/api'
+        '/doc-assembly': '/api'
       }
     },
     dmStore: {
@@ -31,7 +31,7 @@ export const config = {
       endpoints: ['/em-anno'],
       target: process.env['REFORM_ENVIRONMENT'] ? process.env['ANNOTATION_API_URL'] : 'http://localhost:4623',
       pathRewrite: {
-        '^/em-anno': '/api'
+        '/em-anno': '/api'
       }
     },
     npa: {
