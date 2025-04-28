@@ -18,7 +18,7 @@ describe('SocketService', () => {
     socketService = new SocketService();
     spyOn(socketService, 'getSocketClient').and.returnValue(of(mockSocketClient));
     spyOnAllFunctions(mockSocketClient);
-    socketService.connect('');
+    socketService.connect('wss://www.test.com?access-token=access-token', 'caseId', 'documentId');
   });
 
   it('should join', () => {
@@ -126,6 +126,13 @@ describe('SocketService', () => {
     const nextSpy = spyOn(socketService.connected$, 'asObservable');
     socketService.connected();
     expect(nextSpy).toHaveBeenCalled();
+  });
+
+  it('should properly construct URL with search params in connect method', () => {
+    socketService = new SocketService();
+    const getSocketClientSpy = spyOn(socketService, 'getSocketClient').and.returnValue(of(mockSocketClient));
+    socketService.connect('wss://www.test.com', 'testCase', 'testDocument');
+    expect(getSocketClientSpy).toHaveBeenCalledWith('wss://www.test.com/?sessionId=testCase--testDocument');
   });
 
 });
