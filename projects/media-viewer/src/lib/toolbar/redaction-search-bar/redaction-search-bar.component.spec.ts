@@ -1,6 +1,6 @@
 import { RpxTranslationModule } from 'rpx-xui-translation';
 
-import { async, ComponentFixture, TestBed, waitForAsync, fakeAsync, tick, flush, inject } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, flush, inject } from '@angular/core/testing';
 import { RedactionSearchBarComponent } from './redaction-search-bar.component';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
 import { SearchMode, SearchResultsCount, SearchType, ToolbarEventService } from '../toolbar-event.service';
