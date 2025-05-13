@@ -32,6 +32,8 @@ export class TokenRepository {
     this.token = await this.client.getToken();
 
     logger.log("Refreshed token");
+  } catch (err) {
+    logger.error("Failed to refresh token", err.message);
   }
 
   /**
