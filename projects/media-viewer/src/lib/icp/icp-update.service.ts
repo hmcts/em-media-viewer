@@ -12,7 +12,7 @@ export class IcpUpdateService {
 
   joinSession(username: string, session: IcpSession) {
     this.session = session;
-    this.socket.connect(session.connectionUrl);
+    this.socket.connect(session.connectionUrl, session.caseId, session.documentId);
     this.socket.connected().subscribe(isConnected => {
       if (isConnected) {
         this.socket.join({ ...this.session, username });
