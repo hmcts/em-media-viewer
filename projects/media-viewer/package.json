@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.0.16-angular-upgrade",
+  "version": "4.0.16-govuk-frontend-upgrade",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
