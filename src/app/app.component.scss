@@ -5,7 +5,7 @@ $hmcts-page-width: 1220px;
 
 // Consumer component will have to import following dependencies // START
 // Import GOV.UK Frontend
-@import "node_modules/govuk-frontend/govuk/all";
+@import "govuk-frontend/dist/govuk/all";
 // Import Media Viewer Styles
 @import "../../projects/media-viewer/src/assets/all";
 // END
