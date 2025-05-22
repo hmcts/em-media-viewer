@@ -20,10 +20,6 @@ $aui-assets-path : "/public/images/";
   margin-right: auto;
   max-width: $aui-page-width;
 
-  @include govuk-if-ie8 {
-    width: $aui-page-width;
-  }
-
   // On mobile, add half width gutters
   margin: 0 $aui-gutter-half;
 
