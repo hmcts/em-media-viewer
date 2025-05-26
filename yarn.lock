@@ -3732,7 +3732,7 @@ __metadata:
     govuk-frontend: ^4.2.0
     ini: 4.1.3
     jasmine: ^5.0.0
-    jasmine-core: ~5.2.0
+    jasmine-core: ~5.7.0
     jasmine-marbles: ^0.9.1
     jasmine-reporters: ^2.3.2
     jasmine-spec-reporter: ~7.0.0
@@ -15478,10 +15478,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:~5.2.0":
-  version: 5.2.0
-  resolution: "jasmine-core@npm:5.2.0"
-  checksum: e97e8f1fdc4468fe73f228157964095580c60c215971b45464e79c41482aa215c9a8cfb8cac27c25c8a1592348f520c44042ce1216a335fb88f9f732ff9053dd
+"jasmine-core@npm:~5.7.0":
+  version: 5.7.0
+  resolution: "jasmine-core@npm:5.7.0"
+  checksum: b492956dcdebec30fcddb99406281d55794133cab79c87ae80ccd8cb6598b73b1fc346d99ec1b951423f5023927f89a4cf60ccf5d91be71c1c265104efdff250
   languageName: node
   linkType: hard
 
