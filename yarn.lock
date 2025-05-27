@@ -21626,13 +21626,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"run-applescript@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "run-applescript@npm:7.0.0"
-  checksum: b02462454d8b182ad4117e5d4626e9e6782eb2072925c9fac582170b0627ae3c1ea92ee9b2df7daf84b5e9ffe14eb1cf5fb70bc44b15c8a0bfcdb47987e2410c
-  languageName: node
-  linkType: hard
-
 "run-async@npm:^2.2.0":
   version: 2.4.1
   resolution: "run-async@npm:2.4.1"
