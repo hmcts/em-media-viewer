@@ -10,9 +10,9 @@ export class IcpUpdateService {
 
   constructor(private socket: SocketService) { }
 
-  joinSession(username: string, session: IcpSession) {
+  joinSession(username: string, session: IcpSession, token: string) {
     this.session = session;
-    this.socket.connect(session.connectionUrl);
+    this.socket.connect(`${session.connectionUrl}?access_token=${token}`);
     this.socket.connected().subscribe(isConnected => {
       if (isConnected) {
         this.socket.join({ ...this.session, username });
