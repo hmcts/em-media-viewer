@@ -116,7 +116,8 @@
     "got": "^14.0.0",
     "body-parser": "^1.20.3",
     "cross-spawn": "^7.0.6",
-    "nanoid": "^3.3.11"
+    "nanoid": "^3.3.11",
+    "formidable": "^3.5.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.15",
@@ -141,7 +142,7 @@
     "@typescript-eslint/parser": "7.16.0",
     "chai": "^4.3.0",
     "chai-as-promised": "^7.1.1",
-    "chai-http": "4.4.0",
+    "chai-http": "^5.0.0",
     "circular-dependency-plugin": "^5.0.2",
     "codeceptjs": "3.6.7",
     "codecov": "^3.7.1",
