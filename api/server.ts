@@ -4,7 +4,7 @@ import * as nunjucks from 'nunjucks';
 import * as express from 'express';
 import { ClientRequest } from 'http';
 import { config } from './config';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { legacyCreateProxyMiddleware } from 'http-proxy-middleware';
 import { TokenRepository } from './security/token-repository';
 import { ServiceAuthProviderClient } from './security/service-auth-provider-client';
 import { IdamClient } from './security/idam-client';
@@ -42,21 +42,21 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
         };
 
         const assemblyProxy = config.proxies.assembly;
-        app.use(createProxyMiddleware(assemblyProxy.endpoints, {
+        app.use(legacyCreateProxyMiddleware(assemblyProxy.endpoints, {
             target: assemblyProxy.target,
             pathRewrite: assemblyProxy.pathRewrite,
             ...proxyOptions
         }));
 
         const annotationProxy = config.proxies.annotation;
-        app.use(createProxyMiddleware(annotationProxy.endpoints, {
+        app.use(legacyCreateProxyMiddleware(annotationProxy.endpoints, {
             target: annotationProxy.target,
             pathRewrite: annotationProxy.pathRewrite,
             ...proxyOptions
         }));
 
         const dmStoreProxy = config.proxies.dmStore;
-        app.use(createProxyMiddleware(dmStoreProxy.endpoints, {
+        app.use(legacyCreateProxyMiddleware(dmStoreProxy.endpoints, {
             target: dmStoreProxy.target,
             onProxyReq: (req: ClientRequest) => {
                 req.setHeader('user-roles', 'caseworker');
@@ -67,10 +67,10 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
         }));
 
         const npaProxy = config.proxies.npa;
-        app.use(createProxyMiddleware(npaProxy.endpoints, { target: npaProxy.target, ...proxyOptions }));
+        app.use(legacyCreateProxyMiddleware(npaProxy.endpoints, { target: npaProxy.target, ...proxyOptions }));
 
         const icpProxy = config.proxies.icp;
-        app.use(createProxyMiddleware(icpProxy.endpoints, {
+        app.use(legacyCreateProxyMiddleware(icpProxy.endpoints, {
             target: icpProxy.target,
             ...proxyOptions,
             ws: true,
@@ -78,7 +78,7 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
         }));
 
         const hrsProxy = config.proxies.hrsApi;
-        app.use(createProxyMiddleware(hrsProxy.endpoints, { target: hrsProxy.target, ...proxyOptions }));
+        app.use(legacyCreateProxyMiddleware(hrsProxy.endpoints, { target: hrsProxy.target, ...proxyOptions }));
 
         app.use('/', healthcheckRoutes);
         app.use('/dm-store', (req, res) => res.render('index.html'));
@@ -93,5 +93,3 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
         logger.error('Could not start em-showcase application >> ', err.message);
         logger.error('\n', err.stack);
     });
-
-
