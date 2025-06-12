@@ -22,8 +22,10 @@ export class SocketService implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  connect(url: string) {
-    return this.getSocketClient(url).subscribe((socket: WebSocket) => {
+  connect(url: string, caseId: string, documentId: string) {
+    const socketUrl = new URL(url);
+    socketUrl.searchParams.append('sessionId', `${caseId}--${documentId}`);
+    return this.getSocketClient(socketUrl.toString()).subscribe((socket: WebSocket) => {
 
       socket.onopen = (event: Event) => {
         this.connected$.next(true);
