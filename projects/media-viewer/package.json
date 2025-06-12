@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.0.16",
+  "version": "4.0.16-exui-2900-rc1",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
