@@ -109,6 +109,9 @@
   "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/._darcs_GET": "ignore",
   "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/.bzr_GET": "ignore",
   "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/.hg_GET": "ignore",
-  "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/BitKeeper_GET": "ignore"
-
+  "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/BitKeeper_GET": "ignore",
+  "10104_User Agent Fuzzer_http://em-media-viewer-aat.service.core-compute-aat.internal/robots.txt_GET": "ignore",
+  "10104_User Agent Fuzzer_http://em-media-viewer-aat.service.core-compute-aat.internal/polyfills.8ba4f35154d017a2.js_GET": "ignore",
+  "10104_User Agent Fuzzer_http://em-media-viewer-aat.service.core-compute-aat.internal/_GET": "ignore",
+  "40025_Proxy Disclosure_http://em-media-viewer-aat.service.core-compute-aat.internal/runtime.0dcefbd05835f425.js_GET": "ignore"
 }
