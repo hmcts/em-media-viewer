@@ -5,8 +5,8 @@
            id="event-name"
            name="event-name"
            type="text"
-           [(ngModel)]="searchText"
-           (ngModelChange)="search()">
+           [ngModel]="searchText"
+           (ngModelChange)="searchText = $event; search()">
   </div>
   <button class="govuk-button" id="findPrevious" (click)="searchPrev()"><-</button>
   <button class="govuk-button" id="findNext" (click)="searchNext()">-></button>

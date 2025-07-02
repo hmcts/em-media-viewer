@@ -58,7 +58,8 @@
           id="keywords"
           name="keywords"
           type="text"
-          [(ngModel)]="searchValue"
+          [ngModel]="searchValue"
+          (ngModelChange)="searchValue = $event"
         />
       </div>
 
