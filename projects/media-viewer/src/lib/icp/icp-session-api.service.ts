@@ -15,6 +15,12 @@ export class IcpSessionApiService {
     return this.httpClient
       .get<{ username: string, session: IcpSession }>(`${this.ICP_SESSION_API}/${payload.caseId}/${payload.documentId}`,
         { observe: 'response', withCredentials: true })
-      .pipe(map(response => response.body));
+      .pipe(map(response => {
+        const token = response.headers.get('X-Access-Token');
+        return { 
+          ...response.body, 
+          token
+        };
+      }));
   }
 }

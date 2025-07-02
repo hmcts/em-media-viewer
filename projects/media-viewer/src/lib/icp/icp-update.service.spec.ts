@@ -59,7 +59,7 @@ describe('UpdateService', () => {
       spyOn(socketService, 'listen');
       spyOn(socketService, 'connected').and.returnValue(of(true));
 
-      updateService.joinSession(username, session);
+      updateService.joinSession(username, session, "token");
       expect(updateService.session).toEqual(session);
       expect(socketService.connect).toHaveBeenCalled();
       expect(socketService.join).toHaveBeenCalled();
