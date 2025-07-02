@@ -23,7 +23,8 @@
         title="Redact from search"
         placeholder="{{ titleText + ' from search...' | rpxTranslate }}"
         data-l10n-id="search_input"
-        [(ngModel)]="searchText"
+        [ngModel]="searchText"
+        (ngModelChange)="searchText = $event"
         (keydown.escape)="onEscapeKeyPress($event)"
         (keydown.enter)="onEnterKeyPress($event)"
       />
