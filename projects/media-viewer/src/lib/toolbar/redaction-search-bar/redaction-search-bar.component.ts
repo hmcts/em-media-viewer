@@ -13,6 +13,7 @@ import * as fromRedactionActions from '../../store/actions/redaction.actions';
 import { v4 as uuid } from 'uuid';
 import { HighlightCreateService } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.service';
 import { some } from 'lodash';
+import { HtmlTemplatesHelper } from '../../shared/util/helpers/html-templates.helper';
 
 @Component({
   selector: 'mv-redaction-search-bar',
@@ -246,7 +247,7 @@ export class RedactionSearchBarComponent implements OnInit, OnDestroy {
         const clientRects = range.getClientRects();
 
         if (clientRects) {
-          const parentRect = selectedHighLightedElements[0].parentElement.parentElement.getBoundingClientRect();
+          const parentRect = HtmlTemplatesHelper.getAdjustedBoundingRect(selectedHighLightedElements[0]?.parentElement?.parentElement);
           const selectionRectangles: Rectangle[] = [];
           for (let i = 0; i < clientRects.length; i++) {
             const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);

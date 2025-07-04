@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
 import { HighlightCreateService } from '../highlight-create/highlight-create.service';
 import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
-
+import { HtmlTemplatesHelper } from '../../../../shared/util/helpers/html-templates.helper';
 @Component({
   selector: 'mv-box-highlight-create',
   templateUrl: './box-highlight-create.component.html',
@@ -65,7 +65,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const rect = (event.target as HTMLElement).getBoundingClientRect(),
+    const rect = HtmlTemplatesHelper.getAdjustedBoundingRect((event.target as HTMLElement)),
     offsetX = event.clientX - rect.left,
     offsetY = event.clientY - rect.top;
     console.log(`initHighlight: rect=${JSON.stringify(rect)}, clientX=${event.clientX}, clientY=${event.clientY}, offsetX=${offsetX}, offsetY=${offsetY}`);
@@ -96,10 +96,9 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   }
 
   updateHighlight(event: MouseEvent) {
-    const rect = (event.target as HTMLElement).getBoundingClientRect(),
+    const rect = HtmlTemplatesHelper.getAdjustedBoundingRect(event.target as HTMLElement),
       offsetX = event.clientX - rect.left,
       offsetY = event.clientY - rect.top;
-      console.log(`updateHighlight: rect=${JSON.stringify(rect)}, clientX=${event.clientX}, clientY=${event.clientY}, offsetX=${offsetX}, offsetY=${offsetY}`);
     if (this.drawStartX > 0 && this.drawStartY > 0) {
       this.height = Math.abs(offsetY - this.drawStartY);
       this.width = Math.abs(offsetX - this.drawStartX);
@@ -113,6 +112,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
       let rectangle = this.highlightService
         .applyRotation(this.pageHeight, this.pageWidth, this.height, this.width, this.top, this.left, this.rotate, this.zoom);
       rectangle = { id: uuid(), ...rectangle } as any;
+      console.log(`createHighlight: rectangle=${JSON.stringify(rectangle)}`);
       this.saveSelection.emit({ rectangles: [rectangle], page: this.page });
       this.resetHighlight();
     }

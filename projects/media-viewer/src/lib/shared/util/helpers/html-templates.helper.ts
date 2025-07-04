@@ -14,4 +14,16 @@ export class HtmlTemplatesHelper {
       return config.hint ? `${config.id}-hint` : null;
     }
   }
+
+  static getAdjustedBoundingRect(element: HTMLElement): DOMRect {
+    const viewportX = window.visualViewport.offsetLeft
+    const viewportY = window.visualViewport.offsetTop;
+    const viewportScale = window.visualViewport.scale;
+    const viewportPageX  = window.visualViewport.pageLeft;
+    const viewportPageY  = window.visualViewport.pageTop;
+    if (viewportX || viewportY || viewportScale  || viewportPageX || viewportPageY) {
+      console.log(`Viewport X: ${viewportX}, Y: ${viewportY}, Scale: ${viewportScale}, PageX: ${viewportPageX}, PageY: ${viewportPageY}`);
+    }
+    return element.getBoundingClientRect();
+  }
 }
