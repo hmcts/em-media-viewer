@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CommentComponent } from './comment/comment.component';
+import { HtmlTemplatesHelper } from '../../shared/util/helpers/html-templates.helper';
 
 @Injectable()
 export class CommentSetRenderService {
@@ -51,7 +52,7 @@ export class CommentSetRenderService {
   }
 
   private height(element: any) {
-    return element.form.nativeElement.getBoundingClientRect().height;
+    return HtmlTemplatesHelper.getAdjustedBoundingRect(element.form.nativeElement)?.height | 0;
   }
 
   private difference(a: number, b: number): number { return Math.abs(a - b); }
