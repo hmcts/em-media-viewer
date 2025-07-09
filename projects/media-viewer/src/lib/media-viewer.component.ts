@@ -32,6 +32,7 @@ import * as fromAnnoActions from './store/actions/annotation.actions';
 import * as fromRedactActions from './store/actions/redaction.actions';
 import * as fromDocumentActions from './store/actions/document.actions';
 import { IcpEventService } from './toolbar/icp-event.service';
+import { HtmlTemplatesHelper } from './shared/util/helpers/html-templates.helper';
 
 enum CoreContentTypes {
   PDF = 'pdf',
@@ -138,7 +139,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     }
 
     if (!this.height) {
-      const compOffsetTop = this.elRef.nativeElement.getBoundingClientRect().top;
+      const compOffsetTop = HtmlTemplatesHelper.getAdjustedBoundingRect(this.elRef.nativeElement).top;
       const viewerOffsetTop = this.viewerRef.nativeElement.offsetTop;
       const offset = compOffsetTop + viewerOffsetTop;
 

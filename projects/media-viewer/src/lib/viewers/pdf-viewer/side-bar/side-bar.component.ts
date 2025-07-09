@@ -54,7 +54,9 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       })
     );
     this.subscriptions.push(this.store.pipe(select(bookmarksSelectors.getScrollTop)).subscribe(scrollTopValue => {
-      this.sidebarDiv.nativeElement.scrollTop = scrollTopValue;
+      if (this.sidebarDiv?.nativeElement) {
+        this.sidebarDiv.nativeElement.scrollTop = scrollTopValue
+      }
     }));
   }
 
