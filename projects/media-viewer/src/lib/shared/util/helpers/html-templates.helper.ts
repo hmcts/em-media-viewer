@@ -15,13 +15,13 @@ export class HtmlTemplatesHelper {
     }
   }
 
-  static getAdjustedBoundingRect(element: HTMLElement): DOMRect {
+  static getAdjustedBoundingRect(element: HTMLElement, log: boolean = true): DOMRect {
     const viewportX = window.visualViewport.offsetLeft
     const viewportY = window.visualViewport.offsetTop;
     const viewportScale = window.visualViewport.scale;
     const viewportPageX  = window.visualViewport.pageLeft;
     const viewportPageY  = window.visualViewport.pageTop;
-    if (viewportX || viewportY || (viewportScale != 1)  || viewportPageX || viewportPageY) {
+    if (log && viewportX || viewportY || (viewportScale != 1)  || viewportPageX || viewportPageY) {
       console.log(`Element: ${element.id} Viewport X: ${viewportX}, Y: ${viewportY}, Scale: ${viewportScale}, PageX: ${viewportPageX}, PageY: ${viewportPageY}`);
     }
     return element.getBoundingClientRect();

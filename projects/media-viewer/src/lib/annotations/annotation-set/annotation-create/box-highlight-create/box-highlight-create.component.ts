@@ -96,7 +96,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   }
 
   updateHighlight(event: MouseEvent) {
-    const rect = HtmlTemplatesHelper.getAdjustedBoundingRect(event.target as HTMLElement),
+    const rect = HtmlTemplatesHelper.getAdjustedBoundingRect(event.target as HTMLElement, false),
       offsetX = event.clientX - rect.left,
       offsetY = event.clientY - rect.top;
     if (this.drawStartX > 0 && this.drawStartY > 0) {
