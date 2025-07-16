@@ -10,6 +10,7 @@ import { ViewerEventService } from '../../../../viewers/viewer-event.service';
 import * as fromAnnotationActions from '../../../../store/actions/annotation.actions';
 import { HighlightCreateService } from './highlight-create.service';
 import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
+import { HtmlTemplatesHelper } from '../../../../shared/util/helpers/html-templates.helper';
 
 @Directive({
   selector: '[mvCreateTextHighlight]'
@@ -93,7 +94,8 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
 
         if (clientRects) {
 
-          const parentRect = localElement.closest(".textLayer").getBoundingClientRect();
+          const parentRect = HtmlTemplatesHelper
+            .getAdjustedBoundingRect(localElement.closest(".textLayer"));
           const selectionRectangles: Rectangle[] = [];
           for (let i = 0; i < clientRects.length; i++) {
             const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
