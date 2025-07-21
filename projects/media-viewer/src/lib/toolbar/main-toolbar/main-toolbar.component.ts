@@ -15,6 +15,7 @@ import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { NumberHelperService } from '../../../lib/shared/util/services/number.helper.service';
 import { IcpEventService } from '../icp-event.service';
+import { HtmlTemplatesHelper } from '../../shared/util/helpers/html-templates.helper';
 
 @Component({
   selector: 'mv-main-toolbar',
@@ -101,8 +102,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public ngAfterViewInit() {
-    Array.from(this.mvToolbarMain.nativeElement.children).forEach(button => {
-      this.allButtonsWidth += button.getBoundingClientRect().width;
+    Array.from(this.mvToolbarMain.nativeElement.children).forEach((button: HTMLElement) => {
+      this.allButtonsWidth += HtmlTemplatesHelper.getAdjustedBoundingRect(button).width;
       this.widthRequiredForBtn[button.id] = this.allButtonsWidth;
     });
     this.cdr.detectChanges();

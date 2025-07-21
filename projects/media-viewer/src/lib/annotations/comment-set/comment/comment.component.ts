@@ -23,6 +23,7 @@ import * as fromStore from '../../../store/reducers/reducers';
 import * as fromSelector from '../../../store/selectors/annotation.selectors';
 import { AnnotationSet } from '../../annotation-set/annotation-set.model';
 import { Annotation } from '../../annotation-set/annotation-view/annotation.model';
+import { HtmlTemplatesHelper } from '../../../shared/util/helpers/html-templates.helper';
 
 @Component({
   selector: 'mv-anno-comment',
@@ -195,6 +196,6 @@ export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
 
 
   get height() {
-    return this.form.nativeElement.getBoundingClientRect().height / this.zoom;
+    return HtmlTemplatesHelper.getAdjustedBoundingRect(this.form.nativeElement).height / this.zoom;
   }
 }
