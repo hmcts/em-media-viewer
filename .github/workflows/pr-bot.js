@@ -345,11 +345,7 @@ async function handlePRReview(event) {
   const approvalCount = await github.getReviews(repo, prNumber);
 
   if (approvalCount >= CONFIG.REQUIRED_APPROVALS) {
-    // check if pr has changes requested
-    const state = await stateManager.readState();
-    const prData = state.repositories[repo]?.pullRequests[prNumber];
-
-    if (!prData?.changesRequested) {
+    if (reviewState !== 'changes_requested') {
       // post standalone approval message
       const message = formatPRMessage(prNumber, prAuthor, prTitle, repo, approvalCount, '✅✅ ');
       await slack.postMessage(ENV.slackChannelId, message);
