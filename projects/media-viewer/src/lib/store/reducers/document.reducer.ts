@@ -124,18 +124,48 @@ export function docReducer (state = initialDocumentState,
       let pageHeight;
       let pageWidth;
       let hasDifferentPageSize = state.hasDifferentPageSize;
+      // we store the first page, as this has been rendered we can use this to get the rounding value
+      const pageNumberInput = document.getElementById('pageNumber') as HTMLInputElement;
+      const pageIndex = pageNumberInput ? parseInt(pageNumberInput.value, 10) : 0;
+      console.log('pageIndex', pageIndex);
+      const loadedPage = payload[pageIndex] && payload[pageIndex].div && payload[pageIndex].div['attributes'] && payload[pageIndex].div['attributes'].style
+        ? payload[pageIndex].div['attributes'].style.value
+        : '';
       payload.forEach(page => {
+        const sizingValue = page.div && page.div['attributes'] && page.div['attributes'].style
+          ? page.div['attributes'].style.value
+          : '';
+        const widthMatch = sizingValue.match(/width:\s*round\(down,\s*var\(--scale-factor\)\s*\*\s*([\d.]+)px,.*var\(--scale-round-x, ([\d.]+)px\)\)/);
+        const heightMatch = sizingValue.match(/height:\s*round\(down,\s*var\(--scale-factor\)\s*\*\s*([\d.]+)px,.*var\(--scale-round-y, ([\d.]+)px\)\)/);
+        const scaleRoundXMatch = loadedPage.match(/--scale-round-x:\s*([\d.]+)px/);
+        const scaleRoundYMatch = loadedPage.match(/--scale-round-y:\s*([\d.]+)px/);
+        const scaleFactor = page.viewportScale ?? 1;
+        const scaleRoundX = scaleRoundXMatch ? parseFloat(scaleRoundXMatch[1]) : 1;
+        const scaleRoundY = scaleRoundYMatch ? parseFloat(scaleRoundYMatch[1]) : 1;
+        const baseWidth = widthMatch ? parseFloat(widthMatch[1]) : undefined;
+        const baseHeight = heightMatch ? parseFloat(heightMatch[1]) : undefined;
+        function roundDown(value: number, step: number): number {
+          return Math.floor(value / step) * step;
+        }
+        const computedWidth = baseWidth !== undefined
+          ? roundDown(scaleFactor * baseWidth, scaleRoundX)
+          : page.div['clientWidth'];
+        const computedHeight = baseHeight !== undefined
+          ? roundDown(scaleFactor * baseHeight, scaleRoundY)
+          : page.div['clientHeight'];
+        console.log(computedHeight, computedWidth)
+
         if (!hasDifferentPageSize && pageHeight && pageWidth &&
-          (pageHeight !== page.div['clientHeight'] || pageWidth !== page.div['clientWidth'])) {
-            hasDifferentPageSize = true;
+          (pageHeight !== computedHeight || pageWidth !== computedWidth)) {
+          hasDifferentPageSize = true;
         } else {
-          pageHeight = page.div['clientHeight'];
-          pageWidth = page.div['clientWidth'];
+          pageHeight = computedHeight;
+          pageWidth = computedWidth;
         }
         const styles = {
           left: page.div['offsetLeft'],
-          height: page.div['clientHeight'],
-          width: page.div['clientWidth']
+          height: computedHeight,
+          width: computedWidth
         };
 
         const scaleRotation = {
