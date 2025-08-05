@@ -37,12 +37,18 @@ jobs:
             SLACK_BOT_TOKEN=$(az keyvault secret show --name "exui-code-reviews-bot-slack-token" --vault-name "${{ secrets.AZURE_VAULT_NAME }}" --query "value" --output tsv)
             echo "::add-mask::$SLACK_BOT_TOKEN"
             echo "SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN" >> $GITHUB_ENV
-  
+
+            # Get token for utils repo access from Azure Key Vault
+            UTILS_REPO_TOKEN=$(az keyvault secret show --name "pr-bot-utils-repo-pat" --vault-name "${{ secrets.AZURE_VAULT_NAME }}" --query "value" --output tsv)
+            echo "::add-mask::$UTILS_REPO_TOKEN"
+            echo "UTILS_REPO_TOKEN=$UTILS_REPO_TOKEN" >> $GITHUB_ENV
+
       - name: Run PR-bot script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_CHANNEL: 'exui-code-reviews'
           SLACK_CHANNEL_ID: 'C06KG2JFZEF'
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
+          UTILS_REPO_TOKEN: ${{ env.UTILS_REPO_TOKEN }}
         run: |
           node .github/workflows/pr-bot.js
