@@ -126,17 +126,11 @@ export function docReducer (state = initialDocumentState,
       let hasDifferentPageSize = state.hasDifferentPageSize;
       // we store the first page, as this has been rendered we can use this to get the rounding value
       const pageNumberInput = document.getElementById('pageNumber') as HTMLInputElement;
-      const pageIndex = pageNumberInput && pageNumberInput.value
-        ? parseInt(pageNumberInput.value, 10) - 1
-        : 0;
+      const pageIndex = pageNumberInput?.value ? parseInt(pageNumberInput.value, 10) - 1 : 0;
       console.log('pageIndex', pageIndex);
-      const loadedPage = payload[pageIndex] && payload[pageIndex].div && payload[pageIndex].div['attributes'] && payload[pageIndex].div['attributes'].style
-        ? payload[pageIndex].div['attributes'].style.value
-        : '';
+      const loadedPage = payload[pageIndex]?.div['attributes']?.style?.value ?? '';
       payload.forEach(page => {
-        const sizingValue = page.div && page.div['attributes'] && page.div['attributes'].style
-          ? page.div['attributes'].style.value
-          : '';
+        const sizingValue = page.div?.['attributes']?.style?.value ?? '';
         const widthMatch = sizingValue.match(/width:\s*round\(down,\s*var\(--scale-factor\)\s*\*\s*([\d.]+)px,.*var\(--scale-round-x, ([\d.]+)px\)\)/);
         const heightMatch = sizingValue.match(/height:\s*round\(down,\s*var\(--scale-factor\)\s*\*\s*([\d.]+)px,.*var\(--scale-round-y, ([\d.]+)px\)\)/);
         const scaleRoundXMatch = loadedPage.match(/--scale-round-x:\s*([\d.]+)px/);
