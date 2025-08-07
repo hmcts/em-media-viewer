@@ -131,10 +131,11 @@ export function docReducer (state = initialDocumentState,
       const loadedPage = payload[pageIndex]?.div['attributes']?.style?.value ?? '';
       payload.forEach(page => {
         const sizingValue = page.div?.['attributes']?.style?.value ?? '';
-        const widthMatch = sizingValue.match(/width:\s*round\(down,\s*var\(--scale-factor\)\s*\*\s*([\d.]+)px,.*var\(--scale-round-x, ([\d.]+)px\)\)/);
-        const heightMatch = sizingValue.match(/height:\s*round\(down,\s*var\(--scale-factor\)\s*\*\s*([\d.]+)px,.*var\(--scale-round-y, ([\d.]+)px\)\)/);
-        const scaleRoundXMatch = loadedPage.match(/--scale-round-x:\s*([\d.]+)px/);
-        const scaleRoundYMatch = loadedPage.match(/--scale-round-y:\s*([\d.]+)px/);
+        const widthMatch  = sizingValue.match(/width:\s*round\(down,\s*var\(--scale-factor\)\s*\*\s*([\d.]+)([a-z%]+)?,.*var\(--scale-round-x, ([\d.]+)([a-z%]+)?\)\)/);
+        const heightMatch = sizingValue.match(/height:\s*round\(down,\s*var\(--scale-factor\)\s*\*\s*([\d.]+)([a-z%]+)?,.*var\(--scale-round-y, ([\d.]+)([a-z%]+)?\)\)/);
+        const scaleRoundXMatch = loadedPage.match(/--scale-round-x:\s*([\d.]+)([a-z%]+)?/);
+        const scaleRoundYMatch = loadedPage.match(/--scale-round-y:\s*([\d.]+)([a-z%]+)?/);
+        // You can now use widthUnit, heightUnit, scaleRoundXUnit, scaleRoundYUnit as needed
         const scaleFactor = page.viewportScale ?? 1;
         const scaleRoundX = scaleRoundXMatch ? parseFloat(scaleRoundXMatch[1]) : 1;
         const scaleRoundY = scaleRoundYMatch ? parseFloat(scaleRoundYMatch[1]) : 1;
@@ -149,7 +150,8 @@ export function docReducer (state = initialDocumentState,
         const computedHeight = baseHeight !== undefined
           ? roundDown(scaleFactor * baseHeight, scaleRoundY)
           : page.div['clientHeight'];
-        console.log(computedHeight, computedWidth)
+
+        console.log('computedHeight', computedHeight, 'computedWidth', computedWidth);
 
         if (!hasDifferentPageSize && pageHeight && pageWidth &&
           (pageHeight !== computedHeight || pageWidth !== computedWidth)) {
