@@ -124,7 +124,6 @@ export function docReducer (state = initialDocumentState,
       let pageHeight;
       let pageWidth;
       let hasDifferentPageSize = state.hasDifferentPageSize;
-      // we store the first page, as this has been rendered we can use this to get the rounding value
       const pageNumberInput = document.getElementById('pageNumber') as HTMLInputElement;
       const pageIndex = pageNumberInput?.value ? parseInt(pageNumberInput.value, 10) - 1 : 0;
       console.log('pageIndex', pageIndex);
