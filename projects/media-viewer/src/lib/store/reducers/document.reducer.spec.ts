@@ -54,6 +54,41 @@ describe('DocumentReducer', () => {
     expect(state.pages).toEqual(pages);
   });
 
+  it('should set pages after ADD PAGE action with computed styles', () => {
+    const payload = [
+      {
+        div: {
+          attributes: {
+            style: {
+              value: 'width: round(down, var(--scale-factor) * 595.303937007874px, var(--scale-round-x, 1px));height: round(down, var(--scale-factor) * 841.889763779528px, var(--scale-round-y, 1px));--scale-round-x: 5px;--scale-round-y: 5px;'
+            }
+          }
+        },
+        scale: 1,
+        rotation: 0,
+        id: '1',
+        viewportScale: 1.33333
+      }];
+    const { initialDocumentState } = fromDocument;
+    const action = new fromActions.AddPages(payload);
+    const state = fromDocument.docReducer(initialDocumentState, action);
+    const pages: any = {
+      '1' : {
+        styles: {
+          left: undefined,
+          height: 1120,
+          width: 790
+        },
+        scaleRotation: {
+          scale: 1,
+          rotation: 0
+        },
+        viewportScale: 1.33333
+      }
+    };
+    expect(state.pages).toEqual(pages);
+  });
+
   it('should convert document', function () {
     const url = 'new url';
 
