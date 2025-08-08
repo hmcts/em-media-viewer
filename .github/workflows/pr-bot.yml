@@ -56,7 +56,9 @@ jobs:
           PR_BOT_CONFIG_JSON: ${{ vars.PR_BOT_CONFIG_JSON }}
 
       - name: Run pr-bot
-        run: npx @hmcts/pr-bot
+        run: |
+          npm install @hmcts/pr-bot
+          npm start
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
