@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, from, Observable, of, Subject, Subscription } from 'rxjs';
 import { IcpEvents } from './icp.events';
-import { IcpParticipant } from './icp.interfaces';
+import { IcpParticipant, IcpSession } from './icp.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class SocketService implements OnDestroy {
@@ -22,8 +22,12 @@ export class SocketService implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  connect(url: string) {
-    return this.getSocketClient(url).subscribe((socket: WebSocket) => {
+  connect(url: string, session: IcpSession) {
+    const socketUrl = new URL(url);
+    socketUrl.searchParams.append('sessionId', `${session.sessionId}`);
+    socketUrl.searchParams.append('caseId', `${session.caseId}`);
+    socketUrl.searchParams.append('documentId', `${session.documentId}`);
+    return this.getSocketClient(socketUrl.toString()).subscribe((socket: WebSocket) => {
 
       socket.onopen = (event: Event) => {
         this.connected$.next(true);
