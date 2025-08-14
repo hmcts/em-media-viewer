@@ -21,10 +21,6 @@
   transition: opacity 0.2s ease-in-out;
 }
 
-.select-tooltip::after{
- padding: 6px; 
-}
-
 /* Show tooltip on hover and focus */
 .tooltip:hover::after,
 .tooltip:focus::after,
