@@ -221,8 +221,7 @@
                 <span class="mv-toolbar__menu-button--zoom-out-text">{{
                   "Zoom Out" | rpxTranslate
                 }}</span>
-              </button>
-              <div class="tooltip select-tooltip" data-tooltip="Zoom">
+              </button>   
               <select
                 id="scaleSelect"
                 class="hmcts-toolbar-select"
@@ -253,7 +252,6 @@
                   {{ zoomScale * 100 }}%
                 </option>
               </select>
-              </div>
               <button
                 [disabled]="
                   toolbarEvents.zoomValueSubject.value === 5 ||
