@@ -40,6 +40,7 @@ export class PdfJsWrapper {
   ) {
     this.pdfViewer.eventBus.on('updateviewarea', e => positionUpdated.next(e));
     this.pdfViewer.eventBus.on('pagechanging', e => this.toolbarEvents.setCurrentPageInputValueSubject.next(e.pageNumber));
+    this.pdfViewer.eventBus.on('pagechanging', e => this.drawMissingPages(e));
     this.pdfViewer.eventBus.on('pagesinit', () => this.pdfViewer.currentScaleValue = '1');
 
     this.pdfViewer.eventBus.on('pagerendered', e => { }); // not used left for future convenience
@@ -68,6 +69,36 @@ export class PdfJsWrapper {
           matchesCount: event.matchesCount.total
         } as RedactionSearch
         );
+      }
+    }
+  }
+
+  // in the event a user fast scrolls or navigates to a specific page, 
+  // we need to render the missing pages so redaction box is in right place
+  drawMissingPages(e) {
+    const { pageNumber, previous: previousPageNumber } = e;
+    if (!previousPageNumber) {
+      return;
+    }
+    if (pageNumber < previousPageNumber) {
+      return;
+    }
+    const pageDelta = Math.abs(pageNumber - previousPageNumber);
+    if (pageDelta <= 1) {
+      return;
+    }
+    const start = previousPageNumber + 1;
+    const end = pageNumber;
+    console.log('User has skipped pages, rendering missing pages from', start, 'to', end);
+    for (let i = start; i < end; i++) {
+      const pageIndex = i - 1;
+      const page = this.pdfViewer._pages[pageIndex];
+      if (!page) {
+        continue;
+      }
+      if (!page.renderingState) {
+        page.draw();
+      } else {
       }
     }
   }
