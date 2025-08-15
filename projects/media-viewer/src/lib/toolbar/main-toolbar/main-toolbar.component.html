@@ -17,7 +17,7 @@
             "
             [attr.aria-expanded]="isDropdownMenuOpen"
             data-tooltip="More options"
-            aria-label="More Options"
+            aria-label="More options"
             (click)="toggleMoreOptions()"
             cdkOverlayOrigin
             #trigger="cdkOverlayOrigin"
@@ -39,7 +39,7 @@
         </div>
       </div>
       <div id="mvMenuItems" #mvMenuItems>
-        <ng-template #menuItems>  
+        <ng-template #menuItems>
           <button
             *ngIf="toolbarButtons.showSidebar"
             id="mvIndexBtn"
@@ -81,7 +81,7 @@
             [disabled]="redactAllInProgress"
             (click)="toggleBookmarksSideBar(); isDropdownMenuOpen = false"
           >
-            <span>{{ "Bookmarks" | rpxTranslate }}</span>         
+            <span>{{ "Bookmarks" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -151,8 +151,8 @@
               <button
                 id="mvUpBtn"
                 [disabled]="pageNumber === 1 || redactAllInProgress"
-                data-tooltip="Previous Page"
-                aria-label="Previous Page"
+                data-tooltip="Previous page"
+                aria-label="Previous page"
                 class="mv-toolbar__menu-button--up button-image tooltip"
                 data-l10n-id="previous"
                 (click)="decreasePageNumber()"
@@ -163,8 +163,8 @@
               <button
                 id="mvDownBtn"
                 [disabled]="pageNumber === pageCount || redactAllInProgress"
-                data-tooltip="Next Page"
-                aria-label="Next Page"
+                data-tooltip="Next page"
+                aria-label="Next page"
                 class="mv-toolbar__menu-button--down button-image tooltip"
                 data-l10n-id="next"
                 (click)="increasePageNumber()"
@@ -176,8 +176,8 @@
                 type="number"
                 id="pageNumber"
                 class="hmcts-toolbar-input govuk-input--width-2 tooltip"
-                data-tooltip="Page Number"
-                aria-label="Page Number"
+                data-tooltip="Page number"
+                aria-label="Page number"
                 value="1"
                 size="4"
                 min="1"
@@ -213,8 +213,8 @@
                 "
                 id="mvMinusBtn"
                 class="mv-toolbar__menu-button--zoom-out button-image tooltip"
-                aria-label="Zoom Out"
-                data-tooltip="Zoom Out"
+                aria-label="Zoom out"
+                data-tooltip="Zoom out"
                 data-l10n-id="zoom_out"
                 (click)="stepZoom(-0.1)"
               >
@@ -260,8 +260,8 @@
                 id="mvPlusBtn"
                 class="mv-toolbar__menu-button--zoom-in button-image tooltip"
                 (click)="stepZoom(0.1)"
-                data-tooltip="Zoom In"
-                aria-label="Zoom In"
+                data-tooltip="Zoom in"
+                aria-label="Zoom in"
                 data-l10n-id="zoom_in"
               >
                 <span class="mv-toolbar__menu-button--zoom-out-text">{{
@@ -287,7 +287,7 @@
               id="mvRotateLeftBtn"
               class="mv-toolbar__menu-button--rotate_left button-image tooltip"
               aria-label="Rotate"
-              data-tooltip="Rotate Counterclockwise"
+              data-tooltip="Rotate counterclockwise"
               data-l10n-id="page_rotate_ccw"
               (click)="rotate(270)"
               [disabled]="redactAllInProgress"
@@ -298,7 +298,7 @@
               id="mvRotateRightBtn"
               class="mv-toolbar__menu-button--rotate_right button-image tooltip"
               aria-label="Rotate"
-              data-tooltip="Rotate Clockwise"
+              data-tooltip="Rotate clockwise"
               data-l10n-id="page_rotate_cw"
               (click)="rotate(90)"
               [disabled]="redactAllInProgress"
@@ -338,7 +338,7 @@
             id="mvPresentBtn"
             #mvPresentBtn
             class="mv-button mv-toolbar__menu-button--present tooltip"
-            data-tooltip="In-Court Presentation Mode"
+            data-tooltip="In-Court presentation mode"
             aria-label="Present"
             data-l10n-id="icpMode_label"
             [ngClass]="onToolBarOffSetChange('mvPresentBtn')"
