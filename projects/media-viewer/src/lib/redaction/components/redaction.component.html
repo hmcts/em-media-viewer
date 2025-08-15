@@ -5,6 +5,7 @@
        'width.px': redaction.styles.width,
        'height.px': redaction.styles.height
        }"
+      [attr.redaction-page-num]="i+1"
        [ngClass]="{ 'pageContainer__page--draw' : drawMode }">
     <mv-box-highlight-create
       [page]="i + 1"
