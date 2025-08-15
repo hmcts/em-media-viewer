@@ -126,7 +126,6 @@ export function docReducer (state = initialDocumentState,
       let hasDifferentPageSize = state.hasDifferentPageSize;
       const pageNumberInput = document.getElementById('pageNumber') as HTMLInputElement;
       const pageIndex = pageNumberInput?.value ? parseInt(pageNumberInput.value, 10) - 1 : 0;
-      console.log('pageIndex', pageIndex);
       const loadedPage = payload[pageIndex]?.div['attributes']?.style?.value ?? '';
       payload.forEach(page => {
         const sizingValue = page.div?.['attributes']?.style?.value ?? '';
@@ -149,8 +148,6 @@ export function docReducer (state = initialDocumentState,
         const computedHeight = baseHeight !== undefined
           ? roundDown(scaleFactor * baseHeight, scaleRoundY)
           : page.div['clientHeight'];
-
-        console.log('computedHeight', computedHeight, 'computedWidth', computedWidth);
 
         if (!hasDifferentPageSize && pageHeight && pageWidth &&
           (pageHeight !== computedHeight || pageWidth !== computedWidth)) {
