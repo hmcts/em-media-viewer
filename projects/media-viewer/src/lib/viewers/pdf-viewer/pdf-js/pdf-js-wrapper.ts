@@ -98,7 +98,6 @@ export class PdfJsWrapper {
       }
       if (!page.renderingState) {
         page.draw();
-      } else {
       }
     }
   }
