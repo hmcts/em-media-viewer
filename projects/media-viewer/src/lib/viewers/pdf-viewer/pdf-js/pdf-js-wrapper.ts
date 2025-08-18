@@ -89,7 +89,6 @@ export class PdfJsWrapper {
     }
     const start = previousPageNumber + 1;
     const end = pageNumber;
-    console.log('User has skipped pages, rendering missing pages from', start, 'to', end);
     for (let i = start; i < end; i++) {
       const pageIndex = i - 1;
       const page = this.pdfViewer._pages[pageIndex];

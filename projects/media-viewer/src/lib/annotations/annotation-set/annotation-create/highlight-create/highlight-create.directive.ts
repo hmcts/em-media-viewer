@@ -117,9 +117,6 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     const width = rect.right - rect.left;
     const top = rect.top - parentRect.top;
     const left = rect.left - parentRect.left;
-    console.log('this is the function thats called')
-    console.log(rect)
-    console.log('height', height, 'width', width, 'top', top, 'left', left);
     let rectangle = this.highlightService.applyRotation(
       this.pageHeight,
       this.pageWidth,

@@ -319,19 +319,16 @@ describe('drawMissingPages', () => {
   it('should return early if previousPageNumber is not set', () => {
     const event = { pageNumber: 5, previous: undefined };
     expect(() => wrapper.drawMissingPages(event)).not.toThrow();
-    expect(console.log).not.toHaveBeenCalled();
   });
 
   it('should return early if pageNumber < previousPageNumber', () => {
     const event = { pageNumber: 2, previous: 5 };
     expect(() => wrapper.drawMissingPages(event)).not.toThrow();
-    expect(console.log).not.toHaveBeenCalled();
   });
 
   it('should return early if pageDelta <= 1', () => {
     const event = { pageNumber: 6, previous: 5 };
     expect(() => wrapper.drawMissingPages(event)).not.toThrow();
-    expect(console.log).not.toHaveBeenCalled();
   });
 
   it('should call draw on missing pages when skipping forward', () => {
@@ -340,7 +337,6 @@ describe('drawMissingPages', () => {
     mockPdfViewer._pages = [null, null, page3, page4];
     const event = { pageNumber: 5, previous: 2 };
     wrapper.drawMissingPages(event);
-    expect(console.log).toHaveBeenCalledWith('User has skipped pages, rendering missing pages from', 3, 'to', 5);
     expect(page3.draw).toHaveBeenCalled();
     expect(page4.draw).toHaveBeenCalled();
   });
