@@ -119,6 +119,12 @@
   "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/._darcs_GET": "ignore",
   "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/.bzr_GET": "ignore",
   "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/.hg_GET": "ignore",
-  "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/BitKeeper_GET": "ignore"
-
+  "40035_Hidden File Found_http://em-media-viewer-aat.service.core-compute-aat.internal/BitKeeper_GET": "ignore",
+  "90004_Insufficient Site Isolation Against Spectre Vulnerability_http://em-media-viewer-aat.service.core-compute-aat.internal_GET":"ignore",
+  "90004_Insufficient Site Isolation Against Spectre Vulnerability_http://em-media-viewer-aat.service.core-compute-aat.internal/_GET":"ignore",
+  "90004_Insufficient Site Isolation Against Spectre Vulnerability_http://em-media-viewer-aat.service.core-compute-aat.internal/robots.txt_GET":"ignore",
+  "90004_Insufficient Site Isolation Against Spectre Vulnerability_http://em-media-viewer-aat.service.core-compute-aat.internal/sitemap.xml_GET":"ignore",
+  "10063_Permissions Policy Header Not Set_http://em-media-viewer-aat.service.core-compute-aat.internal/main.ae769f5f7fb9a89c.js_GET":"ignore",
+  "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-media-viewer-aat.service.core-compute-aat.internal/main.ae769f5f7fb9a89c.js_GET":"ignore",
+  "90004_Insufficient Site Isolation Against Spectre Vulnerability_http://em-media-viewer-aat.service.core-compute-aat.internal/favicon.ico_GET": "ignore"
 }
