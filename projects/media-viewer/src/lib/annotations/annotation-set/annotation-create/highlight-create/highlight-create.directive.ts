@@ -113,7 +113,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   }
 
   private createTextRectangle(rect: any, parentRect: any): Rectangle {
-    const height = Math.floor(rect.bottom - rect.top);
+    const height = rect.bottom - rect.top;
     const width = rect.right - rect.left;
     const top = rect.top - parentRect.top;
     const left = rect.left - parentRect.left;
