@@ -32,8 +32,8 @@ export class IcpEffects {
     this.actions$.pipe(
       ofType(icpActions.JOIN_ICP_SOCKET_SESSION),
       map((action: icpActions.JoinIcpSocketSession) => action.payload),
-      switchMap((res: { username: string, session: IcpSession }) =>
-        this.icpUpdateService.joinSession(res.username, res.session)
+      switchMap((res: { username: string, session: IcpSession, token: string }) =>
+        this.icpUpdateService.joinSession(res.username, res.session, res.token)
           .pipe(map(participants => new icpActions.IcpSocketSessionJoined({ session: res.session, participantInfo: participants })))
       ))
   );

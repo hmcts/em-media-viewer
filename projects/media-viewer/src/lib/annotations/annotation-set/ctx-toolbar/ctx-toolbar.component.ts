@@ -72,10 +72,11 @@ export class CtxToolbarComponent implements OnChanges {
   addOrEditComment() {
     this.addOrEditCommentEvent.emit();
     setTimeout(() => {
+      // This hack to wait until the element is rendered seems to be unreliable,
       if (!location.hash) {
-        document.getElementById('viewerContainer').scrollBy(0, 1);
+        document.getElementById('viewerContainer')?.scrollBy(0, 1);
       }
-    }, 10);
+    }, 20);
   }
 
   createBookmark() {
