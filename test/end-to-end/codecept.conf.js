@@ -48,13 +48,14 @@ exports.config = {
     },
     retryFailedStep: {
       enabled: true,
-      retries: 1
+      retries: 3
     },
     autoDelay: {
       enabled: true
     }
   },
   mocha: {
+    retries: 3,
     reporterOptions: {
       'codeceptjs-cli-reporter': {
         stdout: '-'

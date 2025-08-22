@@ -291,3 +291,61 @@ describe('PdfJsWrapper', () => {
     expect(redactionSerachSubjectNext).toHaveBeenCalled();
   });
 });
+
+describe('drawMissingPages', () => {
+  let wrapper: PdfJsWrapper;
+  let mockPdfViewer: any;
+
+  beforeEach(() => {
+    mockPdfViewer = {
+      _pages: [],
+      eventBus: { on: () => {}, dispatch: () => {} }
+    };
+    wrapper = new PdfJsWrapper(
+      mockPdfViewer,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any
+    );
+    spyOn(console, 'log');
+  });
+
+  it('should return early if previousPageNumber is not set', () => {
+    const event = { pageNumber: 5, previous: undefined };
+    expect(() => wrapper.drawMissingPages(event)).not.toThrow();
+  });
+
+  it('should return early if pageNumber < previousPageNumber', () => {
+    const event = { pageNumber: 2, previous: 5 };
+    expect(() => wrapper.drawMissingPages(event)).not.toThrow();
+  });
+
+  it('should return early if pageDelta <= 1', () => {
+    const event = { pageNumber: 6, previous: 5 };
+    expect(() => wrapper.drawMissingPages(event)).not.toThrow();
+  });
+
+  it('should call draw on missing pages when skipping forward', () => {
+    const page3 = { renderingState: null, draw: jasmine.createSpy('draw') };
+    const page4 = { renderingState: null, draw: jasmine.createSpy('draw') };
+    mockPdfViewer._pages = [null, null, page3, page4];
+    const event = { pageNumber: 5, previous: 2 };
+    wrapper.drawMissingPages(event);
+    expect(page3.draw).toHaveBeenCalled();
+    expect(page4.draw).toHaveBeenCalled();
+  });
+
+  it('should skip pages that already have renderingState', () => {
+    const page3 = { renderingState: 'FINISHED', draw: jasmine.createSpy('draw') };
+    mockPdfViewer._pages = [null, null, page3];
+    const event = { pageNumber: 4, previous: 2 };
+    wrapper.drawMissingPages(event);
+    expect(page3.draw).not.toHaveBeenCalled();
+  });
+});
