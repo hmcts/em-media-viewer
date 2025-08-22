@@ -75,7 +75,7 @@
     "config": "^3.3.9",
     "core-js": "^2.6.5",
     "glob": "^10.3.3",
-    "govuk-frontend": "^4.2.0",
+    "govuk-frontend": "^4.9.0",
     "ini": "4.1.3",
     "moment-timezone": "^0.5.28",
     "mutable-div": "2.0.0",
