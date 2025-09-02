@@ -25,7 +25,7 @@ export class PdfJsWrapper {
   private zoomValue: number;
   private documentTitle: string;
   private documentOutline: Outline[];
-  private redactionPages: { start: number, end: number }[];
+  public redactionPages: { start: number, end: number }[];
 
   constructor(
     private readonly pdfViewer: PDFViewer,
@@ -104,7 +104,7 @@ export class PdfJsWrapper {
     }
   }
 
-  private onRedactionModeChanged(redactionMode: boolean) {
+  public onRedactionModeChanged(redactionMode: boolean) {
     if (redactionMode && this.redactionPages.length) {
       this.redactionPages.forEach(({ start, end }) => {
         console.log('Drawing redaction pages from queue:', start, end);
