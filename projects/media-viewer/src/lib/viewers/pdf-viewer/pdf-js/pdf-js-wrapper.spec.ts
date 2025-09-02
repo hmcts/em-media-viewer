@@ -361,4 +361,16 @@ describe('drawMissingPages', () => {
     wrapper.drawMissingPages(event);
     expect(page3.draw).not.toHaveBeenCalled();
   });
+
+  it('should call onRedactionModeChanged if redactions is toggled', () => {
+    wrapper.redactionPages = [{start: 3, end: 5}];
+    const page3 = { renderingState: null, draw: jasmine.createSpy('draw') };
+    const page4 = { renderingState: null, draw: jasmine.createSpy('draw') };
+    mockPdfViewer._pages = [null, null, page3, page4];
+    redactionMode$.next(true);
+    wrapper.onRedactionModeChanged(true);
+    expect(wrapper.redactionPages.length).toBe(0);
+    expect(page3.draw).toHaveBeenCalled();
+    expect(page4.draw).toHaveBeenCalled();
+  });
 });
