@@ -25,6 +25,7 @@ export class PdfJsWrapper {
   private zoomValue: number;
   private documentTitle: string;
   private documentOutline: Outline[];
+  public redactionPages: { start: number, end: number }[];
 
   constructor(
     private readonly pdfViewer: PDFViewer,
@@ -56,6 +57,11 @@ export class PdfJsWrapper {
       this.toolbarEvents.searchResultsCountSubject.next(result);
     });
     this.zoomValue = 1;
+    this.redactionPages = []
+    // Subscribe to redactionMode changes and run a function when it changes
+    this.toolbarEvents.redactionMode.subscribe((redactionModeValue) => {
+      this.onRedactionModeChanged(redactionModeValue);
+    });
   }
 
   sendSearchDetails(event: any) {
@@ -76,28 +82,40 @@ export class PdfJsWrapper {
   // in the event a user fast scrolls or navigates to a specific page, 
   // we need to render the missing pages so redaction box is in right place
   drawMissingPages(e) {
+    const redactionMode = this.toolbarEvents.redactionMode.getValue();
     const { pageNumber, previous: previousPageNumber } = e;
-    if (!previousPageNumber) {
-      return;
-    }
-    if (pageNumber < previousPageNumber) {
-      return;
-    }
-    const pageDelta = Math.abs(pageNumber - previousPageNumber);
-    if (pageDelta <= 1) {
+    if (!previousPageNumber || pageNumber < previousPageNumber || Math.abs(pageNumber - previousPageNumber) <= 1) {
       return;
     }
     const start = previousPageNumber + 1;
     const end = pageNumber;
-    for (let i = start; i < end; i++) {
-      const pageIndex = i - 1;
-      const page = this.pdfViewer._pages[pageIndex];
-      if (!page) {
-        continue;
+    // if the redaction mode is on render the pages now
+    if (redactionMode) {
+      for (let i = start; i < end; i++) {
+        const page = this.pdfViewer._pages[i - 1];
+        if (page && !page.renderingState) {
+          page.draw();
+        }
       }
-      if (!page.renderingState) {
-        page.draw();
-      }
+    } else {
+      // keep track of pages as if a user skips to a page we need to render all the missing pages
+      console.log('Adding redaction pages to queue:', start, end);
+      this.redactionPages.push({ start, end });
+    }
+  }
+
+  public onRedactionModeChanged(redactionMode: boolean) {
+    if (redactionMode && this.redactionPages.length) {
+      this.redactionPages.forEach(({ start, end }) => {
+        console.log('Drawing redaction pages from queue:', start, end);
+        for (let i = start; i < end; i++) {
+          const page = this.pdfViewer._pages[i - 1];
+          if (page && !page.renderingState) {
+            page.draw();
+          }
+        }
+      });
+      this.redactionPages = [];
     }
   }
 
