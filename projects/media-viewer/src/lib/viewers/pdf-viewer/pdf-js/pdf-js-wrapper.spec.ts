@@ -1,5 +1,5 @@
 import { DocumentLoadProgress, PageEvent, PdfJsWrapper } from './pdf-js-wrapper';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import * as pdfjsViewer from 'pdfjs-dist/web/pdf_viewer.mjs';
 import * as pdfjsLib from 'pdfjs-dist';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
@@ -289,5 +289,88 @@ describe('PdfJsWrapper', () => {
 
     expect(searchResultsCountSubjectNext).toHaveBeenCalled();
     expect(redactionSerachSubjectNext).toHaveBeenCalled();
+  });
+});
+
+describe('drawMissingPages', () => {
+  let wrapper: PdfJsWrapper;
+  let mockPdfViewer: any;
+  let mockToolbarEvents: any;
+  let redactionMode$: BehaviorSubject<boolean>;
+  
+  beforeEach(() => {
+    mockPdfViewer = {
+      _pages: [],
+      eventBus: { on: () => {}, dispatch: () => {} }
+    };
+    redactionMode$ = new BehaviorSubject<boolean>(false);
+    mockToolbarEvents = {
+      redactionMode: redactionMode$,
+      setCurrentPageInputValueSubject: { next: () => {} },
+      searchResultsCountSubject: { next: () => {} },
+      redactionSerachSubject: { next: () => {} },
+      pageCountSubject: { next: () => {} },
+      zoomValueSubject: { next: () => {} },
+      getValue: () => redactionMode$.getValue()
+    };
+    wrapper = new PdfJsWrapper(
+      mockPdfViewer,
+      {} as any,
+      mockToolbarEvents,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any
+    );
+    spyOn(console, 'log');
+  });
+
+  it('should return early if previousPageNumber is not set', () => {
+    const event = { pageNumber: 5, previous: undefined };
+    expect(() => wrapper.drawMissingPages(event)).not.toThrow();
+  });
+
+  it('should return early if pageNumber < previousPageNumber', () => {
+    const event = { pageNumber: 2, previous: 5 };
+    expect(() => wrapper.drawMissingPages(event)).not.toThrow();
+  });
+
+  it('should return early if pageDelta <= 1', () => {
+    const event = { pageNumber: 6, previous: 5 };
+    expect(() => wrapper.drawMissingPages(event)).not.toThrow();
+  });
+
+  it('should call draw on missing pages when skipping forward', () => {
+    redactionMode$.next(true);
+    const page3 = { renderingState: null, draw: jasmine.createSpy('draw') };
+    const page4 = { renderingState: null, draw: jasmine.createSpy('draw') };
+    mockPdfViewer._pages = [null, null, page3, page4];
+    const event = { pageNumber: 5, previous: 2 };
+    wrapper.drawMissingPages(event);
+    expect(page3.draw).toHaveBeenCalled();
+    expect(page4.draw).toHaveBeenCalled();
+  });
+
+  it('should skip pages that already have renderingState', () => {
+    const page3 = { renderingState: 'FINISHED', draw: jasmine.createSpy('draw') };
+    mockPdfViewer._pages = [null, null, page3];
+    const event = { pageNumber: 4, previous: 2 };
+    wrapper.drawMissingPages(event);
+    expect(page3.draw).not.toHaveBeenCalled();
+  });
+
+  it('should call onRedactionModeChanged if redactions is toggled', () => {
+    wrapper.redactionPages = [{start: 3, end: 5}];
+    const page3 = { renderingState: null, draw: jasmine.createSpy('draw') };
+    const page4 = { renderingState: null, draw: jasmine.createSpy('draw') };
+    mockPdfViewer._pages = [null, null, page3, page4];
+    redactionMode$.next(true);
+    wrapper.onRedactionModeChanged(true);
+    expect(wrapper.redactionPages.length).toBe(0);
+    expect(page3.draw).toHaveBeenCalled();
+    expect(page4.draw).toHaveBeenCalled();
   });
 });
