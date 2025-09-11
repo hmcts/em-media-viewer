@@ -716,16 +716,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/ssr@npm:^17.3.7":
-  version: 17.3.10
-  resolution: "@angular/ssr@npm:17.3.10"
+"@angular/ssr@npm:^18.0.0":
+  version: 18.2.21
+  resolution: "@angular/ssr@npm:18.2.21"
   dependencies:
-    critters: 0.0.22
+    critters: 0.0.24
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": ^17.0.0
-    "@angular/core": ^17.0.0
-  checksum: 4b2a0ee2bd0ba19d0d47038af7c9ef8e320a9d8eef4e056832227c3a35cc76cc3467903d840d16d684c502c3b7ef5f0054ba5045e1e367bd11e73671e7e2136d
+    "@angular/common": ^18.0.0
+    "@angular/core": ^18.0.0
+  checksum: b9b562485dcb170ae2a04cfa5b8a769649fc57c1aef87e4cfa8c6544efca1617f416ce0c25bd9281f01741b9988dc989549562cc036bc20a8aaa1d42e72876ce
   languageName: node
   linkType: hard
 
@@ -3685,7 +3685,7 @@ __metadata:
     "@angular/platform-browser-dynamic": ^18.2.13
     "@angular/platform-server": ^18.2.13
     "@angular/router": ^18.2.13
-    "@angular/ssr": ^17.3.7
+    "@angular/ssr": ^18.0.0
     "@hmcts/nodejs-healthcheck": ^1.8.5
     "@hmcts/nodejs-logging": 4.0.4
     "@hmcts/properties-volume": ^1.1.0
@@ -10725,21 +10725,6 @@ __metadata:
     crc-32: ^1.2.0
     readable-stream: ^3.4.0
   checksum: d44d0ec6f04d8a1bed899ac3e4fbb82111ed567ea6d506be39147362af45c747887fce1032f4beca1646b4824e5a9614cd3332bfa94bbc5577ca5445e7f75ddd
-  languageName: node
-  linkType: hard
-
-"critters@npm:0.0.22":
-  version: 0.0.22
-  resolution: "critters@npm:0.0.22"
-  dependencies:
-    chalk: ^4.1.0
-    css-select: ^5.1.0
-    dom-serializer: ^2.0.0
-    domhandler: ^5.0.2
-    htmlparser2: ^8.0.2
-    postcss: ^8.4.23
-    postcss-media-query-parser: ^0.2.3
-  checksum: e5f49ccf2966bb4e403981c654b413c81c728e2f56038c1ce03f28e87abec1be47c4005df2950ead581b2bb5036abe9d85a54df1a92e8a80490d3735687a0aa6
   languageName: node
   linkType: hard
 

@@ -61,7 +61,7 @@
     "@angular/platform-browser-dynamic": "^18.2.13",
     "@angular/platform-server": "^18.2.13",
     "@angular/router": "^18.2.13",
-    "@angular/ssr": "^17.3.7",
+    "@angular/ssr": "^18.0.0",
     "@hmcts/nodejs-healthcheck": "^1.8.5",
     "@hmcts/nodejs-logging": "4.0.4",
     "@hmcts/properties-volume": "^1.1.0",
