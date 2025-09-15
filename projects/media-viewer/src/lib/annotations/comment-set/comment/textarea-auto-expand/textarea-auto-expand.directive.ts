@@ -1,7 +1,8 @@
 import { AfterContentChecked, Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[mvTextAreaAutoExpand]'
+    selector: '[mvTextAreaAutoExpand]',
+    standalone: false
 })
 export class TextareaAutoExpandDirective implements AfterContentChecked {
 

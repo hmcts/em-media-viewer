@@ -25,9 +25,10 @@ import { SelectionAnnotation } from '../models/event-select.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 @Component({
-  selector: 'mv-comment-set',
-  templateUrl: './comment-set.component.html',
- })
+    selector: 'mv-comment-set',
+    templateUrl: './comment-set.component.html',
+    standalone: false
+})
 export class CommentSetComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() annotationSet: AnnotationSet;
