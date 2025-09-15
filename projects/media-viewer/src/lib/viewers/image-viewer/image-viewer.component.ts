@@ -25,8 +25,9 @@ import * as fromAnnotationActions from '../../store/actions/annotation.actions';
 import { ViewerEventService } from '../viewer-event.service';
 
 @Component({
-  selector: 'mv-image-viewer',
-  templateUrl: './image-viewer.component.html'
+    selector: 'mv-image-viewer',
+    templateUrl: './image-viewer.component.html',
+    standalone: false
 })
 export class ImageViewerComponent implements OnInit, OnDestroy, OnChanges {
 

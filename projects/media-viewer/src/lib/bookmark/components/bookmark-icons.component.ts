@@ -6,8 +6,9 @@ import * as fromSelectors from '../../store/selectors/bookmark.selectors';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'mv-bookmark-icons',
-  templateUrl: './bookmark-icons.component.html'
+    selector: 'mv-bookmark-icons',
+    templateUrl: './bookmark-icons.component.html',
+    standalone: false
 })
 export class BookmarkIconsComponent implements OnInit {
 

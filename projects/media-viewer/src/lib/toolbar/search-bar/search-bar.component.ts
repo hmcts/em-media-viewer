@@ -4,8 +4,9 @@ import { SearchResultsCount, ToolbarEventService } from '../toolbar-event.servic
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'mv-search-bar',
-  templateUrl: './search-bar.component.html'
+    selector: 'mv-search-bar',
+    templateUrl: './search-bar.component.html',
+    standalone: false
 })
 export class SearchBarComponent implements OnInit, OnDestroy, AfterViewInit {
 

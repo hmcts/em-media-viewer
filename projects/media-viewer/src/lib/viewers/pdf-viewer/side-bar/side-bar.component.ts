@@ -13,8 +13,9 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { BookmarksComponent } from './bookmarks/bookmarks.component';
 
 @Component({
-  selector: 'mv-side-bar',
-  templateUrl: './side-bar.component.html'
+    selector: 'mv-side-bar',
+    templateUrl: './side-bar.component.html',
+    standalone: false
 })
 export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
 
