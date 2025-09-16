@@ -6,7 +6,7 @@ module.exports = async function () {
   const I = this;
   let i = 0;
   const visible = await I.grabNumberOfVisibleElements(commonConfig.commentsCount);
-  console.log(visible);
+  console.log('deleteAllExistingComments.js', visible);
   while (i < visible) {
     await I.click(commonConfig.commentsCount);
     console.log('i', i);
