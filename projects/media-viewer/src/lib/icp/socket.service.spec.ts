@@ -7,6 +7,7 @@ describe('SocketService', () => {
   let socketService: SocketService;
 
   const mockSocketClient: any = {
+    readyState: WebSocket.OPEN,
     onclose: () => { },
     onerror: () => { },
     onmessage: () => { },
