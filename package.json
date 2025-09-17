@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.1.6",
+  "version": "4.1.6-2836",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,6 +11,7 @@
     "setup:api": "cross-env NODE_PATH=. rm -rf ./dist/api && tsc -p ./api --outDir dist/api",
     "setup:demo": "yarn build && yarn copy:demo-files",
     "package": "yarn build:lib && yarn copy:lib-files && yarn npm-pack",
+    "package:local": "rm -rf ./dist/media-viewer && yarn build:lib && yarn copy:lib-files && yarn npm-pack && cd ./dist/media-viewer && yarn install --no-immutable",
     "build": "yarn build:lib && yarn build:demo",
     "build:lib": "cd projects/media-viewer && yarn install && ng build --configuration production",
     "build:demo": "ng build media-viewer-demo-app --configuration production",
