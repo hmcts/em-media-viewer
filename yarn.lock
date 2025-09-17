@@ -2986,7 +2986,7 @@ __metadata:
     puppeteer: ^22.0.0
     require-directory: 2.1.1
     rpx-xui-translation: ^1.1.0
-    rxjs: ^7.4.0
+    rxjs: ^7.8.1
     sass: ^1.64.1
     scss-bundle: ~3.1.2
     selenium-standalone: 8.3.0
@@ -20322,7 +20322,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.8.2, rxjs@npm:^7.4.0, rxjs@npm:^7.8.1":
+"rxjs@npm:7.8.2, rxjs@npm:^7.8.1":
   version: 7.8.2
   resolution: "rxjs@npm:7.8.2"
   dependencies:
