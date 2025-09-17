@@ -521,17 +521,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/cdk@npm:19":
-  version: 19.2.19
-  resolution: "@angular/cdk@npm:19.2.19"
+"@angular/cdk@npm:20":
+  version: 20.2.3
+  resolution: "@angular/cdk@npm:20.2.3"
   dependencies:
-    parse5: ^7.1.2
+    parse5: ^8.0.0
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": ^19.0.0 || ^20.0.0
-    "@angular/core": ^19.0.0 || ^20.0.0
+    "@angular/common": ^20.0.0 || ^21.0.0
+    "@angular/core": ^20.0.0 || ^21.0.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 7728a7ebf34fa1a7d97135b96be91d07d69d7e76adc86427f6683e783b7b124266074f6fc78ee9b065e6e1891be793afef963493011a1c645fd27a6ace6f070a
+  checksum: 3410f95fa1b55167cafd29eaa5ca9413a15856ff3c5bd28f6011d7526eef454019c42ff8aff7c37aabd6184ea904deee329cd182ed666bdbef16e78a9eb52d75
   languageName: node
   linkType: hard
 
@@ -668,19 +668,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/material@npm:19":
-  version: 19.2.19
-  resolution: "@angular/material@npm:19.2.19"
+"@angular/material@npm:20":
+  version: 20.2.3
+  resolution: "@angular/material@npm:20.2.3"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/cdk": 19.2.19
-    "@angular/common": ^19.0.0 || ^20.0.0
-    "@angular/core": ^19.0.0 || ^20.0.0
-    "@angular/forms": ^19.0.0 || ^20.0.0
-    "@angular/platform-browser": ^19.0.0 || ^20.0.0
+    "@angular/cdk": 20.2.3
+    "@angular/common": ^20.0.0 || ^21.0.0
+    "@angular/core": ^20.0.0 || ^21.0.0
+    "@angular/forms": ^20.0.0 || ^21.0.0
+    "@angular/platform-browser": ^20.0.0 || ^21.0.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: c1591501736f3ee61e2452682c7dcafd8dfb89a680a478d518f0df565ee8fc096dabfaa51f5bd620c12b91173f42dc0be2dbc08aa2b1ee237349b58c1513b51c
+  checksum: 9998b64cbb9f244e3e6831b37326cea02446aa212b3a8a68165cd2f54d39246f19cce95149c862c1ff83299a93f63360dbd99ce9c7063386aa638cbf30e29731
   languageName: node
   linkType: hard
 
@@ -2890,7 +2890,7 @@ __metadata:
     "@angular-eslint/template-parser": 20.3.0
     "@angular-eslint/utils": 20.3.0
     "@angular/animations": 20
-    "@angular/cdk": 19
+    "@angular/cdk": 20
     "@angular/cli": 20
     "@angular/common": 20
     "@angular/compiler": 20
@@ -2898,7 +2898,7 @@ __metadata:
     "@angular/core": 20
     "@angular/forms": 20
     "@angular/language-service": ^19.2.15
-    "@angular/material": 19
+    "@angular/material": 20
     "@angular/platform-browser": 20
     "@angular/platform-browser-dynamic": 20
     "@angular/platform-server": 20
