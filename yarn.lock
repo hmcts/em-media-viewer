@@ -541,20 +541,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/cdk@npm:18":
-  version: 18.2.14
-  resolution: "@angular/cdk@npm:18.2.14"
+"@angular/cdk@npm:19":
+  version: 19.2.19
+  resolution: "@angular/cdk@npm:19.2.19"
   dependencies:
     parse5: ^7.1.2
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": ^18.0.0 || ^19.0.0
-    "@angular/core": ^18.0.0 || ^19.0.0
+    "@angular/common": ^19.0.0 || ^20.0.0
+    "@angular/core": ^19.0.0 || ^20.0.0
     rxjs: ^6.5.3 || ^7.4.0
-  dependenciesMeta:
-    parse5:
-      optional: true
-  checksum: c9c2937b0b950ccb4057c96e1398110a6b8f3392af532a16fe517bf7bd057b5b91a8df114dd14fb680a8876160d0fed4677935014ef5075d26305a06141af3a3
+  checksum: 7728a7ebf34fa1a7d97135b96be91d07d69d7e76adc86427f6683e783b7b124266074f6fc78ee9b065e6e1891be793afef963493011a1c645fd27a6ace6f070a
   languageName: node
   linkType: hard
 
@@ -683,20 +680,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/material@npm:18":
-  version: 18.2.14
-  resolution: "@angular/material@npm:18.2.14"
+"@angular/material@npm:19":
+  version: 19.2.19
+  resolution: "@angular/material@npm:19.2.19"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/animations": ^18.0.0 || ^19.0.0
-    "@angular/cdk": 18.2.14
-    "@angular/common": ^18.0.0 || ^19.0.0
-    "@angular/core": ^18.0.0 || ^19.0.0
-    "@angular/forms": ^18.0.0 || ^19.0.0
-    "@angular/platform-browser": ^18.0.0 || ^19.0.0
+    "@angular/cdk": 19.2.19
+    "@angular/common": ^19.0.0 || ^20.0.0
+    "@angular/core": ^19.0.0 || ^20.0.0
+    "@angular/forms": ^19.0.0 || ^20.0.0
+    "@angular/platform-browser": ^19.0.0 || ^20.0.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: e6cbdaa385316e3531c40efa1e763de606c51a0ffddcd7f9649df8c10e5b12548f226376b235b66611ea31bff144f7b86a6ffa51694fb293d97d3822bf4f39a7
+  checksum: c1591501736f3ee61e2452682c7dcafd8dfb89a680a478d518f0df565ee8fc096dabfaa51f5bd620c12b91173f42dc0be2dbc08aa2b1ee237349b58c1513b51c
   languageName: node
   linkType: hard
 
@@ -2925,7 +2921,7 @@ __metadata:
     "@angular-eslint/template-parser": 20.3.0
     "@angular-eslint/utils": 20.3.0
     "@angular/animations": ^19.2.15
-    "@angular/cdk": 18
+    "@angular/cdk": 19
     "@angular/cli": 20
     "@angular/common": ^19.2.15
     "@angular/compiler": ^19.2.15
@@ -2933,7 +2929,7 @@ __metadata:
     "@angular/core": ^19.2.15
     "@angular/forms": ^19.2.15
     "@angular/language-service": ^19.2.15
-    "@angular/material": 18
+    "@angular/material": 19
     "@angular/platform-browser": ^19.2.15
     "@angular/platform-browser-dynamic": ^19.2.15
     "@angular/platform-server": ^19.2.15
