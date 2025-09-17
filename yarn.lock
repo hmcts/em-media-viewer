@@ -726,19 +726,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/platform-server@npm:^19.2.15":
-  version: 19.2.15
-  resolution: "@angular/platform-server@npm:19.2.15"
+"@angular/platform-server@npm:20":
+  version: 20.3.0
+  resolution: "@angular/platform-server@npm:20.3.0"
   dependencies:
     tslib: ^2.3.0
     xhr2: ^0.2.0
   peerDependencies:
-    "@angular/common": 19.2.15
-    "@angular/compiler": 19.2.15
-    "@angular/core": 19.2.15
-    "@angular/platform-browser": 19.2.15
+    "@angular/common": 20.3.0
+    "@angular/compiler": 20.3.0
+    "@angular/core": 20.3.0
+    "@angular/platform-browser": 20.3.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: a8421d9b8ad7f1fa3413d55f35f9080850e31334cee868da3a1893ca25d93867d20ce20b9581c616e447ced0a899312202f90ab572e6c8e78d6f621df66004f2
+  checksum: 9218ae1530a8184be918d9d0e700cd20e0718cd92049f8f1777de006e820292af1cbb1f48b31bed9d235caf75dc74b27a294aa30254b6c761d3c410fc0e6cc34
   languageName: node
   linkType: hard
 
@@ -756,16 +756,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/ssr@npm:^18.2.21":
-  version: 18.2.21
-  resolution: "@angular/ssr@npm:18.2.21"
+"@angular/ssr@npm:20":
+  version: 20.3.1
+  resolution: "@angular/ssr@npm:20.3.1"
   dependencies:
-    critters: 0.0.24
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": ^18.0.0
-    "@angular/core": ^18.0.0
-  checksum: b9b562485dcb170ae2a04cfa5b8a769649fc57c1aef87e4cfa8c6544efca1617f416ce0c25bd9281f01741b9988dc989549562cc036bc20a8aaa1d42e72876ce
+    "@angular/common": ^20.0.0
+    "@angular/core": ^20.0.0
+    "@angular/platform-server": ^20.0.0
+    "@angular/router": ^20.0.0
+  peerDependenciesMeta:
+    "@angular/platform-server":
+      optional: true
+  checksum: f78241ec7f5379e43986e7db9b7fcc9ee5a714aab1ff3a45ecf67fdff0947e211ff67fbf6b499703cdafd3d094dcb57ca9befb8488b0bbbbedbd81246fbbbd67
   languageName: node
   linkType: hard
 
@@ -2932,9 +2936,9 @@ __metadata:
     "@angular/material": 19
     "@angular/platform-browser": ^19.2.15
     "@angular/platform-browser-dynamic": ^19.2.15
-    "@angular/platform-server": ^19.2.15
+    "@angular/platform-server": 20
     "@angular/router": ^19.2.15
-    "@angular/ssr": ^18.2.21
+    "@angular/ssr": 20
     "@hmcts/nodejs-healthcheck": ^1.8.5
     "@hmcts/nodejs-logging": 4.0.4
     "@hmcts/properties-volume": ^1.1.0
@@ -9376,21 +9380,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"critters@npm:0.0.24":
-  version: 0.0.24
-  resolution: "critters@npm:0.0.24"
-  dependencies:
-    chalk: ^4.1.0
-    css-select: ^5.1.0
-    dom-serializer: ^2.0.0
-    domhandler: ^5.0.2
-    htmlparser2: ^8.0.2
-    postcss: ^8.4.23
-    postcss-media-query-parser: ^0.2.3
-  checksum: 6abf1e512d27c4adcac5dfc40d1c755242ee2cb3f9cbb467c2a279835f37c53c013363b0b4bf4db402a58bbc387eb4c3cee68a25dc3781758a6df403528efd23
-  languageName: node
-  linkType: hard
-
 "cross-env@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-env@npm:7.0.3"
@@ -13058,18 +13047,6 @@ __metadata:
     domutils: ^3.2.1
     entities: ^6.0.0
   checksum: ba81aca5d344437e791ffddf61d498972fc0e7dd2d41f59f920e93aedb64667a0f38fed88e0d81fe23ea5a10825991caa020212fdd72a0dc287ab2aaad95fbf5
-  languageName: node
-  linkType: hard
-
-"htmlparser2@npm:^8.0.2":
-  version: 8.0.2
-  resolution: "htmlparser2@npm:8.0.2"
-  dependencies:
-    domelementtype: ^2.3.0
-    domhandler: ^5.0.3
-    domutils: ^3.0.1
-    entities: ^4.4.0
-  checksum: 29167a0f9282f181da8a6d0311b76820c8a59bc9e3c87009e21968264c2987d2723d6fde5a964d4b7b6cba663fca96ffb373c06d8223a85f52a6089ced942700
   languageName: node
   linkType: hard
 
@@ -18919,7 +18896,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.5.6, postcss@npm:^8.2.14, postcss@npm:^8.4.23, postcss@npm:^8.4.33, postcss@npm:^8.4.47, postcss@npm:^8.4.49, postcss@npm:^8.5.6":
+"postcss@npm:8.5.6, postcss@npm:^8.2.14, postcss@npm:^8.4.33, postcss@npm:^8.4.47, postcss@npm:^8.4.49, postcss@npm:^8.5.6":
   version: 8.5.6
   resolution: "postcss@npm:8.5.6"
   dependencies:
