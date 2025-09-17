@@ -1,18 +1,1 @@
-➤ YN0001: RequestError: unable to get local issuer certificate
-    at ClientRequest.<anonymous> (/Users/anthonydummer/.cache/node/corepack/v1/yarn/3.8.5/yarn.js:195:14340)
-    at Object.onceWrapper (node:events:639:26)
-    at ClientRequest.emit (node:events:536:35)
-    at o.emit (/Users/anthonydummer/.cache/node/corepack/v1/yarn/3.8.5/yarn.js:190:90286)
-    at emitErrorEvent (node:_http_client:101:11)
-    at TLSSocket.socketErrorListener (node:_http_client:504:5)
-    at TLSSocket.emit (node:events:524:28)
-    at emitErrorNT (node:internal/streams/destroy:169:8)
-    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
-    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
-    at TLSSocket.onConnectSecure (node:_tls_wrap:1677:34)
-    at TLSSocket.emit (node:events:524:28)
-    at TLSSocket._finishInit (node:_tls_wrap:1076:8)
-    at ssl.onhandshakedone (node:_tls_wrap:862:12)
-
-➤ Errors happened when preparing the environment required to run this command.
-➤ This might be caused by packages being missing from the lockfile, in which case running "yarn install" might help.
+{"actions":[],"advisories":{},"muted":[],"metadata":{"vulnerabilities":{"info":0,"low":0,"moderate":0,"high":0,"critical":0},"dependencies":334,"devDependencies":128,"optionalDependencies":0,"totalDependencies":462}}
