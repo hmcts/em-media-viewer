@@ -9,7 +9,8 @@ import moment from 'moment-timezone';
  * Official date pipe dropped support for abbreviations names from Angular V5
  */
 @Pipe({
-  name: 'momentDate'
+    name: 'momentDate',
+    standalone: false
 })
 export class MomentDatePipe extends DatePipe implements PipeTransform {
 

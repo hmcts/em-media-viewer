@@ -1,10 +1,10 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { SearchBarComponent } from './search-bar.component';
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RpxTranslationModule } from 'rpx-xui-translation';
+import { RpxTranslationModule } from 'rpx-xui-translation';;
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -55,7 +55,7 @@ describe('SearchBarComponent', () => {
     expect(searchbar.getAttribute('hidden')).toBeDefined();
   });
 
-  it('should show searchbar after f3 keypress', () => {
+  it('should show searchbar after f3 keypress', fakeAsync(() => {
     component.toolbarEvents.searchBarHidden.next(true);
     fixture.detectChanges();
 
@@ -64,10 +64,13 @@ describe('SearchBarComponent', () => {
 
     const event = new KeyboardEvent('keydown', { 'code': 'F3' });
     window.dispatchEvent(event);
+    // Drain the 200ms focus timeout scheduled in onWindowKeyDown
+    tick(200);
     fixture.detectChanges();
 
     expect(searchbar.getAttribute('hidden')).toBeNull();
-  });
+    flush();
+  }));
 
   it('should run search event', () => {
     const searchSpy = spyOn(component.toolbarEvents.searchSubject, 'next');
@@ -148,16 +151,24 @@ describe('SearchBarComponent', () => {
     expect(searchSpy).toHaveBeenCalledWith(mockSearchOperation);
   });
 
-  it('should set search result count with results found', () => {
+  it('should set search result count with results found', fakeAsync(() => {
+
     component.toolbarEvents.searchResultsCountSubject.next({ current: 1, total: 4, isPrevious: false });
+    fixture.detectChanges();
+
+    const findNextEl = nativeElement.querySelector('#findNext') as HTMLAnchorElement;
+    expect(findNextEl).toBeTruthy();
+
+    const focusSpy = spyOn(findNextEl, 'focus');
+
     expect(component.resultCount).toBeTruthy();
     expect(component.resultsText).toEqual('Found 1 of 4');
-    setTimeout(() => {
-      const findNext = component.findNext.nativeElement;
-      const findNextSpy = spyOn(findNext, 'focus');
-      expect(findNextSpy).toHaveBeenCalled();
-    }, 1000);
-  });
+
+    tick(1000);
+    expect(focusSpy).toHaveBeenCalled();
+
+    flush(); // safety
+  }));
 
   it('should set search result count with no results found', () => {
     component.toolbarEvents.searchResultsCountSubject.next({ current: null, total: null, isPrevious: false });
@@ -165,13 +176,16 @@ describe('SearchBarComponent', () => {
     expect(component.resultsText).toEqual('No results found');
   });
 
-  it('should toggle searchbar visible', fakeAsync((done) => {
-    component.toggleSearchBar();
+  it('should toggle searchbar visible', () => {
+    component.toolbarEvents.searchBarHidden.next(true);
 
-    component.toolbarEvents.searchBarHidden.asObservable()
-      .subscribe(
-        searchBarHidden => expect(searchBarHidden).toBeFalsy()
-        , error => done(error)
-      );
-  }));
+    const values: boolean[] = [];
+    const sub = component.toolbarEvents.searchBarHidden.asObservable()
+      .subscribe(v => values.push(v));
+
+    component.toggleSearchBar(); // flips true -> false synchronously
+
+    expect(values[values.length - 1]).toBeFalse();
+    sub.unsubscribe();
+  });
 });

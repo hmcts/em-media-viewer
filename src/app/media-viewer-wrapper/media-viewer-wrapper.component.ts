@@ -4,9 +4,10 @@ import { Comment } from '../../../projects/media-viewer/src/lib/annotations/comm
 import { ToolbarEventService } from '../../../projects/media-viewer/src/lib/toolbar/toolbar-event.service';
 
 @Component({
-  selector: 'media-viewer-wrapper',
-  templateUrl: './media-viewer-wrapper.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'media-viewer-wrapper',
+    templateUrl: './media-viewer-wrapper.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MediaViewerWrapperComponent implements AfterContentInit {
 

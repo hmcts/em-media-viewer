@@ -273,7 +273,7 @@ async function deleteNonTextualCommentTest(I, caseId, mediaType) {
 
 async function openCaseDocumentsInMediaViewer(I, caseId, mediaType) {
   await I.authenticateWithIdam();
-  console.log(await I.grabCurrentUrl());
+  console.log('mvCaseHelper', await I.grabCurrentUrl());
   await I.amOnPage('/case-details/' + caseId);
   if (mediaType === mvData.PDF_DOCUMENT) {
     await I.openCaseDocumentsInMV(mediaType);
@@ -287,7 +287,7 @@ async function previewEnv() {
 async function executeTestsOnPreview(I, caseId, mediaType) {
   await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
   await I.waitForText(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
-  console.log(await I.grabCurrentUrl());
+  console.log('mvCaseHelper2', await I.grabCurrentUrl());
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {

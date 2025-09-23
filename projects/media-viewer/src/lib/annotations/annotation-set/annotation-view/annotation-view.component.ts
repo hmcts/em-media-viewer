@@ -11,8 +11,9 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Comment } from '../../comment-set/comment/comment.model';
 
 @Component({
-  selector: 'mv-annotation',
-  templateUrl: './annotation-view.component.html'
+    selector: 'mv-annotation',
+    templateUrl: './annotation-view.component.html',
+    standalone: false
 })
 export class AnnotationViewComponent {  // todo rename this to selection vew c
 

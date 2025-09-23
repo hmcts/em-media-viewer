@@ -9,9 +9,10 @@ import { AnnotationSet } from '../../annotations/annotation-set/annotation-set.m
 import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'mv-conversion-viewer',
-  templateUrl: './convertible-content-viewer.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'mv-conversion-viewer',
+    templateUrl: './convertible-content-viewer.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ConvertibleContentViewerComponent implements OnInit, OnDestroy, OnChanges {
 

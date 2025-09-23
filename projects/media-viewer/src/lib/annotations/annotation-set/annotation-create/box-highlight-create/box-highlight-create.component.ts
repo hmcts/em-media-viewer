@@ -6,8 +6,9 @@ import { HighlightCreateService } from '../highlight-create/highlight-create.ser
 import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 import { HtmlTemplatesHelper } from '../../../../shared/util/helpers/html-templates.helper';
 @Component({
-  selector: 'mv-box-highlight-create',
-  templateUrl: './box-highlight-create.component.html',
+    selector: 'mv-box-highlight-create',
+    templateUrl: './box-highlight-create.component.html',
+    standalone: false
 })
 export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 

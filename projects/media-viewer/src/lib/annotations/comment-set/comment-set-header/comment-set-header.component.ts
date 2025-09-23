@@ -10,9 +10,10 @@ import { CommentService } from '../comment/comment.service';
 import { IcpEventService } from '../../../toolbar/icp-event.service';
 
 @Component({
-  selector: 'mv-comment-set-header',
-  templateUrl: './comment-set-header.component.html',
-  encapsulation: ViewEncapsulation.None,
+    selector: 'mv-comment-set-header',
+    templateUrl: './comment-set-header.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class CommentSetHeaderComponent implements OnInit, OnDestroy {
 

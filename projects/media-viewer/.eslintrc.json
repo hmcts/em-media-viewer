@@ -32,7 +32,8 @@
             "prefix": "mv",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@typescript-eslint/no-require-imports": "off"
       }
     },
     {

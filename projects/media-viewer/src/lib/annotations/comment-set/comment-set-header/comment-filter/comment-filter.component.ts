@@ -10,9 +10,10 @@ import {auditTime, tap} from 'rxjs/operators';
 
 
 @Component({
-  selector: 'mv-comment-filter',
-  templateUrl: './comment-filter.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'mv-comment-filter',
+    templateUrl: './comment-filter.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class CommentFilterComponent implements OnInit, OnDestroy {
   tagGroup: UntypedFormGroup;

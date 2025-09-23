@@ -7,9 +7,10 @@ import * as fromActions from '../../../store/actions/annotation.actions';
 import {ToolbarEventService} from '../../../toolbar/toolbar-event.service';
 
 @Component({
-  selector: 'mv-comments-navigate',
-  templateUrl: './comments-navigate.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'mv-comments-navigate',
+    templateUrl: './comments-navigate.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class CommentsNavigateComponent implements OnChanges {
 

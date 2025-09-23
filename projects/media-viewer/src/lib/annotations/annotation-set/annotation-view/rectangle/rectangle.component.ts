@@ -16,8 +16,9 @@ import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 import { HighlightCreateService } from '../../annotation-create/highlight-create/highlight-create.service';
 
 @Component({
-  selector: 'mv-anno-rectangle',
-  templateUrl: './rectangle.component.html'
+    selector: 'mv-anno-rectangle',
+    templateUrl: './rectangle.component.html',
+    standalone: false
 })
 export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
 

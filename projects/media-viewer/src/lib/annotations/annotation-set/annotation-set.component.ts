@@ -9,8 +9,9 @@ import * as fromActions from '../../store/actions/annotation.actions';
 import * as fromSelectors from '../../store/selectors/annotation.selectors';
 
 @Component({
-  selector: 'mv-annotation-set',
-  templateUrl: './annotation-set.component.html'
+    selector: 'mv-annotation-set',
+    templateUrl: './annotation-set.component.html',
+    standalone: false
 })
 export class AnnotationSetComponent implements OnInit {
 
