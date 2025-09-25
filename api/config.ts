@@ -5,7 +5,6 @@ propertiesVolume.addTo(aksVaultConfig);
 const IDAM_SECRET = aksVaultConfig.secrets ? aksVaultConfig.secrets['em-showcase']['show-oauth2-token'] : undefined;
 const S2S_KEY = aksVaultConfig.secrets ? aksVaultConfig.secrets['em-showcase']['microservicekey-em-gw'] : undefined;
 const IDAM_PASSWORD = aksVaultConfig.secrets ? aksVaultConfig.secrets['em-showcase']['password'] : undefined;
-console.log(aksVaultConfig.secrets)
 
 export const config = {
   proxies: {
