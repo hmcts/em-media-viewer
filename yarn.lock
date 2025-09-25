@@ -15633,17 +15633,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:~5.1.0":
-  version: 5.1.2
-  resolution: "jasmine-core@npm:5.1.2"
-  checksum: 42e8db69879b64392d797b2e35b108782b73c70302787903af49fec27cb12daf795f1e3b7e8c30ef5d4ab501f37aa347590f6b472fc336568e9ada2d06e9726f
-  languageName: node
-  linkType: hard
-
 "jasmine-core@npm:~5.2.0":
   version: 5.2.0
   resolution: "jasmine-core@npm:5.2.0"
   checksum: e97e8f1fdc4468fe73f228157964095580c60c215971b45464e79c41482aa215c9a8cfb8cac27c25c8a1592348f520c44042ce1216a335fb88f9f732ff9053dd
+  languageName: node
+  linkType: hard
+
+"jasmine-core@npm:~5.3.0":
+  version: 5.3.0
+  resolution: "jasmine-core@npm:5.3.0"
+  checksum: 5dbb8c026b683d01872b793902b684ff9f8f097c94062666e13f466fa5a7b4a409670973868e5b9f5bbd47bf2e69bfbe037cc4c31f7cea0b78d45eb2a0b997fd
   languageName: node
   linkType: hard
 
@@ -15691,14 +15691,14 @@ __metadata:
   linkType: hard
 
 "jasmine@npm:^5.0.0":
-  version: 5.1.0
-  resolution: "jasmine@npm:5.1.0"
+  version: 5.3.1
+  resolution: "jasmine@npm:5.3.1"
   dependencies:
     glob: ^10.2.2
-    jasmine-core: ~5.1.0
+    jasmine-core: ~5.3.0
   bin:
     jasmine: bin/jasmine.js
-  checksum: 68ca655f05d66fb80d541d2d3305a9a683b76efc21adc5b99a748938881d16dccc3bfe3d091fff802e8c85a9bfce7f825c8ab28ee1656faf268b2ed8cb3b7c4c
+  checksum: 9a867ade1fce3b975a6232b576131f699a70aa0ddc8a0904449982317346becabcae40aa8fed80b4a955f871f065a09e2891ee12e704a6548417232940e2e57a
   languageName: node
   linkType: hard
 
