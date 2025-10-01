@@ -9,7 +9,6 @@
     class="mv-button mv-toolbar__menu-button--draw tooltip"
     data-tooltip="Draw a box"
     aria-label="Draw a box"
-    title="Draw a box"
     [class.toggled]="toolbarEventService.drawModeSubject | async"
     aria-pressed="false"
     data-l10n-id="mvDrawBtn"
@@ -50,7 +49,7 @@
     id="mvCloseBtn"
     #mvCloseBtn
     class="mv-button redaction-button--close tooltip"
-    data-tooltip="Close redaction"
+    data-tooltip="Close highlight"
     aria-label="Close highlight"
     data-l10n-id="mvRedactBtn"
     (click)="onClose()"

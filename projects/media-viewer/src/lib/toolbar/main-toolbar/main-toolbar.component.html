@@ -404,7 +404,8 @@
             data-l10n-id="print"
             aria-label="Print"
             data-tooltip="Print"
-            class="mv-button mv-toolbar__menu-button--print"
+            data-l10n-id="print"
+            class="mv-button mv-toolbar__menu-button--print tooltip"
             [ngClass]="onToolBarOffSetChange('mvPrintBtn')"
             aria-pressed="false"
             (click)="printFile(); isDropdownMenuOpen = false"
@@ -417,7 +418,7 @@
             [disabled]="redactionEnabled"
             id="mvCommentsBtn"
             #mvCommentsBtn
-            class="mv-button mv-toolbar__menu-button--comments"
+            class="mv-button mv-toolbar__menu-button--comments tooltip"
             aria-label="Comments"
             data-tooltip="Comments"
             data-l10n-id="comments"
