@@ -1,24 +1,30 @@
-/* Tooltip text below */
+.tooltip {
+  /* default: place above */
+  --tooltip-offset-y: -50%;
+}
+
 .tooltip::before {
   content: attr(data-tooltip); /* Tooltip text comes from attribute */
   position: absolute;
-  top: 125%; /* Below the element */
+  top: var(--tooltip-offset-y);
   left: 50%;
   transform: translateX(-50%);
-  background: #e6e3e3;
-  color: black;
-  border: 1px solid black;
-  font-size: 12px;
-  padding: 6px 6px 16px 6px;
-  border-radius: 4px;
+  background: #e3e2e1;
+  color: #444444;
+  border: 1px solid #d1d1d1;
+  font-size: 11px;
+  font-family: system-ui, sans-serif;
+  padding: 3px 6px;
+  border-radius: 2px;
   /* Dynamic sizing */
-  white-space: nowrap;  /* Keeps it one line, grows horizontally */
-  width: max-content;   /* Matches the text length exactly */
-  max-width: 300px;     /* Optional safety limit */
-  z-index: 9999;
+  white-space: nowrap;
+  width: max-content;
+  max-width: 300px;
+  z-index: 999;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease-in-out;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
 }
 
 /* Show tooltip on hover and focus */
@@ -31,3 +37,7 @@
   visibility: visible;
 }
 
+/* place below */
+.tooltip[data-placement="bottom"] {
+  --tooltip-offset-y: 100%;
+}
