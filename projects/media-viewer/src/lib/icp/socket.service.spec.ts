@@ -7,6 +7,7 @@ describe('SocketService', () => {
   let socketService: SocketService;
 
   const mockSocketClient: any = {
+    readyState: WebSocket.OPEN,
     onclose: () => { },
     onerror: () => { },
     onmessage: () => { },
@@ -18,7 +19,13 @@ describe('SocketService', () => {
     socketService = new SocketService();
     spyOn(socketService, 'getSocketClient').and.returnValue(of(mockSocketClient));
     spyOnAllFunctions(mockSocketClient);
-    socketService.connect('');
+    socketService.connect('http://testurl.com', {
+      sessionId: 'dummy-session-id',
+      documentId: 'dummy-document-id',
+      caseId: 'dummy-case-id',
+      dateOfHearing: undefined,
+      connectionUrl: 'dummy-connection-url'
+    });
   });
 
   it('should join', () => {

@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, from, Observable, of, Subject, Subscription } from 'rxjs';
 import { IcpEvents } from './icp.events';
-import { IcpParticipant } from './icp.interfaces';
+import { IcpParticipant, IcpSession } from './icp.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class SocketService implements OnDestroy {
@@ -22,8 +22,12 @@ export class SocketService implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  connect(url: string) {
-    return this.getSocketClient(url).subscribe((socket: WebSocket) => {
+  connect(url: string, session: IcpSession) {
+    const socketUrl = new URL(url);
+    socketUrl.searchParams.append('sessionId', `${session.sessionId}`);
+    socketUrl.searchParams.append('caseId', `${session.caseId}`);
+    socketUrl.searchParams.append('documentId', `${session.documentId}`);
+    this.subscription = this.getSocketClient(socketUrl.toString()).subscribe((socket: WebSocket) => {
 
       socket.onopen = (event: Event) => {
         this.connected$.next(true);
@@ -61,11 +65,15 @@ export class SocketService implements OnDestroy {
   }
 
   emit(event: string, data: any) {
-    this.socket.send(JSON.stringify({
-      type: 'event',
-      event,
-      data
-    }));
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify({
+        type: 'event',
+        event,
+        data
+      }));
+    } else {
+      console.warn('WebSocket is not open. Ready state is:', this.socket ? this.socket.readyState : 'no socket');
+    }
   }
 
   listen(event: IcpEvents): Observable<any> {

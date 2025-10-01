@@ -10,10 +10,15 @@ export class IcpUpdateService {
 
   constructor(private socket: SocketService) { }
 
+  private joinSessionSubscription: any;
+
   joinSession(username: string, session: IcpSession, token: string) {
     this.session = session;
-    this.socket.connect(`${session.connectionUrl}?access_token=${token}`);
-    this.socket.connected().subscribe(isConnected => {
+    this.socket.connect(`${session.connectionUrl}?access_token=${token}`, session);
+    if (this.joinSessionSubscription) {
+      this.joinSessionSubscription.unsubscribe();
+    }
+    this.joinSessionSubscription = this.socket.connected().subscribe(isConnected => {
       if (isConnected) {
         this.socket.join({ ...this.session, username });
       }
@@ -22,6 +27,10 @@ export class IcpUpdateService {
   }
 
   leaveSession() {
+    if (this.joinSessionSubscription) {
+      this.joinSessionSubscription.unsubscribe();
+      this.joinSessionSubscription = null;
+    }
     this.socket.leave(this.session);
   }
 
