@@ -55,16 +55,16 @@
     <td>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="govuk-!-font-weight-bold">Annotate</span>
+          <span class="govuk-!-font-weight-bold">{{ 'Annotate' | rpxTranslate }}</span>
         </div>
         <div class="govuk-grid-column-full">
-          <label for="toggleAnnotations" class="switch govuk-!-margin-right-2">
+          <label for="toggleAnnotations" class="switch govuk-!-margin-right-2 tooltip" [attr.data-tooltip]="'Toggle annotate' | rpxTranslate" data-placement="bottom">
+            <span class="visuallyHidden">{{ 'Toggle annotate' | rpxTranslate }}</span>
             <input
               type="checkbox"
               id="toggleAnnotations"
               [checked]="toggleAnnotations.getValue()"
               (change)="toggleAnnotations.next($event.target.checked)"
-              aria-label="annotate"
             />
             <span class="slider round"></span>
           </label>
@@ -74,16 +74,16 @@
     <td>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="govuk-!-font-weight-bold">Redact</span>
+          <span class="govuk-!-font-weight-bold">{{ 'Redact' | rpxTranslate }}</span>
         </div>
         <div class="govuk-grid-column-full">
-          <label for="toggleRedact" class="switch govuk-!-margin-right-2">
+          <label for="toggleRedact" class="switch govuk-!-margin-right-2 tooltip" [attr.data-tooltip]="'Toggle redact' | rpxTranslate" data-placement="bottom">
+            <span class="visuallyHidden">{{ 'Toggle redact' | rpxTranslate }}</span>
             <input
               type="checkbox"
               id="toggleRedact"
               [checked]="toggleRedaction.getValue()"
               (change)="toggleRedaction.next($event.target.checked)"
-              aria-label="redact"
             />
             <span class="slider round"></span>
           </label>
@@ -93,16 +93,16 @@
     <td>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="govuk-!-font-weight-bold">ICP</span>
+          <span class="govuk-!-font-weight-bold">{{ 'ICP' | rpxTranslate }}</span>
         </div>
         <div class="govuk-grid-column-full">
-          <label for="toggleICP" class="switch govuk-!-margin-right-2">
+          <label for="toggleICP" class="switch govuk-!-margin-right-2 tooltip" [attr.data-tooltip]="'Toggle ICP' | rpxTranslate" data-placement="bottom">
+            <span class="visuallyHidden">{{ 'Toggle ICP' | rpxTranslate }}</span>
             <input
               type="checkbox"
               id="toggleICP"
               [checked]="toggleICP.getValue()"
               (change)="toggleICP.next($event.target.checked)"
-              aria-label="icp"
             />
             <span class="slider round"></span>
           </label>
@@ -112,16 +112,16 @@
     <td>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="govuk-!-font-weight-bold">Multimedia</span>
+          <span class="govuk-!-font-weight-bold">{{ 'Multimedia' | rpxTranslate }}</span>
         </div>
         <div class="govuk-grid-column-full">
-          <label for="toggleMultimedia" class="switch govuk-!-margin-right-2">
+          <label for="toggleMultimedia" class="switch govuk-!-margin-right-2 tooltip" [attr.data-tooltip]="'Toggle multimedia' | rpxTranslate" data-placement="bottom">
+            <span class="visuallyHidden">{{ 'Toggle multimedia' | rpxTranslate }}</span>
             <input
               type="checkbox"
               id="toggleMultimedia"
               [checked]="toggleMultimediaPlayer.getValue()"
               (change)="toggleMultimediaPlayer.next($event.target.checked)"
-              aria-label="toggleMultimedia"
             />
             <span class="slider round"></span>
           </label>
@@ -131,16 +131,16 @@
     <td>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="govuk-!-font-weight-bold">Search Redact</span>
+          <span class="govuk-!-font-weight-bold">{{ 'Search Redact' | rpxTranslate }}</span>
         </div>
         <div class="govuk-grid-column-full">
-          <label for="toggleRedactSearch" class="switch govuk-!-margin-right-2">
+          <label for="toggleRedactSearch" class="switch govuk-!-margin-right-2 tooltip" [attr.data-tooltip]="'Toggle search redact' | rpxTranslate" data-placement="bottom">
+            <span class="visuallyHidden">{{ 'Toggle search redact' | rpxTranslate }}</span>
             <input
               type="checkbox"
               id="toggleRedactSearch"
               [checked]="toggleSearchRedact.getValue()"
               (change)="toggleSearchRedact.next($event.target.checked)"
-              aria-label="toggleRedactSearch"
             />
             <span class="slider round"></span>
           </label>

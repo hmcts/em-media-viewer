@@ -1,11 +1,12 @@
-<div class="govuk-grid-row"><div class="govuk-grid-column-full">
-  <span class="govuk-!-font-weight-bold">{{ label | titlecase }}</span>
-</div>
+<div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <label [for]="label+'-btn-toggle'" class="switch govuk-!-margin-right-2">
+    <span class="govuk-!-font-weight-bold">{{ label | titlecase }}</span>
+  </div>
+  <div class="govuk-grid-column-full">
+    <label [for]="label+'-btn-toggle'" class="switch govuk-!-margin-right-2 tooltip" [attr.data-tooltip]="'Toggle ' + label" data-placement="bottom">
+      <span class="visuallyHidden">Toggle {{ label }}</span>
       <input type="checkbox" [id]="label+'-btn-toggle'"
-             (change)="toggleButtonOverrides.emit($event.target.checked)"
-             [attr.aria-label]="label">
+             (change)="toggleButtonOverrides.emit($event.target.checked)">
       <span class="slider round"></span>
     </label>
   </div>
