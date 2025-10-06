@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.1.7",
+  "version": "4.1.7-exui-3550-rc1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -207,5 +207,5 @@
     "when": "3.7.8",
     "yarn-audit-fix": "^10.0.7"
   },
-  "packageManager": "yarn@3.8.5"
+  "packageManager": "yarn@4.5.0"
 }
