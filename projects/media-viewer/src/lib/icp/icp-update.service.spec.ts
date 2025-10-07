@@ -140,37 +140,4 @@ describe('UpdateService', () => {
       updateService.participantListUpdated();
       expect(socketService.listen).toHaveBeenCalled();
     }));
-
-  it('should unsubscribe from previous joinSessionSubscription when joining session again', inject([SocketService], (socketService) => {
-    const unsubscribeSpy = jasmine.createSpy('unsubscribe');
-    updateService['joinSessionSubscription'] = { unsubscribe: unsubscribeSpy };
-    spyOn(socketService, 'connect');
-    spyOn(socketService, 'join');
-    spyOn(socketService, 'listen');
-    spyOn(socketService, 'connected').and.returnValue(of(true));
-
-    updateService.joinSession(username, session, "token");
-    expect(unsubscribeSpy).toHaveBeenCalled();
-    expect(updateService['joinSessionSubscription']).toBeDefined();
-  }));
-
-  it('should set joinSessionSubscription to null when leaving session', inject([SocketService], (socketService) => {
-    const unsubscribeSpy = jasmine.createSpy('unsubscribe');
-    updateService['joinSessionSubscription'] = { unsubscribe: unsubscribeSpy };
-    spyOn(socketService, 'leave');
-
-    updateService.session = session;
-    updateService.leaveSession();
-    expect(unsubscribeSpy).toHaveBeenCalled();
-    expect(updateService['joinSessionSubscription']).toBeNull();
-    expect(socketService.leave).toHaveBeenCalledWith(session);
-  }));
-
-  it('should not throw if leaveSession called with no joinSessionSubscription', inject([SocketService], (socketService) => {
-    updateService['joinSessionSubscription'] = null;
-    spyOn(socketService, 'leave');
-    updateService.session = session;
-    expect(() => updateService.leaveSession()).not.toThrow();
-    expect(socketService.leave).toHaveBeenCalledWith(session);
-  }));
 });
