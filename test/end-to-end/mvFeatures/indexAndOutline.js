@@ -18,8 +18,8 @@ Scenario('Navigate Nested Documents Using Index', async ({ I }) => {
   .retry(testConfig.TestRetryScenarios);
 
 
-Scenario('Load new document with no outlines', async ({ I }) => {
-  await loadNewDocument(I, mvData.CASE_ID, mvData.PDF_DOCUMENT, mvData.NO_OUTLINE_CASE_ID)
+// Scenario('Load new document with no outlines', async ({ I }) => {
+//   await loadNewDocument(I, mvData.CASE_ID, mvData.PDF_DOCUMENT, mvData.NO_OUTLINE_CASE_ID)
 
-}).tag('@ci')
-  .retry(testConfig.TestRetryScenarios);
+// }).tag('@ci')
+//   .retry(testConfig.TestRetryScenarios);

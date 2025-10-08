@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.1.7-exui-2986-3",
+  "version": "4.1.8-exui-2986",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -121,7 +121,10 @@
     "formidable": "^3.5.3",
     "form-data@^4.0.0": "4.0.4",
     "form-data@~2.3.2": "2.5.5",
-    "form-data@^2.5.0": "2.5.5"
+    "form-data@^2.5.0": "2.5.5",
+    "brace-expansion@^1.1.7": "1.1.12",
+    "brace-expansion@^2.0.1": "2.0.2",
+    "tmp": "0.2.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.14",
@@ -204,5 +207,5 @@
     "when": "3.7.8",
     "yarn-audit-fix": "^10.0.7"
   },
-  "packageManager": "yarn@3.8.5"
+  "packageManager": "yarn@4.5.0"
 }
