@@ -136,5 +136,22 @@
   "10096_Timestamp Disclosure - Unix_http://em-media-viewer-aat.service.core-compute-aat.internal/main.8d7bdc607a2695bb.js_GET": "ignore",
   "10021_X-Content-Type-Options Header Missing_http://em-media-viewer-aat.service.core-compute-aat.internal/main.8d7bdc607a2695bb.js_GET": "ignore",
   "10027_Information Disclosure - Suspicious Comments_http://em-media-viewer-aat.service.core-compute-aat.internal/main.8d7bdc607a2695bb.js_GET": "ignore",
-  "10049_Storable but Non-Cacheable Content_http://em-media-viewer-aat.service.core-compute-aat.internal/main.8d7bdc607a2695bb.js_GET": "ignore"
+  "10049_Storable but Non-Cacheable Content_http://em-media-viewer-aat.service.core-compute-aat.internal/main.8d7bdc607a2695bb.js_GET": "ignore",
+  "10096_Timestamp Disclosure - Unix_http://em-media-viewer-aat.service.core-compute-aat.internal/main.2d533c67363d538f.js_GET": "ignore",
+  "10021_X-Content-Type-Options Header Missing_http://em-media-viewer-aat.service.core-compute-aat.internal/main.2d533c67363d538f.js_GET": "ignore",
+  "10021_X-Content-Type-Options Header Missing_http://em-media-viewer-aat.service.core-compute-aat.internal/styles.7303cfcececa1519.css_GET": "ignore",
+  "10027_Information Disclosure - Suspicious Comments_http://em-media-viewer-aat.service.core-compute-aat.internal/main.2d533c67363d538f.js_GET": "ignore",
+  "10049_Storable but Non-Cacheable Content_http://em-media-viewer-aat.service.core-compute-aat.internal/main.2d533c67363d538f.js_GET": "ignore",
+  "10049_Storable but Non-Cacheable Content_http://em-media-viewer-aat.service.core-compute-aat.internal/styles.7303cfcececa1519.css_GET": "ignore",
+  "10063_Permissions Policy Header Not Set_http://em-media-viewer-aat.service.core-compute-aat.internal/main.2d533c67363d538f.js_GET": "ignore",
+  "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-media-viewer-aat.service.core-compute-aat.internal/main.2d533c67363d538f.js_GET": "ignore",
+  "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-media-viewer-aat.service.core-compute-aat.internal/styles.7303cfcececa1519.css_GET": "ignore",
+  "10096_Timestamp Disclosure - Unix_http://em-media-viewer-aat.service.core-compute-aat.internal/main.49362d86ed181e29.js_GET": "ignore",
+  "10021_X-Content-Type-Options Header Missing_http://em-media-viewer-aat.service.core-compute-aat.internal/main.49362d86ed181e29.js_GET": "ignore",
+  "10027_Information Disclosure - Suspicious Comments_http://em-media-viewer-aat.service.core-compute-aat.internal/main.49362d86ed181e29.js_GET": "ignore",
+  "10049_Storable but Non-Cacheable Content_http://em-media-viewer-aat.service.core-compute-aat.internal/main.49362d86ed181e29.js_GET": "ignore",
+  "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-media-viewer-aat.service.core-compute-aat.internal/main.49362d86ed181e29.js_GET": "ignore",
+  "10063_Permissions Policy Header Not Set_http://em-media-viewer-aat.service.core-compute-aat.internal/main.49362d86ed181e29.js_GET": "ignore",
+  "90004_Insufficient Site Isolation Against Spectre Vulnerability_http://em-media-viewer-aat.service.core-compute-aat.internal/runtime.0dcefbd05835f425.js_GET":"ignore"
+  
 }

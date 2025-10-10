@@ -27,7 +27,7 @@ export class SocketService implements OnDestroy {
     socketUrl.searchParams.append('sessionId', `${session.sessionId}`);
     socketUrl.searchParams.append('caseId', `${session.caseId}`);
     socketUrl.searchParams.append('documentId', `${session.documentId}`);
-    return this.getSocketClient(socketUrl.toString()).subscribe((socket: WebSocket) => {
+    this.subscription = this.getSocketClient(socketUrl.toString()).subscribe((socket: WebSocket) => {
 
       socket.onopen = (event: Event) => {
         this.connected$.next(true);
@@ -65,11 +65,15 @@ export class SocketService implements OnDestroy {
   }
 
   emit(event: string, data: any) {
-    this.socket.send(JSON.stringify({
-      type: 'event',
-      event,
-      data
-    }));
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify({
+        type: 'event',
+        event,
+        data
+      }));
+    } else {
+      console.warn('WebSocket is not open. Ready state is:', this.socket ? this.socket.readyState : 'no socket');
+    }
   }
 
   listen(event: IcpEvents): Observable<any> {

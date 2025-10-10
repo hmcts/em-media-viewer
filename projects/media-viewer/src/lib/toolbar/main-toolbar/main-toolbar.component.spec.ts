@@ -65,7 +65,6 @@ describe('MainToolbarComponent', () => {
   });
 
   it('should toggle searchbar visible', fakeAsync((done) => {
-    console.log('main-toolbar.componenet.spec.ts');
     component.toggleSearchBar();
 
     component.toolbarEvents.searchBarHidden.asObservable()
