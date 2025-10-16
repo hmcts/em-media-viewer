@@ -8,7 +8,6 @@
     #mvDrawBtn
     class="mv-button mv-toolbar__menu-button--draw tooltip"
     [attr.data-tooltip]="'Draw a box' | rpxTranslate"
-    data-placement="bottom"
     [class.toggled]="toolbarEventService.drawModeSubject | async"
     aria-pressed="false"
     data-l10n-id="mvDrawBtn"
@@ -22,7 +21,6 @@
     id="highlightTextBtn"
     class="mv-button mv-toolbar__menu-button--highlight tooltip"
     [attr.data-tooltip]="'Highlight text' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="highlightTextBtn"
     (click)="onHighlight()"
     [class.toggled]="toolbarEventService.highlightModeSubject | async"
@@ -34,7 +32,6 @@
   <button
     id="mvHighlightFromSearchBtn"
     [attr.data-tooltip]="'From search' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="fromSearchButton"
     class="mv-button redaction-button--search tooltip"
     (click)="onAllSearch()"
@@ -50,7 +47,6 @@
     #mvCloseBtn
     class="mv-button redaction-button--close tooltip"
     [attr.data-tooltip]="'Close highlight' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="mvRedactBtn"
     (click)="onClose()"
     [disabled]="redactionAllInProgress"

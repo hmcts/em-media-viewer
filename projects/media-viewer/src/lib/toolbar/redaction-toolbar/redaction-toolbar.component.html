@@ -6,7 +6,6 @@
     id="toggleDrawButton"
     class="mv-button redaction-button--draw tooltip"
     [attr.data-tooltip]="'Draw a box' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="toggleDrawButton"
     (click)="toggleDrawMode()"
     [disabled]="redactionAllInProgress"
@@ -19,7 +18,6 @@
     id="redactPageButton"
     class="mv-button redaction-button--redact-page tooltip"
     [attr.data-tooltip]="'Redact page' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="redactPageButton"
     (click)="redactPage()"
     [disabled]="redactionAllInProgress"
@@ -33,7 +31,6 @@
     id="mvRedactFromSearchBtn"
     class="mv-button redaction-button--search tooltip"
     [attr.data-tooltip]="'From search' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="fromSearchButton"
     (click)="onRedactAllSearch()"
     [disabled]="redactionAllInProgress"
@@ -49,7 +46,6 @@
     class="mv-button redaction-button--redact tooltip"
     aria-pressed="false"
     [attr.data-tooltip]="'Redact text' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="toggleTextRedactionButton"
     (click)="toggleTextRedactionMode()"
     [disabled]="redactionAllInProgress"
@@ -66,7 +62,6 @@
     class="mv-button redaction-button--clear tooltip"
     aria-pressed="false"
     [attr.data-tooltip]="'Clear all' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="toggleClearAllButton"
     (click)="unmarkAll()"
   >
@@ -82,7 +77,6 @@
     redaction-button--preview
     aria-pressed="false"
     [attr.data-tooltip]="'Preview' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="togglePreviewButton"
     (click)="togglePreview()"
   >
@@ -100,7 +94,6 @@
     class="mv-button redaction-button--download tooltip"
     aria-pressed="false"
     [attr.data-tooltip]="'Save document' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="mvRedactBtn"
     (click)="redact()"
   >
@@ -114,7 +107,6 @@
     #mvCloseBtn
     class="mv-button redaction-button--close tooltip"
     [attr.data-tooltip]="'Close Redaction' | rpxTranslate"
-    data-placement="bottom"
     data-l10n-id="mvRedactBtn"
     (click)="toggleRedactBar()"
     [disabled]="redactionAllInProgress"

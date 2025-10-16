@@ -214,10 +214,9 @@
               </button>
               <select
                 id="scaleSelect"
-                class="hmcts-toolbar-select"
+                class="hmcts-toolbar-select tooltip"
                 data-l10n-id="zoom"
                 (change)="zoom($event.target.value)"
-                aria-label="zoom"
                 tabindex="0"
                 [attr.data-tooltip]="'Zoom' | rpxTranslate"
                 [disabled]="redactAllInProgress"

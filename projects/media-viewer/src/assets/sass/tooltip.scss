@@ -1,6 +1,6 @@
 .tooltip {
-  /* default: place above */
-  --tooltip-offset-y: -50%;
+  /* default: place below */
+  --tooltip-offset-y: 100%;
 }
 
 .tooltip::before {
@@ -37,7 +37,7 @@
   visibility: visible;
 }
 
-/* place below */
-.tooltip[data-placement="bottom"] {
-  --tooltip-offset-y: 100%;
+/* place above */
+.tooltip[data-placement="above"] {
+  --tooltip-offset-y: -50%%;
 }
