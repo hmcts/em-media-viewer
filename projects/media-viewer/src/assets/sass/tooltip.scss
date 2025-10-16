@@ -32,7 +32,8 @@
 .tooltip:focus::after,
 .tooltip:hover::before,
 /* Show tooltip on hover or keyboard focus */
-.tooltip:focus::before {
+.tooltip:focus::before,
+.tooltip:focus-within::before {
   opacity: 1;
   visibility: visible;
 }
