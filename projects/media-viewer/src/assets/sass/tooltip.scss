@@ -38,6 +38,12 @@
   visibility: visible;
 }
 
+/* Hide tooltip when dismissed, even if focussed */
+.tooltip[data-tooltip-dismissed]::before {
+  opacity: 0;
+  visibility: hidden;
+}
+
 /* place above */
 .tooltip[data-placement="above"] {
   --tooltip-offset-y: -50%%;
