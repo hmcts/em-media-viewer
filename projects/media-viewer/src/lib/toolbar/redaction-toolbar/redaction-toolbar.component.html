@@ -4,7 +4,7 @@
   }}</label>
   <button
     id="toggleDrawButton"
-    class="mv-button redaction-button--draw tooltip"
+    class="mv-button redaction-button--draw mv-tooltip"
     [attr.data-tooltip]="'Draw a box' | rpxTranslate"
     data-l10n-id="toggleDrawButton"
     (click)="toggleDrawMode()"
@@ -16,7 +16,7 @@
   </button>
   <button
     id="redactPageButton"
-    class="mv-button redaction-button--redact-page tooltip"
+    class="mv-button redaction-button--redact-page mv-tooltip"
     [attr.data-tooltip]="'Redact page' | rpxTranslate"
     data-l10n-id="redactPageButton"
     (click)="redactPage()"
@@ -29,7 +29,7 @@
   <button
     *ngIf="showRedactSearch"
     id="mvRedactFromSearchBtn"
-    class="mv-button redaction-button--search tooltip"
+    class="mv-button redaction-button--search mv-tooltip"
     [attr.data-tooltip]="'From search' | rpxTranslate"
     data-l10n-id="fromSearchButton"
     (click)="onRedactAllSearch()"
@@ -43,7 +43,7 @@
   <button
     *ngIf="toolbarButtons.showHighlightButton"
     id="toggleHighlightButton"
-    class="mv-button redaction-button--redact tooltip"
+    class="mv-button redaction-button--redact mv-tooltip"
     aria-pressed="false"
     [attr.data-tooltip]="'Redact text' | rpxTranslate"
     data-l10n-id="toggleTextRedactionButton"
@@ -59,7 +59,7 @@
     [disabled]="!hasRedactions || redactionAllInProgress"
     id="mvClearBtn"
     #mvClearBtn
-    class="mv-button redaction-button--clear tooltip"
+    class="mv-button redaction-button--clear mv-tooltip"
     aria-pressed="false"
     [attr.data-tooltip]="'Clear all' | rpxTranslate"
     data-l10n-id="toggleClearAllButton"
@@ -71,7 +71,7 @@
   <button
     [disabled]="!hasRedactions || redactionAllInProgress"
     id="mvPreviewBtn"
-    class="mv-button tooltip"
+    class="mv-button mv-tooltip"
     [class.redaction-button--preview]="!preview"
     [class.redaction-button--hide-preview]="preview"
     redaction-button--preview
@@ -91,7 +91,7 @@
   <button
     [disabled]="!hasRedactions || redactionAllInProgress"
     id="mvRedactBtn"
-    class="mv-button redaction-button--download tooltip"
+    class="mv-button redaction-button--download mv-tooltip"
     aria-pressed="false"
     [attr.data-tooltip]="'Save document' | rpxTranslate"
     data-l10n-id="mvRedactBtn"
@@ -105,7 +105,7 @@
   <button
     id="mvCloseBtn"
     #mvCloseBtn
-    class="mv-button redaction-button--close tooltip"
+    class="mv-button redaction-button--close mv-tooltip"
     [attr.data-tooltip]="'Close Redaction' | rpxTranslate"
     data-l10n-id="mvRedactBtn"
     (click)="toggleRedactBar()"

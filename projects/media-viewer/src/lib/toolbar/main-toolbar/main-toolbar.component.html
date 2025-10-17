@@ -11,7 +11,7 @@
         <div id="mvToolbarMoreOptions" class="mv-toolbar-more-options">
           <button
             id="mvMoreOptionsBtn"
-            class="mv-button mv-toolbar__menu-button--more-options tooltip"
+            class="mv-button mv-toolbar__menu-button--more-options mv-tooltip"
             [class.mv-toolbar__menu-button--more-options__hidden]="
               mvToolbar.offsetWidth >= allButtonsWidth
             "
@@ -45,7 +45,7 @@
             data-l10n-id="index"
             [attr.data-tooltip]="'Index' | rpxTranslate"
             #mvIndexBtn
-            class="mv-button mv-toolbar__menu-button--index tooltip"
+            class="mv-button mv-toolbar__menu-button--index mv-tooltip"
             [class.button-hidden-on-toolbar]="
               mvToolbarMain.offsetWidth < widthRequiredForBtn['mvIndexBtn']
             "
@@ -66,7 +66,7 @@
             [attr.data-tooltip]="'Bookmarks' | rpxTranslate"
             #mvBookmarksBtn
             [ngClass]="{
-              'mv-button tooltip mv-toolbar__menu-button--bookmarks': true,
+              'mv-button mv-tooltip mv-toolbar__menu-button--bookmarks': true,
               'button-hidden-on-toolbar':
                 mvToolbarMain.offsetWidth <
                 widthRequiredForBtn['mvBookmarksBtn'],
@@ -86,7 +86,7 @@
             [disabled]="icpEnabled || redactionEnabled"
             id="mvDrawBtn"
             #mvDrawBtn
-            class="mv-button mv-toolbar__menu-button--draw tooltip"
+            class="mv-button mv-toolbar__menu-button--draw mv-tooltip"
             [attr.data-tooltip]="'Draw a box' | rpxTranslate"
             [class.button-hidden-on-toolbar]="
               mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']
@@ -109,7 +109,7 @@
             [disabled]="icpEnabled || redactionEnabled"
             id="mvHighlightBtn"
             #mvHighlightBtn
-            class="mv-button mv-toolbar__menu-button--highlight tooltip"
+            class="mv-button mv-toolbar__menu-button--highlight mv-tooltip"
             [attr.data-tooltip]="'Highlight' | rpxTranslate"
             [class.button-hidden-on-toolbar]="
               mvToolbarMain.offsetWidth < widthRequiredForBtn['mvHighlightBtn']
@@ -146,7 +146,7 @@
                 id="mvUpBtn"
                 [disabled]="pageNumber === 1 || redactAllInProgress"
                 [attr.data-tooltip]="'Previous page' | rpxTranslate"
-                class="mv-toolbar__menu-button--up button-image tooltip"
+                class="mv-toolbar__menu-button--up button-image mv-tooltip"
                 data-l10n-id="previous"
                 (click)="decreasePageNumber()"
                 [disabled]="redactAllInProgress"
@@ -157,14 +157,14 @@
                 id="mvDownBtn"
                 [disabled]="pageNumber === pageCount || redactAllInProgress"
                 [attr.data-tooltip]="'Next page' | rpxTranslate"
-                class="mv-toolbar__menu-button--down button-image tooltip"
+                class="mv-toolbar__menu-button--down button-image mv-tooltip"
                 data-l10n-id="next"
                 (click)="increasePageNumber()"
               >
                 <span></span>
               </button>
 
-              <span class="tooltip" [attr.data-tooltip]="'Page number' | rpxTranslate">
+              <span class="mv-tooltip" [attr.data-tooltip]="'Page number' | rpxTranslate">
                 <input
                   type="number"
                   id="pageNumber"
@@ -204,7 +204,7 @@
                   redactAllInProgress
                 "
                 id="mvMinusBtn"
-                class="mv-toolbar__menu-button--zoom-out button-image tooltip"
+                class="mv-toolbar__menu-button--zoom-out button-image mv-tooltip"
                 [attr.data-tooltip]="'Zoom out' | rpxTranslate"
                 data-l10n-id="zoom_out"
                 (click)="stepZoom(-0.1)"
@@ -213,7 +213,7 @@
                   "Zoom Out" | rpxTranslate
                 }}</span>
               </button>
-              <span class="tooltip" [attr.data-tooltip]="'Zoom' | rpxTranslate"> 
+              <span class="mv-tooltip" [attr.data-tooltip]="'Zoom' | rpxTranslate"> 
                 <select
                   id="scaleSelect"
                   class="hmcts-toolbar-select"
@@ -249,7 +249,7 @@
                   redactAllInProgress
                 "
                 id="mvPlusBtn"
-                class="mv-toolbar__menu-button--zoom-in button-image tooltip"
+                class="mv-toolbar__menu-button--zoom-in button-image mv-tooltip"
                 (click)="stepZoom(0.1)"
                 [attr.data-tooltip]="'Zoom in' | rpxTranslate"
                 data-l10n-id="zoom_in"
@@ -275,7 +275,7 @@
           >
             <button
               id="mvRotateLeftBtn"
-              class="mv-toolbar__menu-button--rotate_left button-image tooltip"
+              class="mv-toolbar__menu-button--rotate_left button-image mv-tooltip"
               aria-label="Rotate"
               [attr.data-tooltip]="'Rotate counterclockwise' | rpxTranslate"
               data-l10n-id="page_rotate_ccw"
@@ -286,7 +286,7 @@
             </button>
             <button
               id="mvRotateRightBtn"
-              class="mv-toolbar__menu-button--rotate_right button-image tooltip"
+              class="mv-toolbar__menu-button--rotate_right button-image mv-tooltip"
               [attr.data-tooltip]="'Rotate clockwise' | rpxTranslate"
               data-l10n-id="page_rotate_cw"
               (click)="rotate(90)"
@@ -304,7 +304,7 @@
             #mvSearchBtn
             [attr.data-tooltip]="'Search' | rpxTranslate"
             data-l10n-id="searchbar"
-            class="mv-button mv-toolbar__menu-button--search tooltip"
+            class="mv-button mv-toolbar__menu-button--search mv-tooltip"
             [class.button-hidden-on-toolbar]="
               mvToolbarMain.offsetWidth < widthRequiredForBtn['mvSearchBtn']
             "
@@ -325,7 +325,7 @@
             [disabled]="icpEnabled || !contentType || redactionEnabled"
             id="mvPresentBtn"
             #mvPresentBtn
-            class="mv-button mv-toolbar__menu-button--present tooltip"
+            class="mv-button mv-toolbar__menu-button--present mv-tooltip"
             [attr.data-tooltip]="'In-Court presentation mode' | rpxTranslate"
             data-l10n-id="icpMode_label"
             [ngClass]="onToolBarOffSetChange('mvPresentBtn')"
@@ -344,7 +344,7 @@
             #mvRedactBtn
             [attr.data-tooltip]="'Redact' | rpxTranslate"
             data-l10n-id="redact"
-            class="mv-button mv-toolbar__menu-button--redact tooltip"
+            class="mv-button mv-toolbar__menu-button--redact mv-tooltip"
             [ngClass]="onToolBarOffSetChange('mvRedactBtn')"
             [attr.aria-expanded]="isRedactOpen"
             (click)="toggleRedactBar(); isDropdownMenuOpen = false"
@@ -357,7 +357,7 @@
             [disabled]="icpEnabled || redactAllInProgress"
             id="mvGrabBtn"
             #mvGrabBtn
-            class="mv-button mv-toolbar__menu-button--grab tooltip"
+            class="mv-button mv-toolbar__menu-button--grab mv-tooltip"
             data-tooltip="Grab and drag"
             [ngClass]="onToolBarOffSetChange('mvGrabBtn')"
             aria-pressed="false"
@@ -371,7 +371,7 @@
             [disabled]="icpEnabled || redactionEnabled"
             id="mvDownloadBtn"
             #mvDownloadBtn
-            class="mv-button mv-toolbar__menu-button--download tooltip"
+            class="mv-button mv-toolbar__menu-button--download mv-tooltip"
             [attr.data-tooltip]="'Download' | rpxTranslate"
             data-l10n-id="download"
             [ngClass]="onToolBarOffSetChange('mvDownloadBtn')"
@@ -390,7 +390,7 @@
             aria-label="Print"
             [attr.data-tooltip]="'Print' | rpxTranslate"
             data-l10n-id="print"
-            class="mv-button mv-toolbar__menu-button--print tooltip"
+            class="mv-button mv-toolbar__menu-button--print mv-tooltip"
             [ngClass]="onToolBarOffSetChange('mvPrintBtn')"
             aria-pressed="false"
             (click)="printFile(); isDropdownMenuOpen = false"
@@ -403,7 +403,7 @@
             [disabled]="redactionEnabled"
             id="mvCommentsBtn"
             #mvCommentsBtn
-            class="mv-button mv-toolbar__menu-button--comments tooltip"
+            class="mv-button mv-toolbar__menu-button--comments mv-tooltip"
             [attr.data-tooltip]="'Comments' | rpxTranslate"
             data-l10n-id="comments"
             [ngClass]="onToolBarOffSetChange('mvCommentsBtn')"

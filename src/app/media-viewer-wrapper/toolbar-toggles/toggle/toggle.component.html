@@ -3,7 +3,7 @@
     <span class="govuk-!-font-weight-bold">{{ label | titlecase }}</span>
   </div>
   <div class="govuk-grid-column-full">
-    <label [for]="label+'-btn-toggle'" class="switch govuk-!-margin-right-2 tooltip" [attr.data-tooltip]="'Toggle ' + label">
+    <label [for]="label+'-btn-toggle'" class="switch govuk-!-margin-right-2 mv-tooltip" [attr.data-tooltip]="'Toggle ' + label">
       <span class="visuallyHidden">Toggle {{ label }}</span>
       <input type="checkbox" [id]="label+'-btn-toggle'"
              (change)="toggleButtonOverrides.emit($event.target.checked)">

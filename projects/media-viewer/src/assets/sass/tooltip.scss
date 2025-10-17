@@ -1,9 +1,9 @@
-.tooltip {
+.mv-tooltip {
   /* default: place below */
   --tooltip-offset-y: 100%;
 }
 
-.tooltip::before {
+.mv-tooltip::before {
   content: attr(data-tooltip); /* Tooltip text comes from attribute */
   position: absolute;
   top: var(--tooltip-offset-y);
@@ -28,23 +28,23 @@
 }
 
 /* Show tooltip on hover and focus */
-.tooltip:hover::after,
-.tooltip:focus::after,
-.tooltip:hover::before,
+.mv-tooltip:hover::after,
+.mv-tooltip:focus::after,
+.mv-tooltip:hover::before,
 /* Show tooltip on hover or keyboard focus */
-.tooltip:focus::before,
-.tooltip:focus-within::before {
+.mv-tooltip:focus::before,
+.mv-tooltip:focus-within::before {
   opacity: 1;
   visibility: visible;
 }
 
 /* Hide tooltip when dismissed, even if focussed */
-.tooltip[data-tooltip-dismissed]::before {
+.mv-tooltip[data-tooltip-dismissed]::before {
   opacity: 0;
   visibility: hidden;
 }
 
 /* place above */
-.tooltip[data-placement="above"] {
-  --tooltip-offset-y: -50%%;
+.mv-tooltip[data-placement="above"] {
+  --tooltip-offset-y: -50%;
 }
