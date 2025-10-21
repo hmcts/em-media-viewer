@@ -7,4 +7,16 @@ mv-box-highlight-create {
     z-index: 10;
     opacity: 0.5;
   }
+
+  // for keyboard users
+  .drawing-cursor {
+    width: 20px;
+    height: 20px;
+    margin-left: -10px; // center horizontally
+    margin-top: -10px;  // center vertically
+    z-index: 15;
+    pointer-events: none;
+    border-radius: 50%;
+    background-color: red;
+  }
 }

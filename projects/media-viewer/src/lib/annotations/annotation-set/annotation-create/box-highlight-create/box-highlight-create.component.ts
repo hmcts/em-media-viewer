@@ -5,6 +5,8 @@ import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
 import { HighlightCreateService } from '../highlight-create/highlight-create.service';
 import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 import { HtmlTemplatesHelper } from '../../../../shared/util/helpers/html-templates.helper';
+import { KeyboardBoxDrawEvent, CursorPosition } from './keyboard-box-draw.directive';
+
 @Component({
   selector: 'mv-box-highlight-create',
   templateUrl: './box-highlight-create.component.html',
@@ -21,20 +23,28 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   @Output() saveSelection = new EventEmitter<{ rectangles: Rectangle[], page: number }>();
 
   @ViewChild('boxHighlight', { static: false }) highlight: ElementRef;
+  @ViewChild('drawingContainer', { static: false }) drawingContainer: ElementRef;
 
   drawStartX = -1;
   drawStartY = -1;
+
   top: number;
   left: number;
   height: number;
   width: number;
   display: string;
+  position: string;
+  backgroundColor = 'none';
+
   drawMode: boolean;
   defaultHeight: string;
   defaultWidth: string;
-  position: string;
-  backgroundColor = 'none';
   wholePage: boolean;
+
+  keyboardDrawingMode = false;
+  cursorX: number;
+  cursorY: number;
+  showCursor = false;
 
   private subscriptions: Subscription[] = [];
 
@@ -46,6 +56,17 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
       this.toolbarEvents.drawModeSubject.subscribe(drawMode => {
         this.defaultHeight = drawMode ? '100%' : '0px';
         this.defaultWidth = drawMode ? '100%' : '0px';
+        this.drawMode = drawMode;
+        if (drawMode) {
+          setTimeout(() => {
+            if (this.drawingContainer && this.drawingContainer.nativeElement) {
+              if (this.isElementInViewport(this.drawingContainer.nativeElement)) {
+                this.drawingContainer.nativeElement.focus();
+                console.log('drawing container focused');
+              }
+            }
+          }, 100);
+        }
       }),
       this.toolbarEvents.redactWholePage.subscribe(() => {
         this.wholePage = true;
@@ -57,6 +78,17 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
+  }
+
+  private isElementInViewport(el: HTMLElement): boolean {
+    const rect = el.getBoundingClientRect();
+    const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+    const windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+
+    const verticallyVisible = rect.bottom > 0 && rect.top < windowHeight;
+    const horizontallyVisible = rect.right > 0 && rect.left < windowWidth;
+
+    return verticallyVisible && horizontallyVisible;
   }
 
   initHighlight(event: MouseEvent) {
@@ -112,9 +144,62 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
       let rectangle = this.highlightService
         .applyRotation(this.pageHeight, this.pageWidth, this.height, this.width, this.top, this.left, this.rotate, this.zoom);
       rectangle = { id: uuid(), ...rectangle } as any;
-      console.log(`createHighlight: rectangle=${JSON.stringify(rectangle)}`);
+      console.log(`createHighlight, rectangle: ${JSON.stringify(rectangle)}`);
       this.saveSelection.emit({ rectangles: [rectangle], page: this.page });
       this.resetHighlight();
+    }
+  }
+
+  // keyboard directive event handlers
+  onCursorPositionChanged(position: CursorPosition): void {
+    this.cursorX = position.x;
+    this.cursorY = position.y;
+    this.showCursor = position.visible;
+  }
+
+  onDrawingStarted(event: KeyboardBoxDrawEvent): void {
+    this.keyboardDrawingMode = true;
+    this.position = 'absolute';
+    this.backgroundColor = 'yellow';
+    this.display = 'block';
+
+    this.drawStartX = event.startX;
+    this.drawStartY = event.startY;
+    this.width = event.width;
+    this.height = event.height;
+    this.top = this.drawStartY;
+    this.left = this.drawStartX;
+
+    this.adjustForRotation();
+  }
+
+  onDrawingUpdated(event: KeyboardBoxDrawEvent): void {
+    this.width = event.width;
+    this.height = event.height;
+  }
+
+  onDrawingConfirmed(event: KeyboardBoxDrawEvent): void {
+    this.keyboardDrawingMode = false;
+    this.createHighlight();
+  }
+
+  onDrawingCancelled(): void {
+    this.keyboardDrawingMode = false;
+    this.resetHighlight();
+  }
+
+  private adjustForRotation(): void {
+    switch (this.rotate) {
+      case 90:
+        this.top = this.drawStartY - this.height;
+        break;
+      case 180:
+        this.top = this.drawStartY - this.height;
+        this.left = this.drawStartX - this.width;
+        break;
+      case 270:
+        this.left = this.drawStartX - this.width;
+        break;
     }
   }
 
