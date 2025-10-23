@@ -14,6 +14,7 @@ import { Rectangle } from './rectangle.model';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 import { HighlightCreateService } from '../../annotation-create/highlight-create/highlight-create.service';
+import { BoxMovementBounds } from './keyboard-box-move.directive';
 
 @Component({
   selector: 'mv-anno-rectangle',
@@ -30,6 +31,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   @Output() selectEvent = new EventEmitter<Rectangle>();
   @Output() updateEvent = new EventEmitter<Rectangle>();
+  @Output() keyboardMovingChange = new EventEmitter<boolean>();
 
   @ViewChild('rectElement', {static: false}) viewRect: ElementRef;
 
@@ -41,6 +43,8 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   width: number;
   top: number;
   left: number;
+
+  movementBounds: BoxMovementBounds;
 
   _annoRect: Rectangle;
   @Input()
@@ -64,12 +68,16 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (changes.rotate) {
       this.adjustForRotation(this.rotate);
     }
+    if (changes.pageHeight || changes.pageWidth) {
+      this.updateMovementBounds();
+    }
   }
 
   ngAfterViewInit() {
     this.subscriptions.push(
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag)
     );
+    this.updateMovementBounds();
   }
 
   ngOnDestroy(): void {
@@ -130,5 +138,18 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
       Math.round(this.top) !== viewRect.offsetTop ||
       Math.round(this.width) !== viewRect.offsetWidth ||
       Math.round(this.height) !== viewRect.offsetHeight;
+  }
+
+  private updateMovementBounds(): void {
+    if (this.pageHeight && this.pageWidth) {
+      this.movementBounds = {
+        containerHeight: this.pageHeight,
+        containerWidth: this.pageWidth
+      };
+    }
+  }
+
+  onKeyboardMovingChange(isMoving: boolean): void {
+    this.keyboardMovingChange.emit(isMoving);
   }
 }

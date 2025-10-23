@@ -3,7 +3,8 @@
        class="rectangle"
        draggable
        resizable
-       [tabindex]="annoRect.id"
+       mvKeyboardBoxMove
+       [tabindex]="0"
        [ngClass]="{ 'selected': selected, 'grabNDrag': enableGrabNDrag }"
        [style.backgroundColor]="'#' + color"
        [style.width]="width + 'px'"
@@ -12,14 +13,16 @@
        [style.top]="top + 'px'"
        [rotate]="0"
        [selected]="selected"
+       [movementBounds]="movementBounds"
        (click)="onClick()"
-       (stopped)="onUpdate(rectElement)">
+       (stopped)="onUpdate(rectElement)"
+       (keyboardMovingChange)="onKeyboardMovingChange($event)">
   </div>
 </div>
 <ng-template #nonEditable>
   <div #rectElement
        class="rectangle"
-       [tabindex]="annoRect.id"
+       [tabindex]="0"
        [ngClass]="{ 'selected': selected }"
        [style.backgroundColor]="'#' + color"
        [style.width]="width + 'px'"

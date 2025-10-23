@@ -37,6 +37,7 @@ import { MetadataLayerComponent } from './annotation-set/metadata-layer/metadata
 import { CommentService } from './comment-set/comment/comment.service';
 import { RpxTranslationModule } from 'rpx-xui-translation';
 import { KeyboardBoxDrawDirective } from './annotation-set/annotation-create/box-highlight-create/keyboard-box-draw.directive';
+import { KeyboardBoxMoveDirective } from './annotation-set/annotation-view/rectangle/keyboard-box-move.directive';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import { KeyboardBoxDrawDirective } from './annotation-set/annotation-create/box
     CommentFilterComponent,
     FilterPipe,
     UnsnakePipe,
-    KeyboardBoxDrawDirective
+    KeyboardBoxDrawDirective,
+    KeyboardBoxMoveDirective
   ],
   providers: [
     AnnotationApiService,

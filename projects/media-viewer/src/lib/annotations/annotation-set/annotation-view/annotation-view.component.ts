@@ -21,6 +21,7 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   }
   anno: Annotation;
   selected: boolean;
+  isKeyboardMoving = false;
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() set selectedAnnoId(selectedId: { annotationId: string }) {
@@ -83,5 +84,9 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
     this.selected = true;
     this.annotationClick.emit({ annotationId: this.anno.id, editable: true, selected: true });
     this.toolbarEvents.toggleCommentsPanel(true);
+  }
+
+  public onKeyboardMovingChange(isMoving: boolean): void {
+    this.isKeyboardMoving = isMoving;
   }
 }
