@@ -4,7 +4,7 @@
        draggable
        resizable
        mvKeyboardBoxMove
-       [tabindex]="0"
+       [tabindex]="rectangleTabIndex"
        [ngClass]="{ 'selected': selected, 'grabNDrag': enableGrabNDrag }"
        [style.backgroundColor]="'#' + color"
        [style.width]="width + 'px'"
@@ -22,7 +22,7 @@
 <ng-template #nonEditable>
   <div #rectElement
        class="rectangle"
-       [tabindex]="0"
+       [tabindex]="rectangleTabIndex"
        [ngClass]="{ 'selected': selected }"
        [style.backgroundColor]="'#' + color"
        [style.width]="width + 'px'"

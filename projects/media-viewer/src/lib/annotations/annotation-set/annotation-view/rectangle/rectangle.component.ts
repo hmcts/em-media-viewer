@@ -28,6 +28,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() editable: boolean;
   @Input() pageHeight: number;
   @Input() pageWidth: number;
+  @Input() rectangleTabIndex: number = 0;
 
   @Output() selectEvent = new EventEmitter<Rectangle>();
   @Output() updateEvent = new EventEmitter<Rectangle>();
