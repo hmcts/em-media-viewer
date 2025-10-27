@@ -1,5 +1,5 @@
 <div #container [tabindex]="anno.id">
-  <mv-ctx-toolbar *ngIf="selected && !isKeyboardMoving"
+  <mv-ctx-toolbar *ngIf="selected && showToolbar"
                   [canDelete]="true" [canComment]="true"
                   [rectangles]="anno.rectangles"
                   [zoom]="zoom"
