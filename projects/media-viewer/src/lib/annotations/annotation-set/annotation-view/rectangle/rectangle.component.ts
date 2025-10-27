@@ -104,7 +104,6 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   onFocus() {
-    console.log('RectangleComponent onFocus called, focused: ', this.annoRect);
     this.selectEvent.emit(this.annoRect);
   }
 
@@ -161,11 +160,8 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   onDelete(): void {
-    console.log('RectangleComponent onDelete called, selected: ', this._selected);
     if (this._selected) {
       this.deleteEvent.emit(this.annoRect);
-    } else {
-      console.log('RectangleComponent onDelete ignored, no rectangle selected');
     }
   }
 }
