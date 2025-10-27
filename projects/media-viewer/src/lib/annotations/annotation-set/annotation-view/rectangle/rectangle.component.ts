@@ -32,6 +32,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   @Output() selectEvent = new EventEmitter<Rectangle>();
   @Output() updateEvent = new EventEmitter<Rectangle>();
+  @Output() deleteEvent = new EventEmitter<Rectangle>();
   @Output() keyboardMovingChange = new EventEmitter<boolean>();
 
   @ViewChild('rectElement', {static: false}) viewRect: ElementRef;
@@ -102,6 +103,11 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.selectEvent.emit(this.annoRect);
   }
 
+  onFocus() {
+    console.log('RectangleComponent onFocus called, focused: ', this.annoRect);
+    this.selectEvent.emit(this.annoRect);
+  }
+
   onUpdate(viewRect: any) {
     const { offsetHeight, offsetWidth, offsetTop, offsetLeft } = viewRect;
     if (this.hasRectangleChanged(viewRect)) {
@@ -152,5 +158,14 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   onKeyboardMovingChange(isMoving: boolean): void {
     this.keyboardMovingChange.emit(isMoving);
+  }
+
+  onDelete(): void {
+    console.log('RectangleComponent onDelete called, selected: ', this._selected);
+    if (this._selected) {
+      this.deleteEvent.emit(this.annoRect);
+    } else {
+      console.log('RectangleComponent onDelete ignored, no rectangle selected');
+    }
   }
 }

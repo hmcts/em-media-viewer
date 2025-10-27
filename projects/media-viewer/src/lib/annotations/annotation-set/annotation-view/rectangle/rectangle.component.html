@@ -15,13 +15,16 @@
        [selected]="selected"
        [movementBounds]="movementBounds"
        (click)="onClick()"
+       (focus)="onFocus()"
        (stopped)="onUpdate(rectElement)"
-       (keyboardMovingChange)="onKeyboardMovingChange($event)">
+       (keyboardMovingChange)="onKeyboardMovingChange($event)"
+       (boxDelete)="onDelete()">
   </div>
 </div>
 <ng-template #nonEditable>
   <div #rectElement
        class="rectangle"
+       mvKeyboardBoxMove
        [tabindex]="rectangleTabIndex"
        [ngClass]="{ 'selected': selected }"
        [style.backgroundColor]="'#' + color"
@@ -29,6 +32,9 @@
        [style.height]="height+ 'px'"
        [style.left]="left + 'px'"
        [style.top]="top + 'px'"
-       (click)="onClick()">
+       [enabled]="false"
+       (click)="onClick()"
+       (focus)="onFocus()"
+       (boxDelete)="onDelete()">
   </div>
 </ng-template>

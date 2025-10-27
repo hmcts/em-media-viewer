@@ -18,6 +18,7 @@ export class KeyboardBoxMoveDirective implements OnDestroy {
   @Input() movementBounds: BoxMovementBounds;
 
   @Output() keyboardMovingChange = new EventEmitter<boolean>();
+  @Output() boxDelete = new EventEmitter<void>();
 
   private moveSubject = new Subject<void>();
   private moveSubscription: Subscription;
@@ -41,6 +42,13 @@ export class KeyboardBoxMoveDirective implements OnDestroy {
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Delete' || event.key === 'Backspace') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.boxDelete.emit();
+      return;
+    }
+
     if (!this.enabled) {
       return;
     }

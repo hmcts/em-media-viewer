@@ -14,6 +14,7 @@
       (selectEvent)="onSelect()"
       (updateEvent)="onRectangleUpdate($event)"
       (keyboardMovingChange)="onKeyboardMovingChange($event)"
+      (deleteEvent)="deleteHighlight()"
       [selected]="selected"
       [zoom]="zoom"
       [rotate]="rotate"
