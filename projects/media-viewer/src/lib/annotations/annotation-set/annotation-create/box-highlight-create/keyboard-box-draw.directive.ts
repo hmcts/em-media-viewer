@@ -18,7 +18,20 @@ export interface CursorPosition {
 })
 export class KeyboardBoxDrawDirective implements OnDestroy {
 
-  @Input() enabled = false;
+  // @Input() enabled = false;
+  @Input() set enabled(value: boolean) {
+    const wasEnabled = this._enabled;
+    this._enabled = value;
+
+    if (value && !wasEnabled && KeyboardBoxDrawDirective.lastInteractionWasKeyboard && !this.showCursor) {
+      this.initializeCursorForKeyboard();
+    }
+  }
+  get enabled(): boolean {
+    return this._enabled;
+  }
+  private _enabled = false;
+
   @Input() minBoxSize = 10;
   @Input() incrementSmall = 1;
   @Input() incrementMedium = 5;
@@ -38,11 +51,37 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
   private drawStartY: number;
   private currentWidth: number;
   private currentHeight: number;
+  private static lastInteractionWasKeyboard = false;
 
-  constructor(private elementRef: ElementRef<HTMLElement>) {}
+  constructor(private elementRef: ElementRef<HTMLElement>) {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('keydown', KeyboardBoxDrawDirective.onGlobalKeyDown, { capture: true });
+      window.addEventListener('mousedown', KeyboardBoxDrawDirective.onGlobalMouseDown, { capture: true });
+    }
+  }
+
+  private static onGlobalKeyDown(): void {
+    KeyboardBoxDrawDirective.lastInteractionWasKeyboard = true;
+  }
+
+  private static onGlobalMouseDown(): void {
+    KeyboardBoxDrawDirective.lastInteractionWasKeyboard = false;
+  }
 
   ngOnDestroy(): void {
     this.cleanup();
+  }
+
+  private initializeCursorForKeyboard(): void {
+    if (this.enabled && !this.showCursor && !this.isDrawing) {
+      const rect = this.elementRef.nativeElement.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        this.cursorX = rect.width / 2;
+        this.cursorY = rect.height / 2;
+        this.showCursor = true;
+        this.emitCursorPosition();
+      }
+    }
   }
 
   @HostListener('keydown', ['$event'])
@@ -84,6 +123,13 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
       } else {
         this.moveCursor(event);
       }
+    }
+  }
+
+  @HostListener('blur')
+  onBlur(): void {
+    if (this.showCursor && !this.isDrawing) {
+      this.hideCursor();
     }
   }
 
@@ -130,6 +176,7 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
       this.showCursor = false;
       this.emitCursorPosition();
     } else {
+      // default to center
       const rect = this.elementRef.nativeElement.getBoundingClientRect();
       startX = rect.width / 2;
       startY = rect.height / 2;
