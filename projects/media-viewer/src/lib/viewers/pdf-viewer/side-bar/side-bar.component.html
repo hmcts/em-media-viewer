@@ -37,7 +37,16 @@
     </button>
   </div>
 </div>
-<div #sidebar id="sidebarContent" cdkScrollable (scroll)="onScroll($event)" [hidden]="!sidebarOpen">
+<div 
+  #sidebar
+  id="sidebarContent"
+  cdkScrollable
+  (scroll)="onScroll($event)"
+  [hidden]="!sidebarOpen"
+  tabIndex="-1"
+  role="region"
+  aria-label="Document sidebar"
+>
   <div id="outlineView" class="outlineWithDeepNesting">
     <div class="outlineItem" *ngIf="selectedView === 'outline'">
       <mv-outline-item

@@ -9,6 +9,7 @@ import { PdfJsWrapperFactory } from '../pdf-js/pdf-js-wrapper.provider';
 import { ViewerEventService } from '../../viewer-event.service';
 import { LoadBookmarks } from '../../../store/actions/bookmark.actions';
 import { Outline } from './outline-item/outline.model';
+import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 describe('SideBarComponent', () => {
   let component: SideBarComponent;
@@ -122,5 +123,33 @@ describe('SideBarComponent', () => {
     component.treeChanged = true
     component.hasTreeChanged(false);
     expect(component.treeChanged).toEqual(false)
+  });
+
+  describe('sidebar focus functionality', () => {
+    let toolbarEvents: ToolbarEventService;
+    let sidebarElement: HTMLElement;
+
+    beforeEach(() => {
+      toolbarEvents = TestBed.inject(ToolbarEventService);
+      sidebarElement = fixture.nativeElement.querySelector('#sidebarContent');
+    });
+
+    it('should set focus to sidebar when sidebar is opened', fakeAsync(() => {
+      spyOn(sidebarElement, 'focus');
+
+      toolbarEvents.sidebarOpen.next(true);
+      tick(0);
+
+      expect(sidebarElement.focus).toHaveBeenCalled();
+    }));
+
+    it('should not set focus to sidebar when sidebar is closed', fakeAsync(() => {
+      spyOn(sidebarElement, 'focus');
+
+      toolbarEvents.sidebarOpen.next(false);
+      tick(0);
+
+      expect(sidebarElement.focus).not.toHaveBeenCalled();
+    }));
   });
 });

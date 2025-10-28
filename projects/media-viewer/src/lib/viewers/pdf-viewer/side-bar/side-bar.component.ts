@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import * as bookmarksSelectors from '../../../store/selectors/bookmark.selectors';
 import { BookmarkNode } from '../../../store/models/bookmarks.interface';
 import { CreateBookmark, LoadBookmarks } from '../../../store/actions/bookmark.actions';
-import { take } from 'rxjs/operators';
+import { filter, delay } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { ViewerEventService } from '../../viewer-event.service';
 import { BookmarksState } from '../../../store/reducers/bookmarks.reducer';
@@ -51,6 +51,14 @@ export class SideBarComponent implements OnInit, OnChanges, OnDestroy {
       }),
       this.toolbarEvents.sidebarOpen.subscribe(toggle => {
         this.sidebarOpen = toggle;
+      }),
+      this.toolbarEvents.sidebarOpen.pipe(
+        filter(toggle => toggle === true),
+        delay(0)
+      ).subscribe(() => {
+        if (this.sidebarDiv?.nativeElement) {
+            this.sidebarDiv.nativeElement.focus();
+        }
       })
     );
     this.subscriptions.push(this.store.pipe(select(bookmarksSelectors.getScrollTop)).subscribe(scrollTopValue => {
