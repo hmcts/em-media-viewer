@@ -61,6 +61,8 @@ describe('Annotations Effects', () => {
       const action = new annotationActions.SaveAnnotation(mockAnnotations[0]);
       UserServiceMock.postAnnotation.and.returnValue(of(returnValue));
       const completion = new annotationActions.SaveAnnotationSuccess(returnValue);
+      (completion as any).autoSelect = undefined;
+      (completion as any).annotationId = mockAnnotations[0].id;
       actions$ = hot('-a', { a: action });
       const expected = cold('-b', { b: completion });
       expect(effects.postAnnotation$).toBeObservable(expected);

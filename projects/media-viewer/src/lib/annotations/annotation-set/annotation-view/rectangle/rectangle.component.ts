@@ -79,7 +79,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.subscriptions.push(
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag)
     );
-    this.updateMovementBounds();
+    setTimeout(() => this.updateMovementBounds(), 0);
 
     if (this._selected && this.viewRect) {
       this.viewRect.nativeElement.focus();
