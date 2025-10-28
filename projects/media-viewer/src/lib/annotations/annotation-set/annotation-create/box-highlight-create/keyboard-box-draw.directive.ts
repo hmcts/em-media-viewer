@@ -47,17 +47,13 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    console.log('KeyboardBoxDrawDirective - keydown event: ', event.key);
-    console.log('KeyboardBoxDrawDirective - enabled: ', this.enabled);
     if (!this.enabled) {
       return;
     }
 
-    // handle Enter key to start or confirm drawing
     if (event.key === 'Enter') {
       event.preventDefault();
       event.stopPropagation();
-      console.log('Enter key - isDrawing: ', this.isDrawing);
 
       if (!this.isDrawing) {
         this.startDrawing();
@@ -67,7 +63,6 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
       return;
     }
 
-    // handle escape to cancel
     if (event.key === 'Escape') {
       event.preventDefault();
       event.stopPropagation();
@@ -80,11 +75,9 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
       return;
     }
 
-    // handle arrow keys
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       event.preventDefault();
       event.stopPropagation();
-      console.log('Arrow key - isDrawing: ', this.isDrawing);
 
       if (this.isDrawing) {
         this.resizeBox(event);
@@ -97,7 +90,6 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
   private moveCursor(event: KeyboardEvent): void {
     const increment = event.shiftKey ? this.incrementLarge : this.incrementMedium;
 
-    // initialize cursor at center if not visible
     if (!this.showCursor) {
       const rect = this.elementRef.nativeElement.getBoundingClientRect();
       this.cursorX = rect.width / 2;

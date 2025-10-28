@@ -62,7 +62,6 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
             if (this.drawingContainer && this.drawingContainer.nativeElement) {
               if (this.isElementInViewport(this.drawingContainer.nativeElement)) {
                 this.drawingContainer.nativeElement.focus();
-                console.log('drawing container focused');
               }
             }
           }, 100);
@@ -100,7 +99,6 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     const rect = HtmlTemplatesHelper.getAdjustedBoundingRect((event.target as HTMLElement)),
     offsetX = event.clientX - rect.left,
     offsetY = event.clientY - rect.top;
-    console.log(`initHighlight: rect=${JSON.stringify(rect)}, clientX=${event.clientX}, clientY=${event.clientY}, offsetX=${offsetX}, offsetY=${offsetY}`);
 
     this.position = 'absolute';
     this.backgroundColor = 'yellow';
@@ -144,7 +142,6 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
       let rectangle = this.highlightService
         .applyRotation(this.pageHeight, this.pageWidth, this.height, this.width, this.top, this.left, this.rotate, this.zoom);
       rectangle = { id: uuid(), ...rectangle } as any;
-      console.log(`createHighlight, rectangle: ${JSON.stringify(rectangle)}`);
       const annotationId = uuid();
       this.saveSelection.emit({ rectangles: [rectangle], page: this.page, annotationId });
       this.resetHighlight();
