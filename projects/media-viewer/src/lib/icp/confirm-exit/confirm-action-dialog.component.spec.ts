@@ -94,4 +94,31 @@ describe('ConfirmActionDialogComponent', () => {
     component.onCancel();
     expect(icpEventService.leavingSession.next).not.toHaveBeenCalledWith(true);
   });
+
+  describe('Focus functionality', () => {
+    it('should have modalContainer ViewChild defined after view initialization', () => {
+      expect(component.modalContainer).toBeDefined();
+      expect(component.modalContainer.nativeElement).toBeTruthy();
+    });
+
+    it('should set focus to the modal element when ngAfterViewInit is called', () => {
+      const focusSpy = spyOn(component.modalContainer.nativeElement, 'focus');
+
+      component.ngAfterViewInit();
+
+      expect(focusSpy).toHaveBeenCalled();
+    });
+
+    it('should not throw error if modalContainer is undefined', () => {
+      component.modalContainer = undefined;
+
+      expect(() => component.ngAfterViewInit()).not.toThrow();
+    });
+
+    it('should have tabindex attribute set to -1 on modal dialog', () => {
+      const modalElement = fixture.nativeElement.querySelector('#modal');
+
+      expect(modalElement.getAttribute('tabindex')).toBe('-1');
+    });
+  });
 });
