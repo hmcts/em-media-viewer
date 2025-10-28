@@ -20,7 +20,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   @Input() zoom: number;
   @Input() container: { top: number, left: number };
 
-  @Output() saveSelection = new EventEmitter<{ rectangles: Rectangle[], page: number }>();
+  @Output() saveSelection = new EventEmitter<{ rectangles: Rectangle[], page: number, annotationId?: string }>();
 
   @ViewChild('boxHighlight', { static: false }) highlight: ElementRef;
   @ViewChild('drawingContainer', { static: false }) drawingContainer: ElementRef;
@@ -145,7 +145,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
         .applyRotation(this.pageHeight, this.pageWidth, this.height, this.width, this.top, this.left, this.rotate, this.zoom);
       rectangle = { id: uuid(), ...rectangle } as any;
       console.log(`createHighlight, rectangle: ${JSON.stringify(rectangle)}`);
-      this.saveSelection.emit({ rectangles: [rectangle], page: this.page });
+      const annotationId = uuid();
+      this.saveSelection.emit({ rectangles: [rectangle], page: this.page, annotationId });
       this.resetHighlight();
     }
   }

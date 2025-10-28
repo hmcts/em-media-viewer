@@ -90,8 +90,8 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
       });
   }
 
-  saveAnnotation({ rectangles, page }: { rectangles: Rectangle[], page: any }) {
-    this.highlightService.saveAnnotation(rectangles, page);
+  saveAnnotation({ rectangles, page, annotationId }: { rectangles: Rectangle[], page: any, annotationId?: string }) {
+    this.highlightService.saveAnnotation(rectangles, page, annotationId);
     this.toolbarEvents.drawModeSubject.next(false);
   }
 }

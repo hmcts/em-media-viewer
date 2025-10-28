@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, exhaustMap, map, switchMap } from 'rxjs/operators';
+import { catchError, concatMap, exhaustMap, map, switchMap, filter, delay } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AnnotationApiService } from '../../annotations/services/annotation-api/annotation-api.service';
 import * as annotationsActions from '../actions/annotation.actions';
@@ -36,7 +36,11 @@ export class AnnotationEffects {
     concatMap((action: annotationsActions.SaveAnnotation) => {
       return this.annotationApiService.postAnnotation(action.payload).pipe(
         map(annotations => {
-          return new annotationsActions.SaveAnnotationSuccess(annotations);
+          const successAction = new annotationsActions.SaveAnnotationSuccess(annotations);
+          (successAction as any).autoSelect = action.autoSelect;
+          (successAction as any).annotationId = action.payload.id;
+          return successAction;
+          // return new annotationsActions.SaveAnnotationSuccess(annotations);
         }),
         catchError(error => {
           return of(new annotationsActions.LoadAnnotationSetFail(error));
@@ -72,5 +76,19 @@ export class AnnotationEffects {
           return of(new annotationsActions.SaveAnnotationSetFail(error));
         }));
     }))
+  );
+
+  autoSelectAnnotation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(annotationsActions.SAVE_ANNOTATION_SUCCESS),
+      filter((action: any) => action.autoSelect === true && action.annotationId),
+      map((action: any) => {
+        return new annotationsActions.SelectedAnnotation({
+          annotationId: action.annotationId,
+          editable: false,
+          selected: true
+        });
+      })
+    )
   );
 }

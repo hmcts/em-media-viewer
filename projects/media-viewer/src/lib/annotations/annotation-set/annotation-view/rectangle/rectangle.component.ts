@@ -80,6 +80,10 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag)
     );
     this.updateMovementBounds();
+
+    if (this._selected && this.viewRect) {
+      this.viewRect.nativeElement.focus();
+    }
   }
 
   ngOnDestroy(): void {
@@ -91,7 +95,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   set selected(selected: boolean) {
     this._selected = selected;
     if (this._selected && this.viewRect) {
-      this.viewRect.nativeElement.focus();
+      this.viewRect.nativeElement.focus()
     }
   }
 
