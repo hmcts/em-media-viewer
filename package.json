@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.1.8-exui-2600",
+  "version": "4.1.8-exui-2600-1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

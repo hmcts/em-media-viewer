@@ -40,7 +40,6 @@ export class AnnotationEffects {
           (successAction as any).autoSelect = action.autoSelect;
           (successAction as any).annotationId = action.payload.id;
           return successAction;
-          // return new annotationsActions.SaveAnnotationSuccess(annotations);
         }),
         catchError(error => {
           return of(new annotationsActions.LoadAnnotationSetFail(error));
