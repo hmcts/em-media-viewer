@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 import { Annotation } from './annotation.model';
 import { Rectangle } from './rectangle/rectangle.model';
@@ -9,24 +9,34 @@ import * as fromActions from '../../../store/actions/annotation.actions';
 import { SelectionAnnotation } from '../../models/event-select.model';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Comment } from '../../comment-set/comment/comment.model';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'mv-annotation',
   templateUrl: './annotation-view.component.html'
 })
-export class AnnotationViewComponent {  // todo rename this to selection vew c
+export class AnnotationViewComponent implements OnDestroy {  // todo rename this to selection vew c
 
   @Input() set annotation(value) {
     this.anno = { ...value };
   }
   anno: Annotation;
   selected: boolean;
+  isKeyboardMoving = false;
+  showToolbar = false;
+  private showToolbarSubject = new Subject<boolean>();
+
   @Input() zoom: number;
   @Input() rotate: number;
   @Input() set selectedAnnoId(selectedId: { annotationId: string }) {
     if (selectedId) {
       const id = this.anno.id || this.anno.redactionId; // todo make it unique
       this.selected = selectedId.annotationId ? (selectedId.annotationId === id) : false;
+      if (this.selected && !this.isKeyboardMoving) {
+        this.showToolbarSubject.next(true);
+      } else {
+        this.showToolbarSubject.next(false);
+      }
     }
   }
   @Input() pageHeight: number;
@@ -40,11 +50,29 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
   constructor(
     private readonly toolbarEvents: ToolbarEventService,
     private store: Store<fromStore.AnnotationSetState>
-  ) { }
+  ) {
+    this.showToolbarSubject
+      .pipe(debounceTime(300))
+      .subscribe(show => {
+        this.showToolbar = show;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.showToolbarSubject.complete();
+  }
+
+  private setShowToolbar(show: boolean): void {
+    this.showToolbarSubject.next(show);
+  }
 
   public onSelect() {
     const annotationId = this.anno.id || this.anno.redactionId;
     this.annotationClick.emit({ annotationId, editable: false, selected: true });
+
+    if (!this.isKeyboardMoving) {
+      this.setShowToolbar(true);
+    }
   }
 
   public onRectangleUpdate(rectangle: Rectangle) {
@@ -83,5 +111,16 @@ export class AnnotationViewComponent {  // todo rename this to selection vew c
     this.selected = true;
     this.annotationClick.emit({ annotationId: this.anno.id, editable: true, selected: true });
     this.toolbarEvents.toggleCommentsPanel(true);
+  }
+
+  public onKeyboardMovingChange(isMoving: boolean): void {
+    this.isKeyboardMoving = isMoving;
+
+    if (isMoving) {
+      this.showToolbar = false;
+      this.showToolbarSubject.next(false);
+    } else if (this.selected) {
+      this.setShowToolbar(true);
+    }
   }
 }
