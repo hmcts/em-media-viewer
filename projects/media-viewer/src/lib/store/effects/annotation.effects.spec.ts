@@ -90,4 +90,60 @@ describe('Annotations Effects', () => {
       expect(effects.deleteAnnotation$).toBeObservable(expected);
     });
   });
+
+  describe('autoSelectAnnotation$', () => {
+    it('should return a SelectedAnnotation action when autoSelect is true', () => {
+      const completion = new annotationActions.SaveAnnotationSuccess(returnValue);
+      (completion as any).autoSelect = true;
+      (completion as any).annotationId = '123';
+
+      const expectedSelection = new annotationActions.SelectedAnnotation({
+        annotationId: '123',
+        editable: false,
+        selected: true
+      });
+
+      actions$ = hot('-a', { a: completion });
+      const expected = cold('-b', { b: expectedSelection });
+      expect(effects.autoSelectAnnotation$).toBeObservable(expected);
+    });
+
+    it('should not emit when autoSelect is false', () => {
+      const completion = new annotationActions.SaveAnnotationSuccess(returnValue);
+      (completion as any).autoSelect = false;
+      (completion as any).annotationId = '123';
+
+      actions$ = hot('-a', { a: completion });
+      const expected = cold('--'); // no emission
+      expect(effects.autoSelectAnnotation$).toBeObservable(expected);
+    });
+
+    it('should not emit when autoSelect is undefined', () => {
+      const completion = new annotationActions.SaveAnnotationSuccess(returnValue);
+      (completion as any).autoSelect = undefined;
+      (completion as any).annotationId = '123';
+
+      actions$ = hot('-a', { a: completion });
+      const expected = cold('--');
+      expect(effects.autoSelectAnnotation$).toBeObservable(expected);
+    });
+
+    it('should not emit when annotationId is missing', () => {
+      const completion = new annotationActions.SaveAnnotationSuccess(returnValue);
+      (completion as any).autoSelect = true;
+      (completion as any).annotationId = undefined;
+
+      actions$ = hot('-a', { a: completion });
+      const expected = cold('--');
+      expect(effects.autoSelectAnnotation$).toBeObservable(expected);
+    });
+
+    it('should not emit when both autoSelect and annotationId are missing', () => {
+      const completion = new annotationActions.SaveAnnotationSuccess(returnValue);
+
+      actions$ = hot('-a', { a: completion });
+      const expected = cold('--')
+      expect(effects.autoSelectAnnotation$).toBeObservable(expected);
+    });
+  });
 });
