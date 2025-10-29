@@ -12,8 +12,8 @@ mv-box-highlight-create {
   .drawing-cursor {
     width: 14px;
     height: 14px;
-    margin-left: -7px; // center horizontally
-    margin-top: -7px;  // center vertically
+    margin-left: -7px;
+    margin-top: -7px;
     z-index: 15;
     pointer-events: none;
     position: relative;

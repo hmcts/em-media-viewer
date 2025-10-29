@@ -15,7 +15,7 @@ import { debounceTime, Subject } from 'rxjs';
   selector: 'mv-annotation',
   templateUrl: './annotation-view.component.html'
 })
-export class AnnotationViewComponent implements OnDestroy {  // todo rename this to selection view component
+export class AnnotationViewComponent implements OnDestroy {  // todo rename this to selection vew c
 
   @Input() set annotation(value) {
     this.anno = { ...value };

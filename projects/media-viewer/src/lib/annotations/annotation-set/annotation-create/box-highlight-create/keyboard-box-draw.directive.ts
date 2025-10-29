@@ -18,7 +18,6 @@ export interface CursorPosition {
 })
 export class KeyboardBoxDrawDirective implements OnDestroy {
 
-  // @Input() enabled = false;
   @Input() set enabled(value: boolean) {
     const wasEnabled = this._enabled;
     this._enabled = value;
@@ -197,21 +196,17 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
 
     switch (event.key) {
       case 'ArrowRight':
-        // expand width to the right
         const maxWidth = rect.width - this.drawStartX;
         this.currentWidth = Math.min(maxWidth, this.currentWidth + increment);
         break;
       case 'ArrowLeft':
-        // shrink width from the right
         this.currentWidth = Math.max(this.minBoxSize, this.currentWidth - increment);
         break;
       case 'ArrowDown':
-        // expand height downward
         const maxHeight = rect.height - this.drawStartY;
         this.currentHeight = Math.min(maxHeight, this.currentHeight + increment);
         break;
       case 'ArrowUp':
-        // reduce height from the bottom
         this.currentHeight = Math.max(this.minBoxSize, this.currentHeight - increment);
         break;
     }

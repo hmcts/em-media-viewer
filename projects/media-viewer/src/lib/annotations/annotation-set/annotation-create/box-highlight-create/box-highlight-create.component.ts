@@ -59,10 +59,8 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
         this.drawMode = drawMode;
         if (drawMode) {
           setTimeout(() => {
-            if (this.drawingContainer && this.drawingContainer.nativeElement) {
-              if (this.isElementInViewport(this.drawingContainer.nativeElement)) {
-                this.drawingContainer.nativeElement.focus();
-              }
+            if (this.drawingContainer?.nativeElement && this.isElementInViewport(this.drawingContainer.nativeElement)) {
+              this.drawingContainer.nativeElement.focus();
             }
           }, 100);
         }
@@ -111,24 +109,14 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     this.top = this.drawStartY;
     this.left = this.drawStartX;
 
-    switch (this.rotate) {
-      case 90:
-        this.top = this.drawStartY - this.height;
-        break;
-      case 180:
-        this.top = this.drawStartY - this.height;
-        this.left = this.drawStartX - this.width;
-        break;
-      case 270:
-        this.left = this.drawStartX - this.width;
-        break;
-    }
+    this.adjustForRotation();
   }
 
   updateHighlight(event: MouseEvent) {
     const rect = HtmlTemplatesHelper.getAdjustedBoundingRect(event.target as HTMLElement, false),
       offsetX = event.clientX - rect.left,
       offsetY = event.clientY - rect.top;
+  
     if (this.drawStartX > 0 && this.drawStartY > 0) {
       this.height = Math.abs(offsetY - this.drawStartY);
       this.width = Math.abs(offsetX - this.drawStartX);
@@ -141,14 +129,13 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     if (this.height / this.zoom > 5 || this.width / this.zoom > 5) {
       let rectangle = this.highlightService
         .applyRotation(this.pageHeight, this.pageWidth, this.height, this.width, this.top, this.left, this.rotate, this.zoom);
-      rectangle = { id: uuid(), ...rectangle } as any;
       const annotationId = uuid();
+      rectangle = { id: annotationId, ...rectangle } as any;
       this.saveSelection.emit({ rectangles: [rectangle], page: this.page, annotationId });
       this.resetHighlight();
     }
   }
 
-  // keyboard directive event handlers
   onCursorPositionChanged(position: CursorPosition): void {
     this.cursorX = position.x;
     this.cursorY = position.y;

@@ -13,7 +13,6 @@
   (mousemove)="updateHighlight($event)"
   (mouseup)="createHighlight()">
 
-  <!-- keyboard users cursor -->
   <div *ngIf="showCursor"
     class="drawing-cursor"
     [style.position]="'absolute'"
@@ -21,7 +20,6 @@
     [style.left]="cursorX + 'px'">
   </div>
 
-  <!-- box being drawn -->
   <div #boxHighlight
     class="box-highlight"
     [style.display]="display"
