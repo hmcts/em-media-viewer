@@ -9,8 +9,9 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { AnnotationViewComponent } from './annotation-view.component';
 
 @Component({
-  selector: 'mv-ctx-toolbar',
-  template: ''
+    selector: 'mv-ctx-toolbar',
+    template: '',
+    standalone: false
 })
 class MockCtxToolbarComponent {
   @Input() zoom = 1;
@@ -31,8 +32,9 @@ class MockCtxToolbarComponent {
 }
 
 @Component({
-  selector: 'mv-anno-rectangle',
-  template: ''
+    selector: 'mv-anno-rectangle',
+    template: '',
+    standalone: false
 })
 class MockRectangleComponent {
   @Input() color: String;

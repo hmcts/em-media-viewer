@@ -13,7 +13,8 @@ import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 import { HtmlTemplatesHelper } from '../../../../shared/util/helpers/html-templates.helper';
 
 @Directive({
-  selector: '[mvCreateTextHighlight]'
+    selector: '[mvCreateTextHighlight]',
+    standalone: false
 })
 export class HighlightCreateDirective implements OnInit, OnDestroy {
   pageHeight: number;

@@ -15,8 +15,9 @@ import { Subscription } from 'rxjs';
 import { ResponseType } from '../viewer-exception.model';
 
 @Component({
-  selector: 'mv-multimedia-player',
-  templateUrl: './multimedia-player.component.html'
+    selector: 'mv-multimedia-player',
+    templateUrl: './multimedia-player.component.html',
+    standalone: false
 })
 export class MultimediaPlayerComponent implements OnInit, OnChanges, OnDestroy {
 

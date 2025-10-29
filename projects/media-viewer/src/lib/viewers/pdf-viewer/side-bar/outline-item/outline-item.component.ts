@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Outline } from './outline.model';
 
 @Component({
-  selector: 'mv-outline-item',
-  templateUrl: './outline-item.component.html'
+    selector: 'mv-outline-item',
+    templateUrl: './outline-item.component.html',
+    standalone: false
 })
 export class OutlineItemComponent implements OnInit {
 

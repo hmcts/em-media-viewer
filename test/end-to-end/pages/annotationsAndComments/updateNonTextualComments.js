@@ -9,7 +9,7 @@ module.exports = async function (annotationToDelete, updatedComment) {
 
   if (await I.getBookmarksCount(commonConfig.commentsCount) !== 0) {
     let commentsList = await I.grabTextFromAll(commonConfig.commentsCount);
-    commentsList.forEach(comment => console.log(comment));
+    commentsList.forEach(comment => console.log('updateNonTextualComments', comment));
 
     await I.click(commonConfig.commentsCount);
     await I.wait(testConfig.BookmarksAndAnnotationsWait)

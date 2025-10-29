@@ -15,8 +15,9 @@ import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Highlight, ViewerEventService } from '../../../viewers/viewer-event.service';
 
 @Component({
-  selector: 'mv-metadata-layer',
-  templateUrl: './metadata-layer.component.html'
+    selector: 'mv-metadata-layer',
+    templateUrl: './metadata-layer.component.html',
+    standalone: false
 })
 export class MetadataLayerComponent implements OnInit, OnDestroy {
 

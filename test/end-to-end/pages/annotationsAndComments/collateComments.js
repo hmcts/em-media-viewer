@@ -10,5 +10,5 @@ module.exports = async function () {
   await I.wait(testConfig.BookmarksAndAnnotationsWait);
 
   let commentsList = await I.grabTextFromAll(commonConfig.commentsCount);
-  commentsList.forEach(comment => console.log(comment));
+  commentsList.forEach(comment => console.log('collateComments', comment));
 }

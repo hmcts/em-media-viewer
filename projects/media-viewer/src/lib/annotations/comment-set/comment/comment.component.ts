@@ -26,8 +26,9 @@ import { Annotation } from '../../annotation-set/annotation-view/annotation.mode
 import { HtmlTemplatesHelper } from '../../../shared/util/helpers/html-templates.helper';
 
 @Component({
-  selector: 'mv-anno-comment',
-  templateUrl: './comment.component.html'
+    selector: 'mv-anno-comment',
+    templateUrl: './comment.component.html',
+    standalone: false
 })
 export class CommentComponent implements OnInit, OnDestroy, AfterContentInit {
 

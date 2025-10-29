@@ -7,8 +7,9 @@ import { IcpState } from '../../icp/icp.interfaces';
 import { IcpEventService } from '../icp-event.service';
 
 @Component({
-  selector: 'mv-icp-toolbar',
-  templateUrl: './icp-toolbar.component.html'
+    selector: 'mv-icp-toolbar',
+    templateUrl: './icp-toolbar.component.html',
+    standalone: false
 })
 export class IcpToolbarComponent implements OnInit, OnDestroy {
 

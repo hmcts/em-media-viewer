@@ -6,8 +6,9 @@ import {Component, Input} from '@angular/core';
 * displaying errorMessage messages
 * */
 @Component({
-  selector: 'mv-gov-uk-date',
-templateUrl: './gov-uk-date.component.html'
+    selector: 'mv-gov-uk-date',
+    templateUrl: './gov-uk-date.component.html',
+    standalone: false
 })
 export class GovUkDateComponent {
   @Input() config: { id: string; legend: string };

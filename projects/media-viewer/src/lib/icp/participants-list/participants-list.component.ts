@@ -7,8 +7,9 @@ import * as fromSelectors from '../../store/selectors/icp.selectors';
 import { IcpEventService } from '../../toolbar/icp-event.service';
 
 @Component({
-  selector: 'mv-participants-list',
-  templateUrl: './participants-list.component.html'
+    selector: 'mv-participants-list',
+    templateUrl: './participants-list.component.html',
+    standalone: false
 })
 export class ParticipantsListComponent implements OnInit, OnDestroy {
 
