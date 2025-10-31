@@ -301,7 +301,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
         if (currentPageElement) {
           const currentPageTextLayer = currentPageElement.querySelector('.textLayer') as HTMLElement;
-          if (currentPageTextLayer?.hasAttribute('tabindex')) {
+          if (currentPageTextLayer) {
             currentPageTextLayer.focus();
           }
         }
