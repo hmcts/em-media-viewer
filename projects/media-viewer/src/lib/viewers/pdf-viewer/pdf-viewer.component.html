@@ -37,6 +37,7 @@
       (toolbarEvents.redactionMode | async) !== true
     "
     [class.grabNDrag]="enableGrabNDrag"
+    (focusin)="onViewerContainerFocusIn($event)"
   >
     <div
       #pdfViewer
