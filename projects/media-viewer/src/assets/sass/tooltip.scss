@@ -1,0 +1,50 @@
+.mv-tooltip {
+  /* default: place below */
+  --tooltip-offset-y: 100%;
+}
+
+.mv-tooltip::before {
+  content: attr(data-tooltip); /* Tooltip text comes from attribute */
+  position: absolute;
+  top: var(--tooltip-offset-y);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #e3e2e1;
+  color: #444444;
+  border: 1px solid #d1d1d1;
+  font-size: 11px;
+  font-family: system-ui, sans-serif;
+  padding: 3px 6px;
+  border-radius: 2px;
+  /* Dynamic sizing */
+  white-space: nowrap;
+  width: max-content;
+  max-width: 300px;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Show tooltip on hover and focus */
+.mv-tooltip:hover::after,
+.mv-tooltip:focus::after,
+.mv-tooltip:hover::before,
+/* Show tooltip on hover or keyboard focus */
+.mv-tooltip:focus::before,
+.mv-tooltip:focus-within::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Hide tooltip when dismissed, even if focussed */
+.mv-tooltip[data-tooltip-dismissed]::before {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* place above */
+.mv-tooltip[data-placement="above"] {
+  --tooltip-offset-y: -50%;
+}

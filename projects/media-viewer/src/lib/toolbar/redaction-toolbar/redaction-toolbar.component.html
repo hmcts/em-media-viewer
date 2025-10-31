@@ -4,8 +4,8 @@
   }}</label>
   <button
     id="toggleDrawButton"
-    class="mv-button redaction-button--draw"
-    title="{{ 'Draw a box' | rpxTranslate }}}"
+    class="mv-button redaction-button--draw mv-tooltip"
+    [attr.data-tooltip]="'Draw a box' | rpxTranslate"
     data-l10n-id="toggleDrawButton"
     (click)="toggleDrawMode()"
     [disabled]="redactionAllInProgress"
@@ -14,11 +14,10 @@
       "Draw a box" | rpxTranslate
     }}</span>
   </button>
-
   <button
     id="redactPageButton"
-    class="mv-button redaction-button--redact-page"
-    title="{{ 'Redact page' | rpxTranslate }}"
+    class="mv-button redaction-button--redact-page mv-tooltip"
+    [attr.data-tooltip]="'Redact page' | rpxTranslate"
     data-l10n-id="redactPageButton"
     (click)="redactPage()"
     [disabled]="redactionAllInProgress"
@@ -30,9 +29,9 @@
   <button
     *ngIf="showRedactSearch"
     id="mvRedactFromSearchBtn"
-    title="{{ 'From search' | rpxTranslate }}"
+    class="mv-button redaction-button--search mv-tooltip"
+    [attr.data-tooltip]="'From search' | rpxTranslate"
     data-l10n-id="fromSearchButton"
-    class="mv-button redaction-button--search"
     (click)="onRedactAllSearch()"
     [disabled]="redactionAllInProgress"
   >
@@ -44,9 +43,9 @@
   <button
     *ngIf="toolbarButtons.showHighlightButton"
     id="toggleHighlightButton"
-    class="mv-button redaction-button--redact"
+    class="mv-button redaction-button--redact mv-tooltip"
     aria-pressed="false"
-    title="{{ 'Redact text' | rpxTranslate }}"
+    [attr.data-tooltip]="'Redact text' | rpxTranslate"
     data-l10n-id="toggleTextRedactionButton"
     (click)="toggleTextRedactionMode()"
     [disabled]="redactionAllInProgress"
@@ -60,9 +59,9 @@
     [disabled]="!hasRedactions || redactionAllInProgress"
     id="mvClearBtn"
     #mvClearBtn
-    class="mv-button redaction-button--clear"
+    class="mv-button redaction-button--clear mv-tooltip"
     aria-pressed="false"
-    title="{{ 'Clear all' | rpxTranslate }}"
+    [attr.data-tooltip]="'Clear all' | rpxTranslate"
     data-l10n-id="toggleClearAllButton"
     (click)="unmarkAll()"
   >
@@ -72,12 +71,12 @@
   <button
     [disabled]="!hasRedactions || redactionAllInProgress"
     id="mvPreviewBtn"
-    class="mv-button"
+    class="mv-button mv-tooltip"
     [class.redaction-button--preview]="!preview"
     [class.redaction-button--hide-preview]="preview"
     redaction-button--preview
     aria-pressed="false"
-    title="{{ 'Preview' | rpxTranslate }}"
+    [attr.data-tooltip]="'Preview' | rpxTranslate"
     data-l10n-id="togglePreviewButton"
     (click)="togglePreview()"
   >
@@ -92,9 +91,9 @@
   <button
     [disabled]="!hasRedactions || redactionAllInProgress"
     id="mvRedactBtn"
-    class="mv-button redaction-button--download"
+    class="mv-button redaction-button--download mv-tooltip"
     aria-pressed="false"
-    title="{{ 'Save document' | rpxTranslate }}"
+    [attr.data-tooltip]="'Save document' | rpxTranslate"
     data-l10n-id="mvRedactBtn"
     (click)="redact()"
   >
@@ -106,8 +105,8 @@
   <button
     id="mvCloseBtn"
     #mvCloseBtn
-    class="mv-button redaction-button--close"
-    title="{{ 'Close Redaction' | rpxTranslate }}"
+    class="mv-button redaction-button--close mv-tooltip"
+    [attr.data-tooltip]="'Close Redaction' | rpxTranslate"
     data-l10n-id="mvRedactBtn"
     (click)="toggleRedactBar()"
     [disabled]="redactionAllInProgress"
