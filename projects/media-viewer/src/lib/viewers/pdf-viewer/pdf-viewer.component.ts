@@ -283,41 +283,29 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       elementFrom?.closest('#sidebarContainer') || 
       elementFrom?.closest('#sidebarContent')
     );
-    console.log('comingFromSidebar: ', comingFromSidebar);
     const goingToViewer = !!elementTo?.closest('#viewerContainer');
-    console.log('goingToViewer: ', goingToViewer);
 
     if (!comingFromSidebar || !goingToViewer) {
-      console.log('!comingFromSidebar || !goingToViewer is true');
       return;
     }
 
     const isTextLayer = elementTo?.classList.contains('textLayer');
-    console.log('isTextLayer: ', isTextLayer);
 
     if (isTextLayer) {
       const focusedPageElement = elementTo.closest('[data-page-number]');
-      console.log('focusedPageElement: ', focusedPageElement);
       const focusedPageNumber = focusedPageElement ? parseInt(focusedPageElement.getAttribute('data-page-number')) : null;
-      console.log('focusedPageNumber: ', focusedPageNumber);
       const currentPage = this.getCurrentPageNumber();
-      console.log('currentPage: ', currentPage);
 
       if (focusedPageNumber !== null && focusedPageNumber !== currentPage) {
-        console.log('focusedPageNumber !== null && focusedPageNumber !== currentPage');
         const currentPageElement = this.viewerContainer.nativeElement.querySelector(`[data-page-number='${currentPage}']`);
-        console.log('currentPageElement: ', currentPageElement);
 
         if (currentPageElement) {
           const currentPageTextLayer = currentPageElement.querySelector('.textLayer') as HTMLElement;
-          console.log('currentPageTextLayer: ', currentPageTextLayer);
           if (currentPageTextLayer?.hasAttribute('tabindex')) {
-            console.log('currentPageTextLayer has tabindex, focusing it now');
             currentPageTextLayer.focus();
           }
         }
       }
     }
-    console.log('onViewerContainerFocusIn END');
   }
 }
