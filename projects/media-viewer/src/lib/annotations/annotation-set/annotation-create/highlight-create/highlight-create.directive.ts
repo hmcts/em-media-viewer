@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { debounceTime, filter, Subscription } from 'rxjs';
 
 import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
 import * as fromStore from '../../../../store/reducers/reducers';
@@ -22,7 +22,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   rotate: number;
   allPages: object;
 
-  $subscription: Subscription;
+  private $subscriptions: Subscription[] = [];
 
   constructor(
     private element: ElementRef<HTMLElement>,
@@ -33,17 +33,24 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.$subscription = this.store.select(fromDocument.getPages).subscribe((pages) => {
+    this.$subscriptions.push(this.store.select(fromDocument.getPages).subscribe((pages) => {
       if (pages[1]) {
         this.allPages = pages;
       }
-    });
+    }));
+
+    this.$subscriptions.push(
+      this.toolbarEvents.highlightModeSubject.pipe(
+        filter(enabled => enabled && !!this.element.nativeElement),
+        debounceTime(100)
+      ).subscribe(() => {
+        this.element.nativeElement.focus();
+      })
+    );
   }
 
   ngOnDestroy() {
-    if (this.$subscription) {
-      this.$subscription.unsubscribe();
-    }
+    this.$subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   @HostListener('mouseup', ['$event'])
