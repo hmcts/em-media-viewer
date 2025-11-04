@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { debounceTime, filter, Subscription } from 'rxjs';
 
 import { Rectangle } from '../../annotation-view/rectangle/rectangle.model';
 import * as fromStore from '../../../../store/reducers/reducers';
@@ -22,7 +22,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   rotate: number;
   allPages: object;
 
-  $subscription: Subscription;
+  private $subscriptions: Subscription[] = [];
 
   constructor(
     private element: ElementRef<HTMLElement>,
@@ -33,17 +33,24 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.$subscription = this.store.select(fromDocument.getPages).subscribe((pages) => {
+    this.$subscriptions.push(this.store.select(fromDocument.getPages).subscribe((pages) => {
       if (pages[1]) {
         this.allPages = pages;
       }
-    });
+    }));
+
+    this.$subscriptions.push(
+      this.toolbarEvents.highlightModeSubject.pipe(
+        filter(enabled => enabled && !!this.element.nativeElement),
+        debounceTime(100)
+      ).subscribe(() => {
+        this.element.nativeElement.focus();
+      })
+    );
   }
 
   ngOnDestroy() {
-    if (this.$subscription) {
-      this.$subscription.unsubscribe();
-    }
+    this.$subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   @HostListener('mouseup', ['$event'])
@@ -65,8 +72,90 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('mousedown', ['$event'])
-  onPdfViewerClick(event: MouseEvent) {
+  public onKeyboardSelectionConfirmed(): void {
+    if (this.toolbarEvents.highlightModeSubject.getValue()) {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount && !selection.isCollapsed) {
+        const page = this.getCurrentPageFromSelection(selection);
+        const rectangles = this.getRectanglesFromSelection(selection, page);
+        if (rectangles && rectangles.length > 0) {
+          this.viewerEvents.textSelected({ page, rectangles });
+        }
+      }
+    }
+  }
+
+  private getCurrentPageFromSelection(selection: Selection): number {
+    const range = selection.getRangeAt(0);
+    let currentElement = range.startContainer as HTMLElement;
+
+    // if text node, get its parent element
+    if (currentElement.nodeType === Node.TEXT_NODE) {
+      currentElement = currentElement.parentElement;
+    }
+
+    while (currentElement && currentElement.offsetParent) {
+      currentElement = currentElement.offsetParent as HTMLElement;
+      if (currentElement.getAttribute) {
+        const page = parseInt(currentElement.getAttribute('data-page-number'), 10);
+        if (page) {
+          return page;
+        }
+      }
+    }
+    return 1;
+  }
+
+  private getRectanglesFromSelection(selection: Selection, page: number): Rectangle[] {
+    if (!this.allPages || !this.allPages[page]) {
+      return [];
+    }
+
+    this.pageHeight = this.allPages[page].styles.height;
+    this.pageWidth = this.allPages[page].styles.width;
+    this.zoom = parseFloat(this.allPages[page].scaleRotation.scale);
+    this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
+
+    // get all rectangles for selection (multi line selections will ahve multiple client rects)
+    const range = selection.getRangeAt(0).cloneRange();
+    const clientRects = range.getClientRects();
+
+    if (!clientRects || clientRects.length === 0) {
+      return [];
+    }
+
+    // get the text layer element
+    let textLayerElement = range.startContainer as HTMLElement;
+    if (textLayerElement.nodeType === Node.TEXT_NODE) {
+      textLayerElement = textLayerElement.parentElement;
+    }
+    const textLayer = textLayerElement.closest('.textLayer') as HTMLElement;
+
+    if (!textLayer) {
+      return [];
+    }
+
+    this.removeEnhancedTextModeStyling(textLayerElement);
+
+    // convert client rectangles to annotation rectangles
+    const parentRect = HtmlTemplatesHelper.getAdjustedBoundingRect(textLayer);
+    const selectionRectangles: Rectangle[] = [];
+
+    for (let i = 0; i < clientRects.length; i++) {
+      const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
+      const findSelectionRectangle = selectionRectangles.find(
+        (rect) => rect.width === selectionRectangle.width && rect.x === selectionRectangle.x
+      );
+      if (!findSelectionRectangle) {
+        selectionRectangles.push(selectionRectangle);
+      }
+    }
+
+    return selectionRectangles;
+  }
+
+  @HostListener('mousedown')
+  onPdfViewerClick() {
     this.store.dispatch(
       new fromAnnotationActions.SelectedAnnotation({
         annotationId: '',

@@ -101,6 +101,82 @@ mv-pdf-viewer {
     width: 100%;
     transition-duration: 600ms;
     transition-timing-function: ease;
+
+    &.highlightMode {
+      position: relative;
+    }
+  }
+
+  // keyboard cursor for text highlighting (before selection)
+  .selection-start-cursor {
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    margin-top: -7px;
+    pointer-events: none;
+    background-color: #ffdd00;
+    border-radius: 50%;
+    border: 1px solid #ffdd00;
+
+    // vertical line
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 100%;
+      background-color: #0b0c0c;
+      transform: translateX(-0.5px);
+    }
+
+    // horizontal line
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #0b0c0c;
+      transform: translateY(-0.5px);
+    }
+  }
+
+    // keyboard cursor for text highlighting (during selection)
+  .selection-end-cursor {
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    margin-top: -7px;
+    pointer-events: none;
+    background-color: #1d70b8;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+
+    // vertical line
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 100%;
+      background-color: #ffffff;
+      transform: translateX(-0.5px);
+    }
+
+    // horizontal line
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #ffffff;
+      transform: translateY(-0.5px);
+    }
   }
 
   .show-comments-panel {
