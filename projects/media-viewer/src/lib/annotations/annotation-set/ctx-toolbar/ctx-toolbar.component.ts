@@ -1,11 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   Output,
-  SimpleChanges
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
@@ -17,6 +19,8 @@ export class CtxToolbarComponent implements OnChanges {
 
   readonly defaultHeight;
   readonly defaultWidth;
+
+  @ViewChild('toolbarContainer', { static: false }) toolbarContainer: ElementRef<HTMLDivElement>;
 
   @Input() zoom;
   @Input() rotate;
@@ -121,6 +125,17 @@ export class CtxToolbarComponent implements OnChanges {
       return this.pageWidth - this.defaultWidth;
     } else {
       return popupLeft;
+    }
+  }
+
+  focusToolbar(): void {
+    if (this.toolbarContainer?.nativeElement) {
+      const firstButton = this.toolbarContainer.nativeElement.querySelector('button');
+      
+      if (firstButton) {
+        setTimeout(() => firstButton.focus(), 0);
+        return;
+      } 
     }
   }
 }

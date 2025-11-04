@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
@@ -13,6 +13,7 @@ import { CreateBookmark } from '../../../store/actions/bookmark.actions';
 import * as fromBookmarks from '../../../store/selectors/bookmark.selectors';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { Highlight, ViewerEventService } from '../../../viewers/viewer-event.service';
+import { CtxToolbarComponent } from '../ctx-toolbar/ctx-toolbar.component';
 
 @Component({
   selector: 'mv-metadata-layer',
@@ -22,6 +23,8 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
 
   @Input() zoom: number;
   @Input() rotate: number;
+
+  @ViewChild(CtxToolbarComponent, { static: false }) ctxToolbar: CtxToolbarComponent;
 
   pages: any[] = []; // todo add type
   annoPages$: Observable<any>; // todo add type
@@ -57,6 +60,7 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
     this.rectangles = highlight.rectangles;
     if (this.rectangles) {
       this.toolbarEvents.highlightModeSubject.next(false);
+      setTimeout(() => this.ctxToolbar.focusToolbar(), 0);
     }
   }
 

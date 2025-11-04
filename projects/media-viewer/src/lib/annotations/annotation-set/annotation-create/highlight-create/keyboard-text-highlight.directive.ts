@@ -368,6 +368,11 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
 
   private confirmTextSelection(): void {
     this.selectionConfirmed.emit();
+    this.selectionCursorPositionChanged.emit({
+      x: this.selectionEndX,
+      y: this.selectionEndY,
+      visible: false
+    });
     this.cleanup();
   }
 
