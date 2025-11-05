@@ -154,8 +154,8 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     return selectionRectangles;
   }
 
-  @HostListener('mousedown')
-  onPdfViewerClick() {
+  @HostListener('mousedown', ['$event'])
+  onPdfViewerClick(event: MouseEvent) {
     this.store.dispatch(
       new fromAnnotationActions.SelectedAnnotation({
         annotationId: '',

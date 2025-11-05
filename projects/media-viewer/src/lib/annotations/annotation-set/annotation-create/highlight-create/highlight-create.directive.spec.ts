@@ -47,13 +47,26 @@ describe('HighlightCreateDirective', () => {
     expect(directive.allPages).toEqual(pages);
   });
 
-  it('should unSubscribe on ngOnDestroy', () => {
-    directive.$subscription = new Subscription();
-    spyOn(directive.$subscription, 'unsubscribe');
+  // it('should unSubscribe on ngOnDestroy', () => {
+  //   directive.$subscription = new Subscription();
+  //   spyOn(directive.$subscription, 'unsubscribe');
+
+  //   directive.ngOnDestroy();
+
+  //   expect(directive.$subscription.unsubscribe).toHaveBeenCalled();
+  // });
+
+  it('should unsubscribe all subscriptions on ngOnDestroy', () => {
+    const sub1 = new Subscription();
+    const sub2 = new Subscription();
+    directive['$subscriptions'] = [sub1, sub2];
+    spyOn(sub1, 'unsubscribe');
+    spyOn(sub2, 'unsubscribe');
 
     directive.ngOnDestroy();
 
-    expect(directive.$subscription.unsubscribe).toHaveBeenCalled();
+    expect(sub1.unsubscribe).toHaveBeenCalled();
+    expect(sub2.unsubscribe).toHaveBeenCalled();
   });
 
   it('should not highlight text when in view mode for selected page', () => {
