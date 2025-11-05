@@ -277,7 +277,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     }, 10);
   }
 
-    private goToDestinationICP(destination: any[]) {
+  private goToDestinationICP(destination: any[]) {
     this.pdfWrapper.nativeNavigate(destination);
   }
 
@@ -299,8 +299,6 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   onSelectionStartCursorChanged(position: { x: number, y: number, visible: boolean }): void {
-    console.log('[PdfViewerComponent] onSelectionStartCursorChanged:', position);
-
     if (position.visible) {
       this.selectionStartCursorX = position.x;
       this.selectionStartCursorY = position.y;
@@ -308,13 +306,9 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     } else {
       this.showSelectionStartCursor = false;
     }
-
-    console.log('[PdfViewerComponent] Cursor state updated. showSelectionStartCursor:', this.showSelectionStartCursor, 'x:', this.selectionStartCursorX, 'y:', this.selectionStartCursorY);
   }
 
   onSelectionEndCursorChanged(position: { x: number, y: number, visible: boolean }): void {
-    console.log('[PdfViewerComponent] onSelectionEndCursorChanged:', position);
-
     if (position.visible) {
       this.selectionEndCursorX = position.x;
       this.selectionEndCursorY = position.y;

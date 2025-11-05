@@ -107,7 +107,6 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       event.preventDefault();
       event.stopPropagation();
-      console.log('[KeyboardTextHighlight] Arrow key pressed:', event.key, 'isSelecting:', this.isSelecting, 'showCursor:', this.showCursor);
 
       if (this.isSelecting) {
         this.expandTextSelection(event);
@@ -214,8 +213,6 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
         break;
     }
 
-    console.log('[KeyboardTextHighlight] Selection expanded to viewport coords:', this.selectionEndX, this.selectionEndY);
-
     this.selectionCursorPositionChanged.emit({
       x: this.selectionEndX,
       y: this.selectionEndY,
@@ -241,49 +238,26 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
         range = document.createRange();
         range.setStart(caretPosition.offsetNode, caretPosition.offset);
         range.collapse(true);
-        console.log('[KeyboardTextHighlight] Using caretPositionFromPoint:', {
-          offsetNode: caretPosition.offsetNode,
-          offset: caretPosition.offset,
-          text: caretPosition.offsetNode.textContent?.substring(0, 50)
-        });
       }
     } else if ((document as any).caretRangeFromPoint) {
       range = (document as any).caretRangeFromPoint(viewportX, viewportY);
-      if (range) {
-        console.log('[KeyboardTextHighlight] Using caretRangeFromPoint:', {
-          startContainer: range.startContainer,
-          startOffset: range.startOffset,
-          text: range.startContainer.textContent?.substring(0, 50)
-        });
-      }
     }
 
     if (range) {
       selection.removeAllRanges();
       selection.addRange(range);
-      console.log('[KeyboardTextHighlight] Initial selection created at precise position');
-    } else {
-      console.log('[KeyboardTextHighlight] Could not get caret position from point');
     }
   }
 
   private updateTextSelection(): void {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
-      console.log('[KeyboardTextHighlight] No selection or no ranges');
       return;
     }
 
-    console.log('[KeyboardTextHighlight] Updating selection end to viewport coords:', this.selectionEndX, this.selectionEndY);
     const range = selection.getRangeAt(0);
     const startNode = range.startContainer;
     const startOffset = range.startOffset;
-
-    console.log('[KeyboardTextHighlight] Current selection start:', {
-      node: startNode,
-      text: startNode.textContent?.substring(0, 50),
-      offset: startOffset
-    });
 
     // get end position using caret APIs
     // caretPositionFromPoint is standard but not supported in all browsers
@@ -296,22 +270,12 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
       if (caretPosition) {
         endNode = caretPosition.offsetNode;
         endOffset = caretPosition.offset;
-        console.log('[KeyboardTextHighlight] End position from caretPositionFromPoint:', {
-          offsetNode: endNode,
-          offset: endOffset,
-          text: endNode?.textContent?.substring(0, 50)
-        });
       }
     } else if ((document as any).caretRangeFromPoint) {
       const caretRange = (document as any).caretRangeFromPoint(this.selectionEndX, this.selectionEndY);
       if (caretRange) {
         endNode = caretRange.startContainer;
         endOffset = caretRange.startOffset;
-        console.log('[KeyboardTextHighlight] End position from caretRangeFromPoint:', {
-          startContainer: endNode,
-          startOffset: endOffset,
-          text: endNode?.textContent?.substring(0, 50)
-        });
       }
     }
 
@@ -337,22 +301,15 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
         this.lastValidEndOffset = endOffset;
       }
 
-      try {
-        // use setBaseAndExtent to handle selection direction with precise offsets
-        // to ensure the selection always starts from the original start point
-        // and extends to the exact character position at the cursor
-        selection.setBaseAndExtent(
-          startNode,
-          startOffset,
-          endNode,
-          endOffset
-        );
-        console.log('[KeyboardTextHighlight] Selection updated successfully with precise offsets');
-      } catch (e) {
-        console.log('[KeyboardTextHighlight] Error extending selection:', e);
-      }
-    } else {
-      console.log('[KeyboardTextHighlight] No precise position found at point');
+      // use setBaseAndExtent to handle selection direction with precise offsets
+      // to ensure the selection always starts from the original start point
+      // and extends to the exact character position at the cursor
+      selection.setBaseAndExtent(
+        startNode,
+        startOffset,
+        endNode,
+        endOffset
+      );
     }
   }
 
@@ -420,7 +377,6 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
       y: this.cursorY,
       visible: this.showCursor
     };
-    console.log('[KeyboardTextHighlight] Emitting cursor position:', position);
     this.cursorPositionChanged.emit(position);
   }
 
