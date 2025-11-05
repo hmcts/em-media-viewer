@@ -48,15 +48,6 @@ describe('HighlightCreateDirective', () => {
     expect(directive.allPages).toEqual(pages);
   });
 
-  // it('should unSubscribe on ngOnDestroy', () => {
-  //   directive.$subscription = new Subscription();
-  //   spyOn(directive.$subscription, 'unsubscribe');
-
-  //   directive.ngOnDestroy();
-
-  //   expect(directive.$subscription.unsubscribe).toHaveBeenCalled();
-  // });
-
   it('should unsubscribe all subscriptions on ngOnDestroy', () => {
     const sub1 = new Subscription();
     const sub2 = new Subscription();

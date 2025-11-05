@@ -186,7 +186,6 @@ describe('KeyboardTextHighlightDirective', () => {
 
   describe('text selection', () => {
     beforeEach(() => {
-      // create mock selection
       const mockSelection = {
         removeAllRanges: jasmine.createSpy('removeAllRanges'),
         addRange: jasmine.createSpy('addRange'),
@@ -200,7 +199,6 @@ describe('KeyboardTextHighlightDirective', () => {
       } as any;
       spyOn(window, 'getSelection').and.returnValue(mockSelection);
 
-      // mock caretRangeFromPoint
       (document as any).caretRangeFromPoint = jasmine.createSpy('caretRangeFromPoint').and.returnValue({
         startContainer: document.createTextNode('test'),
         startOffset: 0

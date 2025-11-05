@@ -89,7 +89,6 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     const range = selection.getRangeAt(0);
     let currentElement = range.startContainer as HTMLElement;
 
-    // if text node, get its parent element
     if (currentElement.nodeType === Node.TEXT_NODE) {
       currentElement = currentElement.parentElement;
     }
@@ -116,7 +115,6 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
     this.zoom = parseFloat(this.allPages[page].scaleRotation.scale);
     this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
 
-    // get all rectangles for selection (multi line selections will ahve multiple client rects)
     const range = selection.getRangeAt(0).cloneRange();
     const clientRects = range.getClientRects();
 
@@ -124,7 +122,6 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
       return [];
     }
 
-    // get the text layer element
     let textLayerElement = range.startContainer as HTMLElement;
     if (textLayerElement.nodeType === Node.TEXT_NODE) {
       textLayerElement = textLayerElement.parentElement;
@@ -137,7 +134,6 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
 
     this.removeEnhancedTextModeStyling(textLayerElement);
 
-    // convert client rectangles to annotation rectangles
     const parentRect = HtmlTemplatesHelper.getAdjustedBoundingRect(textLayer);
     const selectionRectangles: Rectangle[] = [];
 
