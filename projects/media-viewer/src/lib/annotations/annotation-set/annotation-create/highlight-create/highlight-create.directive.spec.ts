@@ -57,7 +57,8 @@ describe('HighlightCreateDirective', () => {
 
     directive.ngOnDestroy();
 
-    expect(directive.$subscription.unsubscribe).toHaveBeenCalled();
+    expect(sub1.unsubscribe).toHaveBeenCalled();
+    expect(sub2.unsubscribe).toHaveBeenCalled();
   });
 
   it('should not highlight text when in view mode for selected page', () => {

@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { of, Subscription } from 'rxjs';
 import { Action, Store, StoreModule } from '@ngrx/store';
 
@@ -8,6 +8,7 @@ import { HighlightCreateService } from '../annotation-create/highlight-create/hi
 import { ViewerEventService } from '../../../viewers/viewer-event.service';
 import { reducers } from '../../../store/reducers/reducers';
 import { MetadataLayerComponent } from './metadata-layer.component';
+import { CtxToolbarComponent } from '../ctx-toolbar/ctx-toolbar.component';
 
 describe('MetadataLayerComponent', () => {
   let component: MetadataLayerComponent;
@@ -113,6 +114,7 @@ describe('MetadataLayerComponent', () => {
     component = fixture.componentInstance;
     component.rotate = 0;
     component.zoom = 1;
+    component.ctxToolbar = { focusToolbar: () => {} } as CtxToolbarComponent;
     fixture.detectChanges();
 
     spyOn(mockHighlight.event, 'target').and.returnValue(mockElement);
@@ -157,15 +159,22 @@ describe('MetadataLayerComponent', () => {
   ));
 
   describe('showContextToolbar', () => {
-    it('should set page and rectangles and push false to highlightModeSubject',
+    it('should set page and rectangles and push false to highlightModeSubject', fakeAsync(
       inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
+        const mockCtxToolbar = { focusToolbar: jasmine.createSpy('focusToolbar') };
+        component.ctxToolbar = mockCtxToolbar as any;
         spyOn(toolbarEvents.highlightModeSubject, 'next');
+  
         component.showContextToolbar({ page: 1, rectangles: ['rectangles'] } as any);
 
         expect(toolbarEvents.highlightModeSubject.next).toHaveBeenCalledWith(false);
         expect(component.rectangles).toEqual(['rectangles'] as any);
+
+        tick();
+        
+        expect(mockCtxToolbar.focusToolbar).toHaveBeenCalled();
       })
-    );
+    ));
 
     it('should set page and rectangles and do not push false to highlightModeSubject',
       inject([ToolbarEventService], (toolbarEvents: ToolbarEventService) => {
