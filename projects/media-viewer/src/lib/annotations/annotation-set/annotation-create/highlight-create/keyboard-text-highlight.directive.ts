@@ -228,71 +228,46 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
   }
 
   private createTextSelectionAtPoint(viewportX: number, viewportY: number): void {
-    console.log('[KeyboardTextHighlight] createTextSelectionAtPoint at viewport coords:', viewportX, viewportY);
-    const element = this.elementRef.nativeElement;
-    const textLayer = element.querySelector('.textLayer') as HTMLElement;
+    const selection = window.getSelection();
 
-    if (!textLayer) {
-      console.log('[KeyboardTextHighlight] No textLayer found');
-      return;
+    // get precise caret position at the coordinates
+    // caretPositionFromPoint is standard but not supported in all browsers
+    // caretRangeFromPoint is older and supported in more browsers
+    let range: Range | null = null;
+
+    if ((document as any).caretPositionFromPoint) {
+      const caretPosition = (document as any).caretPositionFromPoint(viewportX, viewportY);
+      if (caretPosition) {
+        range = document.createRange();
+        range.setStart(caretPosition.offsetNode, caretPosition.offset);
+        range.collapse(true);
+        console.log('[KeyboardTextHighlight] Using caretPositionFromPoint:', {
+          offsetNode: caretPosition.offsetNode,
+          offset: caretPosition.offset,
+          text: caretPosition.offsetNode.textContent?.substring(0, 50)
+        });
+      }
+    } else if ((document as any).caretRangeFromPoint) {
+      range = (document as any).caretRangeFromPoint(viewportX, viewportY);
+      if (range) {
+        console.log('[KeyboardTextHighlight] Using caretRangeFromPoint:', {
+          startContainer: range.startContainer,
+          startOffset: range.startOffset,
+          text: range.startContainer.textContent?.substring(0, 50)
+        });
+      }
     }
 
-    const elementAtPoint = document.elementFromPoint(viewportX, viewportY);
-    console.log('[KeyboardTextHighlight] Element at point:', elementAtPoint, 'is in textLayer:', elementAtPoint && textLayer.contains(elementAtPoint));
-
-    if (elementAtPoint && textLayer.contains(elementAtPoint)) {
-      const selection = window.getSelection();
-
-      // get precise caret position at the coordinates
-      // caretPositionFromPoint is standard but not supported in all browsers
-      // caretRangeFromPoint is older and supported in more browsers
-      let range: Range | null = null;
-
-      if ((document as any).caretPositionFromPoint) {
-        const caretPosition = (document as any).caretPositionFromPoint(viewportX, viewportY);
-        if (caretPosition) {
-          range = document.createRange();
-          range.setStart(caretPosition.offsetNode, caretPosition.offset);
-          range.collapse(true);
-          console.log('[KeyboardTextHighlight] Using caretPositionFromPoint:', {
-            offsetNode: caretPosition.offsetNode,
-            offset: caretPosition.offset,
-            text: caretPosition.offsetNode.textContent?.substring(0, 50)
-          });
-        }
-      } else if ((document as any).caretRangeFromPoint) {
-        range = (document as any).caretRangeFromPoint(viewportX, viewportY);
-        if (range) {
-          console.log('[KeyboardTextHighlight] Using caretRangeFromPoint:', {
-            startContainer: range.startContainer,
-            startOffset: range.startOffset,
-            text: range.startContainer.textContent?.substring(0, 50)
-          });
-        }
-      }
-
-      if (range) {
-        selection.removeAllRanges();
-        selection.addRange(range);
-        console.log('[KeyboardTextHighlight] Initial selection created at precise position');
-      } else {
-        console.log('[KeyboardTextHighlight] Could not get caret position from point');
-      }
+    if (range) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+      console.log('[KeyboardTextHighlight] Initial selection created at precise position');
     } else {
-      console.log('[KeyboardTextHighlight] Element not found or not in textLayer');
+      console.log('[KeyboardTextHighlight] Could not get caret position from point');
     }
   }
 
   private updateTextSelection(): void {
-    console.log('[KeyboardTextHighlight] updateTextSelection called');
-    const element = this.elementRef.nativeElement;
-    const textLayer = element.querySelector('.textLayer') as HTMLElement;
-
-    if (!textLayer) {
-      console.log('[KeyboardTextHighlight] No textLayer found');
-      return;
-    }
-
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
       console.log('[KeyboardTextHighlight] No selection or no ranges');
@@ -300,103 +275,84 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
     }
 
     console.log('[KeyboardTextHighlight] Updating selection end to viewport coords:', this.selectionEndX, this.selectionEndY);
+    const range = selection.getRangeAt(0);
+    const startNode = range.startContainer;
+    const startOffset = range.startOffset;
 
-    // get the end element at the new position (use viewport coordinates for elementFromPoint)
-    const endElement = document.elementFromPoint(this.selectionEndX, this.selectionEndY);
-    console.log('[KeyboardTextHighlight] Element at point:', endElement, 'is in textLayer:', textLayer.contains(endElement));
+    console.log('[KeyboardTextHighlight] Current selection start:', {
+      node: startNode,
+      text: startNode.textContent?.substring(0, 50),
+      offset: startOffset
+    });
 
-    if (endElement && textLayer.contains(endElement)) {
-      const range = selection.getRangeAt(0);
-      const startNode = range.startContainer;
-      const startOffset = range.startOffset;
+    // get end position using caret APIs
+    // caretPositionFromPoint is standard but not supported in all browsers
+    // caretRangeFromPoint is older and supported in more browsers
+    let endNode: Node | null = null;
+    let endOffset = 0;
 
-      console.log('[KeyboardTextHighlight] Current selection start:', {
-        node: startNode,
-        text: startNode.textContent?.substring(0, 50),
-        offset: startOffset
-      });
-
-      // get end position using caret APIs
-      // caretPositionFromPoint is standard but not supported in all browsers
-      // caretRangeFromPoint is older and supported in more browsers
-      let endNode: Node | null = null;
-      let endOffset = 0;
-
-      if ((document as any).caretPositionFromPoint) {
-        const caretPosition = (document as any).caretPositionFromPoint(this.selectionEndX, this.selectionEndY);
-        if (caretPosition) {
-          endNode = caretPosition.offsetNode;
-          endOffset = caretPosition.offset;
-          console.log('[KeyboardTextHighlight] End position from caretPositionFromPoint:', {
-            offsetNode: endNode,
-            offset: endOffset,
-            text: endNode?.textContent?.substring(0, 50)
-          });
-        }
-      } else if ((document as any).caretRangeFromPoint) {
-        const caretRange = (document as any).caretRangeFromPoint(this.selectionEndX, this.selectionEndY);
-        if (caretRange) {
-          endNode = caretRange.startContainer;
-          endOffset = caretRange.startOffset;
-          console.log('[KeyboardTextHighlight] End position from caretRangeFromPoint:', {
-            startContainer: endNode,
-            startOffset: endOffset,
-            text: endNode?.textContent?.substring(0, 50)
-          });
-        }
-      }
-
-      if (endNode) {
-        const range = document.createRange();
-        console.log('[KeyboardTextHighlight] Updating range to:', {
-          startNode: startNode,
-          startOffset: startOffset,
-          endNode: endNode,
-          endOffset: endOffset
+    if ((document as any).caretPositionFromPoint) {
+      const caretPosition = (document as any).caretPositionFromPoint(this.selectionEndX, this.selectionEndY);
+      if (caretPosition) {
+        endNode = caretPosition.offsetNode;
+        endOffset = caretPosition.offset;
+        console.log('[KeyboardTextHighlight] End position from caretPositionFromPoint:', {
+          offsetNode: endNode,
+          offset: endOffset,
+          text: endNode?.textContent?.substring(0, 50)
         });
-        range.setStart(startNode, startOffset);
-        range.setEnd(endNode, endOffset);
+      }
+    } else if ((document as any).caretRangeFromPoint) {
+      const caretRange = (document as any).caretRangeFromPoint(this.selectionEndX, this.selectionEndY);
+      if (caretRange) {
+        endNode = caretRange.startContainer;
+        endOffset = caretRange.startOffset;
+        console.log('[KeyboardTextHighlight] End position from caretRangeFromPoint:', {
+          startContainer: endNode,
+          startOffset: endOffset,
+          text: endNode?.textContent?.substring(0, 50)
+        });
+      }
+    }
 
-        const isBackward = range.collapsed && (startNode !== endNode || endOffset < startOffset);
-        console.log('[KeyboardTextHighlight] Is selection backward?', isBackward);
-        
-        const comparison = startNode.compareDocumentPosition(endNode);
-        console.log('[KeyboardTextHighlight] Node comparison result:', comparison);
-        const endBeforeStart = (comparison & Node.DOCUMENT_POSITION_PRECEDING) !== 0;
-        console.log('[KeyboardTextHighlight] Does endNode come before startNode?', endBeforeStart);
+    if (endNode) {
+      const range = document.createRange();
+      range.setStart(startNode, startOffset);
+      range.setEnd(endNode, endOffset);
 
-        if (isBackward || endBeforeStart) {
-          if (this.lastValidEndNode) {
-            endNode = this.lastValidEndNode;
-            endOffset = this.lastValidEndOffset;
-          } else {
-            endNode = startNode;
-            endOffset = startOffset;
-          }
+      const isBackward = range.collapsed && (startNode !== endNode || endOffset < startOffset);
+      const comparison = startNode.compareDocumentPosition(endNode);
+      const endBeforeStart = (comparison & Node.DOCUMENT_POSITION_PRECEDING) !== 0;
+
+      if (isBackward || endBeforeStart) {
+        if (this.lastValidEndNode) {
+          endNode = this.lastValidEndNode;
+          endOffset = this.lastValidEndOffset;
         } else {
-          this.lastValidEndNode = endNode;
-          this.lastValidEndOffset = endOffset;
-        }
-
-        try {
-          // use setBaseAndExtent to handle selection direction with precise offsets
-          // to ensure the selection always starts from the original start point
-          // and extends to the exact character position at the cursor
-          selection.setBaseAndExtent(
-            startNode,
-            startOffset,
-            endNode,
-            endOffset
-          );
-          console.log('[KeyboardTextHighlight] Selection updated successfully with precise offsets');
-        } catch (e) {
-          console.log('[KeyboardTextHighlight] Error extending selection:', e);
+          endNode = startNode;
+          endOffset = startOffset;
         }
       } else {
-        console.log('[KeyboardTextHighlight] No precise position found at point');
+        this.lastValidEndNode = endNode;
+        this.lastValidEndOffset = endOffset;
+      }
+
+      try {
+        // use setBaseAndExtent to handle selection direction with precise offsets
+        // to ensure the selection always starts from the original start point
+        // and extends to the exact character position at the cursor
+        selection.setBaseAndExtent(
+          startNode,
+          startOffset,
+          endNode,
+          endOffset
+        );
+        console.log('[KeyboardTextHighlight] Selection updated successfully with precise offsets');
+      } catch (e) {
+        console.log('[KeyboardTextHighlight] Error extending selection:', e);
       }
     } else {
-      console.log('[KeyboardTextHighlight] Element not found or not in textLayer');
+      console.log('[KeyboardTextHighlight] No precise position found at point');
     }
   }
 
