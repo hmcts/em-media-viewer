@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   Output,
@@ -32,6 +33,7 @@ export class CtxToolbarComponent implements OnChanges {
   @Output() deleteHighlightEvent = new EventEmitter();
   @Output() addOrEditCommentEvent = new EventEmitter();
   @Output() createBookmarkEvent = new EventEmitter<Rectangle>();
+  @Output() cancelEvent = new EventEmitter();
 
   rectangle: Rectangle;
   _rectangles: Rectangle[];
@@ -47,6 +49,16 @@ export class CtxToolbarComponent implements OnChanges {
     this.setRectangle();
     this.top = this.popupTop();
     this.left = this.popupLeft();
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey(event: KeyboardEvent) {
+    if (this.rectangle) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.rectangle = undefined;
+      this.cancelEvent.emit();
+    }
   }
 
   @Input() set rectangles(rectangles: Rectangle[]) {

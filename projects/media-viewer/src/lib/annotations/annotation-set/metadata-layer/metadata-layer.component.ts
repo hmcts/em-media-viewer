@@ -64,6 +64,15 @@ export class MetadataLayerComponent implements OnInit, OnDestroy {
     this.rectangles = undefined;
   }
 
+  cancelContextToolbar() {
+    const selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+    }
+    this.rectangles = undefined;
+    this.toolbarEvents.highlightModeSubject.next(true);
+  }
+
   createHighlight() {
     this.highlightService.saveAnnotation(this.rectangles, this.highlightPage);
     this.highlightService.resetHighlight();
