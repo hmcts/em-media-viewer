@@ -145,8 +145,8 @@ mv-pdf-viewer {
 
   // keyboard cursor for text highlighting (during selection)
   .selection-end-cursor {
-    width: 2px;
-    height: 20px;
+    width: 1px;
+    height: 12px;
     margin-left: -1px;
     margin-top: -10px;
     pointer-events: none;
@@ -158,10 +158,10 @@ mv-pdf-viewer {
     &::before {
       content: '';
       position: absolute;
-      top: -2px;
+      top: -1px;
       left: 50%;
-      width: 8px;
-      height: 2px;
+      width: 5px;
+      height: 1px;
       background-color: #0b0c0c;
       transform: translateX(-50%);
       box-shadow: 0 -1px 0 #ffffff, 0 1px 0 #ffffff;
@@ -171,10 +171,10 @@ mv-pdf-viewer {
     &::after {
       content: '';
       position: absolute;
-      bottom: -2px;
+      bottom: -1px;
       left: 50%;
-      width: 8px;
-      height: 2px;
+      width: 5px;
+      height: 1px;
       background-color: #0b0c0c;
       transform: translateX(-50%);
       box-shadow: 0 -1px 0 #ffffff, 0 1px 0 #ffffff;

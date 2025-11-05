@@ -51,6 +51,8 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
   private selectionEndX: number;
   private selectionEndY: number;
   private currentPage: number;
+  private lastValidEndNode: Node | null = null;
+  private lastValidEndOffset: number = 0;
   private static lastInteractionWasKeyboard = false;
 
   constructor(private elementRef: ElementRef<HTMLElement>) {
@@ -177,7 +179,8 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
 
     this.isSelecting = true;
     this.currentPage = this.getCurrentPageNumber();
-
+    this.lastValidEndNode = null;
+    this.lastValidEndOffset = 0;
 
     this.selectionCursorPositionChanged.emit({
       x: this.selectionEndX,
@@ -344,6 +347,37 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
       }
 
       if (endNode) {
+        const range = document.createRange();
+        console.log('[KeyboardTextHighlight] Updating range to:', {
+          startNode: startNode,
+          startOffset: startOffset,
+          endNode: endNode,
+          endOffset: endOffset
+        });
+        range.setStart(startNode, startOffset);
+        range.setEnd(endNode, endOffset);
+
+        const isBackward = range.collapsed && (startNode !== endNode || endOffset < startOffset);
+        console.log('[KeyboardTextHighlight] Is selection backward?', isBackward);
+        
+        const comparison = startNode.compareDocumentPosition(endNode);
+        console.log('[KeyboardTextHighlight] Node comparison result:', comparison);
+        const endBeforeStart = (comparison & Node.DOCUMENT_POSITION_PRECEDING) !== 0;
+        console.log('[KeyboardTextHighlight] Does endNode come before startNode?', endBeforeStart);
+
+        if (isBackward || endBeforeStart) {
+          if (this.lastValidEndNode) {
+            endNode = this.lastValidEndNode;
+            endOffset = this.lastValidEndOffset;
+          } else {
+            endNode = startNode;
+            endOffset = startOffset;
+          }
+        } else {
+          this.lastValidEndNode = endNode;
+          this.lastValidEndOffset = endOffset;
+        }
+
         try {
           // use setBaseAndExtent to handle selection direction with precise offsets
           // to ensure the selection always starts from the original start point
@@ -383,6 +417,11 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
     }
 
     this.selectionCancelled.emit();
+    this.selectionCursorPositionChanged.emit({
+      x: this.selectionEndX,
+      y: this.selectionEndY,
+      visible: false
+    });
     this.cleanup();
   }
 
@@ -401,6 +440,8 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
     this.selectionEndX = undefined;
     this.selectionEndY = undefined;
     this.currentPage = undefined;
+    this.lastValidEndNode = null;
+    this.lastValidEndOffset = 0;
   }
 
   private getCurrentPageNumber(): number {
