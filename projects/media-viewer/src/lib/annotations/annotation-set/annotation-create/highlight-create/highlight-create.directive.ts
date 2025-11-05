@@ -110,10 +110,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
       return [];
     }
 
-    this.pageHeight = this.allPages[page].styles.height;
-    this.pageWidth = this.allPages[page].styles.width;
-    this.zoom = parseFloat(this.allPages[page].scaleRotation.scale);
-    this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
+    this.setPageProperties(page);
 
     const range = selection.getRangeAt(0).cloneRange();
     const clientRects = range.getClientRects();
@@ -134,20 +131,7 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
 
     this.removeEnhancedTextModeStyling(textLayerElement);
 
-    const parentRect = HtmlTemplatesHelper.getAdjustedBoundingRect(textLayer);
-    const selectionRectangles: Rectangle[] = [];
-
-    for (let i = 0; i < clientRects.length; i++) {
-      const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
-      const findSelectionRectangle = selectionRectangles.find(
-        (rect) => rect.width === selectionRectangle.width && rect.x === selectionRectangle.x
-      );
-      if (!findSelectionRectangle) {
-        selectionRectangles.push(selectionRectangle);
-      }
-    }
-
-    return selectionRectangles;
+    return this.processClientRects(clientRects, textLayer);
   }
 
   @HostListener('mousedown', ['$event'])
@@ -163,10 +147,8 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
   }
 
   private getRectangles(event: MouseEvent, page) {
-    this.pageHeight = this.allPages[page].styles.height;
-    this.pageWidth = this.allPages[page].styles.width;
-    this.zoom = parseFloat(this.allPages[page].scaleRotation.scale);
-    this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
+    this.setPageProperties(page);
+
     const selection = window.getSelection();
     if (selection) {
       const localElement = <HTMLElement>event.target;
@@ -178,20 +160,8 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
         const clientRects = range.getClientRects();
 
         if (clientRects) {
-
-          const parentRect = HtmlTemplatesHelper
-            .getAdjustedBoundingRect(localElement.closest(".textLayer"));
-          const selectionRectangles: Rectangle[] = [];
-          for (let i = 0; i < clientRects.length; i++) {
-            const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
-            const findSelecttionRectangle = selectionRectangles.find(
-              (rect) => rect.width === selectionRectangle.width && rect.x === selectionRectangle.x
-            );
-            if (!findSelecttionRectangle) {
-              selectionRectangles.push(selectionRectangle);
-            }
-          }
-          return selectionRectangles;
+          const textLayer = localElement.closest(".textLayer") as HTMLElement;
+          return this.processClientRects(clientRects, textLayer);
         }
       }
     }
@@ -229,5 +199,29 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
         child.style.transform = child.style.transform.replace(translateCSSRegex, '').trim();
       }
     }
+  }
+
+  private setPageProperties(page: number): void {
+    this.pageHeight = this.allPages[page].styles.height;
+    this.pageWidth = this.allPages[page].styles.width;
+    this.zoom = parseFloat(this.allPages[page].scaleRotation.scale);
+    this.rotate = parseInt(this.allPages[page].scaleRotation.rotation, 10);
+  }
+
+  private processClientRects(clientRects: DOMRectList, textLayer: HTMLElement): Rectangle[] {
+    const parentRect = HtmlTemplatesHelper.getAdjustedBoundingRect(textLayer);
+    const selectionRectangles: Rectangle[] = [];
+
+    for (let i = 0; i < clientRects.length; i++) {
+      const selectionRectangle = this.createTextRectangle(clientRects[i], parentRect);
+      const findSelectionRectangle = selectionRectangles.find(
+        (rect) => rect.width === selectionRectangle.width && rect.x === selectionRectangle.x
+      );
+      if (!findSelectionRectangle) {
+        selectionRectangles.push(selectionRectangle);
+      }
+    }
+
+    return selectionRectangles;
   }
 }
