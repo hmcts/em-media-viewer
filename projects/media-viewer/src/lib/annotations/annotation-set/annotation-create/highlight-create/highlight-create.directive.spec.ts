@@ -375,4 +375,149 @@ describe('HighlightCreateDirective', () => {
     });
   });
 
+  it('should not create selection when selection is collapsed', () => {
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: true
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
+
+  it('should return empty rectangles when allPages is not available for the page', () => {
+    const mockTextNode = document.createTextNode('test text');
+    const mockSpan = document.createElement('span');
+    const mockOffsetParent = document.createElement('div');
+    mockOffsetParent.setAttribute('data-page-number', '5');
+
+    Object.defineProperty(mockTextNode, 'parentElement', { value: mockSpan });
+    Object.defineProperty(mockSpan, 'offsetParent', { value: mockOffsetParent });
+    Object.defineProperty(mockOffsetParent, 'offsetParent', { value: null });
+
+    const mockRange = {
+      startContainer: mockTextNode,
+      getClientRects: () => [],
+      cloneRange: function() { return this; }
+    } as any;
+
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: false,
+      getRangeAt: () => mockRange
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.allPages = { '1': { ...page }, '2': { ...page } };
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
+
+  it('should return empty rectangles when no clientRects are present', () => {
+    const mockTextNode = document.createTextNode('test text');
+    const mockSpan = document.createElement('span');
+    const mockOffsetParent = document.createElement('div');
+    mockOffsetParent.setAttribute('data-page-number', '1');
+
+    Object.defineProperty(mockTextNode, 'parentElement', { value: mockSpan });
+    Object.defineProperty(mockSpan, 'offsetParent', { value: mockOffsetParent });
+    Object.defineProperty(mockOffsetParent, 'offsetParent', { value: null });
+
+    const mockRange = {
+      startContainer: mockTextNode,
+      getClientRects: () => [],
+      cloneRange: function() { return this; }
+    } as any;
+
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: false,
+      getRangeAt: () => mockRange
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.allPages = { '1': { ...page } };
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
+
+  it('should return empty rectangles when no textLayer is found', () => {
+    const mockTextNode = document.createTextNode('test text');
+    const mockSpan = document.createElement('span');
+    const mockOffsetParent = document.createElement('div');
+    mockOffsetParent.setAttribute('data-page-number', '1');
+
+    Object.defineProperty(mockTextNode, 'parentElement', { value: mockSpan });
+    Object.defineProperty(mockSpan, 'offsetParent', { value: mockOffsetParent });
+    Object.defineProperty(mockOffsetParent, 'offsetParent', { value: null });
+
+    const mockClientRects = [{ top: 80, left: 60, bottom: 100, right: 70 }] as any;
+    const mockRange = {
+      startContainer: mockTextNode,
+      getClientRects: () => mockClientRects,
+      cloneRange: function() { return this; }
+    } as any;
+
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: false,
+      getRangeAt: () => mockRange
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(mockSpan, 'closest').and.returnValue(null);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.allPages = { '1': { ...page } };
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
+
+  it('should default to page 1 when page number cannot be found', () => {
+    const mockTextNode = document.createTextNode('test text');
+    const mockSpan = document.createElement('span');
+
+    Object.defineProperty(mockTextNode, 'parentElement', { value: mockSpan });
+    Object.defineProperty(mockSpan, 'offsetParent', { value: null });
+
+    const mockRange = {
+      startContainer: mockTextNode,
+      getClientRects: () => [],
+      cloneRange: function() { return this; }
+    } as any;
+
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: false,
+      getRangeAt: () => mockRange
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.allPages = { '1': { ...page } };
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
 });
