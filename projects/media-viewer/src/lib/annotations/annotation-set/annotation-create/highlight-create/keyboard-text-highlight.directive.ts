@@ -22,9 +22,6 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
   @Input() set enabled(value: boolean) {
     const wasEnabled = this._enabled;
     this._enabled = value;
-
-    // Don't auto-initialize cursor - let it appear on first arrow key press
-    // This prevents the Enter key from the button click triggering startTextSelection
   }
   get enabled(): boolean {
     return this._enabled;
@@ -127,7 +124,6 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
     const increment = event.shiftKey ? this.incrementLarge : this.incrementMedium;
 
     if (!this.showCursor) {
-      // we use window dimensions because we're using fixed positioning
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
@@ -160,7 +156,7 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
     this.emitCursorPosition();
   }
 
-    private startTextSelection(): void {
+  private startTextSelection(): void {
     if (this.showCursor) {
       this.selectionStartX = this.cursorX;
       this.selectionStartY = this.cursorY;
@@ -259,9 +255,6 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
     const startNode = range.startContainer;
     const startOffset = range.startOffset;
 
-    // get end position using caret APIs
-    // caretPositionFromPoint is standard but not supported in all browsers
-    // caretRangeFromPoint is older and supported in more browsers
     let endNode: Node | null = null;
     let endOffset = 0;
 
@@ -301,9 +294,6 @@ export class KeyboardTextHighlightDirective implements OnDestroy {
         this.lastValidEndOffset = endOffset;
       }
 
-      // use setBaseAndExtent to handle selection direction with precise offsets
-      // to ensure the selection always starts from the original start point
-      // and extends to the exact character position at the cursor
       selection.setBaseAndExtent(
         startNode,
         startOffset,
