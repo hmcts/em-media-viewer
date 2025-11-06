@@ -157,6 +157,9 @@
   "10021_X-Content-Type-Options Header Missing_http://em-media-viewer-aat.service.core-compute-aat.internal/main.dfeaaef9803fce7f.js_GET": "ignore",
   "10021_X-Content-Type-Options Header Missing_http://em-media-viewer-aat.service.core-compute-aat.internal/styles.0a5a45ce0b795698.css_GET": "ignore",
   "10049_Storable but Non-Cacheable Content_http://em-media-viewer-aat.service.core-compute-aat.internal/main.dfeaaef9803fce7f.js_GET": "ignore",
-  "10049_Storable but Non-Cacheable Content_http://em-media-viewer-aat.service.core-compute-aat.internal/styles.0a5a45ce0b795698.css_GET": "ignore"
-  
+  "10049_Storable but Non-Cacheable Content_http://em-media-viewer-aat.service.core-compute-aat.internal/styles.0a5a45ce0b795698.css_GET": "ignore",
+  "10063_Permissions Policy Header Not Set_http://em-media-viewer-aat.service.core-compute-aat.internal/main.dfeaaef9803fce7f.js_GET": "ignore",
+  "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-media-viewer-aat.service.core-compute-aat.internal/main.dfeaaef9803fce7f.js_GET": "ignore",
+  "10037_Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s)_http://em-media-viewer-aat.service.core-compute-aat.internal/styles.0a5a45ce0b795698.css_GET": "ignore",
+  "10027_Information Disclosure - Suspicious Comments_http://em-media-viewer-aat.service.core-compute-aat.internal/main.dfeaaef9803fce7f.js_GET": "ignore"
 }
