@@ -395,4 +395,173 @@ describe('KeyboardTextHighlightDirective', () => {
       directive.reset();
     });
   });
+
+  describe('text selection expansion with vertical arrows', () => {
+    beforeEach(() => {
+      const mockSelection = {
+        removeAllRanges: jasmine.createSpy('removeAllRanges'),
+        addRange: jasmine.createSpy('addRange'),
+        getRangeAt: jasmine.createSpy('getRangeAt').and.returnValue({
+          startContainer: document.createTextNode('test'),
+          startOffset: 0,
+          collapsed: false
+        }),
+        rangeCount: 1,
+        setBaseAndExtent: jasmine.createSpy('setBaseAndExtent')
+      } as any;
+      spyOn(window, 'getSelection').and.returnValue(mockSelection);
+
+      (document as any).caretRangeFromPoint = jasmine.createSpy('caretRangeFromPoint').and.returnValue({
+        startContainer: document.createTextNode('test'),
+        startOffset: 0
+      });
+    });
+
+    it('should expand selection downward when ArrowDown is pressed during selection', (done) => {
+      directive.enabled = true;
+      let startY: number;
+
+      let selectionCursorEmits = 0;
+      directive.selectionCursorPositionChanged.subscribe((pos: CursorPosition) => {
+        selectionCursorEmits++;
+        if (selectionCursorEmits === 1) {
+          startY = pos.y;
+        }
+        if (selectionCursorEmits === 2) {
+          expect(pos.y).toBeGreaterThan(startY);
+          done();
+        }
+      });
+
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'Enter' }));
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    });
+
+    it('should expand selection upward when ArrowUp is pressed during selection', (done) => {
+      directive.enabled = true;
+      let startY: number;
+
+      let selectionCursorEmits = 0;
+      directive.selectionCursorPositionChanged.subscribe((pos: CursorPosition) => {
+        selectionCursorEmits++;
+        if (selectionCursorEmits === 1) {
+          startY = pos.y;
+        }
+        if (selectionCursorEmits === 2) {
+          expect(pos.y).toBeLessThan(startY);
+          done();
+        }
+      });
+
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'Enter' }));
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
+    });
+
+    it('should expand selection leftward when ArrowLeft is pressed during selection', (done) => {
+      directive.enabled = true;
+      let startX: number;
+
+      let selectionCursorEmits = 0;
+      directive.selectionCursorPositionChanged.subscribe((pos: CursorPosition) => {
+        selectionCursorEmits++;
+        if (selectionCursorEmits === 1) {
+          startX = pos.x;
+        }
+        if (selectionCursorEmits === 2) {
+          expect(pos.x).toBeLessThan(startX);
+          done();
+        }
+      });
+
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'Enter' }));
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
+    });
+  });
+
+  describe('caretPositionFromPoint fallback', () => {
+    beforeEach(() => {
+      const mockSelection = {
+        removeAllRanges: jasmine.createSpy('removeAllRanges'),
+        addRange: jasmine.createSpy('addRange'),
+        getRangeAt: jasmine.createSpy('getRangeAt').and.returnValue({
+          startContainer: document.createTextNode('test'),
+          startOffset: 0,
+          collapsed: false
+        }),
+        rangeCount: 1,
+        setBaseAndExtent: jasmine.createSpy('setBaseAndExtent')
+      } as any;
+      spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    });
+
+    it('should use caretPositionFromPoint when available', () => {
+      const mockCaretPosition = {
+        offsetNode: document.createTextNode('test text'),
+        offset: 5
+      };
+      (document as any).caretPositionFromPoint = jasmine.createSpy('caretPositionFromPoint').and.returnValue(mockCaretPosition);
+      (document as any).caretRangeFromPoint = undefined;
+
+      directive.enabled = true;
+      spyOn(directive.selectionStarted, 'emit');
+
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'Enter' }));
+
+      expect((document as any).caretPositionFromPoint).toHaveBeenCalled();
+      expect(directive.selectionStarted.emit).toHaveBeenCalled();
+    });
+
+    it('should update selection using caretPositionFromPoint when available', (done) => {
+      const mockCaretPosition = {
+        offsetNode: document.createTextNode('test text'),
+        offset: 5
+      };
+      (document as any).caretPositionFromPoint = jasmine.createSpy('caretPositionFromPoint').and.returnValue(mockCaretPosition);
+      (document as any).caretRangeFromPoint = undefined;
+
+      directive.enabled = true;
+
+      directive.selectionUpdated.subscribe(() => {
+        expect((document as any).caretPositionFromPoint).toHaveBeenCalled();
+        done();
+      });
+
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'Enter' }));
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    });
+  });
+
+  describe('page number detection', () => {
+    it('should return default page number when no page attribute found', () => {
+      const elementWithoutPage = document.createElement('div');
+      const mockElementRef = new ElementRef(elementWithoutPage);
+      const directiveWithoutPage = new KeyboardTextHighlightDirective(mockElementRef);
+
+      directiveWithoutPage.enabled = true;
+      spyOn(directiveWithoutPage.selectionStarted, 'emit');
+
+      const mockSelection = {
+        removeAllRanges: jasmine.createSpy('removeAllRanges'),
+        addRange: jasmine.createSpy('addRange'),
+        getRangeAt: jasmine.createSpy('getRangeAt').and.returnValue({
+          startContainer: document.createTextNode('test'),
+          startOffset: 0,
+          collapsed: false
+        }),
+        rangeCount: 1,
+        setBaseAndExtent: jasmine.createSpy('setBaseAndExtent')
+      } as any;
+      spyOn(window, 'getSelection').and.returnValue(mockSelection);
+
+      (document as any).caretRangeFromPoint = jasmine.createSpy('caretRangeFromPoint').and.returnValue({
+        startContainer: document.createTextNode('test'),
+        startOffset: 0
+      });
+
+      directiveWithoutPage.onKeyDown(new KeyboardEvent('keydown', { key: 'Enter' }));
+
+      expect(directiveWithoutPage.selectionStarted.emit).toHaveBeenCalled();
+      directiveWithoutPage.ngOnDestroy();
+    });
+  });
 });
