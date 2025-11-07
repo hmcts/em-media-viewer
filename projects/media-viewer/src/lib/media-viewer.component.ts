@@ -12,7 +12,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { delay, filter, Observable, Subscription, take } from 'rxjs';
 import {
   defaultImageOptions, defaultMultimediaOptions,
   defaultPdfOptions,
@@ -55,6 +55,7 @@ enum ConvertibleContentTypes {
 @Component({
   selector: 'mv-media-viewer',
   templateUrl: './media-viewer.component.html',
+  styleUrls: ['./media-viewer.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit, AfterViewChecked {
@@ -256,5 +257,37 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   detectOs() {
     this.hasScrollBar = window.navigator.userAgent.indexOf('Win') !== -1;
+  }
+
+  skipToSidebar(event: Event): void {
+    event.preventDefault();
+
+    const isOpen = this.toolbarEvents.sidebarOpen.getValue();
+    if (!isOpen) {
+      this.toolbarEvents.toggleSideBar(true);
+    }
+
+    this.toolbarEvents.sidebarOpen.pipe(
+      filter(open => open === true),
+      take(1),
+      delay(0)
+    ).subscribe(() => {
+      const element = document.querySelector<HTMLElement>('#sidebarContent');
+      if (element) {
+        if (!element.hasAttribute('tabindex')) {
+          element.setAttribute('tabindex', '-1');
+        }
+        element.focus();
+      }
+    });
+  }
+
+  skipToViewer(event: Event): void {
+    event.preventDefault();
+
+    const element = document.querySelector<HTMLElement>('#viewerContainer');
+    if (element) {
+      element.focus();
+    }
   }
 }
