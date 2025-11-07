@@ -42,12 +42,31 @@
       #pdfViewer
       class="pdfViewer"
       mvCreateTextHighlight
+      mvKeyboardTextHighlight
+      [enabled]="highlightMode | async"
+      [tabindex]="(highlightMode | async) ? 0 : -1"
+      (selectionConfirmed)="onKeyboardTextSelectionConfirmed()"
+      (selectionCancelled)="onKeyboardTextSelectionCancelled()"
+      (cursorPositionChanged)="onSelectionStartCursorChanged($event)"
+      (selectionCursorPositionChanged)="onSelectionEndCursorChanged($event)"
       [ngClass]="{
         hidden: false,
         highlightMode: highlightMode | async,
         drawMode: drawMode | async
       }"
     ></div>
+    <div *ngIf="showSelectionStartCursor"
+      class="selection-start-cursor"
+      [style.position]="'fixed'"
+      [style.top]="selectionStartCursorY + 'px'"
+      [style.left]="selectionStartCursorX + 'px'">
+    </div>
+    <div *ngIf="showSelectionEndCursor"
+      class="selection-end-cursor"
+      [style.position]="'fixed'"
+      [style.top]="selectionEndCursorY + 'px'"
+      [style.left]="selectionEndCursorX + 'px'">
+    </div>
     <mv-redactions
       *ngIf="toolbarEvents.redactionMode | async; else annotationTemplate"
       [zoom]="zoom"
