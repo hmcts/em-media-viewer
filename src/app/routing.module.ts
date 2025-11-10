@@ -10,6 +10,7 @@ import { ToolbarTogglesComponent } from './media-viewer-wrapper/toolbar-toggles/
 import { ToggleComponent } from './media-viewer-wrapper/toolbar-toggles/toggle/toggle.component';
 import { CustomToolbarModule } from './media-viewer-wrapper/custom-toolbar/custom-toolbar.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 const routes: Routes = [{
     path: '',
@@ -34,7 +35,8 @@ const routes: Routes = [{
     MediaViewerModule,
     ToolbarModule,
     FormsModule,
-    CustomToolbarModule
+    CustomToolbarModule,
+    RpxTranslationModule.forChild()
   ],
   exports: [RouterModule]
 })

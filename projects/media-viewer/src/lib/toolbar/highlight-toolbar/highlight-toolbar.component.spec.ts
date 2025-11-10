@@ -5,6 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { HighlightToolbarComponent } from './highlight-toolbar.component';
 import { FormsModule } from '@angular/forms';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { ToolbarEventService } from '../toolbar-event.service';
@@ -25,6 +26,14 @@ describe('HighlightToolbarComponent', () => {
         FormsModule,
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({}),
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       providers: [ToolbarButtonVisibilityService, ToolbarEventService]
     })
