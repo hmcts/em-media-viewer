@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   OnDestroy,
@@ -105,6 +106,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   private $subscriptions: Subscription;
   private prevOffset: number;
+  private currentRegionIndex = -1;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -262,6 +264,18 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   skipToSidebar(event: Event): void {
     event.preventDefault();
 
+    this.openSidebarAndWait(() => {
+        const element = document.querySelector<HTMLElement>('#sidebarContent');
+        if (element) {
+          if (!element.hasAttribute('tabindex')) {
+            element.setAttribute('tabindex', '-1');
+          }
+          element.focus();
+        }
+    });
+  }
+
+  private openSidebarAndWait(callback: () => void): void {
     const isOpen = this.toolbarEvents.sidebarOpen.getValue();
     if (!isOpen) {
       this.toolbarEvents.toggleSideBar(true);
@@ -272,13 +286,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
       take(1),
       delay(0)
     ).subscribe(() => {
-      const element = document.querySelector<HTMLElement>('#sidebarContent');
-      if (element) {
-        if (!element.hasAttribute('tabindex')) {
-          element.setAttribute('tabindex', '-1');
-        }
-        element.focus();
-      }
+      callback();
     });
   }
 
@@ -287,6 +295,82 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
     const element = document.querySelector<HTMLElement>('#viewerContainer');
     if (element) {
+      element.focus();
+    }
+  }
+
+  @HostListener('document:keydown.F6', ['$event'])
+  handleF6Forward(event: KeyboardEvent): void {
+    event.preventDefault();
+    this.cycleRegion('forward');
+  }
+
+  @HostListener('document:keydown.shift.F6', ['$event'])
+  handleF6Backward(event: KeyboardEvent): void {
+    event.preventDefault();
+    this.cycleRegion('backward');
+  }
+
+  private cycleRegion(direction: 'forward' | 'backward'): void {
+    console.log('Cycling region: ', direction);
+    console.log('Current region index before cycling: ', this.currentRegionIndex);
+    const regions = [
+      { selector: '#toolbarContainer', label: 'Main toolbar', isVisible: () => this.showToolbar },
+      { selector: '#sidebarContent', label: 'Index menu', isVisible: () => true },
+      { selector: '#viewerContainer', label: 'Document viewer', isVisible: () => true }
+    ];
+
+    const visibleRegions = regions.filter(r => r.isVisible());
+    console.log('Visible regions: ', visibleRegions);
+    if (visibleRegions.length === 0) return;
+
+    const previousRegion = visibleRegions[this.currentRegionIndex];
+
+    if (direction === 'forward') {
+      this.currentRegionIndex = (this.currentRegionIndex + 1) % visibleRegions.length;
+    } else {
+      this.currentRegionIndex = this.currentRegionIndex <= 0
+        ? visibleRegions.length - 1
+        : this.currentRegionIndex - 1;
+    }
+
+    const currentRegion = visibleRegions[this.currentRegionIndex];
+
+    if (previousRegion?.selector === '#sidebarContent' && currentRegion.selector !== '#sidebarContent') {
+      console.log('New region index after cycling: ', this.currentRegionIndex);
+      const isOpen = this.toolbarEvents.sidebarOpen.getValue();
+      if (isOpen) {
+        this.toolbarEvents.toggleSideBar(false);
+      }
+    }
+    
+    if (currentRegion.selector === '#sidebarContent') {
+      this.openSidebarAndWait(() => {
+        this.focusRegion(currentRegion);
+      });
+    } else {
+      this.focusRegion(currentRegion);
+    }
+  }
+
+  private focusRegion(region: { selector: string; label: string }): void {
+    console.log(`Focusing region: ${region.label} (${region.selector})`);
+    const element = document.querySelector<HTMLElement>(region.selector);
+    if (!element) {
+      console.warn(`Region element not found: ${region.selector}`);
+      return;
+    }
+
+    const firstFocusable = element.querySelector<HTMLElement>(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+
+    if (firstFocusable) {
+      firstFocusable.focus();
+    } else {
+      if (!element.hasAttribute('tabindex')) {
+        element.setAttribute('tabindex', '-1');
+      }
       element.focus();
     }
   }
