@@ -15,6 +15,7 @@ import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { NumberHelperService } from '../../../lib/shared/util/services/number.helper.service';
 import { IcpEventService } from '../icp-event.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 import { HtmlTemplatesHelper } from '../../shared/util/helpers/html-templates.helper';
 
 @Component({
@@ -71,7 +72,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     private readonly cdr: ChangeDetectorRef,
     private readonly numberHelper: NumberHelperService,
-    private readonly icpEventService: IcpEventService
+    private readonly icpEventService: IcpEventService,
+    private readonly toolbarFocusService: ToolbarFocusService
   ) {
   }
 
@@ -132,10 +134,11 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       event.preventDefault();
       event.stopPropagation();
       this.isDropdownMenuOpen = false;
-      const moreOptionsBtn = document.querySelector('#mvMoreOptionsBtn') as HTMLElement;
-      if (moreOptionsBtn) {
-        moreOptionsBtn.focus();
-      }
+      // const moreOptionsBtn = document.querySelector('#mvMoreOptionsBtn') as HTMLElement;
+      // if (moreOptionsBtn) {
+      //   moreOptionsBtn.focus();
+      // }
+      this.toolbarFocusService.focusToolbarButton('#mvMoreOptionsBtn');
     }
   }
 
@@ -171,15 +174,16 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private focusHighlightButton() {
-    setTimeout(() => {
-      const highlightToolbar = document.querySelector('.redaction');
-      if (highlightToolbar) {
-        const tabbableButton = highlightToolbar.querySelector('button[tabindex="0"]') as HTMLElement;
-        if (tabbableButton) {
-          tabbableButton.focus();
-        }
-      }
-    }, 0);
+    // setTimeout(() => {
+    //   const highlightToolbar = document.querySelector('.redaction');
+    //   if (highlightToolbar) {
+    //     const tabbableButton = highlightToolbar.querySelector('button[tabindex="0"]') as HTMLElement;
+    //     if (tabbableButton) {
+    //       tabbableButton.focus();
+    //     }
+    //   }
+    // }, 0);
+    this.toolbarFocusService.focusToolbarButton('.redaction');
   }
 
   public onClickDrawToggle() {
@@ -292,15 +296,16 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private focusRedactButton() {
-    setTimeout(() => {
-      const redactionToolbar = document.querySelector('mv-redaction-toolbar .redaction');
-      if (redactionToolbar) {
-        const tabbableButton = redactionToolbar.querySelector('button[tabindex="0"]') as HTMLElement;
-        if (tabbableButton) {
-          tabbableButton.focus();
-        }
-      }
-    }, 0);
+    // setTimeout(() => {
+    //   const redactionToolbar = document.querySelector('mv-redaction-toolbar .redaction');
+    //   if (redactionToolbar) {
+    //     const tabbableButton = redactionToolbar.querySelector('button[tabindex="0"]') as HTMLElement;
+    //     if (tabbableButton) {
+    //       tabbableButton.focus();
+    //     }
+    //   }
+    // }, 0);
+    this.toolbarFocusService.focusToolbarButton('mv-redaction-toolbar .redaction');
   }
 
   public toggleGrabNDrag() {
@@ -318,15 +323,16 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public toggleMoreOptions() {
     this.isDropdownMenuOpen = !this.isDropdownMenuOpen;
     if (this.isDropdownMenuOpen) {
-      setTimeout(() => {
-        const overlayPane = document.querySelector('.cdk-overlay-pane');
-        if (overlayPane) {
-          const firstButton = overlayPane.querySelector('.dropdown-menu button[tabindex="0"]') as HTMLElement;
-          if (firstButton) {
-            firstButton.focus();
-          }
-        }
-      }, 0);
+      // setTimeout(() => {
+      //   const overlayPane = document.querySelector('.cdk-overlay-pane');
+      //   if (overlayPane) {
+      //     const firstButton = overlayPane.querySelector('.dropdown-menu button[tabindex="0"]') as HTMLElement;
+      //     if (firstButton) {
+      //       firstButton.focus();
+      //     }
+      //   }
+      // }, 0);
+      this.toolbarFocusService.focusToolbarButton('.cdk-overlay-pane .dropdown-menu');
     }
   }
 }

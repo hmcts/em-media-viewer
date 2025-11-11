@@ -5,6 +5,7 @@ import * as fromRedactSelectors from '../../store/selectors/redaction.selectors'
 import * as fromStore from '../../store/reducers/reducers';
 import { Subscription } from 'rxjs';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 
 
 @Component({
@@ -20,11 +21,13 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   redactionAllInProgress: boolean;
-  private lastFocusedButtonId: string | null = null;
+  // private lastFocusedButtonId: string | null = null;
 
   constructor(public readonly toolbarEventService: ToolbarEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
-    private store: Store<fromStore.AnnotationSetState>) { }
+    private store: Store<fromStore.AnnotationSetState>,
+    private readonly toolbarFocusService: ToolbarFocusService
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(this.store.pipe(select(fromRedactSelectors.getRedactionArray)).subscribe(redactions => {
@@ -86,7 +89,10 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
       if (buttons.includes(target)) {
         event.preventDefault();
         event.stopPropagation();
-        this.lastFocusedButtonId = target.id;
+        // this.lastFocusedButtonId = target.id;
+        if (target.id) {
+          this.toolbarFocusService.trackFocusedButton('redaction-toolbar', target.id);
+        }
         this.returnFocusToMainToolbar();
       }
     }
@@ -97,38 +103,41 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
     // track which button has focus so we can return to it later
     const target = event.target as HTMLElement;
     if (target && target.tagName === 'BUTTON' && target.id) {
-      this.lastFocusedButtonId = target.id;
+      // this.lastFocusedButtonId = target.id;
+      this.toolbarFocusService.trackFocusedButton('redaction-toolbar', target.id);
     }
   }
 
   public focusLastButton() {
-    if (this.lastFocusedButtonId) {
-      const button = document.querySelector(`#${this.lastFocusedButtonId}`) as HTMLElement;
-      if (button) {
-        button.focus();
-        return;
-      }
-    }
-    this.focusFirstButton();
+    // if (this.lastFocusedButtonId) {
+    //   const button = document.querySelector(`#${this.lastFocusedButtonId}`) as HTMLElement;
+    //   if (button) {
+    //     button.focus();
+    //     return;
+    //   }
+    // }
+    // this.focusFirstButton();
+    this.toolbarFocusService.focusLastButton('redaction-toolbar', 'mv-redaction-toolbar .redaction');
   }
 
-  private focusFirstButton() {
-    const redactionToolbar = document.querySelector('mv-redaction-toolbar .redaction');
-    if (redactionToolbar) {
-      const firstButton = redactionToolbar.querySelector('button[tabindex="0"]') as HTMLElement;
-      if (firstButton) {
-        firstButton.focus();
-      }
-    }
-  }
+  // private focusFirstButton() {
+  //   const redactionToolbar = document.querySelector('mv-redaction-toolbar .redaction');
+  //   if (redactionToolbar) {
+  //     const firstButton = redactionToolbar.querySelector('button[tabindex="0"]') as HTMLElement;
+  //     if (firstButton) {
+  //       firstButton.focus();
+  //     }
+  //   }
+  // }
 
   private returnFocusToMainToolbar() {
-    setTimeout(() => {
-      const redactButton = document.querySelector('#mvRedactBtn') as HTMLElement;
-      if (redactButton) {
-        redactButton.focus();
-      }
-    }, 0);
+    // setTimeout(() => {
+    //   const redactButton = document.querySelector('#mvRedactBtn') as HTMLElement;
+    //   if (redactButton) {
+    //     redactButton.focus();
+    //   }
+    // }, 0);
+    this.toolbarFocusService.focusToolbarButton('#mvRedactBtn');
   }
 
   ngOnDestroy(): void {

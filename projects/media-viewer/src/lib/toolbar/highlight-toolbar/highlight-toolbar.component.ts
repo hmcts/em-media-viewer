@@ -1,6 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { SearchMode, SearchType, ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 import * as fromStore from '../../store/reducers/reducers';
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -15,10 +16,12 @@ export class HighlightToolbarComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   redactionAllInProgress: boolean;
-  private lastFocusedButtonId: string | null = null;
+  // private lastFocusedButtonId: string | null = null;
 
   constructor(public readonly toolbarEventService: ToolbarEventService,
-    public readonly toolbarButtons: ToolbarButtonVisibilityService) { }
+    public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    private readonly toolbarFocusService: ToolbarFocusService
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(this.toolbarEventService.redactAllInProgressSubject.subscribe(inprogress => {
@@ -54,13 +57,17 @@ export class HighlightToolbarComponent implements OnInit, OnDestroy {
   @HostListener('keydown.arrowup', ['$event'])
   onArrowUp(event: KeyboardEvent) {
     const target = event.target as HTMLElement;
+    // const highlightToolbar = target.closest('.redaction');
     const highlightToolbar = target.closest('.redaction');
     if (highlightToolbar) {
       const buttons = Array.from(highlightToolbar.querySelectorAll('button:not([disabled])'));
       if (buttons.includes(target)) {
         event.preventDefault();
         event.stopPropagation();
-        this.lastFocusedButtonId = target.id;
+        // this.lastFocusedButtonId = target.id;
+        if (target.id) {
+          this.toolbarFocusService.trackFocusedButton('highlight-toolbar', target.id);
+        }
         this.returnFocusToMainToolbar();
       }
     }
@@ -71,30 +78,32 @@ export class HighlightToolbarComponent implements OnInit, OnDestroy {
     // track which button has focus so we can return to it later
     const target = event.target as HTMLElement;
     if (target?.tagName === 'BUTTON' && target.id) {
-      this.lastFocusedButtonId = target.id;
+      // this.lastFocusedButtonId = target.id;
+      this.toolbarFocusService.trackFocusedButton('highlight-toolbar', target.id);
     }
   }
 
   public focusLastButton() {
-    if (this.lastFocusedButtonId) {
-      const button = document.querySelector(`#${this.lastFocusedButtonId}`) as HTMLElement;
-      if (button) {
-        button.focus();
-        return;
-      }
-    }
-    this.focusFirstButton();
+    // if (this.lastFocusedButtonId) {
+    //   const button = document.querySelector(`#${this.lastFocusedButtonId}`) as HTMLElement;
+    //   if (button) {
+    //     button.focus();
+    //     return;
+    //   }
+    // }
+    // this.focusFirstButton();
+    this.toolbarFocusService.focusLastButton('highlight-toolbar', '.redaction');
   }
 
-  private focusFirstButton() {
-    const highlightToolbar = document.querySelector('.redaction');
-    if (highlightToolbar) {
-      const firstButton = highlightToolbar.querySelector('button[tabindex="0"]') as HTMLElement;
-      if (firstButton) {
-        firstButton.focus();
-      }
-    }
-  }
+  // private focusFirstButton() {
+  //   const highlightToolbar = document.querySelector('.redaction');
+  //   if (highlightToolbar) {
+  //     const firstButton = highlightToolbar.querySelector('button[tabindex="0"]') as HTMLElement;
+  //     if (firstButton) {
+  //       firstButton.focus();
+  //     }
+  //   }
+  // }
 
   private closeAndReturnFocus() {
     this.onClose();
@@ -102,10 +111,11 @@ export class HighlightToolbarComponent implements OnInit, OnDestroy {
   }
 
   private returnFocusToMainToolbar() {
-      const highlightButton = document.querySelector('#mvHighlightBtn') as HTMLElement;
-      if (highlightButton) {
-        highlightButton.focus();
-      }
+      // const highlightButton = document.querySelector('#mvHighlightBtn') as HTMLElement;
+      // if (highlightButton) {
+      //   highlightButton.focus();
+      // }
+      this.toolbarFocusService.focusToolbarButton('#mvHighlightBtn');
   }
 
   ngOnDestroy(): void {

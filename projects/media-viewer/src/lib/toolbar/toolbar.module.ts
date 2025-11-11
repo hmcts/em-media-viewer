@@ -5,6 +5,7 @@ import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
+import { ToolbarFocusService } from './toolbar-focus.service';
 import { RedactionToolbarComponent } from './redaction-toolbar/redaction-toolbar.component';
 import { IcpToolbarComponent } from './icp-toolbar/icp-toolbar.component';
 export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
@@ -27,7 +28,8 @@ import { SharedModule } from '../shared/shared.module';
     TooltipDismissDirective
   ],
   providers: [
-    ToolbarButtonVisibilityService
+    ToolbarButtonVisibilityService,
+    ToolbarFocusService
   ],
   exports: [
     MainToolbarComponent,
