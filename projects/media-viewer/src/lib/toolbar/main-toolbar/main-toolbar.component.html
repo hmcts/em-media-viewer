@@ -1,7 +1,7 @@
 <div class="toolbar">
   <div id="toolbarContainer">
     <div class="mv-toolbar__container">
-      <div #mvToolbar class="mv-toolbar" [class.notSupported]="!contentType">
+      <div #mvToolbar class="mv-toolbar" [class.notSupported]="!contentType" [mvKeyboardNav]="'horizontal'">
         <!-- The mvToolbarMain div contains all toolbar buttons except the "More options" button. This allows for calculation of the available space to display buttons -->
         <div id="mvToolbarMain" class="mv-toolbar-main" #mvToolbarMain>
           <ng-container *ngTemplateOutlet="menuItems"></ng-container>
@@ -18,6 +18,7 @@
             [attr.aria-expanded]="isDropdownMenuOpen"
             [attr.data-tooltip]="'More options' | rpxTranslate"
             (click)="toggleMoreOptions()"
+            (keydown)="onMoreOptionsKeyDown($event)"
             cdkOverlayOrigin
             #trigger="cdkOverlayOrigin"
             [disabled]="redactAllInProgress"
@@ -31,7 +32,7 @@
             [cdkConnectedOverlayOpen]="isDropdownMenuOpen"
             [cdkConnectedOverlayPositions]="dropdownMenuPositions"
           >
-            <div class="dropdown-menu" #dropdownMenu tabindex="0">
+            <div class="dropdown-menu" #dropdownMenu [mvKeyboardNav]="'vertical'">
               <ng-container *ngTemplateOutlet="menuItems"></ng-container>
             </div>
           </ng-template>
@@ -120,6 +121,7 @@
             [class.toggled]="toolbarEvents.highlightToolbarSubject | async"
             aria-pressed="false"
             (click)="onClickHighlightToggle(); isDropdownMenuOpen = false"
+            (keydown)="onHighlightKeyDown($event)"
             data-l10n-id="toggleHighlightButton"
           >
             <span data-l10n-id="highlight_label">{{
@@ -351,6 +353,7 @@
             [ngClass]="onToolBarOffSetChange('mvRedactBtn')"
             [attr.aria-expanded]="isRedactOpen"
             (click)="toggleRedactBar(); isDropdownMenuOpen = false"
+            (keydown)="onRedactKeyDown($event)"
           >
             <span>{{ "Redact" | rpxTranslate }}</span>
           </button>

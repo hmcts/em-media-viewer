@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { HighlightToolbarComponent } from './highlight-toolbar/highlight-toolbar.component';
 import { RpxTranslationModule } from 'rpx-xui-translation';
 import { TooltipDismissDirective } from '../shared/directives/tooltip-dismiss.directive';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { TooltipDismissDirective } from '../shared/directives/tooltip-dismiss.di
     FormsModule,
     OverlayModule,
     RouterModule,
-    RpxTranslationModule.forChild()
+    RpxTranslationModule.forChild(),
+    SharedModule
   ]
 })
 export class ToolbarModule { }
