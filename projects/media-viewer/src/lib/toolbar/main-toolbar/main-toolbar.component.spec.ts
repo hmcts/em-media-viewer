@@ -10,6 +10,7 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { StoreModule } from '@ngrx/store';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { ToolbarEventService } from '../toolbar-event.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
 
@@ -18,6 +19,7 @@ describe('MainToolbarComponent', () => {
   let fixture: ComponentFixture<MainToolbarComponent>;
   let nativeElement;
   let toolbarService: ToolbarEventService;
+  let toolbarFocusService: ToolbarFocusService
 
   beforeEach(() => {
     return TestBed.configureTestingModule({
@@ -40,7 +42,7 @@ describe('MainToolbarComponent', () => {
           testMode: true
         })
       ],
-      providers: [ToolbarButtonVisibilityService, ToolbarEventService]
+      providers: [ToolbarButtonVisibilityService, ToolbarEventService, ToolbarFocusService]
     })
       .compileComponents();
   });
@@ -49,6 +51,7 @@ describe('MainToolbarComponent', () => {
     fixture = TestBed.createComponent(MainToolbarComponent);
     component = fixture.componentInstance;
     toolbarService = TestBed.inject(ToolbarEventService);
+    toolbarFocusService = TestBed.inject(ToolbarFocusService);
     nativeElement = fixture.debugElement.nativeElement;
     component.toolbarButtons.showHighlightButton = true;
     component.toolbarButtons.showDrawButton = true;

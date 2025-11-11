@@ -10,12 +10,14 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 
 describe('HighlightToolbarComponent', () => {
   let component: HighlightToolbarComponent;
   let fixture: ComponentFixture<HighlightToolbarComponent>;
   let nativeElement;
   let toolbarService: ToolbarEventService;
+  let toolbarFocusService: ToolbarFocusService
 
   beforeEach(() => {
     return TestBed.configureTestingModule({
@@ -35,7 +37,7 @@ describe('HighlightToolbarComponent', () => {
           testMode: true
         })
       ],
-      providers: [ToolbarButtonVisibilityService, ToolbarEventService]
+      providers: [ToolbarButtonVisibilityService, ToolbarEventService, ToolbarFocusService]
     })
       .compileComponents();
   });
@@ -44,6 +46,7 @@ describe('HighlightToolbarComponent', () => {
     fixture = TestBed.createComponent(HighlightToolbarComponent);
     component = fixture.componentInstance;
     toolbarService = TestBed.inject(ToolbarEventService);
+    toolbarFocusService = TestBed.inject(ToolbarFocusService);
     nativeElement = fixture.debugElement.nativeElement;
     component.toolbarButtons.showHighlightButton = true;
     component.toolbarButtons.showDrawButton = true;

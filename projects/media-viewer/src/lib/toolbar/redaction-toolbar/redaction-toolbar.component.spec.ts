@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { RedactionToolbarComponent } from './redaction-toolbar.component';
 import { SearchType, ToolbarEventService } from '../toolbar-event.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 import { RedactionSearch } from '../redaction-search-bar/redaction-search.model';
 import { Subject } from 'rxjs';
 
@@ -13,6 +14,7 @@ describe('RedactionToolbarComponent', () => {
   let component: RedactionToolbarComponent;
   let fixture: ComponentFixture<RedactionToolbarComponent>;
   let toolbarEvents: ToolbarEventService;
+  let toolbarFocusService: ToolbarFocusService
   const redactAllInProgressSubject: Subject<RedactionSearch> = new Subject<RedactionSearch>();
 
   const toolbarEventsMock = {
@@ -43,7 +45,7 @@ describe('RedactionToolbarComponent', () => {
           testMode: true
         })
       ],
-      providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }]
+      providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }, ToolbarFocusService]
     })
       .compileComponents();
   });
@@ -52,6 +54,7 @@ describe('RedactionToolbarComponent', () => {
     fixture = TestBed.createComponent(RedactionToolbarComponent);
     component = fixture.componentInstance;
     toolbarEvents = TestBed.inject(ToolbarEventService);
+    toolbarFocusService = TestBed.inject(ToolbarFocusService);
     fixture.detectChanges();
   });
 
