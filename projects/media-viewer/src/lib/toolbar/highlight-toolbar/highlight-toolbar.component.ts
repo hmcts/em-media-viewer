@@ -58,23 +58,7 @@ export class HighlightToolbarComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLElement;
     const highlightToolbar = target.closest('.redaction');
     if (highlightToolbar) {
-      const buttons = Array.from(highlightToolbar.querySelectorAll('button:not([disabled])'));
-      if (buttons.includes(target)) {
-        event.preventDefault();
-        event.stopPropagation();
-        if (target.id) {
-          this.toolbarFocusService.trackFocusedButton('highlight-toolbar', target.id);
-        }
-        this.returnFocusToMainToolbar();
-      }
-    }
-  }
-
-  @HostListener('focusin', ['$event'])
-  onFocusIn(event: FocusEvent) {
-    const target = event.target as HTMLElement;
-    if (target?.tagName === 'BUTTON' && target.id) {
-      this.toolbarFocusService.trackFocusedButton('highlight-toolbar', target.id);
+      this.returnFocusToMainToolbar();
     }
   }
 

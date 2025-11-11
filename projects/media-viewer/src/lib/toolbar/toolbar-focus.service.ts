@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ToolbarFocusService {
-  private lastFocusedButtonIds = new Map<string, string>();
-
-
   focusToolbarButton(toolbarSelector: string, buttonId?: string, delay = 0): void {
     setTimeout(() => {
       const element = document.querySelector(toolbarSelector);
@@ -30,13 +27,5 @@ export class ToolbarFocusService {
         tabbableButton.focus();
       }
     }, delay);
-  }
-
-  trackFocusedButton(toolbarId: string, buttonId: string): void {
-    this.lastFocusedButtonIds.set(toolbarId, buttonId);
-  }
-
-  getLastFocusedButton(toolbarId: string): string | undefined {
-    return this.lastFocusedButtonIds.get(toolbarId);
   }
 }

@@ -84,23 +84,7 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLElement;
     const redactionToolbar = target.closest('.redaction');
     if (redactionToolbar) {
-      const buttons = Array.from(redactionToolbar.querySelectorAll('button:not([disabled])'));
-      if (buttons.includes(target)) {
-        event.preventDefault();
-        event.stopPropagation();
-        if (target.id) {
-          this.toolbarFocusService.trackFocusedButton('redaction-toolbar', target.id);
-        }
-        this.returnFocusToMainToolbar();
-      }
-    }
-  }
-
-  @HostListener('focusin', ['$event'])
-  onFocusIn(event: FocusEvent) {
-    const target = event.target as HTMLElement;
-    if (target && target.tagName === 'BUTTON' && target.id) {
-      this.toolbarFocusService.trackFocusedButton('redaction-toolbar', target.id);
+      this.returnFocusToMainToolbar();
     }
   }
 
