@@ -312,8 +312,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   private cycleRegion(direction: 'forward' | 'backward'): void {
-    console.log('Cycling region: ', direction);
-    console.log('Current region index before cycling: ', this.currentRegionIndex);
     const regions = [
       { selector: '#toolbarContainer', label: 'Main toolbar', isVisible: () => this.showToolbar },
       { selector: '#sidebarContent', label: 'Index menu', isVisible: () => true },
@@ -321,7 +319,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     ];
 
     const visibleRegions = regions.filter(r => r.isVisible());
-    console.log('Visible regions: ', visibleRegions);
     if (visibleRegions.length === 0) return;
 
     const previousRegion = visibleRegions[this.currentRegionIndex];
@@ -337,7 +334,6 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
     const currentRegion = visibleRegions[this.currentRegionIndex];
 
     if (previousRegion?.selector === '#sidebarContent' && currentRegion.selector !== '#sidebarContent') {
-      console.log('New region index after cycling: ', this.currentRegionIndex);
       const isOpen = this.toolbarEvents.sidebarOpen.getValue();
       if (isOpen) {
         this.toolbarEvents.toggleSideBar(false);
@@ -354,10 +350,8 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
   }
 
   private focusRegion(region: { selector: string; label: string }): void {
-    console.log(`Focusing region: ${region.label} (${region.selector})`);
     const element = document.querySelector<HTMLElement>(region.selector);
     if (!element) {
-      console.warn(`Region element not found: ${region.selector}`);
       return;
     }
 

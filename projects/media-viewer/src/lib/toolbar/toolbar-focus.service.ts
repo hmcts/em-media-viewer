@@ -39,9 +39,4 @@ export class ToolbarFocusService {
   getLastFocusedButton(toolbarId: string): string | undefined {
     return this.lastFocusedButtonIds.get(toolbarId);
   }
-
-  focusLastButton(toolbarId: string, toolbarSelector: string, delay = 0): void {
-    const lastButtonId = this.getLastFocusedButton(toolbarId);
-    this.focusToolbarButton(toolbarSelector, lastButtonId, delay);
-  }
 }

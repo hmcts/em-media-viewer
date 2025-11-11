@@ -21,7 +21,6 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   redactionAllInProgress: boolean;
-  // private lastFocusedButtonId: string | null = null;
 
   constructor(public readonly toolbarEventService: ToolbarEventService,
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
@@ -89,7 +88,6 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
       if (buttons.includes(target)) {
         event.preventDefault();
         event.stopPropagation();
-        // this.lastFocusedButtonId = target.id;
         if (target.id) {
           this.toolbarFocusService.trackFocusedButton('redaction-toolbar', target.id);
         }
@@ -100,43 +98,13 @@ export class RedactionToolbarComponent implements OnInit, OnDestroy {
 
   @HostListener('focusin', ['$event'])
   onFocusIn(event: FocusEvent) {
-    // track which button has focus so we can return to it later
     const target = event.target as HTMLElement;
     if (target && target.tagName === 'BUTTON' && target.id) {
-      // this.lastFocusedButtonId = target.id;
       this.toolbarFocusService.trackFocusedButton('redaction-toolbar', target.id);
     }
   }
 
-  public focusLastButton() {
-    // if (this.lastFocusedButtonId) {
-    //   const button = document.querySelector(`#${this.lastFocusedButtonId}`) as HTMLElement;
-    //   if (button) {
-    //     button.focus();
-    //     return;
-    //   }
-    // }
-    // this.focusFirstButton();
-    this.toolbarFocusService.focusLastButton('redaction-toolbar', 'mv-redaction-toolbar .redaction');
-  }
-
-  // private focusFirstButton() {
-  //   const redactionToolbar = document.querySelector('mv-redaction-toolbar .redaction');
-  //   if (redactionToolbar) {
-  //     const firstButton = redactionToolbar.querySelector('button[tabindex="0"]') as HTMLElement;
-  //     if (firstButton) {
-  //       firstButton.focus();
-  //     }
-  //   }
-  // }
-
   private returnFocusToMainToolbar() {
-    // setTimeout(() => {
-    //   const redactButton = document.querySelector('#mvRedactBtn') as HTMLElement;
-    //   if (redactButton) {
-    //     redactButton.focus();
-    //   }
-    // }, 0);
     this.toolbarFocusService.focusToolbarButton('#mvRedactBtn');
   }
 
