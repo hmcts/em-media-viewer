@@ -127,4 +127,58 @@ describe('HighlightToolbarComponent', () => {
     expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--draw')).nativeElement).toHaveClass('toggled');
     expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
   });
+
+  describe('keyboard navigation', () => {
+    describe('onEscapeKey', () => {
+      it('should close toolbar and return focus to main toolbar on Escape key', () => {
+        const mockEvent = new KeyboardEvent('keydown', { key: 'Escape' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        const stopPropagationSpy = spyOn(mockEvent, 'stopPropagation');
+        const closeSpy = spyOn(component, 'onClose');
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onEscapeKey(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(closeSpy).toHaveBeenCalled();
+        expect(focusSpy).toHaveBeenCalledWith('#mvHighlightBtn');
+      });
+    });
+
+    describe('onArrowUp', () => {
+      it('should return focus to main toolbar when ArrowUp pressed inside highlight toolbar', () => {
+        const button = document.createElement('button');
+        button.className = 'test-button';
+        const toolbar = document.createElement('div');
+        toolbar.className = 'redaction';
+        toolbar.appendChild(button);
+        document.body.appendChild(toolbar);
+
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+        Object.defineProperty(mockEvent, 'target', { value: button, enumerable: true });
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onArrowUp(mockEvent);
+
+        expect(focusSpy).toHaveBeenCalledWith('#mvHighlightBtn');
+        document.body.removeChild(toolbar);
+      });
+
+      it('should not return focus when target is not inside highlight toolbar', () => {
+        const button = document.createElement('button');
+        button.className = 'test-button';
+        document.body.appendChild(button);
+
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+        Object.defineProperty(mockEvent, 'target', { value: button, enumerable: true });
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onArrowUp(mockEvent);
+
+        expect(focusSpy).not.toHaveBeenCalled();
+        document.body.removeChild(button);
+      });
+    });
+  });
 });
