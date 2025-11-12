@@ -298,4 +298,178 @@ describe('MainToolbarComponent', () => {
 
     expect(togglePrint).toHaveBeenCalled();
   });
+
+  describe('keyboard navigation', () => {
+    describe('onEscapeKey', () => {
+      it('should close dropdown menu and focus toolbar button when dropdown is open', () => {
+        component.isDropdownMenuOpen = true;
+        const mockEvent = new KeyboardEvent('keydown', { key: 'Escape' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        const stopPropagationSpy = spyOn(mockEvent, 'stopPropagation');
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onEscapeKey(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(component.isDropdownMenuOpen).toBeFalse();
+        expect(focusSpy).toHaveBeenCalledWith('#mvMoreOptionsBtn');
+      });
+
+      it('should not close dropdown when it is not open', () => {
+        component.isDropdownMenuOpen = false;
+        const mockEvent = new KeyboardEvent('keydown', { key: 'Escape' });
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onEscapeKey(mockEvent);
+
+        expect(component.isDropdownMenuOpen).toBeFalse();
+        expect(focusSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('onMoreOptionsKeyDown', () => {
+      it('should toggle more options menu on ArrowDown when menu is closed', () => {
+        component.isDropdownMenuOpen = false;
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        const stopPropagationSpy = spyOn(mockEvent, 'stopPropagation');
+        const toggleSpy = spyOn(component, 'toggleMoreOptions');
+
+        component.onMoreOptionsKeyDown(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(toggleSpy).toHaveBeenCalled();
+      });
+
+      it('should not toggle more options menu on ArrowDown when menu is already open', () => {
+        component.isDropdownMenuOpen = true;
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        const toggleSpy = spyOn(component, 'toggleMoreOptions');
+
+        component.onMoreOptionsKeyDown(mockEvent);
+
+        expect(preventDefaultSpy).not.toHaveBeenCalled();
+        expect(toggleSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('onHighlightKeyDown', () => {
+      it('should open highlight toolbar and focus button when ArrowDown pressed and toolbar is closed', () => {
+        component.isHighlightOpen = false;
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        const stopPropagationSpy = spyOn(mockEvent, 'stopPropagation');
+        const toggleSpy = spyOn(toolbarService, 'toggleHighlightToolbar');
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onHighlightKeyDown(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(toggleSpy).toHaveBeenCalled();
+        expect(focusSpy).toHaveBeenCalledWith('.redaction');
+      });
+
+      it('should focus button when ArrowDown pressed and toolbar is already open', () => {
+        component.isHighlightOpen = true;
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        const stopPropagationSpy = spyOn(mockEvent, 'stopPropagation');
+        const toggleSpy = spyOn(toolbarService, 'toggleHighlightToolbar');
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onHighlightKeyDown(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(toggleSpy).not.toHaveBeenCalled();
+        expect(focusSpy).toHaveBeenCalledWith('.redaction');
+      });
+    });
+
+    describe('onRedactKeyDown', () => {
+      it('should open redaction toolbar and focus button when ArrowDown pressed and toolbar is closed', () => {
+        component.isRedactOpen = false;
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        const stopPropagationSpy = spyOn(mockEvent, 'stopPropagation');
+        const toggleSpy = spyOn(toolbarService, 'toggleRedactionMode');
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onRedactKeyDown(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(toggleSpy).toHaveBeenCalled();
+        expect(focusSpy).toHaveBeenCalledWith('mv-redaction-toolbar .redaction');
+      });
+
+      it('should focus button when ArrowDown pressed and toolbar is already open', () => {
+        component.isRedactOpen = true;
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        const stopPropagationSpy = spyOn(mockEvent, 'stopPropagation');
+        const toggleSpy = spyOn(toolbarService, 'toggleRedactionMode');
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onRedactKeyDown(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(toggleSpy).not.toHaveBeenCalled();
+        expect(focusSpy).toHaveBeenCalledWith('mv-redaction-toolbar .redaction');
+      });
+    });
+
+    describe('toggleMoreOptions', () => {
+      it('should open dropdown and focus menu when closed', () => {
+        component.isDropdownMenuOpen = false;
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.toggleMoreOptions();
+
+        expect(component.isDropdownMenuOpen).toBeTrue();
+        expect(focusSpy).toHaveBeenCalledWith('.cdk-overlay-pane .dropdown-menu');
+      });
+
+      it('should close dropdown and not focus when already open', () => {
+        component.isDropdownMenuOpen = true;
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.toggleMoreOptions();
+
+        expect(component.isDropdownMenuOpen).toBeFalse();
+        expect(focusSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('highlight toolbar state tracking', () => {
+      it('should update isHighlightOpen when highlight toolbar is toggled', () => {
+        component.ngOnInit();
+        expect(component.isHighlightOpen).toBeFalse();
+
+        toolbarService.highlightToolbarSubject.next(true);
+        expect(component.isHighlightOpen).toBeTrue();
+
+        toolbarService.highlightToolbarSubject.next(false);
+        expect(component.isHighlightOpen).toBeFalse();
+      });
+    });
+
+    describe('redaction toolbar state tracking', () => {
+      it('should update isRedactOpen when redaction mode is toggled', () => {
+        component.ngOnInit();
+        expect(component.isRedactOpen).toBeFalse();
+
+        toolbarService.redactionMode.next(true);
+        expect(component.isRedactOpen).toBeTrue();
+
+        toolbarService.redactionMode.next(false);
+        expect(component.isRedactOpen).toBeFalse();
+      });
+    });
+  });
 });
