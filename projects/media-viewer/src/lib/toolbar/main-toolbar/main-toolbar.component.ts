@@ -15,6 +15,7 @@ import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { NumberHelperService } from '../../../lib/shared/util/services/number.helper.service';
 import { IcpEventService } from '../icp-event.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 import { HtmlTemplatesHelper } from '../../shared/util/helpers/html-templates.helper';
 
 @Component({
@@ -46,6 +47,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public isIndexOpen = false;
   public isRedactOpen = false;
   public isCommentsOpen = false;
+  public isHighlightOpen = false;
   public dropdownMenuPositions = [
     new ConnectionPositionPair(
       {
@@ -70,7 +72,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     private readonly cdr: ChangeDetectorRef,
     private readonly numberHelper: NumberHelperService,
-    private readonly icpEventService: IcpEventService
+    private readonly icpEventService: IcpEventService,
+    private readonly toolbarFocusService: ToolbarFocusService
   ) {
   }
 
@@ -88,10 +91,14 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       }),
       this.toolbarEvents.redactionMode.subscribe(enabled => {
         this.redactionEnabled = enabled;
+        this.isRedactOpen = enabled;
       }),
       this.toolbarEvents.redactAllInProgressSubject.subscribe(disable => {
         this.redactAllInProgress = disable;
       }),
+      this.toolbarEvents.highlightToolbarSubject.subscribe(isOpen => {
+        this.isHighlightOpen = isOpen;
+      })
     );
   }
 
@@ -121,9 +128,51 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.printFile();
   }
 
+@HostListener('document:keydown.escape', ['$event'])
+  public onEscapeKey(event: KeyboardEvent) {
+    if (this.isDropdownMenuOpen) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.isDropdownMenuOpen = false;
+      this.toolbarFocusService.focusToolbarButton('#mvMoreOptionsBtn');
+    }
+  }
+
+  public onMoreOptionsKeyDown(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown' && !this.isDropdownMenuOpen) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.toggleMoreOptions();
+    }
+  }
+
+  public onHighlightKeyDown(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!this.isHighlightOpen) {
+        this.openHighlightToolbarAndFocus();
+      } else {
+        this.focusHighlightButton();
+      }
+    }
+  }
+
   public onClickHighlightToggle() {
     this.toolbarEvents.toggleHighlightToolbar();
   }
+
+  private openHighlightToolbarAndFocus() {
+    if (!this.isHighlightOpen) {
+      this.toolbarEvents.toggleHighlightToolbar();
+      this.focusHighlightButton();
+    }
+  }
+
+  private focusHighlightButton() {
+    this.toolbarFocusService.focusToolbarButton('.redaction');
+  }
+
   public onClickDrawToggle() {
     this.toolbarEvents.toggleDrawMode();
   }
@@ -212,7 +261,29 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public toggleRedactBar() {
     this.toolbarEvents.toggleRedactionMode();
-    this.isRedactOpen = !this.isRedactOpen;
+  }
+
+  public onRedactKeyDown(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!this.isRedactOpen) {
+        this.openRedactToolbarAndFocus();
+      } else {
+        this.focusRedactButton();
+      }
+    }
+  }
+
+  private openRedactToolbarAndFocus() {
+    if (!this.isRedactOpen) {
+      this.toolbarEvents.toggleRedactionMode();
+      this.focusRedactButton();
+    }
+  }
+
+  private focusRedactButton() {
+    this.toolbarFocusService.focusToolbarButton('mv-redaction-toolbar .redaction');
   }
 
   public toggleGrabNDrag() {
@@ -229,10 +300,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public toggleMoreOptions() {
     this.isDropdownMenuOpen = !this.isDropdownMenuOpen;
-    setTimeout(() => {
-      if (this.mvMenuItems) {
-        this.mvMenuItems.nativeElement.focus();
-      }
-    }, 100);
+    if (this.isDropdownMenuOpen) {
+      this.toolbarFocusService.focusToolbarButton('.cdk-overlay-pane .dropdown-menu');
+    }
   }
 }
