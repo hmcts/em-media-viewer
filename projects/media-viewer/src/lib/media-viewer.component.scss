@@ -1,61 +1,61 @@
 .govuk-skip-link-container {
-  position: inline-block !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  z-index: 101 !important;
-  background: transparent !important;
-  pointer-events: none !important;
-  display: flex !important;
-  flex-direction: row !important;
-  gap: 0 !important;
+  position: inline-block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 101;
+  background: transparent;
+  pointer-events: none;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
 
-  .govuk-skip-link {
-    display: inline-block !important;
-    font-size: 0px !important;
-    height: 0px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: auto !important;
-    pointer-events: auto !important;
+  .mv-govuk-skip-link {
+    display: inline-block;
+    font-size: 0px;
+    height: 0px;
+    margin: 0;
+    padding: 0;
+    width: 0;
+    flex-shrink: 0;
+    pointer-events: auto;
 
     &:link, &:visited {
-      color: #0b0c0c !important;
+      color: #0b0c0c;
     }
   }
 
-  &:has(.govuk-skip-link:focus),
-  &:has(.govuk-skip-link:active) {
-    background-color: #ffdd00 !important;
+  &:has(.mv-govuk-skip-link:focus),
+  &:has(.mv-govuk-skip-link:active) {
+    background-color: #ffdd00;
 
-    .govuk-skip-link {
-      font-size: 16px !important;
-      padding: 10px 15px !important;
-      width: auto !important;
-      min-height: 41px !important;
-      height: auto !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      text-decoration: underline !important;
-      background-color: transparent !important;
-      color: #0b0c0c !important;
-      position: static !important;
-      clip: auto !important;
-      clip-path: none !important;
-      overflow: visible !important;
+    .mv-govuk-skip-link {
+      font-size: 16px;
+      padding: 10px 15px;
+      width: auto;
+      min-height: 41px;
+      height: auto;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: underline;
+      background-color: transparent;
+      color: #0b0c0c;
+      position: static;
+      clip: auto;
+      clip-path: none;
+      overflow: visible;
 
       &:focus, &:active {
-        text-decoration: underline !important;
-        text-decoration-thickness: 3px !important;
+        text-decoration: underline;
+        text-decoration-thickness: 3px;
       }
     }
   }
 }
 
-#outerContainer:has(.govuk-skip-link:focus),
-#outerContainer:has(.govuk-skip-link:active) {
+#outerContainer:has(.mv-govuk-skip-link:focus),
+#outerContainer:has(.mv-govuk-skip-link:active) {
   mv-side-bar {
-    top: calc(40px + 61px) !important; // height of skiplink + height of menu bar
-    border: 1px solid green !important;
-  }
+    top: calc(40px + 61px); // height of skiplink + height of menu bar
+}
 }
