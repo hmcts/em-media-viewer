@@ -796,8 +796,8 @@ __metadata:
   linkType: hard
 
 "@angular/ssr@npm:20":
-  version: 20.3.5
-  resolution: "@angular/ssr@npm:20.3.5"
+  version: 20.3.10
+  resolution: "@angular/ssr@npm:20.3.10"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
@@ -808,7 +808,7 @@ __metadata:
   peerDependenciesMeta:
     "@angular/platform-server":
       optional: true
-  checksum: 10/5e6c233b856108562d92065b3353d1351a37b8d9dc33c644dacdb74407912542320a9d657b648159dfd4b4b39cdc57293c5beb07a1f83b5d3169e0cbb23bd7a9
+  checksum: 10/51affd839aac7f99f906b7380b5934ce3b0009e65673ef86c8d6eb679a245c2cbcb7dfff13f8be2f317b0b740cf5f6c4590c9a53fa03dc675e99ece0a660a45e
   languageName: node
   linkType: hard
 
