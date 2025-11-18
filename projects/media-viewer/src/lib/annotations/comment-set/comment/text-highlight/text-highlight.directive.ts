@@ -1,7 +1,8 @@
 import { AfterViewChecked, Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({
-  selector: '[mvTextHighlight]'
+    selector: '[mvTextHighlight]',
+    standalone: false
 })
 export class TextHighlightDirective implements AfterViewChecked {
 

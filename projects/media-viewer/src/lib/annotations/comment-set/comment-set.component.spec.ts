@@ -14,9 +14,10 @@ import { reducers } from '../../store/reducers/reducers';
 import * as fromActions from '../../store/actions/annotation.actions';
 
 @Component({
-  selector: 'mv-anno-comment',
-  template: '',
- })
+    selector: 'mv-anno-comment',
+    template: '',
+    standalone: false
+})
 export class MockCommentComponent {
   @Input() rotate = 0;
   @Input() zoom = 1;

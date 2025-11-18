@@ -2,8 +2,9 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { IcpEventService } from '../../toolbar/icp-event.service';
 
 @Component({
-  selector: 'mv-confirm-action',
-  templateUrl: './confirm-action-dialog.component.html',
+    selector: 'mv-confirm-action',
+    templateUrl: './confirm-action-dialog.component.html',
+    standalone: false
 })
 export class ConfirmActionDialogComponent implements AfterViewInit {
   @ViewChild('modalContainer') modalContainer: ElementRef;
