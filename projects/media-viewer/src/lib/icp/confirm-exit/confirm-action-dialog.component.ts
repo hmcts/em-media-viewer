@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { IcpEventService } from '../../toolbar/icp-event.service';
 
 @Component({
@@ -7,9 +6,16 @@ import { IcpEventService } from '../../toolbar/icp-event.service';
     templateUrl: './confirm-action-dialog.component.html',
     standalone: false
 })
-export class ConfirmActionDialogComponent {
+export class ConfirmActionDialogComponent implements AfterViewInit {
+  @ViewChild('modalContainer') modalContainer: ElementRef;
 
   constructor(private icpEventService: IcpEventService) {}
+
+  ngAfterViewInit(): void {
+    if (this.modalContainer) {
+      this.modalContainer.nativeElement.focus();
+    }
+  }
 
   onCancel() {
     this.icpEventService.leavingSession.next(false);
