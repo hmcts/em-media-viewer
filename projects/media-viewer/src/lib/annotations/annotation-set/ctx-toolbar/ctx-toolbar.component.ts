@@ -10,8 +10,9 @@ import {
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
 
 @Component({
-  selector: 'mv-ctx-toolbar',
-  templateUrl: './ctx-toolbar.component.html'
+    selector: 'mv-ctx-toolbar',
+    templateUrl: './ctx-toolbar.component.html',
+    standalone: false
 })
 export class CtxToolbarComponent implements OnChanges {
 

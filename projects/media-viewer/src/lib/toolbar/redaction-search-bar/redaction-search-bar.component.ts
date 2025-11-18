@@ -16,9 +16,10 @@ import { some } from 'lodash';
 import { HtmlTemplatesHelper } from '../../shared/util/helpers/html-templates.helper';
 
 @Component({
-  selector: 'mv-redaction-search-bar',
-  templateUrl: './redaction-search-bar.component.html',
-  styleUrls: ['./redaction-search-bar.component.scss']
+    selector: 'mv-redaction-search-bar',
+    templateUrl: './redaction-search-bar.component.html',
+    styleUrls: ['./redaction-search-bar.component.scss'],
+    standalone: false
 })
 export class RedactionSearchBarComponent implements OnInit, OnDestroy {
 
