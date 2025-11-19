@@ -167,7 +167,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
     "jasmine": "^5.0.0",
-    "jasmine-core": "~5.2.0",
+    "jasmine-core": "~5.12.0",
     "jasmine-marbles": "^0.9.1",
     "jasmine-reporters": "^2.3.2",
     "jasmine-spec-reporter": "~7.0.0",
