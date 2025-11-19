@@ -97,7 +97,6 @@
     "zone.js": "0.14.10"
   },
   "resolutions": {
-    "glob": "^11.1.0",
     "glob-parent": "^6.0.0",
     "hosted-git-info": "^7.0.0",
     "ini": "4.1.3",
