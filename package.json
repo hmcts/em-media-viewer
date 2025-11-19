@@ -207,5 +207,5 @@
     "when": "3.7.8",
     "yarn-audit-fix": "^10.0.7"
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "yarn@4.11.0"
 }
