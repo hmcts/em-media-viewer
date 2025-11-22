@@ -3833,7 +3833,7 @@ __metadata:
     "@types/cucumber": "npm:^6"
     "@types/jasmine": "npm:~5.1.0"
     "@types/jasminewd2": "npm:^2.0.8"
-    "@types/lodash": "npm:4.17.10"
+    "@types/lodash": "npm:4.17.21"
     "@types/mocha": "npm:^8.2.1"
     "@types/node": "npm:^18.19.33"
     "@typescript-eslint/eslint-plugin": "npm:7.16.0"
@@ -7420,10 +7420,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:4.17.10":
-  version: 4.17.10
-  resolution: "@types/lodash@npm:4.17.10"
-  checksum: 10/10fe24a93adc6048cb23e4135c1ed1d52cc39033682e6513f4f51b74a9af6d7a24fbea92203c22dc4e01e35f1ab3aa0fd0a2b487e8a4a2bbdf1fc05970094066
+"@types/lodash@npm:4.17.21":
+  version: 4.17.21
+  resolution: "@types/lodash@npm:4.17.21"
+  checksum: 10/34920830a3bc82ba619cda05e606fef00c148a69b4f19f770645d2587ccdb8e42ef3ddfc174b7884c0c709fc0a1aeb48f7326da969bad12a1464a03efbbe414c
   languageName: node
   linkType: hard
 
