@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CtxToolbarComponent } from './ctx-toolbar.component';
 import { By } from '@angular/platform-browser';
 import { EventEmitter } from '@angular/core';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 describe('CtxToolbarComponent', () => {
   let component: CtxToolbarComponent;
@@ -28,7 +29,17 @@ describe('CtxToolbarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CtxToolbarComponent]
+      declarations: [CtxToolbarComponent],
+      imports: [
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
+      ]
     })
       .compileComponents();
 

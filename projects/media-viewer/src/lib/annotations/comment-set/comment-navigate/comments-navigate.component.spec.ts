@@ -5,6 +5,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import {reducers} from '../../../store/reducers/reducers';
 import {RouterTestingModule} from '@angular/router/testing';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 describe('CommentsNavigateComponent', () => {
@@ -36,7 +37,15 @@ describe('CommentsNavigateComponent', () => {
         FormsModule,
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({}),
-        RouterTestingModule
+        RouterTestingModule,
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       declarations: [CommentsNavigateComponent, TestHostComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
