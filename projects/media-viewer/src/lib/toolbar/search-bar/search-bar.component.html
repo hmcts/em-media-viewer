@@ -45,6 +45,7 @@
         class="govuk-link govuk-link--no-visited-state govuk-!-margin-right-2"
         (click)="searchPrev()"
         title="Find the previous occurrence of the phrase"
+        [attr.aria-label]="'Find the previous occurrence of the phrase' | rpxTranslate"
         data-l10n-id="find_previous"
         >{{ "Prev" | rpxTranslate }}</a
       >
@@ -57,6 +58,7 @@
         class="govuk-link govuk-link--no-visited-state"
         (click)="searchNext()"
         title="Find the next occurrence of the phrase"
+        [attr.aria-label]="'Find the next occurrence of the phrase' | rpxTranslate"
         data-l10n-id="find_next"
         >{{ "Next" | rpxTranslate }}</a
       >
@@ -68,6 +70,7 @@
         role="button"
         (click)="toggleAdvancedSearch()"
         title="Advanced"
+        [attr.aria-label]="'Advanced search options' | rpxTranslate"
         [attr.aria-expanded]="advancedSearchVisible"
         aria-controls="advancedSearchVisible"
         data-l10n-id="find_advanced"
@@ -150,6 +153,7 @@
       #mvCloseBtn
       class="mv-button searchbar-button--close"
       title="Close Search"
+      [attr.aria-label]="'Close Search'"
       data-l10n-id="mvRedactBtn"
       (click)="toggleSearchBar()"
     ></button>
