@@ -17,12 +17,13 @@
             "
             [attr.aria-expanded]="isDropdownMenuOpen"
             [attr.data-tooltip]="'More options' | rpxTranslate"
+            [attr.aria-label]="'More options' | rpxTranslate"
             (click)="toggleMoreOptions()"
             cdkOverlayOrigin
             #trigger="cdkOverlayOrigin"
             [disabled]="redactAllInProgress"
           >
-            <span>{{ "More options" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "More options" | rpxTranslate }}</span>
           </button>
           <!-- This template displays the overlay content for the dropdown menu and is connected to the "More options" button -->
           <ng-template
@@ -212,10 +213,11 @@
                 id="mvMinusBtn"
                 class="mv-toolbar__menu-button--zoom-out button-image mv-tooltip"
                 [attr.data-tooltip]="'Zoom out' | rpxTranslate"
+                [attr.aria-label]="'Zoom out' | rpxTranslate"
                 data-l10n-id="zoom_out"
                 (click)="stepZoom(-0.1)"
               >
-                <span class="mv-toolbar__menu-button--zoom-out-text">{{
+                <span class="mv-toolbar__menu-button--zoom-out-text" aria-hidden="true">{{
                   "Zoom Out" | rpxTranslate
                 }}</span>
               </button>
@@ -258,9 +260,10 @@
                 class="mv-toolbar__menu-button--zoom-in button-image mv-tooltip"
                 (click)="stepZoom(0.1)"
                 [attr.data-tooltip]="'Zoom in' | rpxTranslate"
+                [attr.aria-label]="'Zoom in' | rpxTranslate"
                 data-l10n-id="zoom_in"
               >
-                <span class="mv-toolbar__menu-button--zoom-out-text">{{
+                <span class="mv-toolbar__menu-button--zoom-out-text" aria-hidden="true">{{
                   "Zoom In" | rpxTranslate
                 }}</span>
               </button>
@@ -398,8 +401,6 @@
             [disabled]="icpEnabled || redactionEnabled"
             id="mvPrintBtn"
             #mvPrintBtn
-            data-l10n-id="print"
-            aria-label="Print"
             [attr.data-tooltip]="'Print' | rpxTranslate"
             [attr.aria-label]="'Print' | rpxTranslate"
             data-l10n-id="print"
