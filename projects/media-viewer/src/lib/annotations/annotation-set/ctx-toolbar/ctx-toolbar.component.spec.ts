@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CtxToolbarComponent } from './ctx-toolbar.component';
-import { By } from '@angular/platform-browser';
 import { EventEmitter } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { RpxTranslationModule } from 'rpx-xui-translation';
+import { CtxToolbarComponent } from './ctx-toolbar.component';
 
 describe('CtxToolbarComponent', () => {
   let component: CtxToolbarComponent;

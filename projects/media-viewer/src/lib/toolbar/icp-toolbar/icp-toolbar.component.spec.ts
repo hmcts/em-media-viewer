@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
-import { reducers } from '../../store/reducers/reducers';
-import { IcpToolbarComponent } from './icp-toolbar.component';
-import { ToolbarEventService } from '../toolbar-event.service';
 import { BehaviorSubject } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
 import { RpxTranslationModule } from 'rpx-xui-translation';
+import { IcpToolbarComponent } from './icp-toolbar.component';
+import { reducers } from '../../store/reducers/reducers';
+import { ToolbarEventService } from '../toolbar-event.service';
 import { IcpEventService } from '../icp-event.service';
 
 describe('IcpToolbarComponent', () => {
