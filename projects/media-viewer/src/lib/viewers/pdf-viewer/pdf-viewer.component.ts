@@ -36,9 +36,10 @@ import { IcpService } from '../../icp/icp.service';
 import { IcpEventService } from '../../toolbar/icp-event.service';
 
 @Component({
-  selector: 'mv-pdf-viewer',
-  templateUrl: './pdf-viewer.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'mv-pdf-viewer',
+    templateUrl: './pdf-viewer.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 

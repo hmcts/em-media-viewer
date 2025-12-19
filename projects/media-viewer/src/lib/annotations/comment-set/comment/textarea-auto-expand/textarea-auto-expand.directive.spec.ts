@@ -5,12 +5,13 @@ import { By } from '@angular/platform-browser';
 import { TextareaAutoExpandDirective } from './textarea-auto-expand.directive';
 
 @Component({
-  template: `
+    template: `
       <form>
         <textarea mvTextAreaAutoExpand type="text" name="content">
         </textarea>
       </form>
-  `
+  `,
+    standalone: false
 })
 class TestHostComponent {
 }

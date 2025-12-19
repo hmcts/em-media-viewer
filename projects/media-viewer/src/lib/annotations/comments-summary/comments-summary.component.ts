@@ -11,8 +11,9 @@ import * as fromAnnoActions from '../../store/actions/annotation.actions';
 import * as fromTagSelectors from '../../store/selectors/tag.selectors';
 
 @Component({
-  selector: 'mv-comments-summary',
-  templateUrl: './comments-summary.component.html',
+    selector: 'mv-comments-summary',
+    templateUrl: './comments-summary.component.html',
+    standalone: false
 })
 export class CommentsSummaryComponent implements OnInit, OnDestroy {
 

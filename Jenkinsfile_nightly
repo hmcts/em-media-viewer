@@ -7,7 +7,7 @@ properties([
   projectUrlStr: 'https://github.com/hmcts/em-media-viewer/'
   ],
   pipelineTriggers([
-    cron('H 05 * * *')
+    cron('H 17 * * *')
   ]),
   parameters([
     string(name: 'ENVIRONMENT', defaultValue: 'aat', description: 'Environment to test'),
