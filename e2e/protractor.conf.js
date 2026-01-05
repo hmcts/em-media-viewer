@@ -59,7 +59,7 @@ function removePreviousDownloads() {
       }
   }
   catch(e) {
-    console.log(e);
+    console.log('protractor.conf', e);
     return e;
   }
 }

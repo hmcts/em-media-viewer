@@ -1,5 +1,12 @@
 <div id="modal-background" class="modal" (click)="onCancel()">
-  <div id="modal" class="modal-content govuk-width-container clearfix" (click)="$event.stopPropagation()">
+  <div id="modal" 
+    class="modal-content govuk-width-container clearfix"
+    (click)="$event.stopPropagation()"
+    #modalContainer
+    tabIndex="-1"
+    role="dialog"
+    aria-modal="true"
+  >
     <h2 class="govuk-heading-s">Are you sure you want to leave the presentation?</h2>
     <div class="button-container">
       <button id="modal-close-button" (click)="onConfirm()" class="govuk-button">Confirm</button>

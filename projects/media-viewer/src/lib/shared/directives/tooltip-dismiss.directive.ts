@@ -1,7 +1,8 @@
 import { Directive, ElementRef, HostListener } from "@angular/core";
 
 @Directive({
-  selector: '.mv-tooltip, [mvTooltipDismiss]'
+  selector: '.mv-tooltip, [mvTooltipDismiss]',
+  standalone: false
 })
 export class TooltipDismissDirective {
   constructor(private el: ElementRef) {}

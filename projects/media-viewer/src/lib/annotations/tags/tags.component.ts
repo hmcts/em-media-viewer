@@ -5,9 +5,10 @@ import {UntypedFormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'mv-tags',
-  templateUrl: './tags.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'mv-tags',
+    templateUrl: './tags.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class TagsComponent {
   @Input() tagItems: TagsModel[];

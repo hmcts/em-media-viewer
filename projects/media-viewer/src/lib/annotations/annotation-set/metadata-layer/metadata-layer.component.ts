@@ -16,8 +16,9 @@ import { Highlight, ViewerEventService } from '../../../viewers/viewer-event.ser
 import { CtxToolbarComponent } from '../ctx-toolbar/ctx-toolbar.component';
 
 @Component({
-  selector: 'mv-metadata-layer',
-  templateUrl: './metadata-layer.component.html'
+    selector: 'mv-metadata-layer',
+    templateUrl: './metadata-layer.component.html',
+    standalone: false
 })
 export class MetadataLayerComponent implements OnInit, OnDestroy {
 

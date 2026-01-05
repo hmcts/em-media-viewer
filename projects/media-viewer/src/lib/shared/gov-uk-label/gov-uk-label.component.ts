@@ -7,8 +7,8 @@ import {Component, Input} from '@angular/core';
 * @prop config - obj with properties
 * */
 @Component({
-  selector: 'mv-gov-label',
-  template: `<h1 *ngIf="config.isPageHeading else noHeading">
+    selector: 'mv-gov-label',
+    template: `<h1 *ngIf="config.isPageHeading else noHeading">
           <label *ngIf="config.label" [class]="config.classes + ' govuk-label'"
                  [for]="config.id" [innerHTML]="config.label">
           </label>
@@ -18,7 +18,8 @@ import {Component, Input} from '@angular/core';
                  [for]="config.id" [innerHTML]="config.label">
           </label>
         </ng-template>
-  `
+  `,
+    standalone: false
 })
 export class GovUkLabelComponent {
   constructor () { }

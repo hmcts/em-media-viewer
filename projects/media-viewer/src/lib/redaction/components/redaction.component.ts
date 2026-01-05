@@ -18,8 +18,9 @@ import { Redaction } from '../services/redaction.model';
 import { ToolbarEventService } from '../../toolbar/toolbar-event.service';
 
 @Component({
-  selector: 'mv-redactions',
-  templateUrl: './redaction.component.html'
+    selector: 'mv-redactions',
+    templateUrl: './redaction.component.html',
+    standalone: false
 })
 export class RedactionComponent implements OnInit, OnDestroy {
 

@@ -37,9 +37,10 @@ import { IcpEventService } from '../../toolbar/icp-event.service';
 import { HighlightCreateDirective } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.directive';
 
 @Component({
-  selector: 'mv-pdf-viewer',
-  templateUrl: './pdf-viewer.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'mv-pdf-viewer',
+    templateUrl: './pdf-viewer.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestroy {
 
