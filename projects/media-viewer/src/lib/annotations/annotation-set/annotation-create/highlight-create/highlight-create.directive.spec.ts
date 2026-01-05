@@ -1,9 +1,9 @@
 import { ElementRef } from '@angular/core';
+import { fakeAsync, tick } from '@angular/core/testing';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { HighlightCreateDirective } from './highlight-create.directive';
 import { SelectedAnnotation } from '../../../../store/actions/annotation.actions';
-import { BehaviorSubject, of, Subscription } from 'rxjs';
 import any = jasmine.any;
-import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('HighlightCreateDirective', () => {
 
