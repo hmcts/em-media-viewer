@@ -15,7 +15,8 @@ export interface CursorPosition {
 }
 
 @Directive({
-  selector: '[mvKeyboardTextHighlight]'
+  selector: '[mvKeyboardTextHighlight]',
+  standalone: false
 })
 export class KeyboardTextHighlightDirective implements OnDestroy {
 
