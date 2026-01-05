@@ -12,7 +12,8 @@ import {
 export type KeyboardNavOrientation = 'horizontal' | 'vertical';
 
 @Directive({
-  selector: '[mvKeyboardNav]'
+  selector: '[mvKeyboardNav]',
+  standalone: false
 })
 export class KeyboardNavDirective implements OnInit, OnDestroy {
   @Input('mvKeyboardNav') orientation: KeyboardNavOrientation = 'horizontal';
