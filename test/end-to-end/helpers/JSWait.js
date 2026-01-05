@@ -50,7 +50,7 @@ class JSWait extends codecept_helper {
     try {
       await helper.waitInUrl(url);
     } catch (e) {
-      console.log(e.message);
+      console.log('JSWait.js', e.message);
       return false;
     }
     return true;

@@ -19,8 +19,9 @@ import { ToolbarFocusService } from '../toolbar-focus.service';
 import { HtmlTemplatesHelper } from '../../shared/util/helpers/html-templates.helper';
 
 @Component({
-  selector: 'mv-main-toolbar',
-  templateUrl: './main-toolbar.component.html'
+    selector: 'mv-main-toolbar',
+    templateUrl: './main-toolbar.component.html',
+    standalone: false
 })
 export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 

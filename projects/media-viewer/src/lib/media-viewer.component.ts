@@ -54,10 +54,11 @@ enum ConvertibleContentTypes {
 }
 
 @Component({
-  selector: 'mv-media-viewer',
-  templateUrl: './media-viewer.component.html',
-  styleUrls: ['./media-viewer.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'mv-media-viewer',
+    templateUrl: './media-viewer.component.html',
+    styleUrls: ['./media-viewer.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentInit, AfterViewChecked {
 

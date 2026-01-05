@@ -8,9 +8,10 @@ import { Subscription } from 'rxjs';
 import * as fromRedactSelectors from '../../store/selectors/redaction.selectors';
 
 @Component({
-  selector: 'mv-highlight-toolbar',
-  templateUrl: './highlight-toolbar.component.html',
-  styleUrls: ['./highlight-toolbar.component.scss']
+    selector: 'mv-highlight-toolbar',
+    templateUrl: './highlight-toolbar.component.html',
+    styleUrls: ['./highlight-toolbar.component.scss'],
+    standalone: false
 })
 export class HighlightToolbarComponent implements OnInit, OnDestroy {
 

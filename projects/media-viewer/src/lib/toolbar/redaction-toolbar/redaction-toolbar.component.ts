@@ -9,8 +9,9 @@ import { ToolbarFocusService } from '../toolbar-focus.service';
 
 
 @Component({
-  selector: 'mv-redaction-toolbar',
-  templateUrl: './redaction-toolbar.component.html'
+    selector: 'mv-redaction-toolbar',
+    templateUrl: './redaction-toolbar.component.html',
+    standalone: false
 })
 export class RedactionToolbarComponent implements OnInit, OnDestroy {
 

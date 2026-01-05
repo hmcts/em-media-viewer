@@ -11,8 +11,9 @@ describe('CommentsNavigateComponent', () => {
 
   @Component({
     selector: `mv-host-component`,
-    template: `<mv-comments-navigate [annotationList]="annotationList"></mv-comments-navigate>`
-  })
+    template: `<mv-comments-navigate [annotationList]="annotationList"></mv-comments-navigate>`,
+    standalone: false
+})
   class TestHostComponent {
     annotationList = [];
 

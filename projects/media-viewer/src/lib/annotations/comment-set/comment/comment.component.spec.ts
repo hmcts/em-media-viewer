@@ -1,6 +1,6 @@
 import { RpxTranslationModule } from 'rpx-xui-translation';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, provideNgReflectAttributes } from '@angular/core';
 import { CommentComponent } from './comment.component';
 import { FormsModule } from '@angular/forms';
 import { CommentService } from './comment.service';
@@ -99,7 +99,8 @@ describe('CommentComponent', () => {
       providers: [
         CommentService,
         CommentService,
-        TagsServices
+        TagsServices,
+        provideNgReflectAttributes()
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA

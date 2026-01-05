@@ -17,8 +17,9 @@ import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'mv-bookmarks',
-  templateUrl: './bookmarks.component.html'
+    selector: 'mv-bookmarks',
+    templateUrl: './bookmarks.component.html',
+    standalone: false
 })
 
 export class BookmarksComponent implements OnInit, OnDestroy, OnChanges {
