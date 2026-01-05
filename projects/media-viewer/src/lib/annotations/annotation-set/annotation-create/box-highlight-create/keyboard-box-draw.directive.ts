@@ -14,7 +14,8 @@ export interface CursorPosition {
 }
 
 @Directive({
-  selector: '[mvKeyboardBoxDraw]'
+  selector: '[mvKeyboardBoxDraw]',
+  standalone: false
 })
 export class KeyboardBoxDrawDirective implements OnDestroy {
 

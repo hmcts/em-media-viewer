@@ -8,7 +8,8 @@ export interface BoxMovementBounds {
 }
 
 @Directive({
-  selector: '[mvKeyboardBoxMove]'
+  selector: '[mvKeyboardBoxMove]',
+  standalone: false
 })
 export class KeyboardBoxMoveDirective implements OnDestroy {
 
