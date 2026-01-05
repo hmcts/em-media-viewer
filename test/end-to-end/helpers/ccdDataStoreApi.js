@@ -12,7 +12,7 @@ let caseId;
 
 async function createCaseInCcd(dataLocation = 'ccd-case-basic-data.json') {
   const saveCaseResponse = await createECMCase(dataLocation).catch(error => {
-    console.log(error);
+    console.log('ccdDataStoreApi', error);
   });
   caseId = JSON.parse(saveCaseResponse).id;
   logger.info('CCD Case==>:: %s', caseId);

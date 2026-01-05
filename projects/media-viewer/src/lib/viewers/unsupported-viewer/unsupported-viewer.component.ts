@@ -5,8 +5,9 @@ import { ResponseType, ViewerException } from '../viewer-exception.model';
 import { ViewerUtilService } from '../viewer-util.service';
 
 @Component({
-  selector: 'mv-unsupported-viewer',
-  templateUrl: './unsupported-viewer.component.html'
+    selector: 'mv-unsupported-viewer',
+    templateUrl: './unsupported-viewer.component.html',
+    standalone: false
 })
 export class UnsupportedViewerComponent implements OnInit, OnDestroy {
 

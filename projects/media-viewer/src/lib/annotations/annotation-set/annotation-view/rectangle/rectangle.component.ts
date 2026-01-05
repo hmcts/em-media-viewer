@@ -17,8 +17,9 @@ import { HighlightCreateService } from '../../annotation-create/highlight-create
 import { BoxMovementBounds } from './keyboard-box-move.directive';
 
 @Component({
-  selector: 'mv-anno-rectangle',
-  templateUrl: './rectangle.component.html'
+    selector: 'mv-anno-rectangle',
+    templateUrl: './rectangle.component.html',
+    standalone: false
 })
 export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
 

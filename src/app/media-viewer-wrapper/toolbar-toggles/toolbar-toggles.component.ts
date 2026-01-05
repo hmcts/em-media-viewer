@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-toolbar-toggles',
-  templateUrl: './toolbar-toggles.component.html',
-  styleUrls: ['./toolbar-toggles.component.scss']
+    selector: 'app-toolbar-toggles',
+    templateUrl: './toolbar-toggles.component.html',
+    styleUrls: ['./toolbar-toggles.component.scss'],
+    standalone: false
 })
 export class ToolbarTogglesComponent {
 

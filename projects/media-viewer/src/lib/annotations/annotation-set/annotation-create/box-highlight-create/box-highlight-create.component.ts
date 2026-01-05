@@ -8,8 +8,9 @@ import { HtmlTemplatesHelper } from '../../../../shared/util/helpers/html-templa
 import { KeyboardBoxDrawEvent, CursorPosition } from './keyboard-box-draw.directive';
 
 @Component({
-  selector: 'mv-box-highlight-create',
-  templateUrl: './box-highlight-create.component.html',
+    selector: 'mv-box-highlight-create',
+    templateUrl: './box-highlight-create.component.html',
+    standalone: false
 })
 export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
 

@@ -12,6 +12,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { RouterModule } from '@angular/router';
 import { HighlightToolbarComponent } from './highlight-toolbar/highlight-toolbar.component';
 import { RpxTranslationModule } from 'rpx-xui-translation';
+import { TooltipDismissDirective } from '../shared/directives/tooltip-dismiss.directive';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { RpxTranslationModule } from 'rpx-xui-translation';
     RedactionToolbarComponent,
     IcpToolbarComponent,
     RedactionSearchBarComponent,
-    HighlightToolbarComponent
+    HighlightToolbarComponent,
+    TooltipDismissDirective
   ],
   providers: [
     ToolbarButtonVisibilityService
@@ -39,7 +41,7 @@ import { RpxTranslationModule } from 'rpx-xui-translation';
     FormsModule,
     OverlayModule,
     RouterModule,
-    RpxTranslationModule.forChild(),
+    RpxTranslationModule.forChild()
   ]
 })
 export class ToolbarModule { }

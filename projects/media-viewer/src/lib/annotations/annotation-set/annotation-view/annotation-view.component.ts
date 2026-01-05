@@ -12,8 +12,9 @@ import { Comment } from '../../comment-set/comment/comment.model';
 import { debounceTime, Subject } from 'rxjs';
 
 @Component({
-  selector: 'mv-annotation',
-  templateUrl: './annotation-view.component.html'
+    selector: 'mv-annotation',
+    templateUrl: './annotation-view.component.html',
+    standalone: false
 })
 export class AnnotationViewComponent implements OnDestroy {  // todo rename this to selection vew c
 

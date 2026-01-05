@@ -5,13 +5,14 @@ import * as fromStore from '../../../../store/reducers/reducers';
 import * as fromActions from '../../../../store/actions/annotation.actions';
 
 @Component({
-  selector: 'mv-comment-search',
-  templateUrl: './comment-search.component.html',
-  encapsulation: ViewEncapsulation.None
+    selector: 'mv-comment-search',
+    templateUrl: './comment-search.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class CommentSearchComponent implements AfterViewInit, OnDestroy {
 
-  @Input() public readonly annotations: Annotation[];
+  @Input() public annotations: Annotation[];
 
   @ViewChild('searchInput', {static: false}) searchInput: ElementRef<HTMLInputElement>;
 
