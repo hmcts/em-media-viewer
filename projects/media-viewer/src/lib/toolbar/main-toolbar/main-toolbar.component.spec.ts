@@ -303,17 +303,104 @@ describe('MainToolbarComponent', () => {
     describe('onEscapeKey', () => {
       it('should close dropdown menu and focus toolbar button when dropdown is open', () => {
         component.isDropdownMenuOpen = true;
-        const mockEvent = new KeyboardEvent('keydown', { key: 'Escape' });
-        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
-        const stopPropagationSpy = spyOn(mockEvent, 'stopPropagation');
+        const moreOptionsButton = nativeElement.querySelector('#mvMoreOptionsBtn') as HTMLButtonElement;
+        const mockEvent = {
+          target: moreOptionsButton,
+          preventDefault: jasmine.createSpy('preventDefault'),
+          stopPropagation: jasmine.createSpy('stopPropagation'),
+          composedPath: () => [moreOptionsButton]
+        } as unknown as KeyboardEvent;
         const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
 
         component.onEscapeKey(mockEvent);
 
-        expect(preventDefaultSpy).toHaveBeenCalled();
-        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(mockEvent.preventDefault).toHaveBeenCalled();
+        expect(mockEvent.stopPropagation).toHaveBeenCalled();
         expect(component.isDropdownMenuOpen).toBeFalse();
-        expect(focusSpy).toHaveBeenCalledWith('#mvMoreOptionsBtn');
+        expect(focusSpy).toHaveBeenCalledWith('#mvToolbarMain', 'mvMoreOptionsBtn', 50);
+      });
+
+      it('should close search bar and focus search button when escape pressed in search input', () => {
+        component.toolbarButtons.showSearchBar = true;
+        component.toolbarEvents.searchBarHidden.next(false);
+        fixture.detectChanges();
+        const searchInput = nativeElement.querySelector('mv-search-bar input') as HTMLInputElement;
+        const searchBar = nativeElement.querySelector('mv-search-bar') as HTMLElement;
+        const mockEvent = {
+          target: searchInput,
+          preventDefault: jasmine.createSpy('preventDefault'),
+          stopPropagation: jasmine.createSpy('stopPropagation'),
+          composedPath: () => [searchInput, searchBar]
+        } as unknown as KeyboardEvent;
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onEscapeKey(mockEvent);
+
+        expect(mockEvent.preventDefault).toHaveBeenCalled();
+        expect(mockEvent.stopPropagation).toHaveBeenCalled();
+        expect(component.toolbarEvents.searchBarHidden.getValue()).toBeTrue();
+        expect(focusSpy).toHaveBeenCalledWith('#mvToolbarMain', 'mvSearchBtn');
+      });
+
+      it('should close bookmarks sidebar and focus bookmarks button when within bookmarks sidebar', () => {
+        const sidebarRoot = document.createElement('div');
+        sidebarRoot.id = 'sidebarContainer';
+        const bookmarkContainer = document.createElement('div');
+        bookmarkContainer.id = 'bookmarkContainer';
+        const sidebarChild = document.createElement('div');
+        sidebarRoot.appendChild(sidebarChild);
+        sidebarRoot.appendChild(bookmarkContainer);
+        document.body.appendChild(sidebarRoot);
+        component.toolbarEvents.sidebarOpen.next(true);
+        component.isIndexOpen = true;
+        component.isBookmarksOpen = true;
+        const toggleSideBarSpy = spyOn(toolbarService, 'toggleSideBar');
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+        const mockEvent = {
+          target: sidebarChild,
+          preventDefault: jasmine.createSpy('preventDefault'),
+          stopPropagation: jasmine.createSpy('stopPropagation'),
+          composedPath: () => [sidebarChild, sidebarRoot]
+        } as unknown as KeyboardEvent;
+
+        component.onEscapeKey(mockEvent);
+
+        expect(mockEvent.preventDefault).toHaveBeenCalled();
+        expect(mockEvent.stopPropagation).toHaveBeenCalled();
+        expect(toggleSideBarSpy).toHaveBeenCalledWith(false);
+        expect(component.isIndexOpen).toBeFalse();
+        expect(component.isBookmarksOpen).toBeFalse();
+        expect(focusSpy).toHaveBeenCalledWith('#mvToolbarMain', 'mvBookmarksBtn', 50);
+        document.body.removeChild(sidebarRoot);
+      });
+
+      it('should close index sidebar and focus index button when within index sidebar', () => {
+        const sidebarRoot = document.createElement('div');
+        sidebarRoot.id = 'sidebarContainer';
+        const sidebarChild = document.createElement('div');
+        sidebarRoot.appendChild(sidebarChild);
+        document.body.appendChild(sidebarRoot);
+        component.toolbarEvents.sidebarOpen.next(true);
+        component.isIndexOpen = true;
+        component.isBookmarksOpen = true;
+        const toggleSideBarSpy = spyOn(toolbarService, 'toggleSideBar');
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+        const mockEvent = {
+          target: sidebarChild,
+          preventDefault: jasmine.createSpy('preventDefault'),
+          stopPropagation: jasmine.createSpy('stopPropagation'),
+          composedPath: () => [sidebarChild, sidebarRoot]
+        } as unknown as KeyboardEvent;
+
+        component.onEscapeKey(mockEvent);
+
+        expect(mockEvent.preventDefault).toHaveBeenCalled();
+        expect(mockEvent.stopPropagation).toHaveBeenCalled();
+        expect(toggleSideBarSpy).toHaveBeenCalledWith(false);
+        expect(component.isIndexOpen).toBeFalse();
+        expect(component.isBookmarksOpen).toBeFalse();
+        expect(focusSpy).toHaveBeenCalledWith('#mvToolbarMain', 'mvIndexBtn', 50);
+        document.body.removeChild(sidebarRoot);
       });
 
       it('should not close dropdown when it is not open', () => {
