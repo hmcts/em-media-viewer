@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../../store/reducers/reducers';
 import { RedactionToolbarComponent } from './redaction-toolbar.component';
 import { SearchType, ToolbarEventService } from '../toolbar-event.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 import { RedactionSearch } from '../redaction-search-bar/redaction-search.model';
 import { Subject } from 'rxjs';
 
@@ -13,6 +14,7 @@ describe('RedactionToolbarComponent', () => {
   let component: RedactionToolbarComponent;
   let fixture: ComponentFixture<RedactionToolbarComponent>;
   let toolbarEvents: ToolbarEventService;
+  let toolbarFocusService: ToolbarFocusService
   const redactAllInProgressSubject: Subject<RedactionSearch> = new Subject<RedactionSearch>();
 
   const toolbarEventsMock = {
@@ -43,7 +45,7 @@ describe('RedactionToolbarComponent', () => {
           testMode: true
         })
       ],
-      providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }]
+      providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }, ToolbarFocusService]
     })
       .compileComponents();
   });
@@ -52,6 +54,7 @@ describe('RedactionToolbarComponent', () => {
     fixture = TestBed.createComponent(RedactionToolbarComponent);
     component = fixture.componentInstance;
     toolbarEvents = TestBed.inject(ToolbarEventService);
+    toolbarFocusService = TestBed.inject(ToolbarFocusService);
     fixture.detectChanges();
   });
 
@@ -122,5 +125,59 @@ describe('RedactionToolbarComponent', () => {
     component.toggleRedactBar();
 
     expect(toggleRedactionModeSpy).toHaveBeenCalled();
+  });
+
+  describe('keyboard navigation', () => {
+    describe('onEscapeKey', () => {
+      it('should close toolbar and return focus to main toolbar on Escape key', () => {
+        const mockEvent = new KeyboardEvent('keydown', { key: 'Escape' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        const stopPropagationSpy = spyOn(mockEvent, 'stopPropagation');
+        const toggleSpy = spyOn(component, 'toggleRedactBar');
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onEscapeKey(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(toggleSpy).toHaveBeenCalled();
+        expect(focusSpy).toHaveBeenCalledWith('#mvRedactBtn');
+      });
+    });
+
+    describe('onArrowUp', () => {
+      it('should return focus to main toolbar when ArrowUp pressed inside redaction toolbar', () => {
+        const button = document.createElement('button');
+        button.className = 'test-button';
+        const toolbar = document.createElement('div');
+        toolbar.className = 'redaction';
+        toolbar.appendChild(button);
+        document.body.appendChild(toolbar);
+
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+        Object.defineProperty(mockEvent, 'target', { value: button, enumerable: true });
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onArrowUp(mockEvent);
+
+        expect(focusSpy).toHaveBeenCalledWith('#mvRedactBtn');
+        document.body.removeChild(toolbar);
+      });
+
+      it('should not return focus when target is not inside redaction toolbar', () => {
+        const button = document.createElement('button');
+        button.className = 'test-button';
+        document.body.appendChild(button);
+
+        const mockEvent = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+        Object.defineProperty(mockEvent, 'target', { value: button, enumerable: true });
+        const focusSpy = spyOn(toolbarFocusService, 'focusToolbarButton');
+
+        component.onArrowUp(mockEvent);
+
+        expect(focusSpy).not.toHaveBeenCalled();
+        document.body.removeChild(button);
+      });
+    });
   });
 });
