@@ -11,6 +11,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { NumberHelperService } from '../../../lib/shared/util/services/number.helper.service';
@@ -129,14 +130,111 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.printFile();
   }
 
-@HostListener('document:keydown.escape', ['$event'])
+  @HostListener('document:keydown.escape', ['$event'])
   public onEscapeKey(event: KeyboardEvent) {
-    if (this.isDropdownMenuOpen) {
+    const activeElement = document.activeElement as HTMLElement | null;
+    const targetElement = (event.target as HTMLElement | null) ?? activeElement;
+    const targetId = targetElement?.id || activeElement?.id;
+    const stopEvent = () => {
       event.preventDefault();
       event.stopPropagation();
+    };
+    const isInDropdown = this.isEventWithin(event, '.dropdown-menu');
+    const isInSearchBar = this.isEventWithin(event, 'mv-search-bar');
+    const isInSidebar = this.isEventWithin(event, '#sidebarContainer');
+
+    if (this.isDropdownMenuOpen && (isInDropdown || targetId === 'mvMoreOptionsBtn')) {
+      stopEvent();
       this.isDropdownMenuOpen = false;
-      this.toolbarFocusService.focusToolbarButton('#mvMoreOptionsBtn');
+      this.toolbarFocusService.focusToolbarButton('#mvToolbarMain', 'mvMoreOptionsBtn', 50);
+      return;
     }
+
+    if (isInSearchBar) {
+      stopEvent();
+      this.closeSearchBarAndFocus();
+      return;
+    }
+
+    if (isInSidebar && this.toolbarEvents.sidebarOpen.getValue()) {
+      const sidebarContainer = document.getElementById('sidebarContainer');
+      const hasBookmarksContainer = !!sidebarContainer?.querySelector('#bookmarkContainer');
+      stopEvent();
+      this.toolbarEvents.toggleSideBar(false);
+      this.isIndexOpen = false;
+      this.isBookmarksOpen = false;
+      this.toolbarFocusService.focusToolbarButton('#mvToolbarMain', hasBookmarksContainer ? 'mvBookmarksBtn' : 'mvIndexBtn', 50);
+      return;
+    }
+
+    let didClose = false;
+
+    switch (targetId) {
+      case 'mvSearchBtn':
+        if (!this.toolbarEvents.searchBarHidden.getValue()) {
+          this.closeSearchBarAndFocus();
+          didClose = true;
+        }
+        break;
+      case 'mvIndexBtn':
+        if (this.isIndexOpen) {
+          this.toolbarEvents.toggleSideBar(false);
+          this.isIndexOpen = false;
+          didClose = true;
+        }
+        break;
+      case 'mvBookmarksBtn':
+        if (this.isBookmarksOpen) {
+          this.toolbarEvents.toggleSideBar(false);
+          this.isBookmarksOpen = false;
+          didClose = true;
+        }
+        break;
+      case 'mvHighlightBtn':
+        if (this.isHighlightOpen) {
+          this.toolbarEvents.toggleHighlightToolbar();
+          didClose = true;
+        }
+        break;
+      case 'mvRedactBtn':
+        if (this.isRedactOpen) {
+          this.toggleRedactBar();
+          didClose = true;
+        }
+        break;
+      case 'mvCommentsBtn':
+      case 'commentSubPane0':
+        if (this.isCommentsOpen) {
+          this.toggleCommentsPanel();
+          didClose = true;
+        }
+        break;
+    }
+
+    if (didClose) {
+      stopEvent();
+    }
+  }
+
+  private closeSearchBarAndFocus(): void {
+    this.toolbarEvents.searchBarHidden
+      .pipe(
+        filter(hidden => hidden),
+        take(1)
+      )
+      .subscribe(() => {
+        this.toolbarFocusService.focusToolbarButton('#mvToolbarMain', 'mvSearchBtn');
+      });
+    this.toolbarEvents.searchBarHidden.next(true);
+  }
+
+  private isEventWithin(event: KeyboardEvent, selector: string): boolean {
+    const target = (event.target as Element | null) ?? (document.activeElement as Element | null);
+    if (target instanceof Element && target.closest(selector)) {
+      return true;
+    }
+    const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
+    return path.some(node => node instanceof Element && node.matches(selector));
   }
 
   public onMoreOptionsKeyDown(event: KeyboardEvent) {
