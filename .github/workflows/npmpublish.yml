@@ -70,31 +70,31 @@ jobs:
             npm publish --access public
           fi
 
-  publish-gpr:
-    if: startsWith(github.ref, 'refs/tags')
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      NPM_PUBLISH_REGISTRY: https://npm.pkg.github.com/
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          registry-url: https://npm.pkg.github.com/
-          scope: '@hmcts'
-      - run: yarn install
-      - run: yarn publish:dist
-      - name: Pack dist as npm tarball
-        id: pack
-        run: |
-          cd dist/media-viewer
-          TAR=$(npm pack)
-          echo "tarball=dist/media-viewer/$TAR" >> $GITHUB_OUTPUT
-      - name: Attach tarball to GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: ${{ steps.pack.outputs.tarball }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # publish-gpr:
+  #   if: startsWith(github.ref, 'refs/tags')
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     NPM_PUBLISH_REGISTRY: https://npm.pkg.github.com/
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version-file: '.nvmrc'
+  #         registry-url: https://npm.pkg.github.com/
+  #         scope: '@hmcts'
+  #     - run: yarn install
+  #     - run: yarn publish:dist
+  #     - name: Pack dist as npm tarball
+  #       id: pack
+  #       run: |
+  #         cd dist/media-viewer
+  #         TAR=$(npm pack)
+  #         echo "tarball=dist/media-viewer/$TAR" >> $GITHUB_OUTPUT
+  #     - name: Attach tarball to GitHub Release
+  #       uses: softprops/action-gh-release@v2
+  #       with:
+  #         files: ${{ steps.pack.outputs.tarball }}
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
