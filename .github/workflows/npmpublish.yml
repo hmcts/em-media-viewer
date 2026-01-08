@@ -53,6 +53,7 @@ jobs:
         run: |
           # Ensure we do NOT publish using token-based auth (classic/granular).
           unset NODE_AUTH_TOKEN
+          unset NPM_API_TOKEN
 
           # Use a fresh npm user config with no auth token to force OIDC Trusted Publishing.
           export NPM_CONFIG_USERCONFIG="$RUNNER_TEMP/npmrc-noauth"
