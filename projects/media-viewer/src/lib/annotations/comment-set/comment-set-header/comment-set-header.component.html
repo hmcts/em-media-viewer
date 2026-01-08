@@ -9,7 +9,8 @@
     </li>
     <li>
       <button id="mvCloseBtn" #mvCloseBtn class="mv-button commentSummaryHeader-button--close"
-        title="Close Comments" (click)="toggleCommentsPanel()" [hidden]="isHidden">
+        title="Close Comments" [attr.aria-label]="'Close Comments' | rpxTranslate"
+        (click)="toggleCommentsPanel()" [hidden]="isHidden">
       </button>
     </li>
   </ul>
@@ -29,6 +30,7 @@ C13.7,13.2,13.2,13.7,12.5,13.7z M12.5,0.5c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.
                 id="commentSummary" tabindex="0"
                 data-l10n-id="commentSummary"
                 title="Open collate summary"
+                [attr.aria-label]="'Open collate summary' | rpxTranslate"
                 (click)="toggleCommentsSummary()">Collate comments</button>
       </div>
       <ng-container *ngIf="navigationList?.length > 0">

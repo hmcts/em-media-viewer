@@ -17,12 +17,13 @@
             "
             [attr.aria-expanded]="isDropdownMenuOpen"
             [attr.data-tooltip]="'More options' | rpxTranslate"
+            [attr.aria-label]="'More options' | rpxTranslate"
             (click)="toggleMoreOptions()"
             cdkOverlayOrigin
             #trigger="cdkOverlayOrigin"
             [disabled]="redactAllInProgress"
           >
-            <span>{{ "More options" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "More options" | rpxTranslate }}</span>
           </button>
           <!-- This template displays the overlay content for the dropdown menu and is connected to the "More options" button -->
           <ng-template
@@ -44,6 +45,7 @@
             id="mvIndexBtn"
             data-l10n-id="index"
             [attr.data-tooltip]="'Index' | rpxTranslate"
+            [attr.aria-label]="'Index' | rpxTranslate"
             #mvIndexBtn
             class="mv-button mv-toolbar__menu-button--index mv-tooltip"
             [class.button-hidden-on-toolbar]="
@@ -56,7 +58,7 @@
             [disabled]="redactAllInProgress"
             (click)="toggleIndexSideBar(); isDropdownMenuOpen = false"
           >
-            <span>{{ "Index" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "Index" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -64,6 +66,7 @@
             id="mvBookmarksBtn"
             data-l10n-id="bookmarks"
             [attr.data-tooltip]="'Bookmarks' | rpxTranslate"
+            [attr.aria-label]="'Bookmarks' | rpxTranslate"
             #mvBookmarksBtn
             [ngClass]="{
               'mv-button mv-tooltip mv-toolbar__menu-button--bookmarks': true,
@@ -78,7 +81,7 @@
             [disabled]="redactAllInProgress"
             (click)="toggleBookmarksSideBar(); isDropdownMenuOpen = false"
           >
-            <span>{{ "Bookmarks" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "Bookmarks" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -88,6 +91,7 @@
             #mvDrawBtn
             class="mv-button mv-toolbar__menu-button--draw mv-tooltip"
             [attr.data-tooltip]="'Draw a box' | rpxTranslate"
+            [attr.aria-label]="'Draw a box' | rpxTranslate"
             [class.button-hidden-on-toolbar]="
               mvToolbarMain.offsetWidth < widthRequiredForBtn['mvDrawBtn']
             "
@@ -99,7 +103,7 @@
             data-l10n-id="toggleDrawButton"
             (click)="onClickDrawToggle(); isDropdownMenuOpen = false"
           >
-            <span data-l10n-id="draw_label">{{
+            <span data-l10n-id="draw_label" aria-hidden="true">{{
               "Draw a box" | rpxTranslate
             }}</span>
           </button>
@@ -111,6 +115,7 @@
             #mvHighlightBtn
             class="mv-button mv-toolbar__menu-button--highlight mv-tooltip"
             [attr.data-tooltip]="'Highlight' | rpxTranslate"
+            [attr.aria-label]="'Highlight' | rpxTranslate"
             [class.button-hidden-on-toolbar]="
               mvToolbarMain.offsetWidth < widthRequiredForBtn['mvHighlightBtn']
             "
@@ -122,7 +127,7 @@
             (click)="onClickHighlightToggle(); isDropdownMenuOpen = false"
             data-l10n-id="toggleHighlightButton"
           >
-            <span data-l10n-id="highlight_label">{{
+            <span data-l10n-id="highlight_label" aria-hidden="true">{{
               "Highlight" | rpxTranslate
             }}</span>
           </button>
@@ -208,10 +213,11 @@
                 id="mvMinusBtn"
                 class="mv-toolbar__menu-button--zoom-out button-image mv-tooltip"
                 [attr.data-tooltip]="'Zoom out' | rpxTranslate"
+                [attr.aria-label]="'Zoom out' | rpxTranslate"
                 data-l10n-id="zoom_out"
                 (click)="stepZoom(-0.1)"
               >
-                <span class="mv-toolbar__menu-button--zoom-out-text">{{
+                <span class="mv-toolbar__menu-button--zoom-out-text" aria-hidden="true">{{
                   "Zoom Out" | rpxTranslate
                 }}</span>
               </button>
@@ -254,9 +260,10 @@
                 class="mv-toolbar__menu-button--zoom-in button-image mv-tooltip"
                 (click)="stepZoom(0.1)"
                 [attr.data-tooltip]="'Zoom in' | rpxTranslate"
+                [attr.aria-label]="'Zoom in' | rpxTranslate"
                 data-l10n-id="zoom_in"
               >
-                <span class="mv-toolbar__menu-button--zoom-out-text">{{
+                <span class="mv-toolbar__menu-button--zoom-out-text" aria-hidden="true">{{
                   "Zoom In" | rpxTranslate
                 }}</span>
               </button>
@@ -306,6 +313,7 @@
             id="mvSearchBtn"
             #mvSearchBtn
             [attr.data-tooltip]="'Search' | rpxTranslate"
+            [attr.aria-label]="'Search' | rpxTranslate"
             data-l10n-id="searchbar"
             class="mv-button mv-toolbar__menu-button--search mv-tooltip"
             [class.button-hidden-on-toolbar]="
@@ -317,7 +325,7 @@
             aria-pressed="false"
             (click)="toggleSearchBar(); isDropdownMenuOpen = false"
           >
-            <span>{{ "Search" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "Search" | rpxTranslate }}</span>
           </button>
           <mv-search-bar
             *ngIf="!toolbarEvents.searchBarHidden.getValue()"
@@ -330,12 +338,13 @@
             #mvPresentBtn
             class="mv-button mv-toolbar__menu-button--present mv-tooltip"
             [attr.data-tooltip]="'In-Court presentation mode' | rpxTranslate"
+            [attr.aria-label]="'Present' | rpxTranslate"
             data-l10n-id="icpMode_label"
             [ngClass]="onToolBarOffSetChange('mvPresentBtn')"
             aria-pressed="false"
             (click)="togglePresentBar(); isDropdownMenuOpen = false"
           >
-            <span data-l10n-id="icpMode_label">{{
+            <span data-l10n-id="icpMode_label" aria-hidden="true">{{
               "Present" | rpxTranslate
             }}</span>
           </button>
@@ -346,13 +355,14 @@
             id="mvRedactBtn"
             #mvRedactBtn
             [attr.data-tooltip]="'Redact' | rpxTranslate"
+            [attr.aria-label]="'Redact' | rpxTranslate"
             data-l10n-id="redact"
             class="mv-button mv-toolbar__menu-button--redact mv-tooltip"
             [ngClass]="onToolBarOffSetChange('mvRedactBtn')"
             [attr.aria-expanded]="isRedactOpen"
             (click)="toggleRedactBar(); isDropdownMenuOpen = false"
           >
-            <span>{{ "Redact" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "Redact" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -362,11 +372,12 @@
             #mvGrabBtn
             class="mv-button mv-toolbar__menu-button--grab mv-tooltip"
             data-tooltip="Grab and drag"
+            [attr.aria-label]="'Grab and drag' | rpxTranslate"
             [ngClass]="onToolBarOffSetChange('mvGrabBtn')"
             aria-pressed="false"
             (click)="toggleGrabNDrag(); isDropdownMenuOpen = false"
           >
-            <span>{{ "Grab and drag" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "Grab and drag" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -376,12 +387,13 @@
             #mvDownloadBtn
             class="mv-button mv-toolbar__menu-button--download mv-tooltip"
             [attr.data-tooltip]="'Download' | rpxTranslate"
+            [attr.aria-label]="'Download' | rpxTranslate"
             data-l10n-id="download"
             [ngClass]="onToolBarOffSetChange('mvDownloadBtn')"
             aria-pressed="false"
             (click)="downloadFile(); isDropdownMenuOpen = false"
           >
-            <span>{{ "Download" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "Download" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -389,16 +401,15 @@
             [disabled]="icpEnabled || redactionEnabled"
             id="mvPrintBtn"
             #mvPrintBtn
-            data-l10n-id="print"
-            aria-label="Print"
             [attr.data-tooltip]="'Print' | rpxTranslate"
+            [attr.aria-label]="'Print' | rpxTranslate"
             data-l10n-id="print"
             class="mv-button mv-toolbar__menu-button--print mv-tooltip"
             [ngClass]="onToolBarOffSetChange('mvPrintBtn')"
             aria-pressed="false"
             (click)="printFile(); isDropdownMenuOpen = false"
           >
-            <span>{{ "Print" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "Print" | rpxTranslate }}</span>
           </button>
 
           <button
@@ -408,12 +419,13 @@
             #mvCommentsBtn
             class="mv-button mv-toolbar__menu-button--comments mv-tooltip"
             [attr.data-tooltip]="'Comments' | rpxTranslate"
+            [attr.aria-label]="'Comments' | rpxTranslate"
             data-l10n-id="comments"
             [ngClass]="onToolBarOffSetChange('mvCommentsBtn')"
             [attr.aria-expanded]="isCommentsOpen"
             (click)="toggleCommentsPanel(); isDropdownMenuOpen = false"
           >
-            <span>{{ "Comments" | rpxTranslate }}</span>
+            <span aria-hidden="true">{{ "Comments" | rpxTranslate }}</span>
           </button>
         </ng-template>
       </div>

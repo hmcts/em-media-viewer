@@ -5,9 +5,11 @@
   <a [routerLink]="[]"
      class="comment-search__item"
      title="Previous comment"
+     [attr.aria-label]="'Previous comment' | rpxTranslate"
      (click)="prevItem()">Prev</a>
   <a [routerLink]="[]"
      class="comment-search__item"
      title="Next comment'"
+     [attr.aria-label]="'Next comment' | rpxTranslate"
      (click)="nextItem()">Next</a>
 </p>
