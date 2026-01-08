@@ -61,7 +61,13 @@ jobs:
           npm config delete //registry.npmjs.org/:_authToken || true
           npm config delete _authToken || true
 
-          npm publish --access public
+          TAG="${GITHUB_REF_NAME#v}"
+          if [[ "$TAG" == *"-"* ]]; then
+            DIST_TAG="${TAG#*-}"
+            npm publish --access public --tag "$DIST_TAG"
+          else
+            npm publish --access public
+          fi
 
   publish-gpr:
     if: startsWith(github.ref, 'refs/tags')
