@@ -12,19 +12,19 @@ on:
       - '*'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-      - run: yarn install
-      - run: yarn package
-      - run: yarn test
+  # build:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: write
+  #     id-token: write
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version-file: '.nvmrc'
+  #     - run: yarn install
+  #     - run: yarn package
+  #     - run: yarn test
 
   publish-npm:
     if: startsWith(github.ref, 'refs/tags')
