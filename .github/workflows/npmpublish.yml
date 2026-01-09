@@ -53,6 +53,7 @@ jobs:
           fi
 
       - name: Publish version (OIDC via npm)
+        working-directory: dist/media-viewer
         run: |
           # Ensure we do NOT publish using token-based auth (classic/granular).
           unset NODE_AUTH_TOKEN
