@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.4-exui-3994-c",
+  "version": "4.2.4-exui-3994-d",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
@@ -11,7 +11,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hmcts/media-viewer"
+    "url": "https://github.com/hmcts/em-media-viewer"
   },
   "publishConfig": {
     "access": "public"
