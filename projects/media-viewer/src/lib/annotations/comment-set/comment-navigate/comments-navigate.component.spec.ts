@@ -1,10 +1,11 @@
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { CommentsNavigateComponent } from './comments-navigate.component';
-import { FormsModule } from '@angular/forms';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import {reducers} from '../../../store/reducers/reducers';
-import {RouterTestingModule} from '@angular/router/testing';
+import { RpxTranslationModule } from 'rpx-xui-translation';
+import { CommentsNavigateComponent } from './comments-navigate.component';
+import { reducers } from '../../../store/reducers/reducers';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 
 describe('CommentsNavigateComponent', () => {
@@ -36,7 +37,15 @@ describe('CommentsNavigateComponent', () => {
         FormsModule,
         StoreModule.forFeature('media-viewer', reducers),
         StoreModule.forRoot({}),
-        RouterTestingModule
+        RouterTestingModule,
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       declarations: [CommentsNavigateComponent, TestHostComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
