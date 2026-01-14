@@ -1,5 +1,5 @@
-<div #container [tabindex]="anno.id">
-  <mv-ctx-toolbar *ngIf="selected"
+<div #container [tabindex]="-1">
+  <mv-ctx-toolbar *ngIf="selected && showToolbar"
                   [canDelete]="true" [canComment]="true"
                   [rectangles]="anno.rectangles"
                   [zoom]="zoom"
@@ -9,10 +9,12 @@
                   (deleteHighlightEvent)="deleteHighlight()"
                   (addOrEditCommentEvent)="addOrEditComment()">
   </mv-ctx-toolbar>
-  <ng-container *ngFor="let rectangle of anno.rectangles">
+  <ng-container *ngFor="let rectangle of anno.rectangles; let i = index">
     <mv-anno-rectangle
       (selectEvent)="onSelect()"
       (updateEvent)="onRectangleUpdate($event)"
+      (keyboardMovingChange)="onKeyboardMovingChange($event)"
+      (deleteEvent)="deleteHighlight()"
       [selected]="selected"
       [zoom]="zoom"
       [rotate]="rotate"
@@ -20,6 +22,7 @@
       [pageWidth]="pageWidth"
       [editable]="anno.rectangles.length <= 1"
       [annoRect]="rectangle"
+      [rectangleTabIndex]="i + 1"
       [color]="anno.color">
     </mv-anno-rectangle>
   </ng-container>
