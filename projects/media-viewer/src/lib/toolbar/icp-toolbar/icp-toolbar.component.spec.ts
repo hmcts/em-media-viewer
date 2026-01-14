@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
-import { reducers } from '../../store/reducers/reducers';
-import { IcpToolbarComponent } from './icp-toolbar.component';
-import { ToolbarEventService } from '../toolbar-event.service';
 import { BehaviorSubject } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
+import { RpxTranslationModule } from 'rpx-xui-translation';
+import { IcpToolbarComponent } from './icp-toolbar.component';
+import { reducers } from '../../store/reducers/reducers';
+import { ToolbarEventService } from '../toolbar-event.service';
 import { IcpEventService } from '../icp-event.service';
 
 describe('IcpToolbarComponent', () => {
@@ -26,7 +27,15 @@ describe('IcpToolbarComponent', () => {
       declarations: [IcpToolbarComponent],
       imports: [
         StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({})
+        StoreModule.forRoot({}),
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
       ],
       providers: [{ provide: ToolbarEventService, useValue: toolbarEventsMock }, { provide: IcpEventService, useValue: icpEventServiceMock }]
     })
