@@ -2,32 +2,40 @@
      [style.top.px]="top"
      [style.left.px]="left">
   <button *ngIf="canHighlight"
-          type="button" title="Highlight"
+          type="button"
+          title="Highlight"
+          [attr.aria-label]="'Highlight' | rpxTranslate"
           class="aui__toolbar-button aui__toolbar-button--comments contextual-btn leftButton aui__toolbar-button-highlight"
           (mousedown)="createHighlight()"
           (keydown.enter)="createHighlight()">
-    <span>Highlight</span>
+    <span aria-hidden="true">Highlight</span>
   </button>
   <button *ngIf="canDelete"
-          type="button" title="Delete"
+          type="button"
+          title="Delete"
+          [attr.aria-label]="'Delete' | rpxTranslate"
           class="aui__toolbar-button aui__toolbar-button--comments contextual-btn leftButton"
           (mousedown)="deleteHighlight()"
           (keydown.enter)="deleteHighlight()">
-    <span>Remove</span>
+    <span aria-hidden="true">Remove</span>
   </button>
   <button *ngIf="canComment"
-          type="button" title="Comment"
+          type="button"
+          title="Comment"
+          [attr.aria-label]="'Comment' | rpxTranslate"
           class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton aui__toolbar-button-comment"
           (mousedown)="addOrEditComment()"
           (keydown.enter)="addOrEditComment()">
-    <span>Comment</span></button>
+    <span aria-hidden="true">Comment</span></button>
   <button *ngIf="canBookmark"
-          type="button" title="Bookmark"
+          type="button"
+          title="Bookmark"
+          [attr.aria-label]="'Bookmark' | rpxTranslate"
           class="aui__toolbar-button aui__toolbar-button--comments contextual-btn rightButton aui__toolbar-button-bookmark"
           id="bookmarkButton"
           (mousedown)="createBookmark()"
           (keydown.enter)="createBookmark()">
-    <span>Bookmark</span></button>
+    <span aria-hidden="true">Bookmark</span></button>
   <div class="arrow-down">
     <div class="inner-triangle"></div>
   </div>

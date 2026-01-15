@@ -318,4 +318,38 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
       this.showSelectionEndCursor = false;
     }
   }
+  
+  onViewerContainerFocusIn(event: FocusEvent): void {
+    const elementFrom = event.relatedTarget as HTMLElement;
+    const elementTo = event.target as HTMLElement;
+
+    const comingFromSidebar = !!(
+      elementFrom?.closest('#sidebarContainer') || 
+      elementFrom?.closest('#sidebarContent')
+    );
+    const goingToViewer = !!elementTo?.closest('#viewerContainer');
+
+    if (!comingFromSidebar || !goingToViewer) {
+      return;
+    }
+
+    const isTextLayer = elementTo?.classList.contains('textLayer');
+
+    if (isTextLayer) {
+      const focusedPageElement = elementTo.closest('[data-page-number]');
+      const focusedPageNumber = focusedPageElement ? parseInt(focusedPageElement.getAttribute('data-page-number')) : null;
+      const currentPage = this.getCurrentPageNumber();
+
+      if (focusedPageNumber !== null && focusedPageNumber !== currentPage) {
+        const currentPageElement = this.viewerContainer.nativeElement.querySelector(`[data-page-number='${currentPage}']`);
+
+        if (currentPageElement) {
+          const currentPageTextLayer = currentPageElement.querySelector('.textLayer') as HTMLElement;
+          if (currentPageTextLayer) {
+            currentPageTextLayer.focus();
+          }
+        }
+      }
+    }
+  }
 }
