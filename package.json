@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.2-angular-CVE",
+  "version": "4.2.6-angular-CVE",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

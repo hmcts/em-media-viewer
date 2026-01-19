@@ -5,6 +5,7 @@ import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FormsModule } from '@angular/forms';
 import { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
+import { ToolbarFocusService } from './toolbar-focus.service';
 import { RedactionToolbarComponent } from './redaction-toolbar/redaction-toolbar.component';
 import { IcpToolbarComponent } from './icp-toolbar/icp-toolbar.component';
 export { ToolbarButtonVisibilityService } from './toolbar-button-visibility.service';
@@ -13,6 +14,7 @@ import { RouterModule } from '@angular/router';
 import { HighlightToolbarComponent } from './highlight-toolbar/highlight-toolbar.component';
 import { RpxTranslationModule } from 'rpx-xui-translation';
 import { TooltipDismissDirective } from '../shared/directives/tooltip-dismiss.directive';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { TooltipDismissDirective } from '../shared/directives/tooltip-dismiss.di
     TooltipDismissDirective
   ],
   providers: [
-    ToolbarButtonVisibilityService
+    ToolbarButtonVisibilityService,
+    ToolbarFocusService
   ],
   exports: [
     MainToolbarComponent,
@@ -41,7 +44,8 @@ import { TooltipDismissDirective } from '../shared/directives/tooltip-dismiss.di
     FormsModule,
     OverlayModule,
     RouterModule,
-    RpxTranslationModule.forChild()
+    RpxTranslationModule.forChild(),
+    SharedModule
   ]
 })
 export class ToolbarModule { }
