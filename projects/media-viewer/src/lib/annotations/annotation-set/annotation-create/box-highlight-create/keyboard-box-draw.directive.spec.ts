@@ -23,10 +23,14 @@ describe('KeyboardBoxDrawDirective', () => {
 
     mockElementRef = new ElementRef(mockElement);
     directive = new KeyboardBoxDrawDirective(mockElementRef);
+    (KeyboardBoxDrawDirective as any).lastInteractionWasKeyboard = false;
   });
 
   afterEach(() => {
     directive.ngOnDestroy();
+    if (mockElement.parentElement) {
+      mockElement.parentElement.removeChild(mockElement);
+    }
   });
 
   it('should create', () => {
@@ -368,6 +372,41 @@ describe('KeyboardBoxDrawDirective', () => {
       directive.onKeyDown(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
       expect(cursorEmitted).toBe(false);
     });
+
+    it('should reset when disabled after being enabled', (done) => {
+      directive.enabled = true;
+      let emitCount = 0;
+
+      directive.cursorPositionChanged.subscribe((pos: CursorPosition) => {
+        emitCount++;
+        if (emitCount === 2) {
+          expect(pos.visible).toBe(false);
+          expect(pos.x).toBeUndefined();
+          expect(pos.y).toBeUndefined();
+          done();
+        }
+      });
+
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+      directive.enabled = false;
+    });
+
+    it('should initialize cursor when enabling after keyboard interaction and element is focused', (done) => {
+      (KeyboardBoxDrawDirective as any).lastInteractionWasKeyboard = true;
+      mockElement.tabIndex = 0;
+      document.body.appendChild(mockElement);
+      mockElement.focus();
+
+      directive.cursorPositionChanged.subscribe((pos: CursorPosition) => {
+        if (pos.visible) {
+          expect(pos.x).toBe(400);
+          expect(pos.y).toBe(300);
+          done();
+        }
+      });
+
+      directive.enabled = true;
+    });
   });
 
   describe('reset', () => {
@@ -387,6 +426,70 @@ describe('KeyboardBoxDrawDirective', () => {
 
       directive.onKeyDown(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
       directive.reset();
+    });
+  });
+
+  describe('focus handling', () => {
+    it('should show cursor on focus when last interaction was keyboard', (done) => {
+      directive.enabled = true;
+      (KeyboardBoxDrawDirective as any).lastInteractionWasKeyboard = true;
+
+      directive.cursorPositionChanged.subscribe((pos: CursorPosition) => {
+        if (pos.visible) {
+          expect(pos.x).toBe(400);
+          expect(pos.y).toBe(300);
+          done();
+        }
+      });
+
+      directive.onFocus();
+    });
+
+    it('should ignore focus when last interaction was not keyboard', () => {
+      directive.enabled = true;
+      (KeyboardBoxDrawDirective as any).lastInteractionWasKeyboard = false;
+      const emitSpy = spyOn(directive.cursorPositionChanged, 'emit');
+
+      directive.onFocus();
+
+      expect(emitSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('tab handling', () => {
+    it('should cancel drawing when tab is pressed while drawing', () => {
+      directive.enabled = true;
+      let cancelled = false;
+      directive.drawingCancelled.subscribe(() => {
+        cancelled = true;
+      });
+
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'Enter' }));
+      const tabEvent = {
+        key: 'Tab',
+        preventDefault: jasmine.createSpy('preventDefault'),
+        stopPropagation: jasmine.createSpy('stopPropagation')
+      } as unknown as KeyboardEvent;
+
+      directive.onKeyDown(tabEvent);
+
+      expect(cancelled).toBe(true);
+      expect(tabEvent.preventDefault).not.toHaveBeenCalled();
+      expect(tabEvent.stopPropagation).not.toHaveBeenCalled();
+    });
+
+    it('should ignore modifier keys without preventing default', () => {
+      directive.enabled = true;
+      const event = {
+        key: 'Shift',
+        preventDefault: jasmine.createSpy('preventDefault'),
+        stopPropagation: jasmine.createSpy('stopPropagation')
+      } as unknown as KeyboardEvent;
+
+      directive.onKeyDown(event);
+
+      expect(event.preventDefault).not.toHaveBeenCalled();
+      expect(event.stopPropagation).not.toHaveBeenCalled();
     });
   });
 });

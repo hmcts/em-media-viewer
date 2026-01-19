@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { ComponentFixture, inject, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 
 import { Rectangle } from '../annotation-view/rectangle/rectangle.model';
@@ -215,6 +215,145 @@ describe('AnnotationViewComponent', () => {
       fixture.detectChanges();
 
       expect(component.selected).toBeUndefined();
+    });
+  });
+
+  describe('keyboard toolbar navigation', () => {
+    it('should hide toolbar when keyboard movement starts', fakeAsync(() => {
+      component.selected = true;
+      component.showToolbar = true;
+
+      component.onKeyboardMovingChange(true);
+      tick();
+
+      expect(component.showToolbar).toBeFalse();
+    }));
+
+    it('should show toolbar when keyboard movement stops and annotation is selected', fakeAsync(() => {
+      component.selected = true;
+      component.showToolbar = false;
+
+      component.onKeyboardMovingChange(false);
+      tick();
+
+      expect(component.showToolbar).toBeTrue();
+    }));
+
+    it('should focus first toolbar button and capture next target on tab', () => {
+      const toolbar = document.createElement('mv-ctx-toolbar');
+      const toolbarButton = document.createElement('button');
+      toolbar.appendChild(toolbarButton);
+      document.body.appendChild(toolbar);
+      component.ctxToolbar = new ElementRef(toolbar);
+
+      const rectangle = document.createElement('div');
+      rectangle.tabIndex = 1;
+      Object.defineProperty(rectangle, 'getClientRects', { value: () => [1] });
+      document.body.appendChild(rectangle);
+
+      const nextTarget = document.createElement('button');
+      nextTarget.tabIndex = 2;
+      Object.defineProperty(nextTarget, 'getClientRects', { value: () => [1] });
+      document.body.appendChild(nextTarget);
+
+      const zeroTarget = document.createElement('button');
+      zeroTarget.tabIndex = 0;
+      Object.defineProperty(zeroTarget, 'getClientRects', { value: () => [1] });
+      document.body.appendChild(zeroTarget);
+
+      const event = {
+        key: 'Tab',
+        shiftKey: false,
+        target: rectangle,
+        preventDefault: jasmine.createSpy('preventDefault'),
+        stopPropagation: jasmine.createSpy('stopPropagation')
+      } as unknown as KeyboardEvent;
+
+      component.onTabToToolbar(event);
+
+      expect(event.preventDefault).toHaveBeenCalled();
+      expect(event.stopPropagation).toHaveBeenCalled();
+      expect(document.activeElement).toBe(toolbarButton);
+      expect((component as any).nextTabTarget).toBe(nextTarget);
+
+      document.body.removeChild(toolbar);
+      document.body.removeChild(rectangle);
+      document.body.removeChild(nextTarget);
+      document.body.removeChild(zeroTarget);
+    });
+
+    it('should return focus to rectangle when shift+tab from first toolbar button', () => {
+      const toolbar = document.createElement('mv-ctx-toolbar');
+      const firstButton = document.createElement('button');
+      const secondButton = document.createElement('button');
+      toolbar.appendChild(firstButton);
+      toolbar.appendChild(secondButton);
+      document.body.appendChild(toolbar);
+      component.ctxToolbar = new ElementRef(toolbar);
+
+      const rectangle = document.createElement('div');
+      rectangle.tabIndex = 0;
+      document.body.appendChild(rectangle);
+      (component as any).lastFocusedRectangle = rectangle;
+
+      const event = {
+        key: 'Tab',
+        shiftKey: true,
+        target: firstButton,
+        preventDefault: jasmine.createSpy('preventDefault'),
+        stopPropagation: jasmine.createSpy('stopPropagation')
+      } as unknown as KeyboardEvent;
+
+      component.onToolbarKeydown(event);
+
+      expect(event.preventDefault).toHaveBeenCalled();
+      expect(event.stopPropagation).toHaveBeenCalled();
+      expect(document.activeElement).toBe(rectangle);
+
+      document.body.removeChild(toolbar);
+      document.body.removeChild(rectangle);
+    });
+
+    it('should focus next tab target when tabbing from last toolbar button', () => {
+      const toolbar = document.createElement('mv-ctx-toolbar');
+      const firstButton = document.createElement('button');
+      const lastButton = document.createElement('button');
+      toolbar.appendChild(firstButton);
+      toolbar.appendChild(lastButton);
+      document.body.appendChild(toolbar);
+      component.ctxToolbar = new ElementRef(toolbar);
+
+      const nextTarget = document.createElement('button');
+      nextTarget.tabIndex = 0;
+      document.body.appendChild(nextTarget);
+      (component as any).nextTabTarget = nextTarget;
+
+      const event = {
+        key: 'Tab',
+        shiftKey: false,
+        target: lastButton,
+        preventDefault: jasmine.createSpy('preventDefault'),
+        stopPropagation: jasmine.createSpy('stopPropagation')
+      } as unknown as KeyboardEvent;
+
+      component.onToolbarKeydown(event);
+
+      expect(event.preventDefault).toHaveBeenCalled();
+      expect(event.stopPropagation).toHaveBeenCalled();
+      expect(document.activeElement).toBe(nextTarget);
+      expect((component as any).nextTabTarget).toBeNull();
+
+      document.body.removeChild(toolbar);
+      document.body.removeChild(nextTarget);
+    });
+
+    it('should return null when next tab target cannot be resolved', () => {
+      const element = document.createElement('div');
+      Object.defineProperty(element, 'getClientRects', { value: () => [1] });
+
+      const result = (component as any).getNextTabTarget(element);
+
+      expect(result).toBeNull();
     });
   });
 });
