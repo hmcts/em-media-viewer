@@ -23,8 +23,15 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
     const wasEnabled = this._enabled;
     this._enabled = value;
 
+    if (!value && wasEnabled) {
+      this.reset();
+      return;
+    }
+
     if (value && !wasEnabled && KeyboardBoxDrawDirective.lastInteractionWasKeyboard && !this.showCursor) {
-      this.initializeCursorForKeyboard();
+      if (typeof document !== 'undefined' && this.elementRef.nativeElement === document.activeElement) {
+        this.initializeCursorForKeyboard();
+      }
     }
   }
   get enabled(): boolean {
@@ -90,6 +97,22 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
       return;
     }
 
+    if (event.key === 'Tab') {
+      if (this.isDrawing) {
+        this.cancelDrawing();
+      } else {
+        if (this.showCursor) {
+          this.hideCursor();
+        }
+        this.drawingCancelled.emit();
+      }
+      return;
+    }
+
+    if (['Shift', 'Alt', 'Control'].includes(event.key)) {
+      return;
+    }
+
     if (event.key === 'Enter') {
       event.preventDefault();
       event.stopPropagation();
@@ -108,8 +131,11 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
 
       if (this.isDrawing) {
         this.cancelDrawing();
-      } else if (this.showCursor) {
-        this.hideCursor();
+      } else {
+        if (this.showCursor) {
+          this.hideCursor();
+        }
+        this.drawingCancelled.emit();
       }
       return;
     }
@@ -123,7 +149,11 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
       } else {
         this.moveCursor(event);
       }
+      return;
     }
+
+    event.preventDefault();
+    event.stopPropagation();
   }
 
   @HostListener('blur')
@@ -131,6 +161,15 @@ export class KeyboardBoxDrawDirective implements OnDestroy {
     if (this.showCursor && !this.isDrawing) {
       this.hideCursor();
     }
+  }
+
+  @HostListener('focus')
+  onFocus(): void {
+    if (!this.enabled || !KeyboardBoxDrawDirective.lastInteractionWasKeyboard) {
+      return;
+    }
+
+    this.initializeCursorForKeyboard();
   }
 
   private moveCursor(event: KeyboardEvent): void {

@@ -35,6 +35,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Output() updateEvent = new EventEmitter<Rectangle>();
   @Output() deleteEvent = new EventEmitter<Rectangle>();
   @Output() keyboardMovingChange = new EventEmitter<boolean>();
+  @Output() tabToToolbar = new EventEmitter<KeyboardEvent>();
 
   @ViewChild('rectElement', {static: false}) viewRect: ElementRef;
 
@@ -168,5 +169,13 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (this._selected) {
       this.deleteEvent.emit(this.annoRect);
     }
+  }
+
+  onTab(event: KeyboardEvent): void {
+    if (!this._selected) {
+      return;
+    }
+
+    this.tabToToolbar.emit(event);
   }
 }

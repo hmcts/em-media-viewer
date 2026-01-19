@@ -1,9 +1,9 @@
 <div #drawingContainer
   [style.height]="defaultHeight"
   [style.width]="defaultWidth"
-  [tabindex]="drawMode ? 0 : -1"
+  [tabindex]="drawMode && isCurrentPage ? 0 : -1"
   mvKeyboardBoxDraw
-  [enabled]="drawMode"
+  [enabled]="drawMode && isCurrentPage"
   (cursorPositionChanged)="onCursorPositionChanged($event)"
   (drawingStarted)="onDrawingStarted($event)"
   (drawingUpdated)="onDrawingUpdated($event)"

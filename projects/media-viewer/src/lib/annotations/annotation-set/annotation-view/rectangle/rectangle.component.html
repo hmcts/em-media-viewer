@@ -16,6 +16,7 @@
        [movementBounds]="movementBounds"
        (click)="onClick()"
        (focus)="onFocus()"
+       (keydown.tab)="onTab($event)"
        (stopped)="onUpdate(rectElement)"
        (keyboardMovingChange)="onKeyboardMovingChange($event)"
        (boxDelete)="onDelete()">
@@ -35,6 +36,7 @@
        [enabled]="false"
        (click)="onClick()"
        (focus)="onFocus()"
+       (keydown.tab)="onTab($event)"
        (boxDelete)="onDelete()">
   </div>
 </ng-template>

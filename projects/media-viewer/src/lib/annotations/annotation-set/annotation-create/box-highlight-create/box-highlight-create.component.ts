@@ -41,6 +41,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   defaultHeight: string;
   defaultWidth: string;
   wholePage: boolean;
+  isCurrentPage = false;
 
   keyboardDrawingMode = false;
   cursorX: number;
@@ -58,16 +59,18 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
         this.defaultHeight = drawMode ? '100%' : '0px';
         this.defaultWidth = drawMode ? '100%' : '0px';
         this.drawMode = drawMode;
-        if (drawMode) {
-          setTimeout(() => {
-            if (this.drawingContainer?.nativeElement && this.isElementInViewport(this.drawingContainer.nativeElement)) {
-              this.drawingContainer.nativeElement.focus();
-            }
-          }, 100);
+        if (drawMode && this.isCurrentPage) {
+          this.focusDrawingContainer();
         }
       }),
       this.toolbarEvents.redactWholePage.subscribe(() => {
         this.wholePage = true;
+      }),
+      this.toolbarEvents.setCurrentPageInputValueSubject.subscribe(pageNumber => {
+        this.isCurrentPage = this.page === pageNumber;
+        if (this.drawMode && this.isCurrentPage) {
+          this.focusDrawingContainer();
+        }
       })
     ];
   }
@@ -87,6 +90,14 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
     const horizontallyVisible = rect.right > 0 && rect.left < windowWidth;
 
     return verticallyVisible && horizontallyVisible;
+  }
+
+  private focusDrawingContainer(): void {
+    setTimeout(() => {
+      if (this.drawingContainer?.nativeElement && this.isElementInViewport(this.drawingContainer.nativeElement)) {
+        this.drawingContainer.nativeElement.focus();
+      }
+    }, 100);
   }
 
   initHighlight(event: MouseEvent) {
@@ -172,6 +183,7 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   onDrawingCancelled(): void {
     this.keyboardDrawingMode = false;
     this.resetHighlight();
+    this.toolbarEvents.drawModeSubject.next(false);
   }
 
   private adjustForRotation(): void {

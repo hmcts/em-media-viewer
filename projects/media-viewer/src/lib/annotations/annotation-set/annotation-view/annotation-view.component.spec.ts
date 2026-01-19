@@ -48,6 +48,7 @@ class MockRectangleComponent {
 
   @Output() selectEvent = new EventEmitter<Rectangle>();
   @Output() updateEvent = new EventEmitter<Rectangle>();
+  @Output() tabToToolbar = new EventEmitter<KeyboardEvent>();
 }
 
 describe('AnnotationViewComponent', () => {

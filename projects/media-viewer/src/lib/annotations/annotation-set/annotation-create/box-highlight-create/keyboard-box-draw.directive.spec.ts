@@ -327,6 +327,35 @@ describe('KeyboardBoxDrawDirective', () => {
     });
   });
 
+  describe('key handling', () => {
+    it('should emit drawingCancelled and allow Tab to move focus', () => {
+      directive.enabled = true;
+      let cancelled = false;
+      let lastVisible: boolean | undefined;
+
+      directive.cursorPositionChanged.subscribe((pos: CursorPosition) => {
+        lastVisible = pos.visible;
+      });
+      directive.drawingCancelled.subscribe(() => {
+        cancelled = true;
+      });
+
+      directive.onKeyDown(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+      const tabEvent = {
+        key: 'Tab',
+        preventDefault: jasmine.createSpy('preventDefault'),
+        stopPropagation: jasmine.createSpy('stopPropagation')
+      } as unknown as KeyboardEvent;
+
+      directive.onKeyDown(tabEvent);
+
+      expect(cancelled).toBe(true);
+      expect(lastVisible).toBe(false);
+      expect(tabEvent.preventDefault).not.toHaveBeenCalled();
+      expect(tabEvent.stopPropagation).not.toHaveBeenCalled();
+    });
+  });
+
   describe('enabled state', () => {
     it('should not respond to keys when disabled', () => {
       directive.enabled = false;

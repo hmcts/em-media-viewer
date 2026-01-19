@@ -14,6 +14,7 @@ describe('BoxHighlightCreateComponent', () => {
   const mockHighlightService = { saveAnnotation: () => {}, applyRotation: () => {} };
   const drawModeSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   const redactWholePageSubject$ = new Subject<void>();
+  const currentPageSubject$ = new Subject<number>();
 
 
   beforeEach(() => {
@@ -25,7 +26,8 @@ describe('BoxHighlightCreateComponent', () => {
           provide: ToolbarEventService,
           useValue: {
             drawModeSubject: drawModeSubject$.asObservable(),
-            redactWholePage: redactWholePageSubject$.asObservable()
+            redactWholePage: redactWholePageSubject$.asObservable(),
+            setCurrentPageInputValueSubject: currentPageSubject$.asObservable()
           }
         },
         {

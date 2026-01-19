@@ -50,7 +50,7 @@ export class ToolbarEventService {
   public readonly printSubject = new Subject<void>();
   public readonly downloadSubject = new Subject<void>();
   public readonly setCurrentPageSubject = new Subject<number>();
-  public readonly setCurrentPageInputValueSubject = new Subject<number>();
+  public readonly setCurrentPageInputValueSubject = new BehaviorSubject<number>(1);
   public readonly changePageByDeltaSubject = new Subject<number>();
   public readonly showCommentSummary = new BehaviorSubject<boolean>(false);
   public readonly grabNDrag = new BehaviorSubject<boolean>(false);
@@ -77,6 +77,7 @@ export class ToolbarEventService {
    */
   public reset(): void {
     this.setCurrentPageSubject.next(1);
+    this.setCurrentPageInputValueSubject.next(1);
     this.zoomValueSubject.next(1);
     this.highlightModeSubject.next(false);
     this.highlightToolbarSubject.next(false);
