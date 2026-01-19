@@ -12,7 +12,7 @@ properties([
 ])
 
 
-@Library("Infrastructure")
+@Library("Infrastructure@update-build-timeout")
 
 def type = "nodejs"
 def product = "em"
