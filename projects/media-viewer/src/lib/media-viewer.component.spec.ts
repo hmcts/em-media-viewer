@@ -1,5 +1,5 @@
 import { RpxTranslationModule } from 'rpx-xui-translation';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Store, StoreModule } from '@ngrx/store';
@@ -379,6 +379,230 @@ describe('MediaViewerComponent', () => {
       fixture.detectChanges();
 
       expect(component.viewerHeight).not.toEqual(viewerHeight);
+    });
+  });
+
+  describe('keyboard region navigation', () => {
+    let toolbarEvents: ToolbarEventService;
+
+    beforeEach(() => {
+      toolbarEvents = TestBed.inject(ToolbarEventService);
+      component.showToolbar = true;
+    });
+
+    describe('skipToSidebar', () => {
+      it('should open sidebar and focus sidebarContent when sidebar is closed', fakeAsync(() => {
+        const mockEvent = new Event('click');
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+        toolbarEvents.sidebarOpen.next(false);
+
+        const sidebarElement = document.createElement('div');
+        sidebarElement.id = 'sidebarContent';
+        document.body.appendChild(sidebarElement);
+
+        component.skipToSidebar(mockEvent);
+        tick();
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(sidebarElement.getAttribute('tabindex')).toBe('-1');
+        expect(document.activeElement).toBe(sidebarElement);
+        document.body.removeChild(sidebarElement);
+      }));
+
+      it('should focus sidebarContent when sidebar is already open', fakeAsync(() => {
+        const mockEvent = new Event('click');
+        toolbarEvents.sidebarOpen.next(true);
+
+        const sidebarElement = document.createElement('div');
+        sidebarElement.id = 'sidebarContent';
+        document.body.appendChild(sidebarElement);
+
+        component.skipToSidebar(mockEvent);
+        tick();
+
+        expect(document.activeElement).toBe(sidebarElement);
+        document.body.removeChild(sidebarElement);
+      }));
+    });
+
+    describe('skipToViewer', () => {
+      it('should focus viewerContainer element', () => {
+        const mockEvent = new Event('click');
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+
+        const viewerElement = document.createElement('div');
+        viewerElement.id = 'viewerContainer';
+        viewerElement.setAttribute('tabindex', '-1');
+        document.body.appendChild(viewerElement);
+
+        component.skipToViewer(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(document.activeElement).toBe(viewerElement);
+        document.body.removeChild(viewerElement);
+      });
+    });
+
+    describe('handleF6Forward', () => {
+      it('should cycle through regions forward', () => {
+        const mockEvent = new KeyboardEvent('keydown', { key: 'F6' });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+
+        const toolbarElement = document.createElement('div');
+        toolbarElement.id = 'toolbarContainer';
+        const firstButton = document.createElement('button');
+        toolbarElement.appendChild(firstButton);
+        document.body.appendChild(toolbarElement);
+
+        const viewerElement = document.createElement('div');
+        viewerElement.id = 'viewerContainer';
+        viewerElement.setAttribute('tabindex', '-1');
+        document.body.appendChild(viewerElement);
+
+        component.handleF6Forward(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(document.activeElement).toBe(firstButton);
+
+        document.body.removeChild(toolbarElement);
+        document.body.removeChild(viewerElement);
+      });
+    });
+
+    describe('handleF6Backward', () => {
+      it('should cycle through regions backward', () => {
+        const mockEvent = new KeyboardEvent('keydown', { key: 'F6', shiftKey: true });
+        const preventDefaultSpy = spyOn(mockEvent, 'preventDefault');
+
+        const viewerElement = document.createElement('div');
+        viewerElement.id = 'viewerContainer';
+        viewerElement.setAttribute('tabindex', '-1');
+        document.body.appendChild(viewerElement);
+
+        component.handleF6Backward(mockEvent);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(document.activeElement).toBe(viewerElement);
+        document.body.removeChild(viewerElement);
+      });
+    });
+
+    describe('cycleRegion', () => {
+      beforeEach(() => {
+        const toolbarElement = document.createElement('div');
+        toolbarElement.id = 'toolbarContainer';
+        const toolbarButton = document.createElement('button');
+        toolbarElement.appendChild(toolbarButton);
+        document.body.appendChild(toolbarElement);
+
+        const sidebarElement = document.createElement('div');
+        sidebarElement.id = 'sidebarContent';
+        const sidebarButton = document.createElement('button');
+        sidebarElement.appendChild(sidebarButton);
+        document.body.appendChild(sidebarElement);
+
+        const viewerElement = document.createElement('div');
+        viewerElement.id = 'viewerContainer';
+        viewerElement.setAttribute('tabindex', '-1');
+        document.body.appendChild(viewerElement);
+      });
+
+      afterEach(() => {
+        const toolbar = document.getElementById('toolbarContainer');
+        const sidebar = document.getElementById('sidebarContent');
+        const viewer = document.getElementById('viewerContainer');
+        if (toolbar) document.body.removeChild(toolbar);
+        if (sidebar) document.body.removeChild(sidebar);
+        if (viewer) document.body.removeChild(viewer);
+      });
+
+      it('should cycle forward through visible regions', fakeAsync(() => {
+        component['currentRegionIndex'] = -1;
+        toolbarEvents.sidebarOpen.next(false);
+
+        component['cycleRegion']('forward');
+        tick();
+
+        expect(component['currentRegionIndex']).toBe(0);
+      }));
+
+      it('should cycle backward through visible regions', fakeAsync(() => {
+        component['currentRegionIndex'] = 0;
+        toolbarEvents.sidebarOpen.next(false);
+
+        component['cycleRegion']('backward');
+        tick();
+
+        expect(component['currentRegionIndex']).toBe(2);
+      }));
+
+      it('should wrap around when cycling forward from last region', fakeAsync(() => {
+        component['currentRegionIndex'] = 2;
+        toolbarEvents.sidebarOpen.next(false);
+
+        component['cycleRegion']('forward');
+        tick();
+
+        expect(component['currentRegionIndex']).toBe(0);
+      }));
+
+      it('should open sidebar when cycling to sidebar region', fakeAsync(() => {
+        component['currentRegionIndex'] = 0;
+        toolbarEvents.sidebarOpen.next(false);
+        const toggleSpy = spyOn(toolbarEvents, 'toggleSideBar');
+
+        component['cycleRegion']('forward');
+        tick();
+
+        expect(toggleSpy).toHaveBeenCalledWith(true);
+        expect(component['currentRegionIndex']).toBe(1);
+      }));
+
+      it('should close sidebar when cycling away from sidebar region', fakeAsync(() => {
+        component['currentRegionIndex'] = 1;
+        toolbarEvents.sidebarOpen.next(true);
+        const toggleSpy = spyOn(toolbarEvents, 'toggleSideBar');
+
+        component['cycleRegion']('forward');
+        tick();
+
+        expect(toggleSpy).toHaveBeenCalledWith(false);
+      }));
+    });
+
+    describe('focusRegion', () => {
+      it('should focus first focusable element in region if available', () => {
+        const container = document.createElement('div');
+        container.id = 'testContainer';
+        const button = document.createElement('button');
+        button.textContent = 'Test Button';
+        container.appendChild(button);
+        document.body.appendChild(container);
+
+        component['focusRegion']({ selector: '#testContainer', label: 'Test Region' });
+
+        expect(document.activeElement).toBe(button);
+        document.body.removeChild(container);
+      });
+
+      it('should focus container element if no focusable children', () => {
+        const container = document.createElement('div');
+        container.id = 'testContainer';
+        container.textContent = 'No buttons here';
+        document.body.appendChild(container);
+
+        component['focusRegion']({ selector: '#testContainer', label: 'Test Region' });
+
+        expect(container.getAttribute('tabindex')).toBe('-1');
+        expect(document.activeElement).toBe(container);
+        document.body.removeChild(container);
+      });
+
+      it('should not throw error when element not found', () => {
+        expect(() => {
+          component['focusRegion']({ selector: '#nonExistentElement', label: 'Test' });
+        }).not.toThrow();
+      });
     });
   });
 });
