@@ -3,6 +3,7 @@ import {CommentSetHeaderComponent} from './comment-set-header.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule} from '@ngrx/store';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 import {reducers} from '../../../store/reducers/reducers';
 import { ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { CommentService } from '../comment/comment.service';
@@ -18,7 +19,16 @@ describe('CommentSetHeader', () => {
       imports: [
         RouterTestingModule,
         StoreModule.forFeature('media-viewer', reducers),
-        StoreModule.forRoot({})],
+        StoreModule.forRoot({}),
+        RpxTranslationModule.forRoot({
+          baseUrl: '',
+          debounceTimeMs: 300,
+          validity: {
+            days: 1
+          },
+          testMode: true
+        })
+      ],
       declarations: [CommentSetHeaderComponent],
       providers: [
         CommentService

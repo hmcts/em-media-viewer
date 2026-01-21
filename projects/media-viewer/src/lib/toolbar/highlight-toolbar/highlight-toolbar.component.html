@@ -1,4 +1,4 @@
-<div class="redaction">
+<div class="redaction" [mvKeyboardNav]="'horizontal'">
   <label class="govuk-label redaction-title" data-l10n-id="redaction_options"
     >{{ "Highlight options" | rpxTranslate }}</label
   >
@@ -8,36 +8,39 @@
     #mvDrawBtn
     class="mv-button mv-toolbar__menu-button--draw mv-tooltip"
     [attr.data-tooltip]="'Draw a box' | rpxTranslate"
+    [attr.aria-label]="'Draw a box' | rpxTranslate"
     [class.toggled]="toolbarEventService.drawModeSubject | async"
     aria-pressed="false"
     data-l10n-id="mvDrawBtn"
     (click)="onClickDrawToggle()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="draw_label">{{ "Draw a box" | rpxTranslate }}</span>
+    <span data-l10n-id="draw_label" aria-hidden="true">{{ "Draw a box" | rpxTranslate }}</span>
   </button>
 
   <button
     id="highlightTextBtn"
     class="mv-button mv-toolbar__menu-button--highlight mv-tooltip"
     [attr.data-tooltip]="'Highlight text' | rpxTranslate"
+    [attr.aria-label]="'Highlight text' | rpxTranslate"
     data-l10n-id="highlightTextBtn"
     (click)="onHighlight()"
     [class.toggled]="toolbarEventService.highlightModeSubject | async"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="highlightTextBtn_label">{{ "Highlight text" | rpxTranslate }}</span>
+    <span data-l10n-id="highlightTextBtn_label" aria-hidden="true">{{ "Highlight text" | rpxTranslate }}</span>
   </button>
 
   <button
     id="mvHighlightFromSearchBtn"
     [attr.data-tooltip]="'From search' | rpxTranslate"
+    [attr.aria-label]="'From search' | rpxTranslate"
     data-l10n-id="fromSearchButton"
     class="mv-button redaction-button--search mv-tooltip"
     (click)="onAllSearch()"
     [disabled]="redactionAllInProgress"
   >
-    <span style="width: 5rem" data-l10n-id="fromSearchButton_label"
+    <span style="width: 5rem" data-l10n-id="fromSearchButton_label" aria-hidden="true"
       >{{ "From search" | rpxTranslate }}</span
     >
   </button>
@@ -47,10 +50,11 @@
     #mvCloseBtn
     class="mv-button redaction-button--close mv-tooltip"
     [attr.data-tooltip]="'Close highlight' | rpxTranslate"
+    [attr.aria-label]="'Close highlight' | rpxTranslate"
     data-l10n-id="mvRedactBtn"
     (click)="onClose()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="Close Redaction">{{ "Close Highlight" | rpxTranslate }}</span>
+    <span data-l10n-id="Close Redaction" aria-hidden="true">{{ "Close Highlight" | rpxTranslate }}</span>
   </button>
 </div>
