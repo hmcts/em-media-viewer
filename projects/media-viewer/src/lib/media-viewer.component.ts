@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   OnDestroy,
@@ -12,7 +13,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { delay, filter, Observable, Subscription, take } from 'rxjs';
 import {
   defaultImageOptions, defaultMultimediaOptions,
   defaultPdfOptions,
@@ -55,6 +56,7 @@ enum ConvertibleContentTypes {
 @Component({
     selector: 'mv-media-viewer',
     templateUrl: './media-viewer.component.html',
+    styleUrls: ['./media-viewer.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: false
 })
@@ -105,6 +107,7 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   private $subscriptions: Subscription;
   private prevOffset: number;
+  private currentRegionIndex = -1;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -257,5 +260,113 @@ export class MediaViewerComponent implements OnChanges, OnDestroy, AfterContentI
 
   detectOs() {
     this.hasScrollBar = window.navigator.userAgent.indexOf('Win') !== -1;
+  }
+
+  skipToSidebar(event: Event): void {
+    event.preventDefault();
+
+    this.openSidebarAndWait(() => {
+        const element = document.querySelector<HTMLElement>('#sidebarContent');
+        if (element) {
+          if (!element.hasAttribute('tabindex')) {
+            element.setAttribute('tabindex', '-1');
+          }
+          element.focus();
+        }
+    });
+  }
+
+  private openSidebarAndWait(callback: () => void): void {
+    const isOpen = this.toolbarEvents.sidebarOpen.getValue();
+    if (!isOpen) {
+      this.toolbarEvents.toggleSideBar(true);
+    }
+
+    this.toolbarEvents.sidebarOpen.pipe(
+      filter(open => open === true),
+      take(1),
+      delay(0)
+    ).subscribe(() => {
+      callback();
+    });
+  }
+
+  skipToViewer(event: Event): void {
+    event.preventDefault();
+
+    const element = document.querySelector<HTMLElement>('#viewerContainer');
+    if (element) {
+      element.focus();
+    }
+  }
+
+  @HostListener('document:keydown.F6', ['$event'])
+  handleF6Forward(event: KeyboardEvent): void {
+    event.preventDefault();
+    this.cycleRegion('forward');
+  }
+
+  @HostListener('document:keydown.shift.F6', ['$event'])
+  handleF6Backward(event: KeyboardEvent): void {
+    event.preventDefault();
+    this.cycleRegion('backward');
+  }
+
+  private cycleRegion(direction: 'forward' | 'backward'): void {
+    const regions = [
+      { selector: '#toolbarContainer', label: 'Main toolbar', isVisible: () => this.showToolbar },
+      { selector: '#sidebarContent', label: 'Index menu', isVisible: () => true },
+      { selector: '#viewerContainer', label: 'Document viewer', isVisible: () => true }
+    ];
+
+    const visibleRegions = regions.filter(r => r.isVisible());
+    if (visibleRegions.length === 0) return;
+
+    const previousRegion = visibleRegions[this.currentRegionIndex];
+
+    if (direction === 'forward') {
+      this.currentRegionIndex = (this.currentRegionIndex + 1) % visibleRegions.length;
+    } else {
+      this.currentRegionIndex = this.currentRegionIndex <= 0
+        ? visibleRegions.length - 1
+        : this.currentRegionIndex - 1;
+    }
+
+    const currentRegion = visibleRegions[this.currentRegionIndex];
+
+    if (previousRegion?.selector === '#sidebarContent' && currentRegion.selector !== '#sidebarContent') {
+      const isOpen = this.toolbarEvents.sidebarOpen.getValue();
+      if (isOpen) {
+        this.toolbarEvents.toggleSideBar(false);
+      }
+    }
+    
+    if (currentRegion.selector === '#sidebarContent') {
+      this.openSidebarAndWait(() => {
+        this.focusRegion(currentRegion);
+      });
+    } else {
+      this.focusRegion(currentRegion);
+    }
+  }
+
+  private focusRegion(region: { selector: string; label: string }): void {
+    const element = document.querySelector<HTMLElement>(region.selector);
+    if (!element) {
+      return;
+    }
+
+    const firstFocusable = element.querySelector<HTMLElement>(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+
+    if (firstFocusable) {
+      firstFocusable.focus();
+    } else {
+      if (!element.hasAttribute('tabindex')) {
+        element.setAttribute('tabindex', '-1');
+      }
+      element.focus();
+    }
   }
 }
