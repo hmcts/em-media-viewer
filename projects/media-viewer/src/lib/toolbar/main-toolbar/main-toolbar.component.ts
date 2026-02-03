@@ -11,10 +11,12 @@ import {
   ViewChild
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 import { ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
 import { NumberHelperService } from '../../../lib/shared/util/services/number.helper.service';
 import { IcpEventService } from '../icp-event.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 import { HtmlTemplatesHelper } from '../../shared/util/helpers/html-templates.helper';
 
 @Component({
@@ -47,6 +49,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public isIndexOpen = false;
   public isRedactOpen = false;
   public isCommentsOpen = false;
+  public isHighlightOpen = false;
   public dropdownMenuPositions = [
     new ConnectionPositionPair(
       {
@@ -71,7 +74,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     public readonly toolbarButtons: ToolbarButtonVisibilityService,
     private readonly cdr: ChangeDetectorRef,
     private readonly numberHelper: NumberHelperService,
-    private readonly icpEventService: IcpEventService
+    private readonly icpEventService: IcpEventService,
+    private readonly toolbarFocusService: ToolbarFocusService
   ) {
   }
 
@@ -89,10 +93,14 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       }),
       this.toolbarEvents.redactionMode.subscribe(enabled => {
         this.redactionEnabled = enabled;
+        this.isRedactOpen = enabled;
       }),
       this.toolbarEvents.redactAllInProgressSubject.subscribe(disable => {
         this.redactAllInProgress = disable;
       }),
+      this.toolbarEvents.highlightToolbarSubject.subscribe(isOpen => {
+        this.isHighlightOpen = isOpen;
+      })
     );
   }
 
@@ -122,9 +130,148 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.printFile();
   }
 
+  @HostListener('document:keydown.escape', ['$event'])
+  public onEscapeKey(event: KeyboardEvent) {
+    const activeElement = document.activeElement as HTMLElement | null;
+    const targetElement = (event.target as HTMLElement | null) ?? activeElement;
+    const targetId = targetElement?.id || activeElement?.id;
+    const stopEvent = () => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    const isInDropdown = this.isEventWithin(event, '.dropdown-menu');
+    const isInSearchBar = this.isEventWithin(event, 'mv-search-bar');
+    const isInSidebar = this.isEventWithin(event, '#sidebarContainer');
+
+    if (this.isDropdownMenuOpen && (isInDropdown || targetId === 'mvMoreOptionsBtn')) {
+      stopEvent();
+      this.isDropdownMenuOpen = false;
+      this.toolbarFocusService.focusToolbarButton('#mvToolbarMain', 'mvMoreOptionsBtn', 50);
+      return;
+    }
+
+    if (isInSearchBar) {
+      stopEvent();
+      this.closeSearchBarAndFocus();
+      return;
+    }
+
+    if (isInSidebar && this.toolbarEvents.sidebarOpen.getValue()) {
+      const sidebarContainer = document.getElementById('sidebarContainer');
+      const hasBookmarksContainer = !!sidebarContainer?.querySelector('#bookmarkContainer');
+      stopEvent();
+      this.toolbarEvents.toggleSideBar(false);
+      this.isIndexOpen = false;
+      this.isBookmarksOpen = false;
+      this.toolbarFocusService.focusToolbarButton('#mvToolbarMain', hasBookmarksContainer ? 'mvBookmarksBtn' : 'mvIndexBtn', 50);
+      return;
+    }
+
+    let didClose = false;
+
+    switch (targetId) {
+      case 'mvSearchBtn':
+        if (!this.toolbarEvents.searchBarHidden.getValue()) {
+          this.closeSearchBarAndFocus();
+          didClose = true;
+        }
+        break;
+      case 'mvIndexBtn':
+        if (this.isIndexOpen) {
+          this.toolbarEvents.toggleSideBar(false);
+          this.isIndexOpen = false;
+          didClose = true;
+        }
+        break;
+      case 'mvBookmarksBtn':
+        if (this.isBookmarksOpen) {
+          this.toolbarEvents.toggleSideBar(false);
+          this.isBookmarksOpen = false;
+          didClose = true;
+        }
+        break;
+      case 'mvHighlightBtn':
+        if (this.isHighlightOpen) {
+          this.toolbarEvents.toggleHighlightToolbar();
+          didClose = true;
+        }
+        break;
+      case 'mvRedactBtn':
+        if (this.isRedactOpen) {
+          this.toggleRedactBar();
+          didClose = true;
+        }
+        break;
+      case 'mvCommentsBtn':
+      case 'commentSubPane0':
+        if (this.isCommentsOpen) {
+          this.toggleCommentsPanel();
+          didClose = true;
+        }
+        break;
+    }
+
+    if (didClose) {
+      stopEvent();
+    }
+  }
+
+  private closeSearchBarAndFocus(): void {
+    this.toolbarEvents.searchBarHidden
+      .pipe(
+        filter(hidden => hidden),
+        take(1)
+      )
+      .subscribe(() => {
+        this.toolbarFocusService.focusToolbarButton('#mvToolbarMain', 'mvSearchBtn');
+      });
+    this.toolbarEvents.searchBarHidden.next(true);
+  }
+
+  private isEventWithin(event: KeyboardEvent, selector: string): boolean {
+    const target = (event.target as Element | null) ?? (document.activeElement as Element | null);
+    if (target instanceof Element && target.closest(selector)) {
+      return true;
+    }
+    const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
+    return path.some(node => node instanceof Element && node.matches(selector));
+  }
+
+  public onMoreOptionsKeyDown(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown' && !this.isDropdownMenuOpen) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.toggleMoreOptions();
+    }
+  }
+
+  public onHighlightKeyDown(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!this.isHighlightOpen) {
+        this.openHighlightToolbarAndFocus();
+      } else {
+        this.focusHighlightButton();
+      }
+    }
+  }
+
   public onClickHighlightToggle() {
     this.toolbarEvents.toggleHighlightToolbar();
   }
+
+  private openHighlightToolbarAndFocus() {
+    if (!this.isHighlightOpen) {
+      this.toolbarEvents.toggleHighlightToolbar();
+      this.focusHighlightButton();
+    }
+  }
+
+  private focusHighlightButton() {
+    this.toolbarFocusService.focusToolbarButton('.redaction');
+  }
+
   public onClickDrawToggle() {
     this.toolbarEvents.toggleDrawMode();
   }
@@ -213,7 +360,29 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public toggleRedactBar() {
     this.toolbarEvents.toggleRedactionMode();
-    this.isRedactOpen = !this.isRedactOpen;
+  }
+
+  public onRedactKeyDown(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!this.isRedactOpen) {
+        this.openRedactToolbarAndFocus();
+      } else {
+        this.focusRedactButton();
+      }
+    }
+  }
+
+  private openRedactToolbarAndFocus() {
+    if (!this.isRedactOpen) {
+      this.toolbarEvents.toggleRedactionMode();
+      this.focusRedactButton();
+    }
+  }
+
+  private focusRedactButton() {
+    this.toolbarFocusService.focusToolbarButton('mv-redaction-toolbar .redaction');
   }
 
   public toggleGrabNDrag() {
@@ -230,10 +399,8 @@ export class MainToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public toggleMoreOptions() {
     this.isDropdownMenuOpen = !this.isDropdownMenuOpen;
-    setTimeout(() => {
-      if (this.mvMenuItems) {
-        this.mvMenuItems.nativeElement.focus();
-      }
-    }, 100);
+    if (this.isDropdownMenuOpen) {
+      this.toolbarFocusService.focusToolbarButton('.cdk-overlay-pane .dropdown-menu');
+    }
   }
 }

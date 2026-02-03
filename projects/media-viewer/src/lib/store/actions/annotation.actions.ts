@@ -59,7 +59,7 @@ export class SaveAnnotationSetFail implements Action {
 
 export class SaveAnnotation implements Action {
   readonly type = SAVE_ANNOTATION;
-  constructor(public payload: Annotation) { }
+  constructor(public payload: Annotation, public autoSelect?: boolean) { }
 }
 
 export class SaveAnnotationSuccess implements Action {

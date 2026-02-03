@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed} from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, SimpleChange, ElementRef } from '@angular/core';
 import { RectangleComponent } from './rectangle.component';
 import { FormsModule } from '@angular/forms';
 import { MutableDivModule } from 'mutable-div';
@@ -213,6 +213,77 @@ describe('RectangleComponent', () => {
     component.width = 100;
     hasRectChanged = component.hasRectangleChanged(rect);
     expect(hasRectChanged).toEqual(false);
+  });
+
+  it('should emit keyboard moving change', () => {
+    spyOn(component.keyboardMovingChange, 'emit');
+
+    component.onKeyboardMovingChange(true);
+
+    expect(component.keyboardMovingChange.emit).toHaveBeenCalledWith(true);
+  });
+
+  it('should emit deleteEvent when selected', () => {
+    spyOn(component.deleteEvent, 'emit');
+    component.selected = true;
+
+    component.onDelete();
+
+    expect(component.deleteEvent.emit).toHaveBeenCalledWith(component.annoRect);
+  });
+
+  it('should not emit deleteEvent when not selected', () => {
+    spyOn(component.deleteEvent, 'emit');
+    component.selected = false;
+
+    component.onDelete();
+
+    expect(component.deleteEvent.emit).not.toHaveBeenCalled();
+  });
+
+  it('should emit tabToToolbar when selected', () => {
+    spyOn(component.tabToToolbar, 'emit');
+    component.selected = true;
+    const event = new KeyboardEvent('keydown', { key: 'Tab' });
+
+    component.onTab(event);
+
+    expect(component.tabToToolbar.emit).toHaveBeenCalledWith(event);
+  });
+
+  it('should not emit tabToToolbar when not selected', () => {
+    spyOn(component.tabToToolbar, 'emit');
+    component.selected = false;
+    const event = new KeyboardEvent('keydown', { key: 'Tab' });
+
+    component.onTab(event);
+
+    expect(component.tabToToolbar.emit).not.toHaveBeenCalled();
+  });
+
+  it('should update movement bounds when page dimensions change', () => {
+    component.pageHeight = 300;
+    component.pageWidth = 200;
+
+    component.ngOnChanges({
+      pageHeight: new SimpleChange(400, 300, false),
+      pageWidth: new SimpleChange(400, 200, false)
+    });
+
+    expect(component.movementBounds).toEqual({ containerHeight: 300, containerWidth: 200 });
+  });
+
+  it('should focus rectangle when selected after view init', () => {
+    const rectElement = document.createElement('div');
+    rectElement.tabIndex = 0;
+    const focusSpy = spyOn(rectElement, 'focus').and.callThrough();
+
+    (component as any)._selected = true;
+    (component as any).viewRect = new ElementRef(rectElement);
+
+    component.ngAfterViewInit();
+
+    expect(focusSpy).toHaveBeenCalled();
   });
 
   function createPointerEvent(typeArg: string, screenX: number, screenY: number, clientX: number, clientY: number) {
