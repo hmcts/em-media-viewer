@@ -1,16 +1,33 @@
-<div [style.height]="defaultHeight"
-     [style.width]="defaultWidth"
-     (mousedown)="initHighlight($event)"
-     (mousemove)="updateHighlight($event)"
-     (mouseup)="createHighlight()">
+<div #drawingContainer
+  [style.height]="defaultHeight"
+  [style.width]="defaultWidth"
+  [tabindex]="drawMode && isCurrentPage ? 0 : -1"
+  mvKeyboardBoxDraw
+  [enabled]="drawMode && isCurrentPage"
+  (cursorPositionChanged)="onCursorPositionChanged($event)"
+  (drawingStarted)="onDrawingStarted($event)"
+  (drawingUpdated)="onDrawingUpdated($event)"
+  (drawingConfirmed)="onDrawingConfirmed($event)"
+  (drawingCancelled)="onDrawingCancelled()"
+  (mousedown)="initHighlight($event)"
+  (mousemove)="updateHighlight($event)"
+  (mouseup)="createHighlight()">
+
+  <div *ngIf="showCursor"
+    class="drawing-cursor"
+    [style.position]="'absolute'"
+    [style.top]="cursorY + 'px'"
+    [style.left]="cursorX + 'px'">
+  </div>
+
   <div #boxHighlight
-     class="box-highlight"
-     [style.display]="display"
-     [style.position]="position"
-     [style.background-color]="backgroundColor"
-     [style.height]="height ? height + 'px' : '100%'"
-     [style.width]="width ? width + 'px' : '100%'"
-     [style.top]="top + 'px'"
-     [style.left]="left + 'px'">
+    class="box-highlight"
+    [style.display]="display"
+    [style.position]="position"
+    [style.background-color]="backgroundColor"
+    [style.height]="height ? height + 'px' : '100%'"
+    [style.width]="width ? width + 'px' : '100%'"
+    [style.top]="top + 'px'"
+    [style.left]="left + 'px'">
   </div>
 </div>

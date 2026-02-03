@@ -20,10 +20,10 @@ export class HighlightCreateService {
   constructor(private toolBarEvents: ToolbarEventService,
     private store: Store<fromStore.AnnotationSetState>) { }
 
-  saveAnnotation(rectangles: Rectangle[], page: number) {
+  saveAnnotation(rectangles: Rectangle[], page: number, annotationId?: string) {
     this.store.pipe(select(fromSelectors.getDocumentIdSetId), take(1)).subscribe(anoSetDocId => {
       const anno: Annotation = {
-        id: uuid(),
+        id: annotationId || uuid(),
         color: 'FFFF00',
         comments: [],
         page: page,
@@ -38,7 +38,7 @@ export class HighlightCreateService {
         lastModifiedDate: '',
         tags: [],
       };
-      this.store.dispatch(new fromActions.SaveAnnotation(anno));
+      this.store.dispatch(new fromActions.SaveAnnotation(anno, !!annotationId));
     });
   }
 
