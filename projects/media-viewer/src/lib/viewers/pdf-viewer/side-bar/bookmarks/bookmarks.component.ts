@@ -114,7 +114,7 @@ export class BookmarksComponent implements OnInit, OnDestroy, OnChanges {
     this.store.pipe(select(bookmarksSelectors.getBookmarkInfo), take(1))
       .subscribe((bookmarkInfo) => {
         this.store.dispatch(new CreateBookmark({
-          ...bookmarkInfo, name: '', id: uuid()
+          ...bookmarkInfo, name: 'New Bookmark', id: uuid()
         } as any));
       });
   }
