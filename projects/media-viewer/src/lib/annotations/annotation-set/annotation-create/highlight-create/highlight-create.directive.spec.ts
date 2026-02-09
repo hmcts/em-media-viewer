@@ -1,7 +1,8 @@
 import { ElementRef } from '@angular/core';
+import { fakeAsync, tick } from '@angular/core/testing';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { HighlightCreateDirective } from './highlight-create.directive';
 import { SelectedAnnotation } from '../../../../store/actions/annotation.actions';
-import { BehaviorSubject, of, Subscription } from 'rxjs';
 import any = jasmine.any;
 
 describe('HighlightCreateDirective', () => {
@@ -47,13 +48,17 @@ describe('HighlightCreateDirective', () => {
     expect(directive.allPages).toEqual(pages);
   });
 
-  it('should unSubscribe on ngOnDestroy', () => {
-    directive.$subscription = new Subscription();
-    spyOn(directive.$subscription, 'unsubscribe');
+  it('should unsubscribe all subscriptions on ngOnDestroy', () => {
+    const sub1 = new Subscription();
+    const sub2 = new Subscription();
+    directive['$subscriptions'] = [sub1, sub2];
+    spyOn(sub1, 'unsubscribe');
+    spyOn(sub2, 'unsubscribe');
 
     directive.ngOnDestroy();
 
-    expect(directive.$subscription.unsubscribe).toHaveBeenCalled();
+    expect(sub1.unsubscribe).toHaveBeenCalled();
+    expect(sub2.unsubscribe).toHaveBeenCalled();
   });
 
   it('should not highlight text when in view mode for selected page', () => {
@@ -195,4 +200,324 @@ describe('HighlightCreateDirective', () => {
       .toHaveBeenCalledWith({ page: 1, rectangles: [{ id, ...rectangle }, { id, ...rectangle2 }] });
   });
 
+  describe('keyboard text selection', () => {
+    it('should focus element when highlight mode is enabled', fakeAsync(() => {
+      const mockElement = document.createElement('div');
+      const newDirective = new HighlightCreateDirective(
+        new ElementRef<HTMLElement>(mockElement),
+        toolbarEvents,
+        viewerEvents,
+        highlightService,
+        store
+      );
+      spyOn(mockElement, 'focus');
+
+      newDirective.ngOnInit();
+
+      toolbarEvents.highlightModeSubject.next(true);
+
+      tick(150);
+      expect(mockElement.focus).toHaveBeenCalled();
+      newDirective.ngOnDestroy();
+    }));
+
+    it('should not focus element when highlight mode is disabled', fakeAsync(() => {
+      toolbarEvents.highlightModeSubject.next(false);
+
+      const mockElement = document.createElement('div');
+      const newDirective = new HighlightCreateDirective(
+        new ElementRef<HTMLElement>(mockElement),
+        toolbarEvents,
+        viewerEvents,
+        highlightService,
+        store
+      );
+      spyOn(mockElement, 'focus');
+
+      newDirective.ngOnInit();
+
+      tick(10);
+      toolbarEvents.highlightModeSubject.next(false);
+
+      expect(mockElement.focus).not.toHaveBeenCalled();
+      newDirective.ngOnDestroy();
+      tick(200);
+    }));
+
+    it('should handle keyboard selection confirmation when in highlight mode', () => {
+      const mockTextNode = document.createTextNode('test text');
+      const mockSpan = document.createElement('span');
+      const mockParentElement = document.createElement('div');
+      mockParentElement.appendChild(mockSpan);
+      const mockOffsetParent = document.createElement('div');
+      mockOffsetParent.setAttribute('data-page-number', '2');
+
+      Object.defineProperty(mockTextNode, 'parentElement', {
+        value: mockSpan,
+        writable: true
+      });
+      Object.defineProperty(mockSpan, 'offsetParent', {
+        value: mockOffsetParent,
+        writable: true
+      });
+      Object.defineProperty(mockOffsetParent, 'offsetParent', {
+        value: null,
+        writable: true
+      });
+
+      const mockClientRects = [{ top: 80, left: 60, bottom: 100, right: 70 }] as any;
+      const mockRange = {
+        startContainer: mockTextNode,
+        getClientRects: () => mockClientRects,
+        cloneRange: function() { return this; }
+      } as any;
+
+      const mockTextLayer = document.createElement('div');
+      mockTextLayer.className = 'textLayer';
+      Object.defineProperty(mockTextLayer, 'getBoundingClientRect', {
+        value: () => ({ top: 50, left: 40 })
+      });
+
+      const mockSelection = {
+        rangeCount: 1,
+        isCollapsed: false,
+        getRangeAt: () => mockRange
+      } as any;
+
+      spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+      spyOn(window, 'getSelection').and.returnValue(mockSelection);
+      spyOn(mockSpan, 'closest').and.returnValue(mockTextLayer);
+
+      directive.allPages = { '2': { ...page } };
+      spyOn(viewerEvents, 'textSelected');
+      const rectangle = { x: 20, y: 50, height: 20, width: 10 };
+      spyOn(highlightService, 'applyRotation').and.returnValue(rectangle);
+
+      directive.onKeyboardSelectionConfirmed();
+
+      expect(viewerEvents.textSelected).toHaveBeenCalledWith({
+        page: 2,
+        rectangles: jasmine.arrayContaining([jasmine.objectContaining({ x: 20, y: 50, height: 20, width: 10 })])
+      });
+    });
+
+    it('should not handle keyboard selection when not in highlight mode', () => {
+      spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(false);
+      spyOn(viewerEvents, 'textSelected');
+
+      directive.onKeyboardSelectionConfirmed();
+
+      expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+    });
+
+    it('should not handle keyboard selection when there are no ranges', () => {
+      const mockSelection = {
+        rangeCount: 0,
+        isCollapsed: false
+      } as any;
+
+      spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+      spyOn(window, 'getSelection').and.returnValue(mockSelection);
+      spyOn(viewerEvents, 'textSelected');
+
+      directive.onKeyboardSelectionConfirmed();
+
+      expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+    });
+
+    it('should handle text node in selection and get parent element', () => {
+      const mockTextNode = document.createTextNode('test text');
+      const mockSpan = document.createElement('span');
+      const mockParentElement = document.createElement('div');
+      mockParentElement.appendChild(mockSpan);
+      const mockOffsetParent = document.createElement('div');
+      mockOffsetParent.setAttribute('data-page-number', '3');
+
+      Object.defineProperty(mockTextNode, 'nodeType', { value: Node.TEXT_NODE });
+      Object.defineProperty(mockTextNode, 'parentElement', { value: mockSpan });
+      Object.defineProperty(mockSpan, 'offsetParent', { value: mockOffsetParent });
+      Object.defineProperty(mockOffsetParent, 'offsetParent', { value: null });
+
+      const mockClientRects = [{ top: 80, left: 60, bottom: 100, right: 70 }] as any;
+      const mockRange = {
+        startContainer: mockTextNode,
+        getClientRects: () => mockClientRects,
+        cloneRange: function() { return this; }
+      } as any;
+
+      const mockTextLayer = document.createElement('div');
+      mockTextLayer.className = 'textLayer';
+      Object.defineProperty(mockTextLayer, 'getBoundingClientRect', {
+        value: () => ({ top: 50, left: 40 })
+      });
+
+      const mockSelection = {
+        rangeCount: 1,
+        isCollapsed: false,
+        getRangeAt: () => mockRange
+      } as any;
+
+      spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+      spyOn(window, 'getSelection').and.returnValue(mockSelection);
+      spyOn(mockSpan, 'closest').and.returnValue(mockTextLayer);
+
+      directive.allPages = { '3': { ...page } };
+      spyOn(viewerEvents, 'textSelected');
+      const rectangle = { x: 20, y: 50, height: 20, width: 10 };
+      spyOn(highlightService, 'applyRotation').and.returnValue(rectangle);
+
+      directive.onKeyboardSelectionConfirmed();
+
+      expect(viewerEvents.textSelected).toHaveBeenCalledWith({
+        page: 3,
+        rectangles: jasmine.any(Array)
+      });
+    });
+  });
+
+  it('should not create selection when selection is collapsed', () => {
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: true
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
+
+  it('should return empty rectangles when allPages is not available for the page', () => {
+    const mockTextNode = document.createTextNode('test text');
+    const mockSpan = document.createElement('span');
+    const mockOffsetParent = document.createElement('div');
+    mockOffsetParent.setAttribute('data-page-number', '5');
+
+    Object.defineProperty(mockTextNode, 'parentElement', { value: mockSpan });
+    Object.defineProperty(mockSpan, 'offsetParent', { value: mockOffsetParent });
+    Object.defineProperty(mockOffsetParent, 'offsetParent', { value: null });
+
+    const mockRange = {
+      startContainer: mockTextNode,
+      getClientRects: () => [],
+      cloneRange: function() { return this; }
+    } as any;
+
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: false,
+      getRangeAt: () => mockRange
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.allPages = { '1': { ...page }, '2': { ...page } };
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
+
+  it('should return empty rectangles when no clientRects are present', () => {
+    const mockTextNode = document.createTextNode('test text');
+    const mockSpan = document.createElement('span');
+    const mockOffsetParent = document.createElement('div');
+    mockOffsetParent.setAttribute('data-page-number', '1');
+
+    Object.defineProperty(mockTextNode, 'parentElement', { value: mockSpan });
+    Object.defineProperty(mockSpan, 'offsetParent', { value: mockOffsetParent });
+    Object.defineProperty(mockOffsetParent, 'offsetParent', { value: null });
+
+    const mockRange = {
+      startContainer: mockTextNode,
+      getClientRects: () => [],
+      cloneRange: function() { return this; }
+    } as any;
+
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: false,
+      getRangeAt: () => mockRange
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.allPages = { '1': { ...page } };
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
+
+  it('should return empty rectangles when no textLayer is found', () => {
+    const mockTextNode = document.createTextNode('test text');
+    const mockSpan = document.createElement('span');
+    const mockOffsetParent = document.createElement('div');
+    mockOffsetParent.setAttribute('data-page-number', '1');
+
+    Object.defineProperty(mockTextNode, 'parentElement', { value: mockSpan });
+    Object.defineProperty(mockSpan, 'offsetParent', { value: mockOffsetParent });
+    Object.defineProperty(mockOffsetParent, 'offsetParent', { value: null });
+
+    const mockClientRects = [{ top: 80, left: 60, bottom: 100, right: 70 }] as any;
+    const mockRange = {
+      startContainer: mockTextNode,
+      getClientRects: () => mockClientRects,
+      cloneRange: function() { return this; }
+    } as any;
+
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: false,
+      getRangeAt: () => mockRange
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(mockSpan, 'closest').and.returnValue(null);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.allPages = { '1': { ...page } };
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
+
+  it('should default to page 1 when page number cannot be found', () => {
+    const mockTextNode = document.createTextNode('test text');
+    const mockSpan = document.createElement('span');
+
+    Object.defineProperty(mockTextNode, 'parentElement', { value: mockSpan });
+    Object.defineProperty(mockSpan, 'offsetParent', { value: null });
+
+    const mockRange = {
+      startContainer: mockTextNode,
+      getClientRects: () => [],
+      cloneRange: function() { return this; }
+    } as any;
+
+    const mockSelection = {
+      rangeCount: 1,
+      isCollapsed: false,
+      getRangeAt: () => mockRange
+    } as any;
+
+    spyOn(toolbarEvents.highlightModeSubject, 'getValue').and.returnValue(true);
+    spyOn(window, 'getSelection').and.returnValue(mockSelection);
+    spyOn(viewerEvents, 'textSelected');
+
+    directive.allPages = { '1': { ...page } };
+
+    directive.onKeyboardSelectionConfirmed();
+
+    expect(viewerEvents.textSelected).not.toHaveBeenCalled();
+  });
 });
