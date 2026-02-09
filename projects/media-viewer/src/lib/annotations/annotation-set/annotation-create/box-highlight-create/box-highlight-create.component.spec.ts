@@ -14,6 +14,7 @@ describe('BoxHighlightCreateComponent', () => {
   const mockHighlightService = { saveAnnotation: () => {}, applyRotation: () => {} };
   const drawModeSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   const redactWholePageSubject$ = new Subject<void>();
+  const currentPageSubject$ = new Subject<number>();
 
 
   beforeEach(() => {
@@ -25,7 +26,8 @@ describe('BoxHighlightCreateComponent', () => {
           provide: ToolbarEventService,
           useValue: {
             drawModeSubject: drawModeSubject$.asObservable(),
-            redactWholePage: redactWholePageSubject$.asObservable()
+            redactWholePage: redactWholePageSubject$.asObservable(),
+            setCurrentPageInputValueSubject: currentPageSubject$.asObservable()
           }
         },
         {
@@ -362,5 +364,64 @@ describe('BoxHighlightCreateComponent', () => {
         expect(component.wholePage).toBe(false);
     })
   );
+  });
+
+  describe('keyboard drawing', () => {
+    it('should update cursor position state', () => {
+      component.onCursorPositionChanged({ x: 12, y: 24, visible: true });
+
+      expect(component.cursorX).toBe(12);
+      expect(component.cursorY).toBe(24);
+      expect(component.showCursor).toBeTrue();
+    });
+
+    it('should initialize keyboard drawing state on drawing started', () => {
+      component.rotate = 180;
+      const event = { startX: 100, startY: 200, width: 50, height: 20 };
+
+      component.onDrawingStarted(event);
+
+      expect(component.keyboardDrawingMode).toBeTrue();
+      expect(component.display).toBe('block');
+      expect(component.backgroundColor).toBe('yellow');
+      expect(component.width).toBe(50);
+      expect(component.height).toBe(20);
+      expect(component.top).toBe(180);
+      expect(component.left).toBe(50);
+    });
+
+    it('should update dimensions on drawing updated', () => {
+      component.onDrawingUpdated({ startX: 0, startY: 0, width: 25, height: 30 });
+
+      expect(component.width).toBe(25);
+      expect(component.height).toBe(30);
+    });
+
+    it('should confirm drawing and create highlight', () => {
+      const createSpy = spyOn(component, 'createHighlight');
+      component.keyboardDrawingMode = true;
+
+      component.onDrawingConfirmed({ startX: 0, startY: 0, width: 15, height: 15 });
+
+      expect(component.keyboardDrawingMode).toBeFalse();
+      expect(createSpy).toHaveBeenCalled();
+    });
+
+    it('should cancel drawing and reset highlight state', () => {
+      const drawModeSubject = { next: jasmine.createSpy('next') };
+      (component as any).toolbarEvents = { drawModeSubject };
+      component.keyboardDrawingMode = true;
+      component.width = 20;
+      component.height = 20;
+      component.display = 'block';
+
+      component.onDrawingCancelled();
+
+      expect(component.keyboardDrawingMode).toBeFalse();
+      expect(component.display).toBe('none');
+      expect(component.width).toBe(0);
+      expect(component.height).toBe(0);
+      expect(drawModeSubject.next).toHaveBeenCalledWith(false);
+    });
   });
 });

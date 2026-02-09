@@ -233,7 +233,7 @@ describe('MetadataLayerComponent', () => {
         spyOn(toolbarEvents.drawModeSubject, 'next');
 
         component.saveAnnotation({ rectangles: mockRectangles, page: mockPage});
-        expect(highlightCreateService.saveAnnotation).toHaveBeenCalledWith(mockRectangles, mockPage);
+        expect(highlightCreateService.saveAnnotation).toHaveBeenCalledWith(mockRectangles, mockPage, undefined);
         expect(toolbarEvents.drawModeSubject.next).toHaveBeenCalledWith(false);
       }
     )
