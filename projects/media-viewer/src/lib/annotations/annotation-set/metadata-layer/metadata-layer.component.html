@@ -22,7 +22,8 @@
                     [pageHeight]="page.styles.height"
                     [pageWidth]="page.styles.width"
                     (createBookmarkEvent)="createBookmark($event)"
-                    (createHighlightEvent)="createHighlight()">
+                    (createHighlightEvent)="createHighlight()"
+                    (cancelEvent)="cancelContextToolbar()">
     </mv-ctx-toolbar>
     <div class="pageContainer__page-item">
       <mv-annotation-set *ngIf="(annoPages$ | async) as annoPages"
