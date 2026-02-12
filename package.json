@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.10",
+  "version": "4.2.10-exui-4101",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -109,7 +109,7 @@
     "xmlhttprequest-ssl": "^1.6.2",
     "@xmldom/xmldom": "^0.9.0",
     "yargs-parser": "^20.2.7",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "xml2j": "^0.5.0",
     "axios": "^1.12.0",
     "got": "^14.0.0",
@@ -162,7 +162,7 @@
     "cucumber-html-reporter": "^4.0.5",
     "cucumber-pretty": "1.5.2",
     "cucumberjs-allure-reporter": "1.0.3",
-    "eslint": "^8.57.0",
+    "eslint": "^9.11.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-n": "^17.0.0",
