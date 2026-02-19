@@ -27,8 +27,8 @@ const idamRepository = new TokenRepository(new IdamClient(), config.tokenRefresh
 Promise.all([serviceAuthRepository.init(), idamRepository.init()])
     .then(() => {
 
-        logger.info('IDAM token initialized');
-        logger.info('S2S token initialized');
+        logger.info('idamToken: ' + idamRepository.getToken());
+        logger.info('s2sToken: ' + serviceAuthRepository.getToken());
 
         const addHeaders = (req: ClientRequest) => {
             req.setHeader('Authorization', idamRepository.getToken());
