@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.11",
+  "version": "4.2.10-exui-4074",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -124,6 +124,7 @@
     "brace-expansion@^2.0.1": "2.0.2",
     "tmp": "0.2.5",
     "jws": "^4.0.1",
+    "tar": "^7.5.8",
     "qs": "6.14.1"
   },
   "devDependencies": {
