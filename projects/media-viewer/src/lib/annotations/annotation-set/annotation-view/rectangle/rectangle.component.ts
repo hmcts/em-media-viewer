@@ -14,6 +14,7 @@ import { Rectangle } from './rectangle.model';
 import { Subscription } from 'rxjs';
 import { ToolbarEventService } from '../../../../toolbar/toolbar-event.service';
 import { HighlightCreateService } from '../../annotation-create/highlight-create/highlight-create.service';
+import { BoxMovementBounds } from './keyboard-box-move.directive';
 
 @Component({
     selector: 'mv-anno-rectangle',
@@ -28,9 +29,13 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() editable: boolean;
   @Input() pageHeight: number;
   @Input() pageWidth: number;
+  @Input() rectangleTabIndex: number = 0;
 
   @Output() selectEvent = new EventEmitter<Rectangle>();
   @Output() updateEvent = new EventEmitter<Rectangle>();
+  @Output() deleteEvent = new EventEmitter<Rectangle>();
+  @Output() keyboardMovingChange = new EventEmitter<boolean>();
+  @Output() tabToToolbar = new EventEmitter<KeyboardEvent>();
 
   @ViewChild('rectElement', {static: false}) viewRect: ElementRef;
 
@@ -42,6 +47,8 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   width: number;
   top: number;
   left: number;
+
+  movementBounds: BoxMovementBounds;
 
   _annoRect: Rectangle;
   @Input()
@@ -65,12 +72,20 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (changes.rotate) {
       this.adjustForRotation(this.rotate);
     }
+    if (changes.pageHeight || changes.pageWidth) {
+      this.updateMovementBounds();
+    }
   }
 
   ngAfterViewInit() {
     this.subscriptions.push(
       this.toolbarEvents.grabNDrag.subscribe(grabNDrag => this.enableGrabNDrag = grabNDrag)
     );
+    setTimeout(() => this.updateMovementBounds(), 0);
+
+    if (this._selected && this.viewRect) {
+      this.viewRect.nativeElement.focus();
+    }
   }
 
   ngOnDestroy(): void {
@@ -82,7 +97,7 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   set selected(selected: boolean) {
     this._selected = selected;
     if (this._selected && this.viewRect) {
-      this.viewRect.nativeElement.focus();
+      this.viewRect.nativeElement.focus()
     }
   }
 
@@ -91,6 +106,10 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   onClick() {
+    this.selectEvent.emit(this.annoRect);
+  }
+
+  onFocus() {
     this.selectEvent.emit(this.annoRect);
   }
 
@@ -131,5 +150,32 @@ export class RectangleComponent implements OnChanges, AfterViewInit, OnDestroy {
       Math.round(this.top) !== viewRect.offsetTop ||
       Math.round(this.width) !== viewRect.offsetWidth ||
       Math.round(this.height) !== viewRect.offsetHeight;
+  }
+
+  private updateMovementBounds(): void {
+    if (this.pageHeight && this.pageWidth) {
+      this.movementBounds = {
+        containerHeight: this.pageHeight,
+        containerWidth: this.pageWidth
+      };
+    }
+  }
+
+  onKeyboardMovingChange(isMoving: boolean): void {
+    this.keyboardMovingChange.emit(isMoving);
+  }
+
+  onDelete(): void {
+    if (this._selected) {
+      this.deleteEvent.emit(this.annoRect);
+    }
+  }
+
+  onTab(event: KeyboardEvent): void {
+    if (!this._selected) {
+      return;
+    }
+
+    this.tabToToolbar.emit(event);
   }
 }

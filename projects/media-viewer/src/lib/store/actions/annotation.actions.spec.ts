@@ -41,7 +41,8 @@ describe('Annotations actions', () => {
         const action = new fromAnnotations.SaveAnnotation(mockAnnotations[0]);
         expect({ ...action }).toEqual({
           type: fromAnnotations.SAVE_ANNOTATION,
-          payload: mockAnnotations[0]
+          payload: mockAnnotations[0],
+          autoSelect: undefined
         });
       });
     });

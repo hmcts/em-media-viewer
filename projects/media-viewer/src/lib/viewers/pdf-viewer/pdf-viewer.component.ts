@@ -34,6 +34,7 @@ import { IcpState } from '../../icp/icp.interfaces';
 import { ViewerEventService } from '../viewer-event.service';
 import { IcpService } from '../../icp/icp.service';
 import { IcpEventService } from '../../toolbar/icp-event.service';
+import { HighlightCreateDirective } from '../../annotations/annotation-set/annotation-create/highlight-create/highlight-create.directive';
 
 @Component({
     selector: 'mv-pdf-viewer',
@@ -75,6 +76,7 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
 
   @ViewChild('viewerContainer', { static: true }) viewerContainer: ElementRef<HTMLDivElement>;
   @ViewChild('pdfViewer', { static: false }) pdfViewer: ElementRef<HTMLDivElement>;
+  @ViewChild(HighlightCreateDirective, { static: false }) highlightCreateDirective: HighlightCreateDirective;
 
   private pdfWrapper: PdfJsWrapper;
   private $subscription: Subscription;
@@ -82,6 +84,14 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
   showCommentsPanel: boolean;
   showIcpParticipantsList: boolean;
   enableGrabNDrag = false;
+
+  showSelectionStartCursor = false;
+  selectionStartCursorX: number;
+  selectionStartCursorY: number;
+
+  showSelectionEndCursor = false;
+  selectionEndCursorX: number;
+  selectionEndCursorY: number;
 
   constructor(
     private store: Store<fromStore.AnnotationSetState>,
@@ -276,6 +286,39 @@ export class PdfViewerComponent implements AfterContentInit, OnChanges, OnDestro
     return this.pdfWrapper.getPageNumber();
   }
 
+  onKeyboardTextSelectionConfirmed(): void {
+    if (this.highlightCreateDirective) {
+      this.highlightCreateDirective.onKeyboardSelectionConfirmed();
+    }
+  }
+
+  onKeyboardTextSelectionCancelled(): void {
+    const selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+    }
+  }
+
+  onSelectionStartCursorChanged(position: { x: number, y: number, visible: boolean }): void {
+    if (position.visible) {
+      this.selectionStartCursorX = position.x;
+      this.selectionStartCursorY = position.y;
+      this.showSelectionStartCursor = true;
+    } else {
+      this.showSelectionStartCursor = false;
+    }
+  }
+
+  onSelectionEndCursorChanged(position: { x: number, y: number, visible: boolean }): void {
+    if (position.visible) {
+      this.selectionEndCursorX = position.x;
+      this.selectionEndCursorY = position.y;
+      this.showSelectionEndCursor = true;
+    } else {
+      this.showSelectionEndCursor = false;
+    }
+  }
+  
   onViewerContainerFocusIn(event: FocusEvent): void {
     const elementFrom = event.relatedTarget as HTMLElement;
     const elementTo = event.target as HTMLElement;
