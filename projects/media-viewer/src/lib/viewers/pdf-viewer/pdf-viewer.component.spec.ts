@@ -317,4 +317,145 @@ describe('PdfViewerComponent', () => {
     expect(result).toEqual(0.1);
   }));
 
+  describe('onViewerContainerFocusIn', () => {
+    it('should do nothing when not coming from sidebar', () => {
+      const mockEvent = <Partial<FocusEvent>>{
+        relatedTarget: document.createElement('div'),
+        target: document.createElement('div')
+      };
+
+      spyOn(component, 'getCurrentPageNumber');
+
+      component.onViewerContainerFocusIn(mockEvent as FocusEvent);
+
+      expect(component.getCurrentPageNumber).not.toHaveBeenCalled();
+    });
+
+    it('should do nothing when not going to viewer container', () => {
+      const sidebarElement = document.createElement('div');
+      sidebarElement.id = 'sidebarContainer';
+      const fromElement = document.createElement('div');
+      sidebarElement.appendChild(fromElement);
+
+      const toElement = document.createElement('div');
+
+      const mockEvent = <Partial<FocusEvent>>{
+        relatedTarget: fromElement,
+        target: toElement
+      };
+
+      spyOn(component, 'getCurrentPageNumber');
+
+      component.onViewerContainerFocusIn(mockEvent as FocusEvent);
+
+      expect(component.getCurrentPageNumber).not.toHaveBeenCalled();
+    });
+
+    it('should do nothing when target is not a text layer', () => {
+      const sidebarElement = document.createElement('div');
+      sidebarElement.id = 'sidebarContainer';
+      const fromElement = document.createElement('div');
+      sidebarElement.appendChild(fromElement);
+
+      const viewerContainer = document.createElement('div');
+      viewerContainer.id = 'viewerContainer';
+      const toElement = document.createElement('div');
+      viewerContainer.appendChild(toElement);
+
+      const mockEvent = <Partial<FocusEvent>>{
+        relatedTarget: fromElement,
+        target: toElement
+      };
+
+      spyOn(component, 'getCurrentPageNumber');
+
+      component.onViewerContainerFocusIn(mockEvent as FocusEvent);
+
+      expect(component.getCurrentPageNumber).not.toHaveBeenCalled();
+    });
+
+    it('should focus current page text layer when tabbing from sidebar to the first page', () => {
+      const sidebarElement = document.createElement('div');
+      sidebarElement.id = 'sidebarContainer';
+      const fromElement = document.createElement('div');
+      sidebarElement.appendChild(fromElement);
+      document.body.appendChild(sidebarElement);
+
+      const viewerContainer = document.createElement('div');
+      viewerContainer.id = 'viewerContainer';
+
+      const focusedPageElement = document.createElement('div');
+      focusedPageElement.setAttribute('data-page-number', '1');
+      const focusedTextLayer = document.createElement('div');
+      focusedTextLayer.classList.add('textLayer');
+      focusedPageElement.appendChild(focusedTextLayer);
+      viewerContainer.appendChild(focusedPageElement);
+
+      const currentPageElement = document.createElement('div');
+      currentPageElement.setAttribute('data-page-number', '3');
+      const currentTextLayer = document.createElement('div');
+      currentTextLayer.classList.add('textLayer');
+      currentTextLayer.setAttribute('tabindex', '0');
+      currentPageElement.appendChild(currentTextLayer);
+      viewerContainer.appendChild(currentPageElement);
+
+      document.body.appendChild(viewerContainer);
+
+      const mockEvent = <Partial<FocusEvent>>{
+        relatedTarget: fromElement,
+        target: focusedTextLayer
+      };
+
+      spyOn(component, 'getCurrentPageNumber').and.returnValue(3);
+      spyOn(currentTextLayer, 'focus');
+      spyOn(component.viewerContainer.nativeElement, 'querySelector').and.returnValue(currentPageElement);
+
+      component.onViewerContainerFocusIn(mockEvent as FocusEvent);
+
+      expect(component.getCurrentPageNumber).toHaveBeenCalled();
+      expect(currentTextLayer.focus).toHaveBeenCalled();
+
+      document.body.removeChild(sidebarElement);
+      document.body.removeChild(viewerContainer);
+    });
+
+    it('should not focus when tabbing to current page', () => {
+      const sidebarElement = document.createElement('div');
+      sidebarElement.id = 'sidebarContainer';
+      const fromElement = document.createElement('div');
+      sidebarElement.appendChild(fromElement);
+      document.body.appendChild(sidebarElement);
+
+      const viewerContainer = document.createElement('div');
+      viewerContainer.id = 'viewerContainer';
+
+      const currentPageElement = document.createElement('div');
+      currentPageElement.setAttribute('data-page-number', '3');
+      const currentTextLayer = document.createElement('div');
+      currentTextLayer.classList.add('textLayer');
+      currentTextLayer.setAttribute('tabindex', '0');
+      currentPageElement.appendChild(currentTextLayer);
+      viewerContainer.appendChild(currentPageElement);
+
+      component.viewerContainer.nativeElement.appendChild(viewerContainer);
+      document.body.appendChild(viewerContainer);
+
+      const mockEvent = <Partial<FocusEvent>>{
+        relatedTarget: fromElement,
+        target: currentTextLayer
+      };
+
+      spyOn(component, 'getCurrentPageNumber').and.returnValue(3);
+      spyOn(currentTextLayer, 'focus');
+
+      component.onViewerContainerFocusIn(mockEvent as FocusEvent);
+
+      expect(component.getCurrentPageNumber).toHaveBeenCalled();
+      expect(currentTextLayer.focus).not.toHaveBeenCalled();
+
+      document.body.removeChild(sidebarElement);
+      document.body.removeChild(viewerContainer);
+    });
+  }); 
+
 });

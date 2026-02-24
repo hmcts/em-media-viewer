@@ -9,8 +9,8 @@
     </div>
     <div class="item-button">
       <button class="govuk-button govuk-button--secondary" data-module="govuk-button" tabindex="0"
-        title="Leave presentation" (click)="leaveIcpSession()">
-        <span data-l10n-id="icp-leave-presentation_label">Leave presentation</span>
+        title="Leave presentation" [attr.aria-label]="'Leave presentation' | rpxTranslate" (click)="leaveIcpSession()">
+        <span data-l10n-id="icp-leave-presentation_label" aria-hidden="true">Leave presentation</span>
       </button>
     </div>
   </div>
@@ -25,22 +25,22 @@
         is presenting</label>
     </div>
     <div class="item-button">
-      <button *ngIf="!presenterName" class="govuk-button" id="icp-present" tabindex="0" title="Present"
+      <button *ngIf="!presenterName" class="govuk-button" id="icp-present" tabindex="0" [attr.aria-label]="'Start presenting' | rpxTranslate"
         (click)="present()">
-        <span data-l10n-id="icp-present_label">Start presenting</span>
+        <span data-l10n-id="icp-present_label" aria-hidden="true">Start presenting</span>
       </button>
       <button *ngIf="isPresenter" class="govuk-button  govuk-button--warning" id="icp-stop-presenting" tabindex="0"
-        title="Stop presenting" (click)="stopPresenting()">
-        <span data-l10n-id="icp-stop-presenting_label">Stop Presenting</span>
+        [attr.aria-label]="'Stop presenting' | rpxTranslate" (click)="stopPresenting()">
+        <span data-l10n-id="icp-stop-presenting_label" aria-hidden="true">Stop Presenting</span>
       </button>
     </div>
   </div>
 
   <div id="participant-list">
     <button class="govuk-button govuk-button--secondary" id="icp-participants-list" tabindex="0"
-      title="Participants list" (click)="showParticipantsList()">
+      [attr.aria-label]="'Participants list' | rpxTranslate" (click)="showParticipantsList()">
       <span
-        data-l10n-id="icp-stop-presenting_label">{{(icpEventService.participantsListVisible | async) ? 'Hide': 'Show'}}
+        data-l10n-id="icp-stop-presenting_label" aria-hidden="true">{{(icpEventService.participantsListVisible | async) ? 'Hide': 'Show'}}
         participants</span>
     </button>
   </div>

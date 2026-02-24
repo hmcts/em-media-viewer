@@ -1,4 +1,4 @@
-<div class="redaction">
+<div class="redaction" [mvKeyboardNav]="'horizontal'">
   <label class="govuk-label redaction-title" data-l10n-id="redaction_options">{{
     "Redaction options" | rpxTranslate
   }}</label>
@@ -6,11 +6,12 @@
     id="toggleDrawButton"
     class="mv-button redaction-button--draw mv-tooltip"
     [attr.data-tooltip]="'Draw a box' | rpxTranslate"
+    [attr.aria-label]="'Draw a box' | rpxTranslate"
     data-l10n-id="toggleDrawButton"
     (click)="toggleDrawMode()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="toggleDrawButton_label">{{
+    <span data-l10n-id="toggleDrawButton_label" aria-hidden="true">{{
       "Draw a box" | rpxTranslate
     }}</span>
   </button>
@@ -18,11 +19,12 @@
     id="redactPageButton"
     class="mv-button redaction-button--redact-page mv-tooltip"
     [attr.data-tooltip]="'Redact page' | rpxTranslate"
+    [attr.aria-label]="'Redact page' | rpxTranslate"
     data-l10n-id="redactPageButton"
     (click)="redactPage()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="redactPageButton_label">{{
+    <span data-l10n-id="redactPageButton_label" aria-hidden="true">{{
       "Redact page" | rpxTranslate
     }}</span>
   </button>
@@ -31,11 +33,12 @@
     id="mvRedactFromSearchBtn"
     class="mv-button redaction-button--search mv-tooltip"
     [attr.data-tooltip]="'From search' | rpxTranslate"
+    [attr.aria-label]="'From search' | rpxTranslate"
     data-l10n-id="fromSearchButton"
     (click)="onRedactAllSearch()"
     [disabled]="redactionAllInProgress"
   >
-    <span style="width: 5rem" data-l10n-id="fromSearchButton_label">{{
+    <span style="width: 5rem" data-l10n-id="fromSearchButton_label" aria-hidden="true">{{
       "From search" | rpxTranslate
     }}</span>
   </button>
@@ -46,11 +49,12 @@
     class="mv-button redaction-button--redact mv-tooltip"
     aria-pressed="false"
     [attr.data-tooltip]="'Redact text' | rpxTranslate"
+    [attr.aria-label]="'Redact text' | rpxTranslate"
     data-l10n-id="toggleTextRedactionButton"
     (click)="toggleTextRedactionMode()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="toggleTextRedactionButton_label">{{
+    <span data-l10n-id="toggleTextRedactionButton_label" aria-hidden="true">{{
       "Redact text" | rpxTranslate
     }}</span>
   </button>
@@ -62,10 +66,11 @@
     class="mv-button redaction-button--clear mv-tooltip"
     aria-pressed="false"
     [attr.data-tooltip]="'Clear all' | rpxTranslate"
+    [attr.aria-label]="'Clear all' | rpxTranslate"
     data-l10n-id="toggleClearAllButton"
     (click)="unmarkAll()"
   >
-    <span data-l10n-id="Clear all">{{ "Clear all" | rpxTranslate }}</span>
+    <span data-l10n-id="Clear all" aria-hidden="true">{{ "Clear all" | rpxTranslate }}</span>
   </button>
 
   <button
@@ -76,14 +81,15 @@
     [class.redaction-button--hide-preview]="preview"
     redaction-button--preview
     aria-pressed="false"
-    [attr.data-tooltip]="'Preview' | rpxTranslate"
+    [attr.data-tooltip]="preview ? ('Hide preview' | rpxTranslate) : ('Preview' | rpxTranslate)"
+    [attr.aria-label]="preview ? ('Hide preview' | rpxTranslate) : ('Preview' | rpxTranslate)"
     data-l10n-id="togglePreviewButton"
     (click)="togglePreview()"
   >
-    <span *ngIf="!preview" data-l10n-id="redaction-preview_label">{{
+    <span *ngIf="!preview" data-l10n-id="redaction-preview_label" aria-hidden="true">{{
       "Preview" | rpxTranslate
     }}</span>
-    <span *ngIf="preview" data-l10n-id="redaction-hide-preview_label">{{
+    <span *ngIf="preview" data-l10n-id="redaction-hide-preview_label" aria-hidden="true">{{
       "Hide preview" | rpxTranslate
     }}</span>
   </button>
@@ -94,10 +100,11 @@
     class="mv-button redaction-button--download mv-tooltip"
     aria-pressed="false"
     [attr.data-tooltip]="'Save document' | rpxTranslate"
+    [attr.aria-label]="'Save document' | rpxTranslate"
     data-l10n-id="mvRedactBtn"
     (click)="redact()"
   >
-    <span data-l10n-id="Save Document">{{
+    <span data-l10n-id="Save Document" aria-hidden="true">{{
       "Save document" | rpxTranslate
     }}</span>
   </button>
@@ -107,11 +114,12 @@
     #mvCloseBtn
     class="mv-button redaction-button--close mv-tooltip"
     [attr.data-tooltip]="'Close Redaction' | rpxTranslate"
+    [attr.aria-label]="'Close Redaction' | rpxTranslate"
     data-l10n-id="mvRedactBtn"
     (click)="toggleRedactBar()"
     [disabled]="redactionAllInProgress"
   >
-    <span data-l10n-id="Close Redaction">{{
+    <span data-l10n-id="Close Redaction" aria-hidden="true">{{
       "Close Redaction" | rpxTranslate
     }}</span>
   </button>

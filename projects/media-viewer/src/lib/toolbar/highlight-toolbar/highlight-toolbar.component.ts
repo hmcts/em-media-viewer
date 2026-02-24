@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { SearchMode, SearchType, ToolbarEventService } from '../toolbar-event.service';
 import { ToolbarButtonVisibilityService } from '../toolbar-button-visibility.service';
+import { ToolbarFocusService } from '../toolbar-focus.service';
 import * as fromStore from '../../store/reducers/reducers';
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -18,7 +19,9 @@ export class HighlightToolbarComponent implements OnInit, OnDestroy {
   redactionAllInProgress: boolean;
 
   constructor(public readonly toolbarEventService: ToolbarEventService,
-    public readonly toolbarButtons: ToolbarButtonVisibilityService) { }
+    public readonly toolbarButtons: ToolbarButtonVisibilityService,
+    private readonly toolbarFocusService: ToolbarFocusService
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(this.toolbarEventService.redactAllInProgressSubject.subscribe(inprogress => {
@@ -42,6 +45,31 @@ export class HighlightToolbarComponent implements OnInit, OnDestroy {
     this.toolbarEventService.highlightToolbarSubject.next(false);
     this.toolbarEventService.highlightModeSubject.next(false);
     this.toolbarEventService.openRedactionSearch.next({ modeType: SearchType.Highlight, isOpen: false } as SearchMode);
+  }
+
+  @HostListener('keydown.escape', ['$event'])
+  onEscapeKey(event: KeyboardEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.closeAndReturnFocus();
+  }
+
+  @HostListener('keydown.arrowup', ['$event'])
+  onArrowUp(event: KeyboardEvent) {
+    const target = event.target as HTMLElement;
+    const highlightToolbar = target.closest('.redaction');
+    if (highlightToolbar) {
+      this.returnFocusToMainToolbar();
+    }
+  }
+
+  private closeAndReturnFocus() {
+    this.onClose();
+    this.returnFocusToMainToolbar();
+  }
+
+  private returnFocusToMainToolbar() {
+      this.toolbarFocusService.focusToolbarButton('#mvHighlightBtn');
   }
 
   ngOnDestroy(): void {
