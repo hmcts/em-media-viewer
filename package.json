@@ -124,7 +124,9 @@
     "tmp": "0.2.5",
     "jws": "^4.0.1",
     "qs": "^6.14.1",
-    "minimatch": "^10.2.2"
+    "minimatch": "^10.2.2",
+    "bn.js": "^5.2.3",
+    "ajv": "^6.14.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "20",
