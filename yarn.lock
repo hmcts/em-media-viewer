@@ -3338,7 +3338,7 @@ __metadata:
     sass: "npm:^1.64.1"
     scss-bundle: "npm:~3.1.2"
     selenium-standalone: "npm:8.3.0"
-    session-file-store: "npm:^1.2.0"
+    session-file-store: "npm:^1.5.0"
     socket.io-client: "npm:^4.8.0"
     sonar-scanner: "npm:^3.1.0"
     totp-generator: "npm:^0.0.14"
@@ -22524,7 +22524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"session-file-store@npm:^1.2.0":
+"session-file-store@npm:^1.5.0":
   version: 1.5.0
   resolution: "session-file-store@npm:1.5.0"
   dependencies:
