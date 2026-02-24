@@ -63,6 +63,7 @@ Alternatively, it is possible to import file by file as required from ```assets/
 
 eg. ```~media-viewer/assets/sass/toolbar/main```
 
+
 ## Customisations
 ### Toolbar
 The toolbar may be toggled off by setting `showToolbar` to false. The toolbar itself is available as a module that can be included into the DOM at a different location if necessary. 
