@@ -777,7 +777,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/platform-browser-dynamic@npm:^20.3.16":
+"@angular/platform-browser-dynamic@npm:20.3.17":
   version: 20.3.17
   resolution: "@angular/platform-browser-dynamic@npm:20.3.17"
   dependencies:
@@ -791,7 +791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/platform-browser@npm:^20.3.16":
+"@angular/platform-browser@npm:20.3.17":
   version: 20.3.17
   resolution: "@angular/platform-browser@npm:20.3.17"
   dependencies:
@@ -807,7 +807,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/platform-server@npm:^20.3.16":
+"@angular/platform-server@npm:20.3.17":
   version: 20.3.17
   resolution: "@angular/platform-server@npm:20.3.17"
   dependencies:
@@ -823,7 +823,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/router@npm:^20.3.16":
+"@angular/router@npm:20.3.17":
   version: 20.3.17
   resolution: "@angular/router@npm:20.3.17"
   dependencies:
@@ -837,7 +837,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/ssr@npm:^20.3.16":
+"@angular/ssr@npm:20.3.17":
   version: 20.3.17
   resolution: "@angular/ssr@npm:20.3.17"
   dependencies:
@@ -3248,11 +3248,11 @@ __metadata:
     "@angular/forms": "npm:20.3.16"
     "@angular/language-service": "npm:20.3.16"
     "@angular/material": "npm:^17.3.8"
-    "@angular/platform-browser": "npm:^20.3.16"
-    "@angular/platform-browser-dynamic": "npm:^20.3.16"
-    "@angular/platform-server": "npm:^20.3.16"
-    "@angular/router": "npm:^20.3.16"
-    "@angular/ssr": "npm:^20.3.16"
+    "@angular/platform-browser": "npm:20.3.17"
+    "@angular/platform-browser-dynamic": "npm:20.3.17"
+    "@angular/platform-server": "npm:20.3.17"
+    "@angular/router": "npm:20.3.17"
+    "@angular/ssr": "npm:20.3.17"
     "@hmcts/nodejs-healthcheck": "npm:^1.8.5"
     "@hmcts/nodejs-logging": "npm:4.0.4"
     "@hmcts/properties-volume": "npm:^1.1.0"
