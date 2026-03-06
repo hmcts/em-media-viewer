@@ -44,6 +44,7 @@ export class HighlightToolbarComponent implements OnInit, OnDestroy {
   onClose() {
     this.toolbarEventService.highlightToolbarSubject.next(false);
     this.toolbarEventService.highlightModeSubject.next(false);
+    this.toolbarEventService.drawModeSubject.next(false);
     this.toolbarEventService.openRedactionSearch.next({ modeType: SearchType.Highlight, isOpen: false } as SearchMode);
   }
 

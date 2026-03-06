@@ -110,7 +110,12 @@ export class ToolbarEventService {
   }
 
   public toggleHighlightToolbar(): void {
-    this.highlightToolbarSubject.next(!this.highlightToolbarSubject.getValue());
+    const isOpening = !this.highlightToolbarSubject.getValue();
+    this.highlightToolbarSubject.next(isOpening);
+    if (!isOpening) {
+      this.highlightModeSubject.next(false);
+      this.drawModeSubject.next(false);
+    }
   }
 
   public rotate(angle: number): void {
@@ -187,10 +192,14 @@ export class ToolbarEventService {
 
   public toggleRedactionMode(): void {
     if (this.redactionMode.getValue() === false) {
+      this.highlightToolbarSubject.next(false);
+      this.highlightModeSubject.next(false);
       this.drawModeSubject.next(false);
       this.grabNDrag.next(false);
       this.redactionMode.next(true);
     } else {
+      this.highlightModeSubject.next(false);
+      this.drawModeSubject.next(false);
       this.redactionMode.next(false);
     }
     this.openRedactionSearch.next({ modeType: SearchType.Redact, isOpen: false });
