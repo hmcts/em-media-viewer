@@ -10,7 +10,8 @@ import { ServiceAuthProviderClient } from './security/service-auth-provider-clie
 import { IdamClient } from './security/idam-client';
 import { healthcheckRoutes } from './health';
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// For development purposes only, to allow self-signed certificates when proxying to
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const frontendRoot = path.join(__dirname, '..', 'demo-app');
 const app = express();
@@ -37,7 +38,9 @@ Promise.all([serviceAuthRepository.init(), idamRepository.init()])
 
         const proxyOptions = {
             onProxyReq: addHeaders,
-            secure: false,
+            // Set to false if the target server uses a self-signed certificate. This is not recommended for production environments
+            // secure: false,
+            secure: true,
             changeOrigin: true
         };
 
