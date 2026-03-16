@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.13",
+  "version": "4.2.13-EXUI-4227-cve-test-2",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
