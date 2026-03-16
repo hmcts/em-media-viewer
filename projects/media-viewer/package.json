@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.13",
+  "version": "4.2.14-remove-unused-packages-1",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
@@ -28,10 +28,8 @@
     "@angular/common": "^20.0.0",
     "@angular/core": "^20.0.0",
     "@angular/forms": "^20.0.0",
-    "@angular/material": "^17.3.8",
     "@angular/platform-browser": "^20.0.0",
     "@ngrx/effects": "^20",
-    "@ngrx/router-store": "^20",
     "@ngrx/store": "^20",
     "@ngrx/store-devtools": "^20"
   },
