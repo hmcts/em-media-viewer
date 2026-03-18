@@ -201,7 +201,7 @@ describe('HighlightCreateDirective', () => {
   });
 
   describe('keyboard text selection', () => {
-    it('should focus element when highlight mode is enabled', fakeAsync(() => {
+    it('should focus element without scrolling when highlight mode is enabled', fakeAsync(() => {
       const mockElement = document.createElement('div');
       const newDirective = new HighlightCreateDirective(
         new ElementRef<HTMLElement>(mockElement),
@@ -217,7 +217,7 @@ describe('HighlightCreateDirective', () => {
       toolbarEvents.highlightModeSubject.next(true);
 
       tick(150);
-      expect(mockElement.focus).toHaveBeenCalled();
+      expect(mockElement.focus).toHaveBeenCalledWith({ preventScroll: true });
       newDirective.ngOnDestroy();
     }));
 

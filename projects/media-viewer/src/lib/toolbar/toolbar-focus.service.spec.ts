@@ -55,6 +55,7 @@ describe('ToolbarFocusService', () => {
       tick();
 
       expect(focusSpy).toHaveBeenCalledTimes(1);
+      expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true });
       expect(document.activeElement).toBe(singleButton);
       document.body.removeChild(singleButton);
     }));
@@ -66,6 +67,7 @@ describe('ToolbarFocusService', () => {
       tick();
 
       expect(focusSpy).toHaveBeenCalledTimes(1);
+      expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true });
       expect(document.activeElement).toBe(button2);
     }));
 
@@ -76,6 +78,7 @@ describe('ToolbarFocusService', () => {
       tick();
 
       expect(focusSpy).toHaveBeenCalledTimes(1);
+      expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true });
       expect(document.activeElement).toBe(button1);
     }));
 
