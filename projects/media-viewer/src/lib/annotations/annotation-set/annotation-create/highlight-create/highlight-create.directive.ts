@@ -45,13 +45,21 @@ export class HighlightCreateDirective implements OnInit, OnDestroy {
         filter(enabled => enabled && !!this.element.nativeElement),
         debounceTime(100)
       ).subscribe(() => {
-        this.element.nativeElement.focus();
+        this.focusWithoutScrolling(this.element.nativeElement);
       })
     );
   }
 
   ngOnDestroy() {
     this.$subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  private focusWithoutScrolling(element: HTMLElement): void {
+    try {
+      element.focus({ preventScroll: true });
+    } catch {
+      element.focus();
+    }
   }
 
   @HostListener('mouseup', ['$event'])

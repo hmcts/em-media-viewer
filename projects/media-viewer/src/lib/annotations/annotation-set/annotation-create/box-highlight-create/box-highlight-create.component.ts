@@ -95,7 +95,11 @@ export class BoxHighlightCreateComponent implements OnInit, OnDestroy {
   private focusDrawingContainer(): void {
     setTimeout(() => {
       if (this.drawingContainer?.nativeElement && this.isElementInViewport(this.drawingContainer.nativeElement)) {
-        this.drawingContainer.nativeElement.focus();
+        try {
+          this.drawingContainer.nativeElement.focus({ preventScroll: true });
+        } catch {
+          this.drawingContainer.nativeElement.focus();
+        }
       }
     }, 100);
   }
