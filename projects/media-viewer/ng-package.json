@@ -5,6 +5,18 @@
   "lib": {
     "entryFile": "src/public_api.ts"
   },
+  "assets": [
+    {
+      "glob": "**/*",
+      "input": "src/assets",
+      "output": "assets"
+    },
+    {
+      "glob": "**/*",
+      "input": "node_modules/pdfjs-dist/build",
+      "output": "assets/build"
+    }
+  ],
   "allowedNonPeerDependencies": [
     "@swimlane/ngx-datatable",
     "pdfjs-dist",
