@@ -88,16 +88,24 @@ import { IcpEventService } from './icp-event.service';
     });
 
     it('should toggle redaction mode off', () => {
+      service.highlightToolbarSubject.next(true);
+      service.highlightModeSubject.next(true);
       service.redactionMode.next(false);
       service.toggleRedactionMode();
+      expect(service.highlightToolbarSubject.getValue()).toBeFalsy();
+      expect(service.highlightModeSubject.getValue()).toBeFalsy();
       expect(service.drawModeSubject.getValue()).toBeFalsy();
       expect(service.grabNDrag.getValue()).toBeFalsy();
       expect(service.redactionMode.getValue()).toBeTruthy();
     });
 
     it('should toggle redaction mode on', () => {
+      service.highlightModeSubject.next(true);
+      service.drawModeSubject.next(true);
       service.redactionMode.next(true);
       service.toggleRedactionMode();
+      expect(service.highlightModeSubject.getValue()).toBeFalsy();
+      expect(service.drawModeSubject.getValue()).toBeFalsy();
       expect(service.redactionMode.getValue()).toBeFalsy();
     });
 
@@ -131,6 +139,18 @@ import { IcpEventService } from './icp-event.service';
       expect(service.highlightToolbarSubject.getValue()).toBeTruthy();
       service.toggleHighlightToolbar();
       expect(service.highlightToolbarSubject.getValue()).toBeFalsy();
+    });
+
+    it('should clear highlight and draw submenu selections when highlight toolbar closes', () => {
+      service.highlightToolbarSubject.next(true);
+      service.highlightModeSubject.next(true);
+      service.drawModeSubject.next(true);
+
+      service.toggleHighlightToolbar();
+
+      expect(service.highlightToolbarSubject.getValue()).toBeFalsy();
+      expect(service.highlightModeSubject.getValue()).toBeFalsy();
+      expect(service.drawModeSubject.getValue()).toBeFalsy();
     });
 
     it('should rotate', () => {

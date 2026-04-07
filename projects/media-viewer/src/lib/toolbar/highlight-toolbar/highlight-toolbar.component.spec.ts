@@ -128,6 +128,18 @@ describe('HighlightToolbarComponent', () => {
     expect(fixture.debugElement.query(By.css('.mv-toolbar__menu-button--highlight')).nativeElement).not.toHaveClass('toggled');
   });
 
+  it('should clear both highlight and draw submenu selections when highlight toolbar closes', () => {
+    toolbarService.highlightToolbarSubject.next(true);
+    toolbarService.highlightModeSubject.next(true);
+    toolbarService.drawModeSubject.next(true);
+
+    component.onClose();
+
+    expect(toolbarService.highlightToolbarSubject.getValue()).toBeFalse();
+    expect(toolbarService.highlightModeSubject.getValue()).toBeFalse();
+    expect(toolbarService.drawModeSubject.getValue()).toBeFalse();
+  });
+
   describe('keyboard navigation', () => {
     describe('onEscapeKey', () => {
       it('should close toolbar and return focus to main toolbar on Escape key', () => {
