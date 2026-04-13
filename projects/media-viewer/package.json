@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.15-EXUI-4227-CVE-fixes",
+  "version": "4.2.16",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
