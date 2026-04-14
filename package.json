@@ -156,7 +156,7 @@
     "codelyzer": "^6.0.0",
     "coveralls": "^3.0.3",
     "cross-env": "^7.0.3",
-    "cucumber": "^6",
+    "@cucumber/cucumber": "^7.0.0",
     "cucumber-html-report": "0.6.5",
     "cucumber-html-reporter": "^4.0.5",
     "cucumber-pretty": "1.5.2",
