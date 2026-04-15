@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.16",
+  "version": "4.2.16-exui-4425",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -15,7 +15,7 @@
     "build": "yarn build:lib && yarn build:demo",
     "build:lib": "cd projects/media-viewer && yarn install && ng build --configuration production",
     "build:demo": "ng build media-viewer-demo-app --configuration production",
-    "copy:lib-files": "yarn copy:lib-js-dependencies && yarn copy:lib-assets && yarn copy:docs",
+    "copy:lib-files": "yarn copy:lib-js-dependencies && yarn copy:lib-assets && yarn copy:docs && yarn sync:library-package",
     "copy:demo-files": "yarn copy:demo-js-dependencies && yarn copy:demo-assets",
     "copy:lib-js-dependencies": "cross-env NODE_PATH=. rsync -r projects/media-viewer/node_modules/pdfjs-dist/build dist/media-viewer/assets",
     "copy:demo-js-dependencies": "cross-env NODE_PATH=. rsync -r projects/media-viewer/node_modules/pdfjs-dist/build dist/demo-app/assets",
@@ -26,6 +26,7 @@
     "copy:readme": "cross-env NODE_PATH=. cp ./LICENCE dist/media-viewer",
     "publish:dist": "yarn package && cd dist/media-viewer && yarn install --no-immutable && yarn npm publish",
     "npm-pack": "cd dist/media-viewer && touch yarn.lock && yarn pack",
+    "sync:library-package": "node ./scripts/sync-library-package.mjs",
     "test": "cd projects/media-viewer; ng test",
     "test:coverage": "echo test:coverage",
     "test:a11y": "echo test:a11y",
