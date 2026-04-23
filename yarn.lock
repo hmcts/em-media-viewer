@@ -3297,7 +3297,7 @@ __metadata:
     proxyquire: "npm:2.1.3"
     puppeteer: "npm:^24.42.0"
     require-directory: "npm:2.1.1"
-    rpx-xui-translation: "npm:1.1.2-CME-780-9"
+    rpx-xui-translation: "npm:1.2.3"
     rxjs: "npm:^7.8.1"
     sass: "npm:^1.97.3"
     selenium-standalone: "npm:8.3.0"
@@ -21791,17 +21791,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rpx-xui-translation@npm:1.1.2-CME-780-9":
-  version: 1.1.2-CME-780-9
-  resolution: "rpx-xui-translation@npm:1.1.2-CME-780-9"
+"rpx-xui-translation@npm:1.2.3":
+  version: 1.2.3
+  resolution: "rpx-xui-translation@npm:1.2.3"
   dependencies:
     dexie: "npm:^3.2.2"
     luxon: "npm:^2.4.0"
     tslib: "npm:^2.0.0"
   peerDependencies:
-    "@angular/common": ^20.3.1
-    "@angular/core": ^20.3.1
-  checksum: 10/82126cfbc5984c0e3718a173e8e29d35c18f56e01dbe10241b7bd3f17ce5df065421dffc030db0dc88ec807597aa5aadb55b3349c03ac8335dc44189886aec0a
+    "@angular/common": ^20.3.14
+    "@angular/core": ^20.3.14
+  checksum: 10/32388e2cbee3f2872c7e16541246606e131535d37c1a9869103efcbead0589a9c45d12a027e55e070e6913174041628cb5f1e6dc7e6310f39ba6f489a311bca8
   languageName: node
   linkType: hard
 
