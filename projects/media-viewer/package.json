@@ -21,7 +21,7 @@
     "mutable-div": "^2.0.0",
     "pdfjs-dist": "^4.10.38",
     "socket.io-client": "^4.8.0",
-    "uuid": "^11.0.3"
+    "uuid": "^14.0.0"
   },
   "peerDependencies": {
     "@angular/animations": "^20.0.0",
