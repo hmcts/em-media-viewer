@@ -803,6 +803,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular/router@npm:20.3.18":
+  version: 20.3.18
+  resolution: "@angular/router@npm:20.3.18"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular/common": 20.3.18
+    "@angular/core": 20.3.18
+    "@angular/platform-browser": 20.3.18
+    rxjs: ^6.5.3 || ^7.4.0
+  checksum: 10/6c195ec92ddb4aae31e7dd8d7c6708b6c00d22126b2700da27bd93fb20791e81564ed11de6b8ca9d9abd9b9c9609695197ffe122261c7ba76cc6ede559b81321
+  languageName: node
+  linkType: hard
+
+"@angular/ssr@npm:20.3.18":
+  version: 20.3.18
+  resolution: "@angular/ssr@npm:20.3.18"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular/common": ^20.0.0
+    "@angular/core": ^20.0.0
+    "@angular/platform-server": ^20.0.0
+    "@angular/router": ^20.0.0
+  peerDependenciesMeta:
+    "@angular/platform-server":
+      optional: true
+  checksum: 10/525d71bc472b27da3de8242616ec0af694f00dcb54d1c5baca379360fefe4a937ad58a953666d21ea9829ced2f0de75ea894e3b6f7953fa72165e80f08e6bca8
+  languageName: node
+  linkType: hard
+
 "@arr/every@npm:^1.0.0":
   version: 1.0.1
   resolution: "@arr/every@npm:1.0.1"
@@ -3199,6 +3230,8 @@ __metadata:
     "@angular/platform-browser": "npm:20.3.18"
     "@angular/platform-browser-dynamic": "npm:20.3.18"
     "@angular/platform-server": "npm:20.3.18"
+    "@angular/router": "npm:20.3.18"
+    "@angular/ssr": "npm:20.3.18"
     "@hmcts/nodejs-healthcheck": "npm:^1.8.5"
     "@hmcts/nodejs-logging": "npm:4.0.4"
     "@hmcts/properties-volume": "npm:^1.1.0"

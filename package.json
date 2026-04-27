@@ -59,6 +59,8 @@
     "@angular/platform-browser": "20.3.18",
     "@angular/platform-browser-dynamic": "20.3.18",
     "@angular/platform-server": "20.3.18",
+    "@angular/router": "20.3.18",
+    "@angular/ssr": "20.3.18",
     "@hmcts/nodejs-healthcheck": "^1.8.5",
     "@hmcts/nodejs-logging": "4.0.4",
     "@hmcts/properties-volume": "^1.1.0",
