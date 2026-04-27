@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.14-remove-unused-packages-1",
+  "version": "4.2.17-remove-unused-packages-1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -49,16 +49,16 @@
     "test:crossbrowser": "NODE_PATH=. codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} -c test/end-to-end/saucelabs.conf.js --plugins retryFailedStep --steps --grep '@xb' --reporter mocha-multi"
   },
   "dependencies": {
-    "@angular/animations": "20.3.16",
+    "@angular/animations": "20.3.18",
     "@angular/cdk": "^17.3.8",
-    "@angular/common": "20.3.16",
-    "@angular/compiler": "20.3.16",
-    "@angular/core": "20.3.16",
-    "@angular/forms": "20.3.16",
+    "@angular/common": "20.3.18",
+    "@angular/compiler": "20.3.18",
+    "@angular/core": "20.3.18",
+    "@angular/forms": "20.3.18",
     "@angular/material": "^17.3.8",
-    "@angular/platform-browser": "20.3.17",
-    "@angular/platform-browser-dynamic": "20.3.17",
-    "@angular/router": "20.3.17",
+   "@angular/platform-browser": "20.3.18",
+    "@angular/platform-browser-dynamic": "20.3.18",
+    "@angular/platform-server": "20.3.18",
     "@hmcts/nodejs-healthcheck": "^1.8.5",
     "@hmcts/nodejs-logging": "4.0.4",
     "@hmcts/properties-volume": "^1.1.0",
@@ -70,7 +70,6 @@
     "body-parser": "^1.20.3",
     "config": "^3.3.9",
     "core-js": "^2.6.5",
-    "glob": "^11.1.0",
     "govuk-frontend": "^4.9.0",
     "hammerjs": "^2.0.8",
     "moment-timezone": "^0.5.28",
@@ -115,7 +114,8 @@
     "tmp": "0.2.5",
     "jws": "^4.0.1",
     "qs": "^6.14.1",
-    "bn.js": "^5.2.3"
+    "bn.js": "^5.2.3",
+    "immutable": "^5.1.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "20",
@@ -126,8 +126,8 @@
     "@angular-eslint/schematics": "20.3.0",
     "@angular-eslint/template-parser": "20.3.0",
     "@angular/cli": "20.3.9",
-    "@angular/compiler-cli": "20.3.16",
-    "@angular/language-service": "20.3.16",
+    "@angular/compiler-cli": "20.3.18",
+    "@angular/language-service": "20.3.18",
     "@ngrx/schematics": "^20",
     "@types/chai": "4.3.20",
     "@types/cucumber": "^6",

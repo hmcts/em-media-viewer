@@ -13,8 +13,6 @@ export class ServiceAuthProviderClient {
     private readonly secret: string;
 
     constructor() {
-        console.log("this is the s2s key", config.s2s.secret);
-        console.log("this is the s2s URL", config.s2s.url);
         this.http = Axios.create({
             baseURL: config.s2s.url,
             headers: {
@@ -23,6 +21,7 @@ export class ServiceAuthProviderClient {
         });
         this.microservice = config.s2s.microservice;
         this.secret = config.s2s.secret;
+        logger.info("S2S client initialized");
     }
 
     /**

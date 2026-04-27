@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.14-remove-unused-packages-1",
+  "version": "4.2.17-remove-unused-packages-1",
   "description": "Media Viewer",
   "keywords": [
     "Angular",

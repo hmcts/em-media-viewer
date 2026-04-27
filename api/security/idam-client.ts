@@ -19,8 +19,6 @@ export class IdamClient {
   private readonly password: string;
 
   constructor() {
-    console.log('this is the idam key', config.idam.secret);
-    console.log('this is the idam URL', config.idam.url);
     this.http = Axios.create({
       baseURL: config.idam.url
     });
@@ -66,7 +64,6 @@ export class IdamClient {
     params.append('client_secret', this.secret);
     params.append('username', email);
     params.append('password', this.password);
-    console.log('these are the params', params);
     try {
       const response = await this.http.post('/o/token', params, { headers });
       return response.data['access_token'];
