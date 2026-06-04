@@ -3242,7 +3242,7 @@ __metadata:
     "@swimlane/ngx-datatable": "npm:^20.0.0"
     "@types/chai": "npm:4.3.20"
     "@types/cucumber": "npm:^6"
-    "@types/jasmine": "npm:~6.0.0"
+    "@types/jasmine": "npm:~5.1.0"
     "@types/jasminewd2": "npm:^2.0.8"
     "@types/lodash": "npm:4.17.10"
     "@types/mocha": "npm:^8.2.1"
@@ -6846,10 +6846,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:*, @types/jasmine@npm:~6.0.0":
+"@types/jasmine@npm:*":
   version: 6.0.0
   resolution: "@types/jasmine@npm:6.0.0"
   checksum: 10/22a838ab8d3221da78629819744b7a0065ce6381d198d745258c3ec29974470240160d47fb06b629c1653f285ed23c15c101f0f6939d2817abc02f253ff491b7
+  languageName: node
+  linkType: hard
+
+"@types/jasmine@npm:~5.1.0":
+  version: 5.1.15
+  resolution: "@types/jasmine@npm:5.1.15"
+  checksum: 10/e86a962c153ff91ffe3c65a633578a5e3f6e065e58268c00e839b03dac6792b1e0a2afca216ccfa1e31647e49ef1a935332242350dca91a2940ad883643abd04
   languageName: node
   linkType: hard
 
