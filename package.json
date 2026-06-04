@@ -37,6 +37,7 @@
     "test:codecov-upload": "codecov -f ./reports/tests/coverage/ng/lcov.info",
     "test:pa11y": "pa11y-ci",
     "lint": "ng lint",
+    "prepush": "bash ./bin/prepush.sh",
     "clean": "rimraf reports",
     "stub:annotations": "node api/annotation-stubs.js &",
     "webdriver:update": "webdriver-manager update --versions.chrome 2.44",
