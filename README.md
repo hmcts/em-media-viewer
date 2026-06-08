@@ -4,7 +4,7 @@
 
 This is an angular library that can be used to view and annotate PDF documents and images
 
-## Running demo app
+## Running  demo app
 - yarn package
 - yarn start:ng
 
