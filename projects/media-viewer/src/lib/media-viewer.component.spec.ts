@@ -22,8 +22,6 @@ import { reducers } from './store/reducers/reducers';
 import * as fromRedactActions from './store/actions/redaction.actions';
 import * as fromAnnoActions from './store/actions/annotation.actions';
 
-let intentionalLintError = 'trigger lint failure';
-
 describe('MediaViewerComponent', () => {
   let component: MediaViewerComponent;
   let fixture: ComponentFixture<MediaViewerComponent>;
