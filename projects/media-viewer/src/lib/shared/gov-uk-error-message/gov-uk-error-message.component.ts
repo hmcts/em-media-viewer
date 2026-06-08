@@ -19,3 +19,10 @@ export class GovUkErrorMessageComponent {
   @Input() config: { id: string };
   @Input() errorMessage;
 }
+
+@Directive({
+    selector: '[badLintSelector]',
+    standalone: false
+})
+export class LintErrorDirective {
+}
