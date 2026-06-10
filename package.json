@@ -82,7 +82,7 @@
     "pdfjs-dist": "^4.10.38",
     "rpx-xui-translation": "1.2.3",
     "rxjs": "^7.8.1",
-     "sass": "^1.97.3",
+    "sass": "^1.97.3",
     "scss-bundle": "~3.1.2",
     "socket.io-client": "^4.8.3",
     "uuid": "^11.0.3",
