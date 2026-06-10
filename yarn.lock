@@ -3481,7 +3481,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:7.16.0"
     "@typescript-eslint/types": "npm:7.16.0"
     "@typescript-eslint/utils": "npm:7.16.0"
-    axios: "npm:1.15.2"
+    axios: "npm:^1.16.0"
     body-parser: "npm:^1.20.3"
     chai: "npm:^4.3.0"
     codeceptjs: "npm:3.6.7"
@@ -8444,6 +8444,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.16.0":
+  version: 1.16.0
+  resolution: "axios@npm:1.16.0"
+  dependencies:
+    follow-redirects: "npm:^1.16.0"
+    form-data: "npm:^4.0.5"
+    proxy-from-env: "npm:^2.1.0"
+  checksum: 10/cf8b521ff732c21550b38c8739aef556ea5e14b268468bb89e4307416ab262b462e582474e810963a3d61c2392ab47ad35c11d05eff027de7c97113bc7411623
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:4.1.0":
   version: 4.1.0
   resolution: "axobject-query@npm:4.1.0"
@@ -8793,7 +8804,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brace-expansion@npm:2.0.2":
+"brace-expansion@npm:2.0.2, brace-expansion@npm:^2.0.2":
   version: 2.0.2
   resolution: "brace-expansion@npm:2.0.2"
   dependencies:
@@ -12903,7 +12914,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.6":
+"follow-redirects@npm:^1.16.0":
   version: 1.16.0
   resolution: "follow-redirects@npm:1.16.0"
   peerDependenciesMeta:
@@ -17009,12 +17020,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^9.0.4":
-  version: 9.0.6
-  resolution: "minimatch@npm:9.0.6"
+"minimatch@npm:^9.0.4, minimatch@npm:^9.0.5":
+  version: 9.0.9
+  resolution: "minimatch@npm:9.0.9"
   dependencies:
-    brace-expansion: "npm:^5.0.2"
-  checksum: 10/c7a46134aaf349f386de9a3f6c5b48c53bc3a4e2ef4b8b6365184504e28cc31cc261a388e181648cbc756b40e213dbce115c8087a47eff8f54ee28d62bc17b08
+    brace-expansion: "npm:^2.0.2"
+  checksum: 10/b91fad937deaffb68a45a2cb731ff3cff1c3baf9b6469c879477ed16f15c8f4ce39d63a3f75c2455107c2fdff0f3ab597d97dc09e2e93b883aafcf926ef0c8f9
   languageName: node
   linkType: hard
 
