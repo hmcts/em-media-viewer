@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.18-exui-4295-cve-fix",
+  "version": "4.2.19",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
