@@ -187,5 +187,5 @@
     "webdriver-manager": "^12.1.7",
     "yarn-audit-fix": "^10.0.7"
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "yarn@4.17.0"
 }
