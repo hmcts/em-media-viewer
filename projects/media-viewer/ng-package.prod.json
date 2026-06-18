@@ -6,9 +6,10 @@
   },
   "allowedNonPeerDependencies": [
     "@swimlane/ngx-datatable",
-    "pdfjs-dist",
-    "uuid",
+    "moment-timezone",
     "mutable-div",
-    "socket.io-client"
+    "pdfjs-dist",
+    "socket.io-client",
+    "uuid"
   ]
 }
