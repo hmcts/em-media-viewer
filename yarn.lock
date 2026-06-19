@@ -3518,7 +3518,7 @@ __metadata:
     puppeteer: "npm:^24.42.0"
     require-directory: "npm:2.1.1"
     rpx-xui-translation: "npm:1.2.3"
-    rxjs: "npm:^7.8.1"
+    rxjs: "npm:^7.8.2"
     sass: "npm:^1.97.3"
     socket.io-client: "npm:^4.8.3"
     sonar-scanner: "npm:^3.1.0"
@@ -20514,7 +20514,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.8.2, rxjs@npm:^7.8.1":
+"rxjs@npm:7.8.2, rxjs@npm:^7.8.1, rxjs@npm:^7.8.2":
   version: 7.8.2
   resolution: "rxjs@npm:7.8.2"
   dependencies:
