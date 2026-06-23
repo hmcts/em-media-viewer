@@ -65,7 +65,6 @@ withPipeline(type, product, component) {
   overrideVaultEnvironments(vaultOverrides)
   loadVaultSecrets(secrets)
   enableSecurityScan()
-  env.PUPPETEER_CACHE_DIR = "${env.WORKSPACE}/.cache/puppeteer"
   env.EXECUTE_E2E=false
   env.TEST_URL = 'https://em-media-viewer-staging.service.core-compute-aat.internal/'
   onPR{
@@ -75,6 +74,7 @@ withPipeline(type, product, component) {
   disableLegacyDeployment()
 
   afterSuccess('checkout') {
+      env.PUPPETEER_CACHE_DIR = "${env.WORKSPACE}/.cache/puppeteer"
       sh ("rm -rf node_modules")
       sh ("yarn cache clean")
       sh ('npm rebuild node-sass')
