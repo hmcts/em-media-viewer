@@ -3451,7 +3451,7 @@ __metadata:
     "@angular/platform-server": "npm:20.3.19"
     "@angular/router": "npm:20.3.19"
     "@angular/ssr": "npm:20.3.24"
-    "@hmcts/nodejs-healthcheck": "npm:^1.8.5"
+    "@hmcts/nodejs-healthcheck": "npm:^1.8.6"
     "@hmcts/nodejs-logging": "npm:4.0.4"
     "@hmcts/properties-volume": "npm:1.4.0"
     "@ngrx/effects": "npm:^20"
@@ -3534,7 +3534,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hmcts/nodejs-healthcheck@npm:^1.8.5":
+"@hmcts/nodejs-healthcheck@npm:^1.8.6":
   version: 1.8.6
   resolution: "@hmcts/nodejs-healthcheck@npm:1.8.6"
   dependencies:
