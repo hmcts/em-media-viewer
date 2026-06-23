@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.21",
+  "version": "4.2.22-properties-volume",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -65,7 +65,7 @@
     "@angular/ssr": "20.3.24",
     "@hmcts/nodejs-healthcheck": "^1.8.5",
     "@hmcts/nodejs-logging": "4.0.4",
-    "@hmcts/properties-volume": "1.4.0",
+    "@hmcts/properties-volume": "^1.4.0",
     "@ngrx/effects": "^20",
     "@ngrx/store": "^20",
     "@ngrx/store-devtools": "^20",
