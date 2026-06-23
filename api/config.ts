@@ -1,10 +1,18 @@
 import * as aksVaultConfig from 'config';
 import * as propertiesVolume from '@hmcts/properties-volume';
-propertiesVolume.addTo(aksVaultConfig);
 
-const IDAM_SECRET = aksVaultConfig.secrets ? aksVaultConfig.secrets['em-showcase']['show-oauth2-token'] : undefined;
-const S2S_KEY = aksVaultConfig.secrets ? aksVaultConfig.secrets['em-showcase']['microservicekey-em-gw'] : undefined;
-const IDAM_PASSWORD = aksVaultConfig.secrets ? aksVaultConfig.secrets['em-showcase']['password'] : undefined;
+type VaultConfig = typeof aksVaultConfig & {
+  secrets?: {
+    'em-showcase': Record<string, string | undefined>;
+  };
+};
+
+const vaultConfig = aksVaultConfig as VaultConfig;
+propertiesVolume.addTo(vaultConfig);
+
+const IDAM_SECRET = vaultConfig.secrets ? vaultConfig.secrets['em-showcase']['show-oauth2-token'] : undefined;
+const S2S_KEY = vaultConfig.secrets ? vaultConfig.secrets['em-showcase']['microservicekey-em-gw'] : undefined;
+const IDAM_PASSWORD = vaultConfig.secrets ? vaultConfig.secrets['em-showcase']['password'] : undefined;
 
 export const config = {
   proxies: {
