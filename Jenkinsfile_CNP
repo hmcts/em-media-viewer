@@ -88,7 +88,7 @@ withPipeline(type, product, component) {
 
   before('test') {
     sh ('rm -rf "$PUPPETEER_CACHE_DIR/chrome"')
-    sh ('yarn puppeteer browsers install chrome')
+    yarnBuilder.yarn('puppeteer browsers install chrome')
   }
 
   afterAlways('smoketest:preview') {
