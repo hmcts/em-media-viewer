@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.21",
+  "version": "4.2.22-properties-volume",
   "description": "Media Viewer",
   "keywords": [
     "Angular",
