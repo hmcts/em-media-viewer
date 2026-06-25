@@ -1,5 +1,5 @@
 import Axios, { AxiosInstance } from "axios";
-import * as otp from "otp";
+import { OTP } from 'otp';
 import { config } from "../config";
 import { logger } from "../logger";
 
@@ -30,7 +30,7 @@ export class ServiceAuthProviderClient {
     public async getToken(): Promise<string> {
         const body = {
             microservice: this.microservice,
-            oneTimePassword: otp({ secret: this.secret }).totp(),
+            oneTimePassword: await new OTP({ secret: this.secret }).totp(Date.now()),
         };
 
         try {
