@@ -13,6 +13,11 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "otp": [
+        "../node_modules/otp/dist/otp.d.ts"
+      ]
+    },
   }
 }

@@ -3458,7 +3458,7 @@ __metadata:
     "@ngrx/schematics": "npm:^20"
     "@ngrx/store": "npm:^20"
     "@ngrx/store-devtools": "npm:^20"
-    "@swimlane/ngx-datatable": "npm:^20.0.0"
+    "@swimlane/ngx-datatable": "npm:^23.0.1"
     "@types/chai": "npm:4.3.20"
     "@types/cucumber": "npm:^6"
     "@types/jasmine": "npm:~5.1.0"
@@ -3503,13 +3503,13 @@ __metadata:
     mocha-junit-reporter: "npm:2.2.1"
     mocha-multi: "npm:1.1.7"
     mochawesome: "npm:7.1.3"
-    moment-timezone: "npm:^0.5.28"
+    moment-timezone: "npm:^0.6.2"
     mutable-div: "npm:2.0.0"
     ng-packagr: "npm:20"
     ngrx-store-freeze: "npm:^0.2.4"
     ngx-chips: "npm:3.0.0"
     nunjucks: "npm:^3.2.4"
-    otp: "npm:^0.1.3"
+    otp: "npm:^2.0.1"
     pa11y-ci: "npm:^2.4.0"
     pdfjs-dist: "npm:^4.10.38"
     protractor: "npm:^7.0.0"
@@ -3530,7 +3530,7 @@ __metadata:
     uuid: "npm:^11.0.3"
     webdriver-manager: "npm:^12.1.7"
     yarn-audit-fix: "npm:^10.0.7"
-    zone.js: "npm:~0.15.0"
+    zone.js: "npm:0.16.2"
   languageName: unknown
   linkType: soft
 
@@ -6824,17 +6824,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swimlane/ngx-datatable@npm:^20.0.0":
-  version: 20.1.0
-  resolution: "@swimlane/ngx-datatable@npm:20.1.0"
+"@swimlane/ngx-datatable@npm:^23.0.1":
+  version: 23.0.1
+  resolution: "@swimlane/ngx-datatable@npm:23.0.1"
   dependencies:
     tslib: "npm:^2.0.0"
   peerDependencies:
-    "@angular/common": ">=11.0.2"
-    "@angular/core": ">=11.0.2"
-    "@angular/platform-browser": ">=11.0.2"
-    rxjs: ^6.6.3 || ^7.4.0
-  checksum: 10/e3d500f986096c5d5062480e755568984147123f0665c141ad517d52de3f6b1ef3ab306f355e4a8fef14c8305d85e6de7d0c4c8e0437acc3556765a59ee3577e
+    "@angular/common": 18.x || 19.x || 20.x
+    "@angular/core": 18.x || 19.x || 20.x
+    "@angular/platform-browser": 18.x || 19.x || 20.x
+    rxjs: 7.x
+  checksum: 10/4768d437581984afcf98010d1a3e396648f8878d572e37b4e1a7847f09ace82ed3d0063e7679289f12fc79165645233d80fa92ecf7997ff556c95c7792698419
   languageName: node
   linkType: hard
 
@@ -17282,12 +17282,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:^0.5.28":
-  version: 0.5.48
-  resolution: "moment-timezone@npm:0.5.48"
+"moment-timezone@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "moment-timezone@npm:0.6.2"
   dependencies:
     moment: "npm:^2.29.4"
-  checksum: 10/8e0b7a05577623552293b28eeee4e60634b8be87fdb74084fa6d5ccc516771eb42d88f29c5a5e50a94c494048d14cdef94f94526a9dfd5e1b0050ff29d0a6c0a
+  checksum: 10/021f908742a392ff7234b3814fb20c786cb086d0fa3f98a58f6810181c71a305244e908e913d8bd6750c4a7e09300eda2c869cd77ef0b3f83e58028fa75f84de
   languageName: node
   linkType: hard
 
@@ -18339,12 +18339,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"otp@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "otp@npm:0.1.3"
-  dependencies:
-    thirty-two: "npm:^0.0.2"
-  checksum: 10/82c8511323ef82a18c7dd9f1b479c18a653fcb664023aa67bb1d48721fff7282e81fa9be56735c246f2e85757d9f4e3181a1851e2c4e61f1378c6e80bbaac846
+"otp@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "otp@npm:2.0.1"
+  checksum: 10/5d2092126a1d26c5d2d9dafa5ceab08c85ac3b6e35c39df2d2c979cc54f5fff028ac05cffa7fdb887c411579bcf72c961deb0a01d693eba3d5083176ecccc26e
   languageName: node
   linkType: hard
 
@@ -22105,13 +22103,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"thirty-two@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "thirty-two@npm:0.0.2"
-  checksum: 10/e5766d18e713fca70c6795c24063299ddfebec1ebe0c338df06d5be14f3def140e49f6bbff283d6149cf34be99b31dd0e8cff41664adec8df131335dfda1d764
-  languageName: node
-  linkType: hard
-
 "throat@npm:^5.0.0":
   version: 5.0.0
   resolution: "throat@npm:5.0.0"
@@ -23848,9 +23839,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zone.js@npm:~0.15.0":
-  version: 0.15.1
-  resolution: "zone.js@npm:0.15.1"
-  checksum: 10/10f8b8651694e7c9484b32da677d4051b8aaa7e2cb3a6baa1f608ff789e249fbccca33820b0590f9d80a7bbfc860a3ae3a6969b5c433f77b1b66e896f3d5b4d5
+"zone.js@npm:0.16.2":
+  version: 0.16.2
+  resolution: "zone.js@npm:0.16.2"
+  checksum: 10/3b8bf9b5379f6590a7f814f477549bf67bc39c1b61445474893e178884014cc9b29b3624c19f30ed6ad954510da50b5b448506a196701610606bafa5a6d3ff98
   languageName: node
   linkType: hard
