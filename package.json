@@ -121,14 +121,14 @@
     "immutable": "^5.1.5"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "20.3.24",
-    "@angular-devkit/core": "20.3.24",
+    "@angular-devkit/build-angular": "20.3.31",
+    "@angular-devkit/core": "20.3.31",
     "@angular-eslint/builder": "20.3.0",
     "@angular-eslint/eslint-plugin": "20.3.0",
     "@angular-eslint/eslint-plugin-template": "20.3.0",
     "@angular-eslint/schematics": "20.3.0",
     "@angular-eslint/template-parser": "20.3.0",
-    "@angular/cli": "20.3.19",
+    "@angular/cli": "20.3.31",
     "@angular/compiler-cli": "20.3.19",
     "@angular/language-service": "20.3.19",
     "@ngrx/schematics": "^20",
