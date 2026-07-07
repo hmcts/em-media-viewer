@@ -286,8 +286,16 @@ async function previewEnv() {
 
 async function executeTestsOnPreview(I, caseId, mediaType) {
   await I.amOnPage(testConfig.TestUrl, testConfig.PageLoadTime);
-  await I.waitForText(commonConfig.assertEnvTestData, testConfig.TestTimeToWaitForText);
-  console.log('mvCaseHelper2', await I.grabCurrentUrl());
+  try {
+    await I.waitForElement(commonConfig.mvpdfviewer, testConfig.TestTimeToWaitForText);
+    await I.waitForElement('mv-pdf-viewer .textLayer span', testConfig.TestTimeToWaitForText);
+    console.log('mvCaseHelper2', await I.grabCurrentUrl());
+  } catch (error) {
+    const currentUrl = await I.grabCurrentUrl();
+    const bodyText = await I.grabTextFrom('body');
+    console.log(`Media viewer did not become ready. url=${currentUrl}, body=${bodyText.slice(0, 1000)}`);
+    throw error;
+  }
 }
 
 async function uploadDocumentEvent(I, caseId, eventName) {
