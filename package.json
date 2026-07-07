@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/media-viewer",
-  "version": "4.2.21",
+  "version": "4.2.22-library-update",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -18,8 +18,8 @@
     "build:demo": "ng build media-viewer-demo-app --configuration production",
     "copy:lib-files": "yarn copy:lib-js-dependencies && yarn copy:lib-assets && yarn copy:docs",
     "copy:demo-files": "yarn copy:demo-js-dependencies && yarn copy:demo-assets",
-    "copy:lib-js-dependencies": "cross-env NODE_PATH=. rsync -r projects/media-viewer/node_modules/pdfjs-dist/build dist/media-viewer/assets",
-    "copy:demo-js-dependencies": "cross-env NODE_PATH=. rsync -r projects/media-viewer/node_modules/pdfjs-dist/build dist/demo-app/assets",
+    "copy:lib-js-dependencies": "cross-env NODE_PATH=. rsync -r projects/media-viewer/node_modules/pdfjs-dist/build dist/media-viewer/assets && cp dist/media-viewer/assets/build/pdf.worker.min.mjs dist/media-viewer/assets/build/pdf.worker.min.js",
+    "copy:demo-js-dependencies": "cross-env NODE_PATH=. rsync -r projects/media-viewer/node_modules/pdfjs-dist/build dist/demo-app/assets && cp dist/demo-app/assets/build/pdf.worker.min.mjs dist/demo-app/assets/build/pdf.worker.min.js",
     "copy:lib-assets": "cross-env NODE_PATH=. rsync -r projects/media-viewer/src/assets/* dist/media-viewer/assets/",
     "copy:demo-assets": "cross-env NODE_PATH=. rsync -r projects/media-viewer/src/assets/* dist/demo-app/assets/",
     "copy:docs": "yarn copy:readme && yarn copy:licence",
@@ -81,7 +81,7 @@
     "ngx-chips": "3.0.0",
     "nunjucks": "^3.2.4",
     "otp": "^0.1.3",
-    "pdfjs-dist": "^4.10.38",
+    "pdfjs-dist": "^6.1.200",
     "rpx-xui-translation": "1.2.3",
     "rxjs": "^7.8.1",
     "sass": "^1.97.3",
@@ -118,7 +118,8 @@
     "jws": "^4.0.1",
     "qs": "^6.14.1",
     "bn.js": "^5.2.3",
-    "immutable": "^5.1.5"
+    "immutable": "^5.1.5",
+    "pdfjs-dist": "^6.1.200"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "20.3.24",
