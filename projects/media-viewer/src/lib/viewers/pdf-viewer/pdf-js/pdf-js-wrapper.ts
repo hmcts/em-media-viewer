@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 import { SearchOperation, SearchResultsCount, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
 import { PdfPosition } from '../../../store/reducers/document.reducer';
 
-pdfjs.GlobalWorkerOptions.workerSrc = '/assets/build/pdf.worker.min.js';
+pdfjs.GlobalWorkerOptions.workerSrc = '/assets/build/pdf.worker.min.mjs';
 
 /**
  * Values of the state field returned by the find events
