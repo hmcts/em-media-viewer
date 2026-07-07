@@ -1,6 +1,6 @@
 import { Outline } from './../side-bar/outline-item/outline.model';
 import { RedactionSearch } from './../../../toolbar/redaction-search-bar/redaction-search.model';
-import * as pdfjs from 'pdfjs-dist';
+import { pdfjs } from './pdf-js-lib';
 import { DownloadManager, PDFLinkService, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
 import { Subject } from 'rxjs';
 import { SearchOperation, SearchResultsCount, ToolbarEventService } from '../../../toolbar/toolbar-event.service';
