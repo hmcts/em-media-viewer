@@ -846,9 +846,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/ssr@npm:20.3.24":
-  version: 20.3.24
-  resolution: "@angular/ssr@npm:20.3.24"
+"@angular/ssr@npm:20.3.25":
+  version: 20.3.25
+  resolution: "@angular/ssr@npm:20.3.25"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
@@ -859,7 +859,7 @@ __metadata:
   peerDependenciesMeta:
     "@angular/platform-server":
       optional: true
-  checksum: 10/11f5a1ba71b7f9f8fe05be476924e8a487772fdad988a78dbfdf65bc6b464e2b11e991140158c6f98057f0b94ce8f9eee67dcf940b676e6d362d5020580ba840
+  checksum: 10/0f438bbcb4cffab3bc96bf7622abf633eede2b6c5ab70164e98ce9ae5904c5ba55cb2b1532d601b083feaccd6b633671394ee960e71a5dfccfbfde3236bca55c
   languageName: node
   linkType: hard
 
@@ -3450,7 +3450,7 @@ __metadata:
     "@angular/platform-browser-dynamic": "npm:20.3.19"
     "@angular/platform-server": "npm:20.3.19"
     "@angular/router": "npm:20.3.19"
-    "@angular/ssr": "npm:20.3.24"
+    "@angular/ssr": "npm:20.3.25"
     "@hmcts/nodejs-healthcheck": "npm:^1.8.5"
     "@hmcts/nodejs-logging": "npm:4.0.4"
     "@hmcts/properties-volume": "npm:1.4.0"
