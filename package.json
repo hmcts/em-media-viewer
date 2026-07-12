@@ -144,7 +144,7 @@
     "@typescript-eslint/types": "7.16.0",
     "@typescript-eslint/utils": "7.16.0",
     "chai": "^4.3.0",
-    "codeceptjs": "3.6.7",
+    "codeceptjs": "3.7.5",
     "codecov": "^3.7.1",
     "coveralls": "^3.0.3",
     "cross-env": "^7.0.3",
