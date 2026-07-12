@@ -148,7 +148,7 @@
     "codecov": "^3.7.1",
     "coveralls": "^3.0.3",
     "cross-env": "^7.0.3",
-    "cucumber": "^6",
+    "@cucumber/cucumber": "^7.0.0",
     "cucumber-pretty": "1.5.2",
     "cucumberjs-allure-reporter": "1.0.3",
     "eslint": "^9.39.4",
